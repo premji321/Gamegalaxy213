@@ -3,614 +3,355 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101827">
 
-<title>1857 की क्रांति | Animated History - Game Galaxy</title>
+<title>1857 की क्रांति | Visual History</title>
 
 <style>
 :root {
-    --bg: #101827;
-    --panel: #18263a;
-    --gold: #ffd166;
-    --orange: #f97316;
-    --white: #ffffff;
-    --muted: #cbd5e1;
+  --navy: #10223d;
+  --blue: #194d78;
+  --gold: #f6c453;
+  --paper: #fff4d9;
+  --red: #a62c32;
+  --ink: #252b36;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--white);
-    font-family: Arial, "Noto Sans Devanagari", sans-serif;
-}
-
-button {
-    font: inherit;
-    cursor: pointer;
+  margin: 0;
+  font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+  background: #081321;
+  color: white;
 }
 
 header {
-    padding: 18px 12px;
-    text-align: center;
-    background: linear-gradient(135deg, #172b4d, #7c2d12);
-    border-bottom: 2px solid var(--gold);
+  position: relative;
+  padding: 32px 18px;
+  text-align: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 10% 20%, #47789c 0 2px, transparent 3px),
+    linear-gradient(120deg, #10223d, #194d78, #10223d);
+  border-bottom: 5px solid var(--gold);
 }
 
 header h1 {
-    margin: 0;
-    font-size: clamp(23px, 4vw, 36px);
+  margin: 0;
+  font-size: clamp(32px, 6vw, 65px);
+  color: var(--gold);
+  text-shadow: 3px 4px 0 #56232a;
 }
 
 header p {
-    margin: 8px 0 0;
-    color: #fef3c7;
-    font-size: 14px;
+  margin: 10px auto;
+  max-width: 700px;
+  font-size: 17px;
+  line-height: 1.8;
 }
 
-.container {
-    width: min(1100px, 96%);
-    margin: auto;
-    padding: 18px 0 30px;
+.badge {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  padding: 7px 15px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
-.player {
-    overflow: hidden;
-    border-radius: 16px;
-    background: #000;
-    border: 2px solid #475569;
-    box-shadow: 0 12px 35px #0008;
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(8, 19, 33, .96);
+  border-bottom: 1px solid #31465c;
 }
 
-#stage {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    min-height: 300px;
-    max-height: 620px;
-    overflow: hidden;
-    isolation: isolate;
-    background: linear-gradient(
-        #72bce7 0%,
-        #f8d7a0 68%,
-        #71864c 69%,
-        #34452b 100%
-    );
+button {
+  padding: 10px 15px;
+  border: 1px solid #607b94;
+  border-radius: 9px;
+  background: #193650;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-#stage.night {
-    background: linear-gradient(
-        #101c3b 0%,
-        #354a69 68%,
-        #414d3a 69%,
-        #253022 100%
-    );
+button:hover {
+  background: #28577b;
 }
 
-.sun {
-    position: absolute;
-    top: 8%;
-    right: 12%;
-    width: clamp(35px, 7vw, 75px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: #ffe9a3;
-    box-shadow: 0 0 50px #ffd166aa;
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
 }
 
-.cloud {
-    position: absolute;
-    top: 17%;
-    left: -100px;
-    width: 90px;
-    height: 25px;
-    border-radius: 40px;
-    background: #ffffffbb;
-    animation: clouds 24s linear infinite;
+.intro {
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 16px;
 }
 
-.cloud::before,
-.cloud::after {
-    content: "";
-    position: absolute;
-    background: inherit;
-    border-radius: 50%;
+.intro h2 {
+  color: var(--gold);
+  font-size: 26px;
 }
 
-.cloud::before {
-    width: 35px;
-    height: 35px;
-    top: -17px;
-    left: 15px;
+.intro p {
+  color: #cbd5e1;
+  line-height: 1.9;
 }
 
-.cloud::after {
-    width: 28px;
-    height: 28px;
-    top: -10px;
-    right: 12px;
+.progress-wrap {
+  position: sticky;
+  top: 58px;
+  z-index: 9;
+  height: 5px;
+  background: #26384b;
 }
 
-@keyframes clouds {
-    from { transform: translateX(0); }
-    to { transform: translateX(125vw); }
-}
-
-.hill {
-    position: absolute;
-    bottom: 20%;
-    width: 70%;
-    height: 30%;
-    background: #73864c;
-    border-radius: 50% 50% 0 0;
-}
-
-.hill.one {
-    left: -15%;
-}
-
-.hill.two {
-    right: -15%;
-    background: #5d7140;
-}
-
-.building {
-    position: absolute;
-    bottom: 20%;
-    left: 8%;
-    width: 23%;
-    height: 34%;
-    background: #b9653e;
-    border: 3px solid #75412c;
-    border-radius: 4px 4px 0 0;
-}
-
-.building::before {
-    content: "";
-    position: absolute;
-    top: -13px;
-    left: -6%;
-    width: 112%;
-    height: 15px;
-    background: #78402b;
-    clip-path: polygon(0 100%, 10% 0, 90% 0, 100% 100%);
-}
-
-.building::after {
-    content: "";
-    position: absolute;
-    width: 20%;
-    height: 45%;
-    bottom: 0;
-    left: 40%;
-    background: #57352b;
-    border-radius: 50% 50% 0 0;
-}
-
-.window {
-    position: absolute;
-    top: 20%;
-    width: 16%;
-    height: 24%;
-    background: #573c32;
-    border: 2px solid #e5bb87;
-}
-
-.window.a { left: 12%; }
-.window.b { right: 12%; }
-
-.character {
-    position: absolute;
-    z-index: 4;
-    bottom: 19%;
-    left: 49%;
-    width: 70px;
-    height: 165px;
-    transform-origin: bottom center;
-    animation: walk 0.55s ease-in-out infinite alternate;
-}
-
-@keyframes walk {
-    from {
-        transform: translateY(0) rotate(-2deg);
-    }
-    to {
-        transform: translateY(-4px) rotate(2deg);
-    }
-}
-
-.head {
-    position: absolute;
-    left: 17px;
-    top: 0;
-    width: 39px;
-    height: 43px;
-    border-radius: 45%;
-    background: #b9784d;
-    border: 2px solid #603e2c;
-}
-
-.turban {
-    position: absolute;
-    z-index: 2;
-    top: -5px;
-    left: 11px;
-    width: 51px;
-    height: 18px;
-    border-radius: 50% 50% 15% 15%;
-    background: #a92c24;
-    border: 2px solid #64251f;
-}
-
-.face-eye {
-    position: absolute;
-    top: 17px;
-    left: 25px;
-    width: 4px;
-    height: 4px;
-    background: #201914;
-    border-radius: 50%;
-    box-shadow: 14px 0 #201914;
-}
-
-.moustache {
-    position: absolute;
-    top: 26px;
-    left: 24px;
-    width: 20px;
-    height: 6px;
-    background: #34251f;
-    border-radius: 0 0 50% 50%;
-}
-
-.body {
-    position: absolute;
-    top: 42px;
-    left: 9px;
-    width: 55px;
-    height: 61px;
-    border-radius: 8px;
-    background: #b58a4e;
-    border: 2px solid #64472d;
-}
-
-.belt {
-    position: absolute;
-    top: 81px;
-    left: 9px;
-    width: 55px;
-    height: 7px;
-    background: #4b3326;
-}
-
-.arm {
-    position: absolute;
-    top: 49px;
-    left: 0;
-    width: 15px;
-    height: 48px;
-    background: #b9784d;
-    border-radius: 10px;
-    transform: rotate(18deg);
-    transform-origin: top center;
-}
-
-.arm.right {
-    left: 57px;
-    transform: rotate(-25deg);
-}
-
-.leg {
-    position: absolute;
-    top: 100px;
-    left: 17px;
-    width: 15px;
-    height: 53px;
-    border-radius: 8px;
-    background: #44372e;
-    transform: rotate(5deg);
-}
-
-.leg.right {
-    left: 41px;
-    transform: rotate(-5deg);
-}
-
-.weapon {
-    position: absolute;
-    top: 42px;
-    left: 65px;
-    width: 5px;
-    height: 105px;
-    background: #777;
-    border: 1px solid #333;
-    transform: rotate(-8deg);
-    display: none;
-}
-
-.weapon::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: -5px;
-    width: 13px;
-    height: 12px;
-    background: #67432c;
-}
-
-.flagpole {
-    position: absolute;
-    z-index: 3;
-    bottom: 20%;
-    left: 74%;
-    width: 5px;
-    height: 43%;
-    background: #493a2b;
-    display: none;
-}
-
-.flagcloth {
-    position: absolute;
-    top: 0;
-    left: 4px;
-    width: 100px;
-    height: 57px;
-    background: linear-gradient(
-        to bottom,
-        #e78b35 0 33.3%,
-        #fff5e0 33.3% 66.6%,
-        #36804b 66.6% 100%
-    );
-    clip-path: polygon(0 0, 100% 0, 87% 50%, 100% 100%, 0 100%);
-    animation: flagwave 0.6s ease-in-out infinite alternate;
-}
-
-@keyframes flagwave {
-    from { transform: skewY(-4deg); }
-    to { transform: skewY(4deg); }
-}
-
-.crowd {
-    position: absolute;
-    z-index: 2;
-    bottom: 20%;
-    left: 10%;
-    width: 80%;
-    height: 23%;
-    display: none;
-}
-
-.person {
-    position: absolute;
-    bottom: 0;
-    width: 25px;
-    height: 55px;
-    border-radius: 7px 7px 0 0;
-    background: #80543a;
-    animation: crowdMove 0.8s ease-in-out infinite alternate;
-}
-
-.person::before {
-    content: "";
-    position: absolute;
-    top: -18px;
-    left: 3px;
-    width: 19px;
-    height: 20px;
-    border-radius: 50%;
-    background: #b9784d;
-}
-
-@keyframes crowdMove {
-    from { transform: translateY(0); }
-    to { transform: translateY(-3px); }
-}
-
-.vignette {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-        to bottom,
-        #00000008,
-        transparent 60%,
-        #00000060
-    );
-}
-
-.scene-label {
-    position: absolute;
-    z-index: 8;
-    top: 4%;
-    left: 3%;
-    padding: 7px 12px;
-    border-radius: 6px;
-    background: #111827d9;
-    color: var(--gold);
-    font-size: clamp(12px, 2vw, 17px);
-}
-
-.caption {
-    position: absolute;
-    z-index: 9;
-    bottom: 3%;
-    left: 3%;
-    width: 94%;
-    padding: 10px 14px;
-    background: #101827e8;
-    border-left: 4px solid var(--gold);
-    border-radius: 7px;
-    text-align: center;
-    font-size: clamp(13px, 2.4vw, 21px);
-    line-height: 1.6;
-}
-
-#stage.transition {
-    animation: sceneIn .5s ease;
-}
-
-@keyframes sceneIn {
-    from {
-        opacity: .5;
-        transform: scale(.985);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 10px;
-    background: #111827;
-}
-
-.btn {
-    border: 1px solid #475569;
-    padding: 10px 14px;
-    border-radius: 8px;
-    background: #25364e;
-    color: white;
-    font-size: 14px;
-}
-
-.btn:hover {
-    background: #354b69;
-}
-
-.btn.primary {
-    background: #b45309;
-    border-color: #fbbf24;
-}
-
-.btn.primary:hover {
-    background: #d97706;
-}
-
-.progress {
-    height: 6px;
-    background: #334155;
-}
-
-#progressBar {
-    height: 100%;
-    width: 0;
-    background: var(--gold);
-    transition: width .3s;
-}
-
-.info-panel {
-    margin-top: 20px;
-    padding: 20px;
-    background: var(--panel);
-    border: 1px solid #334155;
-    border-radius: 14px;
-}
-
-.info-panel h2 {
-    color: var(--gold);
-    margin-top: 0;
-    font-size: clamp(21px, 4vw, 29px);
-}
-
-.info-panel p {
-    color: var(--muted);
-    font-size: 16px;
-    line-height: 1.9;
-}
-
-.fact {
-    margin-top: 14px;
-    padding: 12px;
-    background: #0f1b2e;
-    border-radius: 8px;
-    line-height: 1.8;
+#progress {
+  width: 0;
+  height: 100%;
+  background: var(--gold);
 }
 
 .timeline {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-    margin-top: 20px;
+  position: relative;
+  max-width: 1250px;
+  margin: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 }
 
-.timeline button {
-    padding: 12px;
-    min-height: 70px;
-    border: 1px solid #475569;
-    border-radius: 9px;
-    color: white;
-    background: #22324a;
-    text-align: left;
-    line-height: 1.5;
+.card {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 13px;
+  border: 3px solid #d6a94d;
+  box-shadow: 0 8px 22px #0005;
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+  scroll-margin-top: 100px;
 }
 
-.timeline button.active {
-    border-color: var(--gold);
-    background: #694019;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px #0008;
 }
 
-.timeline strong {
-    display: block;
-    color: var(--gold);
-    margin-bottom: 5px;
+.card.selected {
+  outline: 4px solid #5ec8ff;
 }
 
-.note {
-    margin-top: 18px;
-    color: #94a3b8;
-    font-size: 13px;
-    line-height: 1.7;
+.scene-number {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--red);
+  color: white;
+  border: 2px solid white;
+  font-weight: bold;
+}
+
+.art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #dce9e9;
+}
+
+.art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.card-body {
+  padding: 14px 15px 18px;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  color: #78322d;
+  font-size: 19px;
+}
+
+.card .date {
+  display: inline-block;
+  background: #f0d49b;
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.card p {
+  margin: 9px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.keywords span {
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: #d9e5e6;
+  color: #233b4b;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.summary {
+  max-width: 1150px;
+  margin: 35px auto;
+  padding: 25px;
+  border: 2px solid var(--gold);
+  border-radius: 15px;
+  background: linear-gradient(135deg, #193650, #10223d);
+}
+
+.summary h2 {
+  color: var(--gold);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.summary-item {
+  padding: 15px 8px;
+  text-align: center;
+  background: #ffffff10;
+  border-radius: 10px;
+}
+
+.summary-item strong {
+  display: block;
+  color: var(--gold);
+  font-size: 23px;
+  margin-bottom: 5px;
 }
 
 footer {
-    padding: 20px;
-    text-align: center;
-    color: #94a3b8;
-    background: #0b1220;
-    font-size: 13px;
+  padding: 30px 15px;
+  text-align: center;
+  color: #cbd5e1;
+  background: #050c15;
+  line-height: 1.8;
 }
 
-@media (max-width: 600px) {
-    .container {
-        width: 96%;
-    }
+@media (max-width: 850px) {
+  .timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 12px;
+  }
 
-    #stage {
-        min-height: 270px;
-    }
+  .card h3 {
+    font-size: 16px;
+  }
 
-    .character {
-        transform: scale(.8);
-        transform-origin: bottom center;
-        left: 45%;
-    }
+  .card p {
+    font-size: 13px;
+  }
 
-    .building {
-        width: 28%;
-        height: 29%;
-    }
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
-    .caption {
-        padding: 8px;
-        font-size: 13px;
-    }
+@media (max-width: 480px) {
+  .timeline {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
 
-    .btn {
-        padding: 9px 10px;
-        font-size: 13px;
-    }
+  .card .art {
+    aspect-ratio: 5 / 3;
+  }
 
-    .info-panel {
-        padding: 14px;
-    }
+  .card h3 {
+    font-size: 19px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  header {
+    background: white;
+    color: black;
+    border: 2px solid black;
+  }
+
+  header h1,
+  .intro h2,
+  .summary h2 {
+    color: black;
+    text-shadow: none;
+  }
+
+  .toolbar,
+  .progress-wrap {
+    display: none;
+  }
+
+  .timeline {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  .card p {
+    color: black;
+  }
+
+  .summary {
+    background: white;
+    color: black;
+  }
 }
 </style>
 </head>
@@ -618,543 +359,296 @@ footer {
 <body>
 
 <header>
-    <h1>🇮🇳 1857 की क्रांति</h1>
-    <p>Animated Indian History | Learn Through Stories</p>
+  <span class="badge">VISUAL HISTORY • CLASS 8–10</span>
+  <h1>1857 की क्रांति</h1>
+  <p>
+    ईस्ट इंडिया कंपनी के शासन के विरुद्ध विद्रोह की कहानी।
+    50 ऐतिहासिक पड़ावों के माध्यम से समझिए।
+  </p>
 </header>
 
-<main class="container">
+<div class="toolbar">
+  <button onclick="scrollToTop()">🏠 शुरुआत</button>
+  <button onclick="previousCard()">← पिछला दृश्य</button>
+  <button onclick="nextCard()">अगला दृश्य →</button>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+  <button onclick="toggleFullscreen()">⛶ Full Screen</button>
+</div>
 
-    <section class="player" aria-label="1857 की क्रांति का एनिमेशन">
+<div class="progress-wrap">
+  <div id="progress"></div>
+</div>
 
-        <div id="stage">
+<section class="intro">
+  <h2>चित्रों के माध्यम से पूरी कहानी</h2>
+  <p>
+    हर कार्ड एक घटना या ऐतिहासिक पड़ाव को दर्शाता है।
+    कार्ड पर क्लिक करें और क्रम से पढ़ते जाएँ।
+    नीचे दिए गए चित्र SVG से बनाए गए सांकेतिक चित्र हैं,
+    न कि वास्तविक ऐतिहासिक तस्वीरें।
+  </p>
+</section>
 
-            <div class="sun" id="sun"></div>
-            <div class="cloud"></div>
+<main>
+  <section class="timeline" id="timeline"></section>
 
-            <div class="hill one"></div>
-            <div class="hill two"></div>
-
-            <div class="building" id="building">
-                <div class="window a"></div>
-                <div class="window b"></div>
-            </div>
-
-            <div class="crowd" id="crowd"></div>
-
-            <div class="character" id="character">
-                <div class="head">
-                    <div class="face-eye"></div>
-                    <div class="moustache"></div>
-                </div>
-
-                <div class="turban" id="turban"></div>
-                <div class="body" id="body"></div>
-                <div class="belt"></div>
-                <div class="arm"></div>
-                <div class="arm right"></div>
-                <div class="leg"></div>
-                <div class="leg right"></div>
-                <div class="weapon" id="weapon"></div>
-            </div>
-
-            <div class="flagpole" id="flagpole">
-                <div class="flagcloth"></div>
-            </div>
-
-            <div class="scene-label" id="sceneLabel">
-                दृश्य 1 / 8
-            </div>
-
-            <div class="caption" id="caption">
-                1857 — भारत में विद्रोह की शुरुआत
-            </div>
-
-            <div class="vignette"></div>
-
-        </div>
-
-        <div class="progress">
-            <div id="progressBar"></div>
-        </div>
-
-        <div class="controls">
-
-            <button class="btn" id="previousBtn">
-                ⏮ पिछला
-            </button>
-
-            <button class="btn primary" id="playBtn">
-                ⏸ रोकें
-            </button>
-
-            <button class="btn" id="nextBtn">
-                अगला ⏭
-            </button>
-
-            <button class="btn" id="voiceBtn">
-                🔊 हिंदी आवाज़
-            </button>
-
-            <button class="btn" id="fullscreenBtn">
-                ⛶ Fullscreen
-            </button>
-
-            <button class="btn" id="restartBtn">
-                🔄 फिर से
-            </button>
-
-        </div>
-
-    </section>
-
-    <section class="info-panel">
-
-        <h2 id="storyTitle">दृश्य 1: अंग्रेजी शासन</h2>
-
-        <p id="storyText"></p>
-
-        <div class="fact">
-            <strong style="color:#ffd166">महत्वपूर्ण तथ्य:</strong>
-            <span id="factText"></span>
-        </div>
-
-        <div class="timeline" id="timeline"></div>
-
-        <p class="note">
-            शैक्षिक नोट: यह एक CSS-आधारित 2D एनिमेशन प्रदर्शन है।
-            पात्र प्रतीकात्मक हैं, ऐतिहासिक व्यक्तियों के वास्तविक चित्र नहीं।
-            हिंदी आवाज़ आपके ब्राउज़र और डिवाइस में उपलब्ध Speech Synthesis
-            सुविधा पर निर्भर करेगी।
-        </p>
-
-    </section>
-
+  <section class="summary">
+    <h2>क्रांति को 4 बातों में याद रखें</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <strong>1857</strong>
+        विद्रोह का वर्ष
+      </div>
+      <div class="summary-item">
+        <strong>मेरठ</strong>
+        10 मई को विद्रोह
+      </div>
+      <div class="summary-item">
+        <strong>दिल्ली</strong>
+        बहादुर शाह ज़फ़र
+      </div>
+      <div class="summary-item">
+        <strong>1858</strong>
+        कंपनी शासन का अंत
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
-    Game Galaxy | Educational History Animation
-    <br>
-    इतिहास को समझें, याद रखें और आगे बढ़ें।
+  <strong>Orient Classes | History Visual Learning</strong>
+  <br>
+  शैक्षिक सामग्री। चित्र प्रतीकात्मक हैं; प्रत्येक घटना का विवरण
+  पाठ्यपुस्तक के साथ मिलाकर पढ़ें।
 </footer>
 
 <script>
-"use strict";
-
-const scenes = [
-    {
-        title: "दृश्य 1: अंग्रेजी शासन",
-        date: "1857 से पहले",
-        caption: "भारत में अंग्रेजी शासन और बढ़ता असंतोष",
-        text:
-            "1857 से पहले भारत के बड़े हिस्से पर ईस्ट इंडिया कंपनी का शासन था। " +
-            "कंपनी की विस्तारवादी नीतियों, कई रियासतों के विलय, आर्थिक शोषण " +
-            "और सामाजिक-धार्मिक मामलों में हस्तक्षेप की आशंकाओं के कारण " +
-            "विभिन्न वर्गों में असंतोष बढ़ रहा था। सैनिकों की अपनी शिकायतें भी थीं।",
-        fact:
-            "1857 का विद्रोह केवल एक कारण से नहीं हुआ। इसके पीछे राजनीतिक, " +
-            "आर्थिक, सैनिक और सामाजिक कारणों का मेल था।",
-        character: false,
-        crowd: false,
-        flag: false,
-        night: false,
-        color: "#b58a4e",
-        speech:
-            "सन् अठारह सौ सत्तावन से पहले भारत के बड़े हिस्से पर ईस्ट इंडिया कंपनी का शासन था। " +
-            "विभिन्न नीतियों और शिकायतों के कारण असंतोष बढ़ रहा था।"
-    },
-
-    {
-        title: "दृश्य 2: सैनिकों में असंतोष",
-        date: "1857 की शुरुआत",
-        caption: "भारतीय सैनिकों की शिकायतें",
-        text:
-            "ईस्ट इंडिया कंपनी की सेना में भारतीय सिपाहियों को वेतन, पदोन्नति, " +
-            "सेवा की शर्तों और भेदभाव से जुड़ी शिकायतें थीं। नई एनफील्ड राइफल के " +
-            "कारतूसों के बारे में यह अफवाह फैली कि उन पर गाय और सूअर की चर्बी " +
-            "लगी है। कारतूस को मुँह से काटना पड़ता था, इसलिए इस खबर से धार्मिक " +
-            "भावनाएँ आहत हुईं और सैनिकों में तनाव बढ़ गया।",
-        fact:
-            "कारतूस विवाद विद्रोह का एक तात्कालिक कारण बना, लेकिन इसके पीछे " +
-            "पहले से मौजूद अनेक शिकायतें थीं।",
-        character: true,
-        crowd: false,
-        flag: false,
-        night: false,
-        color: "#b58a4e",
-        speech:
-            "कंपनी की सेना में भारतीय सैनिकों की कई शिकायतें थीं। कारतूसों से जुड़ी " +
-            "अफवाह ने असंतोष को और बढ़ा दिया।"
-    },
-
-    {
-        title: "दृश्य 3: मंगल पांडे",
-        date: "29 मार्च 1857",
-        caption: "बैरकपुर — मंगल पांडे की घटना",
-        text:
-            "29 मार्च 1857 को बैरकपुर में भारतीय सिपाही मंगल पांडे ने अंग्रेज " +
-            "अधिकारियों के विरुद्ध कार्रवाई की। उन्हें गिरफ्तार किया गया और " +
-            "8 अप्रैल 1857 को फाँसी दी गई। उनकी घटना ने सैनिक असंतोष के " +
-            "बढ़ते तनाव को सामने ला दिया।",
-        fact:
-            "मंगल पांडे की घटना बैरकपुर में हुई थी। मेरठ का व्यापक सैनिक विद्रोह " +
-            "इसके बाद 10 मई 1857 को शुरू हुआ।",
-        character: true,
-        crowd: false,
-        flag: false,
-        night: false,
-        color: "#c28d53",
-        speech:
-            "उनतीस मार्च अठारह सौ सत्तावन को बैरकपुर में मंगल पांडे की घटना हुई। " +
-            "आठ अप्रैल को उन्हें फाँसी दी गई।"
-    },
-
-    {
-        title: "दृश्य 4: मेरठ का विद्रोह",
-        date: "10 मई 1857",
-        caption: "मेरठ से विद्रोह की व्यापक शुरुआत",
-        text:
-            "मेरठ में 85 सैनिकों को कारतूस इस्तेमाल करने से इनकार करने के बाद " +
-            "कठोर दंड दिया गया था। 10 मई 1857 को सैनिक विद्रोह भड़क उठा। " +
-            "विद्रोही सैनिकों ने जेल से अपने साथियों को मुक्त कराया और दिल्ली " +
-            "की ओर कूच किया। इसी घटना को व्यापक विद्रोह की प्रमुख शुरुआत माना जाता है।",
-        fact:
-            "10 मई 1857 — मेरठ में सैनिक विद्रोह। अगले दिन विद्रोही सैनिक दिल्ली पहुँचे।",
-        character: true,
-        crowd: true,
-        flag: false,
-        night: true,
-        color: "#b58a4e",
-        speech:
-            "दस मई अठारह सौ सत्तावन को मेरठ में सैनिक विद्रोह हुआ। " +
-            "इसके बाद विद्रोही सैनिक दिल्ली की ओर बढ़े।"
-    },
-
-    {
-        title: "दृश्य 5: दिल्ली और बहादुर शाह ज़फ़र",
-        date: "11 मई 1857",
-        caption: "दिल्ली में विद्रोही सैनिक",
-        text:
-            "11 मई 1857 को विद्रोही सैनिक दिल्ली पहुँचे। उन्होंने मुगल सम्राट " +
-            "बहादुर शाह ज़फ़र को अपना प्रतीकात्मक नेता स्वीकार किया। दिल्ली " +
-            "विद्रोह का एक महत्वपूर्ण केंद्र बन गई और आंदोलन कई क्षेत्रों तक फैलने लगा।",
-        fact:
-            "बहादुर शाह ज़फ़र उस समय मुगल सम्राट थे। विद्रोहियों ने उन्हें " +
-            "प्रतीकात्मक नेतृत्व प्रदान करने के लिए चुना।",
-        character: true,
-        crowd: true,
-        flag: true,
-        night: false,
-        color: "#b58a4e",
-        speech:
-            "ग्यारह मई को विद्रोही सैनिक दिल्ली पहुँचे और बहादुर शाह ज़फ़र को " +
-            "अपना प्रतीकात्मक नेता स्वीकार किया।"
-    },
-
-    {
-        title: "दृश्य 6: विद्रोह के प्रमुख केंद्र",
-        date: "1857",
-        caption: "कानपुर, लखनऊ, झाँसी और अन्य क्षेत्र",
-        text:
-            "विद्रोह अनेक क्षेत्रों में फैला। कानपुर में नाना साहेब, लखनऊ में " +
-            "बेगम हज़रत महल और झाँसी में रानी लक्ष्मीबाई ने महत्वपूर्ण भूमिका " +
-            "निभाई। बिहार के जगदीशपुर क्षेत्र में कुँवर सिंह ने भी अंग्रेजी शासन " +
-            "के विरुद्ध संघर्ष का नेतृत्व किया। अलग-अलग क्षेत्रों में विद्रोह के " +
-            "कारण और परिस्थितियाँ भिन्न थीं।",
-        fact:
-            "प्रमुख नेता: रानी लक्ष्मीबाई, नाना साहेब, बेगम हज़रत महल, " +
-            "कुँवर सिंह और तात्या टोपे।",
-        character: true,
-        crowd: true,
-        flag: true,
-        night: false,
-        color: "#b58a4e",
-        speech:
-            "विद्रोह कानपुर, लखनऊ, झाँसी और बिहार के जगदीशपुर सहित कई क्षेत्रों में फैला। " +
-            "विभिन्न नेताओं ने अपने-अपने क्षेत्रों में संघर्ष का नेतृत्व किया।"
-    },
-
-    {
-        title: "दृश्य 7: विद्रोह का दमन",
-        date: "1857–1858",
-        caption: "अंग्रेजी सेना ने विद्रोह को दबाया",
-        text:
-            "कंपनी की सेना और ब्रिटिश सरकार ने बड़े सैन्य अभियान चलाकर विद्रोह " +
-            "को दबाया। विद्रोहियों के पास एकीकृत कमान और समान रणनीति का अभाव " +
-            "था। कई क्षेत्रों में संघर्ष 1858 तक जारी रहा। अनेक नेताओं और " +
-            "सैनिकों को पराजय, गिरफ्तारी या मृत्यु का सामना करना पड़ा।",
-        fact:
-            "विद्रोह सभी भारतीय क्षेत्रों में समान रूप से नहीं फैला और इसमें " +
-            "अनेक स्थानीय नेतृत्व तथा अलग-अलग लक्ष्य शामिल थे।",
-        character: true,
-        crowd: false,
-        flag: false,
-        night: true,
-        color: "#6c5339",
-        speech:
-            "अंग्रेजी सेना ने व्यापक सैन्य अभियान चलाकर विद्रोह को दबाया। " +
-            "कई क्षेत्रों में संघर्ष अठारह सौ अट्ठावन तक जारी रहा।"
-    },
-
-    {
-        title: "दृश्य 8: ऐतिहासिक परिणाम",
-        date: "1858",
-        caption: "ईस्ट इंडिया कंपनी का शासन समाप्त",
-        text:
-            "1858 में भारत शासन अधिनियम के बाद भारत का शासन ईस्ट इंडिया कंपनी " +
-            "से ब्रिटिश क्राउन के अधीन चला गया। गवर्नर जनरल को वायसराय की " +
-            "भूमिका भी मिली। ब्रिटिश सरकार ने भारतीय रियासतों और सेना के " +
-            "प्रशासन में बदलाव किए। 1857 का विद्रोह आगे के भारतीय इतिहास में " +
-            "औपनिवेशिक शासन के विरुद्ध संघर्ष की एक महत्वपूर्ण घटना बना।",
-        fact:
-            "1858 में कंपनी शासन समाप्त हुआ और भारत का प्रशासन ब्रिटिश क्राउन " +
-            "के अधीन आ गया।",
-        character: false,
-        crowd: false,
-        flag: true,
-        night: false,
-        color: "#b58a4e",
-        speech:
-            "अठारह सौ अट्ठावन में ईस्ट इंडिया कंपनी का शासन समाप्त हुआ और भारत " +
-            "का प्रशासन ब्रिटिश क्राउन के अधीन आ गया।"
-    }
+const events = [
+  ["कंपनी का विस्तार","1757","प्लासी का युद्ध","प्लासी के युद्ध के बाद कंपनी का राजनीतिक प्रभाव बढ़ने लगा।","🏰","कंपनी","विस्तार"],
+  ["बक्सर का युद्ध","1764","कंपनी की शक्ति","बक्सर की विजय ने बंगाल क्षेत्र में कंपनी की स्थिति मजबूत की।","⚔️","युद्ध","शक्ति"],
+  ["दीवानी अधिकार","1765","राजस्व पर नियंत्रण","कंपनी को बंगाल, बिहार और उड़ीसा में राजस्व वसूली का अधिकार मिला।","📜","राजस्व","अधिकार"],
+  ["किसानों पर दबाव","18वीं सदी","लगान और शोषण","कई क्षेत्रों में राजस्व व्यवस्था और आर्थिक नीतियों से असंतोष बढ़ा।","🌾","किसान","लगान"],
+  ["भारतीय शासक","1800 के दशक","राज्यों पर दबाव","कंपनी ने संधियों, युद्धों और राजनीतिक हस्तक्षेप से अपना प्रभाव बढ़ाया।","👑","राज्य","दबाव"],
+  ["सहायक संधि","1798 के बाद","लॉर्ड वेलेजली","सहायक संधियों से अनेक भारतीय राज्यों की स्वतंत्रता सीमित हुई।","🤝","संधि","नियंत्रण"],
+  ["राज्य हड़प नीति","1848–1856","डलहौजी","दत्तक उत्तराधिकारी को मान्यता न देने की नीति से कई राज्य अधिग्रहित किए गए।","📜","नीति","विलय"],
+  ["सतारा का विलय","1848","राज्य अधिग्रहण","सतारा उन राज्यों में था जिन्हें राज्य हड़प नीति के तहत मिला लिया गया।","🏯","सतारा","1848"],
+  ["झाँसी का विलय","1854","रानी लक्ष्मीबाई","झाँसी के विलय ने रानी लक्ष्मीबाई और उनके समर्थकों में गहरा असंतोष पैदा किया।","👸","झाँसी","विलय"],
+  ["अवध का विलय","1856","लखनऊ","कंपनी ने कुशासन का आरोप लगाकर अवध को अपने अधीन कर लिया।","🏰","अवध","1856"],
+  ["मुगल सत्ता का क्षय","19वीं सदी","दिल्ली का दरबार","मुगल सम्राट का राजनीतिक प्रभाव सीमित था, लेकिन उनका प्रतीकात्मक महत्व बना रहा।","👑","दिल्ली","मुगल"],
+  ["कारीगरों की मुश्किलें","19वीं सदी","पारंपरिक उद्योग","औपनिवेशिक आर्थिक बदलावों ने अनेक कारीगरों और उत्पादकों को प्रभावित किया।","🧵","कारीगर","अर्थव्यवस्था"],
+  ["सैनिक असंतोष","1850 का दशक","भेदभाव","भारतीय सैनिक वेतन, पदोन्नति और सेवा शर्तों को लेकर असंतुष्ट थे।","🪖","सिपाही","असंतोष"],
+  ["विदेश सेवा का डर","1856","सैनिक नियम","विदेश में सेवा से जुड़े नियमों ने कुछ सैनिकों की धार्मिक और सामाजिक चिंताएँ बढ़ाईं।","🚢","सेवा","चिंता"],
+  ["धार्मिक आशंकाएँ","1850 का दशक","सामाजिक बदलाव","कुछ भारतीयों को डर था कि अंग्रेज उनकी धार्मिक और सामाजिक परंपराओं में हस्तक्षेप कर रहे हैं।","🛕","आस्था","आशंका"],
+  ["नई एनफील्ड राइफल","1856–1857","कारतूस विवाद","नई राइफल के कारतूसों को काटकर खोलने की प्रक्रिया से विवाद पैदा हुआ।","🔫","राइफल","कारतूस"],
+  ["कारतूसों की अफवाह","1857","गाय और सूअर की चर्बी","कारतूसों में गाय और सूअर की चर्बी होने की खबर ने हिंदू और मुस्लिम सैनिकों में आक्रोश बढ़ाया।","⚠️","कारतूस","विवाद"],
+  ["बैरकपुर","मार्च 1857","सैनिक तनाव","बैरकपुर में कारतूस विवाद और सैन्य असंतोष खुलकर सामने आया।","🏕️","बैरकपुर","1857"],
+  ["मंगल पांडे","29 मार्च 1857","बैरकपुर की घटना","मंगल पांडे ने बैरकपुर में अंग्रेज अधिकारियों के विरुद्ध कार्रवाई की।","🪖","मंगल पांडे","बैरकपुर"],
+  ["मंगल पांडे को फाँसी","8 अप्रैल 1857","दमन","मंगल पांडे को फाँसी दी गई। घटना सैनिक असंतोष के इतिहास में महत्वपूर्ण बनी।","📜","दमन","बैरकपुर"],
+  ["मेरठ के सैनिक","अप्रैल 1857","कारतूस से इनकार","मेरठ में कई सैनिकों ने विवादित कारतूसों का इस्तेमाल करने से इनकार किया।","🪖","मेरठ","सैनिक"],
+  ["सैनिकों को सजा","9 मई 1857","85 सैनिक","कारतूस इस्तेमाल करने से इनकार करने वाले 85 सैनिकों को कठोर सजा दी गई।","⛓️","सजा","आक्रोश"],
+  ["मेरठ का विद्रोह","10 मई 1857","विद्रोह शुरू","मेरठ में भारतीय सैनिकों ने विद्रोह किया और बंदी सैनिकों को मुक्त कराया।","🔥","मेरठ","10 मई"],
+  ["दिल्ली की ओर कूच","मई 1857","विद्रोही सैनिक","विद्रोही सैनिक मेरठ से दिल्ली की ओर बढ़े।","🐎","दिल्ली","कूच"],
+  ["दिल्ली पहुँचना","11 मई 1857","विद्रोह का विस्तार","विद्रोही दिल्ली पहुँचे और वहाँ कंपनी के शासन को चुनौती दी।","🏰","दिल्ली","विद्रोह"],
+  ["बहादुर शाह ज़फ़र","मई 1857","प्रतीकात्मक नेतृत्व","विद्रोहियों ने मुगल सम्राट बहादुर शाह ज़फ़र को अपना प्रतीकात्मक नेता स्वीकार किया।","👑","ज़फ़र","नेतृत्व"],
+  ["विद्रोह का संदेश","1857","अन्य क्षेत्रों में खबर","सैनिकों, स्थानीय नेताओं और संदेशों के माध्यम से विद्रोह की खबर कई क्षेत्रों में पहुँची।","📯","संदेश","फैलाव"],
+  ["कानपुर","जून 1857","नाना साहेब","कानपुर में नाना साहेब विद्रोह के प्रमुख नेताओं में शामिल हुए।","⚔️","कानपुर","नाना साहेब"],
+  ["लखनऊ","1857","बेगम हज़रत महल","अवध में बेगम हज़रत महल ने अंग्रेजी सत्ता के विरुद्ध संघर्ष का नेतृत्व किया।","🏰","लखनऊ","अवध"],
+  ["झाँसी","1857–1858","रानी लक्ष्मीबाई","रानी लक्ष्मीबाई ने झाँसी की रक्षा और अंग्रेजी सेना के विरुद्ध संघर्ष किया।","🐎","झाँसी","लक्ष्मीबाई"],
+  ["बिहार","1857","कुँवर सिंह","जगदीशपुर के ज़मींदार और नेता कुँवर सिंह ने बिहार में विद्रोह का नेतृत्व किया।","⚔️","बिहार","कुँवर सिंह"],
+  ["बरेली","1857","खान बहादुर खान","बरेली में खान बहादुर खान विद्रोह के प्रमुख नेताओं में थे।","🛡️","बरेली","नेतृत्व"],
+  ["फैजाबाद","1857","मौलवी अहमदुल्लाह शाह","मौलवी अहमदुल्लाह शाह अवध क्षेत्र के प्रमुख विद्रोही नेताओं में शामिल थे।","📣","अवध","नेतृत्व"],
+  ["इलाहाबाद क्षेत्र","1857","स्थानीय विद्रोह","उत्तर भारत के अनेक नगरों और ग्रामीण क्षेत्रों में विद्रोह तथा प्रतिरोध हुआ।","🏘️","स्थानीय","प्रतिरोध"],
+  ["ग्रामीण भागीदारी","1857","किसान और जमींदार","कई स्थानों पर किसान, जमींदार और स्थानीय समुदाय विद्रोह में शामिल हुए।","🌾","ग्रामीण","भागीदारी"],
+  ["दिल्ली की घेराबंदी","1857","ब्रिटिश जवाबी कार्रवाई","अंग्रेजी सेना ने दिल्ली को फिर से अपने नियंत्रण में लेने के लिए सैन्य अभियान चलाया।","🛡️","दिल्ली","घेराबंदी"],
+  ["दिल्ली पर पुनः कब्जा","सितंबर 1857","विद्रोह को झटका","अंग्रेजी सेना ने सितंबर 1857 में दिल्ली पर फिर कब्जा कर लिया।","🏰","दिल्ली","सितंबर"],
+  ["बहादुर शाह ज़फ़र की गिरफ्तारी","1857","मुगल सत्ता का अंत","बहादुर शाह ज़फ़र को गिरफ्तार कर बाद में रंगून निर्वासित कर दिया गया।","👑","गिरफ्तारी","निर्वासन"],
+  ["लखनऊ का संघर्ष","1857–1858","अवध में लड़ाई","लखनऊ और अवध में अंग्रेजी सेना तथा विद्रोहियों के बीच संघर्ष जारी रहा।","⚔️","लखनऊ","संघर्ष"],
+  ["कानपुर की लड़ाई","1857","सैन्य संघर्ष","कानपुर में विद्रोहियों और अंग्रेजी सेना के बीच कई महत्वपूर्ण सैन्य घटनाएँ हुईं।","🛡️","कानपुर","युद्ध"],
+  ["रानी लक्ष्मीबाई का संघर्ष","1858","झाँसी की रक्षा","रानी लक्ष्मीबाई ने झाँसी की रक्षा की और बाद में ग्वालियर क्षेत्र में भी संघर्ष किया।","🐎","झाँसी","वीरता"],
+  ["ग्वालियर","जून 1858","अंतिम प्रमुख संघर्ष","ग्वालियर क्षेत्र में लड़ाई के दौरान रानी लक्ष्मीबाई की मृत्यु हुई।","🏯","ग्वालियर","1858"],
+  ["कुँवर सिंह का अंतिम चरण","1858","बिहार का प्रतिरोध","कुँवर सिंह ने वृद्धावस्था में भी अंग्रेजों के विरुद्ध अभियान चलाया।","⚔️","बिहार","प्रतिरोध"],
+  ["विद्रोह दबाया गया","1858","कंपनी की सैन्य विजय","अंग्रेजी सेना ने प्रमुख विद्रोही केंद्रों पर फिर नियंत्रण स्थापित कर लिया।","🛡️","1858","दमन"],
+  ["कंपनी शासन का अंत","1858","शासन परिवर्तन","भारत शासन अधिनियम 1858 के बाद भारत का शासन ईस्ट इंडिया कंपनी से ब्रिटिश क्राउन के हाथों में चला गया।","📜","अधिनियम","1858"],
+  ["ब्रिटिश क्राउन का शासन","1858 के बाद","नया प्रशासन","भारत का प्रशासन ब्रिटिश सरकार के अधीन हुआ और वायसराय की व्यवस्था स्थापित हुई।","👑","क्राउन","शासन"],
+  ["सेना का पुनर्गठन","1858 के बाद","नई सैन्य नीति","ब्रिटिश सरकार ने भारतीय सेना की संरचना और भर्ती नीति में बदलाव किए।","🪖","सेना","बदलाव"],
+  ["रियासतों के प्रति नीति","1858 के बाद","राज्यों को आश्वासन","ब्रिटिश सरकार ने भारतीय रियासतों के प्रति अपनी नीति में बदलाव और आश्वासन दिए।","🤝","रियासत","नीति"],
+  ["ऐतिहासिक महत्व","19वीं सदी के बाद","प्रतिरोध की विरासत","1857 का विद्रोह औपनिवेशिक शासन के विरुद्ध बड़े प्रतिरोध के रूप में याद किया जाता है।","📚","इतिहास","विरासत"],
+  ["1857 की याद","आज","इतिहास से सीख","इस विद्रोह में सैनिकों, शासकों और विभिन्न समुदायों की भागीदारी अलग-अलग क्षेत्रों में भिन्न थी।","🇮🇳","स्मृति","इतिहास"]
 ];
 
-const stage = document.getElementById("stage");
-const character = document.getElementById("character");
-const crowd = document.getElementById("crowd");
-const flagpole = document.getElementById("flagpole");
-const weapon = document.getElementById("weapon");
-const body = document.getElementById("body");
-const turban = document.getElementById("turban");
+const palette = [
+  ["#8fc9e8","#dfb27c","#a54d38"],
+  ["#c5d9d5","#d3aa74","#426b58"],
+  ["#f2cf8d","#b56d4b","#5d3b32"],
+  ["#b6d7ee","#d5c2a1","#596b85"],
+  ["#d9e4bb","#c69a63","#8d4135"]
+];
 
-const sceneLabel = document.getElementById("sceneLabel");
-const caption = document.getElementById("caption");
-const storyTitle = document.getElementById("storyTitle");
-const storyText = document.getElementById("storyText");
-const factText = document.getElementById("factText");
+function makeArt(event, index) {
+  const colors = palette[index % palette.length];
+  const sky = colors[0];
+  const earth = colors[1];
+  const building = colors[2];
 
-const progressBar = document.getElementById("progressBar");
-const playBtn = document.getElementById("playBtn");
-const voiceBtn = document.getElementById("voiceBtn");
+  const icon = event[4];
+
+  return `
+  <svg viewBox="0 0 400 300"
+       xmlns="http://www.w3.org/2000/svg"
+       role="img"
+       aria-label="${event[0]} का सांकेतिक चित्र">
+
+    <defs>
+      <linearGradient id="sky${index}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${sky}"/>
+        <stop offset="100%" stop-color="#fff0c9"/>
+      </linearGradient>
+    </defs>
+
+    <rect width="400" height="300" fill="url(#sky${index})"/>
+
+    <circle cx="325" cy="45" r="25" fill="#ffe6a0"/>
+
+    <path d="M0 190 L75 115 L140 190 L220 100 L310 190 L370 125 L400 170 L400 300 L0 300Z"
+          fill="#75936b" opacity=".65"/>
+
+    <rect x="0" y="215" width="400" height="85" fill="${earth}"/>
+
+    <g fill="${building}" stroke="#603d35" stroke-width="3">
+      <rect x="35" y="120" width="125" height="95"/>
+      <path d="M25 120 L98 65 L170 120 Z"/>
+      <rect x="70" y="155" width="28" height="60" fill="#573a31"/>
+      <rect x="110" y="140" width="22" height="22" fill="#ffe6a0"/>
+    </g>
+
+    <g transform="translate(235 90)">
+      <circle cx="35" cy="30" r="23" fill="#b8794f" stroke="#593b2b" stroke-width="3"/>
+      <path d="M12 25 Q35 -5 58 25 L52 12 L20 12Z" fill="#823c2d"/>
+      <path d="M9 57 Q35 45 61 57 L73 125 L-3 125Z"
+            fill="${index % 2 ? '#b64238' : '#344e70'}"
+            stroke="#4a342d" stroke-width="3"/>
+      <path d="M8 65 L-10 110 M59 65 L80 100"
+            stroke="#b8794f" stroke-width="13" stroke-linecap="round"/>
+      <path d="M15 125 L10 170 M48 125 L55 170"
+            stroke="#43372f" stroke-width="16" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(195 30)">
+      <rect x="0" y="0" width="5" height="105" fill="#59453b"/>
+      <path d="M5 0 L68 15 L5 33Z" fill="#b83b32"/>
+    </g>
+
+    <rect x="12" y="12" width="42" height="42" rx="10"
+          fill="#10223d" stroke="#f6c453" stroke-width="3"/>
+
+    <text x="33" y="40" font-size="22" text-anchor="middle"
+          fill="#ffffff" font-weight="bold">${index + 1}</text>
+
+    <rect x="15" y="235" width="370" height="50" rx="8"
+          fill="#10223d" opacity=".92"/>
+
+    <text x="200" y="268" font-size="22"
+          text-anchor="middle" fill="#ffe0a0">${icon}</text>
+
+  </svg>`;
+}
+
 const timeline = document.getElementById("timeline");
 
-let current = 0;
-let playing = true;
-let voiceEnabled = false;
-let timer = null;
-const sceneDuration = 12000;
+events.forEach((event, index) => {
+  const card = document.createElement("article");
 
-function buildTimeline() {
-    timeline.innerHTML = "";
+  card.className = "card";
+  card.id = "scene-" + index;
+  card.tabIndex = 0;
 
-    scenes.forEach((scene, index) => {
-        const button = document.createElement("button");
-        button.type = "button";
+  card.innerHTML = `
+    <span class="scene-number">${index + 1}</span>
 
-        const strong = document.createElement("strong");
-        strong.textContent = scene.date;
+    <div class="art">
+      ${makeArt(event, index)}
+    </div>
 
-        const span = document.createElement("span");
-        span.textContent = scene.title.replace(/^दृश्य \d+:\s*/, "");
+    <div class="card-body">
+      <span class="date">${event[1]}</span>
+      <h3>${event[0]}</h3>
+      <p>${event[3]}</p>
 
-        button.append(strong, span);
+      <div class="keywords">
+        <span>${event[5]}</span>
+        <span>${event[6]}</span>
+      </div>
+    </div>
+  `;
 
-        button.addEventListener("click", () => {
-            current = index;
-            showScene();
-            if (playing) startTimer();
-        });
+  card.addEventListener("click", () => selectCard(index));
 
-        timeline.appendChild(button);
-    });
-}
-
-function makeCrowd() {
-    crowd.innerHTML = "";
-
-    for (let i = 0; i < 11; i++) {
-        const person = document.createElement("div");
-        person.className = "person";
-        person.style.left = (i * 8.8) + "%";
-        person.style.background = [
-            "#80543a",
-            "#5b4937",
-            "#9b6846",
-            "#55443a"
-        ][i % 4];
-
-        person.style.animationDelay = (i * 0.08) + "s";
-        crowd.appendChild(person);
+  card.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      selectCard(index);
     }
+  });
+
+  timeline.appendChild(card);
+});
+
+let selected = 0;
+
+function selectCard(index) {
+  selected = Math.max(0, Math.min(events.length - 1, index));
+
+  document.querySelectorAll(".card").forEach(card => {
+    card.classList.remove("selected");
+  });
+
+  const card = document.getElementById("scene-" + selected);
+  card.classList.add("selected");
+
+  card.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 }
 
-function speakScene() {
-    if (!voiceEnabled || !("speechSynthesis" in window)) return;
-
-    window.speechSynthesis.cancel();
-
-    const scene = scenes[current];
-    const utterance = new SpeechSynthesisUtterance(scene.speech);
-
-    utterance.lang = "hi-IN";
-    utterance.rate = 0.88;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    window.speechSynthesis.speak(utterance);
+function nextCard() {
+  selectCard((selected + 1) % events.length);
 }
 
-function showScene() {
-    const scene = scenes[current];
-
-    stage.classList.remove("transition");
-    void stage.offsetWidth;
-    stage.classList.add("transition");
-
-    sceneLabel.textContent =
-        `दृश्य ${current + 1} / ${scenes.length} • ${scene.date}`;
-
-    caption.textContent = scene.caption;
-    storyTitle.textContent = scene.title;
-    storyText.textContent = scene.text;
-    factText.textContent = scene.fact;
-
-    character.style.display = scene.character ? "block" : "none";
-    crowd.style.display = scene.crowd ? "block" : "none";
-    flagpole.style.display = scene.flag ? "block" : "none";
-
-    stage.classList.toggle("night", scene.night);
-
-    weapon.style.display = current === 1 || current === 3 ? "block" : "none";
-
-    body.style.background = scene.color;
-
-    turban.style.background =
-        current === 4 ? "#263c74" : "#a92c24";
-
-    document.querySelectorAll(".timeline button").forEach((button, index) => {
-        button.classList.toggle("active", index === current);
-    });
-
-    progressBar.style.width =
-        (((current + 1) / scenes.length) * 100) + "%";
-
-    if (voiceEnabled) speakScene();
+function previousCard() {
+  selectCard((selected - 1 + events.length) % events.length);
 }
 
-function nextScene() {
-    if (current < scenes.length - 1) {
-        current++;
-    } else {
-        current = 0;
-    }
-
-    showScene();
-}
-
-function previousScene() {
-    current = (current - 1 + scenes.length) % scenes.length;
-    showScene();
-}
-
-function startTimer() {
-    clearInterval(timer);
-
-    if (!playing) return;
-
-    timer = setInterval(() => {
-        if (current < scenes.length - 1) {
-            current++;
-            showScene();
-        } else {
-            stopPlayback();
-        }
-    }, sceneDuration);
-}
-
-function stopPlayback() {
-    playing = false;
-    clearInterval(timer);
-    playBtn.textContent = "▶ चलाएँ";
-
-    if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-    }
-}
-
-function togglePlayback() {
-    if (playing) {
-        stopPlayback();
-    } else {
-        playing = true;
-        playBtn.textContent = "⏸ रोकें";
-        startTimer();
-
-        if (voiceEnabled) speakScene();
-    }
-}
-
-function toggleVoice() {
-    voiceEnabled = !voiceEnabled;
-
-    voiceBtn.textContent = voiceEnabled
-        ? "🔇 आवाज़ बंद करें"
-        : "🔊 हिंदी आवाज़";
-
-    if (voiceEnabled) {
-        speakScene();
-    } else if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-    }
-}
-
-function restartAnimation() {
-    current = 0;
-    playing = true;
-    playBtn.textContent = "⏸ रोकें";
-    showScene();
-    startTimer();
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 async function toggleFullscreen() {
-    try {
-        if (!document.fullscreenElement) {
-            await document.querySelector(".player").requestFullscreen();
-        } else {
-            await document.exitFullscreen();
-        }
-    } catch (error) {
-        alert("Fullscreen इस ब्राउज़र में उपलब्ध नहीं है।");
+  try {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+    } else {
+      await document.exitFullscreen();
     }
+  } catch (error) {
+    alert("इस ब्राउज़र में Full Screen उपलब्ध नहीं है।");
+  }
 }
 
-document.getElementById("nextBtn").addEventListener("click", () => {
-    nextScene();
-    if (playing) startTimer();
+window.addEventListener("scroll", () => {
+  const maxScroll =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  const percentage = maxScroll > 0
+    ? (window.scrollY / maxScroll) * 100
+    : 0;
+
+  document.getElementById("progress").style.width =
+    percentage + "%";
 });
-
-document.getElementById("previousBtn").addEventListener("click", () => {
-    previousScene();
-    if (playing) startTimer();
-});
-
-document.getElementById("playBtn").addEventListener("click", togglePlayback);
-document.getElementById("voiceBtn").addEventListener("click", toggleVoice);
-
-document.getElementById("fullscreenBtn").addEventListener(
-    "click",
-    toggleFullscreen
-);
-
-document.getElementById("restartBtn").addEventListener(
-    "click",
-    restartAnimation
-);
-
-makeCrowd();
-buildTimeline();
-showScene();
-startTimer();
 </script>
 
 </body>
