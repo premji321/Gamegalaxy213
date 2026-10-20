@@ -4,651 +4,1161 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>1857 की क्रांति | Visual History</title>
+<title>Revolution 1857 | History Challenge</title>
 
 <style>
 :root {
-  --navy: #10223d;
-  --blue: #194d78;
-  --gold: #f6c453;
-  --paper: #fff4d9;
-  --red: #a62c32;
-  --ink: #252b36;
+    --bg: #080d1c;
+    --panel: #131d34;
+    --panel2: #1c2b49;
+    --gold: #ffd166;
+    --green: #45e0a8;
+    --red: #ff647c;
+    --blue: #65a9ff;
+    --text: #f5f7ff;
+    --muted: #aab6d0;
 }
 
 * {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
-  background: #081321;
-  color: white;
-}
-
-header {
-  position: relative;
-  padding: 32px 18px;
-  text-align: center;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 10% 20%, #47789c 0 2px, transparent 3px),
-    linear-gradient(120deg, #10223d, #194d78, #10223d);
-  border-bottom: 5px solid var(--gold);
-}
-
-header h1 {
-  margin: 0;
-  font-size: clamp(32px, 6vw, 65px);
-  color: var(--gold);
-  text-shadow: 3px 4px 0 #56232a;
-}
-
-header p {
-  margin: 10px auto;
-  max-width: 700px;
-  font-size: 17px;
-  line-height: 1.8;
-}
-
-.badge {
-  display: inline-block;
-  background: var(--red);
-  color: white;
-  padding: 7px 15px;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px;
-  background: rgba(8, 19, 33, .96);
-  border-bottom: 1px solid #31465c;
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+    background:
+        radial-gradient(ellipse at top, #233e65 0%, transparent 55%),
+        var(--bg);
+    color: var(--text);
 }
 
 button {
-  padding: 10px 15px;
-  border: 1px solid #607b94;
-  border-radius: 9px;
-  background: #193650;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
+    font: inherit;
+    cursor: pointer;
 }
 
-button:hover {
-  background: #28577b;
+button:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
 }
 
-button:focus-visible,
-a:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 3px;
+.app {
+    max-width: 1000px;
+    margin: auto;
+    padding: 18px;
 }
 
-.intro {
-  max-width: 1100px;
-  margin: 25px auto;
-  padding: 0 16px;
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
 }
 
-.intro h2 {
-  color: var(--gold);
-  font-size: 26px;
+.logo {
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 1px;
+    font-size: 18px;
 }
 
-.intro p {
-  color: #cbd5e1;
-  line-height: 1.9;
+.sound-btn {
+    background: var(--panel2);
+    color: white;
+    border: 1px solid #3b5278;
+    border-radius: 10px;
+    padding: 9px 12px;
 }
 
-.progress-wrap {
-  position: sticky;
-  top: 58px;
-  z-index: 9;
-  height: 5px;
-  background: #26384b;
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 30px 22px;
+    text-align: center;
+    border: 1px solid #526b91;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #172c4d, #0e172b);
+    box-shadow: 0 15px 50px #0005;
 }
 
-#progress {
-  width: 0;
-  height: 100%;
-  background: var(--gold);
+.hero::before {
+    content: "⚔️";
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    font-size: 70px;
+    opacity: .13;
 }
 
-.timeline {
-  position: relative;
-  max-width: 1250px;
-  margin: auto;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+.hero::after {
+    content: "🏰";
+    position: absolute;
+    left: 20px;
+    bottom: 10px;
+    font-size: 85px;
+    opacity: .13;
 }
 
-.card {
-  position: relative;
-  overflow: hidden;
-  background: var(--paper);
-  color: var(--ink);
-  border-radius: 13px;
-  border: 3px solid #d6a94d;
-  box-shadow: 0 8px 22px #0005;
-  transition: transform .2s, box-shadow .2s;
-  cursor: pointer;
-  scroll-margin-top: 100px;
+.hero-badge {
+    display: inline-block;
+    padding: 7px 13px;
+    background: #533d20;
+    border: 1px solid #97713b;
+    border-radius: 30px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: bold;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 28px #0008;
+h1 {
+    margin: 18px 0 8px;
+    font-size: clamp(31px, 6vw, 54px);
+    line-height: 1.25;
 }
 
-.card.selected {
-  outline: 4px solid #5ec8ff;
+h1 span {
+    color: var(--gold);
 }
 
-.scene-number {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 2;
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--red);
-  color: white;
-  border: 2px solid white;
-  font-weight: bold;
+.hero p {
+    max-width: 600px;
+    margin: 12px auto;
+    line-height: 1.8;
+    color: var(--muted);
 }
 
-.art {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: #dce9e9;
+.primary {
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #ffd166, #f2a93b);
+    color: #241606;
+    font-weight: 900;
+    box-shadow: 0 5px 0 #a96e22;
 }
 
-.art svg {
-  display: block;
-  width: 100%;
-  height: 100%;
+.primary:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #a96e22;
 }
 
-.card-body {
-  padding: 14px 15px 18px;
+.section-title {
+    margin: 28px 0 14px;
+    font-size: 21px;
 }
 
-.card h3 {
-  margin: 0 0 8px;
-  color: #78322d;
-  font-size: 19px;
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
 }
 
-.card .date {
-  display: inline-block;
-  background: #f0d49b;
-  border-radius: 5px;
-  padding: 4px 8px;
-  font-size: 12px;
-  font-weight: bold;
+.level-card {
+    text-align: center;
+    padding: 15px 8px;
+    border-radius: 15px;
+    border: 1px solid #344766;
+    background: var(--panel);
+    min-width: 0;
 }
 
-.card p {
-  margin: 9px 0 0;
-  font-size: 14px;
-  line-height: 1.7;
+.level-card .icon {
+    font-size: 30px;
 }
 
-.keywords {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
+.level-card h3 {
+    font-size: 14px;
+    margin: 8px 0 5px;
 }
 
-.keywords span {
-  padding: 4px 7px;
-  border-radius: 5px;
-  background: #d9e5e6;
-  color: #233b4b;
-  font-size: 11px;
-  font-weight: bold;
+.level-card p {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
 }
 
-.summary {
-  max-width: 1150px;
-  margin: 35px auto;
-  padding: 25px;
-  border: 2px solid var(--gold);
-  border-radius: 15px;
-  background: linear-gradient(135deg, #193650, #10223d);
+.level-card.active {
+    border-color: var(--gold);
+    box-shadow: inset 0 0 0 1px var(--gold);
 }
 
-.summary h2 {
-  color: var(--gold);
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+.stat {
+    text-align: center;
+    padding: 13px 6px;
+    background: var(--panel);
+    border: 1px solid #2b3e5e;
+    border-radius: 13px;
 }
 
-.summary-item {
-  padding: 15px 8px;
-  text-align: center;
-  background: #ffffff10;
-  border-radius: 10px;
+.stat strong {
+    display: block;
+    font-size: 22px;
+    color: var(--gold);
 }
 
-.summary-item strong {
-  display: block;
-  color: var(--gold);
-  font-size: 23px;
-  margin-bottom: 5px;
+.stat small {
+    color: var(--muted);
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+    animation: appear .3s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-panel {
+    margin-top: 18px;
+    padding: 22px;
+    border-radius: 20px;
+    border: 1px solid #354b70;
+    background: var(--panel);
+}
+
+.game-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pill {
+    background: #263a5d;
+    border-radius: 30px;
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+.progress {
+    width: 100%;
+    height: 8px;
+    background: #26344c;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 18px 0;
+}
+
+.progress-fill {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #42d9a2, #ffd166);
+    transition: width .3s;
+}
+
+.question-number {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.question {
+    font-size: clamp(21px, 4vw, 29px);
+    line-height: 1.6;
+    margin: 12px 0 20px;
+}
+
+.visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 125px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    background:
+        radial-gradient(circle, #334c70, #192840);
+    border: 1px solid #405778;
+    font-size: 75px;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    text-align: left;
+    padding: 13px;
+    border: 1px solid #405371;
+    background: var(--panel2);
+    color: white;
+    border-radius: 12px;
+    transition: .2s;
+}
+
+.option:hover:not(:disabled) {
+    border-color: var(--blue);
+    transform: translateY(-2px);
+}
+
+.option .letter {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 33px;
+    height: 33px;
+    background: #344967;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+.option.correct {
+    border-color: var(--green);
+    background: #123b35;
+}
+
+.option.wrong {
+    border-color: var(--red);
+    background: #482432;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.feedback {
+    display: none;
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 12px;
+    line-height: 1.8;
+    background: #20364b;
+    border-left: 4px solid var(--gold);
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback strong {
+    color: var(--gold);
+}
+
+.game-actions {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.secondary {
+    padding: 12px 16px;
+    background: #263954;
+    border: 1px solid #4a6182;
+    border-radius: 10px;
+    color: white;
+}
+
+.secondary:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.result {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+.result-icon {
+    font-size: 80px;
+}
+
+.result h2 {
+    color: var(--gold);
+    font-size: 30px;
+}
+
+.result-score {
+    font-size: 50px;
+    font-weight: 900;
+    color: var(--green);
+    margin: 15px 0;
+}
+
+.result p {
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+.review {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.review-item {
+    padding: 13px;
+    margin: 9px 0;
+    border-radius: 10px;
+    background: #1e2b42;
+    line-height: 1.8;
+}
+
+.review-item strong {
+    color: var(--gold);
 }
 
 footer {
-  padding: 30px 15px;
-  text-align: center;
-  color: #cbd5e1;
-  background: #050c15;
-  line-height: 1.8;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    padding: 25px 10px;
 }
 
-@media (max-width: 850px) {
-  .timeline {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    padding: 12px;
-  }
+@media(max-width: 700px) {
+    .level-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
-  .card h3 {
-    font-size: 16px;
-  }
+    .level-card:last-child {
+        grid-column: 1 / -1;
+    }
 
-  .card p {
-    font-size: 13px;
-  }
+    .options {
+        grid-template-columns: 1fr;
+    }
 
-  .summary-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+    .game-panel {
+        padding: 15px;
+    }
 
-@media (max-width: 480px) {
-  .timeline {
-    grid-template-columns: 1fr;
-    padding: 12px;
-  }
+    .hero::before {
+        right: -5px;
+    }
 
-  .card .art {
-    aspect-ratio: 5 / 3;
-  }
-
-  .card h3 {
-    font-size: 19px;
-  }
-
-  .card p {
-    font-size: 14px;
-  }
-}
-
-@media print {
-  body {
-    background: white;
-    color: black;
-  }
-
-  header {
-    background: white;
-    color: black;
-    border: 2px solid black;
-  }
-
-  header h1,
-  .intro h2,
-  .summary h2 {
-    color: black;
-    text-shadow: none;
-  }
-
-  .toolbar,
-  .progress-wrap {
-    display: none;
-  }
-
-  .timeline {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .card {
-    break-inside: avoid;
-    box-shadow: none;
-  }
-
-  .card p {
-    color: black;
-  }
-
-  .summary {
-    background: white;
-    color: black;
-  }
+    .hero::after {
+        left: -8px;
+    }
 }
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<header>
-  <span class="badge">VISUAL HISTORY • CLASS 8–10</span>
-  <h1>1857 की क्रांति</h1>
-  <p>
-    ईस्ट इंडिया कंपनी के शासन के विरुद्ध विद्रोह की कहानी।
-    50 ऐतिहासिक पड़ावों के माध्यम से समझिए।
-  </p>
-</header>
-
-<div class="toolbar">
-  <button onclick="scrollToTop()">🏠 शुरुआत</button>
-  <button onclick="previousCard()">← पिछला दृश्य</button>
-  <button onclick="nextCard()">अगला दृश्य →</button>
-  <button onclick="window.print()">🖨 Print / PDF</button>
-  <button onclick="toggleFullscreen()">⛶ Full Screen</button>
-</div>
-
-<div class="progress-wrap">
-  <div id="progress"></div>
-</div>
-
-<section class="intro">
-  <h2>चित्रों के माध्यम से पूरी कहानी</h2>
-  <p>
-    हर कार्ड एक घटना या ऐतिहासिक पड़ाव को दर्शाता है।
-    कार्ड पर क्लिक करें और क्रम से पढ़ते जाएँ।
-    नीचे दिए गए चित्र SVG से बनाए गए सांकेतिक चित्र हैं,
-    न कि वास्तविक ऐतिहासिक तस्वीरें।
-  </p>
-</section>
-
-<main>
-  <section class="timeline" id="timeline"></section>
-
-  <section class="summary">
-    <h2>क्रांति को 4 बातों में याद रखें</h2>
-    <div class="summary-grid">
-      <div class="summary-item">
-        <strong>1857</strong>
-        विद्रोह का वर्ष
-      </div>
-      <div class="summary-item">
-        <strong>मेरठ</strong>
-        10 मई को विद्रोह
-      </div>
-      <div class="summary-item">
-        <strong>दिल्ली</strong>
-        बहादुर शाह ज़फ़र
-      </div>
-      <div class="summary-item">
-        <strong>1858</strong>
-        कंपनी शासन का अंत
-      </div>
+    <div class="topbar">
+        <div class="logo">⚔ REVOLUTION 1857</div>
+        <button class="sound-btn" id="soundButton"
+                onclick="toggleSound()">🔇 ध्वनि बंद</button>
     </div>
-  </section>
-</main>
 
-<footer>
-  <strong>Orient Classes | History Visual Learning</strong>
-  <br>
-  शैक्षिक सामग्री। चित्र प्रतीकात्मक हैं; प्रत्येक घटना का विवरण
-  पाठ्यपुस्तक के साथ मिलाकर पढ़ें।
-</footer>
+    <section id="homeScreen" class="screen active">
+
+        <div class="hero">
+            <div class="hero-badge">INDIAN HISTORY • MISSION 1857</div>
+
+            <h1>THE <span>REVOLUTION</span><br>1857</h1>
+
+            <p>
+                इतिहास के पाँच मिशन पूरे करो।
+                कारणों से लेकर परिणामों तक,
+                1857 की क्रांति के महत्वपूर्ण तथ्य सीखो।
+            </p>
+
+            <button class="primary" onclick="startGame()">
+                🚀 मिशन शुरू करें
+            </button>
+        </div>
+
+        <h2 class="section-title">🎯 पाँच कठिन लेवल</h2>
+
+        <div class="level-grid">
+            <div class="level-card active">
+                <div class="icon">🟢</div>
+                <h3>LEVEL 01</h3>
+                <p>ROOKIE<br>मूल तथ्य</p>
+            </div>
+
+            <div class="level-card">
+                <div class="icon">🔵</div>
+                <h3>LEVEL 02</h3>
+                <p>CADET<br>कारण और शुरुआत</p>
+            </div>
+
+            <div class="level-card">
+                <div class="icon">🟠</div>
+                <h3>LEVEL 03</h3>
+                <p>WARRIOR<br>घटनाएँ और नेता</p>
+            </div>
+
+            <div class="level-card">
+                <div class="icon">🔴</div>
+                <h3>LEVEL 04</h3>
+                <p>COMMANDER<br>कठिन तथ्य</p>
+            </div>
+
+            <div class="level-card">
+                <div class="icon">🟣</div>
+                <h3>LEVEL 05</h3>
+                <p>LEGEND<br>इतिहास मास्टर</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <strong>5</strong>
+                <small>लेवल</small>
+            </div>
+
+            <div class="stat">
+                <strong id="totalQuestions">50</strong>
+                <small>कुल प्रश्न</small>
+            </div>
+
+            <div class="stat">
+                <strong>100%</strong>
+                <small>सीखने का लक्ष्य</small>
+            </div>
+        </div>
+    </section>
+
+    <section id="gameScreen" class="screen">
+        <div class="game-panel">
+
+            <div class="game-top">
+                <span class="pill" id="levelLabel">LEVEL 1</span>
+                <span class="pill" id="scoreLabel">⭐ अंक: 0</span>
+                <span class="pill" id="timerLabel">⏱ 30 सेकंड</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="question-number" id="questionNumber">
+                प्रश्न 1 / 10
+            </div>
+
+            <div class="visual" id="visual">🏰</div>
+
+            <h2 class="question" id="questionText"></h2>
+
+            <div class="options" id="options"></div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="game-actions">
+                <button class="secondary" onclick="goHome()">
+                    🏠 मुख्य पेज
+                </button>
+
+                <button class="primary" id="nextButton"
+                        onclick="nextQuestion()" disabled>
+                    अगला प्रश्न ➜
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="resultScreen" class="screen">
+        <div class="game-panel result">
+            <div class="result-icon" id="resultIcon">🏆</div>
+            <h2 id="resultTitle">मिशन पूरा!</h2>
+
+            <div class="result-score" id="resultScore">0/10</div>
+
+            <p id="resultMessage"></p>
+
+            <button class="primary" id="continueButton"
+                    onclick="continueGame()">
+                अगला लेवल ➜
+            </button>
+
+            <button class="secondary" onclick="showReview()">
+                📚 उत्तरों से सीखें
+            </button>
+
+            <div id="review" class="review"></div>
+        </div>
+    </section>
+
+    <footer>
+        REVOLUTION 1857 — HISTORY CHALLENGE<br>
+        शैक्षिक गेम • गलत उत्तरों की व्याख्या पढ़कर दोबारा सीखें
+    </footer>
+
+</div>
 
 <script>
-const events = [
-  ["कंपनी का विस्तार","1757","प्लासी का युद्ध","प्लासी के युद्ध के बाद कंपनी का राजनीतिक प्रभाव बढ़ने लगा।","🏰","कंपनी","विस्तार"],
-  ["बक्सर का युद्ध","1764","कंपनी की शक्ति","बक्सर की विजय ने बंगाल क्षेत्र में कंपनी की स्थिति मजबूत की।","⚔️","युद्ध","शक्ति"],
-  ["दीवानी अधिकार","1765","राजस्व पर नियंत्रण","कंपनी को बंगाल, बिहार और उड़ीसा में राजस्व वसूली का अधिकार मिला।","📜","राजस्व","अधिकार"],
-  ["किसानों पर दबाव","18वीं सदी","लगान और शोषण","कई क्षेत्रों में राजस्व व्यवस्था और आर्थिक नीतियों से असंतोष बढ़ा।","🌾","किसान","लगान"],
-  ["भारतीय शासक","1800 के दशक","राज्यों पर दबाव","कंपनी ने संधियों, युद्धों और राजनीतिक हस्तक्षेप से अपना प्रभाव बढ़ाया।","👑","राज्य","दबाव"],
-  ["सहायक संधि","1798 के बाद","लॉर्ड वेलेजली","सहायक संधियों से अनेक भारतीय राज्यों की स्वतंत्रता सीमित हुई।","🤝","संधि","नियंत्रण"],
-  ["राज्य हड़प नीति","1848–1856","डलहौजी","दत्तक उत्तराधिकारी को मान्यता न देने की नीति से कई राज्य अधिग्रहित किए गए।","📜","नीति","विलय"],
-  ["सतारा का विलय","1848","राज्य अधिग्रहण","सतारा उन राज्यों में था जिन्हें राज्य हड़प नीति के तहत मिला लिया गया।","🏯","सतारा","1848"],
-  ["झाँसी का विलय","1854","रानी लक्ष्मीबाई","झाँसी के विलय ने रानी लक्ष्मीबाई और उनके समर्थकों में गहरा असंतोष पैदा किया।","👸","झाँसी","विलय"],
-  ["अवध का विलय","1856","लखनऊ","कंपनी ने कुशासन का आरोप लगाकर अवध को अपने अधीन कर लिया।","🏰","अवध","1856"],
-  ["मुगल सत्ता का क्षय","19वीं सदी","दिल्ली का दरबार","मुगल सम्राट का राजनीतिक प्रभाव सीमित था, लेकिन उनका प्रतीकात्मक महत्व बना रहा।","👑","दिल्ली","मुगल"],
-  ["कारीगरों की मुश्किलें","19वीं सदी","पारंपरिक उद्योग","औपनिवेशिक आर्थिक बदलावों ने अनेक कारीगरों और उत्पादकों को प्रभावित किया।","🧵","कारीगर","अर्थव्यवस्था"],
-  ["सैनिक असंतोष","1850 का दशक","भेदभाव","भारतीय सैनिक वेतन, पदोन्नति और सेवा शर्तों को लेकर असंतुष्ट थे।","🪖","सिपाही","असंतोष"],
-  ["विदेश सेवा का डर","1856","सैनिक नियम","विदेश में सेवा से जुड़े नियमों ने कुछ सैनिकों की धार्मिक और सामाजिक चिंताएँ बढ़ाईं।","🚢","सेवा","चिंता"],
-  ["धार्मिक आशंकाएँ","1850 का दशक","सामाजिक बदलाव","कुछ भारतीयों को डर था कि अंग्रेज उनकी धार्मिक और सामाजिक परंपराओं में हस्तक्षेप कर रहे हैं।","🛕","आस्था","आशंका"],
-  ["नई एनफील्ड राइफल","1856–1857","कारतूस विवाद","नई राइफल के कारतूसों को काटकर खोलने की प्रक्रिया से विवाद पैदा हुआ।","🔫","राइफल","कारतूस"],
-  ["कारतूसों की अफवाह","1857","गाय और सूअर की चर्बी","कारतूसों में गाय और सूअर की चर्बी होने की खबर ने हिंदू और मुस्लिम सैनिकों में आक्रोश बढ़ाया।","⚠️","कारतूस","विवाद"],
-  ["बैरकपुर","मार्च 1857","सैनिक तनाव","बैरकपुर में कारतूस विवाद और सैन्य असंतोष खुलकर सामने आया।","🏕️","बैरकपुर","1857"],
-  ["मंगल पांडे","29 मार्च 1857","बैरकपुर की घटना","मंगल पांडे ने बैरकपुर में अंग्रेज अधिकारियों के विरुद्ध कार्रवाई की।","🪖","मंगल पांडे","बैरकपुर"],
-  ["मंगल पांडे को फाँसी","8 अप्रैल 1857","दमन","मंगल पांडे को फाँसी दी गई। घटना सैनिक असंतोष के इतिहास में महत्वपूर्ण बनी।","📜","दमन","बैरकपुर"],
-  ["मेरठ के सैनिक","अप्रैल 1857","कारतूस से इनकार","मेरठ में कई सैनिकों ने विवादित कारतूसों का इस्तेमाल करने से इनकार किया।","🪖","मेरठ","सैनिक"],
-  ["सैनिकों को सजा","9 मई 1857","85 सैनिक","कारतूस इस्तेमाल करने से इनकार करने वाले 85 सैनिकों को कठोर सजा दी गई।","⛓️","सजा","आक्रोश"],
-  ["मेरठ का विद्रोह","10 मई 1857","विद्रोह शुरू","मेरठ में भारतीय सैनिकों ने विद्रोह किया और बंदी सैनिकों को मुक्त कराया।","🔥","मेरठ","10 मई"],
-  ["दिल्ली की ओर कूच","मई 1857","विद्रोही सैनिक","विद्रोही सैनिक मेरठ से दिल्ली की ओर बढ़े।","🐎","दिल्ली","कूच"],
-  ["दिल्ली पहुँचना","11 मई 1857","विद्रोह का विस्तार","विद्रोही दिल्ली पहुँचे और वहाँ कंपनी के शासन को चुनौती दी।","🏰","दिल्ली","विद्रोह"],
-  ["बहादुर शाह ज़फ़र","मई 1857","प्रतीकात्मक नेतृत्व","विद्रोहियों ने मुगल सम्राट बहादुर शाह ज़फ़र को अपना प्रतीकात्मक नेता स्वीकार किया।","👑","ज़फ़र","नेतृत्व"],
-  ["विद्रोह का संदेश","1857","अन्य क्षेत्रों में खबर","सैनिकों, स्थानीय नेताओं और संदेशों के माध्यम से विद्रोह की खबर कई क्षेत्रों में पहुँची।","📯","संदेश","फैलाव"],
-  ["कानपुर","जून 1857","नाना साहेब","कानपुर में नाना साहेब विद्रोह के प्रमुख नेताओं में शामिल हुए।","⚔️","कानपुर","नाना साहेब"],
-  ["लखनऊ","1857","बेगम हज़रत महल","अवध में बेगम हज़रत महल ने अंग्रेजी सत्ता के विरुद्ध संघर्ष का नेतृत्व किया।","🏰","लखनऊ","अवध"],
-  ["झाँसी","1857–1858","रानी लक्ष्मीबाई","रानी लक्ष्मीबाई ने झाँसी की रक्षा और अंग्रेजी सेना के विरुद्ध संघर्ष किया।","🐎","झाँसी","लक्ष्मीबाई"],
-  ["बिहार","1857","कुँवर सिंह","जगदीशपुर के ज़मींदार और नेता कुँवर सिंह ने बिहार में विद्रोह का नेतृत्व किया।","⚔️","बिहार","कुँवर सिंह"],
-  ["बरेली","1857","खान बहादुर खान","बरेली में खान बहादुर खान विद्रोह के प्रमुख नेताओं में थे।","🛡️","बरेली","नेतृत्व"],
-  ["फैजाबाद","1857","मौलवी अहमदुल्लाह शाह","मौलवी अहमदुल्लाह शाह अवध क्षेत्र के प्रमुख विद्रोही नेताओं में शामिल थे।","📣","अवध","नेतृत्व"],
-  ["इलाहाबाद क्षेत्र","1857","स्थानीय विद्रोह","उत्तर भारत के अनेक नगरों और ग्रामीण क्षेत्रों में विद्रोह तथा प्रतिरोध हुआ।","🏘️","स्थानीय","प्रतिरोध"],
-  ["ग्रामीण भागीदारी","1857","किसान और जमींदार","कई स्थानों पर किसान, जमींदार और स्थानीय समुदाय विद्रोह में शामिल हुए।","🌾","ग्रामीण","भागीदारी"],
-  ["दिल्ली की घेराबंदी","1857","ब्रिटिश जवाबी कार्रवाई","अंग्रेजी सेना ने दिल्ली को फिर से अपने नियंत्रण में लेने के लिए सैन्य अभियान चलाया।","🛡️","दिल्ली","घेराबंदी"],
-  ["दिल्ली पर पुनः कब्जा","सितंबर 1857","विद्रोह को झटका","अंग्रेजी सेना ने सितंबर 1857 में दिल्ली पर फिर कब्जा कर लिया।","🏰","दिल्ली","सितंबर"],
-  ["बहादुर शाह ज़फ़र की गिरफ्तारी","1857","मुगल सत्ता का अंत","बहादुर शाह ज़फ़र को गिरफ्तार कर बाद में रंगून निर्वासित कर दिया गया।","👑","गिरफ्तारी","निर्वासन"],
-  ["लखनऊ का संघर्ष","1857–1858","अवध में लड़ाई","लखनऊ और अवध में अंग्रेजी सेना तथा विद्रोहियों के बीच संघर्ष जारी रहा।","⚔️","लखनऊ","संघर्ष"],
-  ["कानपुर की लड़ाई","1857","सैन्य संघर्ष","कानपुर में विद्रोहियों और अंग्रेजी सेना के बीच कई महत्वपूर्ण सैन्य घटनाएँ हुईं।","🛡️","कानपुर","युद्ध"],
-  ["रानी लक्ष्मीबाई का संघर्ष","1858","झाँसी की रक्षा","रानी लक्ष्मीबाई ने झाँसी की रक्षा की और बाद में ग्वालियर क्षेत्र में भी संघर्ष किया।","🐎","झाँसी","वीरता"],
-  ["ग्वालियर","जून 1858","अंतिम प्रमुख संघर्ष","ग्वालियर क्षेत्र में लड़ाई के दौरान रानी लक्ष्मीबाई की मृत्यु हुई।","🏯","ग्वालियर","1858"],
-  ["कुँवर सिंह का अंतिम चरण","1858","बिहार का प्रतिरोध","कुँवर सिंह ने वृद्धावस्था में भी अंग्रेजों के विरुद्ध अभियान चलाया।","⚔️","बिहार","प्रतिरोध"],
-  ["विद्रोह दबाया गया","1858","कंपनी की सैन्य विजय","अंग्रेजी सेना ने प्रमुख विद्रोही केंद्रों पर फिर नियंत्रण स्थापित कर लिया।","🛡️","1858","दमन"],
-  ["कंपनी शासन का अंत","1858","शासन परिवर्तन","भारत शासन अधिनियम 1858 के बाद भारत का शासन ईस्ट इंडिया कंपनी से ब्रिटिश क्राउन के हाथों में चला गया।","📜","अधिनियम","1858"],
-  ["ब्रिटिश क्राउन का शासन","1858 के बाद","नया प्रशासन","भारत का प्रशासन ब्रिटिश सरकार के अधीन हुआ और वायसराय की व्यवस्था स्थापित हुई।","👑","क्राउन","शासन"],
-  ["सेना का पुनर्गठन","1858 के बाद","नई सैन्य नीति","ब्रिटिश सरकार ने भारतीय सेना की संरचना और भर्ती नीति में बदलाव किए।","🪖","सेना","बदलाव"],
-  ["रियासतों के प्रति नीति","1858 के बाद","राज्यों को आश्वासन","ब्रिटिश सरकार ने भारतीय रियासतों के प्रति अपनी नीति में बदलाव और आश्वासन दिए।","🤝","रियासत","नीति"],
-  ["ऐतिहासिक महत्व","19वीं सदी के बाद","प्रतिरोध की विरासत","1857 का विद्रोह औपनिवेशिक शासन के विरुद्ध बड़े प्रतिरोध के रूप में याद किया जाता है।","📚","इतिहास","विरासत"],
-  ["1857 की याद","आज","इतिहास से सीख","इस विद्रोह में सैनिकों, शासकों और विभिन्न समुदायों की भागीदारी अलग-अलग क्षेत्रों में भिन्न थी।","🇮🇳","स्मृति","इतिहास"]
+/*
+हर प्रश्न का प्रारूप:
+[प्रश्न, विकल्पों की सूची, सही विकल्प का इंडेक्स,
+व्याख्या, चित्र/इमोजी]
+*/
+
+const levels = [
+{
+    name: "ROOKIE",
+    time: 30,
+    questions: [
+        ["1857 का विद्रोह किस वर्ष शुरू हुआ?",
+         ["1757", "1857", "1885", "1942"], 1,
+         "1857 में कंपनी शासन के विरुद्ध व्यापक विद्रोह हुआ।", "📅"],
+
+        ["10 मई 1857 को विद्रोह कहाँ शुरू हुआ?",
+         ["दिल्ली", "झाँसी", "मेरठ", "लखनऊ"], 2,
+         "10 मई 1857 को मेरठ में सैनिक विद्रोह हुआ।", "🔥"],
+
+        ["बैरकपुर की घटना किस सैनिक से जुड़ी है?",
+         ["कुँवर सिंह", "मंगल पांडे", "नाना साहेब", "तात्या टोपे"], 1,
+         "मंगल पांडे बैरकपुर में अंग्रेज अधिकारियों के विरुद्ध कार्रवाई के लिए प्रसिद्ध हैं।", "🪖"],
+
+        ["विद्रोहियों ने किस मुगल सम्राट को नेता स्वीकार किया?",
+         ["अकबर द्वितीय", "शाह आलम द्वितीय", "बहादुर शाह ज़फ़र", "औरंगज़ेब"], 2,
+         "बहादुर शाह ज़फ़र को विद्रोहियों ने प्रतीकात्मक नेतृत्व के लिए स्वीकार किया।", "👑"],
+
+        ["झाँसी की प्रसिद्ध वीरांगना कौन थीं?",
+         ["बेगम हज़रत महल", "रानी दुर्गावती", "रानी लक्ष्मीबाई", "अहिल्याबाई"], 2,
+         "रानी लक्ष्मीबाई ने झाँसी और ग्वालियर क्षेत्र में संघर्ष किया।", "🐎"],
+
+        ["बिहार में 1857 के प्रमुख नेता कौन थे?",
+         ["कुँवर सिंह", "गोपाल कृष्ण गोखले", "दादाभाई नौरोजी", "सुभाष बोस"], 0,
+         "कुँवर सिंह ने बिहार के जगदीशपुर क्षेत्र में विद्रोह का नेतृत्व किया।", "⚔️"],
+
+        ["1857 के विद्रोह में कारतूस विवाद किस राइफल से जुड़ा था?",
+         ["एनफील्ड राइफल", "AK-47", "ली-एनफील्ड 1907", "मस्कट 1940"], 0,
+         "नई एनफील्ड राइफल के कारतूसों को लेकर धार्मिक आपत्तियाँ और आक्रोश बढ़ा।", "🔫"],
+
+        ["कानपुर के विद्रोह से कौन प्रमुख रूप से जुड़ा था?",
+         ["नाना साहेब", "रवींद्रनाथ टैगोर", "सरदार पटेल", "गोपाल कृष्ण गोखले"], 0,
+         "नाना साहेब कानपुर में विद्रोह के प्रमुख नेताओं में थे।", "🏰"],
+
+        ["लखनऊ में विद्रोह से जुड़ी प्रमुख महिला नेता कौन थीं?",
+         ["बेगम हज़रत महल", "सरोजिनी नायडू", "एनी बेसेंट", "कस्तूरबा गांधी"], 0,
+         "बेगम हज़रत महल ने अवध क्षेत्र में अंग्रेजी सत्ता का विरोध किया।", "👸"],
+
+        ["1857 के विद्रोह के बाद कंपनी शासन का अंत किस वर्ष हुआ?",
+         ["1757", "1858", "1885", "1905"], 1,
+         "भारत शासन अधिनियम 1858 के बाद शासन ब्रिटिश क्राउन के हाथों में चला गया।", "📜"]
+    ]
+},
+{
+    name: "CADET",
+    time: 25,
+    questions: [
+        ["प्लासी का युद्ध किस वर्ष हुआ?",
+         ["1757", "1764", "1857", "1858"], 0,
+         "1757 की प्लासी विजय ने बंगाल में कंपनी के राजनीतिक प्रभाव की नींव मजबूत की।", "⚔️"],
+
+        ["बक्सर का युद्ध किस वर्ष हुआ?",
+         ["1757", "1764", "1773", "1857"], 1,
+         "1764 के बक्सर युद्ध में कंपनी की विजय ने उसकी शक्ति बढ़ाई।", "🏰"],
+
+        ["कंपनी को बंगाल, बिहार और उड़ीसा की दीवानी कब मिली?",
+         ["1757", "1765", "1793", "1858"], 1,
+         "1765 में मुगल सम्राट शाह आलम द्वितीय ने कंपनी को दीवानी अधिकार दिए।", "📜"],
+
+        ["राज्य हड़प नीति किस गवर्नर-जनरल से जुड़ी है?",
+         ["लॉर्ड डलहौजी", "लॉर्ड रिपन", "लॉर्ड कर्जन", "लॉर्ड माउंटबेटन"], 0,
+         "डलहौजी के शासनकाल में राज्य हड़प नीति से कई राज्यों का विलय हुआ।", "👑"],
+
+        ["अवध का विलय किस वर्ष हुआ?",
+         ["1848", "1854", "1856", "1858"], 2,
+         "1856 में अंग्रेजों ने कुशासन का आरोप लगाकर अवध का विलय किया।", "🏯"],
+
+        ["1857 में सैनिकों के असंतोष का तात्कालिक कारण क्या बना?",
+         ["रेलवे", "कारतूस विवाद", "डाक व्यवस्था", "टेलीफोन"], 1,
+         "कारतूसों में गाय और सूअर की चर्बी होने की खबर से असंतोष बढ़ा।", "🔫"],
+
+        ["मंगल पांडे की घटना कहाँ हुई?",
+         ["मेरठ", "बैरकपुर", "कानपुर", "झाँसी"], 1,
+         "बैरकपुर में 29 मार्च 1857 को मंगल पांडे की घटना हुई।", "🪖"],
+
+        ["मेरठ के 85 सैनिकों को सजा कब दी गई?",
+         ["9 मई 1857", "10 मई 1857", "11 मई 1857", "29 मार्च 1857"], 0,
+         "9 मई को सैनिकों को कठोर सजा दिए जाने के बाद अगले दिन मेरठ में विद्रोह भड़क उठा।", "⛓️"],
+
+        ["विद्रोही सैनिक मेरठ से किस शहर की ओर बढ़े?",
+         ["कलकत्ता", "मुंबई", "दिल्ली", "मद्रास"], 2,
+         "विद्रोही सैनिक 11 मई 1857 को दिल्ली पहुँचे।", "🐎"],
+
+        ["1858 में भारत का शासन किसके अधीन गया?",
+         ["ईस्ट इंडिया कंपनी", "ब्रिटिश क्राउन", "फ्रांसीसी कंपनी", "डच कंपनी"], 1,
+         "1858 के शासन परिवर्तन से कंपनी का शासन समाप्त हुआ।", "👑"]
+    ]
+},
+{
+    name: "WARRIOR",
+    time: 22,
+    questions: [
+        ["मंगल पांडे को किस तारीख को फाँसी दी गई?",
+         ["29 मार्च 1857", "8 अप्रैल 1857", "10 मई 1857", "11 मई 1857"], 1,
+         "मंगल पांडे को 8 अप्रैल 1857 को फाँसी दी गई।", "📅"],
+
+        ["बहादुर शाह ज़फ़र को अंततः कहाँ निर्वासित किया गया?",
+         ["लंदन", "रंगून", "काबुल", "काठमांडू"], 1,
+         "बहादुर शाह ज़फ़र को रंगून, वर्तमान यांगून, निर्वासित किया गया।", "🚢"],
+
+        ["कुँवर सिंह का मुख्य केंद्र कहाँ था?",
+         ["जगदीशपुर", "झाँसी", "बरेली", "मेरठ"], 0,
+         "जगदीशपुर बिहार में कुँवर सिंह के संघर्ष का प्रमुख केंद्र था।", "🏰"],
+
+        ["बेगम हज़रत महल किस क्षेत्र से जुड़ी थीं?",
+         ["अवध", "पंजाब", "मैसूर", "राजस्थान"], 0,
+         "बेगम हज़रत महल ने अवध में विद्रोह का नेतृत्व किया।", "👸"],
+
+        ["खान बहादुर खान किस शहर में प्रमुख नेता थे?",
+         ["बरेली", "दिल्ली", "झाँसी", "पटना"], 0,
+         "खान बहादुर खान बरेली में विद्रोह से जुड़े प्रमुख नेता थे।", "⚔️"],
+
+        ["मौलवी अहमदुल्लाह शाह किस क्षेत्र में सक्रिय थे?",
+         ["अवध", "केरल", "असम", "सिंध"], 0,
+         "मौलवी अहमदुल्लाह शाह अवध क्षेत्र के प्रमुख विद्रोही नेताओं में थे।", "📣"],
+
+        ["दिल्ली पर अंग्रेजों ने फिर कब कब्जा किया?",
+         ["मई 1857", "सितंबर 1857", "जनवरी 1858", "जून 1858"], 1,
+         "सितंबर 1857 में अंग्रेजों ने दिल्ली पर फिर कब्जा कर लिया।", "🏰"],
+
+        ["रानी लक्ष्मीबाई की मृत्यु किस वर्ष हुई?",
+         ["1857", "1858", "1859", "1862"], 1,
+         "रानी लक्ष्मीबाई की मृत्यु जून 1858 में ग्वालियर के निकट संघर्ष के दौरान हुई।", "🐎"],
+
+        ["1857 के विद्रोह में कौन-सा केंद्र प्रमुख था?",
+         ["कानपुर", "टोक्यो", "रोम", "लिस्बन"], 0,
+         "कानपुर विद्रोह के महत्वपूर्ण केंद्रों में से एक था।", "🔥"],
+
+        ["विद्रोह के फैलाव की कौन-सी विशेषता सही है?",
+         ["सभी क्षेत्रों में समान भागीदारी थी", "केवल दक्षिण भारत में हुआ", "भागीदारी क्षेत्र के अनुसार अलग थी", "कोई सैनिक शामिल नहीं था"], 2,
+         "विद्रोह की तीव्रता और भागीदारी विभिन्न क्षेत्रों में अलग-अलग थी।", "🗺️"]
+    ]
+},
+{
+    name: "COMMANDER",
+    time: 18,
+    questions: [
+        ["किस अधिनियम ने कंपनी से ब्रिटिश क्राउन को शासन हस्तांतरित किया?",
+         ["रेगुलेटिंग एक्ट 1773", "चार्टर एक्ट 1833", "भारत शासन अधिनियम 1858", "भारतीय परिषद अधिनियम 1909"], 2,
+         "भारत शासन अधिनियम 1858 ने कंपनी शासन समाप्त किया।", "📜"],
+
+        ["डलहौजी की राज्य हड़प नीति में मुख्य विवाद क्या था?",
+         ["रेलवे का निर्माण", "दत्तक उत्तराधिकारी को मान्यता न देना", "नमक कर", "मुद्रा परिवर्तन"], 1,
+         "कुछ रियासतों के दत्तक उत्तराधिकारियों को मान्यता न देने से विलय हुए।", "👑"],
+
+        ["कारतूसों को खोलने के लिए सैनिकों को क्या करना पड़ता था?",
+         ["उन्हें पानी में डालना", "दाँत से काटना", "आग में रखना", "दो हिस्सों में तोड़ना"], 1,
+         "कारतूस को दाँत से काटने की प्रक्रिया ने धार्मिक आपत्तियों को बढ़ाया।", "🔫"],
+
+        ["1857 में अवध के विलय से किस वर्ग में विशेष असंतोष था?",
+         ["केवल विदेशी व्यापारियों में", "दरबार, ताल्लुकेदारों और अन्य समूहों में", "केवल यूरोपीय सैनिकों में", "केवल समुद्री व्यापारियों में"], 1,
+         "अवध के विलय से शासक वर्ग, दरबारी, ताल्लुकेदार और अन्य समूह प्रभावित हुए।", "🏯"],
+
+        ["कंपनी के शासन का अंत किस घटना का परिणाम था?",
+         ["प्लासी का युद्ध", "1857 के विद्रोह के बाद शासन परिवर्तन", "स्वेज नहर", "प्रथम विश्व युद्ध"], 1,
+         "विद्रोह के बाद 1858 में शासन सीधे ब्रिटिश क्राउन के अधीन कर दिया गया।", "📜"],
+
+        ["नाना साहेब का संबंध किस पेशवा से था?",
+         ["बाजीराव द्वितीय", "बालाजी विश्वनाथ", "माधवराव प्रथम", "बाजीराव प्रथम"], 0,
+         "नाना साहेब, पेशवा बाजीराव द्वितीय के दत्तक पुत्र थे।", "👑"],
+
+        ["तात्या टोपे किससे निकटता से जुड़े थे?",
+         ["नाना साहेब", "लॉर्ड डलहौजी", "रॉबर्ट क्लाइव", "लॉर्ड कर्जन"], 0,
+         "तात्या टोपे नाना साहेब के सहयोगी और प्रमुख सैन्य नेताओं में थे।", "⚔️"],
+
+        ["विद्रोहियों के लिए बहादुर शाह ज़फ़र का महत्व क्या था?",
+         ["ब्रिटिश गवर्नर थे", "मुगल सम्राट और प्रतीकात्मक नेता थे", "फ्रांसीसी सेनापति थे", "पुर्तगाली शासक थे"], 1,
+         "उनका नाम विद्रोह को व्यापक राजनीतिक वैधता और प्रतीकात्मक एकता देता था।", "👑"],
+
+        ["1857 के विद्रोह की एक प्रमुख सीमा क्या थी?",
+         ["कहीं कोई लड़ाई नहीं हुई", "सभी भारतीय शासक एकजुट नहीं हुए", "कंपनी के पास सेना नहीं थी", "विद्रोह केवल समुद्र में हुआ"], 1,
+         "विद्रोह पूरे भारत में समान रूप से नहीं फैला और सभी शासक इसमें शामिल नहीं हुए।", "🗺️"],
+
+        ["ब्रिटिश सरकार ने 1858 के बाद सेना के साथ क्या किया?",
+         ["सेना समाप्त कर दी", "सेना की संरचना और भर्ती नीति बदली", "सभी सैनिकों को घर भेज दिया", "किसी तरह का बदलाव नहीं किया"], 1,
+         "1857 के बाद ब्रिटिश सरकार ने सैन्य संरचना और भर्ती में बदलाव किए।", "🪖"]
+    ]
+},
+{
+    name: "LEGEND",
+    time: 15,
+    questions: [
+        ["इन घटनाओं का सही क्रम कौन-सा है?",
+         ["मेरठ विद्रोह → बैरकपुर घटना → दिल्ली", "बैरकपुर घटना → मेरठ विद्रोह → दिल्ली", "दिल्ली → मेरठ → बैरकपुर", "दिल्ली → बैरकपुर → मेरठ"], 1,
+         "29 मार्च की बैरकपुर घटना के बाद 10 मई को मेरठ विद्रोह हुआ और 11 मई को विद्रोही दिल्ली पहुँचे।", "⏳"],
+
+        ["1857 के विद्रोह का तात्कालिक सैन्य कारण कौन-सा था?",
+         ["रेलवे का विस्तार", "विवादित कारतूस", "डाक टिकट", "विश्व युद्ध"], 1,
+         "कारतूस विवाद तात्कालिक कारण था; इसके पीछे राजनीतिक, आर्थिक और सैन्य असंतोष भी था।", "🔫"],
+
+        ["1857 के विद्रोह के आर्थिक कारणों में क्या शामिल था?",
+         ["केवल करों में कमी", "राजस्व दबाव और आर्थिक शोषण", "सभी किसानों को जमीन देना", "व्यापार पर कोई नियंत्रण नहीं"], 1,
+         "औपनिवेशिक राजस्व नीतियाँ और आर्थिक बदलाव विभिन्न समूहों के असंतोष के कारण बने।", "🌾"],
+
+        ["1857 के विद्रोह को केवल सैनिक विद्रोह कहना क्यों अधूरा है?",
+         ["क्योंकि कोई सैनिक नहीं था", "कई क्षेत्रों में स्थानीय शासक, किसान और अन्य समूह भी शामिल हुए", "क्योंकि कोई लड़ाई नहीं हुई", "क्योंकि यह विदेश में हुआ"], 1,
+         "कई क्षेत्रों में विद्रोह का सामाजिक आधार सैनिकों से आगे बढ़ा, हालाँकि भागीदारी एकसमान नहीं थी।", "🗺️"],
+
+        ["कंपनी शासन समाप्त होने के बाद भारत का प्रशासन किसके अधीन आया?",
+         ["डच सरकार", "ब्रिटिश क्राउन", "फ्रांसीसी क्राउन", "मुगल दरबार"], 1,
+         "1858 के अधिनियम ने शासन ब्रिटिश क्राउन को हस्तांतरित किया।", "👑"],
+
+        ["1857 के विद्रोह का कौन-सा परिणाम सही है?",
+         ["ईस्ट इंडिया कंपनी का शासन समाप्त हुआ", "भारत तुरंत स्वतंत्र हुआ", "मुगल साम्राज्य फिर पूरी तरह स्थापित हुआ", "ब्रिटिश शासन उसी दिन पूरी तरह समाप्त हो गया"], 0,
+         "विद्रोह दबा दिया गया, लेकिन उसके बाद कंपनी शासन समाप्त हुआ; भारत स्वतंत्र नहीं हुआ।", "📜"],
+
+        ["अवध के विलय का आधिकारिक ब्रिटिश औचित्य क्या बताया गया?",
+         ["रेलवे की कमी", "कुशासन", "समुद्री तूफान", "यूरोप में युद्ध"], 1,
+         "ब्रिटिश अधिकारियों ने 1856 में अवध के विलय के लिए कुशासन का तर्क दिया।", "🏯"],
+
+        ["1857 के विद्रोह की भौगोलिक सीमा के बारे में सही कथन कौन-सा है?",
+         ["यह हर क्षेत्र में समान रूप से फैला", "मुख्य संघर्ष अनेक उत्तर और मध्य भारतीय केंद्रों में हुआ", "यह केवल बंगाल की राजधानी में हुआ", "यह केवल समुद्री बंदरगाहों पर हुआ"], 1,
+         "विद्रोह के मुख्य केंद्र उत्तर और मध्य भारत के कई क्षेत्रों में थे; अनेक अन्य क्षेत्र इससे अलग रहे।", "🗺️"],
+
+        ["बहादुर शाह ज़फ़र के साथ विद्रोह के बाद क्या हुआ?",
+         ["वे भारत के स्वतंत्र राष्ट्राध्यक्ष बने", "उन्हें गिरफ्तार कर रंगून निर्वासित किया गया", "वे ब्रिटिश संसद के सदस्य बने", "वे पेशवा बन गए"], 1,
+         "दिल्ली पर कब्जे के बाद उन्हें गिरफ्तार किया गया और रंगून भेज दिया गया।", "👑"],
+
+        ["इतिहासकार 1857 के विद्रोह को अलग-अलग नामों से क्यों देखते हैं?",
+         ["क्योंकि घटना हुई ही नहीं", "क्योंकि इसके स्वरूप, क्षेत्रीय भागीदारी और उद्देश्यों की व्याख्या अलग है", "क्योंकि कोई दस्तावेज नहीं है", "क्योंकि सभी इतिहासकार एक ही शब्द इस्तेमाल करते हैं"], 1,
+         "इसे सैनिक विद्रोह, व्यापक विद्रोह और प्रथम स्वतंत्रता संग्राम जैसे नाम दिए गए हैं; नामकरण इतिहासलेखन की व्याख्याओं से जुड़ा है।", "📚"]
+    ]
+}
 ];
 
-const palette = [
-  ["#8fc9e8","#dfb27c","#a54d38"],
-  ["#c5d9d5","#d3aa74","#426b58"],
-  ["#f2cf8d","#b56d4b","#5d3b32"],
-  ["#b6d7ee","#d5c2a1","#596b85"],
-  ["#d9e4bb","#c69a63","#8d4135"]
-];
+let levelIndex = 0;
+let questionIndex = 0;
+let score = 0;
+let levelScore = 0;
+let answers = [];
+let timer = null;
+let timeLeft = 0;
+let soundOn = false;
+let answered = false;
 
-function makeArt(event, index) {
-  const colors = palette[index % palette.length];
-  const sky = colors[0];
-  const earth = colors[1];
-  const building = colors[2];
+const $ = id => document.getElementById(id);
 
-  const icon = event[4];
+function showScreen(id) {
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
 
-  return `
-  <svg viewBox="0 0 400 300"
-       xmlns="http://www.w3.org/2000/svg"
-       role="img"
-       aria-label="${event[0]} का सांकेतिक चित्र">
-
-    <defs>
-      <linearGradient id="sky${index}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="${sky}"/>
-        <stop offset="100%" stop-color="#fff0c9"/>
-      </linearGradient>
-    </defs>
-
-    <rect width="400" height="300" fill="url(#sky${index})"/>
-
-    <circle cx="325" cy="45" r="25" fill="#ffe6a0"/>
-
-    <path d="M0 190 L75 115 L140 190 L220 100 L310 190 L370 125 L400 170 L400 300 L0 300Z"
-          fill="#75936b" opacity=".65"/>
-
-    <rect x="0" y="215" width="400" height="85" fill="${earth}"/>
-
-    <g fill="${building}" stroke="#603d35" stroke-width="3">
-      <rect x="35" y="120" width="125" height="95"/>
-      <path d="M25 120 L98 65 L170 120 Z"/>
-      <rect x="70" y="155" width="28" height="60" fill="#573a31"/>
-      <rect x="110" y="140" width="22" height="22" fill="#ffe6a0"/>
-    </g>
-
-    <g transform="translate(235 90)">
-      <circle cx="35" cy="30" r="23" fill="#b8794f" stroke="#593b2b" stroke-width="3"/>
-      <path d="M12 25 Q35 -5 58 25 L52 12 L20 12Z" fill="#823c2d"/>
-      <path d="M9 57 Q35 45 61 57 L73 125 L-3 125Z"
-            fill="${index % 2 ? '#b64238' : '#344e70'}"
-            stroke="#4a342d" stroke-width="3"/>
-      <path d="M8 65 L-10 110 M59 65 L80 100"
-            stroke="#b8794f" stroke-width="13" stroke-linecap="round"/>
-      <path d="M15 125 L10 170 M48 125 L55 170"
-            stroke="#43372f" stroke-width="16" stroke-linecap="round"/>
-    </g>
-
-    <g transform="translate(195 30)">
-      <rect x="0" y="0" width="5" height="105" fill="#59453b"/>
-      <path d="M5 0 L68 15 L5 33Z" fill="#b83b32"/>
-    </g>
-
-    <rect x="12" y="12" width="42" height="42" rx="10"
-          fill="#10223d" stroke="#f6c453" stroke-width="3"/>
-
-    <text x="33" y="40" font-size="22" text-anchor="middle"
-          fill="#ffffff" font-weight="bold">${index + 1}</text>
-
-    <rect x="15" y="235" width="370" height="50" rx="8"
-          fill="#10223d" opacity=".92"/>
-
-    <text x="200" y="268" font-size="22"
-          text-anchor="middle" fill="#ffe0a0">${icon}</text>
-
-  </svg>`;
+    $(id).classList.add("active");
+    window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-const timeline = document.getElementById("timeline");
+function startGame() {
+    levelIndex = 0;
+    score = 0;
+    answers = [];
+    startLevel();
+}
 
-events.forEach((event, index) => {
-  const card = document.createElement("article");
+function startLevel() {
+    questionIndex = 0;
+    levelScore = 0;
+    showScreen("gameScreen");
+    loadQuestion();
+}
 
-  card.className = "card";
-  card.id = "scene-" + index;
-  card.tabIndex = 0;
+function stopTimer() {
+    clearInterval(timer);
+    timer = null;
+}
 
-  card.innerHTML = `
-    <span class="scene-number">${index + 1}</span>
+function loadQuestion() {
+    stopTimer();
 
-    <div class="art">
-      ${makeArt(event, index)}
-    </div>
+    answered = false;
 
-    <div class="card-body">
-      <span class="date">${event[1]}</span>
-      <h3>${event[0]}</h3>
-      <p>${event[3]}</p>
+    const level = levels[levelIndex];
+    const q = level.questions[questionIndex];
 
-      <div class="keywords">
-        <span>${event[5]}</span>
-        <span>${event[6]}</span>
-      </div>
-    </div>
-  `;
+    $("levelLabel").textContent =
+        `LEVEL ${levelIndex + 1} • ${level.name}`;
 
-  card.addEventListener("click", () => selectCard(index));
+    $("scoreLabel").textContent = `⭐ अंक: ${score}`;
 
-  card.addEventListener("keydown", e => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      selectCard(index);
+    $("questionNumber").textContent =
+        `प्रश्न ${questionIndex + 1} / ${level.questions.length}`;
+
+    $("questionText").textContent = q[0];
+    $("visual").textContent = q[4];
+
+    $("progressFill").style.width =
+        `${(questionIndex / level.questions.length) * 100}%`;
+
+    $("feedback").className = "feedback";
+    $("feedback").innerHTML = "";
+
+    $("nextButton").disabled = true;
+    $("nextButton").textContent =
+        questionIndex === level.questions.length - 1
+        ? "लेवल का परिणाम ➜"
+        : "अगला प्रश्न ➜";
+
+    const options = $("options");
+    options.innerHTML = "";
+
+    q[1].forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+
+        button.innerHTML = `
+            <span class="letter">${String.fromCharCode(65 + index)}</span>
+            <span></span>
+        `;
+
+        button.querySelector("span:last-child").textContent = option;
+
+        button.addEventListener("click", () => chooseAnswer(index));
+
+        options.appendChild(button);
+    });
+
+    timeLeft = level.time;
+    updateTimer();
+    timer = setInterval(tick, 1000);
+}
+
+function updateTimer() {
+    $("timerLabel").textContent = `⏱ ${timeLeft} सेकंड`;
+    $("timerLabel").style.color =
+        timeLeft <= 5 ? "var(--red)" : "white";
+}
+
+function tick() {
+    timeLeft--;
+    updateTimer();
+
+    if (timeLeft <= 0) {
+        stopTimer();
+
+        if (!answered) {
+            chooseAnswer(-1, true);
+        }
     }
-  });
-
-  timeline.appendChild(card);
-});
-
-let selected = 0;
-
-function selectCard(index) {
-  selected = Math.max(0, Math.min(events.length - 1, index));
-
-  document.querySelectorAll(".card").forEach(card => {
-    card.classList.remove("selected");
-  });
-
-  const card = document.getElementById("scene-" + selected);
-  card.classList.add("selected");
-
-  card.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
 }
 
-function nextCard() {
-  selectCard((selected + 1) % events.length);
+function chooseAnswer(index, timedOut = false) {
+    if (answered) return;
+
+    answered = true;
+    stopTimer();
+
+    const q = levels[levelIndex].questions[questionIndex];
+    const correct = q[2];
+    const isCorrect = index === correct;
+
+    if (isCorrect) {
+        const earned = 100 + Math.max(0, timeLeft) * 5;
+        score += earned;
+        levelScore += earned;
+    }
+
+    const buttons = $("options").querySelectorAll("button");
+
+    buttons.forEach((button, i) => {
+        button.disabled = true;
+
+        if (i === correct) {
+            button.classList.add("correct");
+        } else if (i === index) {
+            button.classList.add("wrong");
+        }
+    });
+
+    if (index === -1) {
+        buttons.forEach(button => button.disabled = true);
+    }
+
+    const feedback = $("feedback");
+    feedback.className = "feedback show";
+
+    const status = isCorrect
+        ? "✅ सही उत्तर!"
+        : timedOut
+            ? "⏰ समय समाप्त!"
+            : "❌ गलत उत्तर!";
+
+    feedback.innerHTML =
+        `<strong>${status}</strong><br>` +
+        `सही उत्तर: <strong>${q[1][correct]}</strong><br>` +
+        q[3];
+
+    answers.push({
+        level: levelIndex + 1,
+        question: q[0],
+        selected: index === -1 ? "उत्तर नहीं दिया" : q[1][index],
+        correct: q[1][correct],
+        explanation: q[3],
+        isCorrect
+    });
+
+    $("scoreLabel").textContent = `⭐ अंक: ${score}`;
+    $("progressFill").style.width =
+        `${((questionIndex + 1) / levels[levelIndex].questions.length) * 100}%`;
+
+    $("nextButton").disabled = false;
+    playTone(isCorrect ? 660 : 240);
 }
 
-function previousCard() {
-  selectCard((selected - 1 + events.length) % events.length);
-}
+function nextQuestion() {
+    if (!answered) return;
 
-function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-async function toggleFullscreen() {
-  try {
-    if (!document.fullscreenElement) {
-      await document.documentElement.requestFullscreen();
+    if (questionIndex < levels[levelIndex].questions.length - 1) {
+        questionIndex++;
+        loadQuestion();
     } else {
-      await document.exitFullscreen();
+        showLevelResult();
     }
-  } catch (error) {
-    alert("इस ब्राउज़र में Full Screen उपलब्ध नहीं है।");
-  }
 }
 
-window.addEventListener("scroll", () => {
-  const maxScroll =
-    document.documentElement.scrollHeight - window.innerHeight;
+function showLevelResult() {
+    stopTimer();
+    showScreen("resultScreen");
 
-  const percentage = maxScroll > 0
-    ? (window.scrollY / maxScroll) * 100
-    : 0;
+    const total = levels[levelIndex].questions.length;
+    const correctCount = answers.filter(
+        a => a.level === levelIndex + 1 && a.isCorrect
+    ).length;
 
-  document.getElementById("progress").style.width =
-    percentage + "%";
-});
+    $("resultScore").textContent = `${correctCount}/${total}`;
+
+    if (correctCount >= 8) {
+        $("resultIcon").textContent = "🏆";
+        $("resultTitle").textContent = "शानदार प्रदर्शन!";
+        $("resultMessage").textContent =
+            "आपने इस लेवल में बेहतरीन प्रदर्शन किया। अब अगले मिशन के लिए तैयार हो जाइए।";
+    } else if (correctCount >= 5) {
+        $("resultIcon").textContent = "⚔️";
+        $("resultTitle").textContent = "अच्छा प्रयास!";
+        $("resultMessage").textContent =
+            "आप आगे बढ़ सकते हैं। गलत उत्तरों की व्याख्या जरूर पढ़ें।";
+    } else {
+        $("resultIcon").textContent = "📚";
+        $("resultTitle").textContent = "फिर से अभ्यास करें!";
+        $("resultMessage").textContent =
+            "इस लेवल के प्रश्न दोबारा खेलकर अपने ज्ञान को मजबूत करें।";
+    }
+
+    if (levelIndex === levels.length - 1) {
+        $("continueButton").textContent = "🏆 पूरा गेम फिर खेलें";
+    } else {
+        $("continueButton").textContent =
+            `LEVEL ${levelIndex + 2} शुरू करें ➜`;
+    }
+
+    $("review").innerHTML = "";
+}
+
+function continueGame() {
+    if (levelIndex < levels.length - 1) {
+        levelIndex++;
+        startLevel();
+    } else {
+        startGame();
+    }
+}
+
+function showReview() {
+    const review = $("review");
+    review.innerHTML = "<h3>📖 इस लेवल के प्रश्नों से सीखें</h3>";
+
+    const levelAnswers = answers.filter(
+        answer => answer.level === levelIndex + 1
+    );
+
+    levelAnswers.forEach((answer, index) => {
+        const item = document.createElement("div");
+        item.className = "review-item";
+
+        item.innerHTML = `
+            <strong>${index + 1}. ${escapeHTML(answer.question)}</strong><br>
+            आपका उत्तर: ${escapeHTML(answer.selected)}<br>
+            सही उत्तर: <strong>${escapeHTML(answer.correct)}</strong><br>
+            ${escapeHTML(answer.explanation)}
+        `;
+
+        review.appendChild(item);
+    });
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function goHome() {
+    stopTimer();
+    showScreen("homeScreen");
+}
+
+function toggleSound() {
+    soundOn = !soundOn;
+
+    $("soundButton").textContent = soundOn
+        ? "🔊 ध्वनि चालू"
+        : "🔇 ध्वनि बंद";
+
+    if (soundOn) playTone(600);
+}
+
+function playTone(frequency) {
+    if (!soundOn) return;
+
+    try {
+        const AudioContext =
+            window.AudioContext || window.webkitAudioContext;
+
+        const context = new AudioContext();
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+
+        oscillator.frequency.value = frequency;
+        gain.gain.value = 0.05;
+
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+
+        oscillator.start();
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001, context.currentTime + 0.15
+        );
+
+        oscillator.stop(context.currentTime + 0.15);
+        oscillator.onended = () => context.close();
+    } catch (error) {
+        // ध्वनि उपलब्ध न होने पर गेम सामान्य रूप से चलेगा।
+    }
+}
+
+$("totalQuestions").textContent =
+    levels.reduce((sum, level) => sum + level.questions.length, 0);
 </script>
 
 </body>
