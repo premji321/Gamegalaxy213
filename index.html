@@ -1,198 +1,615 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#030616">
+<meta name="theme-color" content="#101827">
 
-<title>Alien Shooter - Space Battle</title>
+<title>1857 की क्रांति | Animated History - Game Galaxy</title>
 
 <style>
+:root {
+    --bg: #101827;
+    --panel: #18263a;
+    --gold: #ffd166;
+    --orange: #f97316;
+    --white: #ffffff;
+    --muted: #cbd5e1;
+}
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-:root {
-    --cyan: #39f5ff;
-    --blue: #247bff;
-    --purple: #a855f7;
-    --dark: #030616;
-}
-
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--dark);
-    color: white;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-.game-wrapper {
-    width: 100%;
-    max-width: 1100px;
-    margin: auto;
-    padding: 12px;
-}
-
-.header {
-    text-align: center;
-    padding: 12px 5px 18px;
-}
-
-.header h1 {
-    font-size: clamp(25px, 5vw, 42px);
-    color: var(--cyan);
-    text-shadow: 0 0 20px #00d9ff;
-    letter-spacing: 3px;
-}
-
-.header p {
-    margin-top: 8px;
-    color: #b7c9ed;
-    font-size: 13px;
-    letter-spacing: 2px;
-}
-
-.game-panel {
-    background: linear-gradient(135deg, #0b1736, #060817);
-    border: 1px solid #234b91;
-    border-radius: 18px;
-    padding: 12px;
-    box-shadow: 0 0 35px #0066ff22;
-}
-
-.hud {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 12px;
-}
-
-.hud-box {
-    background: #07142b;
-    border: 1px solid #244c86;
-    border-radius: 9px;
-    padding: 10px 5px;
-    text-align: center;
-    font-size: 12px;
-}
-
-.hud-box strong {
-    display: block;
-    margin-top: 5px;
-    color: var(--cyan);
-    font-size: 17px;
-}
-
-#gameCanvas {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3 / 4;
-    max-height: 720px;
-    background: #020511;
-    border: 1px solid #183d70;
-    border-radius: 12px;
-    touch-action: none;
-}
-
-.message {
-    text-align: center;
-    color: #c3d8ff;
-    font-size: 13px;
-    line-height: 1.7;
-    margin: 12px 0;
-}
-
-.controls {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 9px;
+    margin: 0;
+    background: var(--bg);
+    color: var(--white);
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
 }
 
 button {
-    font-family: inherit;
+    font: inherit;
     cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    padding: 13px 8px;
-    font-weight: bold;
-    color: white;
-    transition: transform .15s, filter .15s;
-    touch-action: manipulation;
-    user-select: none;
 }
 
-button:active {
-    transform: scale(.95);
-}
-
-.btn-move {
-    background: linear-gradient(135deg, #1456c7, #172d79);
-    border: 1px solid #4387ff;
-}
-
-.btn-fire {
-    background: linear-gradient(135deg, #fa315d, #b50d63);
-    border: 1px solid #ff76a2;
-}
-
-.btn-start {
-    background: linear-gradient(135deg, #00c9a7, #087caa);
-    border: 1px solid #4dffe2;
-}
-
-.btn-pause {
-    background: linear-gradient(135deg, #763df0, #3922a1);
-    border: 1px solid #ad8bff;
-}
-
-.btn-restart {
-    background: linear-gradient(135deg, #f08c27, #bd3e13);
-    border: 1px solid #ffbd71;
-}
-
-.secondary-controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 9px;
-    margin-top: 9px;
-}
-
-.footer {
+header {
+    padding: 18px 12px;
     text-align: center;
-    font-size: 12px;
-    color: #8294bd;
-    padding: 18px 5px;
+    background: linear-gradient(135deg, #172b4d, #7c2d12);
+    border-bottom: 2px solid var(--gold);
 }
 
-@media (max-width: 500px) {
-    .game-wrapper {
-        padding: 7px;
+header h1 {
+    margin: 0;
+    font-size: clamp(23px, 4vw, 36px);
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #fef3c7;
+    font-size: 14px;
+}
+
+.container {
+    width: min(1100px, 96%);
+    margin: auto;
+    padding: 18px 0 30px;
+}
+
+.player {
+    overflow: hidden;
+    border-radius: 16px;
+    background: #000;
+    border: 2px solid #475569;
+    box-shadow: 0 12px 35px #0008;
+}
+
+#stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 300px;
+    max-height: 620px;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(
+        #72bce7 0%,
+        #f8d7a0 68%,
+        #71864c 69%,
+        #34452b 100%
+    );
+}
+
+#stage.night {
+    background: linear-gradient(
+        #101c3b 0%,
+        #354a69 68%,
+        #414d3a 69%,
+        #253022 100%
+    );
+}
+
+.sun {
+    position: absolute;
+    top: 8%;
+    right: 12%;
+    width: clamp(35px, 7vw, 75px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #ffe9a3;
+    box-shadow: 0 0 50px #ffd166aa;
+}
+
+.cloud {
+    position: absolute;
+    top: 17%;
+    left: -100px;
+    width: 90px;
+    height: 25px;
+    border-radius: 40px;
+    background: #ffffffbb;
+    animation: clouds 24s linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.cloud::before {
+    width: 35px;
+    height: 35px;
+    top: -17px;
+    left: 15px;
+}
+
+.cloud::after {
+    width: 28px;
+    height: 28px;
+    top: -10px;
+    right: 12px;
+}
+
+@keyframes clouds {
+    from { transform: translateX(0); }
+    to { transform: translateX(125vw); }
+}
+
+.hill {
+    position: absolute;
+    bottom: 20%;
+    width: 70%;
+    height: 30%;
+    background: #73864c;
+    border-radius: 50% 50% 0 0;
+}
+
+.hill.one {
+    left: -15%;
+}
+
+.hill.two {
+    right: -15%;
+    background: #5d7140;
+}
+
+.building {
+    position: absolute;
+    bottom: 20%;
+    left: 8%;
+    width: 23%;
+    height: 34%;
+    background: #b9653e;
+    border: 3px solid #75412c;
+    border-radius: 4px 4px 0 0;
+}
+
+.building::before {
+    content: "";
+    position: absolute;
+    top: -13px;
+    left: -6%;
+    width: 112%;
+    height: 15px;
+    background: #78402b;
+    clip-path: polygon(0 100%, 10% 0, 90% 0, 100% 100%);
+}
+
+.building::after {
+    content: "";
+    position: absolute;
+    width: 20%;
+    height: 45%;
+    bottom: 0;
+    left: 40%;
+    background: #57352b;
+    border-radius: 50% 50% 0 0;
+}
+
+.window {
+    position: absolute;
+    top: 20%;
+    width: 16%;
+    height: 24%;
+    background: #573c32;
+    border: 2px solid #e5bb87;
+}
+
+.window.a { left: 12%; }
+.window.b { right: 12%; }
+
+.character {
+    position: absolute;
+    z-index: 4;
+    bottom: 19%;
+    left: 49%;
+    width: 70px;
+    height: 165px;
+    transform-origin: bottom center;
+    animation: walk 0.55s ease-in-out infinite alternate;
+}
+
+@keyframes walk {
+    from {
+        transform: translateY(0) rotate(-2deg);
+    }
+    to {
+        transform: translateY(-4px) rotate(2deg);
+    }
+}
+
+.head {
+    position: absolute;
+    left: 17px;
+    top: 0;
+    width: 39px;
+    height: 43px;
+    border-radius: 45%;
+    background: #b9784d;
+    border: 2px solid #603e2c;
+}
+
+.turban {
+    position: absolute;
+    z-index: 2;
+    top: -5px;
+    left: 11px;
+    width: 51px;
+    height: 18px;
+    border-radius: 50% 50% 15% 15%;
+    background: #a92c24;
+    border: 2px solid #64251f;
+}
+
+.face-eye {
+    position: absolute;
+    top: 17px;
+    left: 25px;
+    width: 4px;
+    height: 4px;
+    background: #201914;
+    border-radius: 50%;
+    box-shadow: 14px 0 #201914;
+}
+
+.moustache {
+    position: absolute;
+    top: 26px;
+    left: 24px;
+    width: 20px;
+    height: 6px;
+    background: #34251f;
+    border-radius: 0 0 50% 50%;
+}
+
+.body {
+    position: absolute;
+    top: 42px;
+    left: 9px;
+    width: 55px;
+    height: 61px;
+    border-radius: 8px;
+    background: #b58a4e;
+    border: 2px solid #64472d;
+}
+
+.belt {
+    position: absolute;
+    top: 81px;
+    left: 9px;
+    width: 55px;
+    height: 7px;
+    background: #4b3326;
+}
+
+.arm {
+    position: absolute;
+    top: 49px;
+    left: 0;
+    width: 15px;
+    height: 48px;
+    background: #b9784d;
+    border-radius: 10px;
+    transform: rotate(18deg);
+    transform-origin: top center;
+}
+
+.arm.right {
+    left: 57px;
+    transform: rotate(-25deg);
+}
+
+.leg {
+    position: absolute;
+    top: 100px;
+    left: 17px;
+    width: 15px;
+    height: 53px;
+    border-radius: 8px;
+    background: #44372e;
+    transform: rotate(5deg);
+}
+
+.leg.right {
+    left: 41px;
+    transform: rotate(-5deg);
+}
+
+.weapon {
+    position: absolute;
+    top: 42px;
+    left: 65px;
+    width: 5px;
+    height: 105px;
+    background: #777;
+    border: 1px solid #333;
+    transform: rotate(-8deg);
+    display: none;
+}
+
+.weapon::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: -5px;
+    width: 13px;
+    height: 12px;
+    background: #67432c;
+}
+
+.flagpole {
+    position: absolute;
+    z-index: 3;
+    bottom: 20%;
+    left: 74%;
+    width: 5px;
+    height: 43%;
+    background: #493a2b;
+    display: none;
+}
+
+.flagcloth {
+    position: absolute;
+    top: 0;
+    left: 4px;
+    width: 100px;
+    height: 57px;
+    background: linear-gradient(
+        to bottom,
+        #e78b35 0 33.3%,
+        #fff5e0 33.3% 66.6%,
+        #36804b 66.6% 100%
+    );
+    clip-path: polygon(0 0, 100% 0, 87% 50%, 100% 100%, 0 100%);
+    animation: flagwave 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes flagwave {
+    from { transform: skewY(-4deg); }
+    to { transform: skewY(4deg); }
+}
+
+.crowd {
+    position: absolute;
+    z-index: 2;
+    bottom: 20%;
+    left: 10%;
+    width: 80%;
+    height: 23%;
+    display: none;
+}
+
+.person {
+    position: absolute;
+    bottom: 0;
+    width: 25px;
+    height: 55px;
+    border-radius: 7px 7px 0 0;
+    background: #80543a;
+    animation: crowdMove 0.8s ease-in-out infinite alternate;
+}
+
+.person::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 3px;
+    width: 19px;
+    height: 20px;
+    border-radius: 50%;
+    background: #b9784d;
+}
+
+@keyframes crowdMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(-3px); }
+}
+
+.vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        #00000008,
+        transparent 60%,
+        #00000060
+    );
+}
+
+.scene-label {
+    position: absolute;
+    z-index: 8;
+    top: 4%;
+    left: 3%;
+    padding: 7px 12px;
+    border-radius: 6px;
+    background: #111827d9;
+    color: var(--gold);
+    font-size: clamp(12px, 2vw, 17px);
+}
+
+.caption {
+    position: absolute;
+    z-index: 9;
+    bottom: 3%;
+    left: 3%;
+    width: 94%;
+    padding: 10px 14px;
+    background: #101827e8;
+    border-left: 4px solid var(--gold);
+    border-radius: 7px;
+    text-align: center;
+    font-size: clamp(13px, 2.4vw, 21px);
+    line-height: 1.6;
+}
+
+#stage.transition {
+    animation: sceneIn .5s ease;
+}
+
+@keyframes sceneIn {
+    from {
+        opacity: .5;
+        transform: scale(.985);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 10px;
+    background: #111827;
+}
+
+.btn {
+    border: 1px solid #475569;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #25364e;
+    color: white;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background: #354b69;
+}
+
+.btn.primary {
+    background: #b45309;
+    border-color: #fbbf24;
+}
+
+.btn.primary:hover {
+    background: #d97706;
+}
+
+.progress {
+    height: 6px;
+    background: #334155;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0;
+    background: var(--gold);
+    transition: width .3s;
+}
+
+.info-panel {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--panel);
+    border: 1px solid #334155;
+    border-radius: 14px;
+}
+
+.info-panel h2 {
+    color: var(--gold);
+    margin-top: 0;
+    font-size: clamp(21px, 4vw, 29px);
+}
+
+.info-panel p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.fact {
+    margin-top: 14px;
+    padding: 12px;
+    background: #0f1b2e;
+    border-radius: 8px;
+    line-height: 1.8;
+}
+
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.timeline button {
+    padding: 12px;
+    min-height: 70px;
+    border: 1px solid #475569;
+    border-radius: 9px;
+    color: white;
+    background: #22324a;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.timeline button.active {
+    border-color: var(--gold);
+    background: #694019;
+}
+
+.timeline strong {
+    display: block;
+    color: var(--gold);
+    margin-bottom: 5px;
+}
+
+.note {
+    margin-top: 18px;
+    color: #94a3b8;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+    color: #94a3b8;
+    background: #0b1220;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 96%;
     }
 
-    .game-panel {
+    #stage {
+        min-height: 270px;
+    }
+
+    .character {
+        transform: scale(.8);
+        transform-origin: bottom center;
+        left: 45%;
+    }
+
+    .building {
+        width: 28%;
+        height: 29%;
+    }
+
+    .caption {
         padding: 8px;
+        font-size: 13px;
     }
 
-    .hud {
-        gap: 4px;
+    .btn {
+        padding: 9px 10px;
+        font-size: 13px;
     }
 
-    .hud-box {
-        padding: 8px 2px;
-        font-size: 10px;
-    }
-
-    .hud-box strong {
-        font-size: 15px;
-    }
-
-    button {
-        padding: 13px 4px;
-        font-size: 12px;
+    .info-panel {
+        padding: 14px;
     }
 }
 </style>
@@ -200,1385 +617,544 @@ button:active {
 
 <body>
 
-<div class="game-wrapper">
+<header>
+    <h1>🇮🇳 1857 की क्रांति</h1>
+    <p>Animated Indian History | Learn Through Stories</p>
+</header>
 
-    <header class="header">
-        <h1>👽 ALIEN SHOOTER</h1>
-        <p>GALACTIC SPACE BATTLE • SURVIVE THE INVASION</p>
-    </header>
+<main class="container">
 
-    <main class="game-panel">
+    <section class="player" aria-label="1857 की क्रांति का एनिमेशन">
 
-        <div class="hud">
-            <div class="hud-box">
-                ⭐ SCORE
-                <strong id="score">0</strong>
+        <div id="stage">
+
+            <div class="sun" id="sun"></div>
+            <div class="cloud"></div>
+
+            <div class="hill one"></div>
+            <div class="hill two"></div>
+
+            <div class="building" id="building">
+                <div class="window a"></div>
+                <div class="window b"></div>
             </div>
 
-            <div class="hud-box">
-                ❤️ LIVES
-                <strong id="lives">3</strong>
+            <div class="crowd" id="crowd"></div>
+
+            <div class="character" id="character">
+                <div class="head">
+                    <div class="face-eye"></div>
+                    <div class="moustache"></div>
+                </div>
+
+                <div class="turban" id="turban"></div>
+                <div class="body" id="body"></div>
+                <div class="belt"></div>
+                <div class="arm"></div>
+                <div class="arm right"></div>
+                <div class="leg"></div>
+                <div class="leg right"></div>
+                <div class="weapon" id="weapon"></div>
             </div>
 
-            <div class="hud-box">
-                🚀 LEVEL
-                <strong id="level">1</strong>
+            <div class="flagpole" id="flagpole">
+                <div class="flagcloth"></div>
             </div>
 
-            <div class="hud-box">
-                🏆 BEST
-                <strong id="best">0</strong>
+            <div class="scene-label" id="sceneLabel">
+                दृश्य 1 / 8
             </div>
+
+            <div class="caption" id="caption">
+                1857 — भारत में विद्रोह की शुरुआत
+            </div>
+
+            <div class="vignette"></div>
+
         </div>
 
-        <canvas id="gameCanvas" width="480" height="640">
-            Your browser does not support HTML5 Canvas.
-        </canvas>
-
-        <p class="message" id="message">
-            Destroy the aliens and defend the galaxy!<br>
-            Use ← → or A/D to move. Press SPACE to shoot.
-        </p>
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
 
         <div class="controls">
 
-            <button class="btn-move"
-                    id="leftBtn"
-                    aria-label="Move left">
-                ◀ LEFT
+            <button class="btn" id="previousBtn">
+                ⏮ पिछला
             </button>
 
-            <button class="btn-fire"
-                    id="fireBtn">
-                🔥 FIRE
+            <button class="btn primary" id="playBtn">
+                ⏸ रोकें
             </button>
 
-            <button class="btn-move"
-                    id="rightBtn"
-                    aria-label="Move right">
-                RIGHT ▶
+            <button class="btn" id="nextBtn">
+                अगला ⏭
             </button>
 
-        </div>
-
-        <div class="secondary-controls">
-
-            <button class="btn-start" id="startBtn">
-                🚀 START GAME
+            <button class="btn" id="voiceBtn">
+                🔊 हिंदी आवाज़
             </button>
 
-            <button class="btn-pause" id="pauseBtn">
-                ⏸ PAUSE
+            <button class="btn" id="fullscreenBtn">
+                ⛶ Fullscreen
             </button>
 
-            <button class="btn-restart" id="restartBtn">
-                🔄 RESTART
-            </button>
-
-            <button class="btn-start" id="soundBtn">
-                🔊 SOUND: ON
+            <button class="btn" id="restartBtn">
+                🔄 फिर से
             </button>
 
         </div>
 
-    </main>
+    </section>
 
-    <footer class="footer">
-        ALIEN SHOOTER © 2026 | DEFEND THE GALAXY 🚀
-    </footer>
+    <section class="info-panel">
 
-</div>
+        <h2 id="storyTitle">दृश्य 1: अंग्रेजी शासन</h2>
+
+        <p id="storyText"></p>
+
+        <div class="fact">
+            <strong style="color:#ffd166">महत्वपूर्ण तथ्य:</strong>
+            <span id="factText"></span>
+        </div>
+
+        <div class="timeline" id="timeline"></div>
+
+        <p class="note">
+            शैक्षिक नोट: यह एक CSS-आधारित 2D एनिमेशन प्रदर्शन है।
+            पात्र प्रतीकात्मक हैं, ऐतिहासिक व्यक्तियों के वास्तविक चित्र नहीं।
+            हिंदी आवाज़ आपके ब्राउज़र और डिवाइस में उपलब्ध Speech Synthesis
+            सुविधा पर निर्भर करेगी।
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    Game Galaxy | Educational History Animation
+    <br>
+    इतिहास को समझें, याद रखें और आगे बढ़ें।
+</footer>
 
 <script>
 "use strict";
 
-/* ==========================================
-   ALIEN SHOOTER
-   Complete HTML5 Canvas Game
-========================================== */
+const scenes = [
+    {
+        title: "दृश्य 1: अंग्रेजी शासन",
+        date: "1857 से पहले",
+        caption: "भारत में अंग्रेजी शासन और बढ़ता असंतोष",
+        text:
+            "1857 से पहले भारत के बड़े हिस्से पर ईस्ट इंडिया कंपनी का शासन था। " +
+            "कंपनी की विस्तारवादी नीतियों, कई रियासतों के विलय, आर्थिक शोषण " +
+            "और सामाजिक-धार्मिक मामलों में हस्तक्षेप की आशंकाओं के कारण " +
+            "विभिन्न वर्गों में असंतोष बढ़ रहा था। सैनिकों की अपनी शिकायतें भी थीं।",
+        fact:
+            "1857 का विद्रोह केवल एक कारण से नहीं हुआ। इसके पीछे राजनीतिक, " +
+            "आर्थिक, सैनिक और सामाजिक कारणों का मेल था।",
+        character: false,
+        crowd: false,
+        flag: false,
+        night: false,
+        color: "#b58a4e",
+        speech:
+            "सन् अठारह सौ सत्तावन से पहले भारत के बड़े हिस्से पर ईस्ट इंडिया कंपनी का शासन था। " +
+            "विभिन्न नीतियों और शिकायतों के कारण असंतोष बढ़ रहा था।"
+    },
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+    {
+        title: "दृश्य 2: सैनिकों में असंतोष",
+        date: "1857 की शुरुआत",
+        caption: "भारतीय सैनिकों की शिकायतें",
+        text:
+            "ईस्ट इंडिया कंपनी की सेना में भारतीय सिपाहियों को वेतन, पदोन्नति, " +
+            "सेवा की शर्तों और भेदभाव से जुड़ी शिकायतें थीं। नई एनफील्ड राइफल के " +
+            "कारतूसों के बारे में यह अफवाह फैली कि उन पर गाय और सूअर की चर्बी " +
+            "लगी है। कारतूस को मुँह से काटना पड़ता था, इसलिए इस खबर से धार्मिक " +
+            "भावनाएँ आहत हुईं और सैनिकों में तनाव बढ़ गया।",
+        fact:
+            "कारतूस विवाद विद्रोह का एक तात्कालिक कारण बना, लेकिन इसके पीछे " +
+            "पहले से मौजूद अनेक शिकायतें थीं।",
+        character: true,
+        crowd: false,
+        flag: false,
+        night: false,
+        color: "#b58a4e",
+        speech:
+            "कंपनी की सेना में भारतीय सैनिकों की कई शिकायतें थीं। कारतूसों से जुड़ी " +
+            "अफवाह ने असंतोष को और बढ़ा दिया।"
+    },
 
-const W = canvas.width;
-const H = canvas.height;
+    {
+        title: "दृश्य 3: मंगल पांडे",
+        date: "29 मार्च 1857",
+        caption: "बैरकपुर — मंगल पांडे की घटना",
+        text:
+            "29 मार्च 1857 को बैरकपुर में भारतीय सिपाही मंगल पांडे ने अंग्रेज " +
+            "अधिकारियों के विरुद्ध कार्रवाई की। उन्हें गिरफ्तार किया गया और " +
+            "8 अप्रैल 1857 को फाँसी दी गई। उनकी घटना ने सैनिक असंतोष के " +
+            "बढ़ते तनाव को सामने ला दिया।",
+        fact:
+            "मंगल पांडे की घटना बैरकपुर में हुई थी। मेरठ का व्यापक सैनिक विद्रोह " +
+            "इसके बाद 10 मई 1857 को शुरू हुआ।",
+        character: true,
+        crowd: false,
+        flag: false,
+        night: false,
+        color: "#c28d53",
+        speech:
+            "उनतीस मार्च अठारह सौ सत्तावन को बैरकपुर में मंगल पांडे की घटना हुई। " +
+            "आठ अप्रैल को उन्हें फाँसी दी गई।"
+    },
 
-const scoreElement = document.getElementById("score");
-const livesElement = document.getElementById("lives");
-const levelElement = document.getElementById("level");
-const bestElement = document.getElementById("best");
-const messageElement = document.getElementById("message");
+    {
+        title: "दृश्य 4: मेरठ का विद्रोह",
+        date: "10 मई 1857",
+        caption: "मेरठ से विद्रोह की व्यापक शुरुआत",
+        text:
+            "मेरठ में 85 सैनिकों को कारतूस इस्तेमाल करने से इनकार करने के बाद " +
+            "कठोर दंड दिया गया था। 10 मई 1857 को सैनिक विद्रोह भड़क उठा। " +
+            "विद्रोही सैनिकों ने जेल से अपने साथियों को मुक्त कराया और दिल्ली " +
+            "की ओर कूच किया। इसी घटना को व्यापक विद्रोह की प्रमुख शुरुआत माना जाता है।",
+        fact:
+            "10 मई 1857 — मेरठ में सैनिक विद्रोह। अगले दिन विद्रोही सैनिक दिल्ली पहुँचे।",
+        character: true,
+        crowd: true,
+        flag: false,
+        night: true,
+        color: "#b58a4e",
+        speech:
+            "दस मई अठारह सौ सत्तावन को मेरठ में सैनिक विद्रोह हुआ। " +
+            "इसके बाद विद्रोही सैनिक दिल्ली की ओर बढ़े।"
+    },
 
-let score = 0;
-let lives = 3;
-let level = 1;
-let best = 0;
+    {
+        title: "दृश्य 5: दिल्ली और बहादुर शाह ज़फ़र",
+        date: "11 मई 1857",
+        caption: "दिल्ली में विद्रोही सैनिक",
+        text:
+            "11 मई 1857 को विद्रोही सैनिक दिल्ली पहुँचे। उन्होंने मुगल सम्राट " +
+            "बहादुर शाह ज़फ़र को अपना प्रतीकात्मक नेता स्वीकार किया। दिल्ली " +
+            "विद्रोह का एक महत्वपूर्ण केंद्र बन गई और आंदोलन कई क्षेत्रों तक फैलने लगा।",
+        fact:
+            "बहादुर शाह ज़फ़र उस समय मुगल सम्राट थे। विद्रोहियों ने उन्हें " +
+            "प्रतीकात्मक नेतृत्व प्रदान करने के लिए चुना।",
+        character: true,
+        crowd: true,
+        flag: true,
+        night: false,
+        color: "#b58a4e",
+        speech:
+            "ग्यारह मई को विद्रोही सैनिक दिल्ली पहुँचे और बहादुर शाह ज़फ़र को " +
+            "अपना प्रतीकात्मक नेता स्वीकार किया।"
+    },
 
-try {
-    best = Number(localStorage.getItem("alienShooterBest")) || 0;
-} catch (e) {
-    best = 0;
-}
+    {
+        title: "दृश्य 6: विद्रोह के प्रमुख केंद्र",
+        date: "1857",
+        caption: "कानपुर, लखनऊ, झाँसी और अन्य क्षेत्र",
+        text:
+            "विद्रोह अनेक क्षेत्रों में फैला। कानपुर में नाना साहेब, लखनऊ में " +
+            "बेगम हज़रत महल और झाँसी में रानी लक्ष्मीबाई ने महत्वपूर्ण भूमिका " +
+            "निभाई। बिहार के जगदीशपुर क्षेत्र में कुँवर सिंह ने भी अंग्रेजी शासन " +
+            "के विरुद्ध संघर्ष का नेतृत्व किया। अलग-अलग क्षेत्रों में विद्रोह के " +
+            "कारण और परिस्थितियाँ भिन्न थीं।",
+        fact:
+            "प्रमुख नेता: रानी लक्ष्मीबाई, नाना साहेब, बेगम हज़रत महल, " +
+            "कुँवर सिंह और तात्या टोपे।",
+        character: true,
+        crowd: true,
+        flag: true,
+        night: false,
+        color: "#b58a4e",
+        speech:
+            "विद्रोह कानपुर, लखनऊ, झाँसी और बिहार के जगदीशपुर सहित कई क्षेत्रों में फैला। " +
+            "विभिन्न नेताओं ने अपने-अपने क्षेत्रों में संघर्ष का नेतृत्व किया।"
+    },
 
-bestElement.textContent = best;
+    {
+        title: "दृश्य 7: विद्रोह का दमन",
+        date: "1857–1858",
+        caption: "अंग्रेजी सेना ने विद्रोह को दबाया",
+        text:
+            "कंपनी की सेना और ब्रिटिश सरकार ने बड़े सैन्य अभियान चलाकर विद्रोह " +
+            "को दबाया। विद्रोहियों के पास एकीकृत कमान और समान रणनीति का अभाव " +
+            "था। कई क्षेत्रों में संघर्ष 1858 तक जारी रहा। अनेक नेताओं और " +
+            "सैनिकों को पराजय, गिरफ्तारी या मृत्यु का सामना करना पड़ा।",
+        fact:
+            "विद्रोह सभी भारतीय क्षेत्रों में समान रूप से नहीं फैला और इसमें " +
+            "अनेक स्थानीय नेतृत्व तथा अलग-अलग लक्ष्य शामिल थे।",
+        character: true,
+        crowd: false,
+        flag: false,
+        night: true,
+        color: "#6c5339",
+        speech:
+            "अंग्रेजी सेना ने व्यापक सैन्य अभियान चलाकर विद्रोह को दबाया। " +
+            "कई क्षेत्रों में संघर्ष अठारह सौ अट्ठावन तक जारी रहा।"
+    },
 
-let running = false;
-let gameOver = false;
-let paused = false;
-let soundOn = true;
-
-let frame = 0;
-let animationId = 0;
-
-let bullets = [];
-let enemyBullets = [];
-let enemies = [];
-let particles = [];
-let stars = [];
-let powerUps = [];
-
-let enemyDirection = 1;
-let enemySpeed = 0.55;
-let enemyShootTimer = 0;
-let playerInvincible = 0;
-let rapidFireTimer = 0;
-let shieldTimer = 0;
-let fireCooldown = 0;
-
-const keys = {
-    left: false,
-    right: false,
-    fire: false
-};
-
-const player = {
-    x: W / 2,
-    y: H - 70,
-    width: 34,
-    height: 38,
-    speed: 4.3
-};
-
-/* ==========================================
-   AUDIO
-========================================== */
-
-let audioContext = null;
-
-function playSound(frequency = 440, duration = 0.07, type = "sine") {
-    if (!soundOn) return;
-
-    try {
-        if (!audioContext) {
-            audioContext = new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
-        }
-
-        if (audioContext.state === "suspended") {
-            audioContext.resume();
-        }
-
-        const oscillator = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-
-        oscillator.type = type;
-        oscillator.frequency.value = frequency;
-
-        gain.gain.setValueAtTime(
-            0.055,
-            audioContext.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            audioContext.currentTime + duration
-        );
-
-        oscillator.connect(gain);
-        gain.connect(audioContext.destination);
-
-        oscillator.start();
-        oscillator.stop(
-            audioContext.currentTime + duration
-        );
-    } catch (e) {
-        // The game still works if audio is unavailable.
+    {
+        title: "दृश्य 8: ऐतिहासिक परिणाम",
+        date: "1858",
+        caption: "ईस्ट इंडिया कंपनी का शासन समाप्त",
+        text:
+            "1858 में भारत शासन अधिनियम के बाद भारत का शासन ईस्ट इंडिया कंपनी " +
+            "से ब्रिटिश क्राउन के अधीन चला गया। गवर्नर जनरल को वायसराय की " +
+            "भूमिका भी मिली। ब्रिटिश सरकार ने भारतीय रियासतों और सेना के " +
+            "प्रशासन में बदलाव किए। 1857 का विद्रोह आगे के भारतीय इतिहास में " +
+            "औपनिवेशिक शासन के विरुद्ध संघर्ष की एक महत्वपूर्ण घटना बना।",
+        fact:
+            "1858 में कंपनी शासन समाप्त हुआ और भारत का प्रशासन ब्रिटिश क्राउन " +
+            "के अधीन आ गया।",
+        character: false,
+        crowd: false,
+        flag: true,
+        night: false,
+        color: "#b58a4e",
+        speech:
+            "अठारह सौ अट्ठावन में ईस्ट इंडिया कंपनी का शासन समाप्त हुआ और भारत " +
+            "का प्रशासन ब्रिटिश क्राउन के अधीन आ गया।"
     }
-}
-
-/* ==========================================
-   BACKGROUND STARS
-========================================== */
-
-function createStars() {
-    stars = [];
-
-    for (let i = 0; i < 115; i++) {
-        stars.push({
-            x: Math.random() * W,
-            y: Math.random() * H,
-            radius: Math.random() * 1.5 + 0.3,
-            speed: Math.random() * 1.4 + 0.25,
-            alpha: Math.random() * 0.7 + 0.3
-        });
-    }
-}
-
-function drawBackground() {
-    const gradient = ctx.createLinearGradient(0, 0, W, H);
-
-    gradient.addColorStop(0, "#030719");
-    gradient.addColorStop(0.5, "#071638");
-    gradient.addColorStop(1, "#020512");
-
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, W, H);
-
-    // Nebula clouds
-    const nebula = ctx.createRadialGradient(
-        95, 170, 5,
-        95, 170, 190
-    );
-
-    nebula.addColorStop(0, "rgba(30,70,190,0.23)");
-    nebula.addColorStop(1, "rgba(30,70,190,0)");
-
-    ctx.fillStyle = nebula;
-    ctx.fillRect(0, 0, W, H);
-
-    const nebula2 = ctx.createRadialGradient(
-        390, 390, 5,
-        390, 390, 160
-    );
-
-    nebula2.addColorStop(0, "rgba(125,20,180,0.12)");
-    nebula2.addColorStop(1, "rgba(125,20,180,0)");
-
-    ctx.fillStyle = nebula2;
-    ctx.fillRect(0, 0, W, H);
-
-    for (const star of stars) {
-        ctx.globalAlpha = star.alpha;
-
-        ctx.fillStyle = "#d9f7ff";
-        ctx.beginPath();
-
-        ctx.arc(
-            star.x,
-            star.y,
-            star.radius,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-        ctx.globalAlpha = 1;
-
-        if (running && !paused) {
-            star.y += star.speed;
-
-            if (star.y > H) {
-                star.y = 0;
-                star.x = Math.random() * W;
-            }
-        }
-    }
-
-    // Distant planet
-    ctx.save();
-
-    ctx.shadowBlur = 25;
-    ctx.shadowColor = "#386fff";
-
-    const planet = ctx.createRadialGradient(
-        370, 95, 3,
-        370, 95, 42
-    );
-
-    planet.addColorStop(0, "#8db9ff");
-    planet.addColorStop(0.4, "#3456a3");
-    planet.addColorStop(1, "#080d2c");
-
-    ctx.fillStyle = planet;
-
-    ctx.beginPath();
-    ctx.arc(370, 95, 42, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.restore();
-}
-
-/* ==========================================
-   PLAYER SPACESHIP
-========================================== */
-
-function drawPlayer() {
-    if (playerInvincible > 0 && frame % 8 < 4) {
-        return;
-    }
-
-    ctx.save();
-
-    ctx.translate(player.x, player.y);
-
-    // Engine glow
-    ctx.shadowBlur = 20;
-    ctx.shadowColor = "#00c8ff";
-
-    ctx.fillStyle = "#11bfff";
-
-    ctx.beginPath();
-    ctx.moveTo(-8, 13);
-    ctx.lineTo(0, 29 + Math.random() * 8);
-    ctx.lineTo(8, 13);
-    ctx.closePath();
-    ctx.fill();
-
-    // Main wings
-    ctx.shadowBlur = 12;
-
-    ctx.fillStyle = "#d9f5ff";
-    ctx.strokeStyle = "#38d9ff";
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-    ctx.moveTo(0, -20);
-    ctx.lineTo(24, 17);
-    ctx.lineTo(9, 12);
-    ctx.lineTo(0, 19);
-    ctx.lineTo(-9, 12);
-    ctx.lineTo(-24, 17);
-    ctx.closePath();
-
-    ctx.fill();
-    ctx.stroke();
-
-    // Red wing details
-    ctx.fillStyle = "#ff416c";
-
-    ctx.beginPath();
-    ctx.moveTo(-18, 12);
-    ctx.lineTo(-9, -1);
-    ctx.lineTo(-10, 12);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.moveTo(18, 12);
-    ctx.lineTo(9, -1);
-    ctx.lineTo(10, 12);
-    ctx.closePath();
-    ctx.fill();
-
-    // Cockpit
-    ctx.fillStyle = "#168aff";
-
-    ctx.beginPath();
-    ctx.ellipse(0, -6, 5.5, 11, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "#bafaff";
-
-    ctx.beginPath();
-    ctx.ellipse(-1, -9, 2, 5, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Shield
-    if (shieldTimer > 0) {
-        ctx.strokeStyle = "#38f5ff";
-        ctx.lineWidth = 2.5;
-        ctx.shadowColor = "#38f5ff";
-        ctx.shadowBlur = 20;
-
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 32, 35, 0, 0, Math.PI * 2);
-        ctx.stroke();
-    }
-
-    ctx.restore();
-}
-
-/* ==========================================
-   ENEMIES
-========================================== */
-
-function createEnemies() {
-    enemies = [];
-
-    const columns = Math.min(8, 4 + level);
-    const rows = Math.min(5, 2 + Math.ceil(level / 2));
-
-    const spacingX = 43;
-    const spacingY = 42;
-
-    const totalWidth = (columns - 1) * spacingX;
-
-    const startX = (W - totalWidth) / 2;
-
-    for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < columns; col++) {
-
-            const type = row === 0 ? 2 : row === 1 ? 1 : 0;
-
-            enemies.push({
-                x: startX + col * spacingX,
-                y: 80 + row * spacingY,
-                width: 27,
-                height: 25,
-                type: type,
-                hp: type === 2 ? 2 : 1,
-                phase: Math.random() * Math.PI * 2
-            });
-        }
-    }
-
-    enemySpeed = 0.45 + level * 0.12;
-    enemyDirection = 1;
-}
-
-function drawEnemy(enemy) {
-    ctx.save();
-
-    ctx.translate(
-        enemy.x,
-        enemy.y + Math.sin(frame * 0.06 + enemy.phase) * 3
-    );
-
-    const colors = [
-        "#53ff9d",
-        "#45c8ff",
-        "#ff4e87"
-    ];
-
-    const color = colors[enemy.type];
-
-    ctx.shadowBlur = 14;
-    ctx.shadowColor = color;
-
-    // Alien body
-    ctx.fillStyle = color;
-
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 13, 11, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Antennae
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-    ctx.moveTo(-7, -7);
-    ctx.lineTo(-11, -14);
-
-    ctx.moveTo(7, -7);
-    ctx.lineTo(11, -14);
-
-    ctx.stroke();
-
-    // Eyes
-    ctx.shadowBlur = 0;
-
-    ctx.fillStyle = "#07111e";
-
-    ctx.beginPath();
-    ctx.ellipse(-5, -1, 3, 4, -0.2, 0, Math.PI * 2);
-    ctx.ellipse(5, -1, 3, 4, 0.2, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "#ffffff";
-
-    ctx.fillRect(-5, -3, 1.5, 2);
-    ctx.fillRect(4, -3, 1.5, 2);
-
-    // Legs
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-
-    ctx.moveTo(-8, 8);
-    ctx.lineTo(-12, 13);
-
-    ctx.moveTo(0, 9);
-    ctx.lineTo(0, 14);
-
-    ctx.moveTo(8, 8);
-    ctx.lineTo(12, 13);
-
-    ctx.stroke();
-
-    ctx.restore();
-}
-
-/* ==========================================
-   LASER BULLETS
-========================================== */
-
-function shoot() {
-    if (!running || paused || gameOver) return;
-    if (fireCooldown > 0) return;
-
-    bullets.push({
-        x: player.x,
-        y: player.y - 22,
-        speed: 9,
-        damage: 1
-    });
-
-    if (rapidFireTimer > 0) {
-        bullets.push({
-            x: player.x - 12,
-            y: player.y - 15,
-            speed: 9,
-            damage: 1
+];
+
+const stage = document.getElementById("stage");
+const character = document.getElementById("character");
+const crowd = document.getElementById("crowd");
+const flagpole = document.getElementById("flagpole");
+const weapon = document.getElementById("weapon");
+const body = document.getElementById("body");
+const turban = document.getElementById("turban");
+
+const sceneLabel = document.getElementById("sceneLabel");
+const caption = document.getElementById("caption");
+const storyTitle = document.getElementById("storyTitle");
+const storyText = document.getElementById("storyText");
+const factText = document.getElementById("factText");
+
+const progressBar = document.getElementById("progressBar");
+const playBtn = document.getElementById("playBtn");
+const voiceBtn = document.getElementById("voiceBtn");
+const timeline = document.getElementById("timeline");
+
+let current = 0;
+let playing = true;
+let voiceEnabled = false;
+let timer = null;
+const sceneDuration = 12000;
+
+function buildTimeline() {
+    timeline.innerHTML = "";
+
+    scenes.forEach((scene, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+
+        const strong = document.createElement("strong");
+        strong.textContent = scene.date;
+
+        const span = document.createElement("span");
+        span.textContent = scene.title.replace(/^दृश्य \d+:\s*/, "");
+
+        button.append(strong, span);
+
+        button.addEventListener("click", () => {
+            current = index;
+            showScene();
+            if (playing) startTimer();
         });
 
-        bullets.push({
-            x: player.x + 12,
-            y: player.y - 15,
-            speed: 9,
-            damage: 1
-        });
-    }
-
-    fireCooldown = rapidFireTimer > 0 ? 7 : 13;
-
-    playSound(760, 0.045, "square");
-}
-
-function drawBullets() {
-    for (const bullet of bullets) {
-        ctx.save();
-
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = "#20efff";
-
-        ctx.fillStyle = "#b9ffff";
-
-        ctx.fillRect(
-            bullet.x - 2,
-            bullet.y - 10,
-            4,
-            15
-        );
-
-        ctx.fillStyle = "#15aaff";
-
-        ctx.fillRect(
-            bullet.x - 4,
-            bullet.y - 4,
-            8,
-            7
-        );
-
-        ctx.restore();
-    }
-
-    for (const bullet of enemyBullets) {
-        ctx.save();
-
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = "#ff3268";
-
-        ctx.fillStyle = "#ff315f";
-
-        ctx.beginPath();
-        ctx.ellipse(
-            bullet.x,
-            bullet.y,
-            3,
-            7,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-        ctx.restore();
-    }
-}
-
-/* ==========================================
-   PARTICLE EXPLOSIONS
-========================================== */
-
-function createExplosion(x, y, color, count = 15) {
-    for (let i = 0; i < count; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 3.8 + 0.5;
-
-        particles.push({
-            x: x,
-            y: y,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            life: 25 + Math.random() * 20,
-            maxLife: 45,
-            radius: Math.random() * 3 + 1,
-            color: color
-        });
-    }
-}
-
-function updateParticles() {
-    for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        p.vx *= 0.97;
-        p.vy *= 0.97;
-
-        p.life--;
-
-        if (p.life <= 0) {
-            particles.splice(i, 1);
-        }
-    }
-}
-
-function drawParticles() {
-    for (const p of particles) {
-        ctx.save();
-
-        ctx.globalAlpha = Math.max(
-            0,
-            p.life / p.maxLife
-        );
-
-        ctx.fillStyle = p.color;
-
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = p.color;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.restore();
-    }
-}
-
-/* ==========================================
-   POWER-UPS
-========================================== */
-
-function maybeDropPowerUp(x, y) {
-    if (Math.random() > 0.14) return;
-
-    const types = ["rapid", "life", "shield"];
-
-    powerUps.push({
-        x: x,
-        y: y,
-        type: types[Math.floor(Math.random() * types.length)],
-        speed: 1.5,
-        radius: 11
+        timeline.appendChild(button);
     });
 }
 
-function drawPowerUps() {
-    for (const p of powerUps) {
-        ctx.save();
+function makeCrowd() {
+    crowd.innerHTML = "";
 
-        ctx.shadowBlur = 16;
+    for (let i = 0; i < 11; i++) {
+        const person = document.createElement("div");
+        person.className = "person";
+        person.style.left = (i * 8.8) + "%";
+        person.style.background = [
+            "#80543a",
+            "#5b4937",
+            "#9b6846",
+            "#55443a"
+        ][i % 4];
 
-        let color = "#ffdb45";
-        let symbol = "⚡";
-
-        if (p.type === "life") {
-            color = "#ff4b74";
-            symbol = "+";
-        }
-
-        if (p.type === "shield") {
-            color = "#36e7ff";
-            symbol = "◆";
-        }
-
-        ctx.shadowColor = color;
-        ctx.fillStyle = color;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = "#071326";
-        ctx.font = "bold 15px Arial";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        ctx.fillText(symbol, p.x, p.y + 1);
-
-        ctx.restore();
+        person.style.animationDelay = (i * 0.08) + "s";
+        crowd.appendChild(person);
     }
 }
 
-/* ==========================================
-   HUD
-========================================== */
+function speakScene() {
+    if (!voiceEnabled || !("speechSynthesis" in window)) return;
 
-function updateHUD() {
-    scoreElement.textContent = score;
-    livesElement.textContent = lives;
-    levelElement.textContent = level;
-    bestElement.textContent = best;
+    window.speechSynthesis.cancel();
+
+    const scene = scenes[current];
+    const utterance = new SpeechSynthesisUtterance(scene.speech);
+
+    utterance.lang = "hi-IN";
+    utterance.rate = 0.88;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    window.speechSynthesis.speak(utterance);
 }
 
-function addScore(points) {
-    score += points;
+function showScene() {
+    const scene = scenes[current];
 
-    if (score > best) {
-        best = score;
+    stage.classList.remove("transition");
+    void stage.offsetWidth;
+    stage.classList.add("transition");
 
-        try {
-            localStorage.setItem(
-                "alienShooterBest",
-                String(best)
-            );
-        } catch (e) {
-            // Local storage may be unavailable.
-        }
-    }
+    sceneLabel.textContent =
+        `दृश्य ${current + 1} / ${scenes.length} • ${scene.date}`;
 
-    updateHUD();
+    caption.textContent = scene.caption;
+    storyTitle.textContent = scene.title;
+    storyText.textContent = scene.text;
+    factText.textContent = scene.fact;
+
+    character.style.display = scene.character ? "block" : "none";
+    crowd.style.display = scene.crowd ? "block" : "none";
+    flagpole.style.display = scene.flag ? "block" : "none";
+
+    stage.classList.toggle("night", scene.night);
+
+    weapon.style.display = current === 1 || current === 3 ? "block" : "none";
+
+    body.style.background = scene.color;
+
+    turban.style.background =
+        current === 4 ? "#263c74" : "#a92c24";
+
+    document.querySelectorAll(".timeline button").forEach((button, index) => {
+        button.classList.toggle("active", index === current);
+    });
+
+    progressBar.style.width =
+        (((current + 1) / scenes.length) * 100) + "%";
+
+    if (voiceEnabled) speakScene();
 }
 
-/* ==========================================
-   COLLISION DETECTION
-========================================== */
-
-function collides(a, b, padding = 0) {
-    return (
-        Math.abs(a.x - b.x) <
-            ((a.width || 0) + (b.width || 0)) / 2 + padding &&
-        Math.abs(a.y - b.y) <
-            ((a.height || 0) + (b.height || 0)) / 2 + padding
-    );
-}
-
-function updateBullets() {
-    for (let i = bullets.length - 1; i >= 0; i--) {
-        const bullet = bullets[i];
-
-        bullet.y -= bullet.speed;
-
-        if (bullet.y < -20) {
-            bullets.splice(i, 1);
-            continue;
-        }
-
-        let hit = false;
-
-        for (let j = enemies.length - 1; j >= 0; j--) {
-            const enemy = enemies[j];
-
-            if (
-                Math.abs(bullet.x - enemy.x) < 15 &&
-                Math.abs(bullet.y - enemy.y) < 15
-            ) {
-                enemy.hp -= bullet.damage;
-
-                bullets.splice(i, 1);
-                hit = true;
-
-                createExplosion(
-                    bullet.x,
-                    bullet.y,
-                    "#38f5ff",
-                    4
-                );
-
-                if (enemy.hp <= 0) {
-                    createExplosion(
-                        enemy.x,
-                        enemy.y,
-                        enemy.type === 2 ? "#ff4e87" : "#56ffb0",
-                        18
-                    );
-
-                    maybeDropPowerUp(enemy.x, enemy.y);
-
-                    enemies.splice(j, 1);
-
-                    addScore(
-                        enemy.type === 2 ? 30 :
-                        enemy.type === 1 ? 20 : 10
-                    );
-
-                    playSound(210, 0.12, "triangle");
-                }
-
-                break;
-            }
-        }
-
-        if (hit) continue;
-    }
-}
-
-function updateEnemyBullets() {
-    for (let i = enemyBullets.length - 1; i >= 0; i--) {
-        const bullet = enemyBullets[i];
-
-        bullet.y += bullet.speed;
-
-        if (bullet.y > H + 20) {
-            enemyBullets.splice(i, 1);
-            continue;
-        }
-
-        if (
-            Math.abs(bullet.x - player.x) < 20 &&
-            Math.abs(bullet.y - player.y) < 22
-        ) {
-            enemyBullets.splice(i, 1);
-
-            damagePlayer();
-        }
-    }
-}
-
-function updatePowerUps() {
-    for (let i = powerUps.length - 1; i >= 0; i--) {
-        const p = powerUps[i];
-
-        p.y += p.speed;
-
-        if (p.y > H + 20) {
-            powerUps.splice(i, 1);
-            continue;
-        }
-
-        if (
-            Math.abs(p.x - player.x) < 28 &&
-            Math.abs(p.y - player.y) < 30
-        ) {
-            if (p.type === "rapid") {
-                rapidFireTimer = 600;
-                messageElement.textContent =
-                    "⚡ RAPID FIRE ACTIVATED!";
-            }
-
-            if (p.type === "shield") {
-                shieldTimer = 500;
-                messageElement.textContent =
-                    "🛡️ SHIELD ACTIVATED!";
-            }
-
-            if (p.type === "life") {
-                lives = Math.min(5, lives + 1);
-                messageElement.textContent =
-                    "❤️ EXTRA LIFE COLLECTED!";
-            }
-
-            playSound(950, 0.2, "sine");
-
-            powerUps.splice(i, 1);
-
-            updateHUD();
-        }
-    }
-}
-
-/* ==========================================
-   PLAYER DAMAGE
-========================================== */
-
-function damagePlayer() {
-    if (playerInvincible > 0) return;
-
-    if (shieldTimer > 0) {
-        shieldTimer = 0;
-
-        createExplosion(
-            player.x,
-            player.y,
-            "#36e7ff",
-            18
-        );
-
-        playSound(320, 0.15, "triangle");
-        return;
-    }
-
-    lives--;
-
-    playerInvincible = 100;
-
-    createExplosion(
-        player.x,
-        player.y,
-        "#ff436e",
-        25
-    );
-
-    playSound(100, 0.3, "sawtooth");
-
-    updateHUD();
-
-    if (lives <= 0) {
-        endGame();
+function nextScene() {
+    if (current < scenes.length - 1) {
+        current++;
     } else {
-        messageElement.textContent =
-            "⚠️ YOUR SHIP WAS HIT! Keep fighting!";
+        current = 0;
     }
+
+    showScene();
 }
 
-/* ==========================================
-   ENEMY MOVEMENT AND ATTACK
-========================================== */
+function previousScene() {
+    current = (current - 1 + scenes.length) % scenes.length;
+    showScene();
+}
 
-function updateEnemies() {
-    if (enemies.length === 0) {
-        level++;
+function startTimer() {
+    clearInterval(timer);
 
-        bullets = [];
-        enemyBullets = [];
-        powerUps = [];
+    if (!playing) return;
 
-        createEnemies();
-
-        messageElement.textContent =
-            "🌟 LEVEL " + level + " — THE ALIENS ARE GETTING STRONGER!";
-
-        playSound(600, 0.25, "sine");
-
-        updateHUD();
-
-        return;
-    }
-
-    let reachedEdge = false;
-
-    for (const enemy of enemies) {
-        enemy.x += enemySpeed * enemyDirection;
-
-        if (enemy.x > W - 22 || enemy.x < 22) {
-            reachedEdge = true;
+    timer = setInterval(() => {
+        if (current < scenes.length - 1) {
+            current++;
+            showScene();
+        } else {
+            stopPlayback();
         }
+    }, sceneDuration);
+}
 
-        // Aliens reaching the bottom threaten the player.
-        if (enemy.y > player.y - 45) {
-            endGame();
-            return;
+function stopPlayback() {
+    playing = false;
+    clearInterval(timer);
+    playBtn.textContent = "▶ चलाएँ";
+
+    if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+    }
+}
+
+function togglePlayback() {
+    if (playing) {
+        stopPlayback();
+    } else {
+        playing = true;
+        playBtn.textContent = "⏸ रोकें";
+        startTimer();
+
+        if (voiceEnabled) speakScene();
+    }
+}
+
+function toggleVoice() {
+    voiceEnabled = !voiceEnabled;
+
+    voiceBtn.textContent = voiceEnabled
+        ? "🔇 आवाज़ बंद करें"
+        : "🔊 हिंदी आवाज़";
+
+    if (voiceEnabled) {
+        speakScene();
+    } else if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+    }
+}
+
+function restartAnimation() {
+    current = 0;
+    playing = true;
+    playBtn.textContent = "⏸ रोकें";
+    showScene();
+    startTimer();
+}
+
+async function toggleFullscreen() {
+    try {
+        if (!document.fullscreenElement) {
+            await document.querySelector(".player").requestFullscreen();
+        } else {
+            await document.exitFullscreen();
         }
-    }
-
-    if (reachedEdge) {
-        enemyDirection *= -1;
-
-        for (const enemy of enemies) {
-            enemy.y += 10;
-        }
-    }
-
-    enemyShootTimer++;
-
-    const shootInterval = Math.max(
-        22,
-        80 - level * 5
-    );
-
-    if (enemyShootTimer >= shootInterval) {
-        enemyShootTimer = 0;
-
-        const shooter = enemies[
-            Math.floor(Math.random() * enemies.length)
-        ];
-
-        if (shooter) {
-            enemyBullets.push({
-                x: shooter.x,
-                y: shooter.y + 15,
-                speed: 2.4 + level * 0.22,
-                width: 6,
-                height: 12
-            });
-        }
+    } catch (error) {
+        alert("Fullscreen इस ब्राउज़र में उपलब्ध नहीं है।");
     }
 }
 
-/* ==========================================
-   GAME UPDATE
-========================================== */
-
-function update() {
-    if (!running || paused || gameOver) return;
-
-    frame++;
-
-    if (playerInvincible > 0) playerInvincible--;
-    if (rapidFireTimer > 0) rapidFireTimer--;
-    if (shieldTimer > 0) shieldTimer--;
-    if (fireCooldown > 0) fireCooldown--;
-
-    if (keys.left) {
-        player.x -= player.speed;
-    }
-
-    if (keys.right) {
-        player.x += player.speed;
-    }
-
-    player.x = Math.max(
-        25,
-        Math.min(W - 25, player.x)
-    );
-
-    if (keys.fire) {
-        shoot();
-    }
-
-    updateEnemies();
-    updateBullets();
-    updateEnemyBullets();
-    updatePowerUps();
-    updateParticles();
-
-    if (gameOver) return;
-}
-
-/* ==========================================
-   DRAWING
-========================================== */
-
-function drawOverlay(title, subtitle, color = "#39f5ff") {
-    ctx.save();
-
-    ctx.fillStyle = "rgba(0, 3, 15, 0.78)";
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.textAlign = "center";
-
-    ctx.shadowBlur = 22;
-    ctx.shadowColor = color;
-
-    ctx.fillStyle = color;
-    ctx.font = "bold 31px Arial";
-
-    ctx.fillText(title, W / 2, H / 2 - 25);
-
-    ctx.shadowBlur = 0;
-
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "15px Arial";
-
-    ctx.fillText(subtitle, W / 2, H / 2 + 12);
-
-    ctx.restore();
-}
-
-function draw() {
-    drawBackground();
-
-    for (const enemy of enemies) {
-        drawEnemy(enemy);
-    }
-
-    drawBullets();
-    drawPowerUps();
-    drawParticles();
-    drawPlayer();
-
-    if (!running && !gameOver) {
-        drawOverlay(
-            "ALIEN SHOOTER",
-            "Press START GAME to begin"
-        );
-    }
-
-    if (paused && !gameOver) {
-        drawOverlay(
-            "GAME PAUSED",
-            "Press RESUME to continue",
-            "#d3a5ff"
-        );
-    }
-
-    if (gameOver) {
-        drawOverlay(
-            "GAME OVER",
-            "Final Score: " + score,
-            "#ff477e"
-        );
-    }
-}
-
-function gameLoop() {
-    update();
-    draw();
-
-    animationId = requestAnimationFrame(gameLoop);
-}
-
-/* ==========================================
-   GAME START / PAUSE / RESTART
-========================================== */
-
-function resetGame() {
-    score = 0;
-    lives = 3;
-    level = 1;
-
-    frame = 0;
-
-    running = true;
-    paused = false;
-    gameOver = false;
-
-    bullets = [];
-    enemyBullets = [];
-    particles = [];
-    powerUps = [];
-
-    player.x = W / 2;
-    player.y = H - 70;
-
-    playerInvincible = 0;
-    rapidFireTimer = 0;
-    shieldTimer = 0;
-    fireCooldown = 0;
-    enemyShootTimer = 0;
-
-    messageElement.textContent =
-        "Destroy the aliens! Collect ⚡ rapid fire, 🛡️ shields and + extra lives.";
-
-    createStars();
-    createEnemies();
-
-    updateHUD();
-
-    playSound(520, 0.15, "sine");
-}
-
-function endGame() {
-    if (gameOver) return;
-
-    gameOver = true;
-    running = false;
-    paused = false;
-
-    updateHUD();
-
-    messageElement.textContent =
-        "Game over! Final score: " + score +
-        ". Press RESTART to try again.";
-
-    playSound(90, 0.45, "sawtooth");
-}
-
-function togglePause() {
-    if (gameOver || !running) return;
-
-    paused = !paused;
-
-    document.getElementById("pauseBtn").textContent =
-        paused ? "▶ RESUME" : "⏸ PAUSE";
-
-    messageElement.textContent = paused
-        ? "Game paused. Press RESUME to continue."
-        : "Destroy the aliens and defend the galaxy!";
-}
-
-/* ==========================================
-   KEYBOARD CONTROLS
-========================================== */
-
-document.addEventListener("keydown", function(e) {
-    const key = e.key.toLowerCase();
-
-    if (
-        ["arrowleft", "arrowright", " ", "arrowup", "arrowdown"]
-        .includes(key)
-    ) {
-        e.preventDefault();
-    }
-
-    if (key === "arrowleft" || key === "a") {
-        keys.left = true;
-    }
-
-    if (key === "arrowright" || key === "d") {
-        keys.right = true;
-    }
-
-    if (key === " " || key === "arrowup") {
-        keys.fire = true;
-    }
-
-    if (
-        (key === "p" || key === "escape") &&
-        !e.repeat
-    ) {
-        togglePause();
-    }
-
-    if (key === "enter" && !running && !gameOver) {
-        resetGame();
-    }
-
-    if (key === "enter" && gameOver) {
-        resetGame();
-    }
+document.getElementById("nextBtn").addEventListener("click", () => {
+    nextScene();
+    if (playing) startTimer();
 });
 
-document.addEventListener("keyup", function(e) {
-    const key = e.key.toLowerCase();
-
-    if (key === "arrowleft" || key === "a") {
-        keys.left = false;
-    }
-
-    if (key === "arrowright" || key === "d") {
-        keys.right = false;
-    }
-
-    if (key === " " || key === "arrowup") {
-        keys.fire = false;
-    }
+document.getElementById("previousBtn").addEventListener("click", () => {
+    previousScene();
+    if (playing) startTimer();
 });
 
-window.addEventListener("blur", function() {
-    keys.left = false;
-    keys.right = false;
-    keys.fire = false;
-});
+document.getElementById("playBtn").addEventListener("click", togglePlayback);
+document.getElementById("voiceBtn").addEventListener("click", toggleVoice);
 
-/* ==========================================
-   MOBILE BUTTON CONTROLS
-========================================== */
-
-function bindHoldButton(buttonId, keyName) {
-    const button = document.getElementById(buttonId);
-
-    button.addEventListener("pointerdown", function(e) {
-        e.preventDefault();
-
-        keys[keyName] = true;
-
-        try {
-            button.setPointerCapture(e.pointerId);
-        } catch (err) {}
-    });
-
-    function release() {
-        keys[keyName] = false;
-    }
-
-    button.addEventListener("pointerup", release);
-    button.addEventListener("pointercancel", release);
-    button.addEventListener("lostpointercapture", release);
-    button.addEventListener("contextmenu", e => e.preventDefault());
-}
-
-bindHoldButton("leftBtn", "left");
-bindHoldButton("rightBtn", "right");
-bindHoldButton("fireBtn", "fire");
-
-/* ==========================================
-   TOUCH / DRAG CONTROL
-========================================== */
-
-let dragging = false;
-
-canvas.addEventListener("pointerdown", function(e) {
-    if (!running || paused || gameOver) return;
-
-    dragging = true;
-
-    canvas.setPointerCapture(e.pointerId);
-
-    movePlayerToPointer(e);
-
-    keys.fire = true;
-});
-
-canvas.addEventListener("pointermove", function(e) {
-    if (!dragging) return;
-
-    movePlayerToPointer(e);
-});
-
-function movePlayerToPointer(e) {
-    const rect = canvas.getBoundingClientRect();
-
-    const x = (e.clientX - rect.left) / rect.width * W;
-
-    player.x = Math.max(
-        25,
-        Math.min(W - 25, x)
-    );
-}
-
-function stopDragging() {
-    dragging = false;
-    keys.fire = false;
-}
-
-canvas.addEventListener("pointerup", stopDragging);
-canvas.addEventListener("pointercancel", stopDragging);
-canvas.addEventListener("lostpointercapture", stopDragging);
-
-/* ==========================================
-   BUTTON EVENTS
-========================================== */
-
-document.getElementById("startBtn").addEventListener(
+document.getElementById("fullscreenBtn").addEventListener(
     "click",
-    function() {
-        if (gameOver) {
-            resetGame();
-        } else if (!running) {
-            resetGame();
-        } else if (paused) {
-            togglePause();
-        }
-    }
-);
-
-document.getElementById("pauseBtn").addEventListener(
-    "click",
-    togglePause
+    toggleFullscreen
 );
 
 document.getElementById("restartBtn").addEventListener(
     "click",
-    resetGame
+    restartAnimation
 );
 
-document.getElementById("soundBtn").addEventListener(
-    "click",
-    function() {
-        soundOn = !soundOn;
-
-        this.textContent = soundOn
-            ? "🔊 SOUND: ON"
-            : "🔇 SOUND: OFF";
-
-        if (soundOn) {
-            playSound(600, 0.12);
-        }
-    }
-);
-
-/* ==========================================
-   INITIALIZE
-========================================== */
-
-createStars();
-createEnemies();
-updateHUD();
-draw();
-
-gameLoop();
-
+makeCrowd();
+buildTimeline();
+showScene();
+startTimer();
 </script>
 
 </body>
