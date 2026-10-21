@@ -5,28 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#10264b">
 
-<title>PDF Reader & Editor</title>
+<title>PDF Pro Editor | Reader & Editing Engine</title>
 
-<!-- PDF.js: PDF Reader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
-<!-- PDF-lib: PDF Export and Page Operations -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-
-<!-- Mammoth: Optional Word Document Import Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.9.0/mammoth.browser.min.js"></script>
 
 <style>
 :root {
     --navy: #10264b;
     --blue: #2459c4;
-    --blue-light: #edf4ff;
-    --border: #dce4ef;
+    --light: #edf4ff;
+    --border: #dbe4f0;
     --text: #24334d;
-    --bg: #f4f7fc;
-    --white: #ffffff;
-    --green: #15803d;
-    --red: #dc2626;
+    --green: #168047;
+    --red: #d93030;
 }
 
 * {
@@ -36,8 +28,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: var(--bg);
     color: var(--text);
+    background: #f3f6fc;
 }
 
 header {
@@ -56,33 +48,33 @@ header p {
     line-height: 1.6;
 }
 
-.topbar {
+.toolbar {
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px;
+    justify-content: center;
     padding: 12px;
     background: white;
     border-bottom: 1px solid var(--border);
 }
 
-button, .file-label {
+button,
+.file-label {
     border: none;
-    padding: 10px 14px;
     border-radius: 7px;
-    background: var(--blue);
-    color: white;
+    padding: 10px 13px;
     font-weight: bold;
     cursor: pointer;
+    background: var(--blue);
+    color: white;
     font-size: 13px;
 }
 
 button.secondary {
-    background: #e8eef8;
+    background: #e7edf8;
     color: var(--navy);
 }
 
@@ -95,200 +87,214 @@ button.danger {
 }
 
 button:disabled {
-    opacity: .5;
+    opacity: .45;
     cursor: not-allowed;
-}
-
-input, select {
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    max-width: 100%;
-}
-
-input[type="file"] {
-    display: none;
 }
 
 .file-label {
     display: inline-block;
 }
 
-.app {
-    max-width: 1500px;
-    margin: auto;
-    padding: 16px;
+input[type="file"] {
+    display: none;
 }
 
-.upload-box {
-    background: white;
-    border: 2px dashed #9db7e5;
-    border-radius: 14px;
-    padding: 28px 15px;
-    text-align: center;
-    margin-bottom: 16px;
-}
-
-.upload-box h2 {
-    color: var(--navy);
-}
-
-.workspace {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-}
-
-.reader-panel, .editor-panel, .tools-panel {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.panel-heading {
-    background: #f8faff;
-    border-bottom: 1px solid var(--border);
-    padding: 14px;
-    font-weight: bold;
-    color: var(--navy);
-}
-
-.panel-content {
-    padding: 15px;
-}
-
-#pdfViewport {
-    min-height: 300px;
-    max-height: 75vh;
-    overflow: auto;
-    background: #e9edf4;
-    padding: 15px;
-    text-align: center;
-}
-
-#pdfCanvas {
+input,
+select,
+textarea {
     max-width: 100%;
-    height: auto;
-    background: white;
-    box-shadow: 0 2px 10px #0002;
-}
-
-.reader-controls {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px;
-    border-bottom: 1px solid var(--border);
-}
-
-.search-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
-}
-
-.search-row input {
-    flex: 1;
-    min-width: 120px;
-}
-
-#textEditor {
-    min-height: 480px;
-    max-height: 70vh;
-    overflow: auto;
-    padding: 24px;
-    border: 1px solid var(--border);
-    background: white;
-    color: #222;
-    line-height: 1.7;
-    font-size: 16px;
-    outline: none;
-    overflow-wrap: anywhere;
-}
-
-#textEditor:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 2px #2459c422;
-}
-
-.editor-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
     padding: 10px;
-    background: #f8faff;
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font: inherit;
 }
 
-.editor-toolbar select {
-    width: auto;
+input[type="text"],
+textarea {
+    width: 100%;
 }
 
-.editor-toolbar button {
-    min-width: 38px;
-}
-
-.hidden {
-    display: none !important;
+.app {
+    max-width: 1400px;
+    padding: 15px;
+    margin: auto;
 }
 
 .status {
     padding: 12px;
-    background: var(--blue-light);
-    border-radius: 7px;
-    margin-top: 12px;
+    border-radius: 8px;
+    background: var(--light);
     line-height: 1.5;
+    margin: 10px 0;
     overflow-wrap: anywhere;
 }
 
 .status.error {
     background: #fff0f0;
-    color: #a11;
+    color: #a31515;
 }
 
 .status.ok {
-    background: #e9f9ef;
-    color: #146c36;
+    background: #eaf8ef;
+    color: #126b3c;
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+}
+
+.panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.panel-title {
+    padding: 14px;
+    background: #f8faff;
+    border-bottom: 1px solid var(--border);
+    font-weight: bold;
+    color: var(--navy);
+}
+
+.panel-body {
+    padding: 14px;
+}
+
+.reader-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+}
+
+.reader-controls input {
+    width: 70px;
+}
+
+#viewer {
+    position: relative;
+    background: #e8edf5;
+    padding: 12px;
+    min-height: 350px;
+    max-height: 78vh;
+    overflow: auto;
+    text-align: center;
+}
+
+#pageStage {
+    position: relative;
+    display: inline-block;
+    background: white;
+    line-height: 0;
+    box-shadow: 0 3px 14px #0002;
+}
+
+#pdfCanvas {
+    display: block;
+    max-width: none;
+}
+
+#textLayer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    line-height: 1;
+    text-align: initial;
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+#textLayer span {
+    position: absolute;
+    white-space: pre;
+    color: transparent;
+    transform-origin: 0 0;
+    cursor: text;
+    line-height: 1;
+}
+
+#textLayer span::selection {
+    background: rgba(40, 120, 255, .4);
+}
+
+#textLayer.editing span:hover {
+    background: rgba(36, 89, 196, .15);
+    outline: 1px dashed #2459c4;
+}
+
+#textLayer.editing span.selected {
+    background: rgba(255, 190, 50, .3);
+    outline: 1px solid #e3a300;
+}
+
+#textLayer.editing {
+    cursor: text;
+}
+
+.editor-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 14px;
+}
+
+.editor-box h3 {
+    margin-top: 0;
+    color: var(--navy);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.row input {
+    flex: 1;
+    min-width: 100px;
 }
 
 .note {
     background: #fff8e7;
-    border: 1px solid #f0dca5;
+    border: 1px solid #eedba9;
     padding: 12px;
     border-radius: 8px;
+    font-size: 13px;
     line-height: 1.6;
-    font-size: 14px;
     margin: 12px 0;
 }
 
-.tool-grid {
+.grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 12px;
 }
 
 .tool-card {
-    padding: 15px;
+    padding: 14px;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 9px;
 }
 
 .tool-card h3 {
-    color: var(--navy);
     margin-top: 0;
-}
-
-.tool-card p {
-    font-size: 13px;
-    line-height: 1.5;
+    color: var(--navy);
 }
 
 .tool-card input {
-    width: 100%;
-    margin: 6px 0 10px;
+    margin: 7px 0;
+}
+
+.hidden {
+    display: none !important;
 }
 
 footer {
@@ -302,32 +308,34 @@ footer {
 
 @media (min-width: 900px) {
     .workspace {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) 340px;
         align-items: start;
     }
 
-    .tools-panel {
-        grid-column: 1 / -1;
+    .side-panel {
+        position: sticky;
+        top: 90px;
     }
 }
 
 @media (max-width: 600px) {
     .app {
+        padding: 8px;
+    }
+
+    .toolbar {
+        gap: 5px;
+        padding: 8px;
+    }
+
+    button,
+    .file-label {
         padding: 9px;
-    }
-
-    #textEditor {
-        min-height: 400px;
-        padding: 14px;
-    }
-
-    .topbar {
-        gap: 6px;
-    }
-
-    button, .file-label {
-        padding: 10px;
         font-size: 12px;
+    }
+
+    #viewer {
+        padding: 5px;
     }
 }
 </style>
@@ -336,110 +344,113 @@ footer {
 <body>
 
 <header>
-    <h1>📄 PDF Reader & Editor</h1>
-    <p>Read, Edit, Convert, Merge and Split PDF Documents</p>
+    <h1>📄 PDF Pro Editor</h1>
+    <p>Read, Search, Replace Text, Merge, Split & Convert PDF</p>
 </header>
 
-<div class="topbar">
+<div class="toolbar">
 
-    <label class="file-label" for="pdfInput">
-        📂 Open PDF
-    </label>
+    <label class="file-label" for="pdfInput">📂 Open PDF</label>
     <input type="file" id="pdfInput" accept=".pdf,application/pdf">
 
-    <button onclick="setMode('reader')" class="secondary">
-        📖 Reader
-    </button>
-
-    <button onclick="enterEditMode()">
-        ✏️ Edit PDF
-    </button>
-
-    <button onclick="saveEditedDocument()" class="success">
-        💾 Export PDF
-    </button>
-
-    <button onclick="downloadText()" class="secondary">
-        📝 Export TXT
-    </button>
+    <button class="secondary" onclick="setEditMode(false)">📖 Reader</button>
+    <button onclick="setEditMode(true)">✏️ Edit Mode</button>
+    <button class="success" onclick="savePDF()">💾 Save PDF</button>
+    <button class="secondary" onclick="downloadOriginal()">Download Original</button>
 
 </div>
 
 <main class="app">
 
-    <section class="upload-box" id="uploadBox">
-        <h2>Open Your PDF Document</h2>
-        <p>Select a PDF from your device to start reading or editing.</p>
-        <label for="pdfInput" class="file-label">
-            Choose PDF File
-        </label>
-        <div id="fileStatus" class="status">
-            No document opened.
-        </div>
-    </section>
+    <div id="globalStatus" class="status">
+        Open a PDF file to begin.
+    </div>
 
     <div class="workspace">
 
-        <!-- PDF READER -->
+        <section class="panel">
 
-        <section class="reader-panel" id="readerPanel">
-
-            <div class="panel-heading">
-                📖 PDF Reader
-            </div>
+            <div class="panel-title">📖 PDF Reader & Editing Canvas</div>
 
             <div class="reader-controls">
 
-                <button class="secondary" onclick="previousPage()">
-                    ◀ Previous
-                </button>
+                <button class="secondary" onclick="previousPage()">◀</button>
 
-                <span style="display:flex;align-items:center;gap:5px">
-                    Page
-                    <input id="pageNumber" type="number"
-                           min="1" value="1" style="width:65px">
-                    <span id="pageTotal">/ 0</span>
-                </span>
+                <span>Page</span>
+                <input type="number" id="pageInput" value="1" min="1">
 
-                <button class="secondary" onclick="goToPage()">
-                    Go
-                </button>
+                <span id="totalPages">/ 0</span>
 
-                <button class="secondary" onclick="nextPage()">
-                    Next ▶
-                </button>
+                <button class="secondary" onclick="goPage()">Go</button>
+                <button class="secondary" onclick="nextPage()">▶</button>
 
-                <button class="secondary" onclick="changeZoom(-0.2)">
-                    −
-                </button>
-
-                <span id="zoomLabel">100%</span>
-
-                <button class="secondary" onclick="changeZoom(0.2)">
-                    +
-                </button>
+                <button class="secondary" onclick="zoomBy(-0.2)">−</button>
+                <span id="zoomValue">100%</span>
+                <button class="secondary" onclick="zoomBy(0.2)">+</button>
 
             </div>
 
-            <div class="panel-content">
+            <div id="viewer">
 
-                <div class="search-row">
-                    <input id="searchInput"
-                           type="text"
-                           placeholder="Search a word in PDF">
+                <div id="pageStage">
 
-                    <button onclick="searchPDF()">Search</button>
-                </div>
-
-                <div id="searchStatus" class="status hidden"></div>
-
-                <div id="pdfViewport">
                     <canvas id="pdfCanvas"></canvas>
+
+                    <div id="textLayer"></div>
+
                 </div>
+
+            </div>
+
+            <div class="panel-body">
 
                 <div class="note">
-                    Reader mode displays the original PDF page.
-                    Click Edit PDF to open the extracted text in the editor.
+                    Edit Mode में टेक्स्ट की किसी लाइन पर क्लिक करके उसे चुनें।
+                    फिर नीचे Replace Text में नया टेक्स्ट डालें।
+                    यह संस्करण चुने हुए टेक्स्ट आइटम को बदलता है; पूरे PDF में
+                    किसी भी शब्द का सटीक inline replacement हर फाइल में संभव नहीं है।
+                </div>
+
+                <div id="selectionInfo" class="status">
+                    No text selected.
+                </div>
+
+                <div class="editor-box">
+
+                    <h3>✏️ Replace Selected Text</h3>
+
+                    <label for="oldText">Selected / Original Text</label>
+                    <textarea id="oldText" rows="2"
+                              placeholder="Select a text item from the page"></textarea>
+
+                    <label for="newText">New Text</label>
+                    <textarea id="newText" rows="2"
+                              placeholder="Enter replacement text"></textarea>
+
+                    <div class="row" style="margin-top:10px">
+                        <button onclick="replaceSelectedText()">Replace Text</button>
+                        <button class="secondary" onclick="clearSelection()">Clear</button>
+                        <button class="secondary" onclick="undoLastChange()">Undo Last</button>
+                    </div>
+
+                    <div id="editStatus" class="status">
+                        Open a PDF and select a text item in Edit Mode.
+                    </div>
+
+                </div>
+
+                <div class="editor-box">
+
+                    <h3>🔎 Search Text</h3>
+
+                    <div class="row">
+                        <input type="text" id="searchText"
+                               placeholder="Search in current PDF">
+                        <button onclick="searchText()">Search</button>
+                    </div>
+
+                    <div id="searchStatus" class="status"></div>
+
                 </div>
 
             </div>
@@ -447,221 +458,135 @@ footer {
         </section>
 
 
-        <!-- EDITOR -->
+        <aside class="panel side-panel">
 
-        <section class="editor-panel hidden" id="editorPanel">
+            <div class="panel-title">🛠️ PDF Tools</div>
 
-            <div class="panel-heading">
-                ✏️ Editable Document
-            </div>
+            <div class="panel-body">
 
-            <div class="panel-content">
+                <div class="tool-card">
 
-                <div class="note">
-                    Edit the extracted document text below. The original
-                    PDF layout may change when the edited text is exported.
+                    <h3>📚 Merge PDF</h3>
+
+                    <input type="file" id="mergeInput"
+                           accept=".pdf,application/pdf" multiple
+                           style="display:block;width:100%">
+
+                    <button onclick="mergePDFs()">Merge & Download</button>
+
+                    <div id="mergeStatus" class="status"></div>
+
                 </div>
 
-                <div class="editor-toolbar">
+                <div class="tool-card" style="margin-top:12px">
 
-                    <button class="secondary"
-                            onclick="formatText('bold')">
-                        <b>B</b>
-                    </button>
+                    <h3>✂️ Extract Pages</h3>
 
-                    <button class="secondary"
-                            onclick="formatText('italic')">
-                        <i>I</i>
-                    </button>
+                    <input type="text" id="pageRanges"
+                           placeholder="Example: 1,3,5-8">
 
-                    <button class="secondary"
-                            onclick="formatText('underline')">
-                        <u>U</u>
-                    </button>
+                    <button onclick="extractPages()">Extract PDF</button>
 
-                    <button class="secondary"
-                            onclick="formatText('justifyLeft')">
-                        Left
-                    </button>
+                    <div id="splitStatus" class="status"></div>
 
-                    <button class="secondary"
-                            onclick="formatText('justifyCenter')">
-                        Center
-                    </button>
+                </div>
 
-                    <button class="secondary"
-                            onclick="formatText('justifyRight')">
-                        Right
-                    </button>
+                <div class="tool-card" style="margin-top:12px">
 
-                    <select id="fontSizeSelect"
-                            onchange="setFontSize(this.value)">
-                        <option value="2">Small</option>
-                        <option value="3" selected>Normal</option>
-                        <option value="4">Large</option>
-                        <option value="5">Very Large</option>
-                        <option value="6">Heading</option>
-                        <option value="7">Huge</option>
+                    <h3>🔄 Rotate PDF</h3>
+
+                    <select id="rotateAngle" style="width:100%">
+                        <option value="90">90° clockwise</option>
+                        <option value="180">180°</option>
+                        <option value="270">270° clockwise</option>
                     </select>
 
-                    <button class="secondary"
-                            onclick="formatText('removeFormat')">
-                        Clear Format
+                    <button onclick="rotatePDF()" style="margin-top:8px">
+                        Rotate All Pages
                     </button>
+
+                    <div id="rotateStatus" class="status"></div>
 
                 </div>
 
-                <div id="textEditor"
-                     contenteditable="true"
-                     spellcheck="true"
-                     aria-label="Editable document text">
-                </div>
+                <div class="tool-card" style="margin-top:12px">
 
-                <div class="button-row"
-                     style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+                    <h3>🖼️ Image to PDF</h3>
 
-                    <button onclick="saveEditedDocument()" class="success">
-                        💾 Save as PDF
-                    </button>
+                    <input type="file" id="imageInput"
+                           accept="image/*" multiple
+                           style="display:block;width:100%">
 
-                    <button onclick="downloadText()" class="secondary">
-                        Download TXT
-                    </button>
+                    <button onclick="imagesToPDF()">Convert Images</button>
 
-                    <button onclick="setMode('reader')" class="secondary">
-                        Back to Reader
-                    </button>
+                    <div id="imageStatus" class="status"></div>
 
                 </div>
 
-                <div id="editStatus" class="status">
-                    Open a PDF and click Edit PDF.
-                </div>
+                <div class="tool-card" style="margin-top:12px">
 
-            </div>
+                    <h3>📷 PDF to PNG</h3>
 
-        </section>
+                    <button onclick="exportPNG()">Download Current Page</button>
 
-
-        <!-- PDF TOOLS -->
-
-        <section class="tools-panel">
-
-            <div class="panel-heading">
-                🛠️ Additional PDF Tools
-            </div>
-
-            <div class="panel-content">
-
-                <div class="tool-grid">
-
-                    <article class="tool-card">
-                        <h3>📚 Merge PDF</h3>
-                        <p>Combine multiple PDF documents into one file.</p>
-
-                        <input type="file" id="mergeInput"
-                               accept=".pdf,application/pdf" multiple
-                               style="display:block">
-
-                        <button onclick="mergePDFs()">Merge & Download</button>
-                        <div id="mergeStatus" class="status"></div>
-                    </article>
-
-                    <article class="tool-card">
-                        <h3>✂️ Extract Pages</h3>
-                        <p>Extract selected pages from the opened PDF.</p>
-
-                        <input id="splitRanges"
-                               placeholder="Example: 1,3,5-8">
-
-                        <button onclick="extractPages()">Extract PDF</button>
-                        <div id="splitStatus" class="status"></div>
-                    </article>
-
-                    <article class="tool-card">
-                        <h3>🖼️ Image to PDF</h3>
-                        <p>Convert multiple images into a single PDF.</p>
-
-                        <input type="file" id="imageInput"
-                               accept="image/*" multiple
-                               style="display:block">
-
-                        <button onclick="imagesToPDF()">Convert to PDF</button>
-                        <div id="imageStatus" class="status"></div>
-                    </article>
-
-                    <article class="tool-card">
-                        <h3>📷 PDF to Image</h3>
-                        <p>Convert the current PDF page into a PNG image.</p>
-
-                        <button onclick="exportCurrentPageImage()">
-                            Download Current Page PNG
-                        </button>
-
-                        <div id="pngStatus" class="status"></div>
-                    </article>
+                    <div id="pngStatus" class="status"></div>
 
                 </div>
 
             </div>
 
-        </section>
+        </aside>
 
     </div>
 
 </main>
 
 <footer>
-    <strong>PDF Reader & Editor</strong><br>
-    Browser-based PDF tools for students, teachers and professionals.
-    <br>
-    Your selected files are processed locally in your browser.
+    <strong>PDF Pro Editor</strong><br>
+    Browser-based PDF reader and document editing tools.
 </footer>
 
 
 <script>
 
-/* ===================================================
-   GLOBAL VARIABLES
-=================================================== */
-
 pdfjsLib.GlobalWorkerOptions.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-const { PDFDocument, StandardFonts, rgb } = PDFLib;
+const { PDFDocument, rgb, StandardFonts, degrees } = PDFLib;
 
-let pdfDocument = null;
-let originalPdfBytes = null;
+let pdfDoc = null;
+let originalBytes = null;
+let currentFileName = "document.pdf";
 let currentPage = 1;
 let zoom = 1;
-let pageRendering = false;
-let pendingPage = null;
-let textContentCache = new Map();
-let extractedPages = [];
-let originalFilename = "document.pdf";
+let editMode = false;
+let selectedItem = null;
+let pageItems = [];
+let overlays = [];
+let history = [];
+let rendering = false;
+let renderQueue = null;
 
 
-/* ===================================================
-   UTILITIES
-=================================================== */
+/* =====================================================
+   HELPERS
+===================================================== */
 
-function status(id, message, type = "") {
-    const el = document.getElementById(id);
+function setStatus(id, message, type = "") {
+    const element = document.getElementById(id);
 
-    if (!el) return;
-
-    el.className = "status" + (type ? " " + type : "");
-    el.textContent = message;
+    element.className = "status" + (type ? " " + type : "");
+    element.textContent = message;
 }
 
-function cleanFilename(name) {
-    return name
-        .replace(/\.[^.]+$/, "")
-        .replace(/[^a-z0-9_-]/gi, "_")
-        .slice(0, 80) || "document";
+function cleanName(name) {
+    return name.replace(/\.[^.]+$/, "")
+               .replace(/[^a-z0-9_-]/gi, "_")
+               .slice(0, 70) || "document";
 }
 
-function downloadBlob(blob, filename) {
+function downloadBytes(bytes, filename, type = "application/pdf") {
+    const blob = new Blob([bytes], { type });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
 
@@ -674,31 +599,38 @@ function downloadBlob(blob, filename) {
     setTimeout(() => URL.revokeObjectURL(url), 30000);
 }
 
-function downloadBytes(bytes, filename) {
-    downloadBlob(
-        new Blob([bytes], { type: "application/pdf" }),
-        filename
+function setEditMode(enabled) {
+    editMode = enabled;
+
+    const layer = document.getElementById("textLayer");
+
+    layer.classList.toggle("editing", enabled);
+
+    setStatus(
+        "globalStatus",
+        enabled
+            ? "Edit Mode enabled. Click a text item on the PDF page to select it."
+            : "Reader Mode enabled. Original PDF is displayed.",
+        "ok"
     );
 }
 
-function setMode(mode) {
-
-    const reader = document.getElementById("readerPanel");
-    const editor = document.getElementById("editorPanel");
-
-    if (mode === "editor") {
-        reader.classList.add("hidden");
-        editor.classList.remove("hidden");
-    } else {
-        editor.classList.add("hidden");
-        reader.classList.remove("hidden");
+function downloadOriginal() {
+    if (!originalBytes) {
+        setStatus("globalStatus", "Open a PDF first.", "error");
+        return;
     }
+
+    downloadBytes(
+        originalBytes.slice(0),
+        currentFileName
+    );
 }
 
 
-/* ===================================================
+/* =====================================================
    OPEN PDF
-=================================================== */
+===================================================== */
 
 document.getElementById("pdfInput").addEventListener(
     "change",
@@ -710,52 +642,42 @@ document.getElementById("pdfInput").addEventListener(
 
         try {
 
-            status("fileStatus", "Opening PDF...");
+            setStatus("globalStatus", "Opening PDF...");
 
-            originalFilename = file.name;
+            currentFileName = file.name;
+            originalBytes = await file.arrayBuffer();
 
-            originalPdfBytes = await file.arrayBuffer();
-
-            // Keep separate copies for PDF.js and PDF-lib.
-            const loadingTask = pdfjsLib.getDocument({
-                data: originalPdfBytes.slice(0)
+            const task = pdfjsLib.getDocument({
+                data: originalBytes.slice(0)
             });
 
-            pdfDocument = await loadingTask.promise;
+            pdfDoc = await task.promise;
 
             currentPage = 1;
             zoom = 1;
+            overlays = [];
+            history = [];
+            selectedItem = null;
 
-            textContentCache.clear();
-            extractedPages = [];
+            document.getElementById("totalPages").textContent =
+                "/ " + pdfDoc.numPages;
 
-            document.getElementById("pageTotal").textContent =
-                "/ " + pdfDocument.numPages;
-
-            document.getElementById("pageNumber").max =
-                pdfDocument.numPages;
-
-            document.getElementById("pageNumber").value = 1;
-
-            document.getElementById("zoomLabel").textContent = "100%";
-
-            document.getElementById("uploadBox").classList.add("hidden");
-
-            setMode("reader");
+            document.getElementById("pageInput").max =
+                pdfDoc.numPages;
 
             await renderPage(1);
 
-            status(
-                "fileStatus",
-                `Opened ${file.name} — ${pdfDocument.numPages} pages.`,
+            setStatus(
+                "globalStatus",
+                `${file.name} opened successfully. ${pdfDoc.numPages} pages.`,
                 "ok"
             );
 
         } catch (error) {
 
-            status(
-                "fileStatus",
-                "Unable to open PDF: " + error.message,
+            setStatus(
+                "globalStatus",
+                "Could not open PDF: " + error.message,
                 "error"
             );
 
@@ -764,27 +686,24 @@ document.getElementById("pdfInput").addEventListener(
 );
 
 
-/* ===================================================
-   RENDER PDF PAGE
-=================================================== */
+/* =====================================================
+   RENDER PDF + TEXT LAYER
+===================================================== */
 
 async function renderPage(pageNumber) {
 
-    if (!pdfDocument) {
-        status("fileStatus", "Please open a PDF first.", "error");
+    if (!pdfDoc) return;
+
+    if (rendering) {
+        renderQueue = pageNumber;
         return;
     }
 
-    if (pageRendering) {
-        pendingPage = pageNumber;
-        return;
-    }
-
-    pageRendering = true;
+    rendering = true;
 
     try {
 
-        const page = await pdfDocument.getPage(pageNumber);
+        const page = await pdfDoc.getPage(pageNumber);
 
         const viewport = page.getViewport({
             scale: zoom
@@ -796,482 +715,547 @@ async function renderPage(pageNumber) {
         canvas.width = Math.ceil(viewport.width);
         canvas.height = Math.ceil(viewport.height);
 
+        const stage = document.getElementById("pageStage");
+
+        stage.style.width = canvas.width + "px";
+        stage.style.height = canvas.height + "px";
+
+        document.getElementById("textLayer").style.width =
+            canvas.width + "px";
+
+        document.getElementById("textLayer").style.height =
+            canvas.height + "px";
+
         await page.render({
             canvasContext: context,
             viewport: viewport
         }).promise;
 
+        await buildTextLayer(page, viewport);
+
         currentPage = pageNumber;
 
-        document.getElementById("pageNumber").value = pageNumber;
-
-        document.getElementById("zoomLabel").textContent =
+        document.getElementById("pageInput").value = pageNumber;
+        document.getElementById("zoomValue").textContent =
             Math.round(zoom * 100) + "%";
 
     } catch (error) {
 
-        status("fileStatus", error.message, "error");
+        setStatus("globalStatus", error.message, "error");
 
     } finally {
 
-        pageRendering = false;
+        rendering = false;
 
-        if (pendingPage !== null) {
-            const next = pendingPage;
-            pendingPage = null;
+        if (renderQueue !== null) {
+            const next = renderQueue;
+            renderQueue = null;
             await renderPage(next);
         }
     }
 }
 
-function previousPage() {
-    if (pdfDocument && currentPage > 1) {
-        renderPage(currentPage - 1);
+async function buildTextLayer(page, viewport) {
+
+    const layer = document.getElementById("textLayer");
+
+    layer.innerHTML = "";
+    pageItems = [];
+
+    const content = await page.getTextContent();
+
+    let index = 0;
+
+    for (const item of content.items) {
+
+        if (!item.str || !item.str.trim()) continue;
+
+        const tx = pdfjsLib.Util.transform(
+            viewport.transform,
+            item.transform
+        );
+
+        const fontHeight = Math.hypot(tx[2], tx[3]);
+
+        const span = document.createElement("span");
+
+        span.textContent = item.str;
+
+        span.style.left = tx[4] + "px";
+        span.style.top = (tx[5] - fontHeight) + "px";
+        span.style.fontSize = fontHeight + "px";
+        span.style.height = fontHeight + "px";
+
+        span.style.fontFamily = "sans-serif";
+
+        // Width is based on PDF.js's item width, scaled to the viewport.
+        span.style.width =
+            Math.max(1, item.width * zoom) + "px";
+
+        span.dataset.index = index;
+
+        const record = {
+            index: index,
+            text: item.str,
+            x: item.transform[4],
+            y: item.transform[5],
+            width: item.width,
+            height: Math.abs(item.transform[3]) || fontHeight,
+            fontSize: fontHeight / zoom,
+            fontName: item.fontName || "",
+            page: currentPage
+        };
+
+        pageItems.push(record);
+
+        span.addEventListener("click", () => {
+
+            if (!editMode) return;
+
+            selectItem(record, span);
+        });
+
+        layer.appendChild(span);
+
+        index++;
     }
+
+    applyOverlaysToCanvas(page, viewport);
 }
 
-function nextPage() {
-    if (pdfDocument && currentPage < pdfDocument.numPages) {
-        renderPage(currentPage + 1);
-    }
-}
 
-function goToPage() {
+/* =====================================================
+   SELECT TEXT
+===================================================== */
 
-    if (!pdfDocument) return;
+function selectItem(record, span) {
 
-    const page = Number(
-        document.getElementById("pageNumber").value
+    selectedItem = record;
+
+    document.querySelectorAll("#textLayer span")
+        .forEach(el => el.classList.remove("selected"));
+
+    span.classList.add("selected");
+
+    document.getElementById("oldText").value =
+        record.text;
+
+    document.getElementById("newText").value =
+        record.text;
+
+    setStatus(
+        "selectionInfo",
+        `Selected: "${record.text}" | Page ${record.page}`,
+        "ok"
     );
+}
 
-    if (
-        !Number.isInteger(page) ||
-        page < 1 ||
-        page > pdfDocument.numPages
-    ) {
-        status(
-            "fileStatus",
-            `Enter a page between 1 and ${pdfDocument.numPages}.`,
+function clearSelection() {
+
+    selectedItem = null;
+
+    document.getElementById("oldText").value = "";
+    document.getElementById("newText").value = "";
+
+    document.querySelectorAll("#textLayer span")
+        .forEach(el => el.classList.remove("selected"));
+
+    setStatus("selectionInfo", "No text selected.");
+}
+
+
+/* =====================================================
+   TEXT REPLACEMENT OVERLAY
+===================================================== */
+
+/*
+ * Important:
+ * This implementation creates a white rectangle over the selected
+ * PDF text and draws the replacement text on top.
+ *
+ * It does not modify the original PDF's internal text objects.
+ * Complex backgrounds, overlapping graphics, transparency, and
+ * embedded font metrics may require a more advanced editing engine.
+ */
+
+function replaceSelectedText() {
+
+    if (!pdfDoc || !originalBytes) {
+        setStatus("editStatus", "Open a PDF first.", "error");
+        return;
+    }
+
+    if (!editMode) {
+        setStatus(
+            "editStatus",
+            "Enable Edit Mode first.",
             "error"
         );
         return;
     }
 
-    renderPage(page);
+    if (!selectedItem) {
+        setStatus(
+            "editStatus",
+            "Select a text item from the page.",
+            "error"
+        );
+        return;
+    }
+
+    const oldText = document.getElementById("oldText").value;
+    const newText = document.getElementById("newText").value;
+
+    if (!oldText.trim()) {
+        setStatus("editStatus", "Original text is empty.", "error");
+        return;
+    }
+
+    if (!newText.trim()) {
+        setStatus(
+            "editStatus",
+            "Replacement text cannot be empty.",
+            "error"
+        );
+        return;
+    }
+
+    const record = selectedItem;
+
+    history.push({
+        page: record.page,
+        overlays: overlays.map(x => ({ ...x }))
+    });
+
+    const item = {
+        page: record.page,
+        x: record.x,
+        y: record.y,
+        width: record.width,
+        height: record.height,
+        fontSize: record.fontSize,
+        oldText: oldText,
+        newText: newText
+    };
+
+    overlays.push(item);
+
+    setStatus(
+        "editStatus",
+        "Replacement recorded. Save PDF to export the changes.",
+        "ok"
+    );
+
+    clearSelection();
+
+    renderPage(currentPage);
 }
 
-function changeZoom(amount) {
 
-    if (!pdfDocument) return;
+/* =====================================================
+   APPLY EDIT OVERLAYS
+===================================================== */
 
-    zoom = Math.min(
-        3,
-        Math.max(0.4, zoom + amount)
+async function applyOverlaysToCanvas(page, viewport) {
+
+    // The visible canvas is first rendered from the original PDF.
+    // Apply recorded replacements as a visual preview.
+
+    const ctx = document.getElementById("pdfCanvas").getContext("2d");
+
+    for (const item of overlays) {
+
+        if (item.page !== currentPage) continue;
+
+        const point = viewport.convertToViewportPoint(
+            item.x,
+            item.y
+        );
+
+        const x = point[0];
+        const y = point[1];
+
+        const height = Math.max(
+            8,
+            item.fontSize * zoom
+        );
+
+        const width = Math.max(
+            item.width * zoom,
+            height
+        );
+
+        // White-out the old text. This simple method works best
+        // on plain white backgrounds.
+        ctx.save();
+
+        ctx.fillStyle = "white";
+
+        ctx.fillRect(
+            x,
+            y - height,
+            width + 3,
+            height + 4
+        );
+
+        ctx.fillStyle = "#111111";
+
+        ctx.font = `${height}px sans-serif`;
+
+        ctx.textBaseline = "alphabetic";
+
+        ctx.fillText(
+            item.newText,
+            x,
+            y
+        );
+
+        ctx.restore();
+    }
+}
+
+
+/* =====================================================
+   SAVE PDF
+===================================================== */
+
+async function savePDF() {
+
+    if (!originalBytes) {
+        setStatus("globalStatus", "Open a PDF first.", "error");
+        return;
+    }
+
+    try {
+
+        setStatus(
+            "globalStatus",
+            "Saving PDF changes..."
+        );
+
+        const doc = await PDFDocument.load(
+            originalBytes.slice(0)
+        );
+
+        const font = await doc.embedFont(
+            StandardFonts.Helvetica
+        );
+
+        for (const item of overlays) {
+
+            const page = doc.getPage(item.page - 1);
+
+            const fontSize = Math.max(
+                6,
+                Math.min(72, item.fontSize || 12)
+            );
+
+            const padding = 2;
+
+            const boxWidth = Math.max(
+                item.width + padding * 2,
+                font.widthOfTextAtSize(
+                    item.newText,
+                    fontSize
+                ) + padding * 2
+            );
+
+            const boxHeight = Math.max(
+                item.height + padding * 2,
+                fontSize + padding * 2
+            );
+
+            /*
+             * Coordinates come from PDF.js text transforms.
+             * Exact font metrics may differ from the original.
+             */
+
+            page.drawRectangle({
+                x: item.x - padding,
+                y: item.y - padding,
+                width: boxWidth,
+                height: boxHeight,
+                color: rgb(1, 1, 1)
+            });
+
+            page.drawText(item.newText, {
+                x: item.x,
+                y: item.y,
+                size: fontSize,
+                font,
+                color: rgb(0.05, 0.05, 0.05),
+                maxWidth: Math.max(20, page.getWidth() - item.x - 10)
+            });
+        }
+
+        const bytes = await doc.save();
+
+        downloadBytes(
+            bytes,
+            cleanName(currentFileName) + "_edited.pdf"
+        );
+
+        setStatus(
+            "globalStatus",
+            "Edited PDF downloaded. The original file remains unchanged.",
+            "ok"
+        );
+
+    } catch (error) {
+
+        setStatus(
+            "globalStatus",
+            "Could not save PDF: " + error.message,
+            "error"
+        );
+
+    }
+}
+
+
+/* =====================================================
+   UNDO
+===================================================== */
+
+function undoLastChange() {
+
+    if (!history.length) {
+        setStatus("editStatus", "Nothing to undo.");
+        return;
+    }
+
+    const previous = history.pop();
+
+    overlays = previous.overlays;
+
+    renderPage(currentPage);
+
+    setStatus(
+        "editStatus",
+        "Last replacement undone.",
+        "ok"
+    );
+}
+
+
+/* =====================================================
+   PAGE NAVIGATION AND ZOOM
+===================================================== */
+
+function previousPage() {
+
+    if (pdfDoc && currentPage > 1) {
+        renderPage(currentPage - 1);
+    }
+}
+
+function nextPage() {
+
+    if (pdfDoc && currentPage < pdfDoc.numPages) {
+        renderPage(currentPage + 1);
+    }
+}
+
+function goPage() {
+
+    if (!pdfDoc) return;
+
+    const number = Number(
+        document.getElementById("pageInput").value
+    );
+
+    if (
+        !Number.isInteger(number) ||
+        number < 1 ||
+        number > pdfDoc.numPages
+    ) {
+        setStatus(
+            "globalStatus",
+            "Invalid page number.",
+            "error"
+        );
+        return;
+    }
+
+    renderPage(number);
+}
+
+function zoomBy(amount) {
+
+    if (!pdfDoc) return;
+
+    zoom = Math.max(
+        0.4,
+        Math.min(3, zoom + amount)
     );
 
     renderPage(currentPage);
 }
 
 
-/* ===================================================
-   EXTRACT PDF TEXT
-=================================================== */
+/* =====================================================
+   SEARCH
+===================================================== */
 
-async function extractPageText(pageNumber) {
+async function searchText() {
 
-    if (textContentCache.has(pageNumber)) {
-        return textContentCache.get(pageNumber);
-    }
-
-    const page = await pdfDocument.getPage(pageNumber);
-
-    const content = await page.getTextContent();
-
-    const lines = [];
-    let previousY = null;
-    let currentLine = "";
-
-    for (const item of content.items) {
-
-        if (!item.str) continue;
-
-        const y = item.transform ? item.transform[5] : null;
-
-        if (
-            previousY !== null &&
-            y !== null &&
-            Math.abs(y - previousY) > 4
-        ) {
-            lines.push(currentLine);
-            currentLine = "";
-        }
-
-        currentLine += item.str;
-
-        if (item.hasEOL) {
-            lines.push(currentLine);
-            currentLine = "";
-        }
-
-        previousY = y;
-    }
-
-    if (currentLine) {
-        lines.push(currentLine);
-    }
-
-    const result = lines.join("\n");
-
-    textContentCache.set(pageNumber, result);
-
-    return result;
-}
-
-
-/* ===================================================
-   EDIT MODE
-=================================================== */
-
-async function enterEditMode() {
-
-    if (!pdfDocument) {
-        status(
-            "fileStatus",
-            "Please open a PDF before editing.",
-            "error"
-        );
-        return;
-    }
-
-    try {
-
-        status(
-            "editStatus",
-            "Extracting text from PDF pages..."
-        );
-
-        let combinedText = "";
-
-        extractedPages = [];
-
-        for (
-            let page = 1;
-            page <= pdfDocument.numPages;
-            page++
-        ) {
-
-            const text = await extractPageText(page);
-
-            extractedPages.push({
-                pageNumber: page,
-                text: text
-            });
-
-            combinedText +=
-                `\n\n========== PAGE ${page} ==========\n\n` +
-                (text || "[No selectable text found on this page.]");
-        }
-
-        const editor = document.getElementById("textEditor");
-
-        // Use textContent, not innerHTML, for safe initial insertion.
-        editor.textContent = combinedText.trim();
-
-        setMode("editor");
-
-        status(
-            "editStatus",
-            "Edit mode enabled. You can now modify the extracted text.",
-            "ok"
-        );
-
-    } catch (error) {
-
-        status(
-            "editStatus",
-            "Could not extract text: " + error.message,
-            "error"
-        );
-
-    }
-}
-
-
-/* ===================================================
-   WORD-LIKE FORMATTING
-=================================================== */
-
-function formatText(command) {
-
-    document.getElementById("textEditor").focus();
-
-    document.execCommand(command, false, null);
-}
-
-function setFontSize(value) {
-
-    document.getElementById("textEditor").focus();
-
-    document.execCommand(
-        "fontSize",
-        false,
-        String(value)
-    );
-}
-
-
-/* ===================================================
-   EXPORT EDITED TEXT AS PDF
-=================================================== */
-
-async function saveEditedDocument() {
-
-    try {
-
-        const editor = document.getElementById("textEditor");
-
-        const content = editor.innerText.trim();
-
-        if (!content) {
-            throw new Error("There is no text to export.");
-        }
-
-        status(
-            "editStatus",
-            "Creating a new PDF from the edited text..."
-        );
-
-        const output = await PDFDocument.create();
-
-        const font = await output.embedFont(
-            StandardFonts.Helvetica
-        );
-
-        const boldFont = await output.embedFont(
-            StandardFonts.HelveticaBold
-        );
-
-        const pageWidth = 595.28;
-        const pageHeight = 841.89;
-
-        const margin = 48;
-        const fontSize = 11;
-        const lineHeight = 16;
-
-        let page = output.addPage([
-            pageWidth,
-            pageHeight
-        ]);
-
-        let y = pageHeight - margin;
-
-        const paragraphs = content.split(/\r?\n/);
-
-        for (const paragraph of paragraphs) {
-
-            const words = paragraph.split(/\s+/);
-            let line = "";
-
-            if (!paragraph.trim()) {
-                y -= lineHeight;
-            } else {
-
-                for (const word of words) {
-
-                    const candidate = line
-                        ? line + " " + word
-                        : word;
-
-                    const width = font.widthOfTextAtSize(
-                        candidate,
-                        fontSize
-                    );
-
-                    if (
-                        width > pageWidth - margin * 2 &&
-                        line
-                    ) {
-
-                        if (y < margin) {
-                            page = output.addPage([
-                                pageWidth,
-                                pageHeight
-                            ]);
-
-                            y = pageHeight - margin;
-                        }
-
-                        page.drawText(line, {
-                            x: margin,
-                            y: y,
-                            size: fontSize,
-                            font: font,
-                            color: rgb(0.1, 0.1, 0.1)
-                        });
-
-                        y -= lineHeight;
-
-                        line = word;
-
-                    } else {
-                        line = candidate;
-                    }
-                }
-
-                if (line) {
-
-                    if (y < margin) {
-                        page = output.addPage([
-                            pageWidth,
-                            pageHeight
-                        ]);
-
-                        y = pageHeight - margin;
-                    }
-
-                    page.drawText(line, {
-                        x: margin,
-                        y: y,
-                        size: fontSize,
-                        font: font,
-                        color: rgb(0.1, 0.1, 0.1)
-                    });
-
-                    y -= lineHeight;
-                }
-            }
-
-            y -= 3;
-        }
-
-        const bytes = await output.save();
-
-        downloadBytes(
-            bytes,
-            cleanFilename(originalFilename) + "_edited.pdf"
-        );
-
-        status(
-            "editStatus",
-            "Edited text exported as a new PDF. Original PDF is unchanged.",
-            "ok"
-        );
-
-    } catch (error) {
-
-        status(
-            "editStatus",
-            "Export failed: " + error.message,
-            "error"
-        );
-
-    }
-}
-
-
-/* ===================================================
-   EXPORT TXT
-=================================================== */
-
-function downloadText() {
-
-    const text = document
-        .getElementById("textEditor")
-        .innerText;
-
-    if (!text.trim()) {
-
-        status(
-            "editStatus",
-            "No text is available to download.",
-            "error"
-        );
-
-        return;
-    }
-
-    downloadBlob(
-        new Blob([text], {
-            type: "text/plain;charset=utf-8"
-        }),
-        cleanFilename(originalFilename) + ".txt"
-    );
-}
-
-
-/* ===================================================
-   SEARCH PDF
-=================================================== */
-
-async function searchPDF() {
-
-    if (!pdfDocument) {
-        status("searchStatus", "Open a PDF first.", "error");
+    if (!pdfDoc) {
+        setStatus("searchStatus", "Open a PDF first.", "error");
         return;
     }
 
     const query = document
-        .getElementById("searchInput")
-        .value.trim()
-        .toLowerCase();
+        .getElementById("searchText")
+        .value.trim().toLowerCase();
 
     if (!query) {
-        status("searchStatus", "Enter a word to search.", "error");
+        setStatus("searchStatus", "Enter a search word.", "error");
         return;
     }
 
     const matches = [];
 
-    status("searchStatus", "Searching all pages...");
-
     try {
 
-        for (
-            let pageNumber = 1;
-            pageNumber <= pdfDocument.numPages;
-            pageNumber++
-        ) {
+        for (let p = 1; p <= pdfDoc.numPages; p++) {
 
-            const text = await extractPageText(pageNumber);
+            const page = await pdfDoc.getPage(p);
 
-            if (text.toLowerCase().includes(query)) {
-                matches.push(pageNumber);
+            const content = await page.getTextContent();
+
+            const text = content.items
+                .map(item => item.str || "")
+                .join(" ")
+                .toLowerCase();
+
+            if (text.includes(query)) {
+                matches.push(p);
             }
         }
 
-        const searchBox = document.getElementById("searchStatus");
-
-        searchBox.classList.remove("hidden");
+        setStatus(
+            "searchStatus",
+            matches.length
+                ? `Found on pages: ${matches.join(", ")}`
+                : "No matching text found.",
+            matches.length ? "ok" : ""
+        );
 
         if (matches.length) {
-
-            searchBox.textContent =
-                `Found "${query}" on pages: ${matches.join(", ")}`;
-
-            searchBox.className = "status ok";
-
             renderPage(matches[0]);
-
-        } else {
-
-            searchBox.textContent =
-                `No matches found for "${query}". Scanned PDFs may require OCR.`;
-
-            searchBox.className = "status";
-
         }
 
     } catch (error) {
 
-        status("searchStatus", error.message, "error");
+        setStatus("searchStatus", error.message, "error");
 
     }
 }
 
 
-/* ===================================================
+/* =====================================================
    MERGE PDF
-=================================================== */
+===================================================== */
 
 async function mergePDFs() {
 
@@ -1285,9 +1269,9 @@ async function mergePDFs() {
             throw new Error("Select at least two PDF files.");
         }
 
-        status("mergeStatus", "Merging PDF files...");
+        setStatus("mergeStatus", "Merging files...");
 
-        const merged = await PDFDocument.create();
+        const output = await PDFDocument.create();
 
         for (const file of files) {
 
@@ -1295,37 +1279,33 @@ async function mergePDFs() {
 
             const source = await PDFDocument.load(bytes);
 
-            const pages = await merged.copyPages(
+            const pages = await output.copyPages(
                 source,
                 source.getPageIndices()
             );
 
-            pages.forEach(page => merged.addPage(page));
+            pages.forEach(page => output.addPage(page));
         }
 
-        const bytes = await merged.save();
+        const bytes = await output.save();
 
         downloadBytes(bytes, "merged.pdf");
 
-        status(
-            "mergeStatus",
-            "PDF files merged successfully.",
-            "ok"
-        );
+        setStatus("mergeStatus", "PDFs merged successfully.", "ok");
 
     } catch (error) {
 
-        status("mergeStatus", error.message, "error");
+        setStatus("mergeStatus", error.message, "error");
 
     }
 }
 
 
-/* ===================================================
-   EXTRACT SELECTED PAGES
-=================================================== */
+/* =====================================================
+   EXTRACT PAGES
+===================================================== */
 
-function parsePageRanges(value, total) {
+function parseRanges(value, total) {
 
     const result = new Set();
 
@@ -1335,30 +1315,30 @@ function parsePageRanges(value, total) {
 
         if (/^\d+$/.test(item)) {
 
-            const n = Number(item);
+            const page = Number(item);
 
-            if (n < 1 || n > total) {
+            if (page < 1 || page > total) {
                 throw new Error("Page number out of range.");
             }
 
-            result.add(n - 1);
+            result.add(page - 1);
 
         } else if (/^\d+\s*-\s*\d+$/.test(item)) {
 
-            const [a, b] = item
+            const [start, end] = item
                 .split("-")
-                .map(x => Number(x.trim()));
+                .map(n => Number(n.trim()));
 
-            if (a < 1 || b > total || a > b) {
+            if (start < 1 || end > total || start > end) {
                 throw new Error("Invalid page range.");
             }
 
-            for (let i = a; i <= b; i++) {
+            for (let i = start; i <= end; i++) {
                 result.add(i - 1);
             }
 
         } else {
-            throw new Error("Invalid page range.");
+            throw new Error("Invalid range.");
         }
     }
 
@@ -1369,29 +1349,22 @@ async function extractPages() {
 
     try {
 
-        if (!originalPdfBytes) {
+        if (!originalBytes) {
             throw new Error("Open a PDF first.");
         }
 
         const source = await PDFDocument.load(
-            originalPdfBytes.slice(0)
+            originalBytes.slice(0)
         );
 
-        const range = document
-            .getElementById("splitRanges")
-            .value;
-
-        const indexes = parsePageRanges(
-            range,
+        const indexes = parseRanges(
+            document.getElementById("pageRanges").value,
             source.getPageCount()
         );
 
         const output = await PDFDocument.create();
 
-        const pages = await output.copyPages(
-            source,
-            indexes
-        );
+        const pages = await output.copyPages(source, indexes);
 
         pages.forEach(page => output.addPage(page));
 
@@ -1399,23 +1372,63 @@ async function extractPages() {
 
         downloadBytes(bytes, "extracted_pages.pdf");
 
-        status(
-            "splitStatus",
-            "Selected pages exported successfully.",
-            "ok"
-        );
+        setStatus("splitStatus", "Pages extracted successfully.", "ok");
 
     } catch (error) {
 
-        status("splitStatus", error.message, "error");
+        setStatus("splitStatus", error.message, "error");
 
     }
 }
 
 
-/* ===================================================
+/* =====================================================
+   ROTATE PDF
+===================================================== */
+
+async function rotatePDF() {
+
+    try {
+
+        if (!originalBytes) {
+            throw new Error("Open a PDF first.");
+        }
+
+        const doc = await PDFDocument.load(
+            originalBytes.slice(0)
+        );
+
+        const angle = Number(
+            document.getElementById("rotateAngle").value
+        );
+
+        doc.getPages().forEach(page => {
+
+            const current = page.getRotation().angle;
+
+            page.setRotation(
+                degrees((current + angle) % 360)
+            );
+
+        });
+
+        const bytes = await doc.save();
+
+        downloadBytes(bytes, "rotated.pdf");
+
+        setStatus("rotateStatus", "PDF rotated successfully.", "ok");
+
+    } catch (error) {
+
+        setStatus("rotateStatus", error.message, "error");
+
+    }
+}
+
+
+/* =====================================================
    IMAGE TO PDF
-=================================================== */
+===================================================== */
 
 async function imagesToPDF() {
 
@@ -1426,61 +1439,54 @@ async function imagesToPDF() {
         ];
 
         if (!files.length) {
-            throw new Error("Select at least one image.");
+            throw new Error("Select images first.");
         }
-
-        status("imageStatus", "Converting images...");
 
         const doc = await PDFDocument.create();
 
         for (const file of files) {
 
-            if (!file.type.startsWith("image/")) {
-                throw new Error("Invalid image file: " + file.name);
-            }
-
             const url = URL.createObjectURL(file);
 
             try {
 
-                const image = await new Promise(
-                    (resolve, reject) => {
+                const img = await new Promise((resolve, reject) => {
 
-                        const img = new Image();
+                    const image = new Image();
 
-                        img.onload = () => resolve(img);
+                    image.onload = () => resolve(image);
 
-                        img.onerror = () => reject(
-                            new Error("Cannot open " + file.name)
-                        );
+                    image.onerror = () => reject(
+                        new Error("Could not load " + file.name)
+                    );
 
-                        img.src = url;
-                    }
-                );
+                    image.src = url;
+
+                });
 
                 const canvas = document.createElement("canvas");
 
-                canvas.width = image.naturalWidth;
-                canvas.height = image.naturalHeight;
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
 
                 const ctx = canvas.getContext("2d");
 
                 ctx.fillStyle = "white";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                ctx.drawImage(image, 0, 0);
+                ctx.drawImage(img, 0, 0);
 
                 const blob = await new Promise(resolve =>
                     canvas.toBlob(resolve, "image/jpeg", 0.92)
                 );
 
                 if (!blob) {
-                    throw new Error("Unable to convert image.");
+                    throw new Error("Could not convert image.");
                 }
 
-                const bytes = await blob.arrayBuffer();
-
-                const embedded = await doc.embedJpg(bytes);
+                const embedded = await doc.embedJpg(
+                    await blob.arrayBuffer()
+                );
 
                 const width = 595.28;
                 const height = 841.89;
@@ -1509,37 +1515,34 @@ async function imagesToPDF() {
             }
         }
 
-        const bytes = await doc.save();
-
-        downloadBytes(bytes, "images_to_pdf.pdf");
-
-        status(
-            "imageStatus",
-            "Images converted successfully.",
-            "ok"
+        downloadBytes(
+            await doc.save(),
+            "images_to_pdf.pdf"
         );
+
+        setStatus("imageStatus", "Images converted successfully.", "ok");
 
     } catch (error) {
 
-        status("imageStatus", error.message, "error");
+        setStatus("imageStatus", error.message, "error");
 
     }
 }
 
 
-/* ===================================================
+/* =====================================================
    PDF TO PNG
-=================================================== */
+===================================================== */
 
-async function exportCurrentPageImage() {
+async function exportPNG() {
 
     try {
 
-        if (!pdfDocument) {
+        if (!pdfDoc) {
             throw new Error("Open a PDF first.");
         }
 
-        const page = await pdfDocument.getPage(currentPage);
+        const page = await pdfDoc.getPage(currentPage);
 
         const viewport = page.getViewport({
             scale: 2
@@ -1552,7 +1555,7 @@ async function exportCurrentPageImage() {
 
         await page.render({
             canvasContext: canvas.getContext("2d"),
-            viewport: viewport
+            viewport
         }).promise;
 
         const blob = await new Promise(resolve =>
@@ -1560,23 +1563,23 @@ async function exportCurrentPageImage() {
         );
 
         if (!blob) {
-            throw new Error("Could not create PNG.");
+            throw new Error("PNG export failed.");
         }
 
-        downloadBlob(
-            blob,
-            `pdf_page_${currentPage}.png`
-        );
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
 
-        status(
-            "pngStatus",
-            `Page ${currentPage} exported as PNG.`,
-            "ok"
-        );
+        a.href = url;
+        a.download = `page_${currentPage}.png`;
+        a.click();
+
+        setTimeout(() => URL.revokeObjectURL(url), 30000);
+
+        setStatus("pngStatus", "PNG downloaded.", "ok");
 
     } catch (error) {
 
-        status("pngStatus", error.message, "error");
+        setStatus("pngStatus", error.message, "error");
 
     }
 }
