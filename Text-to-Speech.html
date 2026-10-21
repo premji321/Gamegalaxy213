@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b18">
+
+<title>VOICE X — Advanced Text to Speech Studio</title>
+
+<style>
+:root{
+  --bg:#070b18;
+  --panel:#111a30;
+  --panel2:#182440;
+  --cyan:#00e5ff;
+  --purple:#9d4dff;
+  --pink:#ff3cac;
+  --green:#00ff9d;
+  --text:#f4f7ff;
+  --muted:#9aa9c9;
+  --border:rgba(255,255,255,.10);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  background:
+    radial-gradient(ellipse at top left,#15244b 0%,transparent 40%),
+    radial-gradient(ellipse at bottom right,#271047 0%,transparent 40%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,textarea,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:none;
+}
+
+header{
+  padding:22px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,11,24,.8);
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter:blur(18px);
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:2px;
+  color:var(--cyan);
+  text-shadow:0 0 20px rgba(0,229,255,.6);
+}
+
+.logo span{
+  color:white;
+}
+
+.badge{
+  padding:9px 14px;
+  border:1px solid rgba(0,255,157,.3);
+  color:var(--green);
+  background:rgba(0,255,157,.07);
+  border-radius:30px;
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.container{
+  width:min(1200px,94%);
+  margin:30px auto 60px;
+}
+
+.hero{
+  text-align:center;
+  padding:25px 10px 35px;
+}
+
+.hero h1{
+  font-size:clamp(30px,5vw,55px);
+  margin:0 0 12px;
+  font-weight:900;
+  background:linear-gradient(90deg,#fff,var(--cyan),#c18cff);
+  color:transparent;
+  background-clip:text;
+  -webkit-background-clip:text;
+}
+
+.hero p{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:700px;
+  margin:auto;
+}
+
+.studio{
+  display:grid;
+  grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);
+  gap:22px;
+}
+
+.card{
+  background:linear-gradient(145deg,rgba(24,36,64,.95),rgba(12,19,37,.95));
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 15px 50px rgba(0,0,0,.2);
+}
+
+.card h2{
+  font-size:18px;
+  margin:0 0 20px;
+}
+
+.label{
+  display:block;
+  color:#c3cee8;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+textarea{
+  width:100%;
+  min-height:220px;
+  padding:18px;
+  resize:vertical;
+  background:#080f20;
+  color:white;
+  border:1px solid #2c3b60;
+  border-radius:15px;
+  outline:none;
+  line-height:1.9;
+  font-size:17px;
+}
+
+textarea:focus,
+select:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(0,229,255,.08);
+}
+
+textarea::placeholder{
+  color:#68799d;
+}
+
+.text-info{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:var(--muted);
+  font-size:12px;
+  margin:10px 0 20px;
+  flex-wrap:wrap;
+}
+
+.control{
+  margin:20px 0;
+}
+
+select{
+  width:100%;
+  padding:13px;
+  background:#080f20;
+  border:1px solid #304064;
+  border-radius:10px;
+  color:white;
+  outline:none;
+}
+
+.range-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.range-head output{
+  color:var(--cyan);
+  font-weight:bold;
+}
+
+input[type=range]{
+  width:100%;
+  accent-color:var(--cyan);
+}
+
+.button-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:22px;
+}
+
+.btn{
+  padding:13px 18px;
+  border-radius:12px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.12);
+}
+
+.primary{
+  background:linear-gradient(100deg,var(--cyan),#70a5ff);
+  color:#06101e;
+  box-shadow:0 5px 25px rgba(0,229,255,.2);
+}
+
+.secondary{
+  background:#263454;
+  color:white;
+  border:1px solid #405178;
+}
+
+.danger{
+  background:#411c35;
+  color:#ff9ccc;
+  border:1px solid #783358;
+}
+
+.purple{
+  background:linear-gradient(100deg,#803cff,#bc54ff);
+  color:white;
+}
+
+.full{
+  width:100%;
+}
+
+.visualizer{
+  margin:20px 0;
+  height:155px;
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:
+    radial-gradient(ellipse at center,rgba(0,229,255,.10),transparent 70%),
+    #080e1d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.visualizer canvas{
+  width:100%;
+  height:100%;
+}
+
+.visual-status{
+  position:absolute;
+  left:14px;
+  top:12px;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--cyan);
+}
+
+.live-dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  background:#68799d;
+  border-radius:50%;
+  margin-right:5px;
+}
+
+.live-dot.active{
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+  animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+  50%{opacity:.3;transform:scale(.7)}
+}
+
+.progress-track{
+  width:100%;
+  height:5px;
+  border-radius:20px;
+  background:#263454;
+  margin:20px 0 10px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  transition:width .15s linear;
+}
+
+.status{
+  color:var(--muted);
+  font-size:13px;
+  min-height:20px;
+  line-height:1.6;
+}
+
+.status strong{
+  color:var(--green);
+}
+
+.option-box{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  background:#0b1327;
+  border:1px solid var(--border);
+  padding:13px;
+  border-radius:12px;
+  margin:12px 0;
+  font-size:13px;
+}
+
+.option-box input{
+  accent-color:var(--cyan);
+  width:17px;
+  height:17px;
+}
+
+.note{
+  color:#93a5c8;
+  font-size:12px;
+  line-height:1.8;
+  padding:14px;
+  background:rgba(0,229,255,.04);
+  border-left:3px solid var(--cyan);
+  border-radius:6px;
+  margin-top:18px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.stat{
+  padding:15px 8px;
+  text-align:center;
+  border-radius:13px;
+  background:#0a1225;
+  border:1px solid var(--border);
+}
+
+.stat strong{
+  display:block;
+  font-size:19px;
+  color:var(--cyan);
+  margin-bottom:5px;
+}
+
+.stat small{
+  color:var(--muted);
+  font-size:11px;
+}
+
+footer{
+  text-align:center;
+  color:#7282a5;
+  font-size:12px;
+  padding:25px;
+  border-top:1px solid var(--border);
+}
+
+@media(max-width:850px){
+  .studio{
+    grid-template-columns:1fr;
+  }
+
+  header{
+    position:relative;
+  }
+}
+
+@media(max-width:480px){
+  .card{
+    padding:17px;
+  }
+
+  .button-row .btn{
+    flex:1 1 40%;
+  }
+
+  textarea{
+    min-height:190px;
+    font-size:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">VOICE <span>X</span></div>
+  <div class="badge">● ADVANCED AUDIO STUDIO</div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>Text to Speech Studio</h1>
+    <p>
+      अपने टेक्स्ट को आवाज में बदलें। Cinematic Intro,
+      Powerful Drum Effects, Voice Controls और Animated
+      Audio Visualizer के साथ अपना वॉइस स्टूडियो इस्तेमाल करें।
+    </p>
+  </section>
+
+  <section class="studio">
+
+    <!-- LEFT PANEL -->
+
+    <div class="card">
+
+      <h2>🎙️ Voice Creation Console</h2>
+
+      <label class="label" for="textInput">
+        अपना टेक्स्ट यहाँ लिखें
+      </label>
+
+      <textarea
+        id="textInput"
+        placeholder="नमस्कार दोस्तों! आपका स्वागत है। आज हम एक बहुत ही महत्वपूर्ण विषय के बारे में जानेंगे..."
+      ></textarea>
+
+      <div class="text-info">
+        <span id="charCount">0 characters</span>
+        <span id="wordCount">0 words</span>
+      </div>
+
+      <div class="control">
+        <label class="label" for="voiceSelect">
+          🎤 Voice Selection
+        </label>
+        <select id="voiceSelect">
+          <option value="">आवाजें लोड हो रही हैं...</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <div class="range-head">
+          <label for="speed">⚡ Speaking Speed</label>
+          <output id="speedValue">1.0x</output>
+        </div>
+        <input
+          id="speed"
+          type="range"
+          min="0.5"
+          max="2"
+          step="0.1"
+          value="1"
+        >
+      </div>
+
+      <div class="control">
+        <div class="range-head">
+          <label for="pitch">🎚️ Voice Pitch</label>
+          <output id="pitchValue">1.0</output>
+        </div>
+        <input
+          id="pitch"
+          type="range"
+          min="0.5"
+          max="2"
+          step="0.1"
+          value="1"
+        >
+      </div>
+
+      <div class="control">
+        <div class="range-head">
+          <label for="volume">🔊 Voice Volume</label>
+          <output id="volumeValue">100%</output>
+        </div>
+        <input
+          id="volume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          value="1"
+        >
+      </div>
+
+      <div class="visualizer">
+        <span class="visual-status">
+          <span class="live-dot" id="liveDot"></span>
+          AUDIO VISUALIZER
+        </span>
+        <canvas id="visualCanvas"></canvas>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="status" id="status">
+        <strong>READY:</strong> टेक्स्ट लिखें और Play दबाएँ।
+      </div>
+
+      <div class="button-row">
+        <button class="btn primary" id="playBtn">
+          ▶ Play
+        </button>
+
+        <button class="btn secondary" id="pauseBtn">
+          ⏸ Pause
+        </button>
+
+        <button class="btn secondary" id="resumeBtn">
+          ⏵ Resume
+        </button>
+
+        <button class="btn danger" id="stopBtn">
+          ■ Stop
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+
+    <aside class="card">
+
+      <h2>🎵 Cinematic Sound Effects</h2>
+
+      <div class="option-box">
+        <label for="introToggle">
+          🥁 Intro Drum Effect
+        </label>
+        <input type="checkbox" id="introToggle" checked>
+      </div>
+
+      <div class="option-box">
+        <label for="beepToggle">
+          ✨ Startup Sound
+        </label>
+        <input type="checkbox" id="beepToggle" checked>
+      </div>
+
+      <div class="option-box">
+        <label for="endToggle">
+          🔔 Ending Sound
+        </label>
+        <input type="checkbox" id="endToggle" checked>
+      </div>
+
+      <div class="option-box">
+        <label for="musicToggle">
+          🎼 Ambient Background Tone
+        </label>
+        <input type="checkbox" id="musicToggle">
+      </div>
+
+      <div class="control">
+        <div class="range-head">
+          <label for="effectVolume">🔉 Effect Intensity</label>
+          <output id="effectValue">70%</output>
+        </div>
+        <input
+          id="effectVolume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          value="0.7"
+        >
+      </div>
+
+      <button class="btn purple full" id="testSoundBtn">
+        🥁 Test Cinematic Sound
+      </button>
+
+      <div class="stats">
+        <div class="stat">
+          <strong id="statChars">0</strong>
+          <small>Characters</small>
+        </div>
+        <div class="stat">
+          <strong id="statWords">0</strong>
+          <small>Words</small>
+        </div>
+        <div class="stat">
+          <strong id="statTime">0s</strong>
+          <small>Est. Time</small>
+        </div>
+      </div>
+
+      <div class="control" style="margin-top:25px">
+        <h2>💾 Audio Recording</h2>
+        <p class="status">
+          आवाज को रिकॉर्ड करके WebM फाइल के रूप में सेव करने का प्रयास करें।
+        </p>
+
+        <button class="btn primary full" id="recordBtn">
+          ● Start Audio Recording
+        </button>
+
+        <button
+          class="btn secondary full"
+          id="downloadBtn"
+          style="margin-top:10px"
+          disabled
+        >
+          ↓ Download Recording
+        </button>
+      </div>
+
+      <div class="note">
+        <strong>ध्यान दें:</strong><br>
+        रिकॉर्डिंग में आवाज तभी शामिल होगी जब ब्राउज़र से
+        Speech Synthesis की आवाज रिकॉर्डिंग ऑडियो स्ट्रीम में
+        उपलब्ध हो। कई ब्राउज़र में Speech Synthesis की आवाज
+        सीधे रिकॉर्ड नहीं होती। ऐसे में रिकॉर्डिंग फाइल में
+        केवल साउंड इफेक्ट आ सकते हैं। यह ब्राउज़र की सीमा है।
+      </div>
+
+    </aside>
+
+  </section>
+
+</main>
+
+<footer>
+  VOICE X Studio • Built with HTML, CSS, JavaScript & Web Audio API
+</footer>
+
+<script>
+"use strict";
+
+/* ===================================
+   ELEMENTS
+=================================== */
+
+const $ = id => document.getElementById(id);
+
+const textInput = $("textInput");
+const voiceSelect = $("voiceSelect");
+const speed = $("speed");
+const pitch = $("pitch");
+const volume = $("volume");
+
+const statusBox = $("status");
+const progressFill = $("progressFill");
+const liveDot = $("liveDot");
+
+const introToggle = $("introToggle");
+const beepToggle = $("beepToggle");
+const endToggle = $("endToggle");
+const musicToggle = $("musicToggle");
+
+const effectVolume = $("effectVolume");
+
+let voices = [];
+let currentUtterance = null;
+let currentChunks = [];
+let currentChunkIndex = 0;
+let isSpeaking = false;
+let isPaused = false;
+let sessionId = 0;
+
+let audioContext = null;
+let masterGain = null;
+let ambientNodes = [];
+let animationFrame = null;
+
+let recorder = null;
+let recordedChunks = [];
+let recordingStream = null;
+let recordingDestination = null;
+let recordedBlob = null;
+
+/* ===================================
+   VOICE LOADING
+=================================== */
+
+function loadVoices() {
+  if (!("speechSynthesis" in window)) {
+    voiceSelect.innerHTML =
+      '<option>Speech Synthesis समर्थित नहीं है</option>';
+
+    setStatus(
+      "इस ब्राउज़र में Text-to-Speech उपलब्ध नहीं है।"
+    );
+
+    $("playBtn").disabled = true;
+    return;
+  }
+
+  voices = speechSynthesis.getVoices();
+
+  const previousValue = voiceSelect.value;
+
+  voiceSelect.innerHTML = "";
+
+  if (!voices.length) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent =
+      "आवाजें उपलब्ध होने की प्रतीक्षा करें...";
+    voiceSelect.appendChild(option);
+    return;
+  }
+
+  const groups = {};
+
+  voices.forEach((voice, index) => {
+    const language = voice.lang || "Unknown";
+
+    if (!groups[language]) {
+      groups[language] = [];
+    }
+
+    groups[language].push({
+      voice,
+      index
+    });
+  });
+
+  Object.keys(groups).sort().forEach(language => {
+    const group = document.createElement("optgroup");
+    group.label = language;
+
+    groups[language].forEach(item => {
+      const option = document.createElement("option");
+
+      option.value = String(item.index);
+
+      option.textContent =
+        item.voice.name +
+        (item.voice.default ? " ★ Default" : "");
+
+      group.appendChild(option);
+    });
+
+    voiceSelect.appendChild(group);
+  });
+
+  let preferredIndex = voices.findIndex(v =>
+    /^hi(-|$)/i.test(v.lang)
+  );
+
+  if (preferredIndex < 0) {
+    preferredIndex = voices.findIndex(v =>
+      /^en(-|$)/i.test(v.lang)
+    );
+  }
+
+  if (
+    previousValue !== "" &&
+    voices[Number(previousValue)]
+  ) {
+    voiceSelect.value = previousValue;
+  } else if (preferredIndex >= 0) {
+    voiceSelect.value = String(preferredIndex);
+  }
+
+  setStatus("आवाजें तैयार हैं। अपना टेक्स्ट लिखें।");
+}
+
+if ("speechSynthesis" in window) {
+  loadVoices();
+
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+/* ===================================
+   AUDIO ENGINE
+=================================== */
+
+async function initAudio() {
+  if (!audioContext) {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) {
+      throw new Error("Web Audio API उपलब्ध नहीं है।");
+    }
+
+    audioContext = new AudioContextClass();
+
+    masterGain = audioContext.createGain();
+
+    masterGain.gain.value =
+      Number(effectVolume.value);
+
+    masterGain.connect(audioContext.destination);
+
+    recordingDestination =
+      audioContext.createMediaStreamDestination();
+
+    masterGain.connect(recordingDestination);
+  }
+
+  if (audioContext.state === "suspended") {
+    await audioContext.resume();
+  }
+
+  return audioContext;
+}
+
+function connectEffect(node) {
+  node.connect(masterGain);
+}
+
+function makeOscillator(
+  frequency,
+  startTime,
+  duration,
+  type = "sine",
+  peak = 0.4,
+  endFrequency = null
+) {
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  osc.type = type;
+
+  osc.frequency.setValueAtTime(
+    Math.max(1, frequency),
+    startTime
+  );
+
+  if (endFrequency !== null) {
+    osc.frequency.exponentialRampToValueAtTime(
+      Math.max(1, endFrequency),
+      startTime + duration
+    );
+  }
+
+  gain.gain.setValueAtTime(0.0001, startTime);
+
+  gain.gain.exponentialRampToValueAtTime(
+    Math.max(0.0002, peak),
+    startTime + 0.015
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.0001,
+    startTime + duration
+  );
+
+  osc.connect(gain);
+  connectEffect(gain);
+
+  osc.start(startTime);
+  osc.stop(startTime + duration + 0.03);
+}
+
+/* Cinematic synthetic drum */
+
+async function playDrum() {
+  await initAudio();
+
+  const now = audioContext.currentTime;
+  const strength = Number(effectVolume.value);
+
+  // Deep bass impact
+  makeOscillator(
+    105,
+    now,
+    0.65,
+    "sine",
+    0.75 * strength,
+    36
+  );
+
+  // Second impact
+  makeOscillator(
+    75,
+    now + 0.23,
+    0.55,
+    "sine",
+    0.60 * strength,
+    30
+  );
+
+  // Third impact
+  makeOscillator(
+    95,
+    now + 0.47,
+    0.55,
+    "triangle",
+    0.65 * strength,
+    34
+  );
+
+  // High cinematic accent
+  makeOscillator(
+    620,
+    now + 0.70,
+    0.35,
+    "triangle",
+    0.20 * strength,
+    210
+  );
+
+  // Final bass boom
+  makeOscillator(
+    120,
+    now + 0.95,
+    0.8,
+    "sine",
+    0.85 * strength,
+    28
+  );
+}
+
+async function playStartup() {
+  await initAudio();
+
+  const now = audioContext.currentTime;
+  const strength = Number(effectVolume.value);
+
+  [440, 660, 880].forEach((frequency, index) => {
+    makeOscillator(
+      frequency,
+      now + index * 0.10,
+      0.38,
+      "sine",
+      0.20 * strength
+    );
+  });
+}
+
+async function playEnding() {
+  await initAudio();
+
+  const now = audioContext.currentTime;
+  const strength = Number(effectVolume.value);
+
+  [784, 587, 440].forEach((frequency, index) => {
+    makeOscillator(
+      frequency,
+      now + index * 0.14,
+      0.48,
+      "triangle",
+      0.20 * strength
+    );
+  });
+}
+
+async function startAmbient() {
+  await initAudio();
+
+  stopAmbient();
+
+  if (!musicToggle.checked) {
+    return;
+  }
+
+  const osc1 = audioContext.createOscillator();
+  const osc2 = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  osc1.type = "sine";
+  osc2.type = "triangle";
+
+  osc1.frequency.value = 110;
+  osc2.frequency.value = 165;
+
+  gain.gain.value =
+    0.025 * Number(effectVolume.value);
+
+  osc1.connect(gain);
+  osc2.connect(gain);
+
+  gain.connect(masterGain);
+
+  osc1.start();
+  osc2.start();
+
+  ambientNodes = [osc1, osc2, gain];
+}
+
+function stopAmbient() {
+  if (!ambientNodes.length) {
+    return;
+  }
+
+  const [osc1, osc2, gain] = ambientNodes;
+
+  try {
+    const now = audioContext.currentTime;
+
+    gain.gain.cancelScheduledValues(now);
+    gain.gain.setTargetAtTime(0, now, 0.03);
+
+    osc1.stop(now + 0.15);
+    osc2.stop(now + 0.15);
+  } catch (e) {}
+
+  ambientNodes = [];
+}
+
+/* ===================================
+   TEXT PROCESSING
+=================================== */
+
+function splitText(text, maxLength = 180) {
+  const normalized = text.trim();
+
+  if (!normalized) {
+    return [];
+  }
+
+  const sentences =
+    normalized.match(/[^.!?।\n]+[.!?।\n]*/gu) ||
+    [normalized];
+
+  const chunks = [];
+  let buffer = "";
+
+  sentences.forEach(sentence => {
+    sentence = sentence.trim();
+
+    if (!sentence) {
+      return;
+    }
+
+    if (
+      (buffer + " " + sentence).trim().length <= maxLength
+    ) {
+      buffer = (buffer + " " + sentence).trim();
+    } else {
+      if (buffer) {
+        chunks.push(buffer);
+      }
+
+      if (sentence.length <= maxLength) {
+        buffer = sentence;
+      } else {
+        const words = sentence.split(/\s+/);
+        buffer = "";
+
+        words.forEach(word => {
+          if (
+            (buffer + " " + word).trim().length <= maxLength
+          ) {
+            buffer = (buffer + " " + word).trim();
+          } else {
+            if (buffer) {
+              chunks.push(buffer);
+            }
+
+            buffer = word;
+          }
+        });
+      }
+    }
+  });
+
+  if (buffer) {
+    chunks.push(buffer);
+  }
+
+  return chunks;
+}
+
+function setStatus(message) {
+  statusBox.textContent = message;
+}
+
+function getSelectedVoice() {
+  const index = Number(voiceSelect.value);
+
+  return voices[index] || null;
+}
+
+/* ===================================
+   SPEECH ENGINE
+=================================== */
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function playText() {
+  if (!("speechSynthesis" in window)) {
+    setStatus("आपका ब्राउज़र Text-to-Speech सपोर्ट नहीं करता।");
+    return;
+  }
+
+  const text = textInput.value.trim();
+
+  if (!text) {
+    setStatus("पहले टेक्स्ट लिखें।");
+    textInput.focus();
+    return;
+  }
+
+  if (!voices.length) {
+    loadVoices();
+
+    if (!voices.length) {
+      setStatus("आवाजें अभी लोड नहीं हुई हैं। दोबारा प्रयास करें।");
+      return;
+    }
+  }
+
+  sessionId++;
+
+  const mySession = sessionId;
+
+  speechSynthesis.cancel();
+
+  isSpeaking = false;
+  isPaused = false;
+
+  currentChunks = splitText(text);
+  currentChunkIndex = 0;
+
+  setStatus("ऑडियो सिस्टम तैयार हो रहा है...");
+
+  try {
+    await initAudio();
+
+    if (mySession !== sessionId) {
+      return;
+    }
+
+    if (introToggle.checked) {
+      setStatus("🥁 Cinematic Intro बज रहा है...");
+
+      await playDrum();
+      await sleep(1450);
+    }
+
+    if (mySession !== sessionId) {
+      return;
+    }
+
+    if (beepToggle.checked) {
+      await playStartup();
+      await sleep(350);
+    }
+
+    if (mySession !== sessionId) {
+      return;
+    }
+
+    if (musicToggle.checked) {
+      await startAmbient();
+    }
+
+    isSpeaking = true;
+    isPaused = false;
+
+    liveDot.classList.add("active");
+
+    setStatus("🎙️ आवाज शुरू हो रही है...");
+
+    speakNextChunk(mySession);
+
+  } catch (error) {
+    setStatus(
+      "ऑडियो शुरू नहीं हो सका: " + error.message
+    );
+  }
+}
+
+function speakNextChunk(mySession) {
+  if (mySession !== sessionId) {
+    return;
+  }
+
+  if (currentChunkIndex >= currentChunks.length) {
+    finishSpeech(mySession);
+    return;
+  }
+
+  const chunk = currentChunks[currentChunkIndex];
+
+  currentUtterance = new SpeechSynthesisUtterance(chunk);
+
+  const selectedVoice = getSelectedVoice();
+
+  if (selectedVoice) {
+    currentUtterance.voice = selectedVoice;
+    currentUtterance.lang = selectedVoice.lang;
+  } else {
+    currentUtterance.lang = "hi-IN";
+  }
+
+  currentUtterance.rate = Number(speed.value);
+  currentUtterance.pitch = Number(pitch.value);
+  currentUtterance.volume = Number(volume.value);
+
+  currentUtterance.onstart = () => {
+    if (mySession !== sessionId) {
+      return;
+    }
+
+    const percent = Math.round(
+      (currentChunkIndex / currentChunks.length) * 100
+    );
+
+    progressFill.style.width = percent + "%";
+
+    setStatus(
+      `🎙️ बोल रहा है... भाग ${currentChunkIndex + 1} / ${currentChunks.length}`
+    );
+  };
+
+  currentUtterance.onend = () => {
+    if (mySession !== sessionId) {
+      return;
+    }
+
+    currentChunkIndex++;
+
+    const percent = Math.round(
+      (currentChunkIndex / currentChunks.length) * 100
+    );
+
+    progressFill.style.width = percent + "%";
+
+    speakNextChunk(mySession);
+  };
+
+  currentUtterance.onerror = event => {
+    if (mySession !== sessionId) {
+      return;
+    }
+
+    if (
+      event.error === "canceled" ||
+      event.error === "interrupted"
+    ) {
+      return;
+    }
+
+    setStatus("Voice Error: " + event.error);
+  };
+
+  speechSynthesis.speak(currentUtterance);
+}
+
+async function finishSpeech(mySession) {
+  if (mySession !== sessionId) {
+    return;
+  }
+
+  isSpeaking = false;
+  isPaused = false;
+
+  liveDot.classList.remove("active");
+
+  progressFill.style.width = "100%";
+
+  stopAmbient();
+
+  setStatus("✅ टेक्स्ट पढ़ना पूरा हुआ।");
+
+  if (endToggle.checked) {
+    try {
+      await playEnding();
+    } catch (e) {}
+  }
+}
+
+function pauseSpeech() {
+  if (speechSynthesis.speaking && !speechSynthesis.paused) {
+    speechSynthesis.pause();
+
+    isPaused = true;
+
+    setStatus("⏸️ आवाज रोकी गई है। Resume दबाएँ।");
+  }
+}
+
+function resumeSpeech() {
+  if (speechSynthesis.paused) {
+    speechSynthesis.resume();
+
+    isPaused = false;
+
+    setStatus("▶️ आवाज फिर से शुरू हो गई है।");
+  }
+}
+
+function stopSpeech() {
+  sessionId++;
+
+  speechSynthesis.cancel();
+
+  isSpeaking = false;
+  isPaused = false;
+
+  stopAmbient();
+
+  liveDot.classList.remove("active");
+
+  progressFill.style.width = "0%";
+
+  setStatus("⏹️ Playback बंद कर दिया गया है।");
+}
+
+/* ===================================
+   TEXT STATISTICS
+=================================== */
+
+function updateStats() {
+  const text = textInput.value;
+
+  const characters = text.length;
+
+  const words = text.trim()
+    ? text.trim().split(/\s+/u).length
+    : 0;
+
+  const estimatedSeconds = Math.ceil(
+    words / (150 * Number(speed.value) / 60)
+  );
+
+  $("charCount").textContent =
+    characters + " characters";
+
+  $("wordCount").textContent =
+    words + " words";
+
+  $("statChars").textContent = characters;
+
+  $("statWords").textContent = words;
+
+  $("statTime").textContent =
+    estimatedSeconds < 60
+      ? estimatedSeconds + "s"
+      : Math.ceil(estimatedSeconds / 60) + "m";
+}
+
+textInput.addEventListener("input", updateStats);
+
+speed.addEventListener("input", () => {
+  $("speedValue").textContent =
+    Number(speed.value).toFixed(1) + "x";
+
+  updateStats();
+});
+
+pitch.addEventListener("input", () => {
+  $("pitchValue").textContent =
+    Number(pitch.value).toFixed(1);
+});
+
+volume.addEventListener("input", () => {
+  $("volumeValue").textContent =
+    Math.round(Number(volume.value) * 100) + "%";
+});
+
+effectVolume.addEventListener("input", () => {
+  $("effectValue").textContent =
+    Math.round(Number(effectVolume.value) * 100) + "%";
+
+  if (masterGain && audioContext) {
+    masterGain.gain.setTargetAtTime(
+      Number(effectVolume.value),
+      audioContext.currentTime,
+      0.03
+    );
+  }
+});
+
+/* ===================================
+   AUDIO VISUALIZER
+=================================== */
+
+const canvas = $("visualCanvas");
+const ctx = canvas.getContext("2d");
+
+let visualTime = 0;
+
+function drawVisualizer() {
+  const rect = canvas.getBoundingClientRect();
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  const width = Math.max(1, Math.floor(rect.width * dpr));
+  const height = Math.max(1, Math.floor(rect.height * dpr));
+
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+
+  ctx.clearRect(0, 0, width, height);
+
+  const bars = 64;
+  const gap = 3 * dpr;
+  const barWidth = width / bars - gap;
+
+  visualTime += isSpeaking && !isPaused ? 0.13 : 0.035;
+
+  for (let i = 0; i < bars; i++) {
+    let wave = Math.sin(
+      visualTime + i * 0.31
+    );
+
+    let wave2 = Math.sin(
+      visualTime * 0.65 + i * 0.18
+    );
+
+    let strength = isSpeaking && !isPaused ? 1 : 0.20;
+
+    let barHeight =
+      (0.12 + Math.abs(wave * 0.42 + wave2 * 0.2))
+      * height * strength;
+
+    barHeight = Math.max(3 * dpr, barHeight);
+
+    const x = i * (width / bars);
+    const y = (height - barHeight) / 2;
+
+    const gradient = ctx.createLinearGradient(
+      0, y, 0, y + barHeight
+    );
+
+    gradient.addColorStop(0, "#00e5ff");
+    gradient.addColorStop(0.5, "#8c6bff");
+    gradient.addColorStop(1, "#ff3cac");
+
+    ctx.fillStyle = gradient;
+
+    ctx.fillRect(
+      x,
+      y,
+      Math.max(1, barWidth),
+      barHeight
+    );
+  }
+
+  animationFrame = requestAnimationFrame(drawVisualizer);
+}
+
+drawVisualizer();
+
+/* ===================================
+   RECORDING
+=================================== */
+
+async function startRecording() {
+  try {
+    await initAudio();
+
+    if (!window.MediaRecorder) {
+      setStatus(
+        "इस ब्राउज़र में MediaRecorder समर्थित नहीं है।"
+      );
+      return;
+    }
+
+    if (!recordingDestination) {
+      setStatus("Recording audio stream उपलब्ध नहीं है।");
+      return;
+    }
+
+    recordedChunks = [];
+    recordedBlob = null;
+
+    recordingStream = recordingDestination.stream;
+
+    let mimeType = "";
+
+    if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+      mimeType = "audio/webm;codecs=opus";
+    } else if (MediaRecorder.isTypeSupported("audio/webm")) {
+      mimeType = "audio/webm";
+    }
+
+    recorder = mimeType
+      ? new MediaRecorder(recordingStream, { mimeType })
+      : new MediaRecorder(recordingStream);
+
+    recorder.ondataavailable = event => {
+      if (event.data && event.data.size > 0) {
+        recordedChunks.push(event.data);
+      }
+    };
+
+    recorder.onstop = () => {
+      recordedBlob = new Blob(recordedChunks, {
+        type: recorder.mimeType || "audio/webm"
+      });
+
+      $("downloadBtn").disabled = !recordedBlob.size;
+
+      $("recordBtn").textContent =
+        "● Start Audio Recording";
+
+      setStatus(
+        "Recording तैयार है। Download Recording दबाएँ।"
+      );
+    };
+
+    recorder.start(250);
+
+    $("recordBtn").textContent =
+      "■ Stop Recording";
+
+    setStatus(
+      "Recording चालू है। अब Play दबाकर टेक्स्ट चलाएँ।"
+    );
+
+  } catch (error) {
+    setStatus(
+      "Recording शुरू नहीं हो सकी: " + error.message
+    );
+  }
+}
+
+function stopRecording() {
+  if (recorder && recorder.state !== "inactive") {
+    recorder.stop();
+  }
+}
+
+function downloadRecording() {
+  if (!recordedBlob || !recordedBlob.size) {
+    setStatus("पहले रिकॉर्डिंग तैयार करें।");
+    return;
+  }
+
+  const url = URL.createObjectURL(recordedBlob);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "voice-x-recording.webm";
+
+  document.body.appendChild(link);
+
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+
+/* ===================================
+   BUTTON EVENTS
+=================================== */
+
+$("playBtn").addEventListener("click", playText);
+
+$("pauseBtn").addEventListener("click", pauseSpeech);
+
+$("resumeBtn").addEventListener("click", resumeSpeech);
+
+$("stopBtn").addEventListener("click", stopSpeech);
+
+$("testSoundBtn").addEventListener("click", async () => {
+  try {
+    await playDrum();
+    await sleep(1000);
+    await playStartup();
+  } catch (error) {
+    setStatus("Sound Error: " + error.message);
+  }
+});
+
+$("recordBtn").addEventListener("click", async () => {
+  if (recorder && recorder.state === "recording") {
+    stopRecording();
+  } else {
+    await startRecording();
+  }
+});
+
+$("downloadBtn").addEventListener(
+  "click",
+  downloadRecording
+);
+
+musicToggle.addEventListener("change", async () => {
+  if (musicToggle.checked && isSpeaking) {
+    await startAmbient();
+  } else {
+    stopAmbient();
+  }
+});
+
+window.addEventListener("beforeunload", () => {
+  if ("speechSynthesis" in window) {
+    speechSynthesis.cancel();
+  }
+
+  if (animationFrame) {
+    cancelAnimationFrame(animationFrame);
+  }
+});
+
+/* ===================================
+   INITIALIZATION
+=================================== */
+
+updateStats();
+
+$("speedValue").textContent =
+  Number(speed.value).toFixed(1) + "x";
+
+$("pitchValue").textContent =
+  Number(pitch.value).toFixed(1);
+
+$("volumeValue").textContent =
+  Math.round(Number(volume.value) * 100) + "%";
+
+$("effectValue").textContent =
+  Math.round(Number(effectVolume.value) * 100) + "%";
+
+</script>
+
+</body>
+</html>
