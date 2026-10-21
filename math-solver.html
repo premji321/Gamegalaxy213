@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
+
+<title>Math Voice & Photo Solver Pro</title>
+
+<!-- OCR: फोटो से टेक्स्ट पढ़ने के लिए -->
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+<style>
+:root {
+    --bg: #080d1c;
+    --panel: #111a30;
+    --panel2: #182642;
+    --accent: #7c5cff;
+    --cyan: #00d4ff;
+    --green: #24d98b;
+    --red: #ff5470;
+    --text: #f2f5ff;
+    --muted: #a8b4d1;
+    --border: rgba(255,255,255,.11);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, #172554 0, transparent 38%),
+        var(--bg);
+    color: var(--text);
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
+}
+
+header {
+    text-align: center;
+    padding: 28px 14px 20px;
+}
+
+.logo {
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    margin: auto;
+    border-radius: 23px;
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    font-size: 36px;
+    box-shadow: 0 0 35px #7c5cff55;
+}
+
+header h1 {
+    font-size: clamp(25px, 5vw, 38px);
+    background: linear-gradient(90deg, white, #84e8ff, #bcaaff);
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 650px;
+    margin: auto;
+}
+
+.container {
+    width: min(960px, 94%);
+    margin: auto;
+}
+
+.card {
+    background: linear-gradient(145deg, #131d35, #0f172b);
+    border: 1px solid var(--border);
+    border-radius: 21px;
+    padding: 21px;
+    margin-bottom: 20px;
+    box-shadow: 0 15px 45px #0002;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 21px;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+textarea {
+    width: 100%;
+    min-height: 115px;
+    resize: vertical;
+    background: #080f20;
+    border: 1px solid #34415f;
+    color: white;
+    border-radius: 14px;
+    padding: 15px;
+    font-size: 17px;
+    line-height: 1.7;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px #00d4ff18;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: .2s;
+}
+
+button:active {
+    transform: scale(.97);
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.btn {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+}
+
+.primary {
+    background: linear-gradient(135deg, #7557ff, #4b8dff);
+    color: white;
+}
+
+.voice {
+    background: linear-gradient(135deg, #ed4264, #ff7b54);
+    color: white;
+}
+
+.secondary {
+    background: #243351;
+    color: white;
+    border: 1px solid #405071;
+}
+
+.green {
+    background: var(--green);
+    color: #06251a;
+}
+
+.status {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    min-height: 25px;
+    margin-top: 13px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #71809e;
+    flex-shrink: 0;
+}
+
+.dot.active {
+    background: var(--green);
+    box-shadow: 0 0 12px var(--green);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: .3; }
+}
+
+.upload-zone {
+    border: 2px dashed #43567b;
+    border-radius: 17px;
+    padding: 23px 15px;
+    text-align: center;
+    background: #0b1325;
+}
+
+.upload-icon {
+    font-size: 45px;
+    margin-bottom: 8px;
+}
+
+.upload-zone p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.image-preview {
+    display: none;
+    margin-top: 18px;
+}
+
+.image-preview.show {
+    display: block;
+}
+
+.image-preview img {
+    display: block;
+    max-width: 100%;
+    max-height: 430px;
+    margin: auto;
+    border-radius: 13px;
+    border: 1px solid #344766;
+    object-fit: contain;
+}
+
+.file-name {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+    overflow-wrap: anywhere;
+}
+
+.progress-wrap {
+    display: none;
+    margin-top: 17px;
+}
+
+.progress-wrap.show {
+    display: block;
+}
+
+.progress-bar {
+    height: 9px;
+    background: #27344f;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.progress-inner {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--cyan));
+    transition: width .2s;
+}
+
+.answer-card {
+    display: none;
+}
+
+.answer-card.show {
+    display: block;
+    animation: appear .3s ease;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.question-box {
+    padding: 15px;
+    background: #080f20;
+    border: 1px solid #263957;
+    border-radius: 12px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.heading-small {
+    color: var(--green);
+    margin-top: 23px;
+    font-weight: bold;
+}
+
+.steps {
+    display: grid;
+    gap: 11px;
+    margin-top: 12px;
+}
+
+.step {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 13px;
+    background: #17243d;
+    border: 1px solid #2b3c5b;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.step-num {
+    display: grid;
+    place-items: center;
+    min-width: 29px;
+    height: 29px;
+    border-radius: 9px;
+    background: var(--accent);
+    font-weight: bold;
+}
+
+.final-answer {
+    margin-top: 12px;
+    padding: 19px;
+    background: linear-gradient(135deg, #12382e, #102c2d);
+    border: 1px solid #24d98b66;
+    border-radius: 14px;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.example-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.example {
+    background: #202e4b;
+    border: 1px solid #344766;
+    color: #e2eaff;
+    border-radius: 20px;
+    padding: 10px 13px;
+    font-size: 13px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    margin-top: 10px;
+    background: #17243d;
+    border: 1px solid #2b3c5b;
+    border-radius: 12px;
+}
+
+.history-item span {
+    overflow-wrap: anywhere;
+    line-height: 1.7;
+}
+
+footer {
+    padding: 25px 12px;
+    text-align: center;
+    color: #7f8ca9;
+    font-size: 12px;
+}
+
+@media(max-width: 550px) {
+    .card {
+        padding: 16px;
+        border-radius: 17px;
+    }
+
+    .row .btn {
+        flex: 1 1 42%;
+    }
+
+    .final-answer {
+        font-size: 19px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🧮</div>
+    <h1>Math Voice & Photo Solver Pro</h1>
+    <p>
+        प्रश्न बोलें, टाइप करें या फोटो खींचें।
+        गणित का हल प्राप्त करें।
+    </p>
+</header>
+
+<main class="container">
+
+    <!-- PHOTO UPLOAD -->
+    <section class="card">
+        <h2>📸 फोटो से गणित का प्रश्न हल करें</h2>
+
+        <p class="muted">
+            अपनी किताब, कॉपी या प्रश्न-पत्र की फोटो चुनें।
+            फोटो से पढ़ा गया टेक्स्ट नीचे दिखाई देगा।
+        </p>
+
+        <div class="upload-zone">
+            <div class="upload-icon">📷</div>
+
+            <h3>अपना प्रश्न अपलोड करें</h3>
+
+            <p>
+                कैमरे से फोटो खींचें या गैलरी से तस्वीर चुनें।
+                JPG, PNG और अन्य सामान्य इमेज फॉर्मेट चुन सकते हैं।
+            </p>
+
+            <div class="row" style="justify-content:center">
+                <button class="btn primary"
+                    onclick="document.getElementById('cameraInput').click()">
+                    📸 फोटो खींचें
+                </button>
+
+                <button class="btn secondary"
+                    onclick="document.getElementById('galleryInput').click()">
+                    🖼️ गैलरी से चुनें
+                </button>
+            </div>
+
+            <!-- मोबाइल कैमरा -->
+            <input
+                id="cameraInput"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                hidden
+            >
+
+            <!-- गैलरी -->
+            <input
+                id="galleryInput"
+                type="file"
+                accept="image/*"
+                hidden
+            >
+        </div>
+
+        <div class="image-preview" id="imagePreview">
+            <img id="previewImage" alt="अपलोड किए गए प्रश्न की फोटो">
+            <div class="file-name" id="fileName"></div>
+
+            <div class="row">
+                <button class="btn primary" id="readPhotoBtn"
+                    onclick="readPhoto()">
+                    🔍 फोटो से प्रश्न पढ़ें
+                </button>
+
+                <button class="btn secondary" onclick="removePhoto()">
+                    🗑️ फोटो हटाएँ
+                </button>
+            </div>
+        </div>
+
+        <div class="progress-wrap" id="progressWrap">
+            <div id="progressText" class="muted">
+                फोटो पढ़ने की तैयारी...
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-inner" id="progressInner"></div>
+            </div>
+        </div>
+
+        <div class="status" aria-live="polite">
+            <span class="dot" id="photoDot"></span>
+            <span id="photoStatus">
+                अभी कोई फोटो अपलोड नहीं की गई है।
+            </span>
+        </div>
+    </section>
+
+    <!-- TEXT AND VOICE -->
+    <section class="card">
+        <h2>⌨️ प्रश्न लिखें या बोलें</h2>
+
+        <textarea id="question"
+            placeholder="उदाहरण: 144 और 180 का HCF निकालिए।&#10;या फोटो पढ़ने के बाद यहाँ प्राप्त टेक्स्ट की जाँच करें।"></textarea>
+
+        <div class="row">
+            <button class="btn voice" id="micButton"
+                onclick="startVoice()">
+                🎙️ बोलकर पूछें
+            </button>
+
+            <button class="btn primary" id="solveButton"
+                onclick="solveQuestion()">
+                🧮 Answer निकालें
+            </button>
+
+            <button class="btn secondary" onclick="clearAll()">
+                🗑️ साफ करें
+            </button>
+        </div>
+
+        <div class="status">
+            <span class="dot" id="mainDot"></span>
+            <span id="mainStatus">अपना प्रश्न दर्ज कीजिए।</span>
+        </div>
+    </section>
+
+    <!-- EXAMPLES -->
+    <section class="card">
+        <h2>⚡ उदाहरण</h2>
+
+        <div class="example-list">
+            <button class="example"
+                onclick="setExample('125 + 275')">
+                125 + 275
+            </button>
+
+            <button class="example"
+                onclick="setExample('250 का 20 प्रतिशत')">
+                250 का 20%
+            </button>
+
+            <button class="example"
+                onclick="setExample('144 और 180 का HCF')">
+                HCF
+            </button>
+
+            <button class="example"
+                onclick="setExample('12 और 18 का LCM')">
+                LCM
+            </button>
+
+            <button class="example"
+                onclick="setExample('2x + 5 = 15')">
+                समीकरण
+            </button>
+
+            <button class="example"
+                onclick="setExample('√144')">
+                वर्गमूल
+            </button>
+        </div>
+    </section>
+
+    <!-- ANSWER -->
+    <section class="card answer-card" id="answerCard">
+        <h2>📘 प्रश्न का समाधान</h2>
+
+        <div class="muted">प्रश्न</div>
+        <div class="question-box" id="questionDisplay"></div>
+
+        <div class="heading-small">📝 चरण-दर-चरण हल</div>
+        <div class="steps" id="steps"></div>
+
+        <div class="heading-small">✅ अंतिम उत्तर</div>
+        <div class="final-answer" id="finalAnswer"></div>
+
+        <div class="row">
+            <button class="btn green" onclick="speakAnswer()">
+                🔊 उत्तर सुनें
+            </button>
+
+            <button class="btn secondary" onclick="copyAnswer()">
+                📋 हल कॉपी करें
+            </button>
+        </div>
+
+        <p class="muted" id="answerNote"></p>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="card">
+        <h2>🕘 प्रश्न इतिहास</h2>
+        <div id="history"></div>
+
+        <div class="row">
+            <button class="btn secondary" onclick="clearHistory()">
+                इतिहास मिटाएँ
+            </button>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>ℹ️ फोटो अपलोड करने के सुझाव</h2>
+
+        <div class="steps">
+            <div class="step">
+                <span class="step-num">1</span>
+                <span>प्रश्न की फोटो स्पष्ट और अच्छी रोशनी में खींचें।</span>
+            </div>
+
+            <div class="step">
+                <span class="step-num">2</span>
+                <span>प्रश्न को फोटो में पूरा रखें। अक्षर और गणितीय चिन्ह कटे नहीं होने चाहिए।</span>
+            </div>
+
+            <div class="step">
+                <span class="step-num">3</span>
+                <span>फोटो से प्रश्न पढ़ें बटन दबाएँ। OCR द्वारा पढ़े गए टेक्स्ट की जाँच करें।</span>
+            </div>
+
+            <div class="step">
+                <span class="step-num">4</span>
+                <span>यदि टेक्स्ट सही है, तो Answer निकालें दबाएँ।</span>
+            </div>
+        </div>
+
+        <p class="muted">
+            OCR हस्तलिखित प्रश्नों, भिन्न, घात, वर्गमूल और ज्यामितीय
+            चित्रों को हमेशा सही नहीं पढ़ सकता। इस संस्करण में फोटो
+            पहचान और गणित हल करना अलग-अलग चरण हैं।
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    Math Voice & Photo Solver Pro · Educational Tool
+</footer>
+
+<script>
+"use strict";
+
+const questionInput = document.getElementById("question");
+
+let selectedFile = null;
+let recognition = null;
+let isListening = false;
+let lastSolution = null;
+
+function setMainStatus(message, active = false) {
+    document.getElementById("mainStatus").textContent = message;
+    document.getElementById("mainDot")
+        .classList.toggle("active", active);
+}
+
+function setPhotoStatus(message, active = false) {
+    document.getElementById("photoStatus").textContent = message;
+    document.getElementById("photoDot")
+        .classList.toggle("active", active);
+}
+
+function normalizeText(text) {
+    return String(text)
+        .toLowerCase()
+        .replace(/[०-९]/g, d =>
+            String("०१२३४५६७८९".indexOf(d))
+        )
+        .replace(/,/g, "")
+        .replace(/[?।]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+/* PHOTO INPUT */
+
+document.getElementById("cameraInput")
+    .addEventListener("change", handleImage);
+
+document.getElementById("galleryInput")
+    .addEventListener("change", handleImage);
+
+function handleImage(event) {
+    const file = event.target.files[0];
+
+    // अगली बार वही फोटो चुनने पर भी change event हो सके।
+    event.target.value = "";
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        setPhotoStatus("कृपया एक इमेज फाइल चुनें।");
+        return;
+    }
+
+    const maxSize = 12 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+        setPhotoStatus(
+            "फोटो का आकार 12 MB से कम रखें।"
+        );
+        return;
+    }
+
+    selectedFile = file;
+
+    const url = URL.createObjectURL(file);
+
+    const preview = document.getElementById("previewImage");
+    const oldUrl = preview.dataset.objectUrl;
+
+    if (oldUrl) URL.revokeObjectURL(oldUrl);
+
+    preview.src = url;
+    preview.dataset.objectUrl = url;
+
+    document.getElementById("fileName").textContent =
+        file.name + " · " + (file.size / 1024).toFixed(1) + " KB";
+
+    document.getElementById("imagePreview")
+        .classList.add("show");
+
+    document.getElementById("progressWrap")
+        .classList.remove("show");
+
+    setPhotoStatus(
+        "फोटो तैयार है। अब फोटो से प्रश्न पढ़ें दबाएँ।"
+    );
+}
+
+function removePhoto() {
+    selectedFile = null;
+
+    const preview = document.getElementById("previewImage");
+
+    if (preview.dataset.objectUrl) {
+        URL.revokeObjectURL(preview.dataset.objectUrl);
+        delete preview.dataset.objectUrl;
+    }
+
+    preview.removeAttribute("src");
+
+    document.getElementById("imagePreview")
+        .classList.remove("show");
+
+    document.getElementById("progressWrap")
+        .classList.remove("show");
+
+    setPhotoStatus("फोटो हटा दी गई है।");
+}
+
+/* OCR */
+
+async function readPhoto() {
+    if (!selectedFile) {
+        setPhotoStatus("पहले फोटो खींचें या अपलोड करें।");
+        return;
+    }
+
+    if (!window.Tesseract) {
+        setPhotoStatus(
+            "OCR लाइब्रेरी लोड नहीं हुई। इंटरनेट कनेक्शन जाँचें।"
+        );
+        return;
+    }
+
+    const button = document.getElementById("readPhotoBtn");
+    const progressWrap = document.getElementById("progressWrap");
+    const progressInner = document.getElementById("progressInner");
+    const progressText = document.getElementById("progressText");
+
+    button.disabled = true;
+    progressWrap.classList.add("show");
+    progressInner.style.width = "0%";
+    progressText.textContent = "फोटो पढ़ने की तैयारी...";
+    setPhotoStatus("फोटो का टेक्स्ट पहचाना जा रहा है...", true);
+
+    try {
+        /*
+          OCR के लिए अंग्रेजी और अंकों का मॉडल इस्तेमाल किया जा रहा है।
+          यह सामान्य गणितीय प्रश्नों में उपयोगी हो सकता है।
+          हिंदी प्रश्नों के लिए हिंदी OCR मॉडल की जरूरत पड़ सकती है।
+        */
+
+        const result = await Tesseract.recognize(
+            selectedFile,
+            "eng",
+            {
+                logger: function(info) {
+                    if (typeof info.progress === "number") {
+                        const percent = Math.round(info.progress * 100);
+
+                        progressInner.style.width = percent + "%";
+
+                        progressText.textContent =
+                            (info.status || "फोटो पढ़ी जा रही है") +
+                            " · " + percent + "%";
+                    }
+                }
+            }
+        );
+
+        const extracted = (result.data.text || "").trim();
+
+        if (!extracted) {
+            setPhotoStatus(
+                "फोटो से टेक्स्ट नहीं पढ़ा गया। बेहतर रोशनी में दोबारा फोटो लें।"
+            );
+            return;
+        }
+
+        questionInput.value = extracted;
+
+        progressInner.style.width = "100%";
+        progressText.textContent = "फोटो पढ़ ली गई।";
+
+        setPhotoStatus(
+            "प्रश्न पढ़ लिया गया। नीचे टेक्स्ट जाँचकर Answer निकालें दबाएँ।"
+        );
+
+        questionInput.focus();
+
+        questionInput.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        setPhotoStatus(
+            "फोटो पढ़ने में समस्या आई। इंटरनेट कनेक्शन जाँचकर दोबारा प्रयास करें।"
+        );
+
+    } finally {
+        button.disabled = false;
+    }
+}
+
+/* VOICE INPUT */
+
+function startVoice() {
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        setMainStatus(
+            "इस ब्राउज़र में आवाज पहचान उपलब्ध नहीं है। Chrome में HTTPS वेबसाइट आजमाएँ।"
+        );
+        return;
+    }
+
+    if (isListening && recognition) {
+        recognition.stop();
+        return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "hi-IN";
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+
+    isListening = true;
+
+    document.getElementById("micButton").textContent =
+        "⏹️ सुनना बंद करें";
+
+    setMainStatus("सुन रहा हूँ... अपना प्रश्न बोलिए।", true);
+
+    recognition.onresult = function(event) {
+        let text = "";
+
+        for (
+            let i = event.resultIndex;
+            i < event.results.length;
+            i++
+        ) {
+            text += event.results[i][0].transcript;
+        }
+
+        questionInput.value = text;
+    };
+
+    recognition.onerror = function(event) {
+        setMainStatus(
+            event.error === "not-allowed"
+                ? "माइक्रोफोन की अनुमति दें।"
+                : "आवाज पहचान में समस्या हुई। दोबारा प्रयास करें।"
+        );
+    };
+
+    recognition.onend = function() {
+        isListening = false;
+
+        document.getElementById("micButton").textContent =
+            "🎙️ बोलकर पूछें";
+
+        if (questionInput.value.trim()) {
+            setMainStatus("प्रश्न दर्ज हो गया।");
+        } else {
+            setMainStatus("अब प्रश्न लिखें या फिर बोलकर पूछें।");
+        }
+    };
+
+    try {
+        recognition.start();
+    } catch (error) {
+        isListening = false;
+
+        document.getElementById("micButton").textContent =
+            "🎙️ बोलकर पूछें";
+
+        setMainStatus("माइक्रोफोन शुरू नहीं हो सका।");
+    }
+}
+
+/* SAFE EXPRESSION PARSER */
+
+function tokenizeExpression(input) {
+    const tokens = [];
+    let i = 0;
+
+    while (i < input.length) {
+        const ch = input[i];
+
+        if (/\s/.test(ch)) {
+            i++;
+            continue;
+        }
+
+        if (/[0-9.]/.test(ch)) {
+            const start = i;
+            let dots = 0;
+
+            while (
+                i < input.length &&
+                /[0-9.]/.test(input[i])
+            ) {
+                if (input[i] === ".") dots++;
+                i++;
+            }
+
+            if (dots > 1) {
+                throw new Error("संख्या का प्रारूप गलत है।");
+            }
+
+            tokens.push({
+                type: "number",
+                value: Number(input.slice(start, i))
+            });
+
+            continue;
+        }
+
+        if ("+-*/^()%".includes(ch)) {
+            tokens.push({type: "symbol", value: ch});
+            i++;
+            continue;
+        }
+
+        throw new Error(
+            "प्रश्न में ऐसे अक्षर हैं जिन्हें गणितीय अभिव्यक्ति के रूप में नहीं समझा जा सका।"
+        );
+    }
+
+    return tokens;
+}
+
+function parseExpression(input) {
+    const tokens = tokenizeExpression(input);
+    let pos = 0;
+
+    function peek(value) {
+        return tokens[pos] && tokens[pos].value === value;
+    }
+
+    function take() {
+        return tokens[pos++];
+    }
+
+    function primary() {
+        if (peek("+") || peek("-")) {
+            const op = take().value;
+            const v = primary();
+            return op === "-" ? -v : v;
+        }
+
+        if (peek("(")) {
+            take();
+            const v = addSub();
+
+            if (!peek(")")) {
+                throw new Error("ब्रैकेट बंद नहीं है।");
+            }
+
+            take();
+            return v;
+        }
+
+        const token = take();
+
+        if (!token || token.type !== "number") {
+            throw new Error("गणितीय प्रश्न का प्रारूप सही नहीं है।");
+        }
+
+        return token.value;
+    }
+
+    function power() {
+        let v = primary();
+
+        if (peek("^")) {
+            take();
+            v = Math.pow(v, unaryPower());
+        }
+
+        return v;
+    }
+
+    function unaryPower() {
+        if (peek("+")) {
+            take();
+            return unaryPower();
+        }
+
+        if (peek("-")) {
+            take();
+            return -unaryPower();
+        }
+
+        return power();
+    }
+
+    function mulDiv() {
+        let v = power();
+
+        while (
+            peek("*") ||
+            peek("/") ||
+            peek("%")
+        ) {
+            const op = take().value;
+            const r = power();
+
+            if (r === 0 && (op === "/" || op === "%")) {
+                throw new Error("शून्य से भाग नहीं दे सकते।");
+            }
+
+            if (op === "*") v *= r;
+            if (op === "/") v /= r;
+            if (op === "%") v %= r;
+        }
+
+        return v;
+    }
+
+    function addSub() {
+        let v = mulDiv();
+
+        while (peek("+") || peek("-")) {
+            const op = take().value;
+            const r = mulDiv();
+
+            v = op === "+" ? v + r : v - r;
+        }
+
+        return v;
+    }
+
+    if (!tokens.length) {
+        throw new Error("पहले प्रश्न लिखें।");
+    }
+
+    const result = addSub();
+
+    if (pos !== tokens.length) {
+        throw new Error("प्रश्न का प्रारूप सही नहीं है।");
+    }
+
+    if (!Number.isFinite(result)) {
+        throw new Error("इस गणना का सीमित उत्तर नहीं मिला।");
+    }
+
+    return result;
+}
+
+function formatNumber(n) {
+    if (!Number.isFinite(n)) return String(n);
+
+    if (Math.abs(n) < 1e-10) return "0";
+
+    if (Number.isInteger(n)) return String(n);
+
+    return Number(n.toPrecision(12)).toString();
+}
+
+function parseNumbers(text) {
+    const matches = normalizeText(text)
+        .match(/-?\d+(?:\.\d+)?/g);
+
+    return matches ? matches.map(Number) : [];
+}
+
+function gcd(a, b) {
+    a = Math.abs(Math.trunc(a));
+    b = Math.abs(Math.trunc(b));
+
+    while (b !== 0) {
+        const r = a % b;
+        a = b;
+        b = r;
+    }
+
+    return a;
+}
+
+function lcm(a, b) {
+    if (a === 0 || b === 0) return 0;
+
+    return Math.abs(
+        (Math.trunc(a) / gcd(a, b)) * Math.trunc(b)
+    );
+}
+
+function makeSolution(answer, steps, note = "") {
+    return {
+        finalAnswer: String(answer),
+        steps,
+        note
+    };
+}
+
+function solveHCF(text) {
+    const nums = parseNumbers(text);
+
+    if (nums.length < 2) {
+        throw new Error("HCF के लिए कम-से-कम दो संख्याएँ दें।");
+    }
+
+    if (nums.some(n => !Number.isInteger(n))) {
+        throw new Error("HCF के लिए पूर्ण संख्याएँ दें।");
+    }
+
+    let result = Math.abs(nums[0]);
+    const steps = [];
+
+    for (let i = 1; i < nums.length; i++) {
+        const n = Math.abs(nums[i]);
+
+        steps.push(
+            `HCF(${result}, ${n}) निकालते हैं।`
+        );
+
+        result = gcd(result, n);
+
+        steps.push(`इस चरण का HCF = ${result}`);
+    }
+
+    return makeSolution(
+        result,
+        steps,
+        "HCF का अर्थ महत्तम समापवर्तक है।"
+    );
+}
+
+function solveLCM(text) {
+    const nums = parseNumbers(text);
+
+    if (nums.length < 2) {
+        throw new Error("LCM के लिए कम-से-कम दो संख्याएँ दें।");
+    }
+
+    if (nums.some(n => !Number.isInteger(n))) {
+        throw new Error("LCM के लिए पूर्ण संख्याएँ दें।");
+    }
+
+    let result = Math.abs(nums[0]);
+    const steps = [];
+
+    for (let i = 1; i < nums.length; i++) {
+        const n = Math.abs(nums[i]);
+        const h = gcd(result, n);
+
+        steps.push(
+            `LCM(${result}, ${n}) = (${result} × ${n}) ÷ ${h}`
+        );
+
+        result = lcm(result, n);
+
+        steps.push(`LCM = ${result}`);
+    }
+
+    return makeSolution(
+        result,
+        steps,
+        "LCM का अर्थ लघुत्तम समापवर्त्य है।"
+    );
+}
+
+function solvePercentage(text) {
+    const nums = parseNumbers(text);
+
+    if (nums.length < 2) {
+        throw new Error(
+            "प्रतिशत निकालने के लिए प्रतिशत और संख्या दोनों दें।"
+        );
+    }
+
+    const normalized = normalizeText(text);
+
+    let percent = nums[0];
+    let base = nums[1];
+
+    const percentIndex = normalized.indexOf("%");
+
+    if (percentIndex >= 0) {
+        const before = parseNumbers(
+            normalized.slice(0, percentIndex)
+        );
+
+        const after = parseNumbers(
+            normalized.slice(percentIndex + 1)
+        );
+
+        if (before.length && after.length) {
+            percent = before[before.length - 1];
+            base = after[0];
+        }
+    }
+
+    const result = percent * base / 100;
+
+    return makeSolution(
+        formatNumber(result),
+        [
+            `प्रतिशत = ${percent}%`,
+            `संख्या = ${base}`,
+            "सूत्र = प्रतिशत × संख्या ÷ 100",
+            `${percent} × ${base} ÷ 100 = ${formatNumber(result)}`
+        ]
+    );
+}
+
+function solveSquareRoot(text) {
+    let nums = parseNumbers(text);
+
+    if (!nums.length) {
+        throw new Error("वर्गमूल निकालने के लिए संख्या दें।");
+    }
+
+    const n = nums[0];
+
+    if (n < 0) {
+        throw new Error(
+            "ऋणात्मक संख्या का वास्तविक वर्गमूल नहीं है।"
+        );
+    }
+
+    const result = Math.sqrt(n);
+
+    return makeSolution(
+        formatNumber(result),
+        [
+            `दी गई संख्या = ${n}`,
+            "वर्गमूल वह संख्या है जिसका वर्ग मूल संख्या हो।",
+            `${formatNumber(result)} × ${formatNumber(result)} = ${formatNumber(n)}`
+        ]
+    );
+}
+
+function solveSquare(text) {
+    const nums = parseNumbers(text);
+
+    if (!nums.length) {
+        throw new Error("वर्ग निकालने के लिए संख्या दें।");
+    }
+
+    const n = nums[0];
+
+    return makeSolution(
+        formatNumber(n * n),
+        [
+            `दी गई संख्या = ${n}`,
+            "वर्ग = संख्या × संख्या",
+            `${n} × ${n} = ${formatNumber(n * n)}`
+        ]
+    );
+}
+
+function solveEquation(text) {
+    const parts = text.toLowerCase().split("=");
+
+    if (parts.length !== 2) {
+        throw new Error("समीकरण में एक बराबर (=) चिह्न होना चाहिए।");
+    }
+
+    const variableMatch = text.match(/[a-z]/i);
+
+    if (!variableMatch) {
+        throw new Error("समीकरण में x जैसा एक चर होना चाहिए।");
+    }
+
+    const variable = variableMatch[0].toLowerCase();
+
+    function coefficients(expression) {
+        const compact = expression
+            .replace(/\s+/g, "")
+            .replace(/-/g, "+-");
+
+        const parts = compact.split("+").filter(Boolean);
+
+        let a = 0;
+        let b = 0;
+
+        for (let part of parts) {
+            if (part.includes(variable)) {
+                const coefficient = part
+                    .replace(variable, "")
+                    .replace(/\*/g, "");
+
+                let c;
+
+                if (coefficient === "" || coefficient === "+") {
+                    c = 1;
+                } else if (coefficient === "-") {
+                    c = -1;
+                } else {
+                    c = Number(coefficient);
+                }
+
+                if (!Number.isFinite(c)) {
+                    throw new Error(
+                        "समीकरण में गुणांक समझ नहीं आया।"
+                    );
+                }
+
+                a += c;
+            } else {
+                b += parseExpression(part);
+            }
+        }
+
+        return {a, b};
+    }
+
+    const left = coefficients(parts[0]);
+    const right = coefficients(parts[1]);
+
+    const a = left.a - right.a;
+    const b = right.b - left.b;
+
+    if (Math.abs(a) < 1e-12) {
+        if (Math.abs(b) < 1e-12) {
+            return makeSolution(
+                "अनंत हल",
+                ["यह समानता सभी मानों के लिए सही है।"]
+            );
+        }
+
+        return makeSolution(
+            "कोई हल नहीं",
+            ["समीकरण असंगत है।"]
+        );
+    }
+
+    const answer = b / a;
+
+    return makeSolution(
+        `${variable} = ${formatNumber(answer)}`,
+        [
+            `दिया गया समीकरण: ${text}`,
+            `चर वाले पद एक तरफ लाते हैं: ${formatNumber(a)}${variable} = ${formatNumber(b)}`,
+            `${variable} = ${formatNumber(b)} ÷ ${formatNumber(a)}`,
+            `${variable} = ${formatNumber(answer)}`
+        ]
+    );
+}
+
+function solveArithmetic(text) {
+    const expression = text
+        .toLowerCase()
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+        .replace(/−/g, "-")
+        .replace(/[^0-9+\-*/^().%\s]/g, " ")
+        .trim();
+
+    if (!expression || !/\d/.test(expression)) {
+        throw new Error(
+            "प्रश्न को नहीं समझ पाया। पढ़े गए टेक्स्ट को जाँचकर सही करें।"
+        );
+    }
+
+    const result = parseExpression(expression);
+
+    return makeSolution(
+        formatNumber(result),
+        [
+            `गणितीय अभिव्यक्ति: ${expression}`,
+            "गणना में ब्रैकेट, घात, गुणा/भाग और जोड़/घटाव के नियम लागू होते हैं।",
+            `गणना का परिणाम = ${formatNumber(result)}`
+        ]
+    );
+}
+
+/* SOLVE */
+
+function solveQuestion() {
+    const original = questionInput.value.trim();
+
+    if (!original) {
+        setMainStatus("पहले प्रश्न लिखें, बोलें या फोटो से पढ़ें।");
+        return;
+    }
+
+    setMainStatus("प्रश्न हल किया जा रहा है...", true);
+
+    try {
+        const text = normalizeText(original);
+
+        let solution;
+
+        if (/\bhcf\b|\bgcd\b|महत्तम समापवर्तक/.test(text)) {
+            solution = solveHCF(original);
+        } else if (/\blcm\b|लघुत्तम समापवर्त्य/.test(text)) {
+            solution = solveLCM(original);
+        } else if (
+            /=/.test(original) &&
+            /[a-z]/i.test(original)
+        ) {
+            solution = solveEquation(original);
+        } else if (/%|प्रतिशत|percent/.test(text)) {
+            solution = solvePercentage(original);
+        } else if (
+            /वर्गमूल|square root|sqrt/.test(text) ||
+            original.includes("√")
+        ) {
+            solution = solveSquareRoot(original);
+        } else if (
+            /वर्ग|square|squared/.test(text)
+        ) {
+            solution = solveSquare(original);
+        } else {
+            solution = solveArithmetic(original);
+        }
+
+        showSolution(original, solution);
+        saveHistory(original, solution.finalAnswer);
+
+        setMainStatus("उत्तर तैयार है।");
+
+    } catch (error) {
+        showSolution(
+            original,
+            makeSolution(
+                "प्रश्न हल नहीं हो सका।",
+                [
+                    error.message,
+                    "फोटो से पढ़े गए प्रश्न में गलत अक्षर या गणितीय चिन्ह हो सकता है।",
+                    "प्रश्न को जाँचकर सही करें और फिर कोशिश करें।"
+                ]
+            )
+        );
+
+        setMainStatus("प्रश्न हल नहीं हो सका।");
+    }
+
+    document.getElementById("answerCard")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+}
+
+function showSolution(question, solution) {
+    document.getElementById("questionDisplay").textContent =
+        question;
+
+    const box = document.getElementById("steps");
+    box.replaceChildren();
+
+    solution.steps.forEach((step, index) => {
+        const row = document.createElement("div");
+        row.className = "step";
+
+        const number = document.createElement("span");
+        number.className = "step-num";
+        number.textContent = index + 1;
+
+        const text = document.createElement("span");
+        text.textContent = step;
+
+        row.append(number, text);
+        box.appendChild(row);
+    });
+
+    document.getElementById("finalAnswer").textContent =
+        solution.finalAnswer;
+
+    document.getElementById("answerNote").textContent =
+        solution.note || "";
+
+    document.getElementById("answerCard")
+        .classList.add("show");
+
+    lastSolution = {
+        question,
+        ...solution
+    };
+}
+
+function setExample(text) {
+    questionInput.value = text;
+    solveQuestion();
+}
+
+/* SPEAK */
+
+function speakAnswer() {
+    if (!lastSolution) {
+        setMainStatus("पहले प्रश्न हल करें।");
+        return;
+    }
+
+    if (!("speechSynthesis" in window)) {
+        setMainStatus("इस ब्राउज़र में आवाज की सुविधा उपलब्ध नहीं है।");
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(
+        [
+            "प्रश्न।",
+            lastSolution.question,
+            "हल।",
+            ...lastSolution.steps,
+            "अंतिम उत्तर।",
+            lastSolution.finalAnswer
+        ].join(". ")
+    );
+
+    utterance.lang = "hi-IN";
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    speechSynthesis.speak(utterance);
+}
+
+/* COPY */
+
+async function copyAnswer() {
+    if (!lastSolution) {
+        setMainStatus("पहले प्रश्न हल करें।");
+        return;
+    }
+
+    const text = [
+        "प्रश्न: " + lastSolution.question,
+        "",
+        "हल:",
+        ...lastSolution.steps.map((s, i) => `${i + 1}. ${s}`),
+        "",
+        "अंतिम उत्तर: " + lastSolution.finalAnswer
+    ].join("\n");
+
+    try {
+        await navigator.clipboard.writeText(text);
+        setMainStatus("पूरा हल कॉपी हो गया।");
+    } catch (error) {
+        const area = document.createElement("textarea");
+
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+
+        const ok = document.execCommand("copy");
+
+        area.remove();
+
+        setMainStatus(
+            ok ? "पूरा हल कॉपी हो गया।" : "कॉपी नहीं हो पाया।"
+        );
+    }
+}
+
+/* HISTORY */
+
+function getHistory() {
+    try {
+        return JSON.parse(
+            localStorage.getItem("mathPhotoHistory") || "[]"
+        );
+    } catch {
+        return [];
+    }
+}
+
+function saveHistory(question, answer) {
+    const history = getHistory();
+
+    history.unshift({
+        question,
+        answer
+    });
+
+    localStorage.setItem(
+        "mathPhotoHistory",
+        JSON.stringify(history.slice(0, 10))
+    );
+
+    renderHistory();
+}
+
+function renderHistory() {
+    const box = document.getElementById("history");
+    const history = getHistory();
+
+    box.replaceChildren();
+
+    if (!history.length) {
+        const p = document.createElement("p");
+        p.className = "muted";
+        p.textContent = "अभी तक कोई प्रश्न हल नहीं किया गया है।";
+        box.appendChild(p);
+        return;
+    }
+
+    history.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "history-item";
+
+        const span = document.createElement("span");
+        span.textContent =
+            item.question + " = " + item.answer;
+
+        const button = document.createElement("button");
+        button.className = "btn secondary";
+        button.textContent = "फिर खोलें";
+
+        button.addEventListener("click", () => {
+            questionInput.value = item.question;
+            solveQuestion();
+        });
+
+        row.append(span, button);
+        box.appendChild(row);
+    });
+}
+
+function clearHistory() {
+    if (!confirm("क्या प्रश्नों का इतिहास मिटाना चाहते हैं?")) {
+        return;
+    }
+
+    localStorage.removeItem("mathPhotoHistory");
+    renderHistory();
+
+    setMainStatus("इतिहास साफ कर दिया गया।");
+}
+
+function clearAll() {
+    if (recognition && isListening) {
+        recognition.stop();
+    }
+
+    questionInput.value = "";
+
+    document.getElementById("answerCard")
+        .classList.remove("show");
+
+    document.getElementById("questionDisplay").textContent = "";
+    document.getElementById("steps").replaceChildren();
+    document.getElementById("finalAnswer").textContent = "";
+
+    lastSolution = null;
+
+    if ("speechSynthesis" in window) {
+        speechSynthesis.cancel();
+    }
+
+    setMainStatus("प्रश्न साफ कर दिया गया।");
+}
+
+questionInput.addEventListener("keydown", event => {
+    if (
+        event.key === "Enter" &&
+        !event.shiftKey &&
+        !event.isComposing
+    ) {
+        event.preventDefault();
+        solveQuestion();
+    }
+});
+
+renderHistory();
+</script>
+
+</body>
+</html>
