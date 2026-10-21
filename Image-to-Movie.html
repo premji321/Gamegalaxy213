@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10172a">
+
+<title>Image to Animation Movie Studio</title>
+
+<style>
+:root {
+    --bg: #0b1020;
+    --panel: #141d33;
+    --accent: #7c5cff;
+    --green: #08a88a;
+    --text: #f4f7ff;
+    --muted: #aab6d0;
+    --border: #2a3858;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #18264a, #0b1020 65%);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 28px 12px;
+}
+
+header h1 {
+    font-size: clamp(25px, 5vw, 40px);
+    margin: 0 0 10px;
+}
+
+header p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.container {
+    width: min(1100px, 94%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    min-width: 0;
+    box-shadow: 0 10px 30px #0003;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.upload {
+    border: 2px dashed #6477a2;
+    background: #0b1427;
+    border-radius: 14px;
+    padding: 25px 12px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.upload:hover {
+    border-color: var(--green);
+}
+
+.upload strong {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.upload span {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+input[type="file"] {
+    max-width: 100%;
+}
+
+#imageInput {
+    display: none;
+}
+
+button, .download {
+    border: none;
+    padding: 11px 15px;
+    border-radius: 10px;
+    color: white;
+    background: var(--accent);
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+button:hover, .download:hover {
+    filter: brightness(1.15);
+}
+
+button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.green {
+    background: var(--green);
+}
+
+.gray {
+    background: #293956;
+}
+
+.red {
+    background: #a83c58;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0;
+}
+
+#fileList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.thumb {
+    position: relative;
+    background: #080d1c;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.thumb img {
+    width: 100%;
+    height: 95px;
+    object-fit: cover;
+    display: block;
+}
+
+.thumb .name {
+    font-size: 11px;
+    padding: 7px;
+    overflow-wrap: anywhere;
+    color: var(--muted);
+}
+
+.thumb .remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 4px 8px;
+    background: #b52f4d;
+}
+
+.thumb .move {
+    display: flex;
+    gap: 5px;
+    padding: 0 6px 6px;
+}
+
+.thumb .move button {
+    flex: 1;
+    padding: 5px;
+}
+
+.settings {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.field label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.field input:not([type="range"]),
+.field select {
+    width: 100%;
+    padding: 10px;
+    background: #0b1427;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+}
+
+.field input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.check input {
+    accent-color: var(--accent);
+}
+
+.previewBox {
+    background: #050810;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#previewMessage {
+    color: var(--muted);
+    text-align: center;
+    padding: 15px;
+}
+
+#moviePlayer {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 12px;
+    background: black;
+}
+
+.status {
+    padding: 12px;
+    border-radius: 10px;
+    background: #0b1427;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.progress {
+    height: 8px;
+    margin-top: 10px;
+    background: #263450;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 12px;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 25px 12px;
+    font-size: 12px;
+}
+
+@media(max-width: 760px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎬 Image to Animation Studio</h1>
+    <p>Convert multiple images into an animated movie with music and cinematic effects.</p>
+</header>
+
+<main class="container">
+
+    <!-- IMAGE UPLOAD -->
+    <section class="card">
+        <h2>📸 1. Upload Images</h2>
+
+        <label class="upload" for="imageInput">
+            <strong>＋ Select Multiple Images</strong>
+            <span>Choose multiple photos from your device</span>
+        </label>
+
+        <input type="file" id="imageInput" accept="image/*" multiple>
+
+        <div class="actions">
+            <button class="gray" id="addMore">＋ Add More</button>
+            <button class="red" id="clearAll">Clear All</button>
+        </div>
+
+        <div id="imageCount" class="hint">No images selected.</div>
+
+        <div id="fileList"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="card">
+        <h2>⚙️ 2. Movie Settings</h2>
+
+        <div class="settings">
+
+            <div class="field">
+                <label for="duration">Duration per image</label>
+                <input type="number" id="duration" min="1" max="20" value="3">
+            </div>
+
+            <div class="field">
+                <label for="fps">Frame Rate</label>
+                <select id="fps">
+                    <option value="24">24 FPS</option>
+                    <option value="30" selected>30 FPS</option>
+                    <option value="60">60 FPS</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="resolution">Video Resolution</label>
+                <select id="resolution">
+                    <option value="854x480">480p</option>
+                    <option value="1280x720" selected>HD 720p</option>
+                    <option value="1920x1080">Full HD 1080p</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="fit">Image Display</label>
+                <select id="fit">
+                    <option value="contain">Fit Entire Image</option>
+                    <option value="cover" selected>Fill Screen</option>
+                </select>
+            </div>
+
+            <div class="field full">
+                <label for="transition">Animation Effect</label>
+                <select id="transition">
+                    <option value="fade">Smooth Fade</option>
+                    <option value="zoom">Cinematic Zoom</option>
+                    <option value="slide">Slide Transition</option>
+                    <option value="cut">Simple Cut</option>
+                </select>
+            </div>
+
+            <div class="field full">
+                <label>
+                    Transition Time:
+                    <span id="transitionLabel">0.8</span> seconds
+                </label>
+                <input type="range" id="transitionTime"
+                       min="0" max="2" step="0.1" value="0.8">
+            </div>
+
+            <div class="field full">
+                <label for="musicInput">🎵 Background Music</label>
+                <input type="file" id="musicInput" accept="audio/*">
+            </div>
+
+            <div class="field full">
+                <label>
+                    Music Volume: <span id="volumeLabel">35</span>%
+                </label>
+                <input type="range" id="musicVolume" min="0" max="100" value="35">
+            </div>
+
+        </div>
+
+        <label class="check">
+            <input type="checkbox" id="loopMusic" checked>
+            Loop background music
+        </label>
+
+        <label class="check">
+            <input type="checkbox" id="showNames">
+            Show image file names in video
+        </label>
+
+        <div class="actions">
+            <button class="green" id="makeMovie">▶ Create Movie</button>
+            <button class="red" id="stopMovie" disabled>■ Stop</button>
+        </div>
+
+        <div class="status" id="status">
+            Upload images to get started.
+        </div>
+
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+
+        <p class="hint">
+            Video is rendered in real time. Keep this page open while the movie is being created.
+        </p>
+    </section>
+
+    <!-- PREVIEW -->
+    <section class="card">
+        <h2>👁️ 3. Image Preview</h2>
+
+        <div class="previewBox">
+            <img id="preview" alt="Image preview" hidden>
+            <div id="previewMessage">Your preview will appear here.</div>
+        </div>
+
+        <div class="actions">
+            <button class="gray" id="prevBtn" disabled>◀ Previous</button>
+            <button class="gray" id="nextBtn" disabled>Next ▶</button>
+            <span class="hint" id="previewCounter">0 / 0</span>
+        </div>
+
+        <p class="hint">
+            Use the arrow buttons on each image card to change the order of your photos.
+        </p>
+    </section>
+
+    <!-- OUTPUT -->
+    <section class="card">
+        <h2>🎥 4. Your Movie</h2>
+
+        <video id="moviePlayer" controls playsinline style="display:none"></video>
+
+        <div class="actions">
+            <a id="downloadLink" class="download green"
+               href="#" download="animation-movie.webm"
+               style="display:none">
+                ⬇ Download Movie
+            </a>
+        </div>
+
+        <div class="status">
+            Your finished movie will appear here. The browser exports WebM video.
+            If you need MP4, convert the downloaded file using a video editor.
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    Image to Animation Movie Studio | Works in your browser
+</footer>
+
+<script>
+(() => {
+    const $ = id => document.getElementById(id);
+
+    let images = [];
+    let previewIndex = 0;
+    let musicFile = null;
+    let movieUrl = null;
+    let recorder = null;
+    let renderStream = null;
+    let stopRequested = false;
+
+    function setStatus(message) {
+        $('status').textContent = message;
+    }
+
+    function setProgress(value) {
+        $('progressBar').style.width =
+            Math.max(0, Math.min(100, value)) + '%';
+    }
+
+    function addFiles(files) {
+        const selected = [...files].filter(file =>
+            file.type.startsWith('image/')
+        );
+
+        if (!selected.length) {
+            setStatus('Please select valid image files.');
+            return;
+        }
+
+        selected.forEach(file => {
+            const url = URL.createObjectURL(file);
+            const img = new Image();
+
+            img.onload = () => {
+                images.push({ file, url, img });
+                renderList();
+
+                if (images.length === 1) {
+                    showPreview(0);
+                }
+
+                setStatus(
+                    `${images.length} image(s) ready. You can create your movie now.`
+                );
+            };
+
+            img.onerror = () => {
+                URL.revokeObjectURL(url);
+                setStatus(`Unable to load ${file.name}`);
+            };
+
+            img.src = url;
+        });
+    }
+
+    function renderList() {
+        const list = $('fileList');
+        list.innerHTML = '';
+
+        images.forEach((item, index) => {
+            const box = document.createElement('div');
+            box.className = 'thumb';
+
+            const img = document.createElement('img');
+            img.src = item.url;
+            img.alt = item.file.name;
+
+            const name = document.createElement('div');
+            name.className = 'name';
+            name.textContent = `${index + 1}. ${item.file.name}`;
+
+            const remove = document.createElement('button');
+            remove.className = 'remove';
+            remove.textContent = '×';
+            remove.title = 'Remove image';
+
+            remove.onclick = () => {
+                URL.revokeObjectURL(item.url);
+                images.splice(index, 1);
+
+                if (previewIndex >= images.length) {
+                    previewIndex = Math.max(0, images.length - 1);
+                }
+
+                renderList();
+                showPreview(previewIndex);
+            };
+
+            const move = document.createElement('div');
+            move.className = 'move';
+
+            const up = document.createElement('button');
+            up.className = 'gray';
+            up.textContent = '↑';
+            up.disabled = index === 0;
+
+            up.onclick = () => {
+                [images[index - 1], images[index]] =
+                    [images[index], images[index - 1]];
+
+                renderList();
+                showPreview(previewIndex);
+            };
+
+            const down = document.createElement('button');
+            down.className = 'gray';
+            down.textContent = '↓';
+            down.disabled = index === images.length - 1;
+
+            down.onclick = () => {
+                [images[index + 1], images[index]] =
+                    [images[index], images[index + 1]];
+
+                renderList();
+                showPreview(previewIndex);
+            };
+
+            move.append(up, down);
+            box.append(img, remove, name, move);
+            list.appendChild(box);
+        });
+
+        $('imageCount').textContent =
+            images.length
+                ? `${images.length} image(s) selected.`
+                : 'No images selected.';
+
+        $('makeMovie').disabled = !images.length || !!recorder;
+
+        $('prevBtn').disabled = images.length < 2;
+        $('nextBtn').disabled = images.length < 2;
+
+        $('previewCounter').textContent =
+            images.length ? `${previewIndex + 1} / ${images.length}` : '0 / 0';
+    }
+
+    function showPreview(index) {
+        if (!images.length) {
+            $('preview').hidden = true;
+            $('previewMessage').hidden = false;
+            $('previewCounter').textContent = '0 / 0';
+            $('prevBtn').disabled = true;
+            $('nextBtn').disabled = true;
+            return;
+        }
+
+        previewIndex = Math.max(0, Math.min(index, images.length - 1));
+
+        $('preview').src = images[previewIndex].url;
+        $('preview').hidden = false;
+        $('previewMessage').hidden = true;
+        $('preview').style.objectFit = $('fit').value;
+
+        $('previewCounter').textContent =
+            `${previewIndex + 1} / ${images.length}`;
+
+        $('prevBtn').disabled = previewIndex === 0;
+        $('nextBtn').disabled = previewIndex === images.length - 1;
+    }
+
+    $('imageInput').addEventListener('change', event => {
+        addFiles(event.target.files);
+        event.target.value = '';
+    });
+
+    $('addMore').onclick = () => $('imageInput').click();
+
+    $('clearAll').onclick = () => {
+        if (recorder) return;
+
+        images.forEach(item => URL.revokeObjectURL(item.url));
+        images = [];
+        previewIndex = 0;
+
+        renderList();
+        showPreview(0);
+        setProgress(0);
+        setStatus('All images cleared.');
+    };
+
+    $('prevBtn').onclick = () => showPreview(previewIndex - 1);
+    $('nextBtn').onclick = () => showPreview(previewIndex + 1);
+
+    $('fit').onchange = () => showPreview(previewIndex);
+
+    $('transitionTime').oninput = () => {
+        $('transitionLabel').textContent =
+            Number($('transitionTime').value).toFixed(1);
+    };
+
+    $('musicVolume').oninput = () => {
+        $('volumeLabel').textContent = $('musicVolume').value;
+    };
+
+    $('musicInput').onchange = event => {
+        musicFile = event.target.files[0] || null;
+
+        setStatus(
+            musicFile
+                ? `Music selected: ${musicFile.name}`
+                : 'No music selected.'
+        );
+    };
+
+    function drawImage(ctx, img, w, h, fit, scale = 1) {
+        const iw = img.naturalWidth;
+        const ih = img.naturalHeight;
+
+        const ratio = fit === 'contain'
+            ? Math.min(w / iw, h / ih)
+            : Math.max(w / iw, h / ih);
+
+        const dw = iw * ratio * scale;
+        const dh = ih * ratio * scale;
+
+        ctx.drawImage(
+            img,
+            (w - dw) / 2,
+            (h - dh) / 2,
+            dw,
+            dh
+        );
+    }
+
+    function drawFrame(ctx, index, nextIndex, localTime, opts, w, h) {
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, w, h);
+
+        const current = images[index];
+        const next = nextIndex >= 0 ? images[nextIndex] : null;
+
+        const transitionStart = opts.duration - opts.transitionTime;
+
+        const progress = opts.transitionTime > 0
+            ? Math.max(0, Math.min(
+                1,
+                (localTime - transitionStart) / opts.transitionTime
+            ))
+            : 1;
+
+        const transitioning =
+            next &&
+            opts.transition !== 'cut' &&
+            opts.transitionTime > 0 &&
+            localTime > transitionStart;
+
+        if (opts.transition === 'fade' && transitioning) {
+            drawImage(ctx, current.img, w, h, opts.fit);
+
+            ctx.globalAlpha = progress;
+            drawImage(ctx, next.img, w, h, opts.fit);
+            ctx.globalAlpha = 1;
+
+        } else if (opts.transition === 'slide' && transitioning) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(0, 0, w, h);
+            ctx.clip();
+
+            ctx.translate(-progress * w, 0);
+            drawImage(ctx, current.img, w, h, opts.fit);
+            ctx.restore();
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(0, 0, w, h);
+            ctx.clip();
+
+            ctx.translate((1 - progress) * w, 0);
+            drawImage(ctx, next.img, w, h, opts.fit);
+            ctx.restore();
+
+        } else if (opts.transition === 'zoom') {
+            const zoom = 1 + 0.08 * (localTime / opts.duration);
+
+            drawImage(ctx, current.img, w, h, opts.fit, zoom);
+
+            if (transitioning) {
+                ctx.globalAlpha = progress;
+                drawImage(ctx, next.img, w, h, opts.fit);
+                ctx.globalAlpha = 1;
+            }
+
+        } else {
+            drawImage(ctx, current.img, w, h, opts.fit);
+        }
+
+        if (opts.showNames) {
+            const fontSize = Math.max(18, Math.round(w * 0.022));
+
+            ctx.font = `bold ${fontSize}px Arial`;
+
+            ctx.fillStyle = 'rgba(0,0,0,0.6)';
+            ctx.fillRect(0, h - fontSize - 25, w, fontSize + 25);
+
+            ctx.fillStyle = '#fff';
+            ctx.textBaseline = 'middle';
+
+            ctx.fillText(
+                current.file.name,
+                14,
+                h - fontSize / 2 - 7,
+                w - 28
+            );
+        }
+    }
+
+    function getMimeType() {
+        const types = [
+            'video/webm;codecs=vp9,opus',
+            'video/webm;codecs=vp8,opus',
+            'video/webm'
+        ];
+
+        return types.find(type =>
+            window.MediaRecorder &&
+            MediaRecorder.isTypeSupported(type)
+        ) || '';
+    }
+
+    async function createMovie() {
+        if (!images.length || recorder) return;
+
+        if (
+            !HTMLCanvasElement.prototype.captureStream ||
+            !window.MediaRecorder
+        ) {
+            setStatus(
+                'Video recording is not supported by this browser. Try the latest Chrome.'
+            );
+            return;
+        }
+
+        const duration = Math.max(
+            1,
+            Math.min(20, Number($('duration').value) || 3)
+        );
+
+        const fps = Number($('fps').value) || 30;
+
+        const [w, h] = $('resolution').value.split('x').map(Number);
+
+        const opts = {
+            duration,
+            fit: $('fit').value,
+            transition: $('transition').value,
+            transitionTime: Math.min(
+                Number($('transitionTime').value) || 0,
+                duration
+            ),
+            showNames: $('showNames').checked
+        };
+
+        const totalDuration = images.length * duration;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+
+        const ctx = canvas.getContext('2d');
+
+        let audioContext = null;
+        let audioElement = null;
+        let audioUrl = null;
+
+        stopRequested = false;
+
+        $('makeMovie').disabled = true;
+        $('stopMovie').disabled = false;
+        $('downloadLink').style.display = 'none';
+        $('moviePlayer').style.display = 'none';
+
+        setProgress(0);
+
+        try {
+            renderStream = canvas.captureStream(fps);
+
+            if (musicFile) {
+                audioUrl = URL.createObjectURL(musicFile);
+
+                audioElement = new Audio();
+                audioElement.src = audioUrl;
+                audioElement.loop = $('loopMusic').checked;
+                audioElement.preload = 'auto';
+
+                const AudioContextClass =
+                    window.AudioContext || window.webkitAudioContext;
+
+                audioContext = new AudioContextClass();
+
+                await audioContext.resume();
+
+                const source =
+                    audioContext.createMediaElementSource(audioElement);
+
+                const gain = audioContext.createGain();
+
+                gain.gain.value =
+                    Number($('musicVolume').value) / 100;
+
+                const destination =
+                    audioContext.createMediaStreamDestination();
+
+                source.connect(gain);
+                gain.connect(destination);
+
+                destination.stream.getAudioTracks().forEach(track => {
+                    renderStream.addTrack(track);
+                });
+            }
+
+            const mime = getMimeType();
+
+            recorder = new MediaRecorder(
+                renderStream,
+                mime ? {
+                    mimeType: mime,
+                    videoBitsPerSecond: Math.min(
+                        12000000,
+                        w * h * fps * 0.12
+                    )
+                } : undefined
+            );
+
+            const chunks = [];
+
+            recorder.ondataavailable = event => {
+                if (event.data && event.data.size) {
+                    chunks.push(event.data);
+                }
+            };
+
+            const stopped = new Promise(resolve => {
+                recorder.onstop = resolve;
+            });
+
+            recorder.start(250);
+
+            if (audioElement) {
+                try {
+                    await audioElement.play();
+                } catch (error) {
+                    setStatus(
+                        'Music could not start. Recording video without music.'
+                    );
+                }
+            }
+
+            setStatus('Recording movie... Please keep this page open.');
+
+            const startTime = performance.now();
+
+            await new Promise(resolve => {
+                function renderFrame(now) {
+                    if (stopRequested) {
+                        resolve();
+                        return;
+                    }
+
+                    const elapsed = (now - startTime) / 1000;
+
+                    const boundedTime = Math.min(
+                        elapsed,
+                        totalDuration - 0.001
+                    );
+
+                    const index = Math.min(
+                        images.length - 1,
+                        Math.floor(boundedTime / duration)
+                    );
+
+                    const localTime = boundedTime - index * duration;
+
+                    const nextIndex =
+                        index + 1 < images.length ? index + 1 : -1;
+
+                    drawFrame(
+                        ctx,
+                        index,
+                        nextIndex,
+                        localTime,
+                        opts,
+                        w,
+                        h
+                    );
+
+                    setProgress(elapsed / totalDuration * 100);
+
+                    setStatus(
+                        `Recording: ${Math.min(elapsed, totalDuration).toFixed(1)} / ${totalDuration.toFixed(1)} seconds`
+                    );
+
+                    if (elapsed >= totalDuration) {
+                        resolve();
+                    } else {
+                        requestAnimationFrame(renderFrame);
+                    }
+                }
+
+                requestAnimationFrame(renderFrame);
+            });
+
+            if (recorder && recorder.state !== 'inactive') {
+                recorder.stop();
+            }
+
+            await stopped;
+
+            if (!chunks.length) {
+                throw new Error(
+                    'No video data created. Try lowering the resolution.'
+                );
+            }
+
+            const blob = new Blob(chunks, {
+                type: recorder.mimeType || 'video/webm'
+            });
+
+            if (movieUrl) URL.revokeObjectURL(movieUrl);
+
+            movieUrl = URL.createObjectURL(blob);
+
+            $('moviePlayer').src = movieUrl;
+            $('moviePlayer').style.display = 'block';
+
+            $('downloadLink').href = movieUrl;
+            $('downloadLink').download = 'animation-movie.webm';
+            $('downloadLink').style.display = 'inline-block';
+
+            setProgress(100);
+
+            setStatus(
+                `Movie created successfully! File size: ${(blob.size / 1024 / 1024).toFixed(2)} MB. Click Download Movie.`
+            );
+
+        } catch (error) {
+            setStatus('Movie creation failed: ' + error.message);
+
+        } finally {
+            if (audioElement) {
+                audioElement.pause();
+                audioElement.src = '';
+            }
+
+            if (audioContext) {
+                try {
+                    await audioContext.close();
+                } catch (error) {}
+            }
+
+            if (audioUrl) URL.revokeObjectURL(audioUrl);
+
+            if (renderStream) {
+                renderStream.getTracks().forEach(track => track.stop());
+            }
+
+            renderStream = null;
+            recorder = null;
+            stopRequested = false;
+
+            $('makeMovie').disabled = images.length === 0;
+            $('stopMovie').disabled = true;
+        }
+    }
+
+    $('makeMovie').onclick = createMovie;
+
+    $('stopMovie').onclick = () => {
+        stopRequested = true;
+        setStatus('Stopping recording...');
+    };
+
+    renderList();
+    showPreview(0);
+
+})();
+</script>
+
+</body>
+</html>
