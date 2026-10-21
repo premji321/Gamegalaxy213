@@ -1,0 +1,3168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+
+<title>Ultimate Calculator Pro</title>
+
+<style>
+:root{
+    --bg:#0b1020;
+    --panel:#131c31;
+    --panel2:#192540;
+    --text:#f4f7ff;
+    --muted:#9baac7;
+    --accent:#8b5cf6;
+    --accent2:#06b6d4;
+    --border:rgba(255,255,255,.09);
+    --green:#22c55e;
+    --red:#fb7185;
+    --shadow:0 15px 45px rgba(0,0,0,.22);
+}
+
+body.light{
+    --bg:#eef2ff;
+    --panel:#ffffff;
+    --panel2:#f1f5ff;
+    --text:#182039;
+    --muted:#64748b;
+    --border:rgba(15,23,42,.12);
+    --shadow:0 12px 35px rgba(40,50,80,.10);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    transition:background .2s,color .2s;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible{
+    outline:2px solid var(--accent2);
+    outline-offset:2px;
+}
+
+.app{
+    max-width:1500px;
+    margin:auto;
+    padding:18px;
+}
+
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    display:grid;
+    place-items:center;
+    font-size:25px;
+    background:linear-gradient(135deg,#8b5cf6,#06b6d4);
+    color:white;
+}
+
+.brand h1{
+    margin:0;
+    font-size:clamp(20px,3vw,30px);
+}
+
+.brand p{
+    margin:5px 0 0;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.header-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.action-btn{
+    border:1px solid var(--border);
+    background:var(--panel);
+    color:var(--text);
+    padding:10px 13px;
+    border-radius:11px;
+}
+
+.action-btn:hover{
+    border-color:var(--accent);
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:225px minmax(0,1fr) 285px;
+    gap:16px;
+    align-items:start;
+}
+
+.panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:16px;
+    box-shadow:var(--shadow);
+    min-width:0;
+}
+
+.sidebar h3,
+.rightbar h3{
+    font-size:14px;
+    margin:0 0 13px;
+}
+
+.nav-list{
+    display:grid;
+    gap:7px;
+}
+
+.nav-btn{
+    width:100%;
+    text-align:left;
+    padding:12px;
+    border:1px solid transparent;
+    border-radius:11px;
+    color:var(--text);
+    background:transparent;
+    transition:.2s;
+}
+
+.nav-btn.active{
+    background:linear-gradient(110deg,rgba(139,92,246,.22),rgba(6,182,212,.10));
+    border-color:rgba(139,92,246,.4);
+}
+
+.nav-btn:hover{
+    background:var(--panel2);
+}
+
+.nav-icon{
+    display:inline-block;
+    width:28px;
+}
+
+.main{
+    display:grid;
+    gap:16px;
+}
+
+.screen{
+    background:var(--panel2);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    text-align:right;
+    overflow:hidden;
+}
+
+.screen-label{
+    color:var(--muted);
+    font-size:12px;
+    text-align:left;
+    margin-bottom:12px;
+}
+
+#expression{
+    width:100%;
+    border:0;
+    outline:none;
+    background:transparent;
+    color:var(--muted);
+    font-size:19px;
+    text-align:right;
+    padding:5px 0;
+}
+
+#result{
+    min-height:54px;
+    font-size:clamp(28px,5vw,43px);
+    font-weight:700;
+    overflow-wrap:anywhere;
+    margin-top:8px;
+}
+
+#status{
+    min-height:18px;
+    margin-top:8px;
+    font-size:12px;
+    color:var(--muted);
+}
+
+.keypad{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:9px;
+}
+
+.key{
+    min-height:53px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--panel);
+    color:var(--text);
+    font-size:17px;
+    transition:transform .08s,background .15s;
+    min-width:0;
+}
+
+.key:active{
+    transform:scale(.96);
+}
+
+.key.function{
+    background:var(--panel2);
+    color:var(--accent2);
+}
+
+.key.operator{
+    color:#c4b5fd;
+    background:rgba(139,92,246,.12);
+}
+
+.key.danger{
+    color:var(--red);
+}
+
+.key.equal{
+    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+    color:white;
+    border:0;
+    font-size:23px;
+}
+
+.key.wide{
+    grid-column:span 2;
+}
+
+.key:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.section-title{
+    font-size:18px;
+    margin:0 0 5px;
+}
+
+.section-subtitle{
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:18px;
+}
+
+.tool-page{
+    display:none;
+}
+
+.tool-page.active{
+    display:block;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+}
+
+.field{
+    display:grid;
+    gap:7px;
+    min-width:0;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    min-width:0;
+    background:var(--panel2);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px;
+}
+
+.field textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.primary-btn{
+    background:linear-gradient(120deg,#7c3aed,#0891b2);
+    color:white;
+    border:0;
+    border-radius:10px;
+    padding:12px 16px;
+    font-weight:700;
+}
+
+.secondary-btn{
+    background:var(--panel2);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:10px;
+    padding:11px 14px;
+}
+
+.form-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:16px;
+}
+
+.output-box{
+    margin-top:16px;
+    border:1px solid var(--border);
+    background:var(--panel2);
+    border-radius:13px;
+    padding:15px;
+    overflow-wrap:anywhere;
+}
+
+.output-box strong{
+    font-size:24px;
+    color:var(--accent2);
+}
+
+.output-box p{
+    margin:8px 0 0;
+    line-height:1.6;
+    font-size:13px;
+}
+
+.rightbar{
+    display:grid;
+    gap:16px;
+}
+
+.memory-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+}
+
+.memory-grid button{
+    min-height:39px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:var(--panel2);
+    color:var(--text);
+    font-size:12px;
+}
+
+.history-list{
+    display:grid;
+    gap:8px;
+    max-height:420px;
+    overflow:auto;
+}
+
+.history-item{
+    background:var(--panel2);
+    padding:11px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    cursor:pointer;
+    overflow-wrap:anywhere;
+}
+
+.history-item:hover{
+    border-color:var(--accent);
+}
+
+.history-expression{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:5px;
+}
+
+.history-result{
+    font-weight:700;
+    font-size:17px;
+}
+
+.empty{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+.badge{
+    display:inline-block;
+    background:rgba(6,182,212,.12);
+    color:var(--accent2);
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:11px;
+}
+
+.setting-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin:12px 0;
+    font-size:13px;
+}
+
+.setting-row input[type=range]{
+    max-width:115px;
+}
+
+hr{
+    border:0;
+    border-top:1px solid var(--border);
+    margin:15px 0;
+}
+
+footer{
+    color:var(--muted);
+    text-align:center;
+    font-size:12px;
+    padding:25px 0 10px;
+    line-height:1.7;
+}
+
+.toast{
+    position:fixed;
+    bottom:18px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--text);
+    color:var(--bg);
+    border-radius:12px;
+    padding:12px 18px;
+    font-size:13px;
+    z-index:10;
+    display:none;
+    max-width:90%;
+}
+
+.toast.show{
+    display:block;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.small{
+    font-size:12px;
+    color:var(--muted);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+@media(max-width:1100px){
+    .layout{
+        grid-template-columns:190px minmax(0,1fr);
+    }
+    .rightbar{
+        grid-column:1/-1;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:720px){
+    .app{
+        padding:10px;
+    }
+    .layout{
+        grid-template-columns:minmax(0,1fr);
+    }
+    .sidebar{
+        padding:10px;
+    }
+    .nav-list{
+        display:flex;
+        overflow-x:auto;
+        padding-bottom:4px;
+    }
+    .nav-btn{
+        width:auto;
+        white-space:nowrap;
+        flex-shrink:0;
+        padding:10px;
+    }
+    .rightbar{
+        grid-column:auto;
+        grid-template-columns:minmax(0,1fr);
+    }
+    .form-grid{
+        grid-template-columns:minmax(0,1fr);
+    }
+    .field.full{
+        grid-column:auto;
+    }
+    .keypad{
+        gap:6px;
+    }
+    .key{
+        min-height:48px;
+        font-size:15px;
+    }
+    .screen{
+        padding:15px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation:none!important;
+        transition:none!important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    <div class="brand">
+        <div class="logo">∑</div>
+        <div>
+            <h1>Ultimate Calculator Pro</h1>
+            <p>Scientific • Mathematics • Finance • Converter</p>
+        </div>
+    </div>
+
+    <div class="header-actions">
+        <button class="action-btn" id="themeBtn">☀️ Theme</button>
+        <button class="action-btn" id="soundBtn">🔊 Sound ON</button>
+        <button class="action-btn" id="voiceBtn">🎙️ Voice</button>
+    </div>
+</header>
+
+<div class="layout">
+
+<!-- LEFT NAVIGATION -->
+<aside class="panel sidebar">
+    <h3>CALCULATOR MODES</h3>
+
+    <div class="nav-list">
+        <button class="nav-btn active" data-page="standard">
+            <span class="nav-icon">🧮</span> Standard
+        </button>
+
+        <button class="nav-btn" data-page="scientific">
+            <span class="nav-icon">📐</span> Scientific
+        </button>
+
+        <button class="nav-btn" data-page="math">
+            <span class="nav-icon">🔢</span> Mathematics Tools
+        </button>
+
+        <button class="nav-btn" data-page="statistics">
+            <span class="nav-icon">📊</span> Statistics
+        </button>
+
+        <button class="nav-btn" data-page="finance">
+            <span class="nav-icon">💰</span> Finance
+        </button>
+
+        <button class="nav-btn" data-page="converter">
+            <span class="nav-icon">📏</span> Unit Converter
+        </button>
+
+        <button class="nav-btn" data-page="number">
+            <span class="nav-icon">💻</span> Number Systems
+        </button>
+
+        <button class="nav-btn" data-page="equation">
+            <span class="nav-icon">✖️</span> Equation Solver
+        </button>
+
+        <button class="nav-btn" data-page="percentage">
+            <span class="nav-icon">％</span> Percentage
+        </button>
+
+        <button class="nav-btn" data-page="settings">
+            <span class="nav-icon">⚙️</span> Settings
+        </button>
+    </div>
+
+    <hr>
+
+    <div class="small">
+        Keyboard shortcuts:<br>
+        Enter = Calculate<br>
+        Backspace = Delete<br>
+        Esc = Clear<br>
+        Ctrl + C = Copy result
+    </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+<!-- STANDARD CALCULATOR -->
+<section class="tool-page active" id="page-standard">
+
+    <div class="panel">
+        <div class="screen">
+            <div class="screen-label">STANDARD CALCULATOR</div>
+
+            <input id="expression"
+                   type="text"
+                   inputmode="decimal"
+                   autocomplete="off"
+                   spellcheck="false"
+                   aria-label="Mathematical expression"
+                   placeholder="Enter expression, e.g. (25+5)*2">
+
+            <div id="result" aria-live="polite">0</div>
+            <div id="status" aria-live="polite">Ready to calculate</div>
+        </div>
+
+        <div class="form-actions">
+            <button class="secondary-btn" id="copyBtn">📋 Copy Result</button>
+            <button class="secondary-btn" id="pasteAnsBtn">ANS</button>
+            <button class="secondary-btn" id="toggleScientificBtn">Scientific Keys</button>
+        </div>
+
+        <div id="scientificKeys" class="hidden" style="margin-top:15px">
+            <div class="keypad" id="scientificKeypad">
+                <button class="key function" data-insert="sin(">sin</button>
+                <button class="key function" data-insert="cos(">cos</button>
+                <button class="key function" data-insert="tan(">tan</button>
+                <button class="key function" data-insert="log(">log</button>
+                <button class="key function" data-insert="ln(">ln</button>
+
+                <button class="key function" data-insert="sqrt(">√</button>
+                <button class="key function" data-insert="cbrt(">∛</button>
+                <button class="key function" data-insert="^2">x²</button>
+                <button class="key function" data-insert="^">xʸ</button>
+                <button class="key function" data-insert="!">n!</button>
+
+                <button class="key function" data-insert="pi">π</button>
+                <button class="key function" data-insert="e">e</button>
+                <button class="key function" data-insert="abs(">abs</button>
+                <button class="key function" data-insert="floor(">floor</button>
+                <button class="key function" data-insert="ceil(">ceil</button>
+            </div>
+        </div>
+
+        <div class="keypad" id="keypad" style="margin-top:15px">
+
+            <button class="key danger" data-action="clear">AC</button>
+            <button class="key danger" data-action="delete">DEL</button>
+            <button class="key operator" data-insert="(">(</button>
+            <button class="key operator" data-insert=")">)</button>
+            <button class="key operator" data-insert="/">÷</button>
+
+            <button class="key" data-insert="7">7</button>
+            <button class="key" data-insert="8">8</button>
+            <button class="key" data-insert="9">9</button>
+            <button class="key operator" data-insert="*">×</button>
+            <button class="key operator" data-insert="%">%</button>
+
+            <button class="key" data-insert="4">4</button>
+            <button class="key" data-insert="5">5</button>
+            <button class="key" data-insert="6">6</button>
+            <button class="key operator" data-insert="-">−</button>
+            <button class="key operator" data-insert="^">xʸ</button>
+
+            <button class="key" data-insert="1">1</button>
+            <button class="key" data-insert="2">2</button>
+            <button class="key" data-insert="3">3</button>
+            <button class="key operator" data-insert="+">+</button>
+            <button class="key function" data-insert="sqrt(">√</button>
+
+            <button class="key" data-insert="0">0</button>
+            <button class="key" data-insert=".">.</button>
+            <button class="key function" data-action="sign">±</button>
+            <button class="key function" data-insert="pi">π</button>
+            <button class="key equal" data-action="calculate">=</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3 class="section-title">Quick Calculations</h3>
+        <p class="section-subtitle">Tap a tool to insert a mathematical expression.</p>
+
+        <div class="form-actions">
+            <button class="secondary-btn" data-quick="100*18/100">18% of 100</button>
+            <button class="secondary-btn" data-quick="sqrt(144)">√144</button>
+            <button class="secondary-btn" data-quick="2^10">2¹⁰</button>
+            <button class="secondary-btn" data-quick="5!">5!</button>
+            <button class="secondary-btn" data-quick="(12+8)*5">BODMAS</button>
+        </div>
+    </div>
+
+</section>
+
+<!-- SCIENTIFIC -->
+<section class="tool-page" id="page-scientific">
+    <div class="panel">
+        <h2 class="section-title">Scientific Functions</h2>
+        <p class="section-subtitle">
+            Trigonometric functions use the angle mode selected below.
+            Logarithms use base 10 unless ln is selected.
+        </p>
+
+        <div class="field" style="margin-bottom:16px">
+            <label for="angleMode">Angle Mode</label>
+            <select id="angleMode">
+                <option value="DEG">Degrees</option>
+                <option value="RAD">Radians</option>
+            </select>
+        </div>
+
+        <div class="keypad">
+            <button class="key function" data-science="sin(">sin</button>
+            <button class="key function" data-science="cos(">cos</button>
+            <button class="key function" data-science="tan(">tan</button>
+            <button class="key function" data-science="asin(">sin⁻¹</button>
+            <button class="key function" data-science="acos(">cos⁻¹</button>
+
+            <button class="key function" data-science="atan(">tan⁻¹</button>
+            <button class="key function" data-science="sinh(">sinh</button>
+            <button class="key function" data-science="cosh(">cosh</button>
+            <button class="key function" data-science="tanh(">tanh</button>
+            <button class="key function" data-science="log(">log</button>
+
+            <button class="key function" data-science="ln(">ln</button>
+            <button class="key function" data-science="sqrt(">√</button>
+            <button class="key function" data-science="cbrt(">∛</button>
+            <button class="key function" data-science="abs(">abs</button>
+            <button class="key function" data-science="exp(">eˣ</button>
+
+            <button class="key function" data-science="floor(">floor</button>
+            <button class="key function" data-science="ceil(">ceil</button>
+            <button class="key function" data-science="round(">round</button>
+            <button class="key function" data-science="pi">π</button>
+            <button class="key function" data-science="e">e</button>
+        </div>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="openScientific">Open Main Calculator</button>
+        </div>
+    </div>
+</section>
+
+<!-- MATHEMATICS -->
+<section class="tool-page" id="page-math">
+    <div class="panel">
+        <h2 class="section-title">Mathematics Toolkit</h2>
+        <p class="section-subtitle">HCF, LCM, factors, prime numbers and factorial.</p>
+
+        <div class="form-grid">
+            <div class="field full">
+                <label for="mathNumbers">Numbers (comma separated)</label>
+                <input id="mathNumbers" placeholder="Example: 12, 18, 24">
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="primary-btn" data-math="hcf">Calculate HCF</button>
+            <button class="primary-btn" data-math="lcm">Calculate LCM</button>
+            <button class="secondary-btn" data-math="prime">Prime Check</button>
+            <button class="secondary-btn" data-math="factors">Find Factors</button>
+            <button class="secondary-btn" data-math="sum">Sum</button>
+            <button class="secondary-btn" data-math="product">Product</button>
+        </div>
+
+        <hr>
+
+        <div class="form-grid">
+            <div class="field">
+                <label for="factorialInput">Factorial (0–170)</label>
+                <input type="number" id="factorialInput" min="0" max="170" value="5">
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="factorialBtn">Calculate Factorial</button>
+        </div>
+
+        <div class="output-box" id="mathOutput" aria-live="polite">
+            Results will appear here.
+        </div>
+    </div>
+</section>
+
+<!-- STATISTICS -->
+<section class="tool-page" id="page-statistics">
+    <div class="panel">
+        <h2 class="section-title">Statistics Calculator</h2>
+        <p class="section-subtitle">
+            Calculate mean, median, mode, range, variance and standard deviation.
+        </p>
+
+        <div class="field">
+            <label for="statsNumbers">Enter numbers separated by commas</label>
+            <textarea id="statsNumbers" placeholder="10, 20, 20, 30, 40"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="statsBtn">Analyze Data</button>
+            <button class="secondary-btn" id="statsClear">Clear</button>
+        </div>
+
+        <div class="output-box" id="statsOutput" aria-live="polite">
+            Statistics will appear here.
+        </div>
+    </div>
+</section>
+
+<!-- FINANCE -->
+<section class="tool-page" id="page-finance">
+
+    <div class="panel">
+        <h2 class="section-title">Financial Calculator</h2>
+        <p class="section-subtitle">Interest, EMI, GST, discount and profit/loss.</p>
+
+        <div class="field">
+            <label for="financeMode">Select Calculator</label>
+            <select id="financeMode">
+                <option value="simple">Simple Interest</option>
+                <option value="compound">Compound Interest</option>
+                <option value="emi">Loan EMI</option>
+                <option value="gst">GST Calculator</option>
+                <option value="discount">Discount Calculator</option>
+                <option value="profit">Profit & Loss</option>
+                <option value="sip">SIP Estimator</option>
+            </select>
+        </div>
+
+        <div id="financeFields" class="form-grid" style="margin-top:15px"></div>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="financeCalculate">Calculate</button>
+            <button class="secondary-btn" id="financeReset">Reset</button>
+        </div>
+
+        <div class="output-box" id="financeOutput" aria-live="polite">
+            Enter values to calculate.
+        </div>
+
+        <p class="small">
+            Financial results are estimates. Actual lender fees, taxes,
+            compounding rules and investment returns may differ.
+        </p>
+    </div>
+
+</section>
+
+<!-- UNIT CONVERTER -->
+<section class="tool-page" id="page-converter">
+    <div class="panel">
+        <h2 class="section-title">Universal Unit Converter</h2>
+        <p class="section-subtitle">Convert common units instantly.</p>
+
+        <div class="form-grid">
+            <div class="field full">
+                <label for="unitCategory">Category</label>
+                <select id="unitCategory">
+                    <option value="length">Length</option>
+                    <option value="mass">Weight / Mass</option>
+                    <option value="temperature">Temperature</option>
+                    <option value="area">Area</option>
+                    <option value="volume">Volume</option>
+                    <option value="time">Time</option>
+                    <option value="speed">Speed</option>
+                    <option value="data">Digital Data</option>
+                    <option value="pressure">Pressure</option>
+                    <option value="energy">Energy</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="unitValue">Value</label>
+                <input type="number" id="unitValue" value="1" step="any">
+            </div>
+
+            <div class="field">
+                <label for="unitFrom">From</label>
+                <select id="unitFrom"></select>
+            </div>
+
+            <div class="field full">
+                <label for="unitTo">To</label>
+                <select id="unitTo"></select>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="convertBtn">Convert</button>
+            <button class="secondary-btn" id="swapUnits">⇄ Swap</button>
+        </div>
+
+        <div class="output-box" id="unitOutput" aria-live="polite">
+            Conversion result will appear here.
+        </div>
+    </div>
+</section>
+
+<!-- NUMBER SYSTEM -->
+<section class="tool-page" id="page-number">
+    <div class="panel">
+        <h2 class="section-title">Number System Converter</h2>
+        <p class="section-subtitle">Binary, octal, decimal and hexadecimal.</p>
+
+        <div class="form-grid">
+            <div class="field full">
+                <label for="numberInput">Number</label>
+                <input id="numberInput" placeholder="Enter a number">
+            </div>
+
+            <div class="field">
+                <label for="numberBase">Input Base</label>
+                <select id="numberBase">
+                    <option value="2">Binary</option>
+                    <option value="8">Octal</option>
+                    <option value="10" selected>Decimal</option>
+                    <option value="16">Hexadecimal</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="numberConvert">Convert Number</button>
+        </div>
+
+        <div class="output-box" id="numberOutput" aria-live="polite">
+            Converted values will appear here.
+        </div>
+    </div>
+</section>
+
+<!-- EQUATION SOLVER -->
+<section class="tool-page" id="page-equation">
+    <div class="panel">
+        <h2 class="section-title">Equation Solver</h2>
+        <p class="section-subtitle">
+            Solve linear equations ax + b = 0 and quadratic equations
+            ax² + bx + c = 0.
+        </p>
+
+        <div class="field">
+            <label for="equationType">Equation Type</label>
+            <select id="equationType">
+                <option value="linear">Linear: ax + b = 0</option>
+                <option value="quadratic">Quadratic: ax² + bx + c = 0</option>
+            </select>
+        </div>
+
+        <div class="form-grid" style="margin-top:15px">
+            <div class="field">
+                <label for="coefA">Coefficient a</label>
+                <input type="number" id="coefA" value="1" step="any">
+            </div>
+
+            <div class="field">
+                <label for="coefB">Coefficient b</label>
+                <input type="number" id="coefB" value="-5" step="any">
+            </div>
+
+            <div class="field" id="coefCField">
+                <label for="coefC">Coefficient c</label>
+                <input type="number" id="coefC" value="6" step="any">
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="solveEquation">Solve Equation</button>
+        </div>
+
+        <div class="output-box" id="equationOutput" aria-live="polite">
+            Equation solutions will appear here.
+        </div>
+    </div>
+</section>
+
+<!-- PERCENTAGE -->
+<section class="tool-page" id="page-percentage">
+    <div class="panel">
+        <h2 class="section-title">Percentage Calculator</h2>
+        <p class="section-subtitle">Find percentages, changes and discounts.</p>
+
+        <div class="field">
+            <label for="percentMode">Calculation Type</label>
+            <select id="percentMode">
+                <option value="of">What is X% of Y?</option>
+                <option value="is">X is what percentage of Y?</option>
+                <option value="change">Percentage Change from X to Y</option>
+                <option value="increase">Increase X by Y%</option>
+                <option value="decrease">Decrease X by Y%</option>
+            </select>
+        </div>
+
+        <div class="form-grid" style="margin-top:15px">
+            <div class="field">
+                <label for="percentX">X</label>
+                <input type="number" id="percentX" value="18" step="any">
+            </div>
+
+            <div class="field">
+                <label for="percentY">Y</label>
+                <input type="number" id="percentY" value="500" step="any">
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="percentCalculate">Calculate</button>
+        </div>
+
+        <div class="output-box" id="percentOutput" aria-live="polite">
+            Percentage result will appear here.
+        </div>
+    </div>
+</section>
+
+<!-- SETTINGS -->
+<section class="tool-page" id="page-settings">
+    <div class="panel">
+        <h2 class="section-title">Settings & Data</h2>
+        <p class="section-subtitle">Personalize the calculator.</p>
+
+        <div class="setting-row">
+            <label for="soundToggle">Button Sounds</label>
+            <input type="checkbox" id="soundToggle" checked>
+        </div>
+
+        <div class="setting-row">
+            <label for="volume">Sound Volume</label>
+            <input type="range" id="volume" min="0" max="100" value="30">
+        </div>
+
+        <div class="setting-row">
+            <label for="precision">Decimal Places</label>
+            <select id="precision">
+                <option value="4">4</option>
+                <option value="6" selected>6</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+
+        <div class="setting-row">
+            <label for="groupDigits">Thousands Separator</label>
+            <input type="checkbox" id="groupDigits">
+        </div>
+
+        <hr>
+
+        <div class="form-actions">
+            <button class="primary-btn" id="exportHistory">Export History CSV</button>
+            <button class="secondary-btn" id="exportText">Export History TXT</button>
+            <button class="secondary-btn" id="clearHistory">Clear History</button>
+        </div>
+
+        <hr>
+
+        <div class="form-actions">
+            <button class="secondary-btn" id="resetMemory">Clear Calculator Memory</button>
+            <button class="secondary-btn" id="resetAll">Reset Calculator</button>
+        </div>
+
+        <div class="output-box">
+            <strong style="font-size:16px">Keyboard Shortcuts</strong>
+            <p>
+                Enter: Calculate<br>
+                Backspace: Delete last character<br>
+                Escape: Clear current expression<br>
+                Number keys: Enter numbers<br>
+                +, -, *, /: Arithmetic operators
+            </p>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- RIGHT SIDEBAR -->
+<aside class="rightbar">
+
+    <div class="panel">
+        <h3>🧠 Memory Functions</h3>
+
+        <div class="memory-grid">
+            <button id="memClear">MC</button>
+            <button id="memRecall">MR</button>
+            <button id="memStore">MS</button>
+            <button id="memPlus">M+</button>
+            <button id="memMinus">M−</button>
+            <button id="memShow">M=</button>
+        </div>
+
+        <div class="output-box" style="margin-top:12px">
+            <div class="small">Stored Memory</div>
+            <strong id="memoryDisplay" style="font-size:21px">0</strong>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>📜 Calculation History</h3>
+
+        <div class="form-actions" style="margin-top:0;margin-bottom:12px">
+            <button class="secondary-btn" id="historyCopy">Copy</button>
+            <button class="secondary-btn" id="historyClear">Clear</button>
+        </div>
+
+        <div id="historyList" class="history-list">
+            <p class="empty">Your calculations will appear here.</p>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>⚡ Quick Information</h3>
+        <div class="output-box" style="margin-top:0">
+            <div class="small">Last Answer</div>
+            <strong id="lastAnswer" style="font-size:20px">0</strong>
+        </div>
+
+        <div class="output-box">
+            <div class="small">Angle Mode</div>
+            <strong id="angleDisplay" style="font-size:17px">DEG</strong>
+        </div>
+
+        <div class="output-box">
+            <div class="small">Calculator Status</div>
+            <span class="badge" id="appStatus">READY</span>
+        </div>
+    </div>
+
+</aside>
+
+</div>
+
+<footer>
+    Ultimate Calculator Pro<br>
+    Built with HTML, CSS and JavaScript.<br>
+    Verify important financial and scientific calculations independently.
+</footer>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+/* ==========================================
+   ULTIMATE CALCULATOR PRO
+   Core state and utilities
+========================================== */
+
+const $ = id => document.getElementById(id);
+
+let lastAnswer = 0;
+let memory = 0;
+let history = [];
+let soundEnabled = true;
+let soundVolume = 0.30;
+let audioContext = null;
+
+const MAX_HISTORY = 200;
+
+function toast(message){
+    const el = $("toast");
+    el.textContent = message;
+    el.classList.add("show");
+
+    clearTimeout(toast.timer);
+
+    toast.timer = setTimeout(() => {
+        el.classList.remove("show");
+    }, 2400);
+}
+
+function setStatus(message, error=false){
+    $("status").textContent = message;
+    $("status").style.color = error ? "var(--red)" : "var(--muted)";
+    $("appStatus").textContent = error ? "ERROR" : "READY";
+}
+
+function getPrecision(){
+    return Number($("precision").value) || 6;
+}
+
+function formatNumber(value){
+    if(typeof value !== "number" || !Number.isFinite(value)){
+        return String(value);
+    }
+
+    if(Object.is(value, -0)) value = 0;
+
+    const precision = getPrecision();
+
+    if(Math.abs(value) >= 1e15 || (value !== 0 && Math.abs(value) < 1e-8)){
+        return value.toExponential(Math.min(precision,12));
+    }
+
+    const rounded = Number(value.toPrecision(15));
+
+    if($("groupDigits") && $("groupDigits").checked){
+        return rounded.toLocaleString("en-IN",{
+            maximumFractionDigits:precision
+        });
+    }
+
+    return String(Number(rounded.toFixed(precision)));
+}
+
+function getFiniteInput(id){
+    const raw = $(id).value.trim();
+
+    if(raw === ""){
+        throw new Error("Please enter a value.");
+    }
+
+    const n = Number(raw);
+
+    if(!Number.isFinite(n)){
+        throw new Error("Please enter a valid finite number.");
+    }
+
+    return n;
+}
+
+function safeDisplayNumber(n){
+    if(!Number.isFinite(n)){
+        throw new Error("The result is outside the supported numeric range.");
+    }
+
+    return formatNumber(n);
+}
+
+/* ==========================================
+   SOUND SYSTEM
+========================================== */
+
+function playSound(type="click"){
+    if(!soundEnabled || soundVolume <= 0) return;
+
+    try{
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if(!AudioCtx) return;
+
+        if(!audioContext) audioContext = new AudioCtx();
+
+        if(audioContext.state === "suspended"){
+            audioContext.resume();
+        }
+
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        const now = audioContext.currentTime;
+
+        const settings = {
+            click:{frequency:620,duration:.035,wave:"sine"},
+            success:{frequency:880,duration:.12,wave:"sine"},
+            error:{frequency:180,duration:.16,wave:"triangle"}
+        };
+
+        const s = settings[type] || settings.click;
+
+        osc.type = s.wave;
+        osc.frequency.setValueAtTime(s.frequency,now);
+
+        if(type === "success"){
+            osc.frequency.exponentialRampToValueAtTime(1250,now+.10);
+        }
+
+        gain.gain.setValueAtTime(Math.max(.001,soundVolume*.16),now);
+        gain.gain.exponentialRampToValueAtTime(.001,now+s.duration);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        osc.start(now);
+        osc.stop(now+s.duration);
+    }catch(error){
+        // Sound is optional; calculator remains fully functional.
+    }
+}
+
+/* ==========================================
+   MATHEMATICAL EXPRESSION PARSER
+   No eval() or Function() is used.
+========================================== */
+
+function tokenize(expression){
+    let s = expression
+        .replace(/×/g,"*")
+        .replace(/÷/g,"/")
+        .replace(/−/g,"-")
+        .replace(/π/gi,"pi")
+        .replace(/√/g,"sqrt")
+        .replace(/\s+/g,"");
+
+    if(!s) throw new Error("Enter a mathematical expression.");
+
+    if(s.length > 500){
+        throw new Error("Expression is too long.");
+    }
+
+    const tokens = [];
+    let i = 0;
+
+    while(i < s.length){
+        const ch = s[i];
+
+        if(/[0-9.]/.test(ch)){
+            const match = s.slice(i).match(
+                /^(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?/i
+            );
+
+            if(!match){
+                throw new Error("Invalid number.");
+            }
+
+            const n = Number(match[0]);
+
+            if(!Number.isFinite(n)){
+                throw new Error("Number is outside the supported range.");
+            }
+
+            tokens.push({type:"number",value:n});
+            i += match[0].length;
+            continue;
+        }
+
+        if(/[a-zA-Z]/.test(ch)){
+            const match = s.slice(i).match(/^[a-zA-Z]+/);
+
+            const word = match[0].toLowerCase();
+
+            const constants = ["pi","e","ans"];
+
+            if(constants.includes(word)){
+                tokens.push({type:"number",value:
+                    word === "pi" ? Math.PI :
+                    word === "e" ? Math.E :
+                    lastAnswer
+                });
+            }else{
+                const allowed = [
+                    "sin","cos","tan","asin","acos","atan",
+                    "sinh","cosh","tanh","log","ln",
+                    "sqrt","cbrt","abs","floor","ceil",
+                    "round","exp"
+                ];
+
+                if(!allowed.includes(word)){
+                    throw new Error("Unknown function: " + word);
+                }
+
+                tokens.push({type:"function",value:word});
+            }
+
+            i += word.length;
+            continue;
+        }
+
+        if("+-*/%^!()".includes(ch)){
+            tokens.push({type:"operator",value:ch});
+            i++;
+            continue;
+        }
+
+        throw new Error("Invalid character: " + ch);
+    }
+
+    // Insert implicit multiplication:
+    // 2pi, 2(3+4), (2)(3), 2sqrt(9)
+    const expanded = [];
+
+    function endsValue(t){
+        return t && (
+            t.type === "number" ||
+            t.value === ")" ||
+            t.value === "!"
+        );
+    }
+
+    function beginsValue(t){
+        return t && (
+            t.type === "number" ||
+            t.type === "function" ||
+            t.value === "("
+        );
+    }
+
+    for(const token of tokens){
+        const prev = expanded[expanded.length-1];
+
+        if(endsValue(prev) && beginsValue(token)){
+            expanded.push({type:"operator",value:"*"});
+        }
+
+        expanded.push(token);
+    }
+
+    return expanded;
+}
+
+function factorial(n){
+    if(n < 0 || !Number.isInteger(n)){
+        throw new Error("Factorial requires a non-negative integer.");
+    }
+
+    if(n > 170){
+        throw new Error("Factorial is limited to 170.");
+    }
+
+    let result = 1;
+
+    for(let i=2;i<=n;i++){
+        result *= i;
+    }
+
+    return result;
+}
+
+function angleInput(x){
+    return $("angleMode").value === "DEG" ? x*Math.PI/180 : x;
+}
+
+function angleOutput(x){
+    return $("angleMode").value === "DEG" ? x*180/Math.PI : x;
+}
+
+function applyFunction(name,x){
+    let result;
+
+    switch(name){
+        case "sin": result=Math.sin(angleInput(x)); break;
+        case "cos": result=Math.cos(angleInput(x)); break;
+        case "tan":
+            if(Math.abs(Math.cos(angleInput(x))) < 1e-14){
+                throw new Error("Tangent is undefined at this angle.");
+            }
+            result=Math.tan(angleInput(x));
+            break;
+
+        case "asin":
+            if(x < -1 || x > 1) throw new Error("asin input must be between -1 and 1.");
+            result=angleOutput(Math.asin(x));
+            break;
+
+        case "acos":
+            if(x < -1 || x > 1) throw new Error("acos input must be between -1 and 1.");
+            result=angleOutput(Math.acos(x));
+            break;
+
+        case "atan": result=angleOutput(Math.atan(x)); break;
+        case "sinh": result=Math.sinh(x); break;
+        case "cosh": result=Math.cosh(x); break;
+        case "tanh": result=Math.tanh(x); break;
+
+        case "log":
+            if(x<=0) throw new Error("log requires a positive number.");
+            result=Math.log10(x);
+            break;
+
+        case "ln":
+            if(x<=0) throw new Error("ln requires a positive number.");
+            result=Math.log(x);
+            break;
+
+        case "sqrt":
+            if(x<0) throw new Error("Real square root requires x ≥ 0.");
+            result=Math.sqrt(x);
+            break;
+
+        case "cbrt": result=Math.cbrt(x); break;
+        case "abs": result=Math.abs(x); break;
+        case "floor": result=Math.floor(x); break;
+        case "ceil": result=Math.ceil(x); break;
+        case "round": result=Math.round(x); break;
+        case "exp": result=Math.exp(x); break;
+
+        default: throw new Error("Unsupported function.");
+    }
+
+    if(!Number.isFinite(result)){
+        throw new Error("Result is outside the supported numeric range.");
+    }
+
+    return result;
+}
+
+function parseExpression(expression){
+    const tokens = tokenize(expression);
+    let position = 0;
+
+    function peek(){
+        return tokens[position];
+    }
+
+    function consume(value){
+        const token = peek();
+
+        if(token && token.value === value){
+            position++;
+            return true;
+        }
+
+        return false;
+    }
+
+    function requireNumber(n){
+        if(!Number.isFinite(n)){
+            throw new Error("Result is outside the supported numeric range.");
+        }
+
+        return n;
+    }
+
+    function primary(){
+        const token = peek();
+
+        if(!token) throw new Error("Incomplete expression.");
+
+        if(token.type === "number"){
+            position++;
+            return token.value;
+        }
+
+        if(token.type === "function"){
+            position++;
+            const name = token.value;
+
+            if(!consume("(")){
+                throw new Error(name + " requires parentheses.");
+            }
+
+            const value = additive();
+
+            if(!consume(")")){
+                throw new Error("Missing closing parenthesis.");
+            }
+
+            return applyFunction(name,value);
+        }
+
+        if(consume("(")){
+            const value = additive();
+
+            if(!consume(")")){
+                throw new Error("Missing closing parenthesis.");
+            }
+
+            return value;
+        }
+
+        throw new Error("Expected a number or parenthesis.");
+    }
+
+    function postfix(){
+        let value = primary();
+
+        while(true){
+            if(consume("!")){
+                value = factorial(value);
+            }else if(consume("%")){
+                value /= 100;
+            }else{
+                break;
+            }
+
+            requireNumber(value);
+        }
+
+        return value;
+    }
+
+    function power(){
+        let left;
+
+        if(consume("+")){
+            left = unary();
+        }else if(consume("-")){
+            left = -unary();
+        }else{
+            left = postfix();
+        }
+
+        if(consume("^")){
+            const right = power();
+            left = Math.pow(left,right);
+        }
+
+        return requireNumber(left);
+    }
+
+    function unary(){
+        if(consume("+")) return unary();
+        if(consume("-")) return -unary();
+
+        return postfix();
+    }
+
+    function multiplicative(){
+        let value = power();
+
+        while(true){
+            if(consume("*")){
+                value *= power();
+            }else if(consume("/")){
+                const divisor = power();
+
+                if(divisor === 0){
+                    throw new Error("Cannot divide by zero.");
+                }
+
+                value /= divisor;
+            }else if(consume("%")){
+                const divisor = power();
+
+                if(divisor === 0){
+                    throw new Error("Cannot calculate remainder with zero.");
+                }
+
+                value %= divisor;
+            }else{
+                break;
+            }
+
+            requireNumber(value);
+        }
+
+        return value;
+    }
+
+    function additive(){
+        let value = multiplicative();
+
+        while(true){
+            if(consume("+")){
+                value += multiplicative();
+            }else if(consume("-")){
+                value -= multiplicative();
+            }else{
+                break;
+            }
+
+            requireNumber(value);
+        }
+
+        return value;
+    }
+
+    const result = additive();
+
+    if(position !== tokens.length){
+        throw new Error("Unexpected token: " + tokens[position].value);
+    }
+
+    return requireNumber(result);
+}
+
+/* ==========================================
+   HISTORY
+========================================== */
+
+function addHistory(expression,result){
+    history.unshift({
+        expression,
+        result,
+        time:new Date().toLocaleString()
+    });
+
+    history = history.slice(0,MAX_HISTORY);
+
+    renderHistory();
+}
+
+function renderHistory(){
+    const container = $("historyList");
+
+    if(!history.length){
+        container.innerHTML =
+            '<p class="empty">Your calculations will appear here.</p>';
+        return;
+    }
+
+    container.replaceChildren();
+
+    history.forEach((item,index)=>{
+        const row = document.createElement("div");
+        row.className = "history-item";
+        row.tabIndex = 0;
+        row.setAttribute("role","button");
+        row.setAttribute("aria-label","Reuse calculation "+item.expression);
+
+        const exp = document.createElement("div");
+        exp.className = "history-expression";
+        exp.textContent = item.expression;
+
+        const res = document.createElement("div");
+        res.className = "history-result";
+        res.textContent = "= " + formatNumber(item.result);
+
+        const time = document.createElement("div");
+        time.className = "small";
+        time.textContent = item.time;
+
+        row.append(exp,res,time);
+
+        function reuse(){
+            $("expression").value = item.expression;
+            $("result").textContent = formatNumber(item.result);
+            showPage("standard");
+        }
+
+        row.addEventListener("click",reuse);
+        row.addEventListener("keydown",e=>{
+            if(e.key==="Enter" || e.key===" "){
+                e.preventDefault();
+                reuse();
+            }
+        });
+
+        container.appendChild(row);
+    });
+}
+
+function calculate(){
+    const expression = $("expression").value.trim();
+
+    try{
+        const result = parseExpression(expression);
+
+        lastAnswer = result;
+
+        $("result").textContent = formatNumber(result);
+        $("lastAnswer").textContent = formatNumber(result);
+
+        setStatus("Calculation completed successfully.");
+
+        addHistory(expression,result);
+
+        playSound("success");
+
+        return result;
+    }catch(error){
+        setStatus(error.message,true);
+        playSound("error");
+        return null;
+    }
+}
+
+/* ==========================================
+   STANDARD KEYPAD
+========================================== */
+
+function insertAtCursor(text){
+    const input = $("expression");
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+
+    input.value =
+        input.value.slice(0,start) +
+        text +
+        input.value.slice(end);
+
+    const pos = start + text.length;
+
+    input.focus();
+    input.setSelectionRange(pos,pos);
+
+    playSound("click");
+}
+
+function deleteAtCursor(){
+    const input = $("expression");
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+
+    if(start !== end){
+        input.value =
+            input.value.slice(0,start) +
+            input.value.slice(end);
+
+        input.setSelectionRange(start,start);
+    }else if(start>0){
+        input.value =
+            input.value.slice(0,start-1) +
+            input.value.slice(end);
+
+        input.setSelectionRange(start-1,start-1);
+    }
+
+    input.focus();
+}
+
+function clearExpression(){
+    $("expression").value = "";
+    $("result").textContent = "0";
+    setStatus("Cleared.");
+    $("expression").focus();
+}
+
+$("keypad").addEventListener("click",e=>{
+    const button = e.target.closest("button");
+    if(!button) return;
+
+    if(button.dataset.insert !== undefined){
+        insertAtCursor(button.dataset.insert);
+    }
+
+    if(button.dataset.action === "calculate"){
+        calculate();
+    }
+
+    if(button.dataset.action === "clear"){
+        clearExpression();
+    }
+
+    if(button.dataset.action === "delete"){
+        deleteAtCursor();
+    }
+
+    if(button.dataset.action === "sign"){
+        insertAtCursor("-");
+    }
+});
+
+$("scientificKeypad").addEventListener("click",e=>{
+    const button = e.target.closest("[data-insert]");
+    if(button) insertAtCursor(button.dataset.insert);
+});
+
+$("toggleScientificBtn").addEventListener("click",()=>{
+    $("scientificKeys").classList.toggle("hidden");
+});
+
+document.querySelectorAll("[data-quick]").forEach(button=>{
+    button.addEventListener("click",()=>{
+        $("expression").value = button.dataset.quick;
+        calculate();
+    });
+});
+
+document.querySelectorAll("[data-science]").forEach(button=>{
+    button.addEventListener("click",()=>{
+        showPage("standard");
+        insertAtCursor(button.dataset.science);
+    });
+});
+
+$("openScientific").addEventListener("click",()=>{
+    showPage("standard");
+    $("scientificKeys").classList.remove("hidden");
+});
+
+$("angleMode").addEventListener("change",()=>{
+    $("angleDisplay").textContent = $("angleMode").value;
+    toast("Angle mode changed.");
+});
+
+$("pasteAnsBtn").addEventListener("click",()=>{
+    insertAtCursor("ans");
+});
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+function showPage(name){
+    document.querySelectorAll(".tool-page").forEach(page=>{
+        page.classList.toggle("active",page.id==="page-"+name);
+    });
+
+    document.querySelectorAll(".nav-btn").forEach(button=>{
+        button.classList.toggle("active",button.dataset.page===name);
+    });
+}
+
+document.querySelectorAll(".nav-btn").forEach(button=>{
+    button.addEventListener("click",()=>{
+        showPage(button.dataset.page);
+        playSound("click");
+    });
+});
+
+/* ==========================================
+   CLIPBOARD
+========================================== */
+
+async function copyText(text){
+    try{
+        if(navigator.clipboard && window.isSecureContext){
+            await navigator.clipboard.writeText(text);
+        }else{
+            const area = document.createElement("textarea");
+            area.value = text;
+            area.style.position = "absolute";
+            area.style.left = "-9999px";
+
+            document.body.appendChild(area);
+            area.select();
+
+            const ok = document.execCommand("copy");
+            area.remove();
+
+            if(!ok) throw new Error("Copy unavailable");
+        }
+
+        toast("Copied successfully.");
+    }catch(error){
+        toast("Copy unavailable. Please select and copy manually.");
+    }
+}
+
+$("copyBtn").addEventListener("click",()=>{
+    copyText($("result").textContent);
+});
+
+$("historyCopy").addEventListener("click",()=>{
+    copyText(history.map(item=>
+        item.expression+" = "+item.result
+    ).join("\n"));
+});
+
+$("historyClear").addEventListener("click",()=>{
+    history=[];
+    renderHistory();
+    toast("History cleared.");
+});
+
+$("clearHistory").addEventListener("click",()=>{
+    history=[];
+    renderHistory();
+    toast("History cleared.");
+});
+
+/* ==========================================
+   MEMORY FUNCTIONS
+========================================== */
+
+function updateMemory(){
+    $("memoryDisplay").textContent = formatNumber(memory);
+}
+
+function currentResult(){
+    return lastAnswer;
+}
+
+$("memClear").addEventListener("click",()=>{
+    memory=0;
+    updateMemory();
+    toast("Memory cleared.");
+});
+
+$("memRecall").addEventListener("click",()=>{
+    insertAtCursor(String(memory));
+});
+
+$("memStore").addEventListener("click",()=>{
+    memory=currentResult();
+    updateMemory();
+    toast("Value stored in memory.");
+});
+
+$("memPlus").addEventListener("click",()=>{
+    memory+=currentResult();
+    updateMemory();
+    toast("Added to memory.");
+});
+
+$("memMinus").addEventListener("click",()=>{
+    memory-=currentResult();
+    updateMemory();
+    toast("Subtracted from memory.");
+});
+
+$("memShow").addEventListener("click",()=>{
+    toast("Memory: "+formatNumber(memory));
+});
+
+$("resetMemory").addEventListener("click",()=>{
+    memory=0;
+    updateMemory();
+    toast("Memory reset.");
+});
+
+/* ==========================================
+   MATHEMATICS TOOLS
+========================================== */
+
+function parseNumberList(text){
+    const parts=text.split(/[\s,;]+/).filter(Boolean);
+
+    if(!parts.length){
+        throw new Error("Enter at least one number.");
+    }
+
+    if(parts.length>10000){
+        throw new Error("Please enter at most 10,000 values.");
+    }
+
+    const values=parts.map(Number);
+
+    if(values.some(n=>!Number.isFinite(n))){
+        throw new Error("One or more numbers are invalid.");
+    }
+
+    return values;
+}
+
+function gcd(a,b){
+    a=Math.abs(a);
+    b=Math.abs(b);
+
+    while(b){
+        const r=a%b;
+        a=b;
+        b=r;
+    }
+
+    return a;
+}
+
+function hcfList(values){
+    return values.reduce((a,b)=>gcd(a,b));
+}
+
+function lcmTwo(a,b){
+    if(a===0 || b===0) return 0;
+
+    const result=Math.abs((a/gcd(a,b))*b);
+
+    if(!Number.isSafeInteger(result)){
+        throw new Error("LCM exceeds the safe integer range.");
+    }
+
+    return result;
+}
+
+function lcmList(values){
+    return values.reduce((a,b)=>lcmTwo(a,b));
+}
+
+function isPrime(n){
+    if(!Number.isSafeInteger(n) || n<2) return false;
+    if(n===2) return true;
+    if(n%2===0) return false;
+
+    for(let i=3;i<=Math.sqrt(n);i+=2){
+        if(n%i===0) return false;
+    }
+
+    return true;
+}
+
+document.querySelectorAll("[data-math]").forEach(button=>{
+    button.addEventListener("click",()=>{
+        try{
+            const values=parseNumberList($("mathNumbers").value);
+            let message="";
+
+            switch(button.dataset.math){
+                case "hcf":
+                    if(values.some(n=>!Number.isSafeInteger(n))){
+                        throw new Error("HCF requires safe integers.");
+                    }
+                    message="HCF = "+hcfList(values);
+                    break;
+
+                case "lcm":
+                    if(values.some(n=>!Number.isSafeInteger(n))){
+                        throw new Error("LCM requires safe integers.");
+                    }
+                    message="LCM = "+lcmList(values);
+                    break;
+
+                case "prime":
+                    if(values.length!==1){
+                        throw new Error("Enter exactly one number for prime check.");
+                    }
+                    message=values[0]+" is "+
+                        (isPrime(values[0])?"a prime number.":"not a prime number.");
+                    break;
+
+                case "factors":{
+                    if(values.length!==1 ||
+                       !Number.isSafeInteger(values[0]) ||
+                       values[0]===0){
+                        throw new Error("Enter one non-zero safe integer.");
+                    }
+
+                    const n=Math.abs(values[0]);
+
+                    if(n>1e9){
+                        throw new Error("Factor display is limited to numbers up to 1 billion.");
+                    }
+
+                    const factors=[];
+
+                    for(let i=1;i<=Math.sqrt(n);i++){
+                        if(n%i===0){
+                            factors.push(i);
+
+                            if(i!==n/i) factors.push(n/i);
+                        }
+                    }
+
+                    factors.sort((a,b)=>a-b);
+
+                    message="Factors: "+factors.join(", ");
+                    break;
+                }
+
+                case "sum":
+                    message="Sum = "+safeDisplayNumber(
+                        values.reduce((a,b)=>a+b,0)
+                    );
+                    break;
+
+                case "product":{
+                    const product=values.reduce((a,b)=>a*b,1);
+
+                    message="Product = "+safeDisplayNumber(product);
+                    break;
+                }
+            }
+
+            $("mathOutput").textContent=message;
+        }catch(error){
+            $("mathOutput").textContent=error.message;
+        }
+    });
+});
+
+$("factorialBtn").addEventListener("click",()=>{
+    try{
+        const n=getFiniteInput("factorialInput");
+        $("mathOutput").textContent=
+            n+"! = "+factorial(n);
+    }catch(error){
+        $("mathOutput").textContent=error.message;
+    }
+});
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+$("statsBtn").addEventListener("click",()=>{
+    try{
+        const data=parseNumberList($("statsNumbers").value);
+        const sorted=[...data].sort((a,b)=>a-b);
+        const n=data.length;
+
+        const sum=data.reduce((a,b)=>a+b,0);
+        const mean=sum/n;
+
+        const median=n%2
+            ? sorted[Math.floor(n/2)]
+            : (sorted[n/2-1]+sorted[n/2])/2;
+
+        const frequency=new Map();
+
+        data.forEach(value=>{
+            frequency.set(value,(frequency.get(value)||0)+1);
+        });
+
+        const maxFrequency=Math.max(...frequency.values());
+
+        const modes=maxFrequency===1
+            ? []
+            : [...frequency.entries()]
+                .filter(item=>item[1]===maxFrequency)
+                .map(item=>item[0])
+                .sort((a,b)=>a-b);
+
+        const variance=data.reduce(
+            (total,x)=>total+Math.pow(x-mean,2),0
+        )/n;
+
+        const sampleVariance=n>1
+            ? data.reduce((total,x)=>total+Math.pow(x-mean,2),0)/(n-1)
+            : null;
+
+        const range=sorted[n-1]-sorted[0];
+
+        $("statsOutput").innerHTML="";
+
+        const lines=[
+            ["Count",n],
+            ["Sum",safeDisplayNumber(sum)],
+            ["Mean",safeDisplayNumber(mean)],
+            ["Median",safeDisplayNumber(median)],
+            ["Mode",modes.length?modes.join(", "):"No unique mode"],
+            ["Minimum",safeDisplayNumber(sorted[0])],
+            ["Maximum",safeDisplayNumber(sorted[n-1])],
+            ["Range",safeDisplayNumber(range)],
+            ["Population Variance",safeDisplayNumber(variance)],
+            ["Population Standard Deviation",safeDisplayNumber(Math.sqrt(variance))],
+            ["Sample Variance",sampleVariance===null?"Not available for n = 1":safeDisplayNumber(sampleVariance)],
+            ["Sample Standard Deviation",sampleVariance===null?"Not available for n = 1":safeDisplayNumber(Math.sqrt(sampleVariance))]
+        ];
+
+        const table=document.createElement("table");
+
+        lines.forEach(([label,value])=>{
+            const row=document.createElement("tr");
+            const left=document.createElement("th");
+            const right=document.createElement("td");
+
+            left.textContent=label;
+            right.textContent=value;
+
+            row.append(left,right);
+            table.appendChild(row);
+        });
+
+        $("statsOutput").appendChild(table);
+    }catch(error){
+        $("statsOutput").textContent=error.message;
+    }
+});
+
+$("statsClear").addEventListener("click",()=>{
+    $("statsNumbers").value="";
+    $("statsOutput").textContent="Statistics will appear here.";
+});
+
+/* ==========================================
+   FINANCIAL CALCULATOR
+========================================== */
+
+const financeDefinitions={
+    simple:[
+        ["principal","Principal Amount (₹)","100000"],
+        ["rate","Annual Interest Rate (%)","8"],
+        ["years","Duration (years)","3"]
+    ],
+    compound:[
+        ["principal","Principal Amount (₹)","100000"],
+        ["rate","Annual Interest Rate (%)","8"],
+        ["years","Duration (years)","3"],
+        ["frequency","Compounding per year","4"]
+    ],
+    emi:[
+        ["principal","Loan Amount (₹)","500000"],
+        ["rate","Annual Interest Rate (%)","9"],
+        ["months","Loan Duration (months)","60"]
+    ],
+    gst:[
+        ["principal","Base Amount (₹)","1000"],
+        ["rate","GST Rate (%)","18"]
+    ],
+    discount:[
+        ["principal","Original Price (₹)","2000"],
+        ["rate","Discount (%)","15"]
+    ],
+    profit:[
+        ["cost","Cost Price (₹)","1000"],
+        ["selling","Selling Price (₹)","1200"]
+    ],
+    sip:[
+        ["principal","Monthly Investment (₹)","5000"],
+        ["rate","Expected Annual Return (%)","12"],
+        ["years","Investment Duration (years)","10"]
+    ]
+};
+
+function renderFinanceFields(){
+    const mode=$("financeMode").value;
+    const fields=financeDefinitions[mode];
+
+    $("financeFields").replaceChildren();
+
+    fields.forEach(([id,label,value])=>{
+        const wrapper=document.createElement("div");
+        wrapper.className="field";
+
+        const lab=document.createElement("label");
+        lab.htmlFor="fin_"+id;
+        lab.textContent=label;
+
+        const input=document.createElement("input");
+        input.id="fin_"+id;
+        input.type="number";
+        input.step="any";
+        input.value=value;
+
+        wrapper.append(lab,input);
+        $("financeFields").appendChild(wrapper);
+    });
+}
+
+$("financeMode").addEventListener("change",renderFinanceFields);
+renderFinanceFields();
+
+function financeInput(id){
+    const el=$("fin_"+id);
+
+    if(!el) throw new Error("Missing financial input.");
+
+    const value=Number(el.value);
+
+    if(el.value.trim()==="" || !Number.isFinite(value)){
+        throw new Error("Please enter valid financial values.");
+    }
+
+    return value;
+}
+
+function money(n){
+    if(!Number.isFinite(n)){
+        throw new Error("Result is outside the supported numeric range.");
+    }
+
+    return n.toLocaleString("en-IN",{
+        style:"currency",
+        currency:"INR",
+        maximumFractionDigits:2
+    });
+}
+
+$("financeCalculate").addEventListener("click",()=>{
+    try{
+        const mode=$("financeMode").value;
+        let result="";
+
+        if(mode==="simple"){
+            const p=financeInput("principal");
+            const r=financeInput("rate");
+            const t=financeInput("years");
+
+            if(p<0 || r<0 || t<0) throw new Error("Values cannot be negative.");
+
+            const interest=p*r*t/100;
+
+            result=`Simple Interest: ${money(interest)}
+Total Amount: ${money(p+interest)}`;
+        }
+
+        if(mode==="compound"){
+            const p=financeInput("principal");
+            const r=financeInput("rate");
+            const t=financeInput("years");
+            const f=financeInput("frequency");
+
+            if(p<0 || r<0 || t<0 || f<=0 || !Number.isInteger(f)){
+                throw new Error("Enter valid non-negative values and a positive integer frequency.");
+            }
+
+            if(t*f>100000){
+                throw new Error("Compounding periods are too large.");
+            }
+
+            const amount=p*Math.pow(1+r/(100*f),f*t);
+            const interest=amount-p;
+
+            result=`Compound Interest: ${money(interest)}
+Total Amount: ${money(amount)}`;
+        }
+
+        if(mode==="emi"){
+            const p=financeInput("principal");
+            const annual=financeInput("rate");
+            const months=financeInput("months");
+
+            if(p<0 || annual<0 || months<=0 ||
+               !Number.isInteger(months) || months>1200){
+                throw new Error("Enter a valid loan, rate and duration (1–1200 months).");
+            }
+
+            const r=annual/1200;
+
+            const emi=r===0
+                ? p/months
+                : p*r*Math.pow(1+r,months)/
+                  (Math.pow(1+r,months)-1);
+
+            result=`Monthly EMI: ${money(emi)}
+Total Payment: ${money(emi*months)}
+Total Interest: ${money(emi*months-p)}`;
+        }
+
+        if(mode==="gst"){
+            const p=financeInput("principal");
+            const r=financeInput("rate");
+
+            if(p<0 || r<0 || r>1000){
+                throw new Error("Enter valid amount and GST rate.");
+            }
+
+            const gst=p*r/100;
+
+            result=`GST Amount: ${money(gst)}
+Total Including GST: ${money(p+gst)}
+Base Amount: ${money(p)}`;
+        }
+
+        if(mode==="discount"){
+            const p=financeInput("principal");
+            const r=financeInput("rate");
+
+            if(p<0 || r<0 || r>100){
+                throw new Error("Discount must be between 0% and 100%.");
+            }
+
+            const discount=p*r/100;
+
+            result=`Discount: ${money(discount)}
+Final Price: ${money(p-discount)}`;
+        }
+
+        if(mode==="profit"){
+            const cost=financeInput("cost");
+            const selling=financeInput("selling");
+
+            if(cost<0 || selling<0){
+                throw new Error("Prices cannot be negative.");
+            }
+
+            const difference=selling-cost;
+            const rate=cost===0?null:difference/cost*100;
+
+            result=
+                (difference>=0?"Profit: ":"Loss: ")+money(Math.abs(difference))+
+                "\n"+(rate===null
+                    ?"Percentage unavailable when cost is zero."
+                    :"Profit/Loss Percentage: "+formatNumber(Math.abs(rate))+"%");
+        }
+
+        if(mode==="sip"){
+            const monthly=financeInput("principal");
+            const annual=financeInput("rate");
+            const years=financeInput("years");
+
+            if(monthly<0 || annual<0 || years<0 || years>100){
+                throw new Error("Enter valid SIP values.");
+            }
+
+            const n=Math.round(years*12);
+            const r=annual/1200;
+
+            if(n>12000){
+                throw new Error("Investment duration is too large.");
+            }
+
+            const invested=monthly*n;
+
+            const future=r===0
+                ? invested
+                : monthly*(Math.pow(1+r,n)-1)/r*(1+r);
+
+            result=`Estimated Future Value: ${money(future)}
+Total Invested: ${money(invested)}
+Estimated Gain: ${money(future-invested)}
+
+Assumes a constant monthly return. Actual returns are not guaranteed.`;
+        }
+
+        $("financeOutput").textContent=result;
+        playSound("success");
+    }catch(error){
+        $("financeOutput").textContent=error.message;
+        playSound("error");
+    }
+});
+
+$("financeReset").addEventListener("click",()=>{
+    renderFinanceFields();
+    $("financeOutput").textContent="Enter values to calculate.";
+});
+
+/* ==========================================
+   UNIT CONVERTER
+========================================== */
+
+const unitDefinitions={
+    length:{
+        "Meter":1,
+        "Kilometer":1000,
+        "Centimeter":.01,
+        "Millimeter":.001,
+        "Mile":1609.344,
+        "Yard":.9144,
+        "Foot":.3048,
+        "Inch":.0254
+    },
+
+    mass:{
+        "Kilogram":1,
+        "Gram":.001,
+        "Milligram":.000001,
+        "Metric Ton":1000,
+        "Pound":.45359237,
+        "Ounce":.028349523125
+    },
+
+    area:{
+        "Square Meter":1,
+        "Square Kilometer":1000000,
+        "Square Centimeter":.0001,
+        "Hectare":10000,
+        "Acre":4046.8564224,
+        "Square Foot":.09290304
+    },
+
+    volume:{
+        "Liter":1,
+        "Milliliter":.001,
+        "Cubic Meter":1000,
+        "US Gallon":3.785411784,
+        "US Cup":.2365882365
+    },
+
+    time:{
+        "Second":1,
+        "Minute":60,
+        "Hour":3600,
+        "Day":86400,
+        "Week":604800,
+        "Year (365 days)":31536000
+    },
+
+    speed:{
+        "Meter/second":1,
+        "Kilometer/hour":1/3.6,
+        "Mile/hour":.44704,
+        "Foot/second":.3048
+    },
+
+    data:{
+        "Byte":1,
+        "Kilobyte (1000 B)":1000,
+        "Megabyte (1000 KB)":1e6,
+        "Gigabyte (1000 MB)":1e9,
+        "Kibibyte (1024 B)":1024,
+        "Mebibyte (1024 KiB)":1048576,
+        "Gibibyte (1024 MiB)":1073741824
+    },
+
+    pressure:{
+        "Pascal":1,
+        "Kilopascal":1000,
+        "Bar":100000,
+        "Atmosphere":101325,
+        "PSI":6894.757293
+    },
+
+    energy:{
+        "Joule":1,
+        "Kilojoule":1000,
+        "Calorie (thermochemical)":4.184,
+        "Kilocalorie":4184,
+        "Watt-hour":3600,
+        "Kilowatt-hour":3600000
+    }
+};
+
+function fillUnitOptions(){
+    const category=$("unitCategory").value;
+
+    let units;
+
+    if(category==="temperature"){
+        units=["Celsius","Fahrenheit","Kelvin"];
+    }else{
+        units=Object.keys(unitDefinitions[category]);
+    }
+
+    const from=$("unitFrom");
+    const to=$("unitTo");
+
+    from.replaceChildren();
+    to.replaceChildren();
+
+    units.forEach((unit,index)=>{
+        const a=document.createElement("option");
+        a.value=unit;
+        a.textContent=unit;
+
+        const b=document.createElement("option");
+        b.value=unit;
+        b.textContent=unit;
+
+        from.appendChild(a);
+        to.appendChild(b);
+
+        if(unit==="Meter") a.selected=true;
+        if(unit==="Kilometer") b.selected=true;
+
+        if(category==="temperature"){
+            if(unit==="Celsius") a.selected=true;
+            if(unit==="Fahrenheit") b.selected=true;
+        }
+
+        if(index===0 && category!=="temperature"){
+            a.selected=true;
+        }
+
+        if(index===1 && category!=="temperature"){
+            b.selected=true;
+        }
+    });
+}
+
+function convertTemperature(value,from,to){
+    let celsius;
+
+    if(from==="Celsius") celsius=value;
+    if(from==="Fahrenheit") celsius=(value-32)*5/9;
+    if(from==="Kelvin") celsius=value-273.15;
+
+    if(to==="Celsius") return celsius;
+    if(to==="Fahrenheit") return celsius*9/5+32;
+    if(to==="Kelvin") return celsius+273.15;
+}
+
+function convertUnit(){
+    const category=$("unitCategory").value;
+    const value=getFiniteInput("unitValue");
+    const from=$("unitFrom").value;
+    const to=$("unitTo").value;
+
+    if(category==="temperature"){
+        if(from==="Kelvin" && value<0){
+            throw new Error("Kelvin cannot be below absolute zero.");
+        }
+
+        const result=convertTemperature(value,from,to);
+
+        if(result < -273.15-1e-10){
+            throw new Error("Temperature is below absolute zero.");
+        }
+
+        if(!Number.isFinite(result)){
+            throw new Error("Conversion result is outside the supported range.");
+        }
+
+        return result;
+    }
+
+    const units=unitDefinitions[category];
+    const result=value*units[from]/units[to];
+
+    if(!Number.isFinite(result)){
+        throw new Error("Conversion result is outside the supported range.");
+    }
+
+    return result;
+}
+
+$("unitCategory").addEventListener("change",fillUnitOptions);
+
+$("convertBtn").addEventListener("click",()=>{
+    try{
+        const result=convertUnit();
+
+        $("unitOutput").textContent=
+            $("unitValue").value+" "+$("unitFrom").value+
+            " = "+formatNumber(result)+" "+$("unitTo").value;
+
+        playSound("success");
+    }catch(error){
+        $("unitOutput").textContent=error.message;
+    }
+});
+
+$("swapUnits").addEventListener("click",()=>{
+    const from=$("unitFrom");
+    const to=$("unitTo");
+
+    const previous=from.value;
+    from.value=to.value;
+    to.value=previous;
+});
+
+fillUnitOptions();
+
+/* ==========================================
+   NUMBER SYSTEM CONVERTER
+========================================== */
+
+$("numberConvert").addEventListener("click",()=>{
+    try{
+        const raw=$("numberInput").value.trim();
+        const base=Number($("numberBase").value);
+
+        if(!raw) throw new Error("Enter a number.");
+
+        if(raw.length>10000){
+            throw new Error("Input is too long.");
+        }
+
+        const validPatterns={
+            2:/^[+-]?[01]+$/,
+            8:/^[+-]?[0-7]+$/,
+            10:/^[+-]?\d+$/,
+            16:/^[+-]?[0-9a-f]+$/i
+        };
+
+        if(!validPatterns[base].test(raw)){
+            throw new Error("Input contains digits invalid for the selected base.");
+        }
+
+        const value=BigInt(
+            (raw.startsWith("-") || raw.startsWith("+"))
+                ? raw.replace(/^\+/,"")
+                : raw
+        );
+
+        $("numberOutput").innerHTML="";
+
+        const table=document.createElement("table");
+
+        const results=[
+            ["Binary",value.toString(2)],
+            ["Octal",value.toString(8)],
+            ["Decimal",value.toString(10)],
+            ["Hexadecimal",value.toString(16).toUpperCase()]
+        ];
+
+        results.forEach(([label,result])=>{
+            const row=document.createElement("tr");
+            const th=document.createElement("th");
+            const td=document.createElement("td");
+
+            th.textContent=label;
+            td.textContent=result;
+
+            row.append(th,td);
+            table.appendChild(row);
+        });
+
+        $("numberOutput").appendChild(table);
+    }catch(error){
+        $("numberOutput").textContent=error.message;
+    }
+});
+
+/* ==========================================
+   EQUATION SOLVER
+========================================== */
+
+$("equationType").addEventListener("change",()=>{
+    $("coefCField").classList.toggle(
+        "hidden",
+        $("equationType").value==="linear"
+    );
+});
+
+$("solveEquation").addEventListener("click",()=>{
+    try{
+        const a=getFiniteInput("coefA");
+        const b=getFiniteInput("coefB");
+        const type=$("equationType").value;
+
+        let message="";
+
+        if(type==="linear"){
+            if(a===0){
+                message=b===0
+                    ?"Every real number is a solution."
+                    :"No solution exists.";
+            }else{
+                message="x = "+formatNumber(-b/a);
+            }
+        }else{
+            const c=getFiniteInput("coefC");
+
+            if(a===0){
+                if(b===0){
+                    message=c===0
+                        ?"Every real number satisfies the equation."
+                        :"No solution exists.";
+                }else{
+                    message="Linear solution: x = "+formatNumber(-c/b);
+                }
+            }else{
+                const discriminant=b*b-4*a*c;
+
+                if(discriminant>0){
+                    const root=Math.sqrt(discriminant);
+
+                    // Stable quadratic formula helps reduce cancellation.
+                    const q=-.5*(b+(b>=0?root:-root));
+
+                    const x1=q/a;
+                    const x2=q===0
+                        ? (-b-root)/(2*a)
+                        : c/q;
+
+                    message=
+                        "Discriminant = "+formatNumber(discriminant)+
+                        "\nRoot 1 = "+formatNumber(x1)+
+                        "\nRoot 2 = "+formatNumber(x2);
+                }else if(discriminant===0){
+                    message="Repeated root: x = "+formatNumber(-b/(2*a));
+                }else{
+                    const real=-b/(2*a);
+                    const imaginary=Math.sqrt(-discriminant)/(2*Math.abs(a));
+
+                    message=
+                        "Complex roots:\n"+
+                        "x₁ = "+formatNumber(real)+" + "+formatNumber(imaginary)+"i\n"+
+                        "x₂ = "+formatNumber(real)+" - "+formatNumber(imaginary)+"i";
+                }
+            }
+        }
+
+        $("equationOutput").textContent=message;
+    }catch(error){
+        $("equationOutput").textContent=error.message;
+    }
+});
+
+/* ==========================================
+   PERCENTAGE CALCULATOR
+========================================== */
+
+$("percentCalculate").addEventListener("click",()=>{
+    try{
+        const x=getFiniteInput("percentX");
+        const y=getFiniteInput("percentY");
+        const mode=$("percentMode").value;
+
+        let result;
+
+        switch(mode){
+            case "of":
+                result=x*y/100;
+                break;
+
+            case "is":
+                if(y===0) throw new Error("Cannot divide by zero.");
+                result=x/y*100;
+                result=formatNumber(result)+"%";
+                break;
+
+            case "change":
+                if(x===0) throw new Error("Starting value cannot be zero.");
+                result=(y-x)/Math.abs(x)*100;
+                result=formatNumber(result)+"%";
+                break;
+
+            case "increase":
+                result=x*(1+y/100);
+                break;
+
+            case "decrease":
+                result=x*(1-y/100);
+                break;
+        }
+
+        $("percentOutput").textContent=
+            "Result: "+(typeof result==="number"
+                ? safeDisplayNumber(result)
+                : result);
+    }catch(error){
+        $("percentOutput").textContent=error.message;
+    }
+});
+
+/* ==========================================
+   THEME
+========================================== */
+
+$("themeBtn").addEventListener("click",()=>{
+    document.body.classList.toggle("light");
+
+    $("themeBtn").textContent=
+        document.body.classList.contains("light")
+            ? "🌙 Dark Mode"
+            : "☀️ Light Mode";
+});
+
+/* ==========================================
+   SOUND SETTINGS
+========================================== */
+
+$("soundBtn").addEventListener("click",()=>{
+    soundEnabled=!soundEnabled;
+
+    $("soundToggle").checked=soundEnabled;
+
+    $("soundBtn").textContent=
+        soundEnabled?"🔊 Sound ON":"🔇 Sound OFF";
+
+    if(soundEnabled) playSound("success");
+});
+
+$("soundToggle").addEventListener("change",()=>{
+    soundEnabled=$("soundToggle").checked;
+
+    $("soundBtn").textContent=
+        soundEnabled?"🔊 Sound ON":"🔇 Sound OFF";
+});
+
+$("volume").addEventListener("input",()=>{
+    soundVolume=Number($("volume").value)/100;
+});
+
+/* ==========================================
+   VOICE INPUT
+========================================== */
+
+$("voiceBtn").addEventListener("click",()=>{
+    const SpeechRecognition=
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if(!SpeechRecognition){
+        toast("Voice input is not supported by this browser.");
+        return;
+    }
+
+    try{
+        const recognition=new SpeechRecognition();
+
+        recognition.lang="en-IN";
+        recognition.interimResults=false;
+        recognition.maxAlternatives=1;
+
+        $("voiceBtn").textContent="🎙️ Listening...";
+
+        recognition.onresult=event=>{
+            const spoken=event.results[0][0].transcript;
+
+            $("expression").value=spoken
+                .toLowerCase()
+                .replace(/\bplus\b/g,"+")
+                .replace(/\bminus\b/g,"-")
+                .replace(/\bmultiplied by\b/g,"*")
+                .replace(/\btimes\b/g,"*")
+                .replace(/\bdivided by\b/g,"/")
+                .replace(/\bdivide\b/g,"/")
+                .replace(/\bpoint\b/g,".")
+                .replace(/\bpi\b/g,"pi");
+
+            setStatus("Voice input received. Check the expression before calculating.");
+            $("voiceBtn").textContent="🎙️ Voice";
+        };
+
+        recognition.onerror=()=>{
+            toast("Voice recognition failed or permission was denied.");
+            $("voiceBtn").textContent="🎙️ Voice";
+        };
+
+        recognition.onend=()=>{
+            $("voiceBtn").textContent="🎙️ Voice";
+        };
+
+        recognition.start();
+    }catch(error){
+        toast("Unable to start voice recognition.");
+        $("voiceBtn").textContent="🎙️ Voice";
+    }
+});
+
+/* ==========================================
+   EXPORT HISTORY
+========================================== */
+
+function downloadFile(filename,content,type){
+    const blob=new Blob([content],{type});
+    const url=URL.createObjectURL(blob);
+
+    const link=document.createElement("a");
+    link.href=url;
+    link.download=filename;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+$("exportHistory").addEventListener("click",()=>{
+    const escapeCSV=value=>
+        '"'+String(value).replace(/"/g,'""')+'"';
+
+    const lines=[
+        ["Expression","Result","Date"],
+        ...history.map(item=>[
+            item.expression,
+            item.result,
+            item.time
+        ])
+    ];
+
+    const csv=lines.map(row=>row.map(escapeCSV).join(",")).join("\r\n");
+
+    downloadFile("calculator-history.csv",csv,"text/csv;charset=utf-8");
+});
+
+$("exportText").addEventListener("click",()=>{
+    const content=history.map(item=>
+        item.time+"\n"+
+        item.expression+" = "+item.result+"\n"
+    ).join("\n");
+
+    downloadFile("calculator-history.txt",content,"text/plain;charset=utf-8");
+});
+
+/* ==========================================
+   KEYBOARD SUPPORT
+========================================== */
+
+$("expression").addEventListener("keydown",e=>{
+    if(e.key==="Enter"){
+        e.preventDefault();
+        calculate();
+    }
+
+    if(e.key==="Escape"){
+        e.preventDefault();
+        clearExpression();
+    }
+});
+
+document.addEventListener("keydown",e=>{
+    const active=document.activeElement;
+
+    const typing=active && (
+        active.tagName==="INPUT" ||
+        active.tagName==="TEXTAREA" ||
+        active.tagName==="SELECT" ||
+        active.isContentEditable
+    );
+
+    if(typing) return;
+
+    if(e.key==="Escape"){
+        clearExpression();
+    }
+
+    if(e.key==="Enter"){
+        if($("page-standard").classList.contains("active")){
+            calculate();
+        }
+    }
+});
+
+document.addEventListener("keydown",e=>{
+    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==="c"){
+        const selection=window.getSelection().toString();
+
+        if(!selection){
+            copyText($("result").textContent);
+        }
+    }
+});
+
+/* ==========================================
+   RESET
+========================================== */
+
+$("resetAll").addEventListener("click",()=>{
+    clearExpression();
+
+    history=[];
+    memory=0;
+    lastAnswer=0;
+
+    renderHistory();
+    updateMemory();
+
+    $("lastAnswer").textContent="0";
+
+    $("mathOutput").textContent="Results will appear here.";
+    $("statsOutput").textContent="Statistics will appear here.";
+    $("financeOutput").textContent="Enter values to calculate.";
+    $("unitOutput").textContent="Conversion result will appear here.";
+    $("numberOutput").textContent="Converted values will appear here.";
+    $("equationOutput").textContent="Equation solutions will appear here.";
+    $("percentOutput").textContent="Percentage result will appear here.";
+
+    toast("Calculator has been reset.");
+});
+
+$("precision").addEventListener("change",()=>{
+    $("result").textContent=formatNumber(lastAnswer);
+    updateMemory();
+    renderHistory();
+});
+
+$("groupDigits").addEventListener("change",()=>{
+    $("result").textContent=formatNumber(lastAnswer);
+    updateMemory();
+    renderHistory();
+});
+
+/* ==========================================
+   INITIALIZATION
+========================================== */
+
+updateMemory();
+renderHistory();
+
+$("angleDisplay").textContent=$("angleMode").value;
+
+setStatus("Ready to calculate.");
+
+$("expression").addEventListener("input",()=>{
+    if($("status").textContent!=="Ready to calculate"){
+        setStatus("Expression updated.");
+    }
+});
+
+console.log("Ultimate Calculator Pro initialized successfully.");
+</script>
+
+</body>
+</html>
