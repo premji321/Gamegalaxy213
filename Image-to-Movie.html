@@ -3,97 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10172a">
+<meta name="theme-color" content="#080d1c">
 
-<title>Image to Animation Movie Studio</title>
+<title>Image Motion Studio | GameGalaxy213</title>
 
 <style>
 :root {
-    --bg: #0b1020;
-    --panel: #141d33;
-    --accent: #7c5cff;
-    --green: #08a88a;
-    --text: #f4f7ff;
-    --muted: #aab6d0;
-    --border: #2a3858;
+    --bg: #080d1c;
+    --panel: #111a30;
+    --primary: #6b70ff;
+    --cyan: #00d4ff;
+    --green: #00b894;
+    --text: #f5f7ff;
+    --muted: #aab5d0;
+    --border: rgba(255,255,255,.12);
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background: radial-gradient(circle at top, #18264a, #0b1020 65%);
+    background:
+        radial-gradient(circle at top left, #182957, transparent 42%),
+        var(--bg);
     color: var(--text);
     min-height: 100vh;
 }
 
 header {
     text-align: center;
-    padding: 28px 12px;
+    padding: 30px 14px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+header .eyebrow {
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 header h1 {
-    font-size: clamp(25px, 5vw, 40px);
-    margin: 0 0 10px;
+    font-size: clamp(26px, 5vw, 42px);
+    margin-bottom: 10px;
+}
+
+header h1 span {
+    color: var(--cyan);
 }
 
 header p {
     color: var(--muted);
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.7;
 }
 
-.container {
-    width: min(1100px, 94%);
+main {
+    max-width: 1250px;
     margin: auto;
+    padding: 22px 14px 35px;
+}
+
+.layout {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
 }
 
 .card {
-    background: var(--panel);
+    background: linear-gradient(145deg, #141f39, #10182b);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 20px;
+    border-radius: 17px;
+    padding: 18px;
     min-width: 0;
-    box-shadow: 0 10px 30px #0003;
+    box-shadow: 0 10px 28px #0003;
 }
 
 .card h2 {
-    margin-top: 0;
-    font-size: 20px;
+    font-size: 19px;
+    margin-bottom: 15px;
 }
 
 .upload {
-    border: 2px dashed #6477a2;
+    display: block;
+    border: 2px dashed #586b96;
     background: #0b1427;
-    border-radius: 14px;
-    padding: 25px 12px;
+    border-radius: 13px;
+    padding: 22px 12px;
     text-align: center;
     cursor: pointer;
 }
 
 .upload:hover {
-    border-color: var(--green);
+    border-color: var(--cyan);
 }
 
 .upload strong {
     display: block;
-    font-size: 18px;
-    margin-bottom: 8px;
+    font-size: 17px;
+    margin-bottom: 7px;
 }
 
 .upload span {
-    color: var(--muted);
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.6;
-}
-
-input[type="file"] {
-    max-width: 100%;
+    color: var(--muted);
 }
 
 #imageInput {
@@ -101,24 +120,27 @@ input[type="file"] {
 }
 
 button, .download {
-    border: none;
-    padding: 11px 15px;
+    border: 0;
     border-radius: 10px;
+    padding: 11px 13px;
     color: white;
-    background: var(--accent);
+    background: var(--primary);
     font-weight: bold;
+    font-size: 13px;
     cursor: pointer;
     text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
 }
 
 button:hover, .download:hover {
-    filter: brightness(1.15);
+    filter: brightness(1.12);
 }
 
 button:disabled {
-    opacity: .4;
+    opacity: .42;
     cursor: not-allowed;
 }
 
@@ -127,7 +149,7 @@ button:disabled {
 }
 
 .gray {
-    background: #293956;
+    background: #2a3a5b;
 }
 
 .red {
@@ -136,45 +158,53 @@ button:disabled {
 
 .actions {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
-    margin: 14px 0;
+    flex-wrap: wrap;
+    margin: 13px 0;
+}
+
+.hint {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-top: 10px;
 }
 
 #fileList {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
-    gap: 10px;
-    margin-top: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+    gap: 9px;
+    margin-top: 13px;
 }
 
 .thumb {
     position: relative;
-    background: #080d1c;
+    overflow: hidden;
     border: 1px solid var(--border);
     border-radius: 10px;
-    overflow: hidden;
+    background: #080d1c;
+    min-width: 0;
 }
 
 .thumb img {
     width: 100%;
-    height: 95px;
+    height: 85px;
     object-fit: cover;
     display: block;
 }
 
 .thumb .name {
-    font-size: 11px;
-    padding: 7px;
-    overflow-wrap: anywhere;
+    font-size: 10px;
     color: var(--muted);
+    padding: 6px;
+    overflow-wrap: anywhere;
 }
 
 .thumb .remove {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    padding: 4px 8px;
+    right: 4px;
+    top: 4px;
+    padding: 4px 7px;
     background: #b52f4d;
 }
 
@@ -192,17 +222,21 @@ button:disabled {
 .settings {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 13px;
+    gap: 12px;
+}
+
+.field {
+    min-width: 0;
 }
 
 .field label {
     display: block;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 12px;
     margin-bottom: 7px;
 }
 
-.field input:not([type="range"]),
+.field input:not([type=range]),
 .field select {
     width: 100%;
     padding: 10px;
@@ -210,11 +244,12 @@ button:disabled {
     color: white;
     border: 1px solid var(--border);
     border-radius: 9px;
+    min-height: 39px;
 }
 
-.field input[type="range"] {
+.field input[type=range] {
     width: 100%;
-    accent-color: var(--accent);
+    accent-color: var(--primary);
 }
 
 .full {
@@ -223,22 +258,24 @@ button:disabled {
 
 .check {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
     margin-top: 12px;
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 .check input {
-    accent-color: var(--accent);
+    accent-color: var(--primary);
+    margin-top: 2px;
 }
 
 .previewBox {
-    background: #050810;
+    aspect-ratio: 16 / 9;
+    background: #03060d;
     border: 1px solid var(--border);
     border-radius: 12px;
-    aspect-ratio: 16 / 9;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -256,21 +293,36 @@ button:disabled {
     color: var(--muted);
     text-align: center;
     padding: 15px;
+    font-size: 13px;
+}
+
+.preview-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+#previewCounter {
+    color: var(--muted);
+    font-size: 12px;
 }
 
 #moviePlayer {
     width: 100%;
-    margin-top: 15px;
+    display: none;
+    margin-top: 14px;
     border-radius: 12px;
-    background: black;
+    background: #000;
 }
 
 .status {
-    padding: 12px;
+    padding: 11px 12px;
     border-radius: 10px;
     background: #0b1427;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.6;
     overflow-wrap: anywhere;
 }
@@ -283,33 +335,53 @@ button:disabled {
     overflow: hidden;
 }
 
-#progressBar {
+.progress div {
     height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--accent), var(--green));
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), var(--cyan), var(--green));
+    transition: width .12s;
 }
 
-.hint {
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.6;
-    margin-top: 12px;
+.pill {
+    display: inline-block;
+    border-radius: 99px;
+    padding: 5px 8px;
+    background: #203858;
+    color: #a9f4e4;
+    font-size: 11px;
+    margin-bottom: 12px;
 }
 
 footer {
     text-align: center;
     color: var(--muted);
-    padding: 25px 12px;
-    font-size: 12px;
+    font-size: 11px;
+    line-height: 1.8;
+    padding: 22px 12px;
+    border-top: 1px solid var(--border);
 }
 
-@media(max-width: 760px) {
-    .container {
+@media(max-width:760px) {
+    .layout {
         grid-template-columns: 1fr;
     }
 
+    main {
+        padding: 15px 10px 28px;
+    }
+
     .card {
-        padding: 15px;
+        padding: 14px;
+    }
+}
+
+@media(max-width:380px) {
+    .settings {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
     }
 }
 </style>
@@ -318,179 +390,236 @@ footer {
 <body>
 
 <header>
-    <h1>🎬 Image to Animation Studio</h1>
-    <p>Convert multiple images into an animated movie with music and cinematic effects.</p>
+    <div class="eyebrow">PHOTO • MOTION • STORY</div>
+
+    <h1>🎬 Image <span>Motion Studio</span></h1>
+
+    <p>
+        Turn multiple photos into a connected cinematic slideshow.
+        Add transitions, motion effects and background music.
+    </p>
 </header>
 
-<main class="container">
+<main>
 
-    <!-- IMAGE UPLOAD -->
-    <section class="card">
-        <h2>📸 1. Upload Images</h2>
+<div class="layout">
 
-        <label class="upload" for="imageInput">
-            <strong>＋ Select Multiple Images</strong>
-            <span>Choose multiple photos from your device</span>
-        </label>
+<!-- IMAGE UPLOAD -->
 
-        <input type="file" id="imageInput" accept="image/*" multiple>
+<section class="card">
 
-        <div class="actions">
-            <button class="gray" id="addMore">＋ Add More</button>
-            <button class="red" id="clearAll">Clear All</button>
+    <h2>📸 1. Add & Arrange Photos</h2>
+
+    <label class="upload" for="imageInput">
+        <strong>＋ Select Multiple Images</strong>
+        <span>Choose JPG, PNG, WEBP or other supported image files</span>
+    </label>
+
+    <input type="file" id="imageInput" accept="image/*" multiple>
+
+    <div class="actions">
+        <button class="gray" id="addMore">＋ Add More</button>
+        <button class="red" id="clearAll">Clear All</button>
+    </div>
+
+    <div id="imageCount" class="hint">No images selected yet.</div>
+
+    <div id="fileList"></div>
+
+    <p class="hint">
+        Use ↑ and ↓ to change the order of your photos.
+    </p>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section class="card">
+
+    <h2>⚙️ 2. Movie Settings</h2>
+
+    <div class="pill">Cinematic transition studio</div>
+
+    <div class="settings">
+
+        <div class="field">
+            <label for="duration">Seconds per photo</label>
+            <input id="duration" type="number" min="1" max="20" step="0.5" value="3">
         </div>
 
-        <div id="imageCount" class="hint">No images selected.</div>
-
-        <div id="fileList"></div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section class="card">
-        <h2>⚙️ 2. Movie Settings</h2>
-
-        <div class="settings">
-
-            <div class="field">
-                <label for="duration">Duration per image</label>
-                <input type="number" id="duration" min="1" max="20" value="3">
-            </div>
-
-            <div class="field">
-                <label for="fps">Frame Rate</label>
-                <select id="fps">
-                    <option value="24">24 FPS</option>
-                    <option value="30" selected>30 FPS</option>
-                    <option value="60">60 FPS</option>
-                </select>
-            </div>
-
-            <div class="field">
-                <label for="resolution">Video Resolution</label>
-                <select id="resolution">
-                    <option value="854x480">480p</option>
-                    <option value="1280x720" selected>HD 720p</option>
-                    <option value="1920x1080">Full HD 1080p</option>
-                </select>
-            </div>
-
-            <div class="field">
-                <label for="fit">Image Display</label>
-                <select id="fit">
-                    <option value="contain">Fit Entire Image</option>
-                    <option value="cover" selected>Fill Screen</option>
-                </select>
-            </div>
-
-            <div class="field full">
-                <label for="transition">Animation Effect</label>
-                <select id="transition">
-                    <option value="fade">Smooth Fade</option>
-                    <option value="zoom">Cinematic Zoom</option>
-                    <option value="slide">Slide Transition</option>
-                    <option value="cut">Simple Cut</option>
-                </select>
-            </div>
-
-            <div class="field full">
-                <label>
-                    Transition Time:
-                    <span id="transitionLabel">0.8</span> seconds
-                </label>
-                <input type="range" id="transitionTime"
-                       min="0" max="2" step="0.1" value="0.8">
-            </div>
-
-            <div class="field full">
-                <label for="musicInput">🎵 Background Music</label>
-                <input type="file" id="musicInput" accept="audio/*">
-            </div>
-
-            <div class="field full">
-                <label>
-                    Music Volume: <span id="volumeLabel">35</span>%
-                </label>
-                <input type="range" id="musicVolume" min="0" max="100" value="35">
-            </div>
-
+        <div class="field">
+            <label for="fps">Frame Rate</label>
+            <select id="fps">
+                <option value="24">24 FPS</option>
+                <option value="30" selected>30 FPS</option>
+                <option value="60">60 FPS</option>
+            </select>
         </div>
 
-        <label class="check">
-            <input type="checkbox" id="loopMusic" checked>
-            Loop background music
-        </label>
-
-        <label class="check">
-            <input type="checkbox" id="showNames">
-            Show image file names in video
-        </label>
-
-        <div class="actions">
-            <button class="green" id="makeMovie">▶ Create Movie</button>
-            <button class="red" id="stopMovie" disabled>■ Stop</button>
+        <div class="field">
+            <label for="resolution">Video Resolution</label>
+            <select id="resolution">
+                <option value="854x480">480p</option>
+                <option value="1280x720" selected>HD 720p</option>
+                <option value="1920x1080">Full HD 1080p</option>
+            </select>
         </div>
 
-        <div class="status" id="status">
-            Upload images to get started.
+        <div class="field">
+            <label for="fit">Photo Framing</label>
+            <select id="fit">
+                <option value="cover" selected>Fill Screen</option>
+                <option value="contain">Fit Entire Photo</option>
+                <option value="blur">Blurred Background</option>
+            </select>
         </div>
 
-        <div class="progress">
-            <div id="progressBar"></div>
+        <div class="field full">
+            <label for="transition">Transition Effect</label>
+
+            <select id="transition">
+                <option value="crossfade" selected>Crossfade — blend both photos</option>
+                <option value="zoom">Cinematic Zoom + Blend</option>
+                <option value="slide">Connected Slide</option>
+                <option value="push">Push Transition</option>
+                <option value="wipe">Soft Wipe</option>
+                <option value="blur">Blur Dissolve</option>
+                <option value="flash">Bright Flash</option>
+                <option value="rotate">Rotate + Blend</option>
+                <option value="dip">Dip to Dark</option>
+                <option value="cut">Hard Cut</option>
+            </select>
         </div>
 
-        <p class="hint">
-            Video is rendered in real time. Keep this page open while the movie is being created.
-        </p>
-    </section>
+        <div class="field full">
+            <label>
+                Transition Duration:
+                <span id="transitionLabel">1.0</span> seconds
+            </label>
 
-    <!-- PREVIEW -->
-    <section class="card">
-        <h2>👁️ 3. Image Preview</h2>
-
-        <div class="previewBox">
-            <img id="preview" alt="Image preview" hidden>
-            <div id="previewMessage">Your preview will appear here.</div>
+            <input type="range" id="transitionTime"
+                   min="0" max="2.5" step="0.1" value="1">
         </div>
 
-        <div class="actions">
-            <button class="gray" id="prevBtn" disabled>◀ Previous</button>
-            <button class="gray" id="nextBtn" disabled>Next ▶</button>
-            <span class="hint" id="previewCounter">0 / 0</span>
+        <div class="field full">
+            <label for="musicInput">🎵 Background Music</label>
+            <input type="file" id="musicInput" accept="audio/*">
         </div>
 
-        <p class="hint">
-            Use the arrow buttons on each image card to change the order of your photos.
-        </p>
-    </section>
+        <div class="field full">
+            <label>
+                Music Volume: <span id="volumeLabel">35</span>%
+            </label>
 
-    <!-- OUTPUT -->
-    <section class="card">
-        <h2>🎥 4. Your Movie</h2>
-
-        <video id="moviePlayer" controls playsinline style="display:none"></video>
-
-        <div class="actions">
-            <a id="downloadLink" class="download green"
-               href="#" download="animation-movie.webm"
-               style="display:none">
-                ⬇ Download Movie
-            </a>
+            <input type="range" id="musicVolume"
+                   min="0" max="100" value="35">
         </div>
 
-        <div class="status">
-            Your finished movie will appear here. The browser exports WebM video.
-            If you need MP4, convert the downloaded file using a video editor.
-        </div>
-    </section>
+    </div>
 
+    <label class="check">
+        <input type="checkbox" id="loopMusic" checked>
+        Loop music throughout the movie
+    </label>
+
+    <label class="check">
+        <input type="checkbox" id="showNames">
+        Show photo filenames on the video
+    </label>
+
+    <div class="actions">
+        <button class="green" id="makeMovie">▶ Create Movie</button>
+        <button class="red" id="stopMovie" disabled>■ Stop</button>
+    </div>
+
+    <div class="status" id="status">
+        Add photos to start.
+    </div>
+
+    <div class="progress">
+        <div id="progressBar"></div>
+    </div>
+
+    <p class="hint">
+        Movie rendering happens in real time. Keep this page open until recording finishes.
+    </p>
+
+</section>
+
+
+<!-- PHOTO PREVIEW -->
+
+<section class="card">
+
+    <h2>👁️ 3. Photo Preview</h2>
+
+    <div class="previewBox">
+        <img id="preview" alt="Photo preview" hidden>
+        <div id="previewMessage">Your selected photo appears here.</div>
+    </div>
+
+    <div class="preview-controls">
+        <button class="gray" id="prevBtn" disabled>◀ Previous</button>
+        <button class="gray" id="nextBtn" disabled>Next ▶</button>
+        <span id="previewCounter">0 / 0</span>
+    </div>
+
+    <p class="hint">
+        Transition effects are applied in the finished movie.
+    </p>
+
+</section>
+
+
+<!-- VIDEO OUTPUT -->
+
+<section class="card">
+
+    <h2>🎥 4. Preview & Save Movie</h2>
+
+    <video id="moviePlayer" controls playsinline></video>
+
+    <div class="actions" id="downloadActions" style="display:none">
+
+        <a id="downloadWebm"
+           class="download green"
+           download="image-motion-movie.webm">
+            ⬇ Save WebM
+        </a>
+
+        <a id="downloadMp4"
+           class="download"
+           download="image-motion-movie.mp4"
+           style="background:#e35c78">
+            ⬇ Save MP4
+        </a>
+
+    </div>
+
+    <div class="status" id="formatStatus">
+        The MP4 option will be available after creating the movie.
+        Direct MP4 encoding depends on browser support.
+    </div>
+
+    <p class="hint">
+        Important: Renaming a WebM file to .mp4 does not convert it.
+        If the browser cannot record MP4, use a video converter to create a genuine MP4 file.
+    </p>
+
+</section>
+
+</div>
 </main>
 
 <footer>
-    Image to Animation Movie Studio | Works in your browser
+    Image Motion Studio • Runs in your browser • Use images and music you have permission to use.
 </footer>
+
 
 <script>
 (() => {
+
     const $ = id => document.getElementById(id);
 
     let images = [];
@@ -500,6 +629,9 @@ footer {
     let recorder = null;
     let renderStream = null;
     let stopRequested = false;
+    let audioContext = null;
+    let audioElement = null;
+    let audioUrl = null;
 
     function setStatus(message) {
         $('status').textContent = message;
@@ -510,7 +642,11 @@ footer {
             Math.max(0, Math.min(100, value)) + '%';
     }
 
+
+    // ADD IMAGES
+
     function addFiles(files) {
+
         const selected = [...files].filter(file =>
             file.type.startsWith('image/')
         );
@@ -521,36 +657,44 @@ footer {
         }
 
         selected.forEach(file => {
+
             const url = URL.createObjectURL(file);
             const img = new Image();
 
             img.onload = () => {
+
                 images.push({ file, url, img });
+
                 renderList();
 
                 if (images.length === 1) {
                     showPreview(0);
                 }
 
-                setStatus(
-                    `${images.length} image(s) ready. You can create your movie now.`
-                );
+                setStatus(`${images.length} photo(s) ready.`);
+
             };
 
             img.onerror = () => {
                 URL.revokeObjectURL(url);
-                setStatus(`Unable to load ${file.name}`);
+                setStatus('Could not read ' + file.name);
             };
 
             img.src = url;
+
         });
     }
 
+
+    // IMAGE LIST
+
     function renderList() {
+
         const list = $('fileList');
         list.innerHTML = '';
 
         images.forEach((item, index) => {
+
             const box = document.createElement('div');
             box.className = 'thumb';
 
@@ -565,18 +709,20 @@ footer {
             const remove = document.createElement('button');
             remove.className = 'remove';
             remove.textContent = '×';
-            remove.title = 'Remove image';
 
             remove.onclick = () => {
+
                 URL.revokeObjectURL(item.url);
                 images.splice(index, 1);
 
-                if (previewIndex >= images.length) {
-                    previewIndex = Math.max(0, images.length - 1);
-                }
+                previewIndex = Math.min(
+                    previewIndex,
+                    Math.max(0, images.length - 1)
+                );
 
                 renderList();
                 showPreview(previewIndex);
+
             };
 
             const move = document.createElement('div');
@@ -588,11 +734,13 @@ footer {
             up.disabled = index === 0;
 
             up.onclick = () => {
+
                 [images[index - 1], images[index]] =
                     [images[index], images[index - 1]];
 
                 renderList();
                 showPreview(previewIndex);
+
             };
 
             const down = document.createElement('button');
@@ -601,22 +749,25 @@ footer {
             down.disabled = index === images.length - 1;
 
             down.onclick = () => {
+
                 [images[index + 1], images[index]] =
                     [images[index], images[index + 1]];
 
                 renderList();
                 showPreview(previewIndex);
+
             };
 
             move.append(up, down);
             box.append(img, remove, name, move);
-            list.appendChild(box);
+            list.append(box);
+
         });
 
         $('imageCount').textContent =
             images.length
-                ? `${images.length} image(s) selected.`
-                : 'No images selected.';
+                ? `${images.length} photo(s) selected.`
+                : 'No images selected yet.';
 
         $('makeMovie').disabled = !images.length || !!recorder;
 
@@ -624,51 +775,74 @@ footer {
         $('nextBtn').disabled = images.length < 2;
 
         $('previewCounter').textContent =
-            images.length ? `${previewIndex + 1} / ${images.length}` : '0 / 0';
+            images.length
+                ? `${previewIndex + 1} / ${images.length}`
+                : '0 / 0';
+
     }
 
+
+    // PHOTO PREVIEW
+
     function showPreview(index) {
+
         if (!images.length) {
+
             $('preview').hidden = true;
             $('previewMessage').hidden = false;
             $('previewCounter').textContent = '0 / 0';
+
             $('prevBtn').disabled = true;
             $('nextBtn').disabled = true;
+
             return;
         }
 
-        previewIndex = Math.max(0, Math.min(index, images.length - 1));
+        previewIndex = Math.max(
+            0,
+            Math.min(index, images.length - 1)
+        );
 
         $('preview').src = images[previewIndex].url;
         $('preview').hidden = false;
         $('previewMessage').hidden = true;
-        $('preview').style.objectFit = $('fit').value;
+
+        $('preview').style.objectFit =
+            $('fit').value === 'contain' ? 'contain' : 'cover';
 
         $('previewCounter').textContent =
             `${previewIndex + 1} / ${images.length}`;
 
         $('prevBtn').disabled = previewIndex === 0;
         $('nextBtn').disabled = previewIndex === images.length - 1;
+
     }
 
-    $('imageInput').addEventListener('change', event => {
+
+    // CONTROLS
+
+    $('imageInput').onchange = event => {
         addFiles(event.target.files);
         event.target.value = '';
-    });
+    };
 
     $('addMore').onclick = () => $('imageInput').click();
 
     $('clearAll').onclick = () => {
+
         if (recorder) return;
 
         images.forEach(item => URL.revokeObjectURL(item.url));
+
         images = [];
         previewIndex = 0;
 
         renderList();
         showPreview(0);
+
         setProgress(0);
-        setStatus('All images cleared.');
+        setStatus('All photos cleared.');
+
     };
 
     $('prevBtn').onclick = () => showPreview(previewIndex - 1);
@@ -677,8 +851,10 @@ footer {
     $('fit').onchange = () => showPreview(previewIndex);
 
     $('transitionTime').oninput = () => {
+
         $('transitionLabel').textContent =
             Number($('transitionTime').value).toFixed(1);
+
     };
 
     $('musicVolume').oninput = () => {
@@ -686,105 +862,286 @@ footer {
     };
 
     $('musicInput').onchange = event => {
+
         musicFile = event.target.files[0] || null;
 
         setStatus(
             musicFile
-                ? `Music selected: ${musicFile.name}`
+                ? 'Music selected: ' + musicFile.name
                 : 'No music selected.'
         );
+
     };
 
-    function drawImage(ctx, img, w, h, fit, scale = 1) {
-        const iw = img.naturalWidth;
-        const ih = img.naturalHeight;
 
-        const ratio = fit === 'contain'
-            ? Math.min(w / iw, h / ih)
-            : Math.max(w / iw, h / ih);
+    // DRAW IMAGE
 
-        const dw = iw * ratio * scale;
-        const dh = ih * ratio * scale;
+    function drawPhoto(ctx, img, w, h, fit, scale = 1) {
 
-        ctx.drawImage(
-            img,
-            (w - dw) / 2,
-            (h - dh) / 2,
-            dw,
-            dh
-        );
+        ctx.save();
+
+        if (fit === 'blur') {
+
+            const blurSize = Math.max(4, Math.round(h * 0.025));
+
+            ctx.filter = `blur(${blurSize}px)`;
+
+            const backgroundRatio = Math.max(
+                w / img.naturalWidth,
+                h / img.naturalHeight
+            );
+
+            const bw = img.naturalWidth * backgroundRatio;
+            const bh = img.naturalHeight * backgroundRatio;
+
+            ctx.drawImage(
+                img,
+                (w - bw) / 2,
+                (h - bh) / 2,
+                bw,
+                bh
+            );
+
+            ctx.filter = 'none';
+
+            ctx.fillStyle = 'rgba(0,0,0,.22)';
+            ctx.fillRect(0, 0, w, h);
+
+            const ratio = Math.min(
+                w / img.naturalWidth,
+                h / img.naturalHeight
+            );
+
+            const dw = img.naturalWidth * ratio;
+            const dh = img.naturalHeight * ratio;
+
+            ctx.drawImage(
+                img,
+                (w - dw) / 2,
+                (h - dh) / 2,
+                dw,
+                dh
+            );
+
+        } else {
+
+            const ratio = fit === 'contain'
+                ? Math.min(
+                    w / img.naturalWidth,
+                    h / img.naturalHeight
+                )
+                : Math.max(
+                    w / img.naturalWidth,
+                    h / img.naturalHeight
+                );
+
+            const dw = img.naturalWidth * ratio * scale;
+            const dh = img.naturalHeight * ratio * scale;
+
+            ctx.drawImage(
+                img,
+                (w - dw) / 2,
+                (h - dh) / 2,
+                dw,
+                dh
+            );
+
+        }
+
+        ctx.restore();
+
     }
 
-    function drawFrame(ctx, index, nextIndex, localTime, opts, w, h) {
+
+    // TRANSITION ENGINE
+
+    function drawFrame(ctx, index, nextIndex, local, opts, w, h) {
+
+        ctx.save();
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.globalAlpha = 1;
+        ctx.filter = 'none';
+
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, w, h);
 
         const current = images[index];
         const next = nextIndex >= 0 ? images[nextIndex] : null;
 
-        const transitionStart = opts.duration - opts.transitionTime;
-
-        const progress = opts.transitionTime > 0
-            ? Math.max(0, Math.min(
-                1,
-                (localTime - transitionStart) / opts.transitionTime
-            ))
-            : 1;
+        const tlen = opts.transitionTime;
+        const start = opts.duration - tlen;
 
         const transitioning =
-            next &&
-            opts.transition !== 'cut' &&
-            opts.transitionTime > 0 &&
-            localTime > transitionStart;
+            !!next &&
+            tlen > 0 &&
+            local > start &&
+            opts.transition !== 'cut';
 
-        if (opts.transition === 'fade' && transitioning) {
-            drawImage(ctx, current.img, w, h, opts.fit);
+        const p = transitioning
+            ? Math.max(0, Math.min(1, (local - start) / tlen))
+            : 1;
 
-            ctx.globalAlpha = progress;
-            drawImage(ctx, next.img, w, h, opts.fit);
+        const fit = opts.fit;
+        const effect = opts.transition;
+
+        if (!transitioning) {
+
+            const zoom = effect === 'zoom'
+                ? 1 + 0.07 * local / opts.duration
+                : 1;
+
+            drawPhoto(ctx, current.img, w, h, fit, zoom);
+
+        } else if (effect === 'crossfade') {
+
+            drawPhoto(ctx, current.img, w, h, fit);
+
+            ctx.globalAlpha = p;
+            drawPhoto(ctx, next.img, w, h, fit);
             ctx.globalAlpha = 1;
 
-        } else if (opts.transition === 'slide' && transitioning) {
+        } else if (effect === 'zoom') {
+
+            drawPhoto(ctx, current.img, w, h, fit, 1 + 0.10 * p);
+
+            ctx.globalAlpha = p;
+
+            drawPhoto(
+                ctx,
+                next.img,
+                w,
+                h,
+                fit,
+                1.08 - 0.08 * p
+            );
+
+            ctx.globalAlpha = 1;
+
+        } else if (effect === 'slide' || effect === 'push') {
+
             ctx.save();
+
             ctx.beginPath();
             ctx.rect(0, 0, w, h);
             ctx.clip();
 
-            ctx.translate(-progress * w, 0);
-            drawImage(ctx, current.img, w, h, opts.fit);
+            ctx.save();
+
+            ctx.translate(-p * w, 0);
+            drawPhoto(ctx, current.img, w, h, fit);
+
             ctx.restore();
 
             ctx.save();
-            ctx.beginPath();
-            ctx.rect(0, 0, w, h);
-            ctx.clip();
 
-            ctx.translate((1 - progress) * w, 0);
-            drawImage(ctx, next.img, w, h, opts.fit);
+            ctx.translate((1 - p) * w, 0);
+            drawPhoto(ctx, next.img, w, h, fit);
+
+            ctx.restore();
             ctx.restore();
 
-        } else if (opts.transition === 'zoom') {
-            const zoom = 1 + 0.08 * (localTime / opts.duration);
+        } else if (effect === 'wipe') {
 
-            drawImage(ctx, current.img, w, h, opts.fit, zoom);
+            drawPhoto(ctx, current.img, w, h, fit);
 
-            if (transitioning) {
-                ctx.globalAlpha = progress;
-                drawImage(ctx, next.img, w, h, opts.fit);
+            ctx.save();
+
+            ctx.beginPath();
+            ctx.rect(0, 0, w * p, h);
+            ctx.clip();
+
+            drawPhoto(ctx, next.img, w, h, fit);
+
+            ctx.restore();
+
+        } else if (effect === 'blur') {
+
+            drawPhoto(ctx, current.img, w, h, fit);
+
+            ctx.globalAlpha = p;
+            ctx.filter = `blur(${Math.round((1 - p) * 18)}px)`;
+
+            drawPhoto(ctx, next.img, w, h, fit);
+
+            ctx.filter = 'none';
+            ctx.globalAlpha = 1;
+
+        } else if (effect === 'flash') {
+
+            drawPhoto(ctx, current.img, w, h, fit);
+
+            ctx.globalAlpha = p;
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, w, h);
+
+            ctx.globalAlpha = 1;
+
+            if (p > 0.55) {
+
+                ctx.globalAlpha = (p - 0.55) / 0.45;
+
+                drawPhoto(ctx, next.img, w, h, fit);
+
                 ctx.globalAlpha = 1;
+
             }
 
+        } else if (effect === 'rotate') {
+
+            drawPhoto(ctx, current.img, w, h, fit);
+
+            ctx.globalAlpha = p;
+
+            ctx.translate(w / 2, h / 2);
+            ctx.rotate((1 - p) * 0.08);
+            ctx.translate(-w / 2, -h / 2);
+
+            drawPhoto(ctx, next.img, w, h, fit, 0.92 + 0.08 * p);
+
+            ctx.globalAlpha = 1;
+
+        } else if (effect === 'dip') {
+
+            if (p < 0.5) {
+
+                drawPhoto(ctx, current.img, w, h, fit);
+
+                ctx.globalAlpha = p * 2;
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, w, h);
+
+            } else {
+
+                drawPhoto(ctx, next.img, w, h, fit);
+
+                ctx.globalAlpha = (1 - p) * 2;
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, w, h);
+
+            }
+
+            ctx.globalAlpha = 1;
+
         } else {
-            drawImage(ctx, current.img, w, h, opts.fit);
+
+            drawPhoto(ctx, current.img, w, h, fit);
+
+            ctx.globalAlpha = p;
+            drawPhoto(ctx, next.img, w, h, fit);
+
+            ctx.globalAlpha = 1;
+
         }
 
         if (opts.showNames) {
-            const fontSize = Math.max(18, Math.round(w * 0.022));
 
-            ctx.font = `bold ${fontSize}px Arial`;
+            const size = Math.max(18, Math.round(w * 0.022));
 
-            ctx.fillStyle = 'rgba(0,0,0,0.6)';
-            ctx.fillRect(0, h - fontSize - 25, w, fontSize + 25);
+            ctx.font = `bold ${size}px Arial`;
+
+            ctx.fillStyle = 'rgba(0,0,0,.58)';
+            ctx.fillRect(0, h - size - 24, w, size + 24);
 
             ctx.fillStyle = '#fff';
             ctx.textBaseline = 'middle';
@@ -792,36 +1149,54 @@ footer {
             ctx.fillText(
                 current.file.name,
                 14,
-                h - fontSize / 2 - 7,
+                h - size / 2 - 7,
                 w - 28
             );
+
         }
+
+        ctx.restore();
+
     }
 
-    function getMimeType() {
+
+    // FORMAT SUPPORT
+
+    function supportedMimeTypes() {
+
         const types = [
+            'video/mp4;codecs=avc1.42E01E,mp4a.40.2',
+            'video/mp4',
             'video/webm;codecs=vp9,opus',
             'video/webm;codecs=vp8,opus',
             'video/webm'
         ];
 
-        return types.find(type =>
+        return types.filter(type =>
             window.MediaRecorder &&
             MediaRecorder.isTypeSupported(type)
-        ) || '';
+        );
+
     }
 
+
+    // CREATE MOVIE
+
     async function createMovie() {
+
         if (!images.length || recorder) return;
 
         if (
             !HTMLCanvasElement.prototype.captureStream ||
             !window.MediaRecorder
         ) {
+
             setStatus(
-                'Video recording is not supported by this browser. Try the latest Chrome.'
+                'This browser does not support video recording. Please use an updated Chrome browser.'
             );
+
             return;
+
         }
 
         const duration = Math.max(
@@ -831,53 +1206,65 @@ footer {
 
         const fps = Number($('fps').value) || 30;
 
-        const [w, h] = $('resolution').value.split('x').map(Number);
+        const [w, h] =
+            $('resolution').value.split('x').map(Number);
 
         const opts = {
             duration,
             fit: $('fit').value,
             transition: $('transition').value,
+
             transitionTime: Math.min(
                 Number($('transitionTime').value) || 0,
                 duration
             ),
+
             showNames: $('showNames').checked
         };
 
-        const totalDuration = images.length * duration;
+        const total = images.length * duration;
 
         const canvas = document.createElement('canvas');
+
         canvas.width = w;
         canvas.height = h;
 
         const ctx = canvas.getContext('2d');
 
-        let audioContext = null;
-        let audioElement = null;
-        let audioUrl = null;
-
         stopRequested = false;
 
         $('makeMovie').disabled = true;
         $('stopMovie').disabled = false;
-        $('downloadLink').style.display = 'none';
+
+        $('downloadActions').style.display = 'none';
         $('moviePlayer').style.display = 'none';
+
+        $('formatStatus').textContent = 'Preparing movie...';
 
         setProgress(0);
 
         try {
+
             renderStream = canvas.captureStream(fps);
 
             if (musicFile) {
+
                 audioUrl = URL.createObjectURL(musicFile);
 
                 audioElement = new Audio();
+
                 audioElement.src = audioUrl;
                 audioElement.loop = $('loopMusic').checked;
                 audioElement.preload = 'auto';
 
                 const AudioContextClass =
                     window.AudioContext || window.webkitAudioContext;
+
+                if (!AudioContextClass) {
+                    throw new Error(
+                        'Audio mixing is not supported in this browser.'
+                    );
+                }
 
                 audioContext = new AudioContextClass();
 
@@ -888,11 +1275,11 @@ footer {
 
                 const gain = audioContext.createGain();
 
-                gain.gain.value =
-                    Number($('musicVolume').value) / 100;
-
                 const destination =
                     audioContext.createMediaStreamDestination();
+
+                gain.gain.value =
+                    Number($('musicVolume').value) / 100;
 
                 source.connect(gain);
                 gain.connect(destination);
@@ -900,27 +1287,33 @@ footer {
                 destination.stream.getAudioTracks().forEach(track => {
                     renderStream.addTrack(track);
                 });
+
             }
 
-            const mime = getMimeType();
+            const mimeTypes = supportedMimeTypes();
+            const mime = mimeTypes[0] || '';
 
             recorder = new MediaRecorder(
                 renderStream,
-                mime ? {
-                    mimeType: mime,
-                    videoBitsPerSecond: Math.min(
-                        12000000,
-                        w * h * fps * 0.12
-                    )
-                } : undefined
+                mime
+                    ? {
+                        mimeType: mime,
+                        videoBitsPerSecond: Math.min(
+                            12000000,
+                            w * h * fps * 0.12
+                        )
+                    }
+                    : {}
             );
 
             const chunks = [];
 
             recorder.ondataavailable = event => {
+
                 if (event.data && event.data.size) {
                     chunks.push(event.data);
                 }
+
             };
 
             const stopped = new Promise(resolve => {
@@ -930,67 +1323,74 @@ footer {
             recorder.start(250);
 
             if (audioElement) {
+
                 try {
                     await audioElement.play();
                 } catch (error) {
-                    setStatus(
-                        'Music could not start. Recording video without music.'
-                    );
+
+                    $('formatStatus').textContent =
+                        'Music playback was blocked. Video recording will continue.';
+
                 }
+
             }
 
-            setStatus('Recording movie... Please keep this page open.');
+            setStatus('Recording movie... Keep this page open.');
 
-            const startTime = performance.now();
+            const started = performance.now();
 
             await new Promise(resolve => {
-                function renderFrame(now) {
+
+                function frame(now) {
+
                     if (stopRequested) {
                         resolve();
                         return;
                     }
 
-                    const elapsed = (now - startTime) / 1000;
+                    const elapsed = (now - started) / 1000;
 
-                    const boundedTime = Math.min(
+                    const bounded = Math.min(
                         elapsed,
-                        totalDuration - 0.001
+                        total - 0.001
                     );
 
                     const index = Math.min(
                         images.length - 1,
-                        Math.floor(boundedTime / duration)
+                        Math.floor(bounded / duration)
                     );
 
-                    const localTime = boundedTime - index * duration;
+                    const local = bounded - index * duration;
 
-                    const nextIndex =
+                    const next =
                         index + 1 < images.length ? index + 1 : -1;
 
                     drawFrame(
                         ctx,
                         index,
-                        nextIndex,
-                        localTime,
+                        next,
+                        local,
                         opts,
                         w,
                         h
                     );
 
-                    setProgress(elapsed / totalDuration * 100);
+                    setProgress(elapsed / total * 100);
 
                     setStatus(
-                        `Recording: ${Math.min(elapsed, totalDuration).toFixed(1)} / ${totalDuration.toFixed(1)} seconds`
+                        `Recording: ${Math.min(elapsed, total).toFixed(1)} / ${total.toFixed(1)} seconds`
                     );
 
-                    if (elapsed >= totalDuration) {
+                    if (elapsed >= total) {
                         resolve();
                     } else {
-                        requestAnimationFrame(renderFrame);
+                        requestAnimationFrame(frame);
                     }
+
                 }
 
-                requestAnimationFrame(renderFrame);
+                requestAnimationFrame(frame);
+
             });
 
             if (recorder && recorder.state !== 'inactive') {
@@ -1001,7 +1401,7 @@ footer {
 
             if (!chunks.length) {
                 throw new Error(
-                    'No video data created. Try lowering the resolution.'
+                    'No video data created. Try 480p or another browser.'
                 );
             }
 
@@ -1009,42 +1409,99 @@ footer {
                 type: recorder.mimeType || 'video/webm'
             });
 
-            if (movieUrl) URL.revokeObjectURL(movieUrl);
+            const isMp4 =
+                blob.type.toLowerCase().includes('mp4');
+
+            if (movieUrl) {
+                URL.revokeObjectURL(movieUrl);
+            }
 
             movieUrl = URL.createObjectURL(blob);
 
             $('moviePlayer').src = movieUrl;
             $('moviePlayer').style.display = 'block';
 
-            $('downloadLink').href = movieUrl;
-            $('downloadLink').download = 'animation-movie.webm';
-            $('downloadLink').style.display = 'inline-block';
+            $('downloadActions').style.display = 'flex';
+
+            if (isMp4) {
+
+                $('downloadMp4').href = movieUrl;
+                $('downloadMp4').download = 'image-motion-movie.mp4';
+
+                $('downloadMp4').style.display = 'inline-flex';
+                $('downloadWebm').style.display = 'none';
+
+                $('formatStatus').textContent =
+                    'Your browser created a genuine MP4 video. Use Save MP4 to download it.';
+
+            } else {
+
+                $('downloadWebm').href = movieUrl;
+                $('downloadWebm').download = 'image-motion-movie.webm';
+                $('downloadWebm').style.display = 'inline-flex';
+
+                $('downloadMp4').removeAttribute('href');
+                $('downloadMp4').style.display = 'inline-flex';
+
+                $('downloadMp4').onclick = event => {
+
+                    event.preventDefault();
+
+                    alert(
+                        'Your browser created a WebM file. Direct MP4 encoding is not supported. Download the WebM file and convert it to MP4 using a video editor. Renaming the extension does not convert the video.'
+                    );
+
+                };
+
+                $('formatStatus').textContent =
+                    'This browser created WebM. MP4 is available as an option, but genuine MP4 conversion requires an MP4 encoder.';
+
+            }
 
             setProgress(100);
 
             setStatus(
-                `Movie created successfully! File size: ${(blob.size / 1024 / 1024).toFixed(2)} MB. Click Download Movie.`
+                `Movie created successfully! File size: ${(blob.size / 1024 / 1024).toFixed(2)} MB.`
             );
 
         } catch (error) {
+
             setStatus('Movie creation failed: ' + error.message);
 
+            $('formatStatus').textContent =
+                'Try lowering the resolution to 480p or creating the video without music.';
+
         } finally {
+
             if (audioElement) {
                 audioElement.pause();
                 audioElement.src = '';
+                audioElement = null;
             }
 
             if (audioContext) {
+
                 try {
                     await audioContext.close();
                 } catch (error) {}
+
+                audioContext = null;
+
             }
 
-            if (audioUrl) URL.revokeObjectURL(audioUrl);
+            if (audioUrl) {
+
+                URL.revokeObjectURL(audioUrl);
+                audioUrl = null;
+
+            }
 
             if (renderStream) {
-                renderStream.getTracks().forEach(track => track.stop());
+
+                renderStream.getTracks().forEach(track => {
+                    track.stop();
+                });
+
             }
 
             renderStream = null;
@@ -1053,14 +1510,19 @@ footer {
 
             $('makeMovie').disabled = images.length === 0;
             $('stopMovie').disabled = true;
+
         }
+
     }
+
 
     $('makeMovie').onclick = createMovie;
 
     $('stopMovie').onclick = () => {
+
         stopRequested = true;
         setStatus('Stopping recording...');
+
     };
 
     renderList();
