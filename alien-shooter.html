@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#080d24">
+<meta name="theme-color" content="#050817">
+
 <title>Alien Shooter: Dragon War | GameGalaxy213</title>
 
 <style>
 :root {
-    --bg: #070b1b;
+    --bg: #050817;
     --panel: #0b122b;
     --cyan: #19e7ff;
     --pink: #ff398c;
     --purple: #a744ff;
+    --green: #47ffab;
 }
 
 * {
@@ -59,78 +61,76 @@ button {
     background: var(--bg);
     touch-action: none;
     user-select: none;
-    -webkit-user-select: none;
 }
 
 .topbar {
     flex: 0 0 auto;
-    min-height: 94px;
-    padding: 11px 14px;
+    min-height: 88px;
+    padding: 10px 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    background: #0a1028;
+    gap: 7px;
+    background: linear-gradient(135deg, #080d22, #111b3b);
     border-bottom: 1px solid #173b59;
     z-index: 5;
 }
 
 .brand h1 {
-    font-size: clamp(16px, 4.7vw, 27px);
+    font-size: clamp(15px, 4.5vw, 26px);
     color: var(--cyan);
-    text-shadow: 0 0 15px #00cfff55;
+    text-shadow: 0 0 15px #00cfff88;
     white-space: nowrap;
 }
 
 .brand p {
     margin-top: 5px;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     color: #9eafce;
 }
 
 .stats {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: clamp(7px, 2vw, 18px);
+    gap: clamp(5px, 1.8vw, 16px);
 }
 
 .stat {
-    min-width: 30px;
+    min-width: 28px;
     text-align: center;
 }
 
 .stat span {
     display: block;
-    font-size: 10px;
+    font-size: 9px;
     color: #a4b4d2;
     margin-bottom: 5px;
 }
 
 .stat strong {
-    font-size: clamp(17px, 5vw, 23px);
+    font-size: clamp(15px, 4.5vw, 22px);
     color: var(--cyan);
 }
 
 #score {
-    color: #47ffab;
+    color: var(--green);
 }
 
 #lives {
     white-space: nowrap;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .icon-btn {
     flex-shrink: 0;
-    width: 42px;
-    height: 46px;
-    border-radius: 13px;
+    min-width: 37px;
+    height: 42px;
+    border-radius: 12px;
     border: 1px solid #344a7a;
     background: #142246;
-    font-size: 21px;
+    font-size: 18px;
 }
 
 #canvas-area {
@@ -138,7 +138,7 @@ button {
     flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
-    background: #050918;
+    background: #030614;
     touch-action: none;
 }
 
@@ -151,9 +151,9 @@ button {
 
 .bottom-panel {
     flex: 0 0 auto;
-    min-height: 130px;
-    padding: 11px 16px 14px;
-    background: #0a1028;
+    min-height: 119px;
+    padding: 10px 14px 12px;
+    background: linear-gradient(135deg, #080d22, #111b3b);
     border-top: 1px solid #153c58;
     z-index: 5;
 }
@@ -167,17 +167,17 @@ button {
 
 .move-controls {
     display: flex;
-    gap: 10px;
+    gap: 9px;
 }
 
 .control-btn {
-    width: clamp(58px, 13vw, 94px);
-    height: 68px;
-    border-radius: 19px;
-    background: linear-gradient(145deg, #14254b, #0b1736);
-    border: 1px solid #198ca9;
-    box-shadow: inset 0 0 15px #18eaff12;
-    font-size: 29px;
+    width: clamp(56px, 13vw, 90px);
+    height: 62px;
+    border-radius: 17px;
+    background: linear-gradient(145deg, #182b55, #09142e);
+    border: 1px solid #19a9ca;
+    box-shadow: inset 0 0 15px #18eaff18;
+    font-size: 28px;
 }
 
 .control-btn:active {
@@ -186,28 +186,26 @@ button {
 }
 
 .fire-btn {
-    width: clamp(120px, 29vw, 185px);
-    height: 68px;
-    border-radius: 20px;
+    width: clamp(115px, 28vw, 180px);
+    height: 62px;
+    border-radius: 18px;
     background: linear-gradient(115deg, #b01964, #7020a9);
     border: 1px solid #ff65bb;
-    font-size: clamp(17px, 4vw, 23px);
+    box-shadow: 0 0 16px #ff239e22;
+    font-size: clamp(16px, 4vw, 22px);
     font-weight: bold;
-    letter-spacing: 1px;
 }
 
 .fire-btn:active,
 .fire-btn.firing {
     background: linear-gradient(115deg, #f12d9c, #9a36ed);
-    transform: scale(.97);
 }
 
 .help-text {
     text-align: center;
-    margin-top: 12px;
+    margin-top: 10px;
     color: #94a6c9;
-    font-size: clamp(9px, 2.8vw, 13px);
-    line-height: 1.4;
+    font-size: clamp(9px, 2.5vw, 12px);
 }
 
 .overlay {
@@ -217,9 +215,9 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 22px;
-    background: #030717dd;
-    backdrop-filter: blur(5px);
+    padding: 20px;
+    background: #020615eF;
+    backdrop-filter: blur(6px);
 }
 
 .overlay.hidden {
@@ -230,9 +228,9 @@ button {
     width: min(100%, 410px);
     max-height: 92%;
     overflow: auto;
-    padding: 25px 21px;
+    padding: 24px 20px;
     text-align: center;
-    border-radius: 25px;
+    border-radius: 24px;
     border: 1px solid #1a8ca9;
     background: linear-gradient(150deg, #101c40, #090e23);
     box-shadow: 0 0 35px #00d9ff20;
@@ -242,13 +240,13 @@ button {
     color: var(--cyan);
     font-size: clamp(27px, 7vw, 40px);
     margin-bottom: 12px;
-    text-shadow: 0 0 18px #00d9ff50;
+    text-shadow: 0 0 18px #00d9ff70;
 }
 
 .dialog p {
     color: #b8c7e5;
     line-height: 1.65;
-    margin-bottom: 18px;
+    margin-bottom: 17px;
     font-size: 14px;
 }
 
@@ -279,68 +277,40 @@ button {
     color: #9eafce;
 }
 
+.boss-alert {
+    position: absolute;
+    top: 18%;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    text-align: center;
+    font-weight: 900;
+    font-size: clamp(23px, 7vw, 38px);
+    color: #ff647b;
+    text-shadow: 0 0 12px red, 0 0 28px #ff326d;
+    pointer-events: none;
+    animation: bossPulse .45s infinite alternate;
+}
+
+@keyframes bossPulse {
+    from { transform: scale(1); opacity: .75; }
+    to { transform: scale(1.06); opacity: 1; }
+}
+
 @media (max-height: 650px) {
-    .topbar {
-        min-height: 70px;
-        padding: 7px 10px;
-    }
-
-    .brand p {
-        font-size: 8px;
-    }
-
-    .stat span {
-        margin-bottom: 2px;
-    }
-
-    .bottom-panel {
-        min-height: 95px;
-        padding: 7px 12px;
-    }
-
-    .control-btn,
-    .fire-btn {
-        height: 51px;
-        border-radius: 14px;
-    }
-
-    .help-text {
-        margin-top: 7px;
-        font-size: 9px;
-    }
+    .topbar { min-height: 66px; padding: 6px 9px; }
+    .bottom-panel { min-height: 88px; padding: 6px 10px; }
+    .control-btn, .fire-btn { height: 48px; border-radius: 13px; }
+    .help-text { margin-top: 6px; font-size: 9px; }
 }
 
 @media (max-width: 370px) {
-    .topbar {
-        padding: 8px;
-        gap: 4px;
-    }
-
-    .brand h1 {
-        font-size: 15px;
-    }
-
-    .brand p {
-        letter-spacing: 1px;
-        font-size: 8px;
-    }
-
-    .stats {
-        gap: 5px;
-    }
-
-    .stat span {
-        font-size: 9px;
-    }
-
-    #lives {
-        font-size: 15px;
-    }
-
-    .icon-btn {
-        width: 35px;
-        height: 40px;
-    }
+    .brand h1 { font-size: 14px; }
+    .brand p { font-size: 8px; letter-spacing: 1px; }
+    .stats { gap: 4px; }
+    .stat span { font-size: 8px; }
+    #lives { font-size: 14px; }
+    .icon-btn { min-width: 32px; height: 38px; }
 }
 </style>
 </head>
@@ -349,106 +319,70 @@ button {
 
 <div id="game-wrapper">
 
-    <header class="topbar">
+<header class="topbar">
+    <div class="brand">
+        <h1>ALIEN SHOOTER</h1>
+        <p>GAMEGALAXY213 • DRAGON WAR</p>
+    </div>
 
-        <div class="brand">
-            <h1>ALIEN SHOOTER</h1>
-            <p>GAMEGALAXY213 • DRAGON WAR</p>
+    <div class="stats">
+        <div class="stat">
+            <span>SCORE</span>
+            <strong id="score">0</strong>
         </div>
-
-        <div class="stats">
-            <div class="stat">
-                <span>SCORE</span>
-                <strong id="score">0</strong>
-            </div>
-
-            <div class="stat">
-                <span>LEVEL</span>
-                <strong id="level">1</strong>
-            </div>
-
-            <div class="stat">
-                <span>LIVES</span>
-                <strong id="lives">❤️❤️❤️</strong>
-            </div>
+        <div class="stat">
+            <span>LEVEL</span>
+            <strong id="level">1</strong>
         </div>
-
-        <button id="pauseBtn" class="icon-btn" aria-label="Pause">
-            Ⅱ
-        </button>
-
-    </header>
-
-    <main id="canvas-area">
-        <canvas id="gameCanvas"></canvas>
-    </main>
-
-    <section class="bottom-panel">
-
-        <div class="controls">
-
-            <div class="move-controls">
-                <button id="leftBtn"
-                        class="control-btn"
-                        aria-label="Move left">◀</button>
-
-                <button id="rightBtn"
-                        class="control-btn"
-                        aria-label="Move right">▶</button>
-            </div>
-
-            <button id="fireBtn" class="fire-btn">
-                🔥 FIRE
-            </button>
-
-        </div>
-
-        <p class="help-text">
-            TOUCH & DRAG TO MOVE • HOLD TO FIRE • COLLECT POWER-UPS!
-        </p>
-
-    </section>
-
-    <div id="startOverlay" class="overlay">
-        <div class="dialog">
-
-            <h2>DRAGON WAR</h2>
-
-            <p>
-                Defeat the alien invasion, collect powerful upgrades,
-                and face giant dragons at Levels 5 and 10!
-            </p>
-
-            <button id="startBtn" class="primary-btn">
-                🚀 START GAME
-            </button>
-
-            <div class="instructions">
-                ☝️ Touch and drag anywhere in the game area to move<br>
-                🔥 Hold your finger to fire continuously<br>
-                ⚡ Collect power-ups dropped by enemies<br>
-                🐉 Prepare for the Level 5 and Level 10 Dragon Bosses
-            </div>
-
+        <div class="stat">
+            <span>LIVES</span>
+            <strong id="lives">❤️❤️❤️</strong>
         </div>
     </div>
 
-    <div id="messageOverlay" class="overlay hidden">
-        <div class="dialog">
+    <button id="soundBtn" class="icon-btn" aria-label="Toggle sound">🔊</button>
+    <button id="pauseBtn" class="icon-btn" aria-label="Pause">Ⅱ</button>
+</header>
 
-            <h2 id="messageTitle">PAUSED</h2>
-            <p id="messageText">Game paused.</p>
+<main id="canvas-area">
+    <canvas id="gameCanvas"></canvas>
+    <div id="bossAlert" class="boss-alert" style="display:none"></div>
+</main>
 
-            <button id="resumeBtn" class="primary-btn">
-                ▶ RESUME GAME
-            </button>
+<section class="bottom-panel">
+    <div class="controls">
+        <div class="move-controls">
+            <button id="leftBtn" class="control-btn">◀</button>
+            <button id="rightBtn" class="control-btn">▶</button>
+        </div>
+        <button id="fireBtn" class="fire-btn">🔥 FIRE</button>
+    </div>
+    <p class="help-text">TOUCH & DRAG • HOLD TO FIRE • COLLECT POWER-UPS</p>
+</section>
 
-            <button id="restartBtn" class="secondary-btn">
-                ↻ RESTART GAME
-            </button>
-
+<div id="startOverlay" class="overlay">
+    <div class="dialog">
+        <h2>DRAGON WAR</h2>
+        <p>Prepare your battle ship. Fight the aliens, collect weapons and destroy the giant dragons!</p>
+        <button id="startBtn" class="primary-btn">🚀 START GAME</button>
+        <div class="instructions">
+            ☝️ Touch and drag to move<br>
+            🔥 Hold your finger to fire<br>
+            ⚡ Collect powerful upgrades<br>
+            🐉 Dragon bosses at Levels 5 and 10<br>
+            🔊 Sound effects included
         </div>
     </div>
+</div>
+
+<div id="messageOverlay" class="overlay hidden">
+    <div class="dialog">
+        <h2 id="messageTitle">PAUSED</h2>
+        <p id="messageText">Game paused.</p>
+        <button id="resumeBtn" class="primary-btn">▶ RESUME</button>
+        <button id="restartBtn" class="secondary-btn">↻ RESTART GAME</button>
+    </div>
+</div>
 
 </div>
 
@@ -464,12 +398,12 @@ const scoreEl = document.getElementById("score");
 const levelEl = document.getElementById("level");
 const livesEl = document.getElementById("lives");
 
+const soundBtn = document.getElementById("soundBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 const fireBtn = document.getElementById("fireBtn");
 
 const startOverlay = document.getElementById("startOverlay");
 const messageOverlay = document.getElementById("messageOverlay");
-
 const messageTitle = document.getElementById("messageTitle");
 const messageText = document.getElementById("messageText");
 
@@ -479,17 +413,202 @@ const restartBtn = document.getElementById("restartBtn");
 
 const leftBtn = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
+const bossAlert = document.getElementById("bossAlert");
+
+/* =====================================================
+   PROCEDURAL SOUND ENGINE
+   Uses Web Audio; no external audio files required.
+===================================================== */
+
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+let lastShotSound = 0;
+
+function initAudio() {
+    if (!soundEnabled) return;
+
+    try {
+        if (!audioCtx) {
+            audioCtx = new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+            masterGain = audioCtx.createGain();
+            masterGain.gain.value = 0.42;
+            masterGain.connect(audioCtx.destination);
+        }
+
+        if (audioCtx.state === "suspended") {
+            audioCtx.resume();
+        }
+    } catch (error) {
+        console.warn("Audio could not start:", error);
+    }
+}
+
+function tone(freq, duration, type = "sawtooth", volume = 0.12,
+              endFreq = null, delay = 0) {
+    if (!soundEnabled) return;
+
+    initAudio();
+
+    if (!audioCtx || !masterGain) return;
+
+    const now = audioCtx.currentTime + delay;
+    const oscillator = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(Math.max(1, freq), now);
+
+    if (endFreq !== null) {
+        oscillator.frequency.exponentialRampToValueAtTime(
+            Math.max(1, endFreq),
+            now + duration
+        );
+    }
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(
+        Math.max(0.0002, volume),
+        now + 0.012
+    );
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(masterGain);
+
+    oscillator.start(now);
+    oscillator.stop(now + duration + 0.025);
+}
+
+function noiseSound(duration = 0.22, volume = 0.15, filterFreq = 1200) {
+    if (!soundEnabled) return;
+
+    initAudio();
+
+    if (!audioCtx || !masterGain) return;
+
+    const length = Math.max(
+        1,
+        Math.floor(audioCtx.sampleRate * duration)
+    );
+
+    const buffer = audioCtx.createBuffer(
+        1,
+        length,
+        audioCtx.sampleRate
+    );
+
+    const data = buffer.getChannelData(0);
+
+    for (let i = 0; i < length; i++) {
+        data[i] = Math.random() * 2 - 1;
+    }
+
+    const source = audioCtx.createBufferSource();
+    const filter = audioCtx.createBiquadFilter();
+    const gain = audioCtx.createGain();
+
+    source.buffer = buffer;
+
+    filter.type = "lowpass";
+    filter.frequency.value = filterFreq;
+
+    gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioCtx.currentTime + duration
+    );
+
+    source.connect(filter);
+    filter.connect(gain);
+    gain.connect(masterGain);
+
+    source.start();
+    source.stop(audioCtx.currentTime + duration);
+}
+
+function soundStart() {
+    tone(160, .18, "sawtooth", .16, 420);
+    tone(420, .28, "triangle", .13, 760, .15);
+    tone(760, .35, "sine", .12, 1000, .3);
+}
+
+function soundShoot() {
+    const now = performance.now();
+
+    /* Keep the sound strong without producing hundreds of overlapping sounds. */
+    if (now - lastShotSound < 75) return;
+
+    lastShotSound = now;
+
+    tone(680, .09, "square", .075, 210);
+    tone(1250, .045, "sine", .035, 800);
+}
+
+function soundExplosion() {
+    noiseSound(.32, .24, 1000);
+    tone(120, .36, "sawtooth", .17, 38);
+    tone(65, .42, "triangle", .15, 28, .04);
+}
+
+function soundPowerUp() {
+    tone(400, .12, "sine", .13, 650);
+    tone(650, .13, "sine", .13, 900, .1);
+    tone(900, .22, "triangle", .12, 1250, .2);
+}
+
+function soundHit() {
+    tone(180, .18, "sawtooth", .17, 70);
+    noiseSound(.13, .11, 800);
+}
+
+function soundBoss() {
+    tone(100, .8, "sawtooth", .2, 42);
+    tone(160, .65, "triangle", .18, 60, .12);
+    noiseSound(.6, .12, 450);
+}
+
+function soundBossDefeated() {
+    tone(180, .18, "triangle", .14, 380);
+    tone(380, .22, "triangle", .15, 650, .12);
+    tone(650, .4, "sine", .17, 1100, .27);
+    noiseSound(.28, .12, 1700);
+}
+
+function soundGameOver() {
+    tone(340, .25, "triangle", .15, 240);
+    tone(240, .35, "triangle", .15, 120, .22);
+    tone(120, .6, "sawtooth", .12, 45, .5);
+}
+
+function soundAlienSpawn() {
+    tone(240, .16, "sawtooth", .055, 130);
+}
+
+function soundShield() {
+    tone(320, .35, "sine", .14, 950);
+    tone(500, .4, "triangle", .11, 1200, .06);
+}
+
+/* GAME VARIABLES */
 
 let W = 0;
 let H = 0;
 let DPR = 1;
-
 let gameState = "menu";
+
 let score = 0;
 let level = 1;
 let lives = 3;
-let lastTime = 0;
 let elapsed = 0;
+let lastTime = 0;
 
 let bullets = [];
 let enemyBullets = [];
@@ -507,7 +626,6 @@ let bossSpawnedFor = 0;
 
 let activePointerId = null;
 let fingerDown = false;
-let fingerX = 0;
 
 const keys = Object.create(null);
 
@@ -532,13 +650,13 @@ const ship = {
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const random = (a, b) => a + Math.random() * (b - a);
 
-/* CANVAS RESIZING */
+/* RESIZE */
 
 function resizeCanvas() {
-    const r = canvasArea.getBoundingClientRect();
+    const rect = canvasArea.getBoundingClientRect();
 
-    W = Math.max(1, r.width);
-    H = Math.max(1, r.height);
+    W = Math.max(1, rect.width);
+    H = Math.max(1, rect.height);
 
     DPR = Math.min(window.devicePixelRatio || 1, 2);
 
@@ -550,7 +668,7 @@ function resizeCanvas() {
 
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-    ship.width = clamp(W * 0.095, 32, 46);
+    ship.width = clamp(W * .095, 32, 46);
     ship.height = ship.width * 1.38;
 
     ship.x = clamp(
@@ -568,18 +686,15 @@ function resizeCanvas() {
 function createStars() {
     stars = [];
 
-    const count = Math.max(
-        45,
-        Math.floor((W * H) / 4500)
-    );
+    const count = Math.max(45, Math.floor(W * H / 4500));
 
     for (let i = 0; i < count; i++) {
         stars.push({
             x: Math.random() * W,
             y: Math.random() * H,
-            size: random(0.5, 1.8),
+            size: random(.5, 1.8),
             speed: random(12, 55),
-            alpha: random(0.25, 0.9)
+            alpha: random(.25, .9)
         });
     }
 }
@@ -590,7 +705,7 @@ if ("ResizeObserver" in window) {
     new ResizeObserver(resizeCanvas).observe(canvasArea);
 }
 
-/* GAME INITIALIZATION */
+/* GAME CONTROL */
 
 function resetGame() {
     score = 0;
@@ -604,7 +719,7 @@ function resetGame() {
     powerUps = [];
     boss = null;
 
-    alienSpawnTimer = 0.4;
+    alienSpawnTimer = .4;
     shootTimer = 0;
     enemyShootTimer = 1;
     damageFlash = 0;
@@ -631,12 +746,15 @@ function resetGame() {
 }
 
 function startGame() {
+    initAudio();
     resetGame();
 
     gameState = "playing";
 
     startOverlay.classList.add("hidden");
     messageOverlay.classList.add("hidden");
+
+    soundStart();
 
     lastTime = performance.now();
 
@@ -654,13 +772,17 @@ function pauseGame() {
     messageText.textContent = "Take a break, pilot!";
 
     resumeBtn.style.display = "block";
+
     messageOverlay.classList.remove("hidden");
 }
 
 function resumeGame() {
     if (gameState !== "paused") return;
 
+    initAudio();
+
     gameState = "playing";
+
     messageOverlay.classList.add("hidden");
 
     lastTime = performance.now();
@@ -673,12 +795,12 @@ function gameOver() {
 
     stopAllControls();
 
+    soundGameOver();
+
     messageTitle.textContent = "GAME OVER";
 
     messageText.textContent =
-        "Score: " + score +
-        " • Level: " + level +
-        (level >= 10 ? " • Dragon Slayer!" : "");
+        "Score: " + score + " • Level: " + level;
 
     resumeBtn.style.display = "none";
 
@@ -694,7 +816,7 @@ function updateHUD() {
         "🖤".repeat(Math.max(0, 3 - lives));
 }
 
-/* SPACESHIP DRAWING */
+/* STRONG SPACESHIP */
 
 function drawShip() {
     const x = ship.x;
@@ -706,74 +828,136 @@ function drawShip() {
         ship.invulnerable > 0 &&
         Math.floor(elapsed * 12) % 2 === 0
     ) {
-        ctx.globalAlpha = 0.45;
+        ctx.globalAlpha = .45;
     }
 
     ctx.save();
 
-    ctx.shadowBlur = ship.shield > 0 ? 28 : 18;
-    ctx.shadowColor = ship.shield > 0 ? "#4bffb0" : "#00eaff";
+    /* Energy aura */
+    const aura = ctx.createRadialGradient(
+        x, y + h * .5, 2,
+        x, y + h * .5, w * 1.25
+    );
+
+    aura.addColorStop(0, "#1af7ff44");
+    aura.addColorStop(1, "#1af7ff00");
+
+    ctx.fillStyle = aura;
+    ctx.beginPath();
+    ctx.arc(x, y + h * .5, w * 1.25, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* Engine flames */
+    const flame = random(h * .22, h * .5);
+
+    ctx.shadowColor = "#ff7b20";
+    ctx.shadowBlur = 20;
+
+    ctx.fillStyle = "#ff702b";
 
     ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + w * 0.83, y + h * 0.76);
-    ctx.lineTo(x + w * 0.58, y + h * 0.68);
-    ctx.lineTo(x + w * 0.5, y + h);
-    ctx.lineTo(x + w * 0.42, y + h * 0.68);
-    ctx.lineTo(x + w * 0.17, y + h * 0.76);
+    ctx.moveTo(x - w * .25, y + h * .62);
+    ctx.lineTo(x - w * .17, y + h + flame);
+    ctx.lineTo(x, y + h * .78);
+    ctx.lineTo(x + w * .17, y + h + flame);
+    ctx.lineTo(x + w * .25, y + h * .62);
     ctx.closePath();
+    ctx.fill();
 
-    const gradient = ctx.createLinearGradient(x, y, x, y + h);
+    ctx.fillStyle = "#c5ffff";
 
-    gradient.addColorStop(0, "#d5ffff");
-    gradient.addColorStop(
-        0.45,
-        ship.shield > 0 ? "#4bffb0" : "#14eaff"
-    );
-    gradient.addColorStop(1, "#0877d9");
-
-    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.moveTo(x - w * .09, y + h * .72);
+    ctx.lineTo(x, y + h + flame * .7);
+    ctx.lineTo(x + w * .09, y + h * .72);
+    ctx.closePath();
     ctx.fill();
 
     ctx.shadowBlur = 0;
 
-    ctx.beginPath();
-    ctx.ellipse(
-        x,
-        y + h * 0.48,
-        w * 0.17,
-        h * 0.2,
-        0,
-        0,
-        Math.PI * 2
+    /* Main armored body */
+    const body = ctx.createLinearGradient(
+        x - w, y, x + w, y + h
     );
 
-    ctx.fillStyle = "#ffffff";
-    ctx.fill();
+    body.addColorStop(0, "#f5ffff");
+    body.addColorStop(.2, "#1beeff");
+    body.addColorStop(.5, "#2475d9");
+    body.addColorStop(.8, "#142b69");
+    body.addColorStop(1, "#67faff");
+
+    ctx.fillStyle = body;
 
     ctx.beginPath();
-    ctx.moveTo(x - w * 0.13, y + h * 0.72);
-    ctx.lineTo(x, y + h + random(h * 0.2, h * 0.42));
-    ctx.lineTo(x + w * 0.13, y + h * 0.72);
+    ctx.moveTo(x, y - 5);
+    ctx.lineTo(x + w * .43, y + h * .38);
+    ctx.lineTo(x + w * 1.05, y + h * .7);
+    ctx.lineTo(x + w * .8, y + h * .84);
+    ctx.lineTo(x + w * .45, y + h * .72);
+    ctx.lineTo(x, y + h);
+    ctx.lineTo(x - w * .45, y + h * .72);
+    ctx.lineTo(x - w * .8, y + h * .84);
+    ctx.lineTo(x - w * 1.05, y + h * .7);
+    ctx.lineTo(x - w * .43, y + h * .38);
     ctx.closePath();
 
-    ctx.fillStyle = "#ff7b26";
+    ctx.shadowColor = "#00eaff";
+    ctx.shadowBlur = 18;
     ctx.fill();
 
+    ctx.shadowBlur = 0;
+
+    /* Armored central cockpit */
+    ctx.fillStyle = "#e9ffff";
+
+    ctx.beginPath();
+    ctx.moveTo(x, y + h * .13);
+    ctx.lineTo(x + w * .2, y + h * .48);
+    ctx.lineTo(x, y + h * .63);
+    ctx.lineTo(x - w * .2, y + h * .48);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "#103a79";
+
+    ctx.beginPath();
+    ctx.ellipse(
+        x, y + h * .45,
+        w * .12, h * .16,
+        0, 0, Math.PI * 2
+    );
+    ctx.fill();
+
+    /* Side cannons */
+    for (const side of [-1, 1]) {
+        const sx = x + side * w * .69;
+        const sy = y + h * .64;
+
+        ctx.fillStyle = "#ffdf6a";
+        ctx.shadowColor = "#ffca4b";
+        ctx.shadowBlur = 12;
+
+        ctx.fillRect(sx - w * .07, sy - h * .15, w * .14, h * .3);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(sx - w * .035, sy - h * .17, w * .07, h * .12);
+    }
+
+    ctx.shadowBlur = 0;
+
+    /* Shield bubble */
     if (ship.shield > 0) {
         ctx.beginPath();
         ctx.ellipse(
-            x,
-            y + h * 0.48,
-            w * 0.7,
-            h * 0.68,
-            0,
-            0,
-            Math.PI * 2
+            x, y + h * .48,
+            w * 1.25, h * .75,
+            0, 0, Math.PI * 2
         );
 
-        ctx.strokeStyle = "#57ffbd";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#52ffb9";
+        ctx.lineWidth = 3;
+        ctx.shadowColor = "#52ffb9";
+        ctx.shadowBlur = 20;
         ctx.stroke();
     }
 
@@ -781,7 +965,7 @@ function drawShip() {
     ctx.globalAlpha = 1;
 }
 
-/* ALIEN DRAWING */
+/* ALIENS */
 
 function drawAlien(a) {
     ctx.save();
@@ -790,125 +974,145 @@ function drawAlien(a) {
     const r = a.radius;
 
     ctx.shadowColor = a.color;
-    ctx.shadowBlur = 17;
+    ctx.shadowBlur = 18;
     ctx.fillStyle = a.color;
 
     ctx.beginPath();
 
     if (a.type === 1) {
         ctx.moveTo(0, -r);
-        ctx.lineTo(r * 0.9, -r * 0.25);
-        ctx.lineTo(r * 0.65, r * 0.8);
-        ctx.lineTo(0, r * 0.5);
-        ctx.lineTo(-r * 0.65, r * 0.8);
-        ctx.lineTo(-r * 0.9, -r * 0.25);
+        ctx.lineTo(r, -r * .2);
+        ctx.lineTo(r * .7, r * .8);
+        ctx.lineTo(0, r * .5);
+        ctx.lineTo(-r * .7, r * .8);
+        ctx.lineTo(-r, -r * .2);
         ctx.closePath();
     } else if (a.type === 2) {
-        ctx.ellipse(0, 0, r * 1.2, r * 0.65, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, r * 1.25, r * .7, 0, 0, Math.PI * 2);
     } else {
-        ctx.ellipse(0, 0, r, r * 0.72, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, r, r * .72, 0, 0, Math.PI * 2);
     }
 
     ctx.fill();
 
-    if (a.type === 2) {
-        ctx.fillRect(-r * 1.45, -r * 0.15, r * 0.5, r * 0.5);
-        ctx.fillRect(r * 0.95, -r * 0.15, r * 0.5, r * 0.5);
-    } else {
-        ctx.beginPath();
-        ctx.moveTo(-r * 0.65, -r * 0.1);
-        ctx.lineTo(-r * 1.15, -r * 0.52);
-        ctx.lineTo(-r * 1.05, r * 0.38);
-        ctx.lineTo(-r * 0.55, r * 0.26);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.moveTo(r * 0.65, -r * 0.1);
-        ctx.lineTo(r * 1.15, -r * 0.52);
-        ctx.lineTo(r * 1.05, r * 0.38);
-        ctx.lineTo(r * 0.55, r * 0.26);
-        ctx.closePath();
-        ctx.fill();
-    }
-
     ctx.shadowBlur = 0;
 
-    for (const eyeX of [-r * 0.28, r * 0.28]) {
+    for (const eyeX of [-r * .3, r * .3]) {
+        ctx.fillStyle = "#ffffff";
         ctx.beginPath();
-
         ctx.ellipse(
-            eyeX, -r * 0.03,
-            r * 0.23, r * 0.29,
+            eyeX, -r * .05,
+            r * .2, r * .28,
             0, 0, Math.PI * 2
         );
-
-        ctx.fillStyle = "#ffffff";
         ctx.fill();
 
+        ctx.fillStyle = "#190b2e";
         ctx.beginPath();
-
-        ctx.arc(
-            eyeX + r * 0.04,
-            -r * 0.02,
-            r * 0.105,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle = "#15153d";
+        ctx.arc(eyeX, -r * .03, r * .09, 0, Math.PI * 2);
         ctx.fill();
-    }
-
-    if (a.hp > 1) {
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 11px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(a.hp, 0, -r - 5);
     }
 
     ctx.restore();
 }
 
-/* ALIEN SPAWNING */
+/* BOSS DRAGON */
 
-function spawnAlien() {
-    const type = level >= 4
-        ? Math.floor(Math.random() * 3)
-        : Math.floor(Math.random() * 2);
+function drawBoss(b) {
+    ctx.save();
+    ctx.translate(b.x, b.y);
 
-    const radius = clamp(
-        random(15, 22) + level * 1.1,
-        16,
-        37
+    const r = b.radius;
+
+    ctx.shadowColor = b.kind === 10 ? "#ff165b" : "#ff8b35";
+    ctx.shadowBlur = 30;
+
+    const gradient = ctx.createLinearGradient(0, -r, 0, r);
+
+    gradient.addColorStop(0, b.kind === 10 ? "#ff8cae" : "#ffe07a");
+    gradient.addColorStop(.5, b.kind === 10 ? "#8e22ff" : "#f04429");
+    gradient.addColorStop(1, "#210a3c");
+
+    ctx.fillStyle = gradient;
+
+    /* Dragon head and wings */
+    ctx.beginPath();
+    ctx.moveTo(-r * .6, -r * .2);
+    ctx.lineTo(-r * 1.5, -r);
+    ctx.lineTo(-r * 1.25, -r * .1);
+    ctx.lineTo(-r * .9, r * .1);
+    ctx.lineTo(-r * .7, r * .7);
+    ctx.lineTo(0, r);
+    ctx.lineTo(r * .7, r * .7);
+    ctx.lineTo(r * .9, r * .1);
+    ctx.lineTo(r * 1.25, -r * .1);
+    ctx.lineTo(r * 1.5, -r);
+    ctx.lineTo(r * .6, -r * .2);
+    ctx.lineTo(0, -r * .45);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+
+    for (const ex of [-r * .32, r * .32]) {
+        ctx.fillStyle = "#ffffff";
+
+        ctx.beginPath();
+        ctx.ellipse(ex, -r * .12, r * .18, r * .22, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#ff153c";
+        ctx.beginPath();
+        ctx.arc(ex, -r * .1, r * .09, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    ctx.restore();
+
+    const barWidth = Math.min(W * .72, 320);
+    const bx = (W - barWidth) / 2;
+    const by = Math.max(8, b.y - b.radius - 20);
+
+    ctx.fillStyle = "#35132b";
+    ctx.fillRect(bx, by, barWidth, 9);
+
+    ctx.fillStyle = b.kind === 10 ? "#ff315b" : "#ff9c39";
+    ctx.fillRect(
+        bx, by,
+        barWidth * clamp(b.hp / b.maxHp, 0, 1),
+        9
     );
 
-    const colors = [
-        "#a34cff",
-        "#ff4fba",
-        "#39d9ff",
-        "#ff8b3d",
-        "#7cff69"
-    ];
+    ctx.strokeStyle = "#ffffff99";
+    ctx.strokeRect(bx, by, barWidth, 9);
+}
 
-    const alien = {
+/* SPAWNING */
+
+function spawnAlien() {
+    const type = level >= 4 ? Math.floor(Math.random() * 3) : Math.floor(Math.random() * 2);
+    const radius = clamp(random(15, 22) + level, 16, 36);
+
+    const colors = ["#a34cff", "#ff4fba", "#39d9ff", "#ff8b3d", "#7cff69"];
+
+    const a = {
         x: random(radius * 1.5, Math.max(radius * 1.6, W - radius * 1.5)),
         y: -radius * 2,
-        radius: radius,
+        radius,
         speed: random(32, 60) + level * 6,
         phase: random(0, Math.PI * 2),
         amplitude: random(12, 36),
         baseX: 0,
         hp: 1 + Math.floor(level / 4) + (type === 2 ? 1 : 0),
-        type: type,
+        type,
         color: colors[Math.min(colors.length - 1, Math.floor((level - 1) / 2))]
     };
 
-    alien.baseX = alien.x;
-    aliens.push(alien);
-}
+    a.baseX = a.x;
+    aliens.push(a);
 
-/* DRAGON BOSSES */
+    if (Math.random() < .2) soundAlienSpawn();
+}
 
 function spawnBoss(which) {
     const finalBoss = which === 10;
@@ -917,115 +1121,23 @@ function spawnBoss(which) {
         kind: which,
         x: W / 2,
         y: -90,
-        radius: finalBoss
-            ? Math.min(72, W * 0.17)
-            : Math.min(54, W * 0.13),
-        hp: finalBoss ? 190 : 85,
-        maxHp: finalBoss ? 190 : 85,
+        radius: finalBoss ? Math.min(72, W * .17) : Math.min(54, W * .13),
+        hp: finalBoss ? 220 : 100,
+        maxHp: finalBoss ? 220 : 100,
         speed: finalBoss ? 78 : 62,
         phase: 0,
-        shotTimer: 0.8
+        shotTimer: .8
     };
 
-    createExplosion(
-        W / 2,
-        60,
-        finalBoss ? "#ff315b" : "#ff9c39"
-    );
-}
+    bossAlert.textContent = finalBoss ? "☠ FINAL DRAGON ☠" : "🐉 DRAGON BOSS 🐉";
+    bossAlert.style.display = "block";
 
-function drawBoss(b) {
-    ctx.save();
-    ctx.translate(b.x, b.y);
+    setTimeout(() => {
+        bossAlert.style.display = "none";
+    }, 2500);
 
-    const r = b.radius;
-
-    ctx.shadowBlur = 30;
-    ctx.shadowColor = b.kind === 10 ? "#ff2e53" : "#ff8b35";
-
-    const gradient = ctx.createLinearGradient(0, -r, 0, r);
-
-    gradient.addColorStop(
-        0,
-        b.kind === 10 ? "#ff6b9b" : "#ffca55"
-    );
-
-    gradient.addColorStop(
-        0.55,
-        b.kind === 10 ? "#9d1cff" : "#ed4d28"
-    );
-
-    gradient.addColorStop(1, "#35104f");
-
-    ctx.fillStyle = gradient;
-
-    ctx.beginPath();
-    ctx.moveTo(-r * 0.75, -r * 0.3);
-    ctx.lineTo(-r * 1.45, -r * 0.95);
-    ctx.lineTo(-r * 1.2, -r * 0.15);
-    ctx.lineTo(-r * 0.85, r * 0.25);
-    ctx.lineTo(-r * 0.65, r * 0.8);
-    ctx.lineTo(0, r);
-    ctx.lineTo(r * 0.65, r * 0.8);
-    ctx.lineTo(r * 0.85, r * 0.25);
-    ctx.lineTo(r * 1.2, -r * 0.15);
-    ctx.lineTo(r * 1.45, -r * 0.95);
-    ctx.lineTo(r * 0.75, -r * 0.3);
-    ctx.lineTo(r * 0.4, -r * 0.6);
-    ctx.lineTo(0, -r * 0.4);
-    ctx.lineTo(-r * 0.4, -r * 0.6);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.shadowBlur = 0;
-
-    for (const eyeX of [-r * 0.34, r * 0.34]) {
-        ctx.beginPath();
-
-        ctx.ellipse(
-            eyeX, -r * 0.12,
-            r * 0.18, r * 0.23,
-            0, 0, Math.PI * 2
-        );
-
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(eyeX, -r * 0.1, r * 0.09, 0, Math.PI * 2);
-        ctx.fillStyle = "#16091f";
-        ctx.fill();
-    }
-
-    ctx.fillStyle = "#ffefb0";
-    ctx.beginPath();
-    ctx.moveTo(-r * 0.2, r * 0.2);
-    ctx.lineTo(0, r * 0.48);
-    ctx.lineTo(r * 0.2, r * 0.2);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.restore();
-
-    const barWidth = Math.min(W * 0.72, 320);
-    const barHeight = 8;
-    const barX = (W - barWidth) / 2;
-    const barY = Math.max(8, b.y - b.radius - 20);
-
-    ctx.fillStyle = "#3b173b";
-    ctx.fillRect(barX, barY, barWidth, barHeight);
-
-    ctx.fillStyle = b.kind === 10 ? "#ff315b" : "#ff9c39";
-
-    ctx.fillRect(
-        barX,
-        barY,
-        barWidth * clamp(b.hp / b.maxHp, 0, 1),
-        barHeight
-    );
-
-    ctx.strokeStyle = "#ffffff88";
-    ctx.strokeRect(barX, barY, barWidth, barHeight);
+    soundBoss();
+    createExplosion(W / 2, 60, finalBoss ? "#ff315b" : "#ff9c39");
 }
 
 function bossShoot() {
@@ -1036,30 +1148,33 @@ function bossShoot() {
 
     const dx = ship.x - boss.x;
     const dy = ship.y - boss.y;
+
     const baseAngle = Math.atan2(dy, dx);
 
     for (let i = 0; i < count; i++) {
-        const angle = baseAngle + (i - (count - 1) / 2) * 0.16;
+        const angle = baseAngle + (i - (count - 1) / 2) * .16;
 
         enemyBullets.push({
             x: boss.x,
-            y: boss.y + boss.radius * 0.45,
+            y: boss.y + boss.radius * .45,
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
             radius: boss.kind === 10 ? 7 : 6
         });
     }
+
+    noiseSound(.07, .06, 700);
 }
 
-/* PLAYER WEAPONS */
+/* WEAPONS */
 
 function shoot() {
     const weapon = ship.weaponLevel;
 
     const spread = weapon >= 3
-        ? [-0.22, -0.11, 0, 0.11, 0.22]
+        ? [-.22, -.11, 0, .11, .22]
         : weapon === 2
-            ? [-0.12, 0, 0.12]
+            ? [-.12, 0, .12]
             : [0];
 
     for (const angle of spread) {
@@ -1076,7 +1191,7 @@ function shoot() {
     if (weapon >= 4) {
         bullets.push(
             {
-                x: ship.x - ship.width * 0.45,
+                x: ship.x - ship.width * .45,
                 y: ship.y + 8,
                 vx: -100,
                 vy: -500,
@@ -1084,7 +1199,7 @@ function shoot() {
                 damage: 2
             },
             {
-                x: ship.x + ship.width * 0.45,
+                x: ship.x + ship.width * .45,
                 y: ship.y + 8,
                 vx: 100,
                 vy: -500,
@@ -1093,21 +1208,21 @@ function shoot() {
             }
         );
     }
+
+    soundShoot();
 }
 
-/* ENEMY SHOOTING */
-
-function enemyShoot(alien) {
-    const dx = ship.x - alien.x;
-    const dy = ship.y - alien.y;
-    const length = Math.hypot(dx, dy) || 1;
+function enemyShoot(a) {
+    const dx = ship.x - a.x;
+    const dy = ship.y - a.y;
+    const len = Math.hypot(dx, dy) || 1;
     const speed = 155 + level * 10;
 
     enemyBullets.push({
-        x: alien.x,
-        y: alien.y + alien.radius,
-        vx: dx / length * speed * 0.55,
-        vy: Math.max(110, dy / length * speed),
+        x: a.x,
+        y: a.y + a.radius,
+        vx: dx / len * speed * .55,
+        vy: Math.max(110, dy / len * speed),
         radius: 6
     });
 }
@@ -1115,15 +1230,13 @@ function enemyShoot(alien) {
 /* POWER-UPS */
 
 function maybeDropPowerUp(x, y) {
-    if (Math.random() > 0.27) return;
+    if (Math.random() > .27) return;
 
     const types = ["rapid", "spread", "shield", "repair", "laser"];
     const type = types[Math.floor(Math.random() * types.length)];
 
     powerUps.push({
-        x: x,
-        y: y,
-        type: type,
+        x, y, type,
         radius: 12,
         vy: 75,
         phase: random(0, Math.PI * 2)
@@ -1140,6 +1253,7 @@ function activatePowerUp(p) {
     } else if (p.type === "shield") {
         ship.shield = Math.max(ship.shield, 8);
         ship.invulnerable = Math.max(ship.invulnerable, 1.5);
+        soundShield();
     } else if (p.type === "repair") {
         lives = Math.min(3, lives + 1);
         updateHUD();
@@ -1152,6 +1266,8 @@ function activatePowerUp(p) {
 
     score += 5;
     updateHUD();
+
+    soundPowerUp();
 }
 
 function drawPowerUp(p) {
@@ -1167,7 +1283,7 @@ function drawPowerUp(p) {
 
     ctx.save();
     ctx.translate(p.x, p.y);
-    ctx.rotate(Math.sin(p.phase) * 0.12);
+    ctx.rotate(Math.sin(p.phase) * .12);
 
     ctx.shadowColor = color;
     ctx.shadowBlur = 18;
@@ -1187,7 +1303,7 @@ function drawPowerUp(p) {
     ctx.restore();
 }
 
-/* EXPLOSIONS */
+/* PARTICLES */
 
 function createExplosion(x, y, color = "#b44cff") {
     for (let i = 0; i < 14; i++) {
@@ -1195,16 +1311,17 @@ function createExplosion(x, y, color = "#b44cff") {
         const speed = random(45, 190);
 
         particles.push({
-            x: x,
-            y: y,
+            x, y,
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
-            life: random(0.25, 0.6),
-            maxLife: 0.6,
-            color: color,
+            life: random(.25, .6),
+            maxLife: .6,
+            color,
             size: random(2, 5)
         });
     }
+
+    soundExplosion();
 }
 
 function damagePlayer() {
@@ -1212,28 +1329,24 @@ function damagePlayer() {
 
     if (ship.shield > 0) {
         ship.shield = 0;
-        ship.invulnerable = 0.7;
-
+        ship.invulnerable = .7;
         createExplosion(ship.x, ship.y, "#4bffb0");
         return;
     }
 
     lives--;
-    damageFlash = 0.22;
+    damageFlash = .22;
     ship.invulnerable = 1.4;
 
-    createExplosion(
-        ship.x,
-        ship.y + ship.height * 0.5,
-        "#ff438b"
-    );
+    createExplosion(ship.x, ship.y + ship.height * .5, "#ff438b");
 
+    soundHit();
     updateHUD();
 
     if (lives <= 0) gameOver();
 }
 
-/* MAIN GAME UPDATE */
+/* UPDATE GAME */
 
 function update(dt) {
     elapsed += dt;
@@ -1243,9 +1356,7 @@ function update(dt) {
     ship.shield = Math.max(0, ship.shield - dt);
     ship.power = Math.max(0, ship.power - dt);
 
-    if (ship.power <= 0) {
-        ship.weaponLevel = 1;
-    }
+    if (ship.power <= 0) ship.weaponLevel = 1;
 
     ship.y = H - ship.height - 25;
 
@@ -1254,26 +1365,17 @@ function update(dt) {
     if (keys.arrowleft || keys.a || buttonState.left) direction--;
     if (keys.arrowright || keys.d || buttonState.right) direction++;
 
-    if (!fingerDown) {
-        ship.x += direction * ship.speed * dt;
-    }
+    if (!fingerDown) ship.x += direction * ship.speed * dt;
 
-    ship.x = clamp(
-        ship.x,
-        ship.width / 2,
-        W - ship.width / 2
-    );
+    ship.x = clamp(ship.x, ship.width / 2, W - ship.width / 2);
 
-    /* Hold-to-fire */
     const wantsToFire =
-        fingerDown ||
-        buttonState.fire ||
-        keys[" "];
+        fingerDown || buttonState.fire || keys[" "];
 
     if (wantsToFire) {
         shootTimer -= dt;
 
-        const rate = ship.power > 0 ? 0.085 : 0.18;
+        const rate = ship.power > 0 ? .085 : .18;
 
         if (shootTimer <= 0) {
             shoot();
@@ -1285,7 +1387,7 @@ function update(dt) {
 
     fireBtn.classList.toggle("firing", wantsToFire);
 
-    /* Boss movement and attacks */
+    /* Boss movement */
     if (boss) {
         boss.phase += dt;
 
@@ -1293,7 +1395,7 @@ function update(dt) {
             Math.sin(boss.phase * boss.speed / 65) *
             Math.max(0, W / 2 - boss.radius * 1.5);
 
-        if (boss.y < Math.max(95, H * 0.23)) {
+        if (boss.y < Math.max(95, H * .23)) {
             boss.y += 35 * dt;
         }
 
@@ -1301,27 +1403,22 @@ function update(dt) {
 
         if (boss.shotTimer <= 0) {
             bossShoot();
-            boss.shotTimer = boss.kind === 10 ? 0.68 : 1.05;
+            boss.shotTimer = boss.kind === 10 ? .68 : 1.05;
         }
     } else {
         alienSpawnTimer -= dt;
 
         if (alienSpawnTimer <= 0) {
             spawnAlien();
-            alienSpawnTimer = Math.max(0.32, 1.02 - level * 0.045);
+            alienSpawnTimer = Math.max(.32, 1.02 - level * .045);
         }
     }
 
-    /* Alien firing */
     enemyShootTimer -= dt;
 
     if (enemyShootTimer <= 0 && aliens.length > 0) {
         enemyShoot(aliens[Math.floor(Math.random() * aliens.length)]);
-
-        enemyShootTimer = Math.max(
-            0.45,
-            random(1, 1.8) - level * 0.035
-        );
+        enemyShootTimer = Math.max(.45, random(1, 1.8) - level * .035);
     }
 
     /* Player bullets */
@@ -1339,28 +1436,27 @@ function update(dt) {
         if (
             boss &&
             Math.hypot(b.x - boss.x, b.y - boss.y) <
-            boss.radius * 0.95 + b.radius
+            boss.radius * .95 + b.radius
         ) {
             boss.hp -= b.damage;
-
             bullets.splice(i, 1);
 
             createExplosion(b.x, b.y, "#ffcc6a");
 
             if (boss.hp <= 0) {
-                const defeatedBoss = boss;
+                const defeated = boss;
 
-                score += defeatedBoss.kind === 10 ? 500 : 200;
+                score += defeated.kind === 10 ? 500 : 200;
 
                 createExplosion(
-                    defeatedBoss.x,
-                    defeatedBoss.y,
-                    defeatedBoss.kind === 10 ? "#ff315b" : "#ff9c39"
+                    defeated.x,
+                    defeated.y,
+                    defeated.kind === 10 ? "#ff315b" : "#ff9c39"
                 );
 
                 boss = null;
 
-                level = defeatedBoss.kind === 5 ? 6 : 11;
+                level = defeated.kind === 5 ? 6 : 11;
                 bossSpawnedFor = level;
 
                 ship.shield = Math.max(ship.shield, 4);
@@ -1368,6 +1464,7 @@ function update(dt) {
                 ship.weaponLevel = 4;
 
                 updateHUD();
+                soundBossDefeated();
             }
 
             continue;
@@ -1391,9 +1488,9 @@ function update(dt) {
 
                     score += 10;
 
-                    const newLevel = 1 + Math.floor(score / 100);
+                    const nextLevel = 1 + Math.floor(score / 100);
 
-                    if (newLevel > level) level = newLevel;
+                    if (nextLevel > level) level = nextLevel;
 
                     updateHUD();
                 }
@@ -1405,7 +1502,7 @@ function update(dt) {
         if (hit) continue;
     }
 
-    /* Enemy bullets and player collisions */
+    /* Enemy bullets */
     for (let i = enemyBullets.length - 1; i >= 0; i--) {
         const b = enemyBullets[i];
 
@@ -1420,8 +1517,8 @@ function update(dt) {
         if (
             Math.hypot(
                 b.x - ship.x,
-                b.y - (ship.y + ship.height * 0.5)
-            ) < b.radius + ship.width * 0.34 &&
+                b.y - (ship.y + ship.height * .5)
+            ) < b.radius + ship.width * .34 &&
             ship.invulnerable <= 0
         ) {
             enemyBullets.splice(i, 1);
@@ -1431,7 +1528,7 @@ function update(dt) {
         }
     }
 
-    /* Aliens move and attack */
+    /* Alien movement */
     for (let i = aliens.length - 1; i >= 0; i--) {
         const a = aliens[i];
 
@@ -1456,21 +1553,19 @@ function update(dt) {
         if (
             Math.hypot(
                 a.x - ship.x,
-                a.y - (ship.y + ship.height * 0.5)
-            ) < a.radius + ship.width * 0.32 &&
+                a.y - (ship.y + ship.height * .5)
+            ) < a.radius + ship.width * .32 &&
             ship.invulnerable <= 0
         ) {
             aliens.splice(i, 1);
-
             createExplosion(a.x, a.y, a.color);
-
             damagePlayer();
 
             if (gameState !== "playing") return;
         }
     }
 
-    /* Power-up movement and collection */
+    /* Power-ups */
     for (let i = powerUps.length - 1; i >= 0; i--) {
         const p = powerUps[i];
 
@@ -1479,7 +1574,7 @@ function update(dt) {
 
         if (
             Math.hypot(p.x - ship.x, p.y - ship.y) <
-            p.radius + ship.width * 0.55
+            p.radius + ship.width * .55
         ) {
             activatePowerUp(p);
             powerUps.splice(i, 1);
@@ -1488,24 +1583,22 @@ function update(dt) {
         }
     }
 
-    /* Particle movement */
+    /* Particles */
     for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
 
         p.x += p.vx * dt;
         p.y += p.vy * dt;
 
-        p.vx *= Math.pow(0.9, dt * 10);
-        p.vy *= Math.pow(0.9, dt * 10);
+        p.vx *= Math.pow(.9, dt * 10);
+        p.vy *= Math.pow(.9, dt * 10);
 
         p.life -= dt;
 
-        if (p.life <= 0) {
-            particles.splice(i, 1);
-        }
+        if (p.life <= 0) particles.splice(i, 1);
     }
 
-    /* Star movement */
+    /* Stars */
     for (const star of stars) {
         star.y += star.speed * dt;
 
@@ -1515,14 +1608,14 @@ function update(dt) {
         }
     }
 
-    /* Boss appears at Level 5 and Level 10 */
+    /* Bosses at levels 5 and 10 */
     if (!boss && level >= 5 && level < 10 && bossSpawnedFor < 5) {
         bossSpawnedFor = 5;
         spawnBoss(5);
 
         showBossMessage(
             "DRAGON BOSS APPEARS!",
-            "Use continuous fire and collect power-ups to defeat it!"
+            "Keep firing and dodge its powerful attacks!"
         );
     }
 
@@ -1532,7 +1625,7 @@ function update(dt) {
 
         showBossMessage(
             "FINAL DRAGON BOSS!",
-            "This dragon has huge health and a powerful spread attack!"
+            "This dragon has huge health and a dangerous spread attack!"
         );
     }
 }
@@ -1549,13 +1642,13 @@ function showBossMessage(title, text) {
     messageOverlay.classList.remove("hidden");
 }
 
-/* BACKGROUND */
+/* DRAWING */
 
 function drawBackground() {
     const gradient = ctx.createLinearGradient(0, 0, 0, H);
 
     gradient.addColorStop(0, "#050817");
-    gradient.addColorStop(0.5, "#070b1d");
+    gradient.addColorStop(.5, "#070b1d");
     gradient.addColorStop(1, "#030615");
 
     ctx.fillStyle = gradient;
@@ -1570,28 +1663,24 @@ function drawBackground() {
     ctx.globalAlpha = 1;
 }
 
-/* DRAW BULLETS */
-
 function drawBullets() {
     for (const b of bullets) {
         ctx.save();
 
         ctx.shadowColor = "#17eaff";
-        ctx.shadowBlur = 14;
+        ctx.shadowBlur = 16;
 
-        ctx.fillStyle =
-            ship.weaponLevel >= 4 ? "#f7a4ff" : "#a8ffff";
+        ctx.fillStyle = ship.weaponLevel >= 4 ? "#f7a4ff" : "#a8ffff";
 
         ctx.beginPath();
-
         ctx.ellipse(
             b.x, b.y,
-            b.radius * 0.7,
+            b.radius * .7,
             b.radius * 2.2,
             0, 0, Math.PI * 2
         );
-
         ctx.fill();
+
         ctx.restore();
     }
 
@@ -1609,8 +1698,6 @@ function drawBullets() {
         ctx.restore();
     }
 }
-
-/* DRAW PARTICLES */
 
 function drawParticles() {
     for (const p of particles) {
@@ -1630,20 +1717,13 @@ function drawParticles() {
     }
 }
 
-/* DRAW GAME */
-
 function drawScene() {
     if (!W || !H) return;
 
     drawBackground();
 
-    for (const alien of aliens) {
-        drawAlien(alien);
-    }
-
-    for (const powerUp of powerUps) {
-        drawPowerUp(powerUp);
-    }
+    for (const alien of aliens) drawAlien(alien);
+    for (const powerUp of powerUps) drawPowerUp(powerUp);
 
     if (boss) drawBoss(boss);
 
@@ -1655,7 +1735,7 @@ function drawScene() {
 
     if (damageFlash > 0) {
         ctx.fillStyle =
-            "rgba(255,20,85," + (damageFlash * 0.6) + ")";
+            "rgba(255,20,85," + (damageFlash * .6) + ")";
 
         ctx.fillRect(0, 0, W, H);
     }
@@ -1669,8 +1749,7 @@ function gameLoop(timestamp) {
     let dt = (timestamp - lastTime) / 1000;
 
     lastTime = timestamp;
-
-    dt = Math.min(dt, 0.035);
+    dt = Math.min(dt, .035);
 
     update(dt);
     drawScene();
@@ -1680,20 +1759,16 @@ function gameLoop(timestamp) {
     }
 }
 
-/* MOBILE FINGER CONTROL */
-
-function getFingerX(clientX) {
-    const rect = canvas.getBoundingClientRect();
-
-    return (clientX - rect.left) *
-        (W / Math.max(1, rect.width));
-}
+/* MOBILE TOUCH CONTROL */
 
 function updateFingerPosition(event) {
-    fingerX = getFingerX(event.clientX);
+    const rect = canvas.getBoundingClientRect();
+
+    const x = (event.clientX - rect.left) *
+        (W / Math.max(1, rect.width));
 
     ship.x = clamp(
-        fingerX,
+        x,
         ship.width / 2,
         W - ship.width / 2
     );
@@ -1716,20 +1791,12 @@ function stopAllControls() {
     fireBtn.classList.remove("firing");
 }
 
-/*
-  Finger movement is tracked across the game wrapper.
-  Buttons remain independently usable.
-*/
-
 wrapper.addEventListener("pointerdown", function(event) {
     if (gameState !== "playing") return;
-
     if (event.target.closest("button")) return;
     if (event.target.closest(".overlay")) return;
 
-    if (event.pointerType === "mouse" && event.button !== 0) {
-        return;
-    }
+    if (event.pointerType === "mouse" && event.button !== 0) return;
 
     fingerDown = true;
     activePointerId = event.pointerId;
@@ -1745,8 +1812,7 @@ wrapper.addEventListener("pointerdown", function(event) {
 }, { passive: false });
 
 wrapper.addEventListener("pointermove", function(event) {
-    if (!fingerDown) return;
-    if (activePointerId !== event.pointerId) return;
+    if (!fingerDown || activePointerId !== event.pointerId) return;
 
     updateFingerPosition(event);
 
@@ -1755,24 +1821,18 @@ wrapper.addEventListener("pointermove", function(event) {
 }, { passive: false });
 
 wrapper.addEventListener("pointerup", function(event) {
-    if (activePointerId === event.pointerId) {
-        stopFingerControl();
-    }
+    if (activePointerId === event.pointerId) stopFingerControl();
 });
 
 wrapper.addEventListener("pointercancel", function(event) {
-    if (activePointerId === event.pointerId) {
-        stopFingerControl();
-    }
+    if (activePointerId === event.pointerId) stopFingerControl();
 });
 
 wrapper.addEventListener("lostpointercapture", function(event) {
-    if (activePointerId === event.pointerId) {
-        stopFingerControl();
-    }
+    if (activePointerId === event.pointerId) stopFingerControl();
 });
 
-/* LEFT, RIGHT AND FIRE BUTTONS */
+/* BUTTON CONTROLS */
 
 function bindHoldButton(element, key) {
     element.addEventListener("pointerdown", function(event) {
@@ -1788,52 +1848,38 @@ function bindHoldButton(element, key) {
 
     }, { passive: false });
 
-    function release() {
-        buttonState[key] = false;
-    }
+    const release = () => buttonState[key] = false;
 
     element.addEventListener("pointerup", release);
     element.addEventListener("pointercancel", release);
     element.addEventListener("lostpointercapture", release);
 
-    element.addEventListener("contextmenu", function(event) {
-        event.preventDefault();
-    });
+    element.addEventListener("contextmenu", e => e.preventDefault());
 }
 
 bindHoldButton(leftBtn, "left");
 bindHoldButton(rightBtn, "right");
 bindHoldButton(fireBtn, "fire");
 
-/* KEYBOARD CONTROLS */
+/* KEYBOARD */
 
 window.addEventListener("keydown", function(event) {
     const key = event.key.toLowerCase();
 
-    if (
-        key === "arrowleft" ||
-        key === "arrowright" ||
-        key === " " ||
-        key === "a" ||
-        key === "d"
-    ) {
+    if (["arrowleft", "arrowright", " ", "a", "d"].includes(key)) {
         event.preventDefault();
     }
 
     keys[key] = true;
 
     if (key === "escape" || key === "p") {
-        if (gameState === "playing") {
-            pauseGame();
-        } else if (gameState === "paused") {
-            resumeGame();
-        }
+        if (gameState === "playing") pauseGame();
+        else if (gameState === "paused") resumeGame();
     }
-
 }, { passive: false });
 
-window.addEventListener("keyup", function(event) {
-    keys[event.key.toLowerCase()] = false;
+window.addEventListener("keyup", e => {
+    keys[e.key.toLowerCase()] = false;
 });
 
 window.addEventListener("blur", stopAllControls);
@@ -1842,22 +1888,34 @@ document.addEventListener("visibilitychange", function() {
     if (document.hidden) stopAllControls();
 });
 
+/* SOUND BUTTON */
+
+soundBtn.addEventListener("click", function() {
+    soundEnabled = !soundEnabled;
+
+    soundBtn.textContent = soundEnabled ? "🔊" : "🔇";
+
+    if (soundEnabled) {
+        initAudio();
+        tone(500, .15, "sine", .1, 800);
+    } else if (audioCtx) {
+        audioCtx.suspend();
+    }
+});
+
 /* BUTTON EVENTS */
 
 startBtn.addEventListener("click", startGame);
 
 pauseBtn.addEventListener("click", function() {
-    if (gameState === "playing") {
-        pauseGame();
-    } else if (gameState === "paused") {
-        resumeGame();
-    }
+    if (gameState === "playing") pauseGame();
+    else if (gameState === "paused") resumeGame();
 });
 
 resumeBtn.addEventListener("click", resumeGame);
 restartBtn.addEventListener("click", startGame);
 
-/* ROUND RECT FALLBACK FOR OLDER BROWSERS */
+/* ROUNDED RECT FALLBACK */
 
 if (!CanvasRenderingContext2D.prototype.roundRect) {
     CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
@@ -1875,7 +1933,7 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
     };
 }
 
-/* START */
+/* INITIALIZE */
 
 resizeCanvas();
 
