@@ -8,163 +8,193 @@
 <title>Alien Shooter | GameGalaxy213</title>
 
 <style>
+:root {
+    --cyan: #00f5ff;
+    --purple: #9b5cff;
+    --red: #ff3864;
+    --green: #5cff9d;
+    --bg: #050816;
+}
+
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 body {
-    background: #050816;
-    color: white;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-    user-select: none;
-    -webkit-user-select: none;
+    overscroll-behavior: none;
 }
 
-.game {
+.game-wrapper {
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
     height: 100dvh;
     margin: auto;
     display: flex;
     flex-direction: column;
-    background: #050816;
+    position: relative;
     overflow: hidden;
+    background: var(--bg);
 }
 
-.header {
+.topbar {
+    min-height: 62px;
+    padding: 8px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 6px;
-    padding: 12px 9px;
+    gap: 8px;
     background: #0c1530;
     border-bottom: 1px solid #17305b;
+    z-index: 2;
 }
 
 .logo {
     font-size: 14px;
     font-weight: 900;
-    color: #00f5ff;
+    color: var(--cyan);
+    white-space: nowrap;
 }
 
 .logo small {
     display: block;
+    margin-top: 4px;
     color: #94a9ce;
     font-size: 9px;
-    margin-top: 4px;
+    letter-spacing: 1px;
 }
 
-.stat {
+.stats {
+    display: flex;
+    gap: 10px;
     text-align: center;
-    min-width: 42px;
 }
 
-.stat label {
+.stat-label {
     display: block;
-    color: #8da6d0;
     font-size: 9px;
-    margin-bottom: 5px;
+    color: #8ca5ce;
+    margin-bottom: 4px;
 }
 
-.stat strong {
+.stat-value {
     font-size: 13px;
+    font-weight: bold;
 }
 
 #score {
-    color: #5cff9d;
+    color: var(--green);
 }
 
 #level {
-    color: #00f5ff;
+    color: var(--cyan);
 }
 
 #lives {
-    color: #ff6384;
+    color: var(--red);
 }
 
-.pause {
-    background: #1a2c51;
+.menu-btn {
+    background: #172449;
     color: white;
     border: 1px solid #39578c;
     padding: 9px 12px;
     border-radius: 9px;
     font-size: 14px;
+    cursor: pointer;
 }
 
-#canvas {
+#gameCanvas {
+    flex: 1;
     display: block;
     width: 100%;
-    flex: 1;
     min-height: 0;
+    background: var(--bg);
+
+    /* Essential for reliable finger movement */
     touch-action: none;
-    background: #050816;
+    overscroll-behavior: contain;
 }
 
-.footer {
-    text-align: center;
-    padding: 10px;
+.bottom-panel {
     background: #0c1530;
     border-top: 1px solid #17305b;
+    padding: 9px 12px 11px;
+    text-align: center;
 }
 
-.footer p {
+.bottom-panel strong {
+    color: var(--cyan);
     font-size: 11px;
-    color: #b6c8e8;
-    line-height: 1.7;
+    letter-spacing: .5px;
 }
 
-.footer strong {
-    color: #00f5ff;
+.bottom-panel p {
+    color: #b6c8e8;
+    font-size: 10px;
+    line-height: 1.7;
+    margin-top: 4px;
 }
 
 .overlay {
     position: absolute;
-    inset: 0;
+    inset: 62px 0 0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding: 20px;
-    background: rgba(2, 5, 20, .86);
-    z-index: 10;
+    align-items: center;
+    padding: 18px;
+    background: rgba(3, 6, 20, .86);
+    backdrop-filter: blur(6px);
+    z-index: 5;
 }
 
 .overlay.hidden {
     display: none;
 }
 
-.dialog {
+.modal {
     width: 100%;
-    max-width: 380px;
+    max-width: 400px;
+    padding: 27px 20px;
     text-align: center;
-    background: linear-gradient(145deg, #17254a, #080d20);
-    border: 1px solid #00cfff;
+    border: 1px solid rgba(0,245,255,.6);
     border-radius: 20px;
-    padding: 28px 20px;
-    box-shadow: 0 0 35px #00d9ff22;
+    background: linear-gradient(145deg, #17254a, #080d20);
+    box-shadow: 0 0 35px rgba(0,245,255,.12);
 }
 
-.dialog .icon {
+.modal-icon {
     font-size: 55px;
     margin-bottom: 12px;
 }
 
-.dialog h1 {
-    font-size: 27px;
-    color: #00f5ff;
+.modal h1 {
+    color: var(--cyan);
+    font-size: clamp(25px, 6vw, 34px);
     margin-bottom: 12px;
 }
 
-.dialog p {
-    font-size: 13px;
+.modal p {
     color: #c0cee8;
+    font-size: 13px;
     line-height: 1.8;
     margin-bottom: 20px;
 }
 
-.start {
+.main-btn {
     width: 100%;
     padding: 15px;
     border: none;
@@ -173,27 +203,91 @@ body {
     color: #06101d;
     font-size: 15px;
     font-weight: 900;
+    cursor: pointer;
 }
 
-.hint {
-    font-size: 11px;
-    color: #9bafd1;
+.secondary-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #35476e;
+    border-radius: 10px;
+    background: #182446;
+    color: white;
+    cursor: pointer;
+}
+
+.help {
     margin-top: 15px;
+    color: #9bafd1;
+    font-size: 11px;
     line-height: 1.8;
 }
 
+.toast {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    background: #101d3b;
+    border: 1px solid var(--cyan);
+    border-radius: 20px;
+    padding: 10px 16px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
 @media (min-width: 700px) {
-    .game {
+    .game-wrapper {
         border-left: 1px solid #17264b;
         border-right: 1px solid #17264b;
     }
 
     .logo {
-        font-size: 18px;
+        font-size: 17px;
     }
 
-    .stat strong {
-        font-size: 16px;
+    .stat-value {
+        font-size: 15px;
+    }
+
+    .bottom-panel {
+        padding: 12px;
+    }
+}
+
+@media (max-height: 500px) {
+    .topbar {
+        min-height: 45px;
+        padding: 4px 8px;
+    }
+
+    .logo {
+        font-size: 12px;
+    }
+
+    .logo small {
+        display: none;
+    }
+
+    .bottom-panel {
+        padding: 4px;
+    }
+
+    .bottom-panel p {
+        display: none;
+    }
+
+    .overlay {
+        inset-top: 45px;
     }
 }
 </style>
@@ -201,66 +295,78 @@ body {
 
 <body>
 
-<div class="game">
+<div class="game-wrapper">
 
-    <header class="header">
+    <header class="topbar">
 
         <div class="logo">
             👾 ALIEN SHOOTER
             <small>GAMEGALAXY213</small>
         </div>
 
-        <div class="stat">
-            <label>SCORE</label>
-            <strong id="score">0</strong>
+        <div class="stats">
+
+            <div>
+                <span class="stat-label">SCORE</span>
+                <span class="stat-value" id="score">0</span>
+            </div>
+
+            <div>
+                <span class="stat-label">LEVEL</span>
+                <span class="stat-value" id="level">1</span>
+            </div>
+
+            <div>
+                <span class="stat-label">LIVES</span>
+                <span class="stat-value" id="lives">❤️❤️❤️</span>
+            </div>
+
         </div>
 
-        <div class="stat">
-            <label>LEVEL</label>
-            <strong id="level">1</strong>
-        </div>
-
-        <div class="stat">
-            <label>LIVES</label>
-            <strong id="lives">❤️❤️❤️</strong>
-        </div>
-
-        <button class="pause" id="pauseBtn">Ⅱ</button>
+        <button class="menu-btn" id="pauseBtn" aria-label="Pause">Ⅱ</button>
 
     </header>
 
-    <canvas id="canvas"></canvas>
+    <canvas id="gameCanvas"></canvas>
 
-    <footer class="footer">
-        <p><strong>👆 TOUCH & DRAG YOUR SHIP</strong></p>
-        <p>Move your finger left or right anywhere on the game screen.</p>
-        <p>🔫 Auto Fire Enabled • Avoid enemy lasers!</p>
+    <div class="toast" id="toast"></div>
+
+    <footer class="bottom-panel">
+        <strong>👆 TOUCH & DRAG + CONTINUOUS FIRE</strong>
+        <p>
+            Keep your finger on the game screen and slide left or right.<br>
+            Your spaceship follows your finger and fires automatically.
+        </p>
     </footer>
 
-</div>
+    <div class="overlay" id="overlay">
 
-<div class="overlay" id="overlay">
+        <div class="modal">
 
-    <div class="dialog">
+            <div class="modal-icon" id="modalIcon">🚀</div>
 
-        <div class="icon" id="dialogIcon">🚀</div>
+            <h1 id="modalTitle">ALIEN INVASION</h1>
 
-        <h1 id="dialogTitle">ALIEN INVASION</h1>
+            <p id="modalText">
+                Earth is under attack!<br>
+                Move your finger across the screen to control your ship.<br>
+                Your ship fires while your finger is touching the screen.
+            </p>
 
-        <p id="dialogText">
-            Earth is under attack!<br>
-            Drag your finger to control your spaceship.<br>
-            Your spaceship fires automatically.
-        </p>
+            <button class="main-btn" id="startBtn">
+                🚀 START MISSION
+            </button>
 
-        <button class="start" id="startBtn">
-            🚀 START MISSION
-        </button>
+            <button class="secondary-btn" id="soundBtn">
+                🔊 SOUND: ON
+            </button>
 
-        <div class="hint">
-            TOUCH & DRAG = MOVE YOUR SHIP<br>
-            AUTO FIRE = DESTROY ALIENS<br>
-            ESC = PAUSE ON COMPUTER
+            <div class="help">
+                MOBILE: TOUCH AND DRAG ANYWHERE ON THE GAME SCREEN<br>
+                COMPUTER: MOVE MOUSE WHILE HOLDING LEFT BUTTON<br>
+                KEYBOARD: ARROW KEYS / A-D + SPACE
+            </div>
+
         </div>
 
     </div>
@@ -270,11 +376,11 @@ body {
 <script>
 "use strict";
 
-/* ==================================
-   GAME ELEMENTS
-================================== */
+/* =====================================
+   ELEMENTS
+===================================== */
 
-const canvas = document.getElementById("canvas");
+const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 const scoreEl = document.getElementById("score");
@@ -282,12 +388,18 @@ const levelEl = document.getElementById("level");
 const livesEl = document.getElementById("lives");
 
 const overlay = document.getElementById("overlay");
+const modalIcon = document.getElementById("modalIcon");
+const modalTitle = document.getElementById("modalTitle");
+const modalText = document.getElementById("modalText");
+
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
+const soundBtn = document.getElementById("soundBtn");
+const toast = document.getElementById("toast");
 
-const dialogIcon = document.getElementById("dialogIcon");
-const dialogTitle = document.getElementById("dialogTitle");
-const dialogText = document.getElementById("dialogText");
+/* =====================================
+   GAME STATE
+===================================== */
 
 let W = 0;
 let H = 0;
@@ -298,8 +410,10 @@ let state = "menu";
 let score = 0;
 let level = 1;
 let lives = 3;
+let highScore = 0;
 
-let ship;
+let ship = null;
+
 let aliens = [];
 let bullets = [];
 let enemyBullets = [];
@@ -309,8 +423,10 @@ let stars = [];
 let lastTime = 0;
 let shootTimer = 0;
 let spawnTimer = 0;
+let lastParticleTime = 0;
 
-let highScore = 0;
+let soundEnabled = true;
+let audioContext = null;
 
 try {
     highScore = Number(
@@ -318,35 +434,180 @@ try {
     );
 } catch (e) {}
 
-/* ==================================
-   TOUCH CONTROL SETTINGS
-================================== */
+/* =====================================
+   TOUCH CONTROL
 
-/*
-  touchX = user's finger position.
-  The ship smoothly follows the finger.
+   One finger:
+   - Moves the ship left/right.
+   - Enables continuous firing.
+   - Works anywhere on the canvas.
+===================================== */
 
-  The same system works with a mouse
-  on computers.
-*/
+let fingerDown = false;
+let fingerX = null;
+let activePointerId = null;
 
-let touchX = null;
-let pointerActive = false;
+const keys = Object.create(null);
 
-let lastPointerTime = 0;
+const SHIP_SPEED = 420;
+const SHIP_FOLLOW = 24;
+const FIRE_INTERVAL = 0.14;
 
-const MOVE_SMOOTHNESS = 1;
+function getCanvasX(event) {
+    const rect = canvas.getBoundingClientRect();
+    return event.clientX - rect.left;
+}
 
-/* ==================================
-   RESIZE
-================================== */
+canvas.addEventListener("pointerdown", function(event) {
 
-function resize() {
+    if (state !== "playing") return;
+
+    event.preventDefault();
+
+    fingerDown = true;
+    activePointerId = event.pointerId;
+    fingerX = getCanvasX(event);
+
+    /* Immediately place the ship under the finger. */
+    moveShipToFinger();
+
+    /* Capture pointer so dragging continues across the canvas. */
+    try {
+        canvas.setPointerCapture(event.pointerId);
+    } catch (error) {}
+
+}, { passive: false });
+
+canvas.addEventListener("pointermove", function(event) {
+
+    if (!fingerDown) return;
+    if (event.pointerId !== activePointerId) return;
+    if (state !== "playing") return;
+
+    event.preventDefault();
+
+    fingerX = getCanvasX(event);
+
+}, { passive: false });
+
+function releaseFinger(event) {
+
+    if (
+        activePointerId !== null &&
+        event.pointerId !== activePointerId
+    ) {
+        return;
+    }
+
+    fingerDown = false;
+    fingerX = null;
+    activePointerId = null;
+}
+
+canvas.addEventListener("pointerup", releaseFinger);
+canvas.addEventListener("pointercancel", releaseFinger);
+canvas.addEventListener("lostpointercapture", releaseFinger);
+
+canvas.addEventListener("contextmenu", function(event) {
+    event.preventDefault();
+});
+
+/* =====================================
+   KEYBOARD CONTROL
+===================================== */
+
+window.addEventListener("keydown", function(event) {
+
+    const allowed = [
+        "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown",
+        " ", "a", "A", "d", "D", "Escape"
+    ];
+
+    if (allowed.includes(event.key)) {
+        event.preventDefault();
+    }
+
+    keys[event.key] = true;
+
+    if (event.key === "Escape") {
+        togglePause();
+    }
+
+}, { passive: false });
+
+window.addEventListener("keyup", function(event) {
+    keys[event.key] = false;
+});
+
+window.addEventListener("blur", function() {
+
+    Object.keys(keys).forEach(key => {
+        keys[key] = false;
+    });
+
+    fingerDown = false;
+    fingerX = null;
+    activePointerId = null;
+
+    if (state === "playing") {
+        pauseGame();
+    }
+});
+
+/* =====================================
+   SOUND
+===================================== */
+
+function playSound(frequency = 500, duration = 0.07, type = "square") {
+
+    if (!soundEnabled) return;
+
+    try {
+        const AudioClass =
+            window.AudioContext || window.webkitAudioContext;
+
+        if (!AudioClass) return;
+
+        if (!audioContext) {
+            audioContext = new AudioClass();
+        }
+
+        if (audioContext.state === "suspended") {
+            audioContext.resume();
+        }
+
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.type = type;
+        oscillator.frequency.value = frequency;
+
+        gain.gain.setValueAtTime(0.05, audioContext.currentTime);
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioContext.currentTime + duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + duration);
+
+    } catch (e) {}
+}
+
+/* =====================================
+   CANVAS SIZE
+===================================== */
+
+function resizeCanvas() {
 
     const rect = canvas.getBoundingClientRect();
 
-    W = rect.width;
-    H = rect.height;
+    W = Math.max(1, rect.width);
+    H = Math.max(1, rect.height);
 
     DPR = Math.min(window.devicePixelRatio || 1, 2);
 
@@ -358,37 +619,42 @@ function resize() {
     createStars();
 
     if (ship) {
-        ship.x = Math.max(
+        ship.x = clamp(
+            ship.x,
             ship.width / 2,
-            Math.min(W - ship.width / 2, ship.x)
+            W - ship.width / 2
         );
 
         ship.y = H - 45;
     }
 
-    draw();
+    draw(0);
+}
+
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
 }
 
 function createStars() {
 
     stars = [];
 
-    const count = Math.floor(W * H / 1800);
+    const count = Math.floor(W * H / 1600);
 
     for (let i = 0; i < count; i++) {
-
         stars.push({
             x: Math.random() * W,
             y: Math.random() * H,
-            size: Math.random() * 1.7 + .3,
-            speed: Math.random() * 35 + 12
+            size: Math.random() * 1.7 + 0.3,
+            speed: Math.random() * 35 + 12,
+            alpha: Math.random() * 0.65 + 0.25
         });
     }
 }
 
-/* ==================================
-   RESET
-================================== */
+/* =====================================
+   RESET GAME
+===================================== */
 
 function resetGame() {
 
@@ -404,22 +670,23 @@ function resetGame() {
     shootTimer = 0;
     spawnTimer = 0;
 
-    touchX = null;
-    pointerActive = false;
+    fingerDown = false;
+    fingerX = null;
+    activePointerId = null;
 
     ship = {
         x: W / 2,
         y: H - 45,
         width: 34,
-        height: 34,
+        height: 32,
         invulnerable: 0
     };
-
-    updateHUD();
 
     for (let i = 0; i < 5; i++) {
         spawnAlien(-30 - i * 65);
     }
+
+    updateHUD();
 }
 
 function updateHUD() {
@@ -432,169 +699,101 @@ function updateHUD() {
         "🖤".repeat(Math.max(0, 3 - lives));
 }
 
-/* ==================================
-   TOUCH & DRAG INPUT
-================================== */
+/* =====================================
+   MOVE SHIP TO FINGER
 
-function pointerToCanvasX(event) {
+   The ship follows the horizontal finger
+   coordinate. It cannot leave the canvas.
+===================================== */
 
-    const rect = canvas.getBoundingClientRect();
+function moveShipToFinger() {
 
-    return event.clientX - rect.left;
+    if (!ship || fingerX === null) return;
+
+    ship.x = clamp(
+        fingerX,
+        ship.width / 2,
+        W - ship.width / 2
+    );
 }
 
-canvas.addEventListener("pointerdown", function(event) {
-
-    if (state !== "playing") return;
-
-    event.preventDefault();
-
-    pointerActive = true;
-
-    touchX = pointerToCanvasX(event);
-
-    lastPointerTime = performance.now();
-
-    try {
-        canvas.setPointerCapture(event.pointerId);
-    } catch (e) {}
-
-}, { passive: false });
-
-canvas.addEventListener("pointermove", function(event) {
-
-    if (!pointerActive || state !== "playing") return;
-
-    event.preventDefault();
-
-    touchX = pointerToCanvasX(event);
-
-    lastPointerTime = performance.now();
-
-}, { passive: false });
-
-function releasePointer(event) {
-
-    pointerActive = false;
-
-    /*
-      Keep the ship at its current position.
-      The player can touch again to move it.
-    */
-
-    if (event) {
-        event.preventDefault();
-    }
-}
-
-canvas.addEventListener("pointerup", releasePointer);
-canvas.addEventListener("pointercancel", releasePointer);
-canvas.addEventListener("lostpointercapture", releasePointer);
-
-canvas.addEventListener("contextmenu", function(event) {
-    event.preventDefault();
-});
-
-/* ==================================
-   KEYBOARD CONTROLS
-================================== */
-
-const keys = {};
-
-window.addEventListener("keydown", function(event) {
-
-    if (
-        ["ArrowLeft", "ArrowRight", " ", "a", "A", "d", "D"]
-        .includes(event.key)
-    ) {
-        event.preventDefault();
-    }
-
-    keys[event.key] = true;
-
-    if (event.key === "Escape") {
-        togglePause();
-    }
-
-}, { passive: false });
-
-window.addEventListener("keyup", function(event) {
-
-    keys[event.key] = false;
-
-});
-
-window.addEventListener("blur", function() {
-
-    Object.keys(keys).forEach(key => {
-        keys[key] = false;
-    });
-
-    if (state === "playing") {
-        pauseGame();
-    }
-});
-
-/* ==================================
-   PLAYER MOVEMENT
-================================== */
+/* =====================================
+   SHIP MOVEMENT AND FIRING
+===================================== */
 
 function updateShip(dt) {
 
     if (!ship) return;
 
+    let keyboardDirection = 0;
+
+    if (keys.ArrowLeft || keys.a || keys.A) {
+        keyboardDirection -= 1;
+    }
+
+    if (keys.ArrowRight || keys.d || keys.D) {
+        keyboardDirection += 1;
+    }
+
+    if (keyboardDirection !== 0) {
+
+        ship.x += keyboardDirection * SHIP_SPEED * dt;
+
+        ship.x = clamp(
+            ship.x,
+            ship.width / 2,
+            W - ship.width / 2
+        );
+    }
+
     /*
-      If the finger is touching the screen,
-      follow its horizontal position.
+      Finger control takes priority.
+      When the finger moves, the ship follows it.
     */
 
-    if (pointerActive && touchX !== null) {
+    if (fingerDown && fingerX !== null) {
 
-        const targetX = Math.max(
+        const targetX = clamp(
+            fingerX,
             ship.width / 2,
-            Math.min(W - ship.width / 2, touchX)
+            W - ship.width / 2
         );
 
-        ship.x +=
-            (targetX - ship.x) *
-            Math.min(1, MOVE_SMOOTHNESS * 20 * dt);
+        const smoothing = 1 - Math.exp(-SHIP_FOLLOW * dt);
+
+        ship.x += (targetX - ship.x) * smoothing;
     }
-
-    /*
-      Keyboard movement for computers.
-    */
-
-    let direction = 0;
-
-    if (
-        keys.ArrowLeft ||
-        keys.a ||
-        keys.A
-    ) {
-        direction -= 1;
-    }
-
-    if (
-        keys.ArrowRight ||
-        keys.d ||
-        keys.D
-    ) {
-        direction += 1;
-    }
-
-    ship.x += direction * 350 * dt;
-
-    ship.x = Math.max(
-        ship.width / 2,
-        Math.min(W - ship.width / 2, ship.x)
-    );
 
     ship.y = H - 45;
+
+    /*
+      Continuous firing while the finger is down.
+      Spacebar firing remains available on computers.
+    */
+
+    shootTimer -= dt;
+
+    const shouldFire =
+        fingerDown || keys[" "];
+
+    if (shouldFire && shootTimer <= 0) {
+
+        shoot();
+
+        shootTimer = FIRE_INTERVAL;
+    }
+
+    if (ship.invulnerable > 0) {
+        ship.invulnerable = Math.max(
+            0,
+            ship.invulnerable - dt
+        );
+    }
 }
 
-/* ==================================
-   SHIP GRAPHICS
-================================== */
+/* =====================================
+   DRAW SHIP
+===================================== */
 
 function drawShip() {
 
@@ -608,7 +807,6 @@ function drawShip() {
     }
 
     ctx.save();
-
     ctx.translate(ship.x, ship.y);
 
     /* Engine flame */
@@ -616,30 +814,26 @@ function drawShip() {
     ctx.fillStyle = "#ff7b32";
 
     ctx.beginPath();
-
     ctx.moveTo(-7, 9);
-    ctx.lineTo(0, 23 + Math.random() * 5);
+    ctx.lineTo(0, 22 + Math.random() * 5);
     ctx.lineTo(7, 9);
-
     ctx.closePath();
     ctx.fill();
 
-    /* Spaceship */
+    /* Main ship */
 
-    ctx.shadowColor = "#00f5ff";
+    ctx.shadowColor = "#00eaff";
     ctx.shadowBlur = 15;
 
-    ctx.fillStyle = "#00dfff";
+    ctx.fillStyle = "#16dfff";
 
     ctx.beginPath();
-
-    ctx.moveTo(0, -20);
+    ctx.moveTo(0, -19);
     ctx.lineTo(18, 12);
-    ctx.lineTo(5, 8);
+    ctx.lineTo(6, 8);
     ctx.lineTo(0, 13);
-    ctx.lineTo(-5, 8);
+    ctx.lineTo(-6, 8);
     ctx.lineTo(-18, 12);
-
     ctx.closePath();
     ctx.fill();
 
@@ -648,155 +842,149 @@ function drawShip() {
     ctx.fillStyle = "#ffffff";
 
     ctx.beginPath();
-    ctx.ellipse(0, -4, 4, 7, 0, 0, Math.PI * 2);
+    ctx.ellipse(0, -3, 4.5, 7, 0, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
 }
 
-/* ==================================
+/* =====================================
    ALIENS
-================================== */
+===================================== */
 
 function spawnAlien(y = -30) {
 
-    const elite = level >= 3 && Math.random() < .2;
-
-    const size = elite ? 35 : 27;
+    const elite = level >= 3 && Math.random() < 0.2;
+    const size = elite ? 34 : 27;
 
     aliens.push({
-
         x: 20 + Math.random() * Math.max(1, W - 40),
-
-        y: y,
-
+        y,
         width: size,
-
         height: size,
-
-        speed: 45 + level * 8,
-
+        speed: (35 + level * 7) * (elite ? 0.8 : 1),
         hp: elite ? 3 : 1,
-
-        elite: elite,
-
+        maxHp: elite ? 3 : 1,
+        elite,
         phase: Math.random() * 6,
-
         shootTimer: 1 + Math.random() * 2
-
     });
 }
 
 function drawAlien(alien) {
 
     ctx.save();
-
     ctx.translate(alien.x, alien.y);
 
-    const color = alien.elite ? "#ff3864" : "#a45cff";
+    const color = alien.elite ? "#ff3864" : "#9b5cff";
 
     ctx.shadowColor = color;
     ctx.shadowBlur = 12;
-
     ctx.fillStyle = color;
 
     ctx.beginPath();
-
     ctx.ellipse(
         0, 0,
-        alien.width * .48,
-        alien.height * .35,
+        alien.width * 0.48,
+        alien.height * 0.36,
         0, 0, Math.PI * 2
     );
-
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(-10, 0);
-    ctx.lineTo(-18, -6);
-    ctx.lineTo(-15, 9);
+    ctx.moveTo(-alien.width * 0.35, 0);
+    ctx.lineTo(-alien.width * 0.65, -alien.height * 0.15);
+    ctx.lineTo(-alien.width * 0.48, alien.height * 0.3);
 
-    ctx.moveTo(10, 0);
-    ctx.lineTo(18, -6);
-    ctx.lineTo(15, 9);
+    ctx.moveTo(alien.width * 0.35, 0);
+    ctx.lineTo(alien.width * 0.65, -alien.height * 0.15);
+    ctx.lineTo(alien.width * 0.48, alien.height * 0.3);
 
     ctx.fill();
 
     ctx.shadowBlur = 0;
-
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#ffffff";
 
     ctx.beginPath();
-
-    ctx.arc(-5, -2, 3, 0, Math.PI * 2);
-    ctx.arc(5, -2, 3, 0, Math.PI * 2);
-
+    ctx.ellipse(-alien.width * 0.15, -2, 3, 4, 0, 0, Math.PI * 2);
+    ctx.ellipse(alien.width * 0.15, -2, 3, 4, 0, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
+
+    if (alien.elite) {
+
+        const barWidth = alien.width;
+
+        ctx.fillStyle = "#34142a";
+
+        ctx.fillRect(
+            alien.x - barWidth / 2,
+            alien.y - alien.height / 2 - 7,
+            barWidth,
+            3
+        );
+
+        ctx.fillStyle = "#ff3864";
+
+        ctx.fillRect(
+            alien.x - barWidth / 2,
+            alien.y - alien.height / 2 - 7,
+            barWidth * alien.hp / alien.maxHp,
+            3
+        );
+    }
 }
 
-/* ==================================
+/* =====================================
    SHOOTING
-================================== */
+===================================== */
 
 function shoot() {
 
     if (!ship) return;
 
     bullets.push({
-
         x: ship.x,
-
-        y: ship.y - 20,
-
-        speed: 520
-
+        y: ship.y - 19,
+        speed: 540,
+        radius: 3
     });
+
+    playSound(720, 0.035);
 }
 
 function enemyShoot(alien) {
 
     enemyBullets.push({
-
         x: alien.x,
-
-        y: alien.y + 12,
-
-        speed: 180 + level * 10
-
+        y: alien.y + alien.height / 2,
+        speed: 175 + level * 12,
+        radius: 4
     });
 }
 
-/* ==================================
-   PARTICLES
-================================== */
+/* =====================================
+   EXPLOSIONS
+===================================== */
 
-function explode(x, y, color) {
+function explode(x, y, color = "#00f5ff", count = 15) {
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < count; i++) {
 
         const angle = Math.random() * Math.PI * 2;
-
-        const speed = 40 + Math.random() * 130;
+        const speed = 35 + Math.random() * 150;
 
         particles.push({
-
-            x: x,
-
-            y: y,
-
+            x,
+            y,
             vx: Math.cos(angle) * speed,
-
             vy: Math.sin(angle) * speed,
-
-            life: .5 + Math.random() * .4,
-
-            color: color,
-
-            size: 2 + Math.random() * 3
-
+            life: 0.4 + Math.random() * 0.5,
+            maxLife: 0.9,
+            size: 2 + Math.random() * 3,
+            color
         });
     }
 }
@@ -810,33 +998,76 @@ function updateParticles(dt) {
         p.x += p.vx * dt;
         p.y += p.vy * dt;
 
+        p.vx *= Math.pow(0.15, dt);
+        p.vy *= Math.pow(0.15, dt);
+
         p.life -= dt;
 
         if (p.life <= 0) {
-
             particles.splice(i, 1);
-
             continue;
         }
 
-        ctx.globalAlpha = Math.min(1, p.life * 2);
+        ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
 
         ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 8;
 
-        ctx.fillRect(
-            p.x,
-            p.y,
-            p.size,
-            p.size
-        );
+        ctx.fillRect(p.x, p.y, p.size, p.size);
     }
 
     ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
 }
 
-/* ==================================
+/* =====================================
+   COLLISION AND PLAYER DAMAGE
+===================================== */
+
+function playerHit() {
+
+    if (!ship || ship.invulnerable > 0) return;
+
+    lives--;
+
+    ship.invulnerable = 1.4;
+
+    explode(ship.x, ship.y, "#ff3864", 22);
+
+    playSound(130, 0.18, "sawtooth");
+
+    updateHUD();
+
+    if (lives <= 0) {
+        endGame();
+    }
+}
+
+function circleRectHit(circle, rect) {
+
+    const closestX = clamp(
+        circle.x,
+        rect.x - rect.width / 2,
+        rect.x + rect.width / 2
+    );
+
+    const closestY = clamp(
+        circle.y,
+        rect.y - rect.height / 2,
+        rect.y + rect.height / 2
+    );
+
+    const dx = circle.x - closestX;
+    const dy = circle.y - closestY;
+
+    return dx * dx + dy * dy <
+        circle.radius * circle.radius;
+}
+
+/* =====================================
    GAME UPDATE
-================================== */
+===================================== */
 
 function update(dt) {
 
@@ -844,22 +1075,7 @@ function update(dt) {
 
     updateShip(dt);
 
-    if (ship.invulnerable > 0) {
-        ship.invulnerable -= dt;
-    }
-
-    /* Automatic shooting */
-
-    shootTimer -= dt;
-
-    if (shootTimer <= 0) {
-
-        shoot();
-
-        shootTimer = .2;
-    }
-
-    /* Spawn aliens */
+    /* Spawn enemies */
 
     spawnTimer -= dt;
 
@@ -867,57 +1083,75 @@ function update(dt) {
 
         spawnAlien();
 
-        spawnTimer = Math.max(.35, 1.2 - level * .05);
+        spawnTimer = Math.max(0.38, 1.35 - level * 0.055);
     }
 
-    /* Player bullets */
+    /* Player missiles */
 
     for (let i = bullets.length - 1; i >= 0; i--) {
 
-        const b = bullets[i];
+        const bullet = bullets[i];
 
-        b.y -= b.speed * dt;
+        bullet.y -= bullet.speed * dt;
 
-        if (b.y < -10) {
-
+        if (bullet.y < -15) {
             bullets.splice(i, 1);
-
             continue;
         }
+
+        let hit = false;
 
         for (let j = aliens.length - 1; j >= 0; j--) {
 
             const alien = aliens[j];
 
             if (
-                Math.abs(b.x - alien.x) < alien.width / 2 + 3 &&
-                Math.abs(b.y - alien.y) < alien.height / 2 + 5
+                Math.abs(bullet.x - alien.x) <
+                    alien.width / 2 + bullet.radius &&
+                Math.abs(bullet.y - alien.y) <
+                    alien.height / 2 + 7
             ) {
+
+                alien.hp--;
+
+                explode(bullet.x, bullet.y, "#00f5ff", 4);
 
                 bullets.splice(i, 1);
 
-                alien.hp--;
+                hit = true;
 
                 if (alien.hp <= 0) {
 
                     explode(
                         alien.x,
                         alien.y,
-                        alien.elite ? "#ff3864" : "#a45cff"
+                        alien.elite ? "#ff3864" : "#9b5cff",
+                        17
                     );
 
                     aliens.splice(j, 1);
 
                     score += alien.elite ? 30 : 10;
 
-                    level = Math.floor(score / 100) + 1;
+                    const newLevel =
+                        Math.floor(score / 100) + 1;
+
+                    if (newLevel > level) {
+                        level = newLevel;
+                        showToast("🚀 LEVEL " + level + "!");
+                        playSound(880, 0.12, "triangle");
+                    }
 
                     updateHUD();
+
+                    playSound(280, 0.06, "triangle");
                 }
 
                 break;
             }
         }
+
+        if (hit) continue;
     }
 
     /* Alien movement */
@@ -930,7 +1164,13 @@ function update(dt) {
 
         alien.x +=
             Math.sin(performance.now() / 400 + alien.phase) *
-            35 * dt;
+            30 * dt;
+
+        alien.x = clamp(
+            alien.x,
+            alien.width / 2,
+            W - alien.width / 2
+        );
 
         alien.shootTimer -= dt;
 
@@ -938,10 +1178,12 @@ function update(dt) {
 
             enemyShoot(alien);
 
-            alien.shootTimer = 1.5 + Math.random() * 1.5;
+            alien.shootTimer =
+                Math.max(0.7, 2.2 - level * 0.08) +
+                Math.random();
         }
 
-        if (alien.y > H + 25) {
+        if (alien.y > H + 35) {
 
             aliens.splice(i, 1);
 
@@ -968,25 +1210,30 @@ function update(dt) {
         }
     }
 
-    /* Enemy bullets */
+    /* Enemy missiles */
 
     for (let i = enemyBullets.length - 1; i >= 0; i--) {
 
-        const b = enemyBullets[i];
+        const bullet = enemyBullets[i];
 
-        b.y += b.speed * dt;
+        bullet.y += bullet.speed * dt;
 
-        if (b.y > H + 10) {
-
+        if (bullet.y > H + 12) {
             enemyBullets.splice(i, 1);
-
             continue;
         }
 
         if (
             ship.invulnerable <= 0 &&
-            Math.abs(b.x - ship.x) < ship.width / 2 + 5 &&
-            Math.abs(b.y - ship.y) < ship.height / 2 + 5
+            circleRectHit(
+                bullet,
+                {
+                    x: ship.x,
+                    y: ship.y,
+                    width: ship.width,
+                    height: ship.height
+                }
+            )
         ) {
 
             enemyBullets.splice(i, 1);
@@ -996,54 +1243,27 @@ function update(dt) {
     }
 }
 
-/* ==================================
-   PLAYER HIT
-================================== */
-
-function playerHit() {
-
-    if (ship.invulnerable > 0) return;
-
-    lives--;
-
-    ship.invulnerable = 1.5;
-
-    explode(ship.x, ship.y, "#ff3864");
-
-    updateHUD();
-
-    if (lives <= 0) {
-
-        endGame();
-    }
-}
-
-/* ==================================
-   BACKGROUND
-================================== */
+/* =====================================
+   DRAW BACKGROUND
+===================================== */
 
 function drawBackground(dt) {
 
     ctx.fillStyle = "#050816";
-
     ctx.fillRect(0, 0, W, H);
 
     for (const star of stars) {
 
         if (state === "playing") {
-
             star.y += star.speed * dt;
         }
 
         if (star.y > H) {
-
             star.y = 0;
-
             star.x = Math.random() * W;
         }
 
-        ctx.globalAlpha = .75;
-
+        ctx.globalAlpha = star.alpha;
         ctx.fillStyle = "#d6f8ff";
 
         ctx.fillRect(
@@ -1055,11 +1275,22 @@ function drawBackground(dt) {
     }
 
     ctx.globalAlpha = 1;
+
+    const glow = ctx.createRadialGradient(
+        W / 2, H * 0.35, 5,
+        W / 2, H * 0.35, Math.max(W, H) * 0.65
+    );
+
+    glow.addColorStop(0, "rgba(35,55,130,.13)");
+    glow.addColorStop(1, "rgba(5,8,22,0)");
+
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
 }
 
-/* ==================================
-   RENDER
-================================== */
+/* =====================================
+   RENDER GAME
+===================================== */
 
 function draw(dt = 0) {
 
@@ -1067,28 +1298,30 @@ function draw(dt = 0) {
 
     drawBackground(dt);
 
-    for (const b of bullets) {
+    for (const bullet of bullets) {
+
+        ctx.save();
 
         ctx.shadowColor = "#00f5ff";
-
         ctx.shadowBlur = 12;
 
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle = "#a9ffff";
 
         ctx.fillRect(
-            b.x - 2,
-            b.y - 8,
+            bullet.x - 2,
+            bullet.y - 8,
             4,
-            14
+            13
         );
 
-        ctx.shadowBlur = 0;
+        ctx.restore();
     }
 
-    for (const b of enemyBullets) {
+    for (const bullet of enemyBullets) {
+
+        ctx.save();
 
         ctx.shadowColor = "#ff3864";
-
         ctx.shadowBlur = 10;
 
         ctx.fillStyle = "#ff6685";
@@ -1096,16 +1329,16 @@ function draw(dt = 0) {
         ctx.beginPath();
 
         ctx.arc(
-            b.x,
-            b.y,
-            4,
+            bullet.x,
+            bullet.y,
+            bullet.radius,
             0,
             Math.PI * 2
         );
 
         ctx.fill();
 
-        ctx.shadowBlur = 0;
+        ctx.restore();
     }
 
     aliens.forEach(drawAlien);
@@ -1115,29 +1348,32 @@ function draw(dt = 0) {
     drawShip();
 }
 
-/* ==================================
+/* =====================================
    MAIN LOOP
-================================== */
+===================================== */
 
-function loop(time) {
+function gameLoop(timestamp) {
 
     const dt = Math.min(
-        Math.max((time - lastTime) / 1000, 0),
-        .035
+        Math.max((timestamp - lastTime) / 1000, 0),
+        0.035
     );
 
-    lastTime = time;
+    lastTime = timestamp;
 
-    update(dt);
+    if (state === "playing") {
+        update(dt);
+        draw(dt);
+    } else {
+        draw(0);
+    }
 
-    draw(dt);
-
-    requestAnimationFrame(loop);
+    requestAnimationFrame(gameLoop);
 }
 
-/* ==================================
+/* =====================================
    START / PAUSE / GAME OVER
-================================== */
+===================================== */
 
 function startGame() {
 
@@ -1146,6 +1382,8 @@ function startGame() {
     state = "playing";
 
     overlay.classList.add("hidden");
+
+    pauseBtn.textContent = "Ⅱ";
 
     lastTime = performance.now();
 }
@@ -1156,18 +1394,21 @@ function pauseGame() {
 
     state = "paused";
 
-    pointerActive = false;
+    fingerDown = false;
+    fingerX = null;
+    activePointerId = null;
 
-    dialogIcon.textContent = "⏸️";
+    modalIcon.textContent = "⏸️";
+    modalTitle.textContent = "GAME PAUSED";
 
-    dialogTitle.textContent = "GAME PAUSED";
+    modalText.textContent =
+        "Your mission is paused. Continue when you are ready.";
 
-    dialogText.textContent =
-        "Your mission is paused. Continue when ready.";
-
-    startBtn.textContent = "▶ RESUME GAME";
+    startBtn.textContent = "▶ RESUME MISSION";
 
     overlay.classList.remove("hidden");
+
+    pauseBtn.textContent = "▶";
 }
 
 function togglePause() {
@@ -1182,6 +1423,8 @@ function togglePause() {
 
         overlay.classList.add("hidden");
 
+        pauseBtn.textContent = "Ⅱ";
+
         lastTime = performance.now();
     }
 }
@@ -1190,27 +1433,26 @@ function endGame() {
 
     state = "over";
 
-    pointerActive = false;
+    fingerDown = false;
+    fingerX = null;
+    activePointerId = null;
 
-    try {
+    if (score > highScore) {
 
-        if (score > highScore) {
+        highScore = score;
 
-            highScore = score;
-
+        try {
             localStorage.setItem(
                 "alienShooterHighScore",
                 String(highScore)
             );
-        }
+        } catch (e) {}
+    }
 
-    } catch (e) {}
+    modalIcon.textContent = "💥";
+    modalTitle.textContent = "MISSION FAILED";
 
-    dialogIcon.textContent = "💥";
-
-    dialogTitle.textContent = "GAME OVER";
-
-    dialogText.innerHTML =
+    modalText.innerHTML =
         "Final Score: <b style='color:#5cff9d'>" +
         score +
         "</b><br>High Score: <b style='color:#00f5ff'>" +
@@ -1220,11 +1462,31 @@ function endGame() {
     startBtn.textContent = "🔄 PLAY AGAIN";
 
     overlay.classList.remove("hidden");
+
+    pauseBtn.textContent = "Ⅱ";
 }
 
-/* ==================================
+/* =====================================
+   TOAST
+===================================== */
+
+let toastTimer = null;
+
+function showToast(message) {
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1300);
+}
+
+/* =====================================
    BUTTON EVENTS
-================================== */
+===================================== */
 
 startBtn.addEventListener("click", function() {
 
@@ -1233,6 +1495,8 @@ startBtn.addEventListener("click", function() {
         state = "playing";
 
         overlay.classList.add("hidden");
+
+        pauseBtn.textContent = "Ⅱ";
 
         lastTime = performance.now();
 
@@ -1244,19 +1508,34 @@ startBtn.addEventListener("click", function() {
 
 pauseBtn.addEventListener("click", togglePause);
 
-window.addEventListener("resize", resize);
+soundBtn.addEventListener("click", function() {
 
-/* ==================================
-   INITIALIZE
-================================== */
+    soundEnabled = !soundEnabled;
 
-resize();
+    soundBtn.textContent = soundEnabled
+        ? "🔊 SOUND: ON"
+        : "🔇 SOUND: OFF";
+
+    if (soundEnabled) {
+        playSound(600, 0.08);
+    }
+});
+
+/* =====================================
+   RESIZE AND INITIALIZE
+===================================== */
+
+window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
 
 resetGame();
 
 state = "menu";
 
-requestAnimationFrame(loop);
+lastTime = performance.now();
+
+requestAnimationFrame(gameLoop);
 
 </script>
 
