@@ -1,349 +1,198 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d1c">
+<meta name="theme-color" content="#030616">
 
-<title>Math Voice Solver Pro</title>
+<title>Alien Shooter - Space Battle</title>
 
 <style>
-:root {
-    --bg: #080d1c;
-    --panel: #111a30;
-    --panel2: #172440;
-    --accent: #7c5cff;
-    --accent2: #00d4ff;
-    --green: #24d98b;
-    --text: #f2f5ff;
-    --muted: #a8b4d1;
-    --border: rgba(255,255,255,.10);
-    --danger: #ff5470;
-}
-
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --cyan: #39f5ff;
+    --blue: #247bff;
+    --purple: #a855f7;
+    --dark: #030616;
+}
+
 body {
-    margin: 0;
-    background:
-        radial-gradient(circle at top left, #172554 0, transparent 38%),
-        var(--bg);
-    color: var(--text);
-    font-family: Arial, "Noto Sans Devanagari", sans-serif;
-    min-height: 100vh;
-}
-
-header {
-    text-align: center;
-    padding: 28px 15px 20px;
-}
-
-.logo {
-    width: 70px;
-    height: 70px;
-    display: grid;
-    place-items: center;
-    margin: 0 auto 12px;
-    border-radius: 22px;
-    font-size: 35px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    box-shadow: 0 0 35px #7c5cff50;
-}
-
-header h1 {
-    font-size: clamp(25px, 5vw, 38px);
-    margin: 8px 0;
-    background: linear-gradient(90deg, #fff, #7cddff, #b9a7ff);
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-header p {
-    color: var(--muted);
-    line-height: 1.7;
-    margin: 8px auto;
-    max-width: 650px;
-}
-
-.container {
-    width: min(950px, 94%);
-    margin: 0 auto 40px;
-}
-
-.card {
-    background: linear-gradient(145deg, #131d35, #0f172b);
-    border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 22px;
-    margin-bottom: 20px;
-    box-shadow: 0 15px 45px #00000022;
-}
-
-.card h2 {
-    margin-top: 0;
-    font-size: 21px;
-}
-
-.label {
-    display: block;
-    margin-bottom: 10px;
-    color: #d8e0f8;
-    font-size: 14px;
-}
-
-textarea {
-    width: 100%;
-    min-height: 115px;
-    resize: vertical;
-    background: #080f20;
-    border: 1px solid #34415f;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--dark);
     color: white;
-    border-radius: 14px;
-    padding: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.game-wrapper {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 12px;
+}
+
+.header {
+    text-align: center;
+    padding: 12px 5px 18px;
+}
+
+.header h1 {
+    font-size: clamp(25px, 5vw, 42px);
+    color: var(--cyan);
+    text-shadow: 0 0 20px #00d9ff;
+    letter-spacing: 3px;
+}
+
+.header p {
+    margin-top: 8px;
+    color: #b7c9ed;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.game-panel {
+    background: linear-gradient(135deg, #0b1736, #060817);
+    border: 1px solid #234b91;
+    border-radius: 18px;
+    padding: 12px;
+    box-shadow: 0 0 35px #0066ff22;
+}
+
+.hud {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.hud-box {
+    background: #07142b;
+    border: 1px solid #244c86;
+    border-radius: 9px;
+    padding: 10px 5px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.hud-box strong {
+    display: block;
+    margin-top: 5px;
+    color: var(--cyan);
     font-size: 17px;
-    outline: none;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    max-height: 720px;
+    background: #020511;
+    border: 1px solid #183d70;
+    border-radius: 12px;
+    touch-action: none;
+}
+
+.message {
+    text-align: center;
+    color: #c3d8ff;
+    font-size: 13px;
     line-height: 1.7;
-    transition: .2s;
+    margin: 12px 0;
 }
 
-textarea:focus {
-    border-color: var(--accent2);
-    box-shadow: 0 0 0 3px #00d4ff15;
-}
-
-button, select {
-    font-family: inherit;
+.controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
 }
 
 button {
+    font-family: inherit;
     cursor: pointer;
     border: none;
-    transition: transform .15s, opacity .15s;
+    border-radius: 10px;
+    padding: 13px 8px;
+    font-weight: bold;
+    color: white;
+    transition: transform .15s, filter .15s;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 button:active {
-    transform: scale(.97);
+    transform: scale(.95);
 }
 
-.button-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 14px;
+.btn-move {
+    background: linear-gradient(135deg, #1456c7, #172d79);
+    border: 1px solid #4387ff;
 }
 
-.btn {
-    padding: 12px 17px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: bold;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
+.btn-fire {
+    background: linear-gradient(135deg, #fa315d, #b50d63);
+    border: 1px solid #ff76a2;
 }
 
-.btn:disabled {
-    opacity: .5;
-    cursor: not-allowed;
+.btn-start {
+    background: linear-gradient(135deg, #00c9a7, #087caa);
+    border: 1px solid #4dffe2;
 }
 
-.primary {
-    color: white;
-    background: linear-gradient(135deg, #7557ff, #4b8dff);
+.btn-pause {
+    background: linear-gradient(135deg, #763df0, #3922a1);
+    border: 1px solid #ad8bff;
 }
 
-.voice {
-    color: white;
-    background: linear-gradient(135deg, #ed4264, #ff7b54);
+.btn-restart {
+    background: linear-gradient(135deg, #f08c27, #bd3e13);
+    border: 1px solid #ffbd71;
 }
 
-.secondary {
-    color: #e6ecff;
-    background: #243351;
-    border: 1px solid #405071;
-}
-
-.success {
-    color: #061b14;
-    background: var(--green);
-}
-
-.status {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    color: var(--muted);
-    font-size: 13px;
-    margin-top: 14px;
-    min-height: 20px;
-}
-
-.dot {
-    width: 9px;
-    height: 9px;
-    background: #65718a;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.dot.active {
-    background: var(--green);
-    box-shadow: 0 0 10px var(--green);
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    50% { opacity: .3; }
-}
-
-.examples {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 9px;
-}
-
-.example {
-    padding: 9px 12px;
-    border-radius: 20px;
-    color: #dce5ff;
-    background: #202e4b;
-    border: 1px solid #344766;
-    font-size: 13px;
-}
-
-.example:hover {
-    border-color: var(--accent2);
-}
-
-.answer-card {
-    display: none;
-}
-
-.answer-card.show {
-    display: block;
-    animation: appear .35s ease;
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.question-box {
-    background: #080f20;
-    border: 1px solid #263957;
-    padding: 15px;
-    border-radius: 12px;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
-}
-
-.answer-heading {
-    color: var(--green);
-    font-size: 16px;
-    margin-top: 22px;
-}
-
-.final-answer {
-    margin-top: 12px;
-    padding: 19px;
-    border-radius: 14px;
-    border: 1px solid #24d98b66;
-    background: linear-gradient(135deg, #12382e, #102c2d);
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 1.7;
-    overflow-wrap: anywhere;
-}
-
-.steps {
-    margin-top: 12px;
+.secondary-controls {
     display: grid;
-    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 9px;
 }
 
-.step {
-    display: flex;
-    gap: 13px;
-    align-items: flex-start;
-    background: #17243d;
-    border: 1px solid #2b3c5b;
-    border-radius: 13px;
-    padding: 15px;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
-}
-
-.step-number {
-    display: grid;
-    place-items: center;
-    min-width: 29px;
-    height: 29px;
-    border-radius: 9px;
-    background: #7457ff;
-    font-weight: bold;
-}
-
-.note {
-    color: #ffdb87;
-    font-size: 13px;
-    line-height: 1.7;
-    margin-top: 15px;
-}
-
-.history-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    align-items: center;
-    background: #17243d;
-    border: 1px solid #2b3c5b;
-    padding: 12px;
-    border-radius: 12px;
-    margin-top: 10px;
-}
-
-.history-item span {
-    overflow-wrap: anywhere;
-    line-height: 1.6;
-}
-
-.history-item button {
-    flex-shrink: 0;
-}
-
-footer {
+.footer {
     text-align: center;
-    color: #7f8ca9;
     font-size: 12px;
-    padding: 20px;
+    color: #8294bd;
+    padding: 18px 5px;
 }
 
-@media (max-width: 550px) {
-    .card {
-        padding: 16px;
-        border-radius: 17px;
+@media (max-width: 500px) {
+    .game-wrapper {
+        padding: 7px;
     }
 
-    .button-row .btn {
-        flex: 1 1 42%;
+    .game-panel {
+        padding: 8px;
     }
 
-    .final-answer {
-        font-size: 19px;
+    .hud {
+        gap: 4px;
     }
 
-    header {
-        padding-top: 22px;
+    .hud-box {
+        padding: 8px 2px;
+        font-size: 10px;
+    }
+
+    .hud-box strong {
+        font-size: 15px;
+    }
+
+    button {
+        padding: 13px 4px;
+        font-size: 12px;
     }
 }
 </style>
@@ -351,1168 +200,1385 @@ footer {
 
 <body>
 
-<header>
-    <div class="logo">🧮</div>
-    <h1>Math Voice Solver Pro</h1>
-    <p>
-        बोलकर या लिखकर गणित का प्रश्न पूछिए।
-        Answer बटन दबाइए और पाइए उसका हल, चरण-दर-चरण।
-    </p>
-</header>
+<div class="game-wrapper">
 
-<main class="container">
+    <header class="header">
+        <h1>👽 ALIEN SHOOTER</h1>
+        <p>GALACTIC SPACE BATTLE • SURVIVE THE INVASION</p>
+    </header>
 
-    <section class="card">
-        <h2>🎤 अपना गणित का प्रश्न पूछें</h2>
+    <main class="game-panel">
 
-        <label class="label" for="question">
-            यहाँ अपना प्रश्न लिखें या माइक्रोफोन से बोलें
-        </label>
+        <div class="hud">
+            <div class="hud-box">
+                ⭐ SCORE
+                <strong id="score">0</strong>
+            </div>
 
-        <textarea
-            id="question"
-            placeholder="उदाहरण: 25 का 20 प्रतिशत कितना है?&#10;या: 144 और 180 का HCF निकालिए।&#10;या: 2x + 5 = 15 हल कीजिए।"
-        ></textarea>
+            <div class="hud-box">
+                ❤️ LIVES
+                <strong id="lives">3</strong>
+            </div>
 
-        <div class="button-row">
-            <button class="btn voice" id="micButton" onclick="startVoice()">
-                🎙️ बोलकर पूछें
-            </button>
+            <div class="hud-box">
+                🚀 LEVEL
+                <strong id="level">1</strong>
+            </div>
 
-            <button class="btn primary" onclick="solveQuestion()">
-                🧮 Answer निकालें
-            </button>
-
-            <button class="btn secondary" onclick="clearAll()">
-                🗑️ साफ करें
-            </button>
+            <div class="hud-box">
+                🏆 BEST
+                <strong id="best">0</strong>
+            </div>
         </div>
 
-        <div class="status" aria-live="polite">
-            <span class="dot" id="statusDot"></span>
-            <span id="statusText">अपना प्रश्न दर्ज कीजिए।</span>
-        </div>
-    </section>
+        <canvas id="gameCanvas" width="480" height="640">
+            Your browser does not support HTML5 Canvas.
+        </canvas>
 
-    <section class="card">
-        <h2>⚡ उदाहरण के प्रश्न</h2>
-        <p style="color:var(--muted);font-size:13px;line-height:1.7">
-            किसी उदाहरण पर क्लिक करके तुरंत उसका हल निकाल सकते हैं।
+        <p class="message" id="message">
+            Destroy the aliens and defend the galaxy!<br>
+            Use ← → or A/D to move. Press SPACE to shoot.
         </p>
 
-        <div class="examples">
-            <button class="example" onclick="setExample('125 + 275')">
-                125 + 275
+        <div class="controls">
+
+            <button class="btn-move"
+                    id="leftBtn"
+                    aria-label="Move left">
+                ◀ LEFT
             </button>
 
-            <button class="example" onclick="setExample('250 का 20 प्रतिशत')">
-                250 का 20%
+            <button class="btn-fire"
+                    id="fireBtn">
+                🔥 FIRE
             </button>
 
-            <button class="example" onclick="setExample('144 और 180 का HCF')">
-                HCF
+            <button class="btn-move"
+                    id="rightBtn"
+                    aria-label="Move right">
+                RIGHT ▶
             </button>
 
-            <button class="example" onclick="setExample('12 और 18 का LCM')">
-                LCM
-            </button>
-
-            <button class="example" onclick="setExample('2x + 5 = 15')">
-                समीकरण
-            </button>
-
-            <button class="example" onclick="setExample('√144')">
-                वर्गमूल
-            </button>
-
-            <button class="example" onclick="setExample('15 का वर्ग')">
-                वर्ग
-            </button>
-
-            <button class="example" onclick="setExample('252, 180, 108 का HCF')">
-                तीन संख्याओं का HCF
-            </button>
-        </div>
-    </section>
-
-    <section class="card answer-card" id="answerCard">
-        <h2>📘 प्रश्न का पूरा समाधान</h2>
-
-        <div class="label">आपका प्रश्न</div>
-        <div class="question-box" id="questionDisplay"></div>
-
-        <div class="answer-heading">📝 Step-by-Step Solution</div>
-        <div class="steps" id="steps"></div>
-
-        <div class="answer-heading">✅ अंतिम उत्तर</div>
-        <div class="final-answer" id="finalAnswer"></div>
-
-        <div class="button-row">
-            <button class="btn success" onclick="speakAnswer()">
-                🔊 उत्तर सुनें
-            </button>
-
-            <button class="btn secondary" onclick="copyAnswer()">
-                📋 पूरा हल कॉपी करें
-            </button>
         </div>
 
-        <p class="note" id="answerNote"></p>
-    </section>
+        <div class="secondary-controls">
 
-    <section class="card">
-        <h2>🕘 हाल के प्रश्न</h2>
-        <div id="history">
-            <p style="color:var(--muted);font-size:14px">
-                आपके हल किए गए प्रश्न यहाँ दिखाई देंगे।
-            </p>
-        </div>
-
-        <div class="button-row">
-            <button class="btn secondary" onclick="clearHistory()">
-                इतिहास साफ करें
+            <button class="btn-start" id="startBtn">
+                🚀 START GAME
             </button>
-        </div>
-    </section>
 
-    <section class="card">
-        <h2>ℹ️ इस्तेमाल कैसे करें?</h2>
-        <div class="steps">
-            <div class="step">
-                <span class="step-number">1</span>
-                <span>माइक्रोफोन बटन दबाकर गणित का प्रश्न बोलें या टेक्स्ट बॉक्स में लिखें।</span>
-            </div>
+            <button class="btn-pause" id="pauseBtn">
+                ⏸ PAUSE
+            </button>
 
-            <div class="step">
-                <span class="step-number">2</span>
-                <span>Answer निकालें बटन दबाएँ।</span>
-            </div>
+            <button class="btn-restart" id="restartBtn">
+                🔄 RESTART
+            </button>
 
-            <div class="step">
-                <span class="step-number">3</span>
-                <span>नीचे पूरा हल, गणना के चरण और अंतिम उत्तर देखें।</span>
-            </div>
+            <button class="btn-start" id="soundBtn">
+                🔊 SOUND: ON
+            </button>
 
-            <div class="step">
-                <span class="step-number">4</span>
-                <span>चाहें तो उत्तर को आवाज में सुनें या कॉपी करें।</span>
-            </div>
         </div>
 
-        <p class="note">
-            ध्यान दें: यह संस्करण सामान्य अंकगणित, प्रतिशत, HCF, LCM,
-            वर्गमूल और एक चर वाले कुछ सरल समीकरणों को हल करता है।
-            हर प्रकार के जटिल गणितीय प्रश्न को हल करने के लिए AI सेवा
-            जोड़ना आवश्यक हो सकता है।
-        </p>
-    </section>
+    </main>
 
-</main>
+    <footer class="footer">
+        ALIEN SHOOTER © 2026 | DEFEND THE GALAXY 🚀
+    </footer>
 
-<footer>
-    Math Voice Solver Pro · Educational Mathematics Tool
-</footer>
+</div>
 
 <script>
 "use strict";
 
-const questionInput = document.getElementById("question");
-const answerCard = document.getElementById("answerCard");
-const stepsBox = document.getElementById("steps");
-const finalAnswerBox = document.getElementById("finalAnswer");
-const questionDisplay = document.getElementById("questionDisplay");
-const statusText = document.getElementById("statusText");
-const statusDot = document.getElementById("statusDot");
-const micButton = document.getElementById("micButton");
+/* ==========================================
+   ALIEN SHOOTER
+   Complete HTML5 Canvas Game
+========================================== */
 
-let recognition = null;
-let isListening = false;
-let lastSolution = null;
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-function setStatus(message, active = false) {
-    statusText.textContent = message;
-    statusDot.classList.toggle("active", active);
+const W = canvas.width;
+const H = canvas.height;
+
+const scoreElement = document.getElementById("score");
+const livesElement = document.getElementById("lives");
+const levelElement = document.getElementById("level");
+const bestElement = document.getElementById("best");
+const messageElement = document.getElementById("message");
+
+let score = 0;
+let lives = 3;
+let level = 1;
+let best = 0;
+
+try {
+    best = Number(localStorage.getItem("alienShooterBest")) || 0;
+} catch (e) {
+    best = 0;
 }
 
-function normalizeText(text) {
-    return String(text)
-        .toLowerCase()
-        .replace(/[०-९]/g, d =>
-            String("०१२३४५६७८९".indexOf(d))
-        )
-        .replace(/,/g, "")
-        .replace(/[?।]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-}
+bestElement.textContent = best;
 
-function setExample(text) {
-    questionInput.value = text;
-    questionInput.focus();
-    solveQuestion();
-}
+let running = false;
+let gameOver = false;
+let paused = false;
+let soundOn = true;
 
-function startVoice() {
-    const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
+let frame = 0;
+let animationId = 0;
 
-    if (!SpeechRecognition) {
-        setStatus(
-            "आपका ब्राउज़र Speech Recognition समर्थित नहीं करता। " +
-            "Chrome में HTTPS वेबसाइट खोलकर प्रयास करें।"
-        );
-        return;
-    }
+let bullets = [];
+let enemyBullets = [];
+let enemies = [];
+let particles = [];
+let stars = [];
+let powerUps = [];
 
-    if (isListening && recognition) {
-        recognition.stop();
-        return;
-    }
+let enemyDirection = 1;
+let enemySpeed = 0.55;
+let enemyShootTimer = 0;
+let playerInvincible = 0;
+let rapidFireTimer = 0;
+let shieldTimer = 0;
+let fireCooldown = 0;
 
-    recognition = new SpeechRecognition();
-    recognition.lang = "hi-IN";
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    recognition.maxAlternatives = 1;
+const keys = {
+    left: false,
+    right: false,
+    fire: false
+};
 
-    isListening = true;
-    micButton.textContent = "⏹️ सुनना बंद करें";
-    setStatus("सुन रहा हूँ... अब अपना प्रश्न बोलिए।", true);
+const player = {
+    x: W / 2,
+    y: H - 70,
+    width: 34,
+    height: 38,
+    speed: 4.3
+};
 
-    recognition.onresult = function(event) {
-        let transcript = "";
+/* ==========================================
+   AUDIO
+========================================== */
 
-        for (
-            let i = event.resultIndex;
-            i < event.results.length;
-            i++
-        ) {
-            transcript += event.results[i][0].transcript;
-        }
+let audioContext = null;
 
-        questionInput.value = transcript;
-    };
-
-    recognition.onerror = function(event) {
-        let message = "आवाज पहचानने में समस्या हुई।";
-
-        if (event.error === "not-allowed") {
-            message = "माइक्रोफोन की अनुमति दीजिए।";
-        } else if (event.error === "no-speech") {
-            message = "कोई आवाज नहीं मिली। दोबारा प्रयास करें।";
-        } else if (event.error === "network") {
-            message = "नेटवर्क समस्या के कारण आवाज पहचान नहीं हुई।";
-        }
-
-        setStatus(message);
-    };
-
-    recognition.onend = function() {
-        isListening = false;
-        micButton.textContent = "🎙️ बोलकर पूछें";
-        statusDot.classList.remove("active");
-
-        if (questionInput.value.trim()) {
-            setStatus("प्रश्न दर्ज हो गया। अब Answer दबाएँ।");
-        }
-    };
+function playSound(frequency = 440, duration = 0.07, type = "sine") {
+    if (!soundOn) return;
 
     try {
-        recognition.start();
-    } catch (error) {
-        isListening = false;
-        micButton.textContent = "🎙️ बोलकर पूछें";
-        setStatus("माइक्रोफोन शुरू नहीं हो सका। दोबारा प्रयास करें।");
+        if (!audioContext) {
+            audioContext = new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+        }
+
+        if (audioContext.state === "suspended") {
+            audioContext.resume();
+        }
+
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.type = type;
+        oscillator.frequency.value = frequency;
+
+        gain.gain.setValueAtTime(
+            0.055,
+            audioContext.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioContext.currentTime + duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.start();
+        oscillator.stop(
+            audioContext.currentTime + duration
+        );
+    } catch (e) {
+        // The game still works if audio is unavailable.
     }
 }
 
-/* सुरक्षित गणितीय expression parser */
+/* ==========================================
+   BACKGROUND STARS
+========================================== */
 
-function tokenizeExpression(input) {
-    const tokens = [];
-    let i = 0;
+function createStars() {
+    stars = [];
 
-    while (i < input.length) {
-        const ch = input[i];
-
-        if (/\s/.test(ch)) {
-            i++;
-            continue;
-        }
-
-        if (/[0-9.]/.test(ch)) {
-            let start = i;
-            let dots = 0;
-
-            while (i < input.length && /[0-9.]/.test(input[i])) {
-                if (input[i] === ".") dots++;
-                i++;
-            }
-
-            if (dots > 1) {
-                throw new Error("संख्या का प्रारूप सही नहीं है।");
-            }
-
-            const value = Number(input.slice(start, i));
-
-            if (!Number.isFinite(value)) {
-                throw new Error("अमान्य संख्या।");
-            }
-
-            tokens.push({type: "number", value});
-            continue;
-        }
-
-        if ("+-*/^()%".includes(ch)) {
-            tokens.push({type: "symbol", value: ch});
-            i++;
-            continue;
-        }
-
-        throw new Error("इस गणितीय अभिव्यक्ति को समझ नहीं पाया।");
+    for (let i = 0; i < 115; i++) {
+        stars.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            radius: Math.random() * 1.5 + 0.3,
+            speed: Math.random() * 1.4 + 0.25,
+            alpha: Math.random() * 0.7 + 0.3
+        });
     }
-
-    return tokens;
 }
 
-function parseExpression(input) {
-    const tokens = tokenizeExpression(input);
-    let pos = 0;
+function drawBackground() {
+    const gradient = ctx.createLinearGradient(0, 0, W, H);
 
-    function peek(value) {
-        return tokens[pos] && tokens[pos].value === value;
-    }
+    gradient.addColorStop(0, "#030719");
+    gradient.addColorStop(0.5, "#071638");
+    gradient.addColorStop(1, "#020512");
 
-    function take() {
-        return tokens[pos++];
-    }
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
 
-    function primary() {
-        if (peek("+") || peek("-")) {
-            const op = take().value;
-            const value = primary();
-            return op === "-" ? -value : value;
-        }
-
-        if (peek("(")) {
-            take();
-
-            const value = addSub();
-
-            if (!peek(")")) {
-                throw new Error("ब्रैकेट बंद नहीं है।");
-            }
-
-            take();
-            return value;
-        }
-
-        const token = take();
-
-        if (!token || token.type !== "number") {
-            throw new Error("कृपया सही गणितीय प्रश्न लिखें।");
-        }
-
-        return token.value;
-    }
-
-    function power() {
-        let left = primary();
-
-        if (peek("^")) {
-            take();
-            left = Math.pow(left, unaryPower());
-        }
-
-        return left;
-    }
-
-    function unaryPower() {
-        if (peek("+")) {
-            take();
-            return unaryPower();
-        }
-
-        if (peek("-")) {
-            take();
-            return -unaryPower();
-        }
-
-        return power();
-    }
-
-    function multiplyDivide() {
-        let value = power();
-
-        while (peek("*") || peek("/") || peek("%")) {
-            const op = take().value;
-            const right = power();
-
-            if (op === "*") {
-                value *= right;
-            } else if (op === "/") {
-                if (right === 0) {
-                    throw new Error("शून्य से भाग नहीं दिया जा सकता।");
-                }
-                value /= right;
-            } else {
-                if (right === 0) {
-                    throw new Error("शून्य से भाग नहीं दिया जा सकता।");
-                }
-                value %= right;
-            }
-        }
-
-        return value;
-    }
-
-    function addSub() {
-        let value = multiplyDivide();
-
-        while (peek("+") || peek("-")) {
-            const op = take().value;
-            const right = multiplyDivide();
-
-            value = op === "+" ? value + right : value - right;
-        }
-
-        return value;
-    }
-
-    if (!tokens.length) {
-        throw new Error("पहले गणित का प्रश्न लिखें।");
-    }
-
-    const result = addSub();
-
-    if (pos !== tokens.length) {
-        throw new Error("प्रश्न का प्रारूप सही नहीं है।");
-    }
-
-    if (!Number.isFinite(result)) {
-        throw new Error("इस गणना का सीमित उत्तर नहीं मिला।");
-    }
-
-    return result;
-}
-
-function formatNumber(value) {
-    if (!Number.isFinite(value)) return String(value);
-
-    if (Math.abs(value) < 1e-10) return "0";
-
-    if (Number.isInteger(value)) {
-        return String(value);
-    }
-
-    return Number(value.toPrecision(12)).toString();
-}
-
-function gcd(a, b) {
-    a = Math.abs(Math.trunc(a));
-    b = Math.abs(Math.trunc(b));
-
-    while (b !== 0) {
-        const remainder = a % b;
-        a = b;
-        b = remainder;
-    }
-
-    return a;
-}
-
-function lcm(a, b) {
-    a = Math.abs(Math.trunc(a));
-    b = Math.abs(Math.trunc(b));
-
-    if (a === 0 || b === 0) return 0;
-
-    return Math.abs((a / gcd(a, b)) * b);
-}
-
-function parseNumbers(text) {
-    const normalized = normalizeText(text);
-
-    const matches = normalized.match(
-        /-?\d+(?:\.\d+)?/g
+    // Nebula clouds
+    const nebula = ctx.createRadialGradient(
+        95, 170, 5,
+        95, 170, 190
     );
 
-    return matches ? matches.map(Number) : [];
-}
+    nebula.addColorStop(0, "rgba(30,70,190,0.23)");
+    nebula.addColorStop(1, "rgba(30,70,190,0)");
 
-function makeSolution(finalAnswer, steps, note = "") {
-    return {
-        finalAnswer: String(finalAnswer),
-        steps,
-        note
-    };
-}
+    ctx.fillStyle = nebula;
+    ctx.fillRect(0, 0, W, H);
 
-function solveHCF(text) {
-    const numbers = parseNumbers(text);
-
-    if (numbers.length < 2) {
-        throw new Error(
-            "HCF निकालने के लिए कम-से-कम दो संख्याएँ लिखें।"
-        );
-    }
-
-    if (numbers.some(n => !Number.isInteger(n))) {
-        throw new Error("इस HCF विकल्प में पूर्ण संख्याएँ दीजिए।");
-    }
-
-    let result = Math.abs(numbers[0]);
-    const steps = [];
-
-    for (let i = 1; i < numbers.length; i++) {
-        const a = result;
-        const b = Math.abs(numbers[i]);
-
-        steps.push(
-            `HCF(${a}, ${b}) निकालते हैं।`
-        );
-
-        let x = a;
-        let y = b;
-
-        while (y !== 0) {
-            const r = x % y;
-
-            steps.push(
-                `${x} = ${y} × ${Math.trunc(x / y)} + ${r}`
-            );
-
-            x = y;
-            y = r;
-        }
-
-        result = x;
-
-        steps.push(`इस चरण का HCF = ${result}`);
-    }
-
-    return makeSolution(
-        result,
-        steps,
-        "HCF का अर्थ है महत्तम समापवर्तक।"
+    const nebula2 = ctx.createRadialGradient(
+        390, 390, 5,
+        390, 390, 160
     );
-}
 
-function solveLCM(text) {
-    const numbers = parseNumbers(text);
+    nebula2.addColorStop(0, "rgba(125,20,180,0.12)");
+    nebula2.addColorStop(1, "rgba(125,20,180,0)");
 
-    if (numbers.length < 2) {
-        throw new Error(
-            "LCM निकालने के लिए कम-से-कम दो संख्याएँ लिखें।"
-        );
-    }
+    ctx.fillStyle = nebula2;
+    ctx.fillRect(0, 0, W, H);
 
-    if (numbers.some(n => !Number.isInteger(n))) {
-        throw new Error("इस LCM विकल्प में पूर्ण संख्याएँ दीजिए।");
-    }
+    for (const star of stars) {
+        ctx.globalAlpha = star.alpha;
 
-    let result = Math.abs(numbers[0]);
-    const steps = [];
+        ctx.fillStyle = "#d9f7ff";
+        ctx.beginPath();
 
-    for (let i = 1; i < numbers.length; i++) {
-        const n = Math.abs(numbers[i]);
-        const h = gcd(result, n);
-
-        steps.push(
-            `LCM(${result}, ${n}) = (${result} × ${n}) ÷ HCF(${result}, ${n})`
+        ctx.arc(
+            star.x,
+            star.y,
+            star.radius,
+            0,
+            Math.PI * 2
         );
 
-        result = lcm(result, n);
+        ctx.fill();
 
-        steps.push(
-            `HCF = ${h}, इसलिए LCM = ${result}`
-        );
-    }
+        ctx.globalAlpha = 1;
 
-    return makeSolution(
-        result,
-        steps,
-        "LCM का अर्थ है लघुत्तम समापवर्त्य।"
-    );
-}
+        if (running && !paused) {
+            star.y += star.speed;
 
-function solveLinearEquation(text) {
-    const normalized = normalizeText(text)
-        .replace(/×/g, "*")
-        .replace(/÷/g, "/")
-        .replace(/−/g, "-");
-
-    const equation = normalized.split("=");
-
-    if (equation.length !== 2) {
-        throw new Error("समीकरण में एक बराबर (=) चिह्न होना चाहिए।");
-    }
-
-    const variableMatch = normalized.match(/[a-z]/);
-
-    if (!variableMatch) {
-        throw new Error("समीकरण में x जैसा एक चर होना चाहिए।");
-    }
-
-    const variable = variableMatch[0];
-
-    if (
-        new RegExp(`[a-wy-z]`, "i").test(
-            normalized.replaceAll(variable, "")
-        )
-    ) {
-        throw new Error("इस संस्करण में एक ही चर वाला समीकरण समर्थित है।");
-    }
-
-    function linearPart(expr) {
-        const compact = expr.replace(/\s+/g, "");
-
-        if (!compact) {
-            return {a: 0, b: 0};
-        }
-
-        let parts = compact.match(
-            /[+-]?[^+-]+/g
-        );
-
-        if (!parts) {
-            throw new Error("समीकरण का प्रारूप सही नहीं है।");
-        }
-
-        let a = 0;
-        let b = 0;
-
-        for (let part of parts) {
-            if (part.includes(variable)) {
-                let coefficient = part.replace(variable, "");
-
-                if (coefficient === "" || coefficient === "+") {
-                    coefficient = "1";
-                } else if (coefficient === "-") {
-                    coefficient = "-1";
-                }
-
-                if (
-                    !/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(coefficient)
-                ) {
-                    throw new Error(
-                        "इस समीकरण का गुणांक समझ नहीं पाया।"
-                    );
-                }
-
-                a += Number(coefficient);
-            } else {
-                b += parseExpression(part);
+            if (star.y > H) {
+                star.y = 0;
+                star.x = Math.random() * W;
             }
         }
-
-        return {a, b};
     }
 
-    const left = linearPart(equation[0]);
-    const right = linearPart(equation[1]);
+    // Distant planet
+    ctx.save();
 
-    const coefficient = left.a - right.a;
-    const constant = right.b - left.b;
+    ctx.shadowBlur = 25;
+    ctx.shadowColor = "#386fff";
 
-    const steps = [
-        `दिया गया समीकरण: ${text}`,
-        `चर वाले पद एक तरफ और संख्यात्मक पद दूसरी तरफ लाते हैं।`,
-        `${formatNumber(coefficient)}${variable} = ${formatNumber(constant)}`
+    const planet = ctx.createRadialGradient(
+        370, 95, 3,
+        370, 95, 42
+    );
+
+    planet.addColorStop(0, "#8db9ff");
+    planet.addColorStop(0.4, "#3456a3");
+    planet.addColorStop(1, "#080d2c");
+
+    ctx.fillStyle = planet;
+
+    ctx.beginPath();
+    ctx.arc(370, 95, 42, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+}
+
+/* ==========================================
+   PLAYER SPACESHIP
+========================================== */
+
+function drawPlayer() {
+    if (playerInvincible > 0 && frame % 8 < 4) {
+        return;
+    }
+
+    ctx.save();
+
+    ctx.translate(player.x, player.y);
+
+    // Engine glow
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = "#00c8ff";
+
+    ctx.fillStyle = "#11bfff";
+
+    ctx.beginPath();
+    ctx.moveTo(-8, 13);
+    ctx.lineTo(0, 29 + Math.random() * 8);
+    ctx.lineTo(8, 13);
+    ctx.closePath();
+    ctx.fill();
+
+    // Main wings
+    ctx.shadowBlur = 12;
+
+    ctx.fillStyle = "#d9f5ff";
+    ctx.strokeStyle = "#38d9ff";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo(0, -20);
+    ctx.lineTo(24, 17);
+    ctx.lineTo(9, 12);
+    ctx.lineTo(0, 19);
+    ctx.lineTo(-9, 12);
+    ctx.lineTo(-24, 17);
+    ctx.closePath();
+
+    ctx.fill();
+    ctx.stroke();
+
+    // Red wing details
+    ctx.fillStyle = "#ff416c";
+
+    ctx.beginPath();
+    ctx.moveTo(-18, 12);
+    ctx.lineTo(-9, -1);
+    ctx.lineTo(-10, 12);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(18, 12);
+    ctx.lineTo(9, -1);
+    ctx.lineTo(10, 12);
+    ctx.closePath();
+    ctx.fill();
+
+    // Cockpit
+    ctx.fillStyle = "#168aff";
+
+    ctx.beginPath();
+    ctx.ellipse(0, -6, 5.5, 11, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#bafaff";
+
+    ctx.beginPath();
+    ctx.ellipse(-1, -9, 2, 5, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Shield
+    if (shieldTimer > 0) {
+        ctx.strokeStyle = "#38f5ff";
+        ctx.lineWidth = 2.5;
+        ctx.shadowColor = "#38f5ff";
+        ctx.shadowBlur = 20;
+
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 32, 35, 0, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+
+    ctx.restore();
+}
+
+/* ==========================================
+   ENEMIES
+========================================== */
+
+function createEnemies() {
+    enemies = [];
+
+    const columns = Math.min(8, 4 + level);
+    const rows = Math.min(5, 2 + Math.ceil(level / 2));
+
+    const spacingX = 43;
+    const spacingY = 42;
+
+    const totalWidth = (columns - 1) * spacingX;
+
+    const startX = (W - totalWidth) / 2;
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < columns; col++) {
+
+            const type = row === 0 ? 2 : row === 1 ? 1 : 0;
+
+            enemies.push({
+                x: startX + col * spacingX,
+                y: 80 + row * spacingY,
+                width: 27,
+                height: 25,
+                type: type,
+                hp: type === 2 ? 2 : 1,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    enemySpeed = 0.45 + level * 0.12;
+    enemyDirection = 1;
+}
+
+function drawEnemy(enemy) {
+    ctx.save();
+
+    ctx.translate(
+        enemy.x,
+        enemy.y + Math.sin(frame * 0.06 + enemy.phase) * 3
+    );
+
+    const colors = [
+        "#53ff9d",
+        "#45c8ff",
+        "#ff4e87"
     ];
 
-    if (Math.abs(coefficient) < 1e-12) {
-        if (Math.abs(constant) < 1e-12) {
-            return makeSolution(
-                "अनंत हल",
-                steps.concat("यह समानता हर मान के लिए सही है।")
-            );
-        }
+    const color = colors[enemy.type];
 
-        return makeSolution(
-            "कोई हल नहीं",
-            steps.concat("समीकरण असंगत है।")
-        );
-    }
+    ctx.shadowBlur = 14;
+    ctx.shadowColor = color;
 
-    const answer = constant / coefficient;
+    // Alien body
+    ctx.fillStyle = color;
 
-    steps.push(
-        `${variable} = ${formatNumber(constant)} ÷ ${formatNumber(coefficient)}`
-    );
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 13, 11, 0, 0, Math.PI * 2);
+    ctx.fill();
 
-    steps.push(
-        `${variable} = ${formatNumber(answer)}`
-    );
+    // Antennae
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
 
-    return makeSolution(
-        `${variable} = ${formatNumber(answer)}`,
-        steps,
-        "यह एक चर वाले रैखिक समीकरण का हल है।"
-    );
+    ctx.beginPath();
+    ctx.moveTo(-7, -7);
+    ctx.lineTo(-11, -14);
+
+    ctx.moveTo(7, -7);
+    ctx.lineTo(11, -14);
+
+    ctx.stroke();
+
+    // Eyes
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = "#07111e";
+
+    ctx.beginPath();
+    ctx.ellipse(-5, -1, 3, 4, -0.2, 0, Math.PI * 2);
+    ctx.ellipse(5, -1, 3, 4, 0.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.fillRect(-5, -3, 1.5, 2);
+    ctx.fillRect(4, -3, 1.5, 2);
+
+    // Legs
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(-8, 8);
+    ctx.lineTo(-12, 13);
+
+    ctx.moveTo(0, 9);
+    ctx.lineTo(0, 14);
+
+    ctx.moveTo(8, 8);
+    ctx.lineTo(12, 13);
+
+    ctx.stroke();
+
+    ctx.restore();
 }
 
-function solvePercentage(text) {
-    const normalized = normalizeText(text);
-    const numbers = parseNumbers(text);
+/* ==========================================
+   LASER BULLETS
+========================================== */
 
-    if (numbers.length < 2) {
-        throw new Error(
-            "प्रतिशत निकालने के लिए प्रतिशत और संख्या दोनों लिखें।"
-        );
-    }
+function shoot() {
+    if (!running || paused || gameOver) return;
+    if (fireCooldown > 0) return;
 
-    let percent;
-    let base;
-
-    const ofIndex = normalized.indexOf("%");
-
-    if (ofIndex >= 0) {
-        const before = normalized.slice(0, ofIndex);
-        const after = normalized.slice(ofIndex + 1);
-
-        const beforeNums = parseNumbers(before);
-        const afterNums = parseNumbers(after);
-
-        if (beforeNums.length && afterNums.length) {
-            percent = beforeNums[beforeNums.length - 1];
-            base = afterNums[0];
-        } else {
-            percent = numbers[0];
-            base = numbers[1];
-        }
-    } else {
-        percent = numbers[0];
-        base = numbers[1];
-    }
-
-    const result = percent * base / 100;
-
-    return makeSolution(
-        formatNumber(result),
-        [
-            `प्रतिशत = ${formatNumber(percent)}%`,
-            `कुल संख्या = ${formatNumber(base)}`,
-            `सूत्र: प्रतिशत × संख्या ÷ 100`,
-            `${formatNumber(percent)} × ${formatNumber(base)} ÷ 100`,
-            `= ${formatNumber(result)}`
-        ],
-        "यदि प्रश्न का आशय किसी संख्या का प्रतिशत निकालना है, तो यही गणना लागू होती है।"
-    );
-}
-
-function solveSquareRoot(text) {
-    const normalized = normalizeText(text);
-
-    let value;
-
-    const sqrtMatch = normalized.match(
-        /(?:sqrt|square root|वर्गमूल)\s*(?:of\s*)?(-?\d+(?:\.\d+)?)/i
-    );
-
-    const symbolMatch = normalized.match(
-        /√\s*(-?\d+(?:\.\d+)?)/
-    );
-
-    if (sqrtMatch) {
-        value = Number(sqrtMatch[1]);
-    } else if (symbolMatch) {
-        value = Number(symbolMatch[1]);
-    } else {
-        const numbers = parseNumbers(text);
-        if (!numbers.length) {
-            throw new Error("वर्गमूल निकालने के लिए संख्या लिखें।");
-        }
-        value = numbers[0];
-    }
-
-    if (value < 0) {
-        throw new Error(
-            "ऋणात्मक संख्या का वास्तविक वर्गमूल उपलब्ध नहीं है।"
-        );
-    }
-
-    const result = Math.sqrt(value);
-
-    const steps = [
-        `दी गई संख्या = ${formatNumber(value)}`,
-        `वर्गमूल का अर्थ है वह संख्या जिसका वर्ग दी गई संख्या हो।`,
-        `${formatNumber(result)} × ${formatNumber(result)} = ${formatNumber(value)}`
-    ];
-
-    if (!Number.isInteger(result)) {
-        steps[2] =
-            `√${formatNumber(value)} ≈ ${formatNumber(result)}`;
-    }
-
-    return makeSolution(
-        formatNumber(result),
-        steps
-    );
-}
-
-function solveSquare(text) {
-    const normalized = normalizeText(text);
-
-    let number;
-
-    const squareMatch = normalized.match(
-        /(-?\d+(?:\.\d+)?)\s*(?:का\s*)?(?:वर्ग|square|squared)/
-    );
-
-    if (squareMatch) {
-        number = Number(squareMatch[1]);
-    } else {
-        const numbers = parseNumbers(text);
-
-        if (!numbers.length) {
-            throw new Error("वर्ग निकालने के लिए संख्या लिखें।");
-        }
-
-        number = numbers[0];
-    }
-
-    const result = number * number;
-
-    return makeSolution(
-        formatNumber(result),
-        [
-            `दी गई संख्या = ${formatNumber(number)}`,
-            "वर्ग निकालने के लिए संख्या को उसी से गुणा करते हैं।",
-            `${formatNumber(number)} × ${formatNumber(number)} = ${formatNumber(result)}`
-        ]
-    );
-}
-
-function solveArithmetic(text) {
-    const normalized = normalizeText(text)
-        .replace(/×/g, "*")
-        .replace(/÷/g, "/")
-        .replace(/−/g, "-")
-        .replace(/plus/g, "+")
-        .replace(/minus/g, "-")
-        .replace(/multiplied by/g, "*")
-        .replace(/divided by/g, "/");
-
-    const arithmeticText = normalized
-        .replace(/=/g, " ")
-        .replace(/[^0-9+\-*/^().%\s]/g, " ")
-        .trim();
-
-    if (!arithmeticText || !/\d/.test(arithmeticText)) {
-        throw new Error(
-            "प्रश्न समझ नहीं आया। उदाहरण: 25 + 35 या 144 का वर्गमूल।"
-        );
-    }
-
-    const result = parseExpression(arithmeticText);
-
-    return makeSolution(
-        formatNumber(result),
-        [
-            `गणितीय अभिव्यक्ति: ${arithmeticText}`,
-            "पहले ब्रैकेट, फिर घात, उसके बाद गुणा/भाग और अंत में जोड़/घटाव किया जाता है।",
-            `गणना का परिणाम = ${formatNumber(result)}`
-        ],
-        "यह सामान्य गणितीय अभिव्यक्ति का मूल्य है।"
-    );
-}
-
-function solveQuestion() {
-    const original = questionInput.value.trim();
-
-    if (!original) {
-        setStatus("कृपया पहले अपना गणित का प्रश्न लिखें या बोलें।");
-        questionInput.focus();
-        return;
-    }
-
-    setStatus("गणना की जा रही है...");
-
-    try {
-        const text = normalizeText(original);
-
-        let solution;
-
-        if (
-            /\bhcf\b|\bgcd\b|महत्तम समापवर्तक|मसापवर्तक/.test(text)
-        ) {
-            solution = solveHCF(original);
-        } else if (
-            /\blcm\b|लघुत्तम समापवर्त्य/.test(text)
-        ) {
-            solution = solveLCM(original);
-        } else if (
-            /=/.test(original) &&
-            /[a-z]/i.test(original)
-        ) {
-            solution = solveLinearEquation(original);
-        } else if (
-            /प्रतिशत|percent|percentage|%/.test(text)
-        ) {
-            solution = solvePercentage(original);
-        } else if (
-            /वर्गमूल|square root|sqrt/.test(text) ||
-            original.includes("√")
-        ) {
-            solution = solveSquareRoot(original);
-        } else if (
-            /का वर्ग|वर्ग निकाल|squared|square of/.test(text)
-        ) {
-            solution = solveSquare(original);
-        } else {
-            solution = solveArithmetic(original);
-        }
-
-        displaySolution(original, solution);
-        saveHistory(original, solution.finalAnswer);
-
-        setStatus("हल सफलतापूर्वक तैयार हो गया।");
-    } catch (error) {
-        answerCard.classList.add("show");
-
-        questionDisplay.textContent = original;
-        stepsBox.innerHTML = "";
-
-        finalAnswerBox.textContent =
-            "⚠️ " + (error.message || "प्रश्न हल नहीं हो सका।");
-
-        document.getElementById("answerNote").textContent =
-            "प्रश्न को सरल गणितीय रूप में लिखकर दोबारा प्रयास करें। " +
-            "जटिल शब्दों वाले प्रश्नों के लिए AI सेवा की जरूरत हो सकती है।";
-
-        lastSolution = null;
-
-        setStatus("इस प्रश्न को हल नहीं कर पाया।");
-    }
-
-    answerCard.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-}
-
-function displaySolution(question, solution) {
-    questionDisplay.textContent = question;
-    stepsBox.replaceChildren();
-
-    solution.steps.forEach((step, index) => {
-        const row = document.createElement("div");
-        row.className = "step";
-
-        const number = document.createElement("span");
-        number.className = "step-number";
-        number.textContent = index + 1;
-
-        const text = document.createElement("span");
-        text.textContent = step;
-
-        row.append(number, text);
-        stepsBox.appendChild(row);
+    bullets.push({
+        x: player.x,
+        y: player.y - 22,
+        speed: 9,
+        damage: 1
     });
 
-    finalAnswerBox.textContent = solution.finalAnswer;
-
-    document.getElementById("answerNote").textContent =
-        solution.note || "गणना सामान्य गणितीय नियमों के अनुसार की गई है।";
-
-    answerCard.classList.add("show");
-
-    lastSolution = {
-        question,
-        ...solution
-    };
-}
-
-function speakAnswer() {
-    if (!lastSolution) {
-        setStatus("सुनाने के लिए पहले कोई प्रश्न हल करें।");
-        return;
-    }
-
-    if (!("speechSynthesis" in window)) {
-        setStatus("आपका ब्राउज़र आवाज में उत्तर सुनाने की सुविधा समर्थित नहीं करता।");
-        return;
-    }
-
-    speechSynthesis.cancel();
-
-    const text = [
-        "आपका प्रश्न है।",
-        lastSolution.question,
-        "चरण दर चरण हल।",
-        ...lastSolution.steps,
-        "अंतिम उत्तर।",
-        lastSolution.finalAnswer
-    ].join(". ");
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "hi-IN";
-    utterance.rate = 0.88;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    const voices = speechSynthesis.getVoices();
-
-    const hindiVoice = voices.find(v =>
-        v.lang && v.lang.toLowerCase().startsWith("hi")
-    );
-
-    if (hindiVoice) {
-        utterance.voice = hindiVoice;
-    }
-
-    speechSynthesis.speak(utterance);
-}
-
-async function copyAnswer() {
-    if (!lastSolution) {
-        setStatus("कॉपी करने के लिए पहले प्रश्न हल करें।");
-        return;
-    }
-
-    const text = [
-        "प्रश्न: " + lastSolution.question,
-        "",
-        "पूरा हल:",
-        ...lastSolution.steps.map((s, i) => `${i + 1}. ${s}`),
-        "",
-        "अंतिम उत्तर: " + lastSolution.finalAnswer
-    ].join("\n");
-
-    try {
-        await navigator.clipboard.writeText(text);
-        setStatus("पूरा हल क्लिपबोर्ड पर कॉपी हो गया।");
-    } catch (error) {
-        const area = document.createElement("textarea");
-        area.value = text;
-
-        document.body.appendChild(area);
-        area.select();
-
-        const copied = document.execCommand("copy");
-        area.remove();
-
-        setStatus(
-            copied
-                ? "पूरा हल कॉपी हो गया।"
-                : "कॉपी नहीं हुआ। कृपया उत्तर स्वयं चुनकर कॉपी करें।"
-        );
-    }
-}
-
-function clearAll() {
-    if (recognition && isListening) {
-        recognition.stop();
-    }
-
-    questionInput.value = "";
-    answerCard.classList.remove("show");
-    questionDisplay.textContent = "";
-    stepsBox.replaceChildren();
-    finalAnswerBox.textContent = "";
-
-    lastSolution = null;
-
-    if ("speechSynthesis" in window) {
-        speechSynthesis.cancel();
-    }
-
-    setStatus("प्रश्न साफ कर दिया गया।");
-    questionInput.focus();
-}
-
-/* हाल के प्रश्नों को इस ब्राउज़र में सुरक्षित रखना */
-
-function getHistory() {
-    try {
-        return JSON.parse(
-            localStorage.getItem("mathSolverHistory") || "[]"
-        );
-    } catch {
-        return [];
-    }
-}
-
-function saveHistory(question, answer) {
-    const history = getHistory();
-
-    history.unshift({
-        question,
-        answer,
-        date: new Date().toLocaleString("hi-IN")
-    });
-
-    localStorage.setItem(
-        "mathSolverHistory",
-        JSON.stringify(history.slice(0, 10))
-    );
-
-    renderHistory();
-}
-
-function renderHistory() {
-    const box = document.getElementById("history");
-    const history = getHistory();
-
-    box.replaceChildren();
-
-    if (!history.length) {
-        const p = document.createElement("p");
-        p.style.color = "var(--muted)";
-        p.style.fontSize = "14px";
-        p.textContent = "अभी तक कोई प्रश्न हल नहीं किया गया है।";
-        box.appendChild(p);
-        return;
-    }
-
-    history.forEach(item => {
-        const row = document.createElement("div");
-        row.className = "history-item";
-
-        const details = document.createElement("span");
-        details.textContent =
-            item.question + " = " + item.answer;
-
-        const button = document.createElement("button");
-        button.className = "btn secondary";
-        button.textContent = "फिर खोलें";
-
-        button.addEventListener("click", () => {
-            questionInput.value = item.question;
-            solveQuestion();
+    if (rapidFireTimer > 0) {
+        bullets.push({
+            x: player.x - 12,
+            y: player.y - 15,
+            speed: 9,
+            damage: 1
         });
 
-        row.append(details, button);
-        box.appendChild(row);
+        bullets.push({
+            x: player.x + 12,
+            y: player.y - 15,
+            speed: 9,
+            damage: 1
+        });
+    }
+
+    fireCooldown = rapidFireTimer > 0 ? 7 : 13;
+
+    playSound(760, 0.045, "square");
+}
+
+function drawBullets() {
+    for (const bullet of bullets) {
+        ctx.save();
+
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "#20efff";
+
+        ctx.fillStyle = "#b9ffff";
+
+        ctx.fillRect(
+            bullet.x - 2,
+            bullet.y - 10,
+            4,
+            15
+        );
+
+        ctx.fillStyle = "#15aaff";
+
+        ctx.fillRect(
+            bullet.x - 4,
+            bullet.y - 4,
+            8,
+            7
+        );
+
+        ctx.restore();
+    }
+
+    for (const bullet of enemyBullets) {
+        ctx.save();
+
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = "#ff3268";
+
+        ctx.fillStyle = "#ff315f";
+
+        ctx.beginPath();
+        ctx.ellipse(
+            bullet.x,
+            bullet.y,
+            3,
+            7,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+        ctx.restore();
+    }
+}
+
+/* ==========================================
+   PARTICLE EXPLOSIONS
+========================================== */
+
+function createExplosion(x, y, color, count = 15) {
+    for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 3.8 + 0.5;
+
+        particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 25 + Math.random() * 20,
+            maxLife: 45,
+            radius: Math.random() * 3 + 1,
+            color: color
+        });
+    }
+}
+
+function updateParticles() {
+    for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        p.vx *= 0.97;
+        p.vy *= 0.97;
+
+        p.life--;
+
+        if (p.life <= 0) {
+            particles.splice(i, 1);
+        }
+    }
+}
+
+function drawParticles() {
+    for (const p of particles) {
+        ctx.save();
+
+        ctx.globalAlpha = Math.max(
+            0,
+            p.life / p.maxLife
+        );
+
+        ctx.fillStyle = p.color;
+
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = p.color;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+}
+
+/* ==========================================
+   POWER-UPS
+========================================== */
+
+function maybeDropPowerUp(x, y) {
+    if (Math.random() > 0.14) return;
+
+    const types = ["rapid", "life", "shield"];
+
+    powerUps.push({
+        x: x,
+        y: y,
+        type: types[Math.floor(Math.random() * types.length)],
+        speed: 1.5,
+        radius: 11
     });
 }
 
-function clearHistory() {
-    if (!confirm("क्या आप प्रश्नों का पूरा इतिहास मिटाना चाहते हैं?")) {
+function drawPowerUps() {
+    for (const p of powerUps) {
+        ctx.save();
+
+        ctx.shadowBlur = 16;
+
+        let color = "#ffdb45";
+        let symbol = "⚡";
+
+        if (p.type === "life") {
+            color = "#ff4b74";
+            symbol = "+";
+        }
+
+        if (p.type === "shield") {
+            color = "#36e7ff";
+            symbol = "◆";
+        }
+
+        ctx.shadowColor = color;
+        ctx.fillStyle = color;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = "#071326";
+        ctx.font = "bold 15px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText(symbol, p.x, p.y + 1);
+
+        ctx.restore();
+    }
+}
+
+/* ==========================================
+   HUD
+========================================== */
+
+function updateHUD() {
+    scoreElement.textContent = score;
+    livesElement.textContent = lives;
+    levelElement.textContent = level;
+    bestElement.textContent = best;
+}
+
+function addScore(points) {
+    score += points;
+
+    if (score > best) {
+        best = score;
+
+        try {
+            localStorage.setItem(
+                "alienShooterBest",
+                String(best)
+            );
+        } catch (e) {
+            // Local storage may be unavailable.
+        }
+    }
+
+    updateHUD();
+}
+
+/* ==========================================
+   COLLISION DETECTION
+========================================== */
+
+function collides(a, b, padding = 0) {
+    return (
+        Math.abs(a.x - b.x) <
+            ((a.width || 0) + (b.width || 0)) / 2 + padding &&
+        Math.abs(a.y - b.y) <
+            ((a.height || 0) + (b.height || 0)) / 2 + padding
+    );
+}
+
+function updateBullets() {
+    for (let i = bullets.length - 1; i >= 0; i--) {
+        const bullet = bullets[i];
+
+        bullet.y -= bullet.speed;
+
+        if (bullet.y < -20) {
+            bullets.splice(i, 1);
+            continue;
+        }
+
+        let hit = false;
+
+        for (let j = enemies.length - 1; j >= 0; j--) {
+            const enemy = enemies[j];
+
+            if (
+                Math.abs(bullet.x - enemy.x) < 15 &&
+                Math.abs(bullet.y - enemy.y) < 15
+            ) {
+                enemy.hp -= bullet.damage;
+
+                bullets.splice(i, 1);
+                hit = true;
+
+                createExplosion(
+                    bullet.x,
+                    bullet.y,
+                    "#38f5ff",
+                    4
+                );
+
+                if (enemy.hp <= 0) {
+                    createExplosion(
+                        enemy.x,
+                        enemy.y,
+                        enemy.type === 2 ? "#ff4e87" : "#56ffb0",
+                        18
+                    );
+
+                    maybeDropPowerUp(enemy.x, enemy.y);
+
+                    enemies.splice(j, 1);
+
+                    addScore(
+                        enemy.type === 2 ? 30 :
+                        enemy.type === 1 ? 20 : 10
+                    );
+
+                    playSound(210, 0.12, "triangle");
+                }
+
+                break;
+            }
+        }
+
+        if (hit) continue;
+    }
+}
+
+function updateEnemyBullets() {
+    for (let i = enemyBullets.length - 1; i >= 0; i--) {
+        const bullet = enemyBullets[i];
+
+        bullet.y += bullet.speed;
+
+        if (bullet.y > H + 20) {
+            enemyBullets.splice(i, 1);
+            continue;
+        }
+
+        if (
+            Math.abs(bullet.x - player.x) < 20 &&
+            Math.abs(bullet.y - player.y) < 22
+        ) {
+            enemyBullets.splice(i, 1);
+
+            damagePlayer();
+        }
+    }
+}
+
+function updatePowerUps() {
+    for (let i = powerUps.length - 1; i >= 0; i--) {
+        const p = powerUps[i];
+
+        p.y += p.speed;
+
+        if (p.y > H + 20) {
+            powerUps.splice(i, 1);
+            continue;
+        }
+
+        if (
+            Math.abs(p.x - player.x) < 28 &&
+            Math.abs(p.y - player.y) < 30
+        ) {
+            if (p.type === "rapid") {
+                rapidFireTimer = 600;
+                messageElement.textContent =
+                    "⚡ RAPID FIRE ACTIVATED!";
+            }
+
+            if (p.type === "shield") {
+                shieldTimer = 500;
+                messageElement.textContent =
+                    "🛡️ SHIELD ACTIVATED!";
+            }
+
+            if (p.type === "life") {
+                lives = Math.min(5, lives + 1);
+                messageElement.textContent =
+                    "❤️ EXTRA LIFE COLLECTED!";
+            }
+
+            playSound(950, 0.2, "sine");
+
+            powerUps.splice(i, 1);
+
+            updateHUD();
+        }
+    }
+}
+
+/* ==========================================
+   PLAYER DAMAGE
+========================================== */
+
+function damagePlayer() {
+    if (playerInvincible > 0) return;
+
+    if (shieldTimer > 0) {
+        shieldTimer = 0;
+
+        createExplosion(
+            player.x,
+            player.y,
+            "#36e7ff",
+            18
+        );
+
+        playSound(320, 0.15, "triangle");
         return;
     }
 
-    localStorage.removeItem("mathSolverHistory");
-    renderHistory();
-    setStatus("प्रश्नों का इतिहास साफ कर दिया गया।");
+    lives--;
+
+    playerInvincible = 100;
+
+    createExplosion(
+        player.x,
+        player.y,
+        "#ff436e",
+        25
+    );
+
+    playSound(100, 0.3, "sawtooth");
+
+    updateHUD();
+
+    if (lives <= 0) {
+        endGame();
+    } else {
+        messageElement.textContent =
+            "⚠️ YOUR SHIP WAS HIT! Keep fighting!";
+    }
 }
 
-/* Enter दबाने पर हल निकालें; Shift+Enter से नई लाइन */
+/* ==========================================
+   ENEMY MOVEMENT AND ATTACK
+========================================== */
 
-questionInput.addEventListener("keydown", event => {
+function updateEnemies() {
+    if (enemies.length === 0) {
+        level++;
+
+        bullets = [];
+        enemyBullets = [];
+        powerUps = [];
+
+        createEnemies();
+
+        messageElement.textContent =
+            "🌟 LEVEL " + level + " — THE ALIENS ARE GETTING STRONGER!";
+
+        playSound(600, 0.25, "sine");
+
+        updateHUD();
+
+        return;
+    }
+
+    let reachedEdge = false;
+
+    for (const enemy of enemies) {
+        enemy.x += enemySpeed * enemyDirection;
+
+        if (enemy.x > W - 22 || enemy.x < 22) {
+            reachedEdge = true;
+        }
+
+        // Aliens reaching the bottom threaten the player.
+        if (enemy.y > player.y - 45) {
+            endGame();
+            return;
+        }
+    }
+
+    if (reachedEdge) {
+        enemyDirection *= -1;
+
+        for (const enemy of enemies) {
+            enemy.y += 10;
+        }
+    }
+
+    enemyShootTimer++;
+
+    const shootInterval = Math.max(
+        22,
+        80 - level * 5
+    );
+
+    if (enemyShootTimer >= shootInterval) {
+        enemyShootTimer = 0;
+
+        const shooter = enemies[
+            Math.floor(Math.random() * enemies.length)
+        ];
+
+        if (shooter) {
+            enemyBullets.push({
+                x: shooter.x,
+                y: shooter.y + 15,
+                speed: 2.4 + level * 0.22,
+                width: 6,
+                height: 12
+            });
+        }
+    }
+}
+
+/* ==========================================
+   GAME UPDATE
+========================================== */
+
+function update() {
+    if (!running || paused || gameOver) return;
+
+    frame++;
+
+    if (playerInvincible > 0) playerInvincible--;
+    if (rapidFireTimer > 0) rapidFireTimer--;
+    if (shieldTimer > 0) shieldTimer--;
+    if (fireCooldown > 0) fireCooldown--;
+
+    if (keys.left) {
+        player.x -= player.speed;
+    }
+
+    if (keys.right) {
+        player.x += player.speed;
+    }
+
+    player.x = Math.max(
+        25,
+        Math.min(W - 25, player.x)
+    );
+
+    if (keys.fire) {
+        shoot();
+    }
+
+    updateEnemies();
+    updateBullets();
+    updateEnemyBullets();
+    updatePowerUps();
+    updateParticles();
+
+    if (gameOver) return;
+}
+
+/* ==========================================
+   DRAWING
+========================================== */
+
+function drawOverlay(title, subtitle, color = "#39f5ff") {
+    ctx.save();
+
+    ctx.fillStyle = "rgba(0, 3, 15, 0.78)";
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.textAlign = "center";
+
+    ctx.shadowBlur = 22;
+    ctx.shadowColor = color;
+
+    ctx.fillStyle = color;
+    ctx.font = "bold 31px Arial";
+
+    ctx.fillText(title, W / 2, H / 2 - 25);
+
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "15px Arial";
+
+    ctx.fillText(subtitle, W / 2, H / 2 + 12);
+
+    ctx.restore();
+}
+
+function draw() {
+    drawBackground();
+
+    for (const enemy of enemies) {
+        drawEnemy(enemy);
+    }
+
+    drawBullets();
+    drawPowerUps();
+    drawParticles();
+    drawPlayer();
+
+    if (!running && !gameOver) {
+        drawOverlay(
+            "ALIEN SHOOTER",
+            "Press START GAME to begin"
+        );
+    }
+
+    if (paused && !gameOver) {
+        drawOverlay(
+            "GAME PAUSED",
+            "Press RESUME to continue",
+            "#d3a5ff"
+        );
+    }
+
+    if (gameOver) {
+        drawOverlay(
+            "GAME OVER",
+            "Final Score: " + score,
+            "#ff477e"
+        );
+    }
+}
+
+function gameLoop() {
+    update();
+    draw();
+
+    animationId = requestAnimationFrame(gameLoop);
+}
+
+/* ==========================================
+   GAME START / PAUSE / RESTART
+========================================== */
+
+function resetGame() {
+    score = 0;
+    lives = 3;
+    level = 1;
+
+    frame = 0;
+
+    running = true;
+    paused = false;
+    gameOver = false;
+
+    bullets = [];
+    enemyBullets = [];
+    particles = [];
+    powerUps = [];
+
+    player.x = W / 2;
+    player.y = H - 70;
+
+    playerInvincible = 0;
+    rapidFireTimer = 0;
+    shieldTimer = 0;
+    fireCooldown = 0;
+    enemyShootTimer = 0;
+
+    messageElement.textContent =
+        "Destroy the aliens! Collect ⚡ rapid fire, 🛡️ shields and + extra lives.";
+
+    createStars();
+    createEnemies();
+
+    updateHUD();
+
+    playSound(520, 0.15, "sine");
+}
+
+function endGame() {
+    if (gameOver) return;
+
+    gameOver = true;
+    running = false;
+    paused = false;
+
+    updateHUD();
+
+    messageElement.textContent =
+        "Game over! Final score: " + score +
+        ". Press RESTART to try again.";
+
+    playSound(90, 0.45, "sawtooth");
+}
+
+function togglePause() {
+    if (gameOver || !running) return;
+
+    paused = !paused;
+
+    document.getElementById("pauseBtn").textContent =
+        paused ? "▶ RESUME" : "⏸ PAUSE";
+
+    messageElement.textContent = paused
+        ? "Game paused. Press RESUME to continue."
+        : "Destroy the aliens and defend the galaxy!";
+}
+
+/* ==========================================
+   KEYBOARD CONTROLS
+========================================== */
+
+document.addEventListener("keydown", function(e) {
+    const key = e.key.toLowerCase();
+
     if (
-        event.key === "Enter" &&
-        !event.shiftKey &&
-        !event.isComposing
+        ["arrowleft", "arrowright", " ", "arrowup", "arrowdown"]
+        .includes(key)
     ) {
-        event.preventDefault();
-        solveQuestion();
+        e.preventDefault();
+    }
+
+    if (key === "arrowleft" || key === "a") {
+        keys.left = true;
+    }
+
+    if (key === "arrowright" || key === "d") {
+        keys.right = true;
+    }
+
+    if (key === " " || key === "arrowup") {
+        keys.fire = true;
+    }
+
+    if (
+        (key === "p" || key === "escape") &&
+        !e.repeat
+    ) {
+        togglePause();
+    }
+
+    if (key === "enter" && !running && !gameOver) {
+        resetGame();
+    }
+
+    if (key === "enter" && gameOver) {
+        resetGame();
     }
 });
 
-renderHistory();
+document.addEventListener("keyup", function(e) {
+    const key = e.key.toLowerCase();
+
+    if (key === "arrowleft" || key === "a") {
+        keys.left = false;
+    }
+
+    if (key === "arrowright" || key === "d") {
+        keys.right = false;
+    }
+
+    if (key === " " || key === "arrowup") {
+        keys.fire = false;
+    }
+});
+
+window.addEventListener("blur", function() {
+    keys.left = false;
+    keys.right = false;
+    keys.fire = false;
+});
+
+/* ==========================================
+   MOBILE BUTTON CONTROLS
+========================================== */
+
+function bindHoldButton(buttonId, keyName) {
+    const button = document.getElementById(buttonId);
+
+    button.addEventListener("pointerdown", function(e) {
+        e.preventDefault();
+
+        keys[keyName] = true;
+
+        try {
+            button.setPointerCapture(e.pointerId);
+        } catch (err) {}
+    });
+
+    function release() {
+        keys[keyName] = false;
+    }
+
+    button.addEventListener("pointerup", release);
+    button.addEventListener("pointercancel", release);
+    button.addEventListener("lostpointercapture", release);
+    button.addEventListener("contextmenu", e => e.preventDefault());
+}
+
+bindHoldButton("leftBtn", "left");
+bindHoldButton("rightBtn", "right");
+bindHoldButton("fireBtn", "fire");
+
+/* ==========================================
+   TOUCH / DRAG CONTROL
+========================================== */
+
+let dragging = false;
+
+canvas.addEventListener("pointerdown", function(e) {
+    if (!running || paused || gameOver) return;
+
+    dragging = true;
+
+    canvas.setPointerCapture(e.pointerId);
+
+    movePlayerToPointer(e);
+
+    keys.fire = true;
+});
+
+canvas.addEventListener("pointermove", function(e) {
+    if (!dragging) return;
+
+    movePlayerToPointer(e);
+});
+
+function movePlayerToPointer(e) {
+    const rect = canvas.getBoundingClientRect();
+
+    const x = (e.clientX - rect.left) / rect.width * W;
+
+    player.x = Math.max(
+        25,
+        Math.min(W - 25, x)
+    );
+}
+
+function stopDragging() {
+    dragging = false;
+    keys.fire = false;
+}
+
+canvas.addEventListener("pointerup", stopDragging);
+canvas.addEventListener("pointercancel", stopDragging);
+canvas.addEventListener("lostpointercapture", stopDragging);
+
+/* ==========================================
+   BUTTON EVENTS
+========================================== */
+
+document.getElementById("startBtn").addEventListener(
+    "click",
+    function() {
+        if (gameOver) {
+            resetGame();
+        } else if (!running) {
+            resetGame();
+        } else if (paused) {
+            togglePause();
+        }
+    }
+);
+
+document.getElementById("pauseBtn").addEventListener(
+    "click",
+    togglePause
+);
+
+document.getElementById("restartBtn").addEventListener(
+    "click",
+    resetGame
+);
+
+document.getElementById("soundBtn").addEventListener(
+    "click",
+    function() {
+        soundOn = !soundOn;
+
+        this.textContent = soundOn
+            ? "🔊 SOUND: ON"
+            : "🔇 SOUND: OFF";
+
+        if (soundOn) {
+            playSound(600, 0.12);
+        }
+    }
+);
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+createStars();
+createEnemies();
+updateHUD();
+draw();
+
+gameLoop();
+
 </script>
 
 </body>
