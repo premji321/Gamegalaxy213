@@ -2,427 +2,247 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080d2e">
-
 <title>History Crorepati | Orient Classes</title>
 
 <style>
-:root {
-  --bg: #080d2e;
-  --panel: #111b45;
-  --panel2: #19295f;
-  --gold: #ffd76a;
-  --blue: #4fa5ff;
-  --green: #35d69a;
-  --red: #ff647c;
-  --white: #ffffff;
-  --muted: #b9c6ed;
-  --border: rgba(255,255,255,.15);
+:root{
+  --bg:#070c29;
+  --panel:#111b45;
+  --panel2:#1b2b60;
+  --gold:#ffd76a;
+  --blue:#54a7ff;
+  --green:#31d99a;
+  --red:#ff637b;
+  --text:#fff;
+  --muted:#c1cbed;
+  --border:rgba(255,255,255,.14);
 }
 
-* {
-  box-sizing: border-box;
-}
+*{box-sizing:border-box}
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--white);
-  font-family: Arial, "Noto Sans Devanagari", sans-serif;
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
   background:
-    radial-gradient(ellipse at top, #263d88, transparent 48%),
+    radial-gradient(ellipse at top,#263d88,transparent 48%),
     var(--bg);
 }
 
-button {
-  font: inherit;
-  -webkit-tap-highlight-color: transparent;
+button{font:inherit}
+
+button:focus-visible{
+  outline:3px solid var(--gold);
+  outline-offset:3px;
 }
 
-button:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 3px;
+.container{
+  width:min(1050px,100%);
+  margin:auto;
+  padding:14px;
 }
 
-.container {
-  width: min(1100px, 100%);
-  margin: auto;
-  padding: 14px;
+header{text-align:center;padding:22px 5px}
+
+.logo{
+  width:72px;height:72px;
+  border:2px solid var(--gold);
+  border-radius:50%;
+  display:grid;place-items:center;
+  margin:auto auto 12px;
+  font-size:36px;
+  box-shadow:0 0 28px #ffd76a40;
 }
 
-header {
-  text-align: center;
-  padding: 20px 5px;
+h1{
+  margin:0;
+  font-size:clamp(27px,5vw,42px);
+  color:var(--gold);
 }
 
-.logo {
-  width: 68px;
-  height: 68px;
-  margin: auto auto 12px;
-  display: grid;
-  place-items: center;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  font-size: 34px;
-  box-shadow: 0 0 25px #ffd76a30;
+.subtitle{color:var(--muted);margin-top:9px;font-size:13px}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:9px;margin-bottom:15px;
 }
 
-h1 {
-  margin: 0;
-  font-size: clamp(27px, 5vw, 42px);
-  color: var(--gold);
+.stat,.panel{
+  background:linear-gradient(145deg,var(--panel2),var(--panel));
+  border:1px solid var(--border);
+  border-radius:16px;
 }
 
-.subtitle {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 13px;
+.stat{text-align:center;padding:12px 5px}
+.stat-label{font-size:12px;color:var(--muted)}
+.stat-value{font-weight:bold;font-size:clamp(14px,3vw,21px);margin-top:6px;overflow-wrap:anywhere}
+.gold{color:var(--gold)}
+.green{color:var(--green)}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 235px;
+  gap:14px;align-items:start;
 }
 
-.badge {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 7px 12px;
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  font-size: 11px;
-  color: var(--muted);
+.panel{padding:17px;min-width:0}
+
+.screen{text-align:center;padding:15px 4px}
+.screen h2{color:var(--gold);line-height:1.5}
+.screen p{color:var(--muted);line-height:1.9}
+
+.btn{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 15px;
+  min-height:44px;
+  cursor:pointer;
+  color:white;
+  background:#283968;
+  font-weight:bold;
 }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-  margin-bottom: 16px;
+.primary{
+  background:linear-gradient(135deg,#ffe58d,#ffbe38);
+  color:#191d3b;border:none;
 }
 
-.stat {
-  background: linear-gradient(145deg, var(--panel2), var(--panel));
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  text-align: center;
-  padding: 13px 5px;
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.full{width:100%}
+
+.topline{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;gap:8px;
 }
 
-.stat-label {
-  color: var(--muted);
-  font-size: 12px;
+.level-title{color:var(--gold);font-weight:bold}
+
+.timer{
+  background:#29365f;
+  border-radius:20px;
+  padding:7px 12px;
+  font-weight:bold;
 }
 
-.stat-value {
-  margin-top: 7px;
-  font-weight: bold;
-  font-size: clamp(14px, 3vw, 21px);
-  overflow-wrap: anywhere;
+.timer.danger{color:var(--red)}
+
+.progress-track{
+  height:8px;background:#29345e;
+  border-radius:20px;overflow:hidden;margin:16px 0;
 }
 
-.gold {
-  color: var(--gold);
+.progress-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--blue),var(--gold));
+  transition:width .3s;
 }
 
-.green {
-  color: var(--green);
+.question{
+  font-size:clamp(19px,4vw,26px);
+  line-height:1.8;font-weight:bold;
+  margin:20px 0;
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 255px;
-  gap: 14px;
-  align-items: start;
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.option{
+  min-height:60px;padding:12px;
+  text-align:left;line-height:1.7;
+  border:1px solid #40528a;
+  border-radius:11px;
+  background:#192855;color:white;
+  cursor:pointer;
 }
 
-.panel {
-  min-width: 0;
-  background: linear-gradient(145deg, #111b45, #0c1435);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 18px;
+.option:hover:not(:disabled){border-color:var(--gold)}
+.option.correct{background:#10563f;border-color:var(--green)}
+.option.wrong{background:#68283d;border-color:var(--red)}
+.option:disabled{cursor:default}
+
+.feedback{
+  display:none;padding:14px;margin-top:15px;
+  border-radius:10px;background:#080f2e;line-height:1.8;
 }
 
-.screen {
-  text-align: center;
-  padding: 20px 5px;
+.feedback.show{display:block}
+
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.hidden{display:none!important}
+
+.level-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.level-cell{
+  padding:9px 3px;text-align:center;
+  border:1px solid var(--border);
+  border-radius:7px;font-size:12px;color:var(--muted);
+}
+.level-cell.active{background:#695018;color:var(--gold);border-color:var(--gold)}
+.level-cell.done{background:#10563f;color:#c2ffe5}
+
+.small{font-size:12px;color:var(--muted);line-height:1.8}
+.divider{border:0;border-top:1px solid var(--border);margin:18px 0}
+
+.prize-list{padding:0;list-style:none}
+.prize-list li{
+  display:flex;justify-content:space-between;gap:8px;
+  padding:9px 0;border-bottom:1px solid var(--border);
+  font-size:12px;
+}
+.prize-list li.current{color:var(--gold);font-weight:bold}
+
+.audio-status{
+  margin-top:14px;
+  padding:10px;
+  background:#090f2e;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--gold);
+  font-size:13px;
+  line-height:1.7;
 }
 
-.screen h2 {
-  color: var(--gold);
-  font-size: clamp(22px, 4vw, 30px);
-  line-height: 1.5;
+footer{text-align:center;padding:22px 5px;color:var(--muted);font-size:12px}
+
+@media(max-width:700px){
+  .layout{grid-template-columns:1fr}
+  .options{grid-template-columns:1fr}
+  .container{padding:9px}
+  .panel{padding:13px}
 }
 
-.screen p {
-  color: var(--muted);
-  line-height: 1.9;
-}
-
-.btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px 15px;
-  min-height: 44px;
-  cursor: pointer;
-  font-weight: bold;
-  color: var(--white);
-  background: #273968;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #ffe18a, #ffbf39);
-  color: #191d3c;
-  border: none;
-}
-
-.btn-secondary {
-  background: #263768;
-}
-
-.btn:disabled {
-  opacity: .45;
-  cursor: not-allowed;
-}
-
-.full {
-  width: 100%;
-}
-
-.topline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.level-tag {
-  color: var(--gold);
-  font-weight: bold;
-}
-
-.timer {
-  padding: 7px 12px;
-  border-radius: 20px;
-  background: #26335e;
-  font-weight: bold;
-}
-
-.timer.danger {
-  color: var(--red);
-}
-
-.progress-track {
-  height: 8px;
-  margin: 16px 0;
-  background: #26315b;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, var(--blue), var(--gold));
-  transition: width .3s;
-}
-
-.question {
-  margin: 22px 0;
-  font-size: clamp(18px, 3.5vw, 25px);
-  font-weight: bold;
-  line-height: 1.8;
-}
-
-.options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.option {
-  min-height: 62px;
-  padding: 12px;
-  text-align: left;
-  color: var(--white);
-  background: #1a2856;
-  border: 1px solid #41538c;
-  border-radius: 11px;
-  cursor: pointer;
-  line-height: 1.6;
-}
-
-.option:hover:not(:disabled) {
-  border-color: var(--gold);
-  background: #263a70;
-}
-
-.option.correct {
-  background: #10553e;
-  border-color: var(--green);
-}
-
-.option.wrong {
-  background: #67263b;
-  border-color: var(--red);
-}
-
-.option:disabled {
-  cursor: default;
-}
-
-.feedback {
-  display: none;
-  margin-top: 16px;
-  padding: 14px;
-  background: #0b1231;
-  border-radius: 10px;
-  line-height: 1.8;
-}
-
-.feedback.show {
-  display: block;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-top: 16px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.level-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
-  margin-top: 15px;
-}
-
-.level-cell {
-  padding: 10px 3px;
-  text-align: center;
-  font-size: 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #1a2852;
-  color: var(--muted);
-}
-
-.level-cell.active {
-  background: #6b5318;
-  color: var(--gold);
-  border-color: var(--gold);
-  font-weight: bold;
-}
-
-.level-cell.done {
-  background: #10553e;
-  color: #c4ffe8;
-}
-
-.prize-list {
-  list-style: none;
-  padding: 0;
-  margin: 12px 0;
-}
-
-.prize-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 10px 2px;
-  font-size: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.prize-list li.current {
-  color: var(--gold);
-  font-weight: bold;
-}
-
-.small {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.divider {
-  border: 0;
-  border-top: 1px solid var(--border);
-  margin: 18px 0;
-}
-
-footer {
-  padding: 25px 5px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-@media(max-width: 760px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .options {
-    grid-template-columns: 1fr;
-  }
-
-  .container {
-    padding: 9px;
-  }
-
-  .panel {
-    padding: 14px;
-  }
-}
-
-@media(prefers-reduced-motion:reduce) {
-  *, *::before, *::after {
-    transition: none !important;
-  }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important}
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <header>
   <div class="logo">🏆</div>
   <h1>इतिहास महाचैलेंज</h1>
-  <div class="subtitle">
-    MODERN INDIAN HISTORY • 20 LEVELS
-  </div>
-  <div class="badge">
-    ज्ञान ही असली जीत है | शैक्षणिक क्विज गेम
-  </div>
+  <div class="subtitle">MODERN INDIAN HISTORY • 20 LEVELS</div>
 </header>
 
 <div class="stats">
-
   <div class="stat">
     <div class="stat-label">वर्चुअल बैलेंस</div>
     <div class="stat-value gold" id="balance">0</div>
   </div>
-
   <div class="stat">
     <div class="stat-label">वर्तमान लेवल</div>
     <div class="stat-value" id="levelStat">1 / 20</div>
   </div>
-
   <div class="stat">
-    <div class="stat-label">सही उत्तर</div>
+    <div class="stat-label">सही जवाब</div>
     <div class="stat-value green" id="correctStat">0</div>
   </div>
-
 </div>
 
 <div class="layout">
@@ -430,1107 +250,957 @@ footer {
 <main class="panel">
 
 <section id="welcome" class="screen">
-
-  <h2>क्या आप बनेंगे इतिहास चैंपियन?</h2>
+  <h2>🏆 क्या आप बनेंगे इतिहास चैंपियन?</h2>
 
   <p>
-    आधुनिक भारतीय इतिहास के 20 लेवल पार कीजिए।
-    प्रत्येक लेवल पर आपकी परीक्षा होगी और कठिनाई बढ़ती जाएगी।
+    20 लेवल, बढ़ती कठिनाई, रोमांचक प्रश्न और दमदार ऑडियो अनुभव।
+    हर सवाल का जवाब देकर अपने ज्ञान का प्रदर्शन कीजिए।
   </p>
 
-  <p class="gold">
-    अंतिम लक्ष्य: 100 बिलियन वर्चुअल पॉइंट्स
-  </p>
+  <p class="gold">अंतिम लक्ष्य: 100 बिलियन वर्चुअल पॉइंट्स</p>
 
-  <button class="btn btn-primary" id="startBtn" type="button">
+  <button id="startBtn" class="btn primary" type="button">
     🎮 गेम शुरू करें
   </button>
 
+  <div class="audio-status" id="welcomeAudio">
+    🔊 गेम शुरू करने पर ऑडियो सक्रिय होगा।
+  </div>
+
   <p class="small">
-    यह शैक्षणिक गेम है। सभी पॉइंट्स काल्पनिक हैं।
+    यह शैक्षणिक गेम है। वर्चुअल पॉइंट्स असली पैसे नहीं हैं।
   </p>
-
-  <button class="btn btn-secondary" id="resumeBtn"
-          type="button" style="margin-top:8px">
-    ▶ सेव की गई प्रोग्रेस जारी रखें
-  </button>
-
 </section>
 
 <section id="game" class="hidden">
 
   <div class="topline">
-    <span class="level-tag" id="levelTitle">LEVEL 1</span>
+    <span class="level-title" id="levelTitle"></span>
     <span class="timer" id="timer">⏱ 30 सेकंड</span>
   </div>
 
   <div class="progress-track">
-    <div class="progress-fill" id="progress"></div>
+    <div id="progress" class="progress-fill"></div>
   </div>
 
   <div class="small" id="topic"></div>
 
-  <div class="question" id="question"></div>
+  <div id="question" class="question"></div>
 
-  <div class="options" id="options"></div>
+  <div id="options" class="options"></div>
 
-  <div class="feedback" id="feedback" aria-live="polite"></div>
+  <div id="audioStatus" class="audio-status" aria-live="polite">
+    ऑडियो तैयार हो रहा है...
+  </div>
+
+  <div id="feedback" class="feedback" aria-live="polite"></div>
 
   <div class="controls">
-    <button class="btn btn-secondary" id="fiftyBtn" type="button">
-      ✂️ 50:50
-    </button>
-
-    <button class="btn btn-secondary" id="skipBtn" type="button">
-      ⏭️ सवाल छोड़ें
-    </button>
-
-    <button class="btn btn-secondary" id="soundBtn" type="button">
-      🔊 आवाज चालू करें
-    </button>
+    <button id="repeatBtn" class="btn" type="button">🔊 प्रश्न दोबारा सुनें</button>
+    <button id="fiftyBtn" class="btn" type="button">✂️ 50:50</button>
+    <button id="skipBtn" class="btn" type="button">⏭️ प्रश्न छोड़ें</button>
   </div>
 
   <div class="controls">
-    <button class="btn btn-primary hidden" id="nextBtn" type="button">
-      अगला सवाल ➜
+    <button id="nextBtn" class="btn primary hidden" type="button">
+      अगला प्रश्न ➜
     </button>
   </div>
-
-  <div class="small" id="questionCount"></div>
 
 </section>
 
 <section id="endScreen" class="screen hidden">
-
   <h2 id="endTitle">गेम समाप्त!</h2>
-
   <p id="endMessage"></p>
-
   <div class="stat">
-    <div class="stat-label">अंतिम वर्चुअल स्कोर</div>
+    <div class="stat-label">वर्चुअल स्कोर</div>
     <div class="stat-value gold" id="finalBalance">0</div>
   </div>
-
-  <div class="controls" style="justify-content:center">
-
-    <button class="btn btn-primary" id="restartBtn" type="button">
-      🔄 फिर से खेलें
-    </button>
-
-    <button class="btn btn-secondary" id="homeBtn" type="button">
-      होम
-    </button>
-
-  </div>
-
+  <button id="restartBtn" class="btn primary" type="button">🔄 फिर खेलें</button>
 </section>
 
 </main>
 
-<aside class="panel sidebar">
-
+<aside class="panel">
   <h3>🏆 लेवल मैप</h3>
+  <div id="levelGrid" class="level-grid"></div>
+
+  <hr class="divider">
+
+  <h3>💰 प्राइज सीढ़ी</h3>
+  <ul id="prizeList" class="prize-list"></ul>
+
+  <hr class="divider">
+
+  <button id="soundToggle" class="btn full" type="button">
+    🔊 आवाज चालू है
+  </button>
+
+  <button id="resetBtn" class="btn full" type="button" style="margin-top:8px">
+    🔄 गेम रीसेट करें
+  </button>
 
   <p class="small">
-    हरे लेवल पूरे हो चुके हैं। सुनहरा लेवल वर्तमान है।
+    नोट: आवाज आपके मोबाइल के उपलब्ध हिंदी Text-to-Speech इंजन पर निर्भर करेगी।
   </p>
-
-  <div class="level-grid" id="levelGrid"></div>
-
-  <hr class="divider">
-
-  <h3>💰 वर्चुअल प्राइज</h3>
-
-  <ul class="prize-list" id="prizeList"></ul>
-
-  <hr class="divider">
-
-  <h3>📌 लाइफलाइन</h3>
-
-  <p class="small" id="lifelineStatus">
-    50:50 और सवाल छोड़ने की सुविधा।
-  </p>
-
-  <hr class="divider">
-
-  <button class="btn btn-secondary full" id="saveBtn" type="button">
-    💾 प्रोग्रेस सेव करें
-  </button>
-
-  <button class="btn btn-secondary full" id="resetBtn"
-          type="button" style="margin-top:9px">
-    🗑️ प्रोग्रेस रीसेट करें
-  </button>
-
 </aside>
 
 </div>
 
-<footer>
-  इतिहास महाचैलेंज | Orient Classes | शैक्षणिक क्विज गेम
-</footer>
-
+<footer>इतिहास महाचैलेंज • Orient Classes</footer>
 </div>
 
 <script>
 "use strict";
 
-/* =====================================
-   HISTORY CROREPATI GAME ENGINE
-===================================== */
-
-const STORAGE_KEY = "orient_history_game_v2";
-const TOTAL_LEVELS = 20;
-const QUESTIONS_PER_LEVEL = 2;
-const TOTAL_QUESTIONS = TOTAL_LEVELS * QUESTIONS_PER_LEVEL;
-const QUESTION_TIME = 30;
-
-const prizes = [
-  1000000, 2500000, 5000000, 10000000,
-  25000000, 50000000, 100000000, 250000000,
-  500000000, 1000000000, 2000000000, 3000000000,
-  5000000000, 10000000000, 15000000000, 25000000000,
-  40000000000, 60000000000, 80000000000, 100000000000
-];
-
-const levelNames = [
-  "1857 की क्रांति",
-  "कंपनी शासन",
-  "सामाजिक सुधार",
-  "कांग्रेस की स्थापना",
-  "स्वदेशी आंदोलन",
-  "क्रांतिकारी आंदोलन",
-  "गांधीजी का आगमन",
-  "जलियाँवाला बाग",
-  "असहयोग आंदोलन",
-  "साइमन कमीशन",
-  "पूर्ण स्वराज",
-  "सविनय अवज्ञा",
-  "गोलमेज सम्मेलन",
-  "पूना समझौता",
-  "भारत छोड़ो आंदोलन",
-  "आजाद हिंद फौज",
-  "कैबिनेट मिशन",
-  "स्वतंत्रता योजना",
-  "स्वतंत्रता अधिनियम",
-  "स्वतंत्रता और विभाजन"
-];
-
-/*
- प्रत्येक प्रश्न में:
- q = प्रश्न
- o = विकल्प
- a = सही उत्तर का index
- e = व्याख्या
-*/
+/* ==========================================
+   1. QUESTION BANK
+========================================== */
 
 const questions = [
-
 [
 {q:"1857 के विद्रोह की शुरुआत कहाँ से हुई?",
-o:["मेरठ","दिल्ली","कानपुर","लखनऊ"],a:0,
-e:"10 मई 1857 को मेरठ में विद्रोह शुरू हुआ।"},
-
+o:["मेरठ","दिल्ली","कानपुर","लखनऊ"],a:0,e:"10 मई 1857 को मेरठ में विद्रोह शुरू हुआ।"},
 {q:"1857 के विद्रोह के समय गवर्नर-जनरल कौन था?",
-o:["लॉर्ड डलहौजी","लॉर्ड कैनिंग","लॉर्ड रिपन","लॉर्ड कर्जन"],a:1,
-e:"लॉर्ड कैनिंग उस समय गवर्नर-जनरल थे।"}
+o:["लॉर्ड डलहौजी","लॉर्ड कैनिंग","लॉर्ड रिपन","लॉर्ड कर्जन"],a:1,e:"लॉर्ड कैनिंग उस समय गवर्नर-जनरल थे।"}
 ],
-
 [
-{q:"सहायक संधि की नीति किससे जुड़ी है?",
-o:["लॉर्ड वेलेजली","लॉर्ड रिपन","लॉर्ड मिंटो","लॉर्ड इरविन"],a:0,
-e:"लॉर्ड वेलेजली ने सहायक संधि प्रणाली का विस्तार किया।"},
-
-{q:"व्यपगत सिद्धांत किस गवर्नर-जनरल से संबंधित था?",
-o:["लॉर्ड कैनिंग","लॉर्ड डलहौजी","लॉर्ड कर्जन","लॉर्ड रिपन"],a:1,
-e:"लॉर्ड डलहौजी ने व्यपगत सिद्धांत का उपयोग किया।"}
+{q:"सहायक संधि की नीति किससे जुड़ी थी?",
+o:["लॉर्ड वेलेजली","लॉर्ड रिपन","लॉर्ड मिंटो","लॉर्ड इरविन"],a:0,e:"लॉर्ड वेलेजली ने सहायक संधि प्रणाली का विस्तार किया।"},
+{q:"व्यपगत सिद्धांत किससे संबंधित था?",
+o:["लॉर्ड कैनिंग","लॉर्ड डलहौजी","लॉर्ड कर्जन","लॉर्ड रिपन"],a:1,e:"लॉर्ड डलहौजी ने इस नीति का उपयोग किया।"}
 ],
-
 [
 {q:"ब्रह्म समाज की स्थापना किसने की?",
-o:["राजा राममोहन राय","दयानंद सरस्वती","विवेकानंद","रामकृष्ण परमहंस"],a:0,
-e:"राजा राममोहन राय ने 1828 में ब्रह्म सभा की स्थापना की।"},
-
+o:["राजा राममोहन राय","दयानंद सरस्वती","विवेकानंद","रामकृष्ण परमहंस"],a:0,e:"राजा राममोहन राय ने 1828 में ब्रह्म सभा की स्थापना की।"},
 {q:"आर्य समाज की स्थापना किस वर्ष हुई?",
-o:["1828","1867","1875","1897"],a:2,
-e:"स्वामी दयानंद सरस्वती ने 1875 में आर्य समाज की स्थापना की।"}
+o:["1828","1867","1875","1897"],a:2,e:"आर्य समाज की स्थापना 1875 में हुई।"}
 ],
-
 [
 {q:"भारतीय राष्ट्रीय कांग्रेस की स्थापना किस वर्ष हुई?",
-o:["1885","1889","1905","1911"],a:0,
-e:"भारतीय राष्ट्रीय कांग्रेस की स्थापना 1885 में हुई।"},
-
+o:["1885","1889","1905","1911"],a:0,e:"भारतीय राष्ट्रीय कांग्रेस की स्थापना 1885 में हुई।"},
 {q:"कांग्रेस के प्रथम अध्यक्ष कौन थे?",
-o:["दादाभाई नौरोजी","डब्ल्यू. सी. बनर्जी","ए. ओ. ह्यूम","गोपाल कृष्ण गोखले"],a:1,
-e:"डब्ल्यू. सी. बनर्जी कांग्रेस के प्रथम अध्यक्ष थे।"}
+o:["दादाभाई नौरोजी","डब्ल्यू. सी. बनर्जी","ए. ओ. ह्यूम","गोपाल कृष्ण गोखले"],a:1,e:"डब्ल्यू. सी. बनर्जी कांग्रेस के प्रथम अध्यक्ष थे।"}
 ],
-
 [
 {q:"बंगाल विभाजन किस वर्ष लागू हुआ?",
-o:["1899","1905","1909","1919"],a:1,
-e:"बंगाल विभाजन 16 अक्टूबर 1905 को लागू हुआ।"},
-
+o:["1899","1905","1909","1919"],a:1,e:"बंगाल विभाजन 1905 में लागू हुआ।"},
 {q:"स्वदेशी आंदोलन का प्रमुख उद्देश्य क्या था?",
-o:["विदेशी वस्तुओं को बढ़ावा देना","स्वदेशी वस्तुओं को बढ़ावा देना","कर बढ़ाना","रियासतें बनाना"],a:1,
-e:"स्वदेशी आंदोलन में स्वदेशी वस्तुओं के उपयोग पर जोर था।"}
+o:["विदेशी वस्तुओं को बढ़ावा देना","स्वदेशी वस्तुओं को बढ़ावा देना","कर बढ़ाना","रियासतें बनाना"],a:1,e:"स्वदेशी आंदोलन में स्वदेशी वस्तुओं के उपयोग पर जोर था।"}
 ],
-
 [
 {q:"काकोरी ट्रेन कार्रवाई किस वर्ष हुई?",
-o:["1919","1922","1925","1930"],a:2,
-e:"काकोरी ट्रेन कार्रवाई 9 अगस्त 1925 को हुई।"},
-
+o:["1919","1922","1925","1930"],a:2,e:"काकोरी ट्रेन कार्रवाई 9 अगस्त 1925 को हुई।"},
 {q:"गदर पार्टी की स्थापना किस वर्ष हुई?",
-o:["1905","1913","1919","1928"],a:1,
-e:"गदर पार्टी की स्थापना 1913 में हुई।"}
+o:["1905","1913","1919","1928"],a:1,e:"गदर पार्टी की स्थापना 1913 में हुई।"}
 ],
-
 [
 {q:"गांधीजी दक्षिण अफ्रीका से भारत कब लौटे?",
-o:["1905","1915","1917","1920"],a:1,
-e:"गांधीजी जनवरी 1915 में भारत लौटे।"},
-
+o:["1905","1915","1917","1920"],a:1,e:"गांधीजी जनवरी 1915 में भारत लौटे।"},
 {q:"चंपारण सत्याग्रह किस वर्ष हुआ?",
-o:["1915","1917","1919","1922"],a:1,
-e:"चंपारण सत्याग्रह 1917 में हुआ।"}
+o:["1915","1917","1919","1922"],a:1,e:"चंपारण सत्याग्रह 1917 में हुआ।"}
 ],
-
 [
 {q:"जलियाँवाला बाग हत्याकांड कब हुआ?",
-o:["13 अप्रैल 1919","15 अगस्त 1919","26 जनवरी 1920","9 अगस्त 1925"],a:0,
-e:"यह घटना 13 अप्रैल 1919 को अमृतसर में हुई।"},
-
+o:["13 अप्रैल 1919","15 अगस्त 1919","26 जनवरी 1920","9 अगस्त 1925"],a:0,e:"यह घटना 13 अप्रैल 1919 को हुई।"},
 {q:"जलियाँवाला बाग में गोली चलाने का आदेश किसने दिया?",
-o:["लॉर्ड इरविन","जनरल डायर","लॉर्ड कर्जन","लॉर्ड माउंटबेटन"],a:1,
-e:"जनरल रेजिनाल्ड डायर ने गोली चलाने का आदेश दिया।"}
+o:["लॉर्ड इरविन","जनरल डायर","लॉर्ड कर्जन","लॉर्ड माउंटबेटन"],a:1,e:"जनरल रेजिनाल्ड डायर ने गोली चलाने का आदेश दिया।"}
 ],
-
 [
 {q:"असहयोग आंदोलन किस वर्ष शुरू हुआ?",
-o:["1917","1919","1920","1930"],a:2,
-e:"असहयोग आंदोलन 1920 में शुरू हुआ।"},
-
+o:["1917","1919","1920","1930"],a:2,e:"असहयोग आंदोलन 1920 में शुरू हुआ।"},
 {q:"असहयोग आंदोलन वापस लेने का तात्कालिक कारण क्या था?",
-o:["काकोरी कांड","चौरी-चौरा घटना","साइमन कमीशन","बंगाल विभाजन"],a:1,
-e:"चौरी-चौरा की घटना के बाद 1922 में आंदोलन वापस लिया गया।"}
+o:["काकोरी कांड","चौरी-चौरा घटना","साइमन कमीशन","बंगाल विभाजन"],a:1,e:"चौरी-चौरा की घटना के बाद आंदोलन वापस लिया गया।"}
 ],
-
 [
 {q:"साइमन कमीशन भारत किस वर्ष आया?",
-o:["1925","1928","1930","1935"],a:1,
-e:"साइमन कमीशन 1928 में भारत आया।"},
-
-{q:"साइमन कमीशन का विरोध क्यों किया गया?",
-o:["उसमें कोई भारतीय सदस्य नहीं था","उसने चुनाव कराए","उसने स्वतंत्रता दी","उसने नमक कर लगाया"],a:0,
-e:"कमीशन में कोई भारतीय सदस्य नहीं था।"}
+o:["1925","1928","1930","1935"],a:1,e:"साइमन कमीशन 1928 में भारत आया।"},
+{q:"साइमन कमीशन का विरोध क्यों हुआ?",
+o:["उसमें कोई भारतीय सदस्य नहीं था","उसने चुनाव कराए","उसने स्वतंत्रता दी","उसने नमक कर लगाया"],a:0,e:"कमीशन में कोई भारतीय सदस्य नहीं था।"}
 ],
-
 [
-{q:"पूर्ण स्वराज का प्रस्ताव किस कांग्रेस अधिवेशन में पारित हुआ?",
-o:["सूरत 1907","लखनऊ 1916","लाहौर 1929","कराची 1931"],a:2,
-e:"लाहौर अधिवेशन 1929 में पूर्ण स्वराज का प्रस्ताव पारित हुआ।"},
-
-{q:"26 जनवरी 1930 को कांग्रेस ने किस रूप में मनाया?",
-o:["गणतंत्र दिवस","स्वतंत्रता दिवस","किसान दिवस","स्वदेशी दिवस"],a:1,
-e:"26 जनवरी 1930 को स्वतंत्रता दिवस के रूप में मनाया गया।"}
+{q:"पूर्ण स्वराज का प्रस्ताव किस अधिवेशन में पारित हुआ?",
+o:["सूरत 1907","लखनऊ 1916","लाहौर 1929","कराची 1931"],a:2,e:"लाहौर अधिवेशन 1929 में पूर्ण स्वराज का प्रस्ताव पारित हुआ।"},
+{q:"26 जनवरी 1930 को किस रूप में मनाया गया?",
+o:["गणतंत्र दिवस","स्वतंत्रता दिवस","किसान दिवस","स्वदेशी दिवस"],a:1,e:"इसे स्वतंत्रता दिवस के रूप में मनाया गया।"}
 ],
-
 [
-{q:"दांडी मार्च किस वर्ष शुरू हुआ?",
-o:["1920","1928","1930","1932"],a:2,
-e:"दांडी मार्च मार्च 1930 में शुरू हुआ।"},
-
-{q:"दांडी मार्च का प्रमुख उद्देश्य क्या था?",
-o:["नमक कानून तोड़ना","रेलवे बनाना","चुनाव कराना","बंगाल विभाजन"],a:0,
-e:"गांधीजी ने नमक कानून तोड़कर सविनय अवज्ञा आंदोलन शुरू किया।"}
+{q:"दांडी मार्च किस वर्ष हुआ?",
+o:["1920","1928","1930","1932"],a:2,e:"दांडी मार्च 1930 में हुआ।"},
+{q:"दांडी मार्च किस कानून के विरोध में था?",
+o:["वन कानून","नमक कानून","प्रेस कानून","रॉलेट एक्ट"],a:1,e:"दांडी मार्च नमक कानून के विरोध में था।"}
 ],
-
 [
 {q:"गांधी-इरविन समझौता किस वर्ष हुआ?",
-o:["1928","1930","1931","1935"],a:2,
-e:"गांधी-इरविन समझौता 1931 में हुआ।"},
-
+o:["1928","1930","1931","1935"],a:2,e:"गांधी-इरविन समझौता 1931 में हुआ।"},
 {q:"गांधीजी ने किस गोलमेज सम्मेलन में भाग लिया?",
-o:["पहले","दूसरे","तीसरे","किसी में नहीं"],a:1,
-e:"गांधीजी ने 1931 में दूसरे गोलमेज सम्मेलन में भाग लिया।"}
+o:["पहले","दूसरे","तीसरे","किसी में नहीं"],a:1,e:"गांधीजी ने दूसरे गोलमेज सम्मेलन में भाग लिया।"}
 ],
-
 [
 {q:"पूना समझौता किस वर्ष हुआ?",
-o:["1929","1930","1932","1935"],a:2,
-e:"पूना समझौता सितंबर 1932 में हुआ।"},
-
+o:["1929","1930","1932","1935"],a:2,e:"पूना समझौता सितंबर 1932 में हुआ।"},
 {q:"पूना समझौता किनके बीच हुआ?",
-o:["गांधीजी और डॉ. आंबेडकर","नेहरू और जिन्ना","तिलक और गोखले","पटेल और बोस"],a:0,
-e:"यह समझौता गांधीजी और डॉ. बी. आर. आंबेडकर के बीच हुआ।"}
+o:["गांधीजी और डॉ. आंबेडकर","नेहरू और जिन्ना","तिलक और गोखले","पटेल और बोस"],a:0,e:"यह समझौता गांधीजी और डॉ. आंबेडकर के बीच हुआ।"}
 ],
-
 [
 {q:"भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?",
-o:["1939","1940","1942","1946"],a:2,
-e:"भारत छोड़ो आंदोलन अगस्त 1942 में शुरू हुआ।"},
-
-{q:"भारत छोड़ो आंदोलन के दौरान गांधीजी ने कौन-सा नारा दिया?",
-o:["दिल्ली चलो","करो या मरो","जय जवान","इंकलाब जिंदाबाद"],a:1,
-e:"गांधीजी ने करो या मरो का आह्वान किया।"}
+o:["1939","1940","1942","1946"],a:2,e:"भारत छोड़ो आंदोलन अगस्त 1942 में शुरू हुआ।"},
+{q:"गांधीजी ने भारत छोड़ो आंदोलन में कौन-सा आह्वान दिया?",
+o:["दिल्ली चलो","करो या मरो","जय जवान","इंकलाब जिंदाबाद"],a:1,e:"गांधीजी ने करो या मरो का आह्वान किया।"}
 ],
-
 [
 {q:"आजाद हिंद सरकार की स्थापना किस वर्ष हुई?",
-o:["1939","1941","1943","1945"],a:2,
-e:"सुभाषचंद्र बोस ने 1943 में आजाद हिंद सरकार की स्थापना की।"},
-
-{q:"आजाद हिंद फौज का प्रसिद्ध नारा कौन-सा था?",
-o:["जय हिंद","सत्यमेव जयते","वंदे मातरम् केवल","दिल्ली दरबार"],a:0,
-e:"जय हिंद आजाद हिंद आंदोलन का प्रमुख अभिवादन और नारा था।"}
+o:["1939","1941","1943","1945"],a:2,e:"आजाद हिंद सरकार 1943 में स्थापित हुई।"},
+{q:"आजाद हिंद फौज का प्रसिद्ध अभिवादन कौन-सा था?",
+o:["जय हिंद","सत्यमेव जयते","जय किसान","वंदे भारत"],a:0,e:"जय हिंद आजाद हिंद आंदोलन का प्रसिद्ध अभिवादन था।"}
 ],
-
 [
 {q:"कैबिनेट मिशन भारत किस वर्ष आया?",
-o:["1942","1945","1946","1947"],a:2,
-e:"कैबिनेट मिशन 1946 में भारत आया।"},
-
+o:["1942","1945","1946","1947"],a:2,e:"कैबिनेट मिशन 1946 में भारत आया।"},
 {q:"कैबिनेट मिशन का प्रमुख उद्देश्य क्या था?",
-o:["भारत के संवैधानिक भविष्य पर योजना बनाना","1857 का विद्रोह दबाना","बंगाल विभाजन करना","साइमन कमीशन बनाना"],a:0,
-e:"मिशन ने सत्ता हस्तांतरण और संविधान निर्माण के लिए योजना प्रस्तुत की।"}
+o:["संवैधानिक भविष्य की योजना","1857 का विद्रोह दबाना","बंगाल विभाजन","साइमन कमीशन बनाना"],a:0,e:"इसने सत्ता हस्तांतरण और संविधान निर्माण की योजना प्रस्तुत की।"}
 ],
-
 [
-{q:"माउंटबेटन योजना की घोषणा कब हुई?",
-o:["3 जून 1947","15 अगस्त 1947","26 जनवरी 1950","16 अगस्त 1946"],a:0,
-e:"माउंटबेटन योजना 3 जून 1947 को घोषित हुई।"},
-
+{q:"माउंटबेटन योजना कब घोषित हुई?",
+o:["3 जून 1947","15 अगस्त 1947","26 जनवरी 1950","16 अगस्त 1946"],a:0,e:"माउंटबेटन योजना 3 जून 1947 को घोषित हुई।"},
 {q:"भारत का विभाजन किस वर्ष हुआ?",
-o:["1935","1942","1947","1950"],a:2,
-e:"1947 में ब्रिटिश भारत का विभाजन हुआ।"}
+o:["1935","1942","1947","1950"],a:2,e:"भारत का विभाजन 1947 में हुआ।"}
 ],
-
 [
 {q:"भारतीय स्वतंत्रता अधिनियम किस वर्ष पारित हुआ?",
-o:["1935","1942","1946","1947"],a:3,
-e:"ब्रिटिश संसद ने 1947 में भारतीय स्वतंत्रता अधिनियम पारित किया।"},
-
-{q:"भारतीय स्वतंत्रता अधिनियम को किस संसद ने पारित किया?",
-o:["भारतीय संसद","ब्रिटिश संसद","फ्रांसीसी संसद","अमेरिकी कांग्रेस"],a:1,
-e:"यह अधिनियम ब्रिटिश संसद ने पारित किया।"}
+o:["1935","1942","1946","1947"],a:3,e:"भारतीय स्वतंत्रता अधिनियम 1947 में पारित हुआ।"},
+{q:"भारतीय स्वतंत्रता अधिनियम किस संसद ने पारित किया?",
+o:["भारतीय संसद","ब्रिटिश संसद","फ्रांसीसी संसद","अमेरिकी कांग्रेस"],a:1,e:"इसे ब्रिटिश संसद ने पारित किया।"}
 ],
-
 [
 {q:"स्वतंत्र भारत के पहले गवर्नर-जनरल कौन थे?",
-o:["सी. राजगोपालाचारी","लॉर्ड माउंटबेटन","डॉ. राजेंद्र प्रसाद","जवाहरलाल नेहरू"],a:1,
-e:"लॉर्ड माउंटबेटन स्वतंत्र भारत के पहले गवर्नर-जनरल बने।"},
-
-{q:"भारत के पहले भारतीय गवर्नर-जनरल कौन थे?",
-o:["सी. राजगोपालाचारी","डॉ. राजेंद्र प्रसाद","सरदार पटेल","जवाहरलाल नेहरू"],a:0,
-e:"सी. राजगोपालाचारी स्वतंत्र भारत के पहले भारतीय गवर्नर-जनरल थे।"}
+o:["सी. राजगोपालाचारी","लॉर्ड माउंटबेटन","डॉ. राजेंद्र प्रसाद","जवाहरलाल नेहरू"],a:1,e:"लॉर्ड माउंटबेटन स्वतंत्र भारत के पहले गवर्नर-जनरल थे।"},
+{q:"स्वतंत्र भारत के पहले भारतीय गवर्नर-जनरल कौन थे?",
+o:["सी. राजगोपालाचारी","डॉ. राजेंद्र प्रसाद","सरदार पटेल","जवाहरलाल नेहरू"],a:0,e:"सी. राजगोपालाचारी पहले भारतीय गवर्नर-जनरल थे।"}
 ]
-
 ];
 
-/* =====================================
-   GAME STATE
-===================================== */
+const levelNames=[
+"1857 की क्रांति","कंपनी शासन","सामाजिक सुधार","कांग्रेस की स्थापना",
+"स्वदेशी आंदोलन","क्रांतिकारी आंदोलन","गांधीजी का आगमन",
+"जलियाँवाला बाग","असहयोग आंदोलन","साइमन कमीशन","पूर्ण स्वराज",
+"सविनय अवज्ञा","गोलमेज सम्मेलन","पूना समझौता","भारत छोड़ो आंदोलन",
+"आजाद हिंद फौज","कैबिनेट मिशन","माउंटबेटन योजना",
+"स्वतंत्रता अधिनियम","स्वतंत्रता और विभाजन"
+];
 
-let state = {
-  level: 0,
-  question: 0,
-  earned: 0,
-  correct: 0,
-  answered: false,
-  fiftyUsed: false,
-  skipped: false,
-  running: false,
-  finished: false,
-  seconds: QUESTION_TIME,
-  remaining: [],
-  usedQuestions: []
-};
+const prizes=[
+1000000,2500000,5000000,10000000,25000000,
+50000000,100000000,250000000,500000000,1000000000,
+2000000000,3000000000,5000000000,10000000000,15000000000,
+25000000000,40000000000,60000000000,80000000000,100000000000
+];
 
-let timerId = null;
-let soundEnabled = true;
+/* ==========================================
+   2. AUDIO ENGINE
+========================================== */
 
-const $ = id => document.getElementById(id);
+let audioContext=null;
+let soundEnabled=true;
+let timerId=null;
+let state=null;
 
-function formatNumber(n) {
-  return Number(n).toLocaleString("en-IN");
+function initAudio(){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+
+    if(!AC){
+      setAudioStatus("इस ब्राउज़र में ड्रम साउंड उपलब्ध नहीं है।");
+      return;
+    }
+
+    if(!audioContext) audioContext=new AC();
+
+    if(audioContext.state==="suspended"){
+      audioContext.resume();
+    }
+  }catch(error){
+    console.warn("Audio initialization failed",error);
+  }
 }
 
-function prizeText(n) {
-  if (n >= 1000000000) {
-    return (n / 1000000000).toLocaleString("en-IN", {
-      maximumFractionDigits: 2
-    }) + " Billion";
-  }
+function drumHit(time,frequency,duration,volume){
+  if(!audioContext||!soundEnabled)return;
 
-  if (n >= 1000000) {
-    return (n / 1000000).toLocaleString("en-IN", {
-      maximumFractionDigits: 2
-    }) + " Million";
-  }
+  const osc=audioContext.createOscillator();
+  const gain=audioContext.createGain();
 
-  return formatNumber(n);
+  osc.type="sine";
+  osc.frequency.setValueAtTime(frequency,time);
+  osc.frequency.exponentialRampToValueAtTime(45,time+duration);
+
+  gain.gain.setValueAtTime(volume,time);
+  gain.gain.exponentialRampToValueAtTime(.001,time+duration);
+
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+
+  osc.start(time);
+  osc.stop(time+duration);
 }
 
-function speak(message) {
-  if (!soundEnabled || !("speechSynthesis" in window)) return;
+function cymbal(time){
+  if(!audioContext||!soundEnabled)return;
 
-  try {
+  const length=Math.floor(audioContext.sampleRate*.25);
+  const buffer=audioContext.createBuffer(
+    1,length,audioContext.sampleRate
+  );
+
+  const data=buffer.getChannelData(0);
+
+  for(let i=0;i<length;i++){
+    data[i]=(Math.random()*2-1)*(1-i/length);
+  }
+
+  const source=audioContext.createBufferSource();
+  const filter=audioContext.createBiquadFilter();
+  const gain=audioContext.createGain();
+
+  source.buffer=buffer;
+  filter.type="highpass";
+  filter.frequency.value=5000;
+
+  gain.gain.setValueAtTime(.0001,time);
+  gain.gain.linearRampToValueAtTime(.12,time+.015);
+  gain.gain.exponentialRampToValueAtTime(.0001,time+.23);
+
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(audioContext.destination);
+
+  source.start(time);
+  source.stop(time+.25);
+}
+
+/* Suspense drum rhythm: synthesized locally. */
+
+function playQuestionDrums(){
+  if(!soundEnabled||!audioContext)return;
+
+  const now=audioContext.currentTime+.05;
+
+  drumHit(now,95,.35,.5);
+  drumHit(now+.36,70,.35,.4);
+  drumHit(now+.72,95,.35,.5);
+  drumHit(now+1.08,70,.35,.4);
+  drumHit(now+1.44,120,.4,.65);
+  cymbal(now+1.46);
+}
+
+function playCorrectMusic(){
+  if(!soundEnabled||!audioContext)return;
+
+  const now=audioContext.currentTime+.05;
+  const notes=[523.25,659.25,783.99,1046.5];
+
+  notes.forEach((frequency,index)=>{
+    const osc=audioContext.createOscillator();
+    const gain=audioContext.createGain();
+
+    osc.type="triangle";
+    osc.frequency.value=frequency;
+
+    gain.gain.setValueAtTime(.0001,now+index*.17);
+    gain.gain.linearRampToValueAtTime(.16,now+index*.17+.025);
+    gain.gain.exponentialRampToValueAtTime(.0001,now+index*.17+.45);
+
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    osc.start(now+index*.17);
+    osc.stop(now+index*.17+.48);
+  });
+
+  drumHit(now+.05,100,.4,.35);
+  drumHit(now+.48,75,.4,.3);
+}
+
+function playWrongMusic(){
+  if(!soundEnabled||!audioContext)return;
+
+  const now=audioContext.currentTime+.05;
+  drumHit(now,100,.5,.35);
+  drumHit(now+.55,65,.65,.25);
+}
+
+function stopSpeech(){
+  if("speechSynthesis" in window){
     window.speechSynthesis.cancel();
+  }
+}
 
-    const utterance = new SpeechSynthesisUtterance(message);
-    utterance.lang = "hi-IN";
-    utterance.rate = 0.88;
-    utterance.pitch = 1.08;
-    utterance.volume = 1;
+function speak(text){
+  return new Promise(resolve=>{
+    if(!soundEnabled||!("speechSynthesis" in window)){
+      resolve();
+      return;
+    }
+
+    stopSpeech();
+
+    const utterance=new SpeechSynthesisUtterance(text);
+    utterance.lang="hi-IN";
+    utterance.rate=.84;
+    utterance.pitch=.72;
+    utterance.volume=1;
+
+    let done=false;
+
+    const finish=()=>{
+      if(done)return;
+      done=true;
+      resolve();
+    };
+
+    utterance.onend=finish;
+    utterance.onerror=finish;
 
     window.speechSynthesis.speak(utterance);
-  } catch (error) {
-    console.warn("Voice unavailable:", error);
-  }
-}
 
-/* =====================================
-   INITIALIZATION
-===================================== */
-
-function initialize() {
-  buildLevelGrid();
-  buildPrizeList();
-  updateStats();
-  updateLifelineStatus();
-
-  $("startBtn").addEventListener("click", startNewGame);
-  $("resumeBtn").addEventListener("click", resumeGame);
-  $("nextBtn").addEventListener("click", nextQuestion);
-  $("fiftyBtn").addEventListener("click", useFifty);
-  $("skipBtn").addEventListener("click", skipQuestion);
-  $("soundBtn").addEventListener("click", toggleSound);
-  $("saveBtn").addEventListener("click", saveProgress);
-  $("resetBtn").addEventListener("click", resetProgress);
-  $("restartBtn").addEventListener("click", startNewGame);
-  $("homeBtn").addEventListener("click", goHome);
-
-  window.addEventListener("beforeunload", () => {
-    if (state.running) {
-      saveProgress(false);
-    }
-  });
-
-  const saved = loadSavedState();
-
-  $("resumeBtn").disabled = !saved;
-}
-
-function buildLevelGrid() {
-  const grid = $("levelGrid");
-  grid.innerHTML = "";
-
-  for (let i = 0; i < TOTAL_LEVELS; i++) {
-    const cell = document.createElement("div");
-
-    cell.className = "level-cell";
-    cell.id = "level-cell-" + i;
-    cell.textContent = i + 1;
-
-    grid.appendChild(cell);
-  }
-}
-
-function buildPrizeList() {
-  const list = $("prizeList");
-  list.innerHTML = "";
-
-  prizes.forEach((prize, i) => {
-    const li = document.createElement("li");
-    li.id = "prize-" + i;
-
-    const level = document.createElement("span");
-    level.textContent = "लेवल " + (i + 1);
-
-    const value = document.createElement("strong");
-    value.textContent = prizeText(prize);
-
-    li.append(level, value);
-    list.appendChild(li);
+    /* Prevent a browser voice engine from blocking the game forever. */
+    setTimeout(finish,Math.max(12000,text.length*180));
   });
 }
 
-function updateStats() {
-  $("balance").textContent = prizeText(state.earned);
-  $("levelStat").textContent =
-    Math.min(state.level + 1, TOTAL_LEVELS) + " / " + TOTAL_LEVELS;
-  $("correctStat").textContent = state.correct;
+function delay(ms){
+  return new Promise(resolve=>setTimeout(resolve,ms));
 }
 
-function updateLevelMap() {
-  for (let i = 0; i < TOTAL_LEVELS; i++) {
-    const cell = $("level-cell-" + i);
+function setAudioStatus(text){
+  const element=document.getElementById("audioStatus");
 
-    cell.className = "level-cell";
-
-    if (i < state.level) {
-      cell.classList.add("done");
-    } else if (i === state.level && state.running) {
-      cell.classList.add("active");
-    }
-  }
-
-  document.querySelectorAll(".prize-list li").forEach((li, i) => {
-    li.classList.toggle("current", i === state.level && state.running);
-  });
+  if(element)element.textContent="🔊 "+text;
 }
 
-function updateLifelineStatus() {
-  $("lifelineStatus").textContent =
-    "50:50: " + (state.fiftyUsed ? "इस्तेमाल हो चुकी" : "उपलब्ध") +
-    " | प्रश्न छोड़ना: " +
-    (state.skipped ? "इस्तेमाल हो चुका" : "उपलब्ध");
-}
-
-/* =====================================
-   GAME START / RESUME
-===================================== */
-
-function startNewGame() {
-  stopTimer();
-
-  state = {
-    level: 0,
-    question: 0,
-    earned: 0,
-    correct: 0,
-    answered: false,
-    fiftyUsed: false,
-    skipped: false,
-    running: true,
-    finished: false,
-    seconds: QUESTION_TIME,
-    remaining: [],
-    usedQuestions: []
-  };
-
-  $("welcome").classList.add("hidden");
-  $("endScreen").classList.add("hidden");
-  $("game").classList.remove("hidden");
-
-  prepareQuestionOrder();
-  updateStats();
-  updateLifelineStatus();
-
-  showQuestion();
-
-  speak("स्वागत है इतिहास महाचैलेंज में। खेल शुरू होता है। आपकी तैयारी कैसी है? चलिए पहला सवाल देखते हैं।");
-}
-
-function prepareQuestionOrder() {
-  state.remaining = questions.map((level, i) => {
-    const indexes = level.map((_, j) => j);
-
-    return {
-      level: i,
-      indexes: indexes
-    };
-  });
-}
-
-function resumeGame() {
-  const saved = loadSavedState();
-
-  if (!saved) {
-    startNewGame();
-    return;
-  }
+async function announceQuestion(){
+  if(!state||!state.running)return;
 
   stopTimer();
+  stopSpeech();
 
-  state = {
-    ...state,
-    ...saved,
-    running: true,
-    answered: false,
-    seconds: QUESTION_TIME
-  };
+  const q=getQuestion();
 
-  $("welcome").classList.add("hidden");
-  $("endScreen").classList.add("hidden");
-  $("game").classList.remove("hidden");
+  setAudioStatus("ड्रम और सस्पेंस म्यूजिक...");
 
-  showQuestion();
-}
+  playQuestionDrums();
 
-/* =====================================
-   QUESTION RENDERING
-===================================== */
+  await delay(1900);
 
-function getCurrentQuestion() {
-  return questions[state.level][state.question];
-}
+  if(!state||!state.running)return;
 
-function showQuestion() {
-  if (!state.running) return;
+  setAudioStatus("ध्यान दीजिए, प्रश्न पूछा जा रहा है...");
 
-  if (state.level >= TOTAL_LEVELS) {
-    finishGame(true, "आपने सभी 20 लेवल पूरे कर लिए!");
-    return;
+  await speak(
+    "आपका अगला प्रश्न है। " + q.q
+  );
+
+  if(!state||!state.running)return;
+
+  setAudioStatus("अब चार विकल्प सुनिए।");
+
+  for(let i=0;i<q.o.length;i++){
+    if(!state||!state.running)return;
+
+    await speak(
+      "विकल्प " +
+      ["ए","बी","सी","डी"][i] +
+      "। " + q.o[i]
+    );
+
+    await delay(250);
   }
 
-  stopTimer();
+  if(!state||!state.running)return;
 
-  state.answered = false;
-  state.seconds = QUESTION_TIME;
+  setAudioStatus("अब आप अपना उत्तर चुनिए!");
 
-  const q = getCurrentQuestion();
+  await speak("अब आप अपना उत्तर चुनिए।");
 
-  $("levelTitle").textContent =
-    "LEVEL " + (state.level + 1) + " — " + levelNames[state.level];
-
-  $("topic").textContent =
-    "विषय: " + levelNames[state.level];
-
-  $("question").textContent = q.q;
-
-  $("feedback").textContent = "";
-  $("feedback").classList.remove("show");
-
-  $("nextBtn").classList.add("hidden");
-  $("skipBtn").disabled = state.skipped;
-  $("fiftyBtn").disabled = state.fiftyUsed;
-
-  $("questionCount").textContent =
-    "लेवल " + (state.level + 1) +
-    " | प्रश्न " + (state.question + 1) +
-    " / " + QUESTIONS_PER_LEVEL;
-
-  const options = $("options");
-  options.innerHTML = "";
-
-  q.o.forEach((text, index) => {
-    const button = document.createElement("button");
-
-    button.type = "button";
-    button.className = "option";
-    button.dataset.index = index;
-
-    const letter = String.fromCharCode(65 + index);
-
-    button.textContent = letter + ". " + text;
-
-    button.addEventListener("click", () => {
-      selectAnswer(index);
-    });
-
-    options.appendChild(button);
-  });
-
-  $("progress").style.width =
-    (state.level / TOTAL_LEVELS * 100) + "%";
-
-  $("timer").classList.remove("danger");
-
-  updateStats();
-  updateLevelMap();
-  updateLifelineStatus();
+  if(!state||!state.running||state.answered)return;
 
   startTimer();
 }
 
-function startTimer() {
-  stopTimer();
+/* ==========================================
+   3. GAME STATE
+========================================== */
 
-  $("timer").textContent = "⏱ " + state.seconds + " सेकंड";
+function newState(){
+  return{
+    level:0,
+    question:0,
+    earned:0,
+    correct:0,
+    answered:false,
+    fiftyUsed:false,
+    skipped:false,
+    running:false,
+    finished:false,
+    seconds:30
+  };
+}
 
-  timerId = setInterval(() => {
-    if (!state.running || state.answered) {
-      stopTimer();
+function getQuestion(){
+  return questions[state.level][state.question];
+}
+
+function fmt(n){
+  if(n>=1000000000){
+    return (n/1000000000).toLocaleString("en-IN")+
+      " Billion";
+  }
+
+  if(n>=1000000){
+    return (n/1000000).toLocaleString("en-IN")+
+      " Million";
+  }
+
+  return n.toLocaleString("en-IN");
+}
+
+/* ==========================================
+   4. SCREEN AND PROGRESS
+========================================== */
+
+function buildLevels(){
+  const grid=document.getElementById("levelGrid");
+  const list=document.getElementById("prizeList");
+
+  grid.innerHTML="";
+  list.innerHTML="";
+
+  for(let i=0;i<20;i++){
+    const cell=document.createElement("div");
+    cell.className="level-cell";
+    cell.id="cell"+i;
+    cell.textContent=i+1;
+    grid.appendChild(cell);
+
+    const li=document.createElement("li");
+    li.id="prize"+i;
+
+    const name=document.createElement("span");
+    name.textContent="लेवल "+(i+1);
+
+    const value=document.createElement("strong");
+    value.textContent=fmt(prizes[i]);
+
+    li.append(name,value);
+    list.appendChild(li);
+  }
+}
+
+function updateUI(){
+  document.getElementById("balance").textContent=fmt(state.earned);
+
+  document.getElementById("levelStat").textContent=
+    Math.min(state.level+1,20)+" / 20";
+
+  document.getElementById("correctStat").textContent=state.correct;
+
+  for(let i=0;i<20;i++){
+    const cell=document.getElementById("cell"+i);
+    const prize=document.getElementById("prize"+i);
+
+    cell.className="level-cell";
+    prize.classList.remove("current");
+
+    if(i<state.level)cell.classList.add("done");
+    if(i===state.level&&state.running){
+      cell.classList.add("active");
+      prize.classList.add("current");
+    }
+  }
+}
+
+/* ==========================================
+   5. START AND RENDER QUESTION
+========================================== */
+
+async function startGame(){
+  clearInterval(timerId);
+  stopSpeech();
+
+  initAudio();
+
+  state=newState();
+  state.running=true;
+
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("endScreen").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+
+  updateUI();
+
+  setAudioStatus("स्वागत है! गेम शुरू हो रहा है।");
+
+  playCorrectMusic();
+
+  await speak(
+    "स्वागत है इतिहास महाचैलेंज में। " +
+    "बीस लेवल की इस रोमांचक यात्रा में आपका स्वागत है। " +
+    "चलिए खेल शुरू करते हैं!"
+  );
+
+  if(state&&state.running)showQuestion();
+}
+
+function showQuestion(){
+  if(!state||!state.running)return;
+
+  clearInterval(timerId);
+
+  state.answered=false;
+  state.seconds=30;
+
+  const q=getQuestion();
+
+  document.getElementById("levelTitle").textContent=
+    "LEVEL "+(state.level+1)+" — "+levelNames[state.level];
+
+  document.getElementById("topic").textContent=
+    "विषय: "+levelNames[state.level];
+
+  document.getElementById("question").textContent=q.q;
+
+  document.getElementById("feedback").className="feedback";
+  document.getElementById("feedback").textContent="";
+
+  document.getElementById("nextBtn").classList.add("hidden");
+
+  const options=document.getElementById("options");
+  options.innerHTML="";
+
+  q.o.forEach((text,index)=>{
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="option";
+    button.textContent=
+      ["A","B","C","D"][index]+". "+text;
+
+    button.addEventListener("click",()=>selectAnswer(index));
+
+    options.appendChild(button);
+  });
+
+  document.getElementById("progress").style.width=
+    ((state.level*2+state.question)/40*100)+"%";
+
+  document.getElementById("fiftyBtn").disabled=state.fiftyUsed;
+  document.getElementById("skipBtn").disabled=state.skipped;
+
+  updateUI();
+
+  /*
+    Question audio starts automatically:
+    drum -> spoken question -> spoken options -> invitation.
+  */
+  announceQuestion();
+}
+
+function startTimer(){
+  clearInterval(timerId);
+
+  if(!state||!state.running||state.answered)return;
+
+  state.seconds=30;
+
+  const timer=document.getElementById("timer");
+  timer.classList.remove("danger");
+
+  timerId=setInterval(()=>{
+    if(!state||!state.running||state.answered){
+      clearInterval(timerId);
       return;
     }
 
     state.seconds--;
 
-    $("timer").textContent =
-      "⏱ " + Math.max(0, state.seconds) + " सेकंड";
+    timer.textContent="⏱ "+state.seconds+" सेकंड";
 
-    if (state.seconds <= 10) {
-      $("timer").classList.add("danger");
-    }
+    if(state.seconds<=10)timer.classList.add("danger");
 
-    if (state.seconds <= 0) {
-      stopTimer();
-      state.answered = true;
+    if(state.seconds<=0){
+      clearInterval(timerId);
+      state.answered=true;
+
+      disableOptions();
 
       showFeedback(
-        "⏰ समय समाप्त! सही उत्तर: " +
-        getCurrentQuestion().o[getCurrentQuestion().a] +
-        ". " + getCurrentQuestion().e,
+        "⏰ समय समाप्त! सही उत्तर: "+
+        getQuestion().o[getQuestion().a]+
+        "। "+getQuestion().e,
         false
       );
 
-      disableOptions();
       showNextButton("परिणाम देखें");
     }
-  }, 1000);
+  },1000);
 }
 
-function stopTimer() {
-  if (timerId !== null) {
-    clearInterval(timerId);
-    timerId = null;
-  }
-}
+/* ==========================================
+   6. ANSWER AND LEVEL CONTROL
+========================================== */
 
-/* =====================================
-   ANSWERS
-===================================== */
-
-function selectAnswer(index) {
-  if (!state.running || state.answered) return;
-
-  state.answered = true;
-  stopTimer();
-
-  const q = getCurrentQuestion();
-  const buttons = [...$("options").children];
-
-  buttons.forEach(button => {
-    button.disabled = true;
-
-    if (Number(button.dataset.index) === q.a) {
-      button.classList.add("correct");
-    }
+function disableOptions(){
+  document.querySelectorAll("#options button").forEach(b=>{
+    b.disabled=true;
   });
+}
 
-  if (index === q.a) {
+function showFeedback(message,correct){
+  const box=document.getElementById("feedback");
+  box.textContent=message;
+  box.className="feedback show";
+  box.style.color=correct?"var(--green)":"var(--red)";
+}
+
+function showNextButton(text){
+  const button=document.getElementById("nextBtn");
+  button.textContent=text;
+  button.classList.remove("hidden");
+}
+
+function selectAnswer(index){
+  if(!state||!state.running||state.answered)return;
+
+  clearInterval(timerId);
+  state.answered=true;
+
+  const q=getQuestion();
+  const buttons=[...document.querySelectorAll("#options button")];
+
+  disableOptions();
+
+  buttons[q.a].classList.add("correct");
+
+  if(index===q.a){
     state.correct++;
 
-    showFeedback(
-      "✅ बिल्कुल सही! " + q.e,
-      true
-    );
+    showFeedback("✅ सही जवाब! "+q.e,true);
 
-    speak("शाबाश! आपका जवाब सही है। बहुत बढ़िया!");
-  } else {
+    playCorrectMusic();
+
+    speak("बिल्कुल सही जवाब! बहुत खूब!");
+  }else{
     buttons[index].classList.add("wrong");
 
     showFeedback(
-      "❌ आपका जवाब गलत है। सही उत्तर: " +
-      q.o[q.a] + "। " + q.e,
+      "❌ सही उत्तर: "+q.o[q.a]+". "+q.e,
       false
     );
 
-    speak("इस बार जवाब गलत है। सही उत्तर और उसका कारण ध्यान से पढ़िए।");
+    playWrongMusic();
+
+    speak("इस बार उत्तर गलत है। "+q.e);
   }
 
   showNextButton(
-    state.question === QUESTIONS_PER_LEVEL - 1
-      ? "लेवल का परिणाम देखें ➜"
-      : "अगला प्रश्न ➜"
+    state.question===1?"लेवल का परिणाम देखें":"अगला प्रश्न"
   );
 
-  updateStats();
-  saveProgress(false);
+  updateUI();
+  saveGame(false);
 }
 
-function disableOptions() {
-  [...$("options").children].forEach(button => {
-    button.disabled = true;
-  });
-}
+function nextQuestion(){
+  if(!state||!state.running||!state.answered)return;
 
-function showFeedback(message, correct) {
-  const box = $("feedback");
+  const correct=document.getElementById("feedback")
+    .textContent.startsWith("✅");
 
-  box.textContent = message;
-  box.classList.add("show");
-  box.style.color = correct ? "var(--green)" : "var(--red)";
-}
-
-function showNextButton(text) {
-  $("nextBtn").textContent = text;
-  $("nextBtn").classList.remove("hidden");
-}
-
-/* =====================================
-   LEVEL PROGRESSION
-===================================== */
-
-function nextQuestion() {
-  if (!state.running || !state.answered) return;
-
-  const q = getCurrentQuestion();
-  const isCorrect = $("feedback").textContent.startsWith("✅");
-
-  if (!isCorrect) {
-    finishGame(
-      false,
-      "यह प्रश्न सही नहीं हुआ। सही उत्तर और व्याख्या से सीखिए।"
-    );
+  if(!correct){
+    finishGame(false,"इस बार चुनौती पूरी नहीं हुई।");
     return;
   }
 
-  if (state.question < QUESTIONS_PER_LEVEL - 1) {
-    state.question++;
+  if(state.question===0){
+    state.question=1;
     showQuestion();
     return;
   }
 
-  state.earned = prizes[state.level];
+  state.earned=prizes[state.level];
 
-  const completedLevel = state.level + 1;
+  const completed=state.level+1;
 
-  $("progress").style.width =
-    (completedLevel / TOTAL_LEVELS * 100) + "%";
+  playCorrectMusic();
 
-  updateStats();
+  const congratulation=
+    "बधाई हो! आपने लेवल "+completed+
+    " पूरा कर लिया है। शानदार प्रदर्शन! " +
+    "आपका ज्ञान आपकी ताकत है।";
 
-  if (state.level === 0) {
-    speak(
-      "बधाई हो! आपने पहला लेवल पूरा कर लिया है! " +
-      "क्या शानदार शुरुआत है! आपका ज्ञान आपकी ताकत है। " +
-      "आइए, अगले लेवल की ओर बढ़ें!"
-    );
-  } else {
-    speak(
-      "बहुत खूब! आपने लेवल " + completedLevel +
-      " पूरा कर लिया है। आपकी मेहनत रंग ला रही है!"
-    );
-  }
+  speak(congratulation);
 
-  if (state.level === TOTAL_LEVELS - 1) {
-    state.level = TOTAL_LEVELS;
-    state.running = false;
-
-    finishGame(
-      true,
-      "आपने आधुनिक भारतीय इतिहास की सभी 20 चुनौतियाँ पूरी कर लीं!"
-    );
-
+  if(state.level===19){
+    state.level=20;
+    finishGame(true,"आपने सभी बीस लेवल पूरे कर लिए!");
     return;
   }
 
   state.level++;
-  state.question = 0;
-  state.answered = false;
+  state.question=0;
+  state.answered=false;
 
-  saveProgress(false);
+  updateUI();
+  saveGame(false);
 
-  setTimeout(() => {
-    if (!state.running) return;
-    showQuestion();
-  }, 1200);
+  setTimeout(()=>{
+    if(state&&state.running)showQuestion();
+  },1800);
 }
 
-/* =====================================
-   LIFELINES
-===================================== */
+/* ==========================================
+   7. LIFELINES
+========================================== */
 
-function useFifty() {
-  if (!state.running || state.answered || state.fiftyUsed) return;
+function useFifty(){
+  if(!state||!state.running||state.answered||state.fiftyUsed)return;
 
-  state.fiftyUsed = true;
+  state.fiftyUsed=true;
 
-  const q = getCurrentQuestion();
+  const q=getQuestion();
+  const wrong=[...document.querySelectorAll("#options button")]
+    .filter((b,i)=>i!==q.a&&!b.disabled);
 
-  const wrong = [...$("options").children].filter(button =>
-    Number(button.dataset.index) !== q.a &&
-    !button.disabled
-  );
-
-  wrong.sort(() => Math.random() - 0.5);
-
-  wrong.slice(0, 2).forEach(button => {
-    button.disabled = true;
-    button.style.opacity = ".35";
+  wrong.sort(()=>Math.random()-.5).slice(0,2).forEach(b=>{
+    b.disabled=true;
+    b.style.opacity=".3";
   });
 
-  $("fiftyBtn").disabled = true;
+  document.getElementById("fiftyBtn").disabled=true;
 
-  showFeedback(
-    "✂️ 50:50 लाइफलाइन इस्तेमाल हुई। दो गलत विकल्प हटा दिए गए।",
-    true
-  );
-
-  updateLifelineStatus();
+  setAudioStatus("50:50 लाइफलाइन इस्तेमाल हुई।");
 }
 
-function skipQuestion() {
-  if (!state.running || state.answered || state.skipped) return;
+function skipQuestion(){
+  if(!state||!state.running||state.answered||state.skipped)return;
 
-  state.skipped = true;
-  state.answered = true;
+  state.skipped=true;
+  state.answered=true;
 
-  stopTimer();
+  clearInterval(timerId);
   disableOptions();
 
-  showFeedback(
-    "⏭️ आपने सवाल छोड़ दिया। इस प्रश्न के अंक नहीं मिलेंगे।",
-    false
-  );
+  showFeedback("आपने प्रश्न छोड़ दिया। इस बार अंक नहीं मिलेंगे।",false);
 
   showNextButton("परिणाम देखें");
-  updateLifelineStatus();
 }
 
-/* =====================================
-   GAME COMPLETION
-===================================== */
+/* ==========================================
+   8. END, SAVE AND RESET
+========================================== */
 
-function finishGame(won, message) {
-  stopTimer();
+function finishGame(won,message){
+  clearInterval(timerId);
+  stopSpeech();
 
-  state.running = false;
-  state.finished = true;
+  state.running=false;
+  state.finished=true;
 
-  $("game").classList.add("hidden");
-  $("welcome").classList.add("hidden");
-  $("endScreen").classList.remove("hidden");
+  document.getElementById("game").classList.add("hidden");
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("endScreen").classList.remove("hidden");
 
-  $("endTitle").textContent =
-    won ? "🏆 बधाई! आप इतिहास चैंपियन हैं!" : "🎮 गेम समाप्त";
+  document.getElementById("endTitle").textContent=
+    won?"🏆 आप इतिहास चैंपियन हैं!":"🎮 गेम समाप्त";
 
-  $("endMessage").textContent =
-    message +
-    " आपने " + state.correct +
-    " प्रश्नों के सही उत्तर दिए।";
+  document.getElementById("endMessage").textContent=
+    message+" सही उत्तर: "+state.correct;
 
-  $("finalBalance").textContent =
-    prizeText(state.earned);
+  document.getElementById("finalBalance").textContent=
+    fmt(state.earned);
 
-  $("progress").style.width = "100%";
+  updateUI();
+  saveGame(false);
 
-  updateStats();
-  updateLevelMap();
-  saveProgress(false);
+  if(won){
+    playCorrectMusic();
 
-  if (won) {
     speak(
-      "अद्भुत! आपने सभी बीस लेवल पूरे कर लिए! " +
-      "आप इतिहास महाचैलेंज के विजेता हैं! " +
+      "अविश्वसनीय! आपने सभी बीस लेवल पूरे कर लिए। " +
+      "आप इतिहास महाचैलेंज के विजेता हैं। " +
       "आपकी मेहनत और ज्ञान को सलाम!"
     );
   }
 }
 
-/* =====================================
-   STORAGE
-===================================== */
+function saveGame(showAlert=true){
+  if(!state)return false;
 
-function saveProgress(showMessage = true) {
-  try {
-    const data = {
-      level: state.level,
-      question: state.question,
-      earned: state.earned,
-      correct: state.correct,
-      fiftyUsed: state.fiftyUsed,
-      skipped: state.skipped,
-      finished: state.finished
+  try{
+    const data={
+      level:state.level,
+      question:state.question,
+      earned:state.earned,
+      correct:state.correct,
+      fiftyUsed:state.fiftyUsed,
+      skipped:state.skipped,
+      finished:state.finished
     };
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    localStorage.setItem("history_crorepati_save",JSON.stringify(data));
 
-    if (showMessage) {
-      alert("आपकी प्रोग्रेस सेव हो गई है।");
-    }
-
-    $("resumeBtn").disabled = false;
+    if(showAlert)alert("प्रोग्रेस सेव हो गई!");
 
     return true;
-  } catch (error) {
-    if (showMessage) {
-      alert("प्रोग्रेस सेव नहीं हो सकी। ब्राउज़र स्टोरेज उपलब्ध नहीं है।");
-    }
-
+  }catch(error){
+    if(showAlert)alert("प्रोग्रेस सेव नहीं हो सकी।");
     return false;
   }
 }
 
-function loadSavedState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+function resetGame(){
+  if(!confirm("क्या आप गेम रीसेट करना चाहते हैं?"))return;
 
-    if (!raw) return null;
+  clearInterval(timerId);
+  stopSpeech();
 
-    const data = JSON.parse(raw);
+  try{
+    localStorage.removeItem("history_crorepati_save");
+  }catch(error){}
 
-    if (
-      !data ||
-      !Number.isInteger(data.level) ||
-      data.level < 0 ||
-      data.level > TOTAL_LEVELS ||
-      !Number.isInteger(data.question) ||
-      data.question < 0 ||
-      data.question >= QUESTIONS_PER_LEVEL
-    ) {
-      return null;
-    }
-
-    return data;
-  } catch (error) {
-    return null;
-  }
+  startGame();
 }
 
-function resetProgress() {
-  const confirmed = confirm(
-    "क्या आप अपनी सेव की गई प्रोग्रेस हटाना चाहते हैं?"
-  );
+function toggleSound(){
+  soundEnabled=!soundEnabled;
 
-  if (!confirmed) return;
+  document.getElementById("soundToggle").textContent=
+    soundEnabled?"🔊 आवाज चालू है":"🔇 आवाज बंद है";
 
-  stopTimer();
-
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-  } catch (error) {
-    console.warn(error);
-  }
-
-  state.running = false;
-  state.finished = false;
-
-  $("game").classList.add("hidden");
-  $("endScreen").classList.add("hidden");
-  $("welcome").classList.remove("hidden");
-
-  $("resumeBtn").disabled = true;
-
-  startNewGame();
-}
-
-function goHome() {
-  stopTimer();
-
-  state.running = false;
-
-  $("game").classList.add("hidden");
-  $("endScreen").classList.add("hidden");
-  $("welcome").classList.remove("hidden");
-
-  updateStats();
-}
-
-function toggleSound() {
-  soundEnabled = !soundEnabled;
-
-  $("soundBtn").textContent =
-    soundEnabled ? "🔊 आवाज चालू है" : "🔇 आवाज बंद है";
-
-  if (!soundEnabled && "speechSynthesis" in window) {
-    window.speechSynthesis.cancel();
-  }
-
-  if (soundEnabled) {
+  if(!soundEnabled)stopSpeech();
+  else{
+    initAudio();
     speak("आवाज चालू हो गई है।");
   }
 }
 
-/* =====================================
-   START APPLICATION
-===================================== */
+/* ==========================================
+   9. BUTTON EVENTS
+========================================== */
 
-initialize();
+document.getElementById("startBtn").addEventListener("click",startGame);
+document.getElementById("nextBtn").addEventListener("click",nextQuestion);
+document.getElementById("fiftyBtn").addEventListener("click",useFifty);
+document.getElementById("skipBtn").addEventListener("click",skipQuestion);
+document.getElementById("repeatBtn").addEventListener("click",announceQuestion);
+document.getElementById("soundToggle").addEventListener("click",toggleSound);
+document.getElementById("resetBtn").addEventListener("click",resetGame);
+document.getElementById("restartBtn").addEventListener("click",startGame);
+
+buildLevels();
+
+state=newState();
+updateUI();
+
 </script>
-
 </body>
 </html>
