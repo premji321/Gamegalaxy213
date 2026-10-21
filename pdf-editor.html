@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
+
+<title>Math Voice Solver Pro</title>
+
+<style>
+:root {
+    --bg: #080d1c;
+    --panel: #111a30;
+    --panel2: #172440;
+    --accent: #7c5cff;
+    --accent2: #00d4ff;
+    --green: #24d98b;
+    --text: #f2f5ff;
+    --muted: #a8b4d1;
+    --border: rgba(255,255,255,.10);
+    --danger: #ff5470;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at top left, #172554 0, transparent 38%),
+        var(--bg);
+    color: var(--text);
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 28px 15px 20px;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 12px;
+    border-radius: 22px;
+    font-size: 35px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    box-shadow: 0 0 35px #7c5cff50;
+}
+
+header h1 {
+    font-size: clamp(25px, 5vw, 38px);
+    margin: 8px 0;
+    background: linear-gradient(90deg, #fff, #7cddff, #b9a7ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+header p {
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 8px auto;
+    max-width: 650px;
+}
+
+.container {
+    width: min(950px, 94%);
+    margin: 0 auto 40px;
+}
+
+.card {
+    background: linear-gradient(145deg, #131d35, #0f172b);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 15px 45px #00000022;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 21px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 10px;
+    color: #d8e0f8;
+    font-size: 14px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 115px;
+    resize: vertical;
+    background: #080f20;
+    border: 1px solid #34415f;
+    color: white;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 17px;
+    outline: none;
+    line-height: 1.7;
+    transition: .2s;
+}
+
+textarea:focus {
+    border-color: var(--accent2);
+    box-shadow: 0 0 0 3px #00d4ff15;
+}
+
+button, select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    transition: transform .15s, opacity .15s;
+}
+
+button:active {
+    transform: scale(.97);
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.btn {
+    padding: 12px 17px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.primary {
+    color: white;
+    background: linear-gradient(135deg, #7557ff, #4b8dff);
+}
+
+.voice {
+    color: white;
+    background: linear-gradient(135deg, #ed4264, #ff7b54);
+}
+
+.secondary {
+    color: #e6ecff;
+    background: #243351;
+    border: 1px solid #405071;
+}
+
+.success {
+    color: #061b14;
+    background: var(--green);
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 14px;
+    min-height: 20px;
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    background: #65718a;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dot.active {
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: .3; }
+}
+
+.examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.example {
+    padding: 9px 12px;
+    border-radius: 20px;
+    color: #dce5ff;
+    background: #202e4b;
+    border: 1px solid #344766;
+    font-size: 13px;
+}
+
+.example:hover {
+    border-color: var(--accent2);
+}
+
+.answer-card {
+    display: none;
+}
+
+.answer-card.show {
+    display: block;
+    animation: appear .35s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.question-box {
+    background: #080f20;
+    border: 1px solid #263957;
+    padding: 15px;
+    border-radius: 12px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.answer-heading {
+    color: var(--green);
+    font-size: 16px;
+    margin-top: 22px;
+}
+
+.final-answer {
+    margin-top: 12px;
+    padding: 19px;
+    border-radius: 14px;
+    border: 1px solid #24d98b66;
+    background: linear-gradient(135deg, #12382e, #102c2d);
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.steps {
+    margin-top: 12px;
+    display: grid;
+    gap: 12px;
+}
+
+.step {
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    background: #17243d;
+    border: 1px solid #2b3c5b;
+    border-radius: 13px;
+    padding: 15px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.step-number {
+    display: grid;
+    place-items: center;
+    min-width: 29px;
+    height: 29px;
+    border-radius: 9px;
+    background: #7457ff;
+    font-weight: bold;
+}
+
+.note {
+    color: #ffdb87;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 15px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    background: #17243d;
+    border: 1px solid #2b3c5b;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.history-item span {
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+}
+
+.history-item button {
+    flex-shrink: 0;
+}
+
+footer {
+    text-align: center;
+    color: #7f8ca9;
+    font-size: 12px;
+    padding: 20px;
+}
+
+@media (max-width: 550px) {
+    .card {
+        padding: 16px;
+        border-radius: 17px;
+    }
+
+    .button-row .btn {
+        flex: 1 1 42%;
+    }
+
+    .final-answer {
+        font-size: 19px;
+    }
+
+    header {
+        padding-top: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🧮</div>
+    <h1>Math Voice Solver Pro</h1>
+    <p>
+        बोलकर या लिखकर गणित का प्रश्न पूछिए।
+        Answer बटन दबाइए और पाइए उसका हल, चरण-दर-चरण।
+    </p>
+</header>
+
+<main class="container">
+
+    <section class="card">
+        <h2>🎤 अपना गणित का प्रश्न पूछें</h2>
+
+        <label class="label" for="question">
+            यहाँ अपना प्रश्न लिखें या माइक्रोफोन से बोलें
+        </label>
+
+        <textarea
+            id="question"
+            placeholder="उदाहरण: 25 का 20 प्रतिशत कितना है?&#10;या: 144 और 180 का HCF निकालिए।&#10;या: 2x + 5 = 15 हल कीजिए।"
+        ></textarea>
+
+        <div class="button-row">
+            <button class="btn voice" id="micButton" onclick="startVoice()">
+                🎙️ बोलकर पूछें
+            </button>
+
+            <button class="btn primary" onclick="solveQuestion()">
+                🧮 Answer निकालें
+            </button>
+
+            <button class="btn secondary" onclick="clearAll()">
+                🗑️ साफ करें
+            </button>
+        </div>
+
+        <div class="status" aria-live="polite">
+            <span class="dot" id="statusDot"></span>
+            <span id="statusText">अपना प्रश्न दर्ज कीजिए।</span>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>⚡ उदाहरण के प्रश्न</h2>
+        <p style="color:var(--muted);font-size:13px;line-height:1.7">
+            किसी उदाहरण पर क्लिक करके तुरंत उसका हल निकाल सकते हैं।
+        </p>
+
+        <div class="examples">
+            <button class="example" onclick="setExample('125 + 275')">
+                125 + 275
+            </button>
+
+            <button class="example" onclick="setExample('250 का 20 प्रतिशत')">
+                250 का 20%
+            </button>
+
+            <button class="example" onclick="setExample('144 और 180 का HCF')">
+                HCF
+            </button>
+
+            <button class="example" onclick="setExample('12 और 18 का LCM')">
+                LCM
+            </button>
+
+            <button class="example" onclick="setExample('2x + 5 = 15')">
+                समीकरण
+            </button>
+
+            <button class="example" onclick="setExample('√144')">
+                वर्गमूल
+            </button>
+
+            <button class="example" onclick="setExample('15 का वर्ग')">
+                वर्ग
+            </button>
+
+            <button class="example" onclick="setExample('252, 180, 108 का HCF')">
+                तीन संख्याओं का HCF
+            </button>
+        </div>
+    </section>
+
+    <section class="card answer-card" id="answerCard">
+        <h2>📘 प्रश्न का पूरा समाधान</h2>
+
+        <div class="label">आपका प्रश्न</div>
+        <div class="question-box" id="questionDisplay"></div>
+
+        <div class="answer-heading">📝 Step-by-Step Solution</div>
+        <div class="steps" id="steps"></div>
+
+        <div class="answer-heading">✅ अंतिम उत्तर</div>
+        <div class="final-answer" id="finalAnswer"></div>
+
+        <div class="button-row">
+            <button class="btn success" onclick="speakAnswer()">
+                🔊 उत्तर सुनें
+            </button>
+
+            <button class="btn secondary" onclick="copyAnswer()">
+                📋 पूरा हल कॉपी करें
+            </button>
+        </div>
+
+        <p class="note" id="answerNote"></p>
+    </section>
+
+    <section class="card">
+        <h2>🕘 हाल के प्रश्न</h2>
+        <div id="history">
+            <p style="color:var(--muted);font-size:14px">
+                आपके हल किए गए प्रश्न यहाँ दिखाई देंगे।
+            </p>
+        </div>
+
+        <div class="button-row">
+            <button class="btn secondary" onclick="clearHistory()">
+                इतिहास साफ करें
+            </button>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>ℹ️ इस्तेमाल कैसे करें?</h2>
+        <div class="steps">
+            <div class="step">
+                <span class="step-number">1</span>
+                <span>माइक्रोफोन बटन दबाकर गणित का प्रश्न बोलें या टेक्स्ट बॉक्स में लिखें।</span>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <span>Answer निकालें बटन दबाएँ।</span>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <span>नीचे पूरा हल, गणना के चरण और अंतिम उत्तर देखें।</span>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <span>चाहें तो उत्तर को आवाज में सुनें या कॉपी करें।</span>
+            </div>
+        </div>
+
+        <p class="note">
+            ध्यान दें: यह संस्करण सामान्य अंकगणित, प्रतिशत, HCF, LCM,
+            वर्गमूल और एक चर वाले कुछ सरल समीकरणों को हल करता है।
+            हर प्रकार के जटिल गणितीय प्रश्न को हल करने के लिए AI सेवा
+            जोड़ना आवश्यक हो सकता है।
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    Math Voice Solver Pro · Educational Mathematics Tool
+</footer>
+
+<script>
+"use strict";
+
+const questionInput = document.getElementById("question");
+const answerCard = document.getElementById("answerCard");
+const stepsBox = document.getElementById("steps");
+const finalAnswerBox = document.getElementById("finalAnswer");
+const questionDisplay = document.getElementById("questionDisplay");
+const statusText = document.getElementById("statusText");
+const statusDot = document.getElementById("statusDot");
+const micButton = document.getElementById("micButton");
+
+let recognition = null;
+let isListening = false;
+let lastSolution = null;
+
+function setStatus(message, active = false) {
+    statusText.textContent = message;
+    statusDot.classList.toggle("active", active);
+}
+
+function normalizeText(text) {
+    return String(text)
+        .toLowerCase()
+        .replace(/[०-९]/g, d =>
+            String("०१२३४५६७८९".indexOf(d))
+        )
+        .replace(/,/g, "")
+        .replace(/[?।]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function setExample(text) {
+    questionInput.value = text;
+    questionInput.focus();
+    solveQuestion();
+}
+
+function startVoice() {
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        setStatus(
+            "आपका ब्राउज़र Speech Recognition समर्थित नहीं करता। " +
+            "Chrome में HTTPS वेबसाइट खोलकर प्रयास करें।"
+        );
+        return;
+    }
+
+    if (isListening && recognition) {
+        recognition.stop();
+        return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "hi-IN";
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+
+    isListening = true;
+    micButton.textContent = "⏹️ सुनना बंद करें";
+    setStatus("सुन रहा हूँ... अब अपना प्रश्न बोलिए।", true);
+
+    recognition.onresult = function(event) {
+        let transcript = "";
+
+        for (
+            let i = event.resultIndex;
+            i < event.results.length;
+            i++
+        ) {
+            transcript += event.results[i][0].transcript;
+        }
+
+        questionInput.value = transcript;
+    };
+
+    recognition.onerror = function(event) {
+        let message = "आवाज पहचानने में समस्या हुई।";
+
+        if (event.error === "not-allowed") {
+            message = "माइक्रोफोन की अनुमति दीजिए।";
+        } else if (event.error === "no-speech") {
+            message = "कोई आवाज नहीं मिली। दोबारा प्रयास करें।";
+        } else if (event.error === "network") {
+            message = "नेटवर्क समस्या के कारण आवाज पहचान नहीं हुई।";
+        }
+
+        setStatus(message);
+    };
+
+    recognition.onend = function() {
+        isListening = false;
+        micButton.textContent = "🎙️ बोलकर पूछें";
+        statusDot.classList.remove("active");
+
+        if (questionInput.value.trim()) {
+            setStatus("प्रश्न दर्ज हो गया। अब Answer दबाएँ।");
+        }
+    };
+
+    try {
+        recognition.start();
+    } catch (error) {
+        isListening = false;
+        micButton.textContent = "🎙️ बोलकर पूछें";
+        setStatus("माइक्रोफोन शुरू नहीं हो सका। दोबारा प्रयास करें।");
+    }
+}
+
+/* सुरक्षित गणितीय expression parser */
+
+function tokenizeExpression(input) {
+    const tokens = [];
+    let i = 0;
+
+    while (i < input.length) {
+        const ch = input[i];
+
+        if (/\s/.test(ch)) {
+            i++;
+            continue;
+        }
+
+        if (/[0-9.]/.test(ch)) {
+            let start = i;
+            let dots = 0;
+
+            while (i < input.length && /[0-9.]/.test(input[i])) {
+                if (input[i] === ".") dots++;
+                i++;
+            }
+
+            if (dots > 1) {
+                throw new Error("संख्या का प्रारूप सही नहीं है।");
+            }
+
+            const value = Number(input.slice(start, i));
+
+            if (!Number.isFinite(value)) {
+                throw new Error("अमान्य संख्या।");
+            }
+
+            tokens.push({type: "number", value});
+            continue;
+        }
+
+        if ("+-*/^()%".includes(ch)) {
+            tokens.push({type: "symbol", value: ch});
+            i++;
+            continue;
+        }
+
+        throw new Error("इस गणितीय अभिव्यक्ति को समझ नहीं पाया।");
+    }
+
+    return tokens;
+}
+
+function parseExpression(input) {
+    const tokens = tokenizeExpression(input);
+    let pos = 0;
+
+    function peek(value) {
+        return tokens[pos] && tokens[pos].value === value;
+    }
+
+    function take() {
+        return tokens[pos++];
+    }
+
+    function primary() {
+        if (peek("+") || peek("-")) {
+            const op = take().value;
+            const value = primary();
+            return op === "-" ? -value : value;
+        }
+
+        if (peek("(")) {
+            take();
+
+            const value = addSub();
+
+            if (!peek(")")) {
+                throw new Error("ब्रैकेट बंद नहीं है।");
+            }
+
+            take();
+            return value;
+        }
+
+        const token = take();
+
+        if (!token || token.type !== "number") {
+            throw new Error("कृपया सही गणितीय प्रश्न लिखें।");
+        }
+
+        return token.value;
+    }
+
+    function power() {
+        let left = primary();
+
+        if (peek("^")) {
+            take();
+            left = Math.pow(left, unaryPower());
+        }
+
+        return left;
+    }
+
+    function unaryPower() {
+        if (peek("+")) {
+            take();
+            return unaryPower();
+        }
+
+        if (peek("-")) {
+            take();
+            return -unaryPower();
+        }
+
+        return power();
+    }
+
+    function multiplyDivide() {
+        let value = power();
+
+        while (peek("*") || peek("/") || peek("%")) {
+            const op = take().value;
+            const right = power();
+
+            if (op === "*") {
+                value *= right;
+            } else if (op === "/") {
+                if (right === 0) {
+                    throw new Error("शून्य से भाग नहीं दिया जा सकता।");
+                }
+                value /= right;
+            } else {
+                if (right === 0) {
+                    throw new Error("शून्य से भाग नहीं दिया जा सकता।");
+                }
+                value %= right;
+            }
+        }
+
+        return value;
+    }
+
+    function addSub() {
+        let value = multiplyDivide();
+
+        while (peek("+") || peek("-")) {
+            const op = take().value;
+            const right = multiplyDivide();
+
+            value = op === "+" ? value + right : value - right;
+        }
+
+        return value;
+    }
+
+    if (!tokens.length) {
+        throw new Error("पहले गणित का प्रश्न लिखें।");
+    }
+
+    const result = addSub();
+
+    if (pos !== tokens.length) {
+        throw new Error("प्रश्न का प्रारूप सही नहीं है।");
+    }
+
+    if (!Number.isFinite(result)) {
+        throw new Error("इस गणना का सीमित उत्तर नहीं मिला।");
+    }
+
+    return result;
+}
+
+function formatNumber(value) {
+    if (!Number.isFinite(value)) return String(value);
+
+    if (Math.abs(value) < 1e-10) return "0";
+
+    if (Number.isInteger(value)) {
+        return String(value);
+    }
+
+    return Number(value.toPrecision(12)).toString();
+}
+
+function gcd(a, b) {
+    a = Math.abs(Math.trunc(a));
+    b = Math.abs(Math.trunc(b));
+
+    while (b !== 0) {
+        const remainder = a % b;
+        a = b;
+        b = remainder;
+    }
+
+    return a;
+}
+
+function lcm(a, b) {
+    a = Math.abs(Math.trunc(a));
+    b = Math.abs(Math.trunc(b));
+
+    if (a === 0 || b === 0) return 0;
+
+    return Math.abs((a / gcd(a, b)) * b);
+}
+
+function parseNumbers(text) {
+    const normalized = normalizeText(text);
+
+    const matches = normalized.match(
+        /-?\d+(?:\.\d+)?/g
+    );
+
+    return matches ? matches.map(Number) : [];
+}
+
+function makeSolution(finalAnswer, steps, note = "") {
+    return {
+        finalAnswer: String(finalAnswer),
+        steps,
+        note
+    };
+}
+
+function solveHCF(text) {
+    const numbers = parseNumbers(text);
+
+    if (numbers.length < 2) {
+        throw new Error(
+            "HCF निकालने के लिए कम-से-कम दो संख्याएँ लिखें।"
+        );
+    }
+
+    if (numbers.some(n => !Number.isInteger(n))) {
+        throw new Error("इस HCF विकल्प में पूर्ण संख्याएँ दीजिए।");
+    }
+
+    let result = Math.abs(numbers[0]);
+    const steps = [];
+
+    for (let i = 1; i < numbers.length; i++) {
+        const a = result;
+        const b = Math.abs(numbers[i]);
+
+        steps.push(
+            `HCF(${a}, ${b}) निकालते हैं।`
+        );
+
+        let x = a;
+        let y = b;
+
+        while (y !== 0) {
+            const r = x % y;
+
+            steps.push(
+                `${x} = ${y} × ${Math.trunc(x / y)} + ${r}`
+            );
+
+            x = y;
+            y = r;
+        }
+
+        result = x;
+
+        steps.push(`इस चरण का HCF = ${result}`);
+    }
+
+    return makeSolution(
+        result,
+        steps,
+        "HCF का अर्थ है महत्तम समापवर्तक।"
+    );
+}
+
+function solveLCM(text) {
+    const numbers = parseNumbers(text);
+
+    if (numbers.length < 2) {
+        throw new Error(
+            "LCM निकालने के लिए कम-से-कम दो संख्याएँ लिखें।"
+        );
+    }
+
+    if (numbers.some(n => !Number.isInteger(n))) {
+        throw new Error("इस LCM विकल्प में पूर्ण संख्याएँ दीजिए।");
+    }
+
+    let result = Math.abs(numbers[0]);
+    const steps = [];
+
+    for (let i = 1; i < numbers.length; i++) {
+        const n = Math.abs(numbers[i]);
+        const h = gcd(result, n);
+
+        steps.push(
+            `LCM(${result}, ${n}) = (${result} × ${n}) ÷ HCF(${result}, ${n})`
+        );
+
+        result = lcm(result, n);
+
+        steps.push(
+            `HCF = ${h}, इसलिए LCM = ${result}`
+        );
+    }
+
+    return makeSolution(
+        result,
+        steps,
+        "LCM का अर्थ है लघुत्तम समापवर्त्य।"
+    );
+}
+
+function solveLinearEquation(text) {
+    const normalized = normalizeText(text)
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+        .replace(/−/g, "-");
+
+    const equation = normalized.split("=");
+
+    if (equation.length !== 2) {
+        throw new Error("समीकरण में एक बराबर (=) चिह्न होना चाहिए।");
+    }
+
+    const variableMatch = normalized.match(/[a-z]/);
+
+    if (!variableMatch) {
+        throw new Error("समीकरण में x जैसा एक चर होना चाहिए।");
+    }
+
+    const variable = variableMatch[0];
+
+    if (
+        new RegExp(`[a-wy-z]`, "i").test(
+            normalized.replaceAll(variable, "")
+        )
+    ) {
+        throw new Error("इस संस्करण में एक ही चर वाला समीकरण समर्थित है।");
+    }
+
+    function linearPart(expr) {
+        const compact = expr.replace(/\s+/g, "");
+
+        if (!compact) {
+            return {a: 0, b: 0};
+        }
+
+        let parts = compact.match(
+            /[+-]?[^+-]+/g
+        );
+
+        if (!parts) {
+            throw new Error("समीकरण का प्रारूप सही नहीं है।");
+        }
+
+        let a = 0;
+        let b = 0;
+
+        for (let part of parts) {
+            if (part.includes(variable)) {
+                let coefficient = part.replace(variable, "");
+
+                if (coefficient === "" || coefficient === "+") {
+                    coefficient = "1";
+                } else if (coefficient === "-") {
+                    coefficient = "-1";
+                }
+
+                if (
+                    !/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(coefficient)
+                ) {
+                    throw new Error(
+                        "इस समीकरण का गुणांक समझ नहीं पाया।"
+                    );
+                }
+
+                a += Number(coefficient);
+            } else {
+                b += parseExpression(part);
+            }
+        }
+
+        return {a, b};
+    }
+
+    const left = linearPart(equation[0]);
+    const right = linearPart(equation[1]);
+
+    const coefficient = left.a - right.a;
+    const constant = right.b - left.b;
+
+    const steps = [
+        `दिया गया समीकरण: ${text}`,
+        `चर वाले पद एक तरफ और संख्यात्मक पद दूसरी तरफ लाते हैं।`,
+        `${formatNumber(coefficient)}${variable} = ${formatNumber(constant)}`
+    ];
+
+    if (Math.abs(coefficient) < 1e-12) {
+        if (Math.abs(constant) < 1e-12) {
+            return makeSolution(
+                "अनंत हल",
+                steps.concat("यह समानता हर मान के लिए सही है।")
+            );
+        }
+
+        return makeSolution(
+            "कोई हल नहीं",
+            steps.concat("समीकरण असंगत है।")
+        );
+    }
+
+    const answer = constant / coefficient;
+
+    steps.push(
+        `${variable} = ${formatNumber(constant)} ÷ ${formatNumber(coefficient)}`
+    );
+
+    steps.push(
+        `${variable} = ${formatNumber(answer)}`
+    );
+
+    return makeSolution(
+        `${variable} = ${formatNumber(answer)}`,
+        steps,
+        "यह एक चर वाले रैखिक समीकरण का हल है।"
+    );
+}
+
+function solvePercentage(text) {
+    const normalized = normalizeText(text);
+    const numbers = parseNumbers(text);
+
+    if (numbers.length < 2) {
+        throw new Error(
+            "प्रतिशत निकालने के लिए प्रतिशत और संख्या दोनों लिखें।"
+        );
+    }
+
+    let percent;
+    let base;
+
+    const ofIndex = normalized.indexOf("%");
+
+    if (ofIndex >= 0) {
+        const before = normalized.slice(0, ofIndex);
+        const after = normalized.slice(ofIndex + 1);
+
+        const beforeNums = parseNumbers(before);
+        const afterNums = parseNumbers(after);
+
+        if (beforeNums.length && afterNums.length) {
+            percent = beforeNums[beforeNums.length - 1];
+            base = afterNums[0];
+        } else {
+            percent = numbers[0];
+            base = numbers[1];
+        }
+    } else {
+        percent = numbers[0];
+        base = numbers[1];
+    }
+
+    const result = percent * base / 100;
+
+    return makeSolution(
+        formatNumber(result),
+        [
+            `प्रतिशत = ${formatNumber(percent)}%`,
+            `कुल संख्या = ${formatNumber(base)}`,
+            `सूत्र: प्रतिशत × संख्या ÷ 100`,
+            `${formatNumber(percent)} × ${formatNumber(base)} ÷ 100`,
+            `= ${formatNumber(result)}`
+        ],
+        "यदि प्रश्न का आशय किसी संख्या का प्रतिशत निकालना है, तो यही गणना लागू होती है।"
+    );
+}
+
+function solveSquareRoot(text) {
+    const normalized = normalizeText(text);
+
+    let value;
+
+    const sqrtMatch = normalized.match(
+        /(?:sqrt|square root|वर्गमूल)\s*(?:of\s*)?(-?\d+(?:\.\d+)?)/i
+    );
+
+    const symbolMatch = normalized.match(
+        /√\s*(-?\d+(?:\.\d+)?)/
+    );
+
+    if (sqrtMatch) {
+        value = Number(sqrtMatch[1]);
+    } else if (symbolMatch) {
+        value = Number(symbolMatch[1]);
+    } else {
+        const numbers = parseNumbers(text);
+        if (!numbers.length) {
+            throw new Error("वर्गमूल निकालने के लिए संख्या लिखें।");
+        }
+        value = numbers[0];
+    }
+
+    if (value < 0) {
+        throw new Error(
+            "ऋणात्मक संख्या का वास्तविक वर्गमूल उपलब्ध नहीं है।"
+        );
+    }
+
+    const result = Math.sqrt(value);
+
+    const steps = [
+        `दी गई संख्या = ${formatNumber(value)}`,
+        `वर्गमूल का अर्थ है वह संख्या जिसका वर्ग दी गई संख्या हो।`,
+        `${formatNumber(result)} × ${formatNumber(result)} = ${formatNumber(value)}`
+    ];
+
+    if (!Number.isInteger(result)) {
+        steps[2] =
+            `√${formatNumber(value)} ≈ ${formatNumber(result)}`;
+    }
+
+    return makeSolution(
+        formatNumber(result),
+        steps
+    );
+}
+
+function solveSquare(text) {
+    const normalized = normalizeText(text);
+
+    let number;
+
+    const squareMatch = normalized.match(
+        /(-?\d+(?:\.\d+)?)\s*(?:का\s*)?(?:वर्ग|square|squared)/
+    );
+
+    if (squareMatch) {
+        number = Number(squareMatch[1]);
+    } else {
+        const numbers = parseNumbers(text);
+
+        if (!numbers.length) {
+            throw new Error("वर्ग निकालने के लिए संख्या लिखें।");
+        }
+
+        number = numbers[0];
+    }
+
+    const result = number * number;
+
+    return makeSolution(
+        formatNumber(result),
+        [
+            `दी गई संख्या = ${formatNumber(number)}`,
+            "वर्ग निकालने के लिए संख्या को उसी से गुणा करते हैं।",
+            `${formatNumber(number)} × ${formatNumber(number)} = ${formatNumber(result)}`
+        ]
+    );
+}
+
+function solveArithmetic(text) {
+    const normalized = normalizeText(text)
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+        .replace(/−/g, "-")
+        .replace(/plus/g, "+")
+        .replace(/minus/g, "-")
+        .replace(/multiplied by/g, "*")
+        .replace(/divided by/g, "/");
+
+    const arithmeticText = normalized
+        .replace(/=/g, " ")
+        .replace(/[^0-9+\-*/^().%\s]/g, " ")
+        .trim();
+
+    if (!arithmeticText || !/\d/.test(arithmeticText)) {
+        throw new Error(
+            "प्रश्न समझ नहीं आया। उदाहरण: 25 + 35 या 144 का वर्गमूल।"
+        );
+    }
+
+    const result = parseExpression(arithmeticText);
+
+    return makeSolution(
+        formatNumber(result),
+        [
+            `गणितीय अभिव्यक्ति: ${arithmeticText}`,
+            "पहले ब्रैकेट, फिर घात, उसके बाद गुणा/भाग और अंत में जोड़/घटाव किया जाता है।",
+            `गणना का परिणाम = ${formatNumber(result)}`
+        ],
+        "यह सामान्य गणितीय अभिव्यक्ति का मूल्य है।"
+    );
+}
+
+function solveQuestion() {
+    const original = questionInput.value.trim();
+
+    if (!original) {
+        setStatus("कृपया पहले अपना गणित का प्रश्न लिखें या बोलें।");
+        questionInput.focus();
+        return;
+    }
+
+    setStatus("गणना की जा रही है...");
+
+    try {
+        const text = normalizeText(original);
+
+        let solution;
+
+        if (
+            /\bhcf\b|\bgcd\b|महत्तम समापवर्तक|मसापवर्तक/.test(text)
+        ) {
+            solution = solveHCF(original);
+        } else if (
+            /\blcm\b|लघुत्तम समापवर्त्य/.test(text)
+        ) {
+            solution = solveLCM(original);
+        } else if (
+            /=/.test(original) &&
+            /[a-z]/i.test(original)
+        ) {
+            solution = solveLinearEquation(original);
+        } else if (
+            /प्रतिशत|percent|percentage|%/.test(text)
+        ) {
+            solution = solvePercentage(original);
+        } else if (
+            /वर्गमूल|square root|sqrt/.test(text) ||
+            original.includes("√")
+        ) {
+            solution = solveSquareRoot(original);
+        } else if (
+            /का वर्ग|वर्ग निकाल|squared|square of/.test(text)
+        ) {
+            solution = solveSquare(original);
+        } else {
+            solution = solveArithmetic(original);
+        }
+
+        displaySolution(original, solution);
+        saveHistory(original, solution.finalAnswer);
+
+        setStatus("हल सफलतापूर्वक तैयार हो गया।");
+    } catch (error) {
+        answerCard.classList.add("show");
+
+        questionDisplay.textContent = original;
+        stepsBox.innerHTML = "";
+
+        finalAnswerBox.textContent =
+            "⚠️ " + (error.message || "प्रश्न हल नहीं हो सका।");
+
+        document.getElementById("answerNote").textContent =
+            "प्रश्न को सरल गणितीय रूप में लिखकर दोबारा प्रयास करें। " +
+            "जटिल शब्दों वाले प्रश्नों के लिए AI सेवा की जरूरत हो सकती है।";
+
+        lastSolution = null;
+
+        setStatus("इस प्रश्न को हल नहीं कर पाया।");
+    }
+
+    answerCard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function displaySolution(question, solution) {
+    questionDisplay.textContent = question;
+    stepsBox.replaceChildren();
+
+    solution.steps.forEach((step, index) => {
+        const row = document.createElement("div");
+        row.className = "step";
+
+        const number = document.createElement("span");
+        number.className = "step-number";
+        number.textContent = index + 1;
+
+        const text = document.createElement("span");
+        text.textContent = step;
+
+        row.append(number, text);
+        stepsBox.appendChild(row);
+    });
+
+    finalAnswerBox.textContent = solution.finalAnswer;
+
+    document.getElementById("answerNote").textContent =
+        solution.note || "गणना सामान्य गणितीय नियमों के अनुसार की गई है।";
+
+    answerCard.classList.add("show");
+
+    lastSolution = {
+        question,
+        ...solution
+    };
+}
+
+function speakAnswer() {
+    if (!lastSolution) {
+        setStatus("सुनाने के लिए पहले कोई प्रश्न हल करें।");
+        return;
+    }
+
+    if (!("speechSynthesis" in window)) {
+        setStatus("आपका ब्राउज़र आवाज में उत्तर सुनाने की सुविधा समर्थित नहीं करता।");
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const text = [
+        "आपका प्रश्न है।",
+        lastSolution.question,
+        "चरण दर चरण हल।",
+        ...lastSolution.steps,
+        "अंतिम उत्तर।",
+        lastSolution.finalAnswer
+    ].join(". ");
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "hi-IN";
+    utterance.rate = 0.88;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    const voices = speechSynthesis.getVoices();
+
+    const hindiVoice = voices.find(v =>
+        v.lang && v.lang.toLowerCase().startsWith("hi")
+    );
+
+    if (hindiVoice) {
+        utterance.voice = hindiVoice;
+    }
+
+    speechSynthesis.speak(utterance);
+}
+
+async function copyAnswer() {
+    if (!lastSolution) {
+        setStatus("कॉपी करने के लिए पहले प्रश्न हल करें।");
+        return;
+    }
+
+    const text = [
+        "प्रश्न: " + lastSolution.question,
+        "",
+        "पूरा हल:",
+        ...lastSolution.steps.map((s, i) => `${i + 1}. ${s}`),
+        "",
+        "अंतिम उत्तर: " + lastSolution.finalAnswer
+    ].join("\n");
+
+    try {
+        await navigator.clipboard.writeText(text);
+        setStatus("पूरा हल क्लिपबोर्ड पर कॉपी हो गया।");
+    } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = text;
+
+        document.body.appendChild(area);
+        area.select();
+
+        const copied = document.execCommand("copy");
+        area.remove();
+
+        setStatus(
+            copied
+                ? "पूरा हल कॉपी हो गया।"
+                : "कॉपी नहीं हुआ। कृपया उत्तर स्वयं चुनकर कॉपी करें।"
+        );
+    }
+}
+
+function clearAll() {
+    if (recognition && isListening) {
+        recognition.stop();
+    }
+
+    questionInput.value = "";
+    answerCard.classList.remove("show");
+    questionDisplay.textContent = "";
+    stepsBox.replaceChildren();
+    finalAnswerBox.textContent = "";
+
+    lastSolution = null;
+
+    if ("speechSynthesis" in window) {
+        speechSynthesis.cancel();
+    }
+
+    setStatus("प्रश्न साफ कर दिया गया।");
+    questionInput.focus();
+}
+
+/* हाल के प्रश्नों को इस ब्राउज़र में सुरक्षित रखना */
+
+function getHistory() {
+    try {
+        return JSON.parse(
+            localStorage.getItem("mathSolverHistory") || "[]"
+        );
+    } catch {
+        return [];
+    }
+}
+
+function saveHistory(question, answer) {
+    const history = getHistory();
+
+    history.unshift({
+        question,
+        answer,
+        date: new Date().toLocaleString("hi-IN")
+    });
+
+    localStorage.setItem(
+        "mathSolverHistory",
+        JSON.stringify(history.slice(0, 10))
+    );
+
+    renderHistory();
+}
+
+function renderHistory() {
+    const box = document.getElementById("history");
+    const history = getHistory();
+
+    box.replaceChildren();
+
+    if (!history.length) {
+        const p = document.createElement("p");
+        p.style.color = "var(--muted)";
+        p.style.fontSize = "14px";
+        p.textContent = "अभी तक कोई प्रश्न हल नहीं किया गया है।";
+        box.appendChild(p);
+        return;
+    }
+
+    history.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "history-item";
+
+        const details = document.createElement("span");
+        details.textContent =
+            item.question + " = " + item.answer;
+
+        const button = document.createElement("button");
+        button.className = "btn secondary";
+        button.textContent = "फिर खोलें";
+
+        button.addEventListener("click", () => {
+            questionInput.value = item.question;
+            solveQuestion();
+        });
+
+        row.append(details, button);
+        box.appendChild(row);
+    });
+}
+
+function clearHistory() {
+    if (!confirm("क्या आप प्रश्नों का पूरा इतिहास मिटाना चाहते हैं?")) {
+        return;
+    }
+
+    localStorage.removeItem("mathSolverHistory");
+    renderHistory();
+    setStatus("प्रश्नों का इतिहास साफ कर दिया गया।");
+}
+
+/* Enter दबाने पर हल निकालें; Shift+Enter से नई लाइन */
+
+questionInput.addEventListener("keydown", event => {
+    if (
+        event.key === "Enter" &&
+        !event.shiftKey &&
+        !event.isComposing
+    ) {
+        event.preventDefault();
+        solveQuestion();
+    }
+});
+
+renderHistory();
+</script>
+
+</body>
+</html>
