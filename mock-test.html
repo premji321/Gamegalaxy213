@@ -1,229 +1,393 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10264b">
 
-<meta name="theme-color" content="#07111d">
-<title>Ultimate Car Racing</title>
+<title>Class 6 | Advanced MCQ Test</title>
 
 <style>
+:root {
+    --navy: #10264b;
+    --blue: #2459c4;
+    --light: #edf4ff;
+    --border: #dbe4f0;
+    --text: #24334d;
+    --green: #168047;
+    --red: #d93030;
+    --gold: #f3b62b;
+}
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background: #07111d;
-    color: white;
+    margin: 0;
     font-family: Arial, sans-serif;
-    overflow: hidden;
-    user-select: none;
-    touch-action: none;
+    color: var(--text);
+    background: #f2f5fb;
 }
 
-.game {
-    position: relative;
+header {
+    background: linear-gradient(135deg, #10264b, #2459c4);
+    color: white;
+    text-align: center;
+    padding: 28px 15px;
+}
+
+header h1 {
+    margin: 0 0 10px;
+    font-size: clamp(24px, 5vw, 36px);
+}
+
+header p {
+    margin: 6px 0;
+    line-height: 1.6;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #ffffff22;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+.container {
     width: 100%;
-    height: 100dvh;
-    max-width: 650px;
+    max-width: 1100px;
     margin: auto;
-    overflow: hidden;
-    background: #17613b;
+    padding: 16px;
 }
 
-canvas {
-    width: 100%;
-    height: 100%;
+.panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 15px #10264b0a;
+}
+
+h2, h3 {
+    color: var(--navy);
+}
+
+.instructions {
+    line-height: 1.8;
+    background: var(--light);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.info-card {
+    text-align: center;
+    padding: 15px 8px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.info-card strong {
     display: block;
-    touch-action: none;
+    color: var(--blue);
+    font-size: 24px;
+    margin-bottom: 5px;
 }
 
-.hud {
-    position: absolute;
-    z-index: 3;
-    top: 10px;
-    left: 10px;
-    right: 10px;
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 17px;
+    background: var(--blue);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    filter: brightness(.94);
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+button.secondary {
+    background: #e7edf8;
+    color: var(--navy);
+}
+
+button.success {
+    background: var(--green);
+}
+
+button.danger {
+    background: var(--red);
+}
+
+.start-area {
+    text-align: center;
+}
+
+.progress-wrap {
+    background: #e6ebf4;
+    height: 9px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0;
+    background: var(--green);
+    transition: width .2s;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 13px;
+}
+
+.question-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.question-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.question-number {
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.section-tag {
+    font-size: 11px;
+    color: #52627b;
+    background: #eef2f8;
+    border-radius: 20px;
+    padding: 6px 10px;
+}
+
+.question-text {
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 10px 0 17px;
+    font-weight: bold;
+}
+
+.options {
+    display: grid;
+    gap: 10px;
+}
+
+.option {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
-    gap: 6px;
-    pointer-events: none;
-}
-
-.hudGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.stat {
-    background: rgba(0,0,0,.76);
-    border: 1px solid rgba(51,225,255,.75);
-    padding: 7px 10px;
+    gap: 11px;
+    border: 1px solid #dbe3ef;
     border-radius: 9px;
-    min-width: 86px;
-    font-size: 10px;
-    letter-spacing: .6px;
-}
-
-.stat b {
-    display: block;
-    color: #42eeff;
-    font-size: 17px;
-    margin-top: 3px;
-}
-
-.topButtons {
-    display: flex;
-    gap: 6px;
-    pointer-events: auto;
-}
-
-.iconBtn {
-    width: 41px;
-    height: 41px;
-    border: 1px solid #9befff;
-    background: rgba(0,0,0,.78);
-    border-radius: 50%;
-    color: white;
-    font-size: 19px;
+    padding: 13px;
     cursor: pointer;
+    line-height: 1.6;
+    transition: .15s;
 }
 
-.controls {
-    position: absolute;
-    z-index: 4;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 22px;
-    pointer-events: none;
+.option:hover {
+    background: #f5f8ff;
+    border-color: #8da9e4;
 }
 
-.controlBtn {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.62);
-    border: 2px solid rgba(255,255,255,.8);
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-    pointer-events: auto;
-    touch-action: none;
+.option input {
+    margin-top: 5px;
+    accent-color: var(--blue);
+    flex-shrink: 0;
 }
 
-.controlBtn:active {
-    background: rgba(0,180,255,.8);
-    transform: scale(.94);
+.option.selected {
+    background: #edf4ff;
+    border-color: var(--blue);
 }
 
-.touchHint {
-    position: absolute;
-    bottom: 105px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    color: white;
-    background: rgba(0,0,0,.48);
-    border-radius: 20px;
-    padding: 7px 12px;
-    white-space: nowrap;
-    font-size: 12px;
-    pointer-events: none;
+.option.correct {
+    background: #e9f8ef;
+    border-color: var(--green);
 }
 
-.overlay {
-    position: absolute;
-    z-index: 10;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(1,7,17,.86);
-    padding: 20px;
+.option.wrong {
+    background: #fff0f0;
+    border-color: var(--red);
+}
+
+.explanation {
+    margin-top: 13px;
+    padding: 13px;
+    background: #f5f7fb;
+    border-radius: 8px;
+    line-height: 1.7;
+    border-left: 4px solid var(--blue);
 }
 
 .hidden {
     display: none !important;
 }
 
-.panel {
-    width: 100%;
-    max-width: 350px;
-    text-align: center;
-    padding: 25px 20px;
-    background: linear-gradient(145deg,#172d48,#08111e);
-    border: 2px solid #26dfff;
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(0,220,255,.18);
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    margin: 18px 0;
 }
 
-.logo {
-    font-size: 54px;
-    margin-bottom: 10px;
+.question-map {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 14px;
 }
 
-h1 {
-    color: #40edff;
-    font-size: 27px;
-    margin-bottom: 12px;
+.map-btn {
+    padding: 9px 0;
+    background: #e8edf5;
+    color: var(--navy);
+    border: 1px solid #d6dfec;
 }
 
-.panel p {
-    font-size: 14px;
-    color: #d6e0ee;
-    line-height: 1.7;
-    margin: 12px 0 20px;
+.map-btn.answered {
+    background: #d8f2e2;
+    border-color: #91d3a8;
 }
 
-.mainBtn {
-    width: 100%;
-    border: none;
-    border-radius: 11px;
-    padding: 14px;
-    font-size: 16px;
+.map-btn.current {
+    outline: 2px solid var(--blue);
+}
+
+.result-score {
+    font-size: 48px;
+    color: var(--blue);
     font-weight: bold;
-    color: #07121b;
-    background: linear-gradient(90deg,#24e7ff,#53ffb1);
-    cursor: pointer;
+    margin: 10px 0;
 }
 
-.smallText {
-    font-size: 12px;
-    color: #9db1c8;
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.result-box {
+    padding: 16px 8px;
+    background: #f4f7fc;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.result-box strong {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 6px;
+}
+
+.green-text {
+    color: var(--green);
+}
+
+.red-text {
+    color: var(--red);
+}
+
+.review-item {
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 12px 0;
     line-height: 1.7;
-    margin-top: 15px;
 }
 
-@media (max-height: 600px) {
-    .controls {
-        bottom: 8px;
+.review-item.correct-review {
+    border-left: 5px solid var(--green);
+}
+
+.review-item.wrong-review {
+    border-left: 5px solid var(--red);
+}
+
+footer {
+    background: var(--navy);
+    color: white;
+    padding: 22px 12px;
+    text-align: center;
+    line-height: 1.7;
+}
+
+@media(max-width:600px) {
+    .container {
+        padding: 9px;
     }
 
-    .controlBtn {
-        width: 55px;
-        height: 55px;
+    .panel, .question-card {
+        padding: 14px;
     }
 
-    .touchHint {
-        bottom: 72px;
+    .info-grid {
+        grid-template-columns: 1fr;
     }
 
-    .panel {
-        padding: 15px;
+    .result-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .logo {
-        font-size: 35px;
+    .question-map {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .question-text {
+        font-size: 16px;
+    }
+
+    button {
+        padding: 11px 13px;
+    }
+}
+
+@media print {
+    header, #instructionsPanel, #testPanel, .no-print, footer {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    #resultPanel {
+        display: block !important;
     }
 }
 </style>
@@ -231,972 +395,743 @@ h1 {
 
 <body>
 
-<div class="game" id="game">
+<header>
+    <h1>📘 CLASS 6 MCQ TEST</h1>
+    <p>The Earth – Our World</p>
+    <p>Geography | Advanced Practice Examination</p>
+    <div class="badge">40 Challenging Questions • 40 Marks</div>
+</header>
 
-<canvas id="canvas"></canvas>
+<main class="container">
 
-<div class="hud">
+    <section class="panel" id="instructionsPanel">
 
-    <div class="hudGroup">
-        <div class="stat">
-            DISTANCE
-            <b id="score">0 m</b>
+        <h2>📝 Examination Instructions</h2>
+
+        <div class="instructions">
+            <b>Topics Covered</b>
+            <ul>
+                <li>Reading Maps, Directions and Scale</li>
+                <li>Map Symbols and Colour Codes</li>
+                <li>Solar System, Continents and Oceans</li>
+                <li>Latitudes, Longitudes and the Globe</li>
+                <li>GMT, Time Zones and Location</li>
+                <li>Climate Variation and Arctic Climate</li>
+            </ul>
+
+            <b>Rules</b>
+            <ul>
+                <li>Total questions: 40</li>
+                <li>Each correct answer carries 1 mark.</li>
+                <li>There is no negative marking.</li>
+                <li>Select one option for each question.</li>
+                <li>Submit the test to view your score and explanations.</li>
+            </ul>
         </div>
 
-        <div class="stat">
-            HIGH SCORE
-            <b id="highScore">0 m</b>
+        <div class="info-grid">
+            <div class="info-card">
+                <strong>40</strong>
+                Questions
+            </div>
+
+            <div class="info-card">
+                <strong>40</strong>
+                Maximum Marks
+            </div>
+
+            <div class="info-card">
+                <strong>100%</strong>
+                Maximum Score
+            </div>
         </div>
-    </div>
 
-    <div class="hudGroup">
-        <div class="stat">
-            SPEED
-            <b id="speed">0 km/h</b>
+        <div class="start-area" style="margin-top:22px">
+            <button onclick="startTest()">🚀 Start Examination</button>
         </div>
 
-        <div class="topButtons">
-            <button class="iconBtn" id="soundBtn"
-            aria-label="Sound on or off">🔊</button>
+    </section>
 
-            <button class="iconBtn" id="musicBtn"
-            aria-label="Music on or off">🎵</button>
 
-            <button class="iconBtn" id="pauseBtn"
-            aria-label="Pause">Ⅱ</button>
+    <section id="testPanel" class="hidden">
+
+        <div class="panel">
+
+            <div class="progress-info">
+                <span id="progressText">Question 1 of 40</span>
+                <span id="answeredText">Answered: 0/40</span>
+            </div>
+
+            <div class="progress-wrap">
+                <div id="progressBar"></div>
+            </div>
+
+            <h3>Question Navigator</h3>
+
+            <p style="font-size:13px;line-height:1.6">
+                Green = Answered. Tap any number to jump to that question.
+            </p>
+
+            <div id="questionMap" class="question-map"></div>
+
         </div>
-    </div>
 
-</div>
+        <div id="questionContainer"></div>
 
-<div class="touchHint" id="touchHint">
-    👆 स्क्रीन पर उँगली खिसकाकर कार चलाएँ
-</div>
+        <div class="navigation no-print">
+            <button class="secondary" onclick="previousQuestion()">
+                ◀ Previous
+            </button>
 
-<div class="controls">
-    <button class="controlBtn" id="leftBtn"
-    aria-label="Move left">◀</button>
+            <button class="secondary" onclick="nextQuestion()">
+                Next ▶
+            </button>
 
-    <div style="font-size:11px;color:white;
-    background:rgba(0,0,0,.35);padding:7px;
-    border-radius:8px">
-        STEER
-    </div>
-
-    <button class="controlBtn" id="rightBtn"
-    aria-label="Move right">▶</button>
-</div>
-
-<div class="overlay" id="startScreen">
-    <div class="panel">
-        <div class="logo">🏎️</div>
-        <h1>ULTIMATE RACING</h1>
-
-        <p>
-            तेज रफ्तार में कार चलाएँ।<br>
-            दूसरी गाड़ियों से बचें और अपना रिकॉर्ड बनाएँ!
-        </p>
-
-        <button class="mainBtn" id="startBtn">
-            🏁 START RACE
-        </button>
-
-        <div class="smallText">
-            👆 उँगली से स्क्रीन पर Left/Right करें<br>
-            ◀ ▶ बटन से भी कार चला सकते हैं<br>
-            🔊 इंजन साउंड उपलब्ध
+            <button class="success" onclick="submitTest()">
+                Submit Test ✓
+            </button>
         </div>
-    </div>
-</div>
 
-<div class="overlay hidden" id="pauseScreen">
-    <div class="panel">
-        <div class="logo">⏸️</div>
-        <h1>GAME PAUSED</h1>
-        <p>रेस रोक दी गई है।</p>
-        <button class="mainBtn" id="resumeBtn">
-            ▶ RESUME
-        </button>
-    </div>
-</div>
+    </section>
 
-<div class="overlay hidden" id="gameOverScreen">
-    <div class="panel">
-        <div class="logo">💥</div>
-        <h1>RACE OVER!</h1>
 
-        <p>
-            आपकी रेस समाप्त हो गई।<br>
-            दूरी: <b id="finalScore">0 m</b><br>
-            हाई स्कोर: <b id="finalHigh">0 m</b>
-        </p>
+    <section id="resultPanel" class="panel hidden">
 
-        <button class="mainBtn" id="restartBtn">
-            🔄 RESTART RACE
-        </button>
-    </div>
-</div>
+        <h2>🏆 Examination Result</h2>
 
-</div>
+        <div style="text-align:center">
+            <div class="result-score" id="scoreDisplay">0/40</div>
+            <h3 id="resultMessage">Test Completed</h3>
+            <p id="percentageDisplay"></p>
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-box">
+                <strong class="green-text" id="correctCount">0</strong>
+                Correct
+            </div>
+
+            <div class="result-box">
+                <strong class="red-text" id="wrongCount">0</strong>
+                Incorrect
+            </div>
+
+            <div class="result-box">
+                <strong id="unansweredCount">0</strong>
+                Unanswered
+            </div>
+
+            <div class="result-box">
+                <strong id="totalMarks">40</strong>
+                Total Marks
+            </div>
+
+        </div>
+
+        <div class="no-print" style="display:flex;gap:10px;flex-wrap:wrap">
+            <button onclick="showReview()">📖 Review Answers</button>
+            <button class="secondary" onclick="window.print()">🖨️ Print Result</button>
+            <button class="success" onclick="restartTest()">🔄 Retake Test</button>
+        </div>
+
+        <div id="reviewContainer" class="hidden">
+            <h2>Answer Review & Explanations</h2>
+            <div id="reviewContent"></div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <strong>CLASS 6 ADVANCED MCQ TEST</strong><br>
+    The Earth – Our World<br>
+    Learn • Practise • Improve
+</footer>
+
 
 <script>
-"use strict";
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const questions = [
 
-const $ = id => document.getElementById(id);
+{
+section:"Maps and Directions",
+q:"A traveller moves 5 km north, then 5 km east, and finally 5 km south. Where is the traveller relative to the starting point?",
+o:["5 km west","5 km east","5 km north","At the starting point"],
+a:1,
+e:"The northward and southward movements cancel each other. The traveller remains 5 km east of the starting point."
+},
 
-const scoreEl = $("score");
-const speedEl = $("speed");
+{
+section:"Maps and Scale",
+q:"On a map, 1 cm represents 100 km on the ground. The distance between two cities measures 7.5 cm. What is the actual distance?",
+o:["75 km","750 km","7,500 km","750 metres"],
+a:1,
+e:"Actual distance = 7.5 × 100 = 750 km."
+},
 
-let W = 0;
-let H = 0;
-let DPR = 1;
+{
+section:"Maps and Scale",
+q:"The actual distance between two places is 1,200 km. If the scale is 1 cm = 80 km, what distance should be shown on the map?",
+o:["12 cm","15 cm","18 cm","20 cm"],
+a:1,
+e:"Map distance = 1,200 ÷ 80 = 15 cm."
+},
 
-let running = false;
-let paused = false;
-let started = false;
+{
+section:"Maps and Scale",
+q:"A map has a representative fraction scale of 1:2,000,000. What actual distance does 4 cm on the map represent?",
+o:["8 km","20 km","40 km","80 km"],
+a:2,
+e:"1 cm represents 2,000,000 cm = 20 km. Therefore, 4 cm represents 80 km. Note: the correct calculation gives 80 km, so option D is correct.",
+fix:3
+},
 
-let score = 0;
-let speed = 250;
-let roadOffset = 0;
-let spawnTimer = 0;
-let lastTime = 0;
+{
+section:"Map Symbols",
+q:"Which statement about map symbols and colours is correct?",
+o:["Blue represents plains, while green represents water bodies.","Blue represents water bodies, while green represents plains.","All maps use identical symbols without a legend.","Symbols are used only for roads and buildings."],
+a:1,
+e:"According to the textbook, blue is used for water bodies and green for plains."
+},
 
-let traffic = [];
-let particles = [];
+{
+section:"Map Symbols",
+q:"A map shows a hospital, a railway station, a river and a forest. Which feature most directly identifies a possible natural water barrier?",
+o:["Hospital symbol","Railway station symbol","River symbol","Forest symbol"],
+a:2,
+e:"A river is a water feature and may form a natural barrier to movement."
+},
 
-let soundEnabled = true;
-let musicEnabled = true;
+{
+section:"Map Symbols",
+q:"A student wants to identify the meaning of an unfamiliar symbol on a map. Which feature should the student consult first?",
+o:["Scale","Legend or key","Compass","Latitude"],
+a:1,
+e:"The map key or legend explains the symbols and colours used on a map."
+},
 
-let audioCtx = null;
-let engineOsc = null;
-let engineGain = null;
-let engineFilter = null;
-let masterGain = null;
-let musicTimer = null;
-let musicStep = 0;
+{
+section:"Directions",
+q:"A traveller faces north. He turns 90° clockwise and then 180° anticlockwise. Which direction is he facing?",
+o:["North","South","East","West"],
+a:3,
+e:"North → East after a 90° clockwise turn. A 180° anticlockwise turn from east leads to west."
+},
 
-let highScore = 0;
+{
+section:"Directions",
+q:"Which pair consists entirely of intermediate directions?",
+o:["North and South","East and West","Northeast and Southwest","North and Northwest only"],
+a:2,
+e:"Northeast and southwest are intermediate directions, lying between the principal directions."
+},
 
-try {
-    highScore = Number(
-        localStorage.getItem("ultimateCarHighScore")
-    ) || 0;
-} catch(e) {}
+{
+section:"Directions",
+q:"A person travels towards the southwest. Which two principal directions does this movement combine?",
+o:["North and East","South and West","North and West","South and East"],
+a:1,
+e:"Southwest lies between south and west."
+},
 
-$("highScore").textContent = highScore + " m";
+{
+section:"Solar System",
+q:"Which sequence correctly lists the planets from the Sun outward?",
+o:["Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune","Venus, Mercury, Earth, Mars, Saturn, Jupiter, Uranus, Neptune","Mercury, Earth, Venus, Mars, Jupiter, Uranus, Saturn, Neptune","Mercury, Venus, Mars, Earth, Jupiter, Saturn, Neptune, Uranus"],
+a:0,
+e:"The correct order is Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune."
+},
 
-const player = {
-    x: 0,
-    y: 0,
-    w: 44,
-    h: 77,
-    moveSpeed: 390
-};
+{
+section:"Solar System",
+q:"Which planet is third from the Sun and is known to support life?",
+o:["Venus","Mars","Earth","Jupiter"],
+a:2,
+e:"Earth is the third planet from the Sun and the only planet currently known to support life."
+},
 
-const keys = {
-    left: false,
-    right: false
-};
+{
+section:"Continents",
+q:"Which statement about the continents is correct?",
+o:["Australia is entirely surrounded by other continents.","Antarctica has permanent human habitation across the entire continent.","Asia is the largest continent.","Europe is the largest continent."],
+a:2,
+e:"Asia is the largest continent by land area."
+},
 
-const road = {
-    left: 0,
-    right: 0,
-    width: 0
-};
+{
+section:"Continents",
+q:"Which continent is traditionally described in the textbook as the Dark Continent?",
+o:["Asia","Africa","South America","Antarctica"],
+a:1,
+e:"The textbook uses the historical term Dark Continent for Africa. The term is outdated and reflects historical European perspectives."
+},
 
-/* =========================
-   SOUND SYSTEM
-========================= */
+{
+section:"Oceans",
+q:"Which ocean is the largest and deepest?",
+o:["Atlantic Ocean","Indian Ocean","Arctic Ocean","Pacific Ocean"],
+a:3,
+e:"The Pacific Ocean is the largest ocean and contains the deepest known oceanic region."
+},
 
-function initAudio() {
-    if (!audioCtx) {
-        const AudioContextClass =
-            window.AudioContext || window.webkitAudioContext;
+{
+section:"Oceans",
+q:"Which statement correctly distinguishes the Indian Ocean from the other oceans mentioned in the textbook?",
+o:["It is the largest ocean.","It is the youngest ocean.","It is the only ocean named after a country.","It is the coldest ocean."],
+a:2,
+e:"The Indian Ocean is named after India, a country."
+},
 
-        if (!AudioContextClass) {
-            alert("इस ब्राउज़र में Web Audio सपोर्ट उपलब्ध नहीं है।");
-            return;
+{
+section:"Oceans",
+q:"Which ocean is described as the youngest ocean in the textbook?",
+o:["Pacific Ocean","Atlantic Ocean","Indian Ocean","Arctic Ocean"],
+a:1,
+e:"The textbook identifies the Atlantic Ocean as the youngest ocean."
+},
+
+{
+section:"Earth",
+q:"How many continents and oceans are recognised in the classification used by this textbook?",
+o:["Seven continents and five oceans","Five continents and seven oceans","Six continents and four oceans","Eight continents and five oceans"],
+a:0,
+e:"The textbook identifies seven continents and five oceans."
+},
+
+{
+section:"Latitudes",
+q:"Which imaginary line divides Earth into the Northern and Southern Hemispheres?",
+o:["Prime Meridian","Equator","Tropic of Cancer","Arctic Circle"],
+a:1,
+e:"The Equator is at 0° latitude and divides Earth into the Northern and Southern Hemispheres."
+},
+
+{
+section:"Latitudes",
+q:"Which statement about parallels of latitude is correct?",
+o:["They join the North Pole to the South Pole.","They are imaginary circles drawn from east to west.","All parallels have equal circumference.","They are longitude lines."],
+a:1,
+e:"Parallels are imaginary east-west circles. Their circumference decreases towards the poles."
+},
+
+{
+section:"Longitudes",
+q:"Which statement about meridians is correct?",
+o:["They are parallel circles that never meet.","They run from east to west.","They join the North Pole and the South Pole.","Their maximum separation occurs at the poles."],
+a:2,
+e:"Meridians are lines of longitude that join the North and South Poles."
+},
+
+{
+section:"Latitudes",
+q:"At which latitude is the Tropic of Cancer located?",
+o:["23½° N","23½° S","66½° N","66½° S"],
+a:0,
+e:"The Tropic of Cancer lies at approximately 23½° north latitude."
+},
+
+{
+section:"Latitudes",
+q:"At which latitude is the Antarctic Circle located?",
+o:["23½° N","23½° S","66½° N","66½° S"],
+a:3,
+e:"The Antarctic Circle lies at approximately 66½° south latitude."
+},
+
+{
+section:"Longitudes",
+q:"The Prime Meridian passes through which location?",
+o:["Paris","Greenwich, near London","New Delhi","Puducherry"],
+a:1,
+e:"The Prime Meridian is the 0° longitude line passing through Greenwich, near London."
+},
+
+{
+section:"Coordinates",
+q:"A place is located at 12° N and 80° E. What do these coordinates indicate?",
+o:["12° longitude west and 80° latitude south","12° latitude north and 80° longitude east","12° longitude east and 80° latitude north","12° latitude south and 80° longitude west"],
+a:1,
+e:"The first coordinate indicates latitude; the second indicates longitude."
+},
+
+{
+section:"Coordinates",
+q:"What is the grid on a globe?",
+o:["A network of roads and rivers","A network formed by parallels and meridians","A collection of continents and oceans","A system of climate zones only"],
+a:1,
+e:"The network of parallels and meridians is called a grid. It helps locate places."
+},
+
+{
+section:"Longitudes",
+q:"Which statement about the number of meridians is correct according to the textbook?",
+o:["There are 180 meridians, all east of Greenwich.","There are 360 meridians, with 180 on each side of the Prime Meridian.","There are 181 meridians, including the Equator.","There are 90 meridians in each hemisphere."],
+a:1,
+e:"The textbook describes 360 meridians in total, with 180 on either side of the Prime Meridian."
+},
+
+{
+section:"Longitudes",
+q:"Why does the distance between two meridians decrease as we move towards the poles?",
+o:["Meridians become shorter and stop at the Equator.","Meridians converge towards the poles.","Parallels become longer near the poles.","Earth stops rotating near the poles."],
+a:1,
+e:"All meridians converge at the North and South Poles, so the distance between them decreases."
+},
+
+{
+section:"Latitudes and Longitudes",
+q:"Which statement correctly describes the relationship between parallels and meridians?",
+o:["They never intersect.","They intersect at right angles.","They always intersect at an angle of 45°.","They both run north to south."],
+a:1,
+e:"Meridians and parallels intersect at right angles on a globe."
+},
+
+{
+section:"Latitudes and Longitudes",
+q:"Which continent is crossed by the Equator, Tropic of Cancer, Tropic of Capricorn and Prime Meridian?",
+o:["Asia","South America","Africa","Australia"],
+a:2,
+e:"Africa is the continent crossed by all four of these reference lines."
+},
+
+{
+section:"Time Zones",
+q:"India lies at UTC/GMT +5:30. If it is 12:00 noon at Greenwich, what is the time in India?",
+o:["5:30 a.m.","12:00 noon","5:30 p.m.","6:30 p.m."],
+a:2,
+e:"India is 5 hours and 30 minutes ahead of Greenwich. Noon + 5 hours 30 minutes = 5:30 p.m."
+},
+
+{
+section:"Time Zones",
+q:"If it is 6:00 p.m. in India, what is the corresponding time at Greenwich, ignoring seasonal clock changes?",
+o:["12:30 p.m.","11:30 a.m.","12:30 a.m.","6:00 p.m."],
+a:0,
+e:"Subtract 5 hours and 30 minutes from 6:00 p.m. to get 12:30 p.m."
+},
+
+{
+section:"Longitudes",
+q:"Which statement correctly describes the Prime Meridian and the International Date Line?",
+o:["They are the same line at 0° longitude.","The Prime Meridian is at 0°, while the International Date Line lies approximately along 180° longitude.","Both are located at the Equator.","Both are parallels of latitude."],
+a:1,
+e:"The Prime Meridian is at 0° longitude. The International Date Line generally follows the 180° meridian, with deviations."
+},
+
+{
+section:"Longitudes",
+q:"A student claims that 180° E and 180° W are two different meridians. Which response is correct?",
+o:["The student is correct because east and west are opposite directions.","The student is incorrect because 180° E and 180° W refer to the same meridian.","The student is correct only in the Northern Hemisphere.","Meridians are measured in kilometres."],
+a:1,
+e:"The 180° E and 180° W designations refer to the same meridian."
+},
+
+{
+section:"Climate",
+q:"Why are places near the Equator generally hotter than places near the poles?",
+o:["The Equator is closer to the Moon.","The Sun's rays fall more directly near the Equator and spread over a smaller area.","The poles receive no sunlight throughout the year.","Earth rotates faster at the Equator."],
+a:1,
+e:"More direct sunlight concentrates solar energy over a smaller area near the Equator."
+},
+
+{
+section:"Climate",
+q:"Which pair is correctly matched with its typical climate characteristics?",
+o:["Ladakh — generally cold and dry; Cherrapunji — very wet","Mumbai — polar climate; Jaipur — equatorial climate","Cherrapunji — Arctic climate; Ladakh — tropical rainforest climate","Jaipur — permanently snow-covered; Mumbai — tundra climate"],
+a:0,
+e:"Ladakh has a cold, relatively dry climate, while Cherrapunji is famous for very heavy rainfall."
+},
+
+{
+section:"Arctic Climate",
+q:"Which statement about Greenland is correct?",
+o:["It is the world's largest island and lies near the North Pole.","It is a continent located at the South Pole.","It is a small island in the Indian Ocean.","It is located south of Antarctica."],
+a:0,
+e:"Greenland is the world's largest island and is located in the Arctic region."
+},
+
+{
+section:"Arctic Climate",
+q:"Which combination correctly describes Greenland's climate?",
+o:["Hot summers and warm winters","Cold winters and cool, short summers","Heavy rainfall and hot weather throughout the year","Warm winters and extremely hot summers"],
+a:1,
+e:"Greenland has an Arctic climate, with long cold winters and cool summers that last only a short time."
+},
+
+{
+section:"Arctic Climate",
+q:"Which statement about Greenland's land is correct?",
+o:["The entire island is free of ice throughout the year.","The northern part is covered with ice sheets throughout the year, while ice-free land occurs in coastal areas.","Its interior consists entirely of tropical forests.","There is no ice anywhere in Greenland."],
+a:1,
+e:"Large ice sheets cover much of Greenland, while ice-free areas are found mainly near the coasts."
+},
+
+{
+section:"Arctic Climate",
+q:"Which explanation best accounts for the unusual length of day and night in parts of Greenland?",
+o:["Greenland is located near the Equator.","Earth does not rotate in polar regions.","Its Arctic location produces extreme seasonal variations in daylight.","Greenland lies on the Prime Meridian."],
+a:2,
+e:"Because Greenland lies in the Arctic region, some places experience very long summer days and long winter periods with little or no sunlight."
+}
+
+];
+
+// Correct the map-scale question: 4 cm at 1:2,000,000 = 80 km.
+questions[3].a = 3;
+questions[3].e =
+"At a scale of 1:2,000,000, 1 cm represents 20 km. Therefore, 4 cm represents 4 × 20 = 80 km.";
+
+let answers = new Array(questions.length).fill(null);
+let currentQuestion = 0;
+let testStarted = false;
+let testSubmitted = false;
+
+function startTest() {
+    testStarted = true;
+
+    document.getElementById("instructionsPanel")
+        .classList.add("hidden");
+
+    document.getElementById("testPanel")
+        .classList.remove("hidden");
+
+    renderQuestionMap();
+    showQuestion(0);
+}
+
+function renderQuestionMap() {
+    const map = document.getElementById("questionMap");
+    map.innerHTML = "";
+
+    questions.forEach((q, i) => {
+        const btn = document.createElement("button");
+
+        btn.textContent = i + 1;
+        btn.className = "map-btn";
+
+        if (answers[i] !== null) {
+            btn.classList.add("answered");
         }
 
-        audioCtx = new AudioContextClass();
-
-        masterGain = audioCtx.createGain();
-        masterGain.gain.value = soundEnabled ? 0.65 : 0;
-
-        masterGain.connect(audioCtx.destination);
-
-        // Engine oscillator
-        engineOsc = audioCtx.createOscillator();
-        engineOsc.type = "sawtooth";
-
-        engineFilter = audioCtx.createBiquadFilter();
-        engineFilter.type = "lowpass";
-        engineFilter.frequency.value = 180;
-
-        engineGain = audioCtx.createGain();
-        engineGain.gain.value = 0.0001;
-
-        engineOsc.connect(engineFilter);
-        engineFilter.connect(engineGain);
-        engineGain.connect(masterGain);
-
-        engineOsc.start();
-    }
-
-    if (audioCtx.state === "suspended") {
-        audioCtx.resume();
-    }
-
-    updateSound();
-}
-
-function updateSound() {
-    if (!audioCtx || !masterGain) return;
-
-    masterGain.gain.setTargetAtTime(
-        soundEnabled ? 0.65 : 0,
-        audioCtx.currentTime,
-        0.06
-    );
-
-    if (engineOsc && running && !paused) {
-        engineGain.gain.setTargetAtTime(
-            0.075,
-            audioCtx.currentTime,
-            0.08
-        );
-    } else if (engineGain) {
-        engineGain.gain.setTargetAtTime(
-            0.0001,
-            audioCtx.currentTime,
-            0.08
-        );
-    }
-}
-
-function updateEngine() {
-    if (!audioCtx || !engineOsc || !running || paused) return;
-
-    const frequency = 48 + speed * 0.48;
-
-    engineOsc.frequency.setTargetAtTime(
-        frequency,
-        audioCtx.currentTime,
-        0.08
-    );
-
-    engineFilter.frequency.setTargetAtTime(
-        120 + speed * 1.15,
-        audioCtx.currentTime,
-        0.1
-    );
-}
-
-function playTone(freq, duration, type = "sine", volume = 0.2) {
-    if (!audioCtx || !soundEnabled) return;
-
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-    gain.gain.setValueAtTime(volume, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioCtx.currentTime + duration
-    );
-
-    osc.connect(gain);
-    gain.connect(masterGain);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
-}
-
-function crashSound() {
-    if (!audioCtx || !soundEnabled) return;
-
-    playTone(110, 0.45, "sawtooth", 0.35);
-    setTimeout(() => {
-        playTone(65, 0.35, "square", 0.2);
-    }, 100);
-}
-
-function startMusic() {
-    stopMusic();
-
-    if (!audioCtx || !musicEnabled) return;
-
-    const melody = [
-        261.63, 329.63, 392.00, 329.63,
-        293.66, 349.23, 440.00, 349.23,
-        261.63, 329.63, 392.00, 523.25,
-        440.00, 392.00, 329.63, 293.66
-    ];
-
-    musicTimer = setInterval(() => {
-        if (!running || paused || !musicEnabled || !audioCtx) {
-            return;
+        if (i === currentQuestion) {
+            btn.classList.add("current");
         }
 
-        const note = melody[musicStep % melody.length];
-        musicStep++;
+        btn.onclick = () => showQuestion(i);
 
-        // Background music uses a quieter separate tone.
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-
-        osc.type = "triangle";
-        osc.frequency.value = note;
-
-        gain.gain.setValueAtTime(
-            0.045,
-            audioCtx.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            audioCtx.currentTime + 0.22
-        );
-
-        osc.connect(gain);
-        gain.connect(masterGain);
-
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.23);
-
-    }, 250);
-}
-
-function stopMusic() {
-    if (musicTimer) {
-        clearInterval(musicTimer);
-        musicTimer = null;
-    }
-}
-
-$("soundBtn").addEventListener("click", () => {
-    soundEnabled = !soundEnabled;
-
-    $("soundBtn").textContent = soundEnabled ? "🔊" : "🔇";
-
-    initAudio();
-    updateSound();
-});
-
-$("musicBtn").addEventListener("click", () => {
-    musicEnabled = !musicEnabled;
-
-    $("musicBtn").textContent = musicEnabled ? "🎵" : "🔕";
-
-    initAudio();
-
-    if (musicEnabled) {
-        startMusic();
-    } else {
-        stopMusic();
-    }
-});
-
-/* =========================
-   SCREEN / ROAD
-========================= */
-
-function resize() {
-    const rect = canvas.getBoundingClientRect();
-
-    W = rect.width;
-    H = rect.height;
-
-    DPR = Math.min(window.devicePixelRatio || 1, 2);
-
-    canvas.width = Math.round(W * DPR);
-    canvas.height = Math.round(H * DPR);
-
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-
-    // Much wider road
-    road.width = Math.min(W * 0.94, 610);
-
-    road.left = (W - road.width) / 2;
-    road.right = road.left + road.width;
-
-    player.w = Math.max(30, W * 0.075);
-    player.h = player.w * 1.72;
-
-    player.y = H * 0.72;
-
-    if (!started) {
-        player.x = W / 2;
-    }
-
-    player.x = clamp(
-        player.x,
-        road.left + player.w / 2 + 8,
-        road.right - player.w / 2 - 8
-    );
-
-    draw();
-}
-
-window.addEventListener("resize", resize);
-
-function clamp(v, min, max) {
-    return Math.max(min, Math.min(max, v));
-}
-
-function roundedRect(x, y, w, h, r, color) {
-    ctx.fillStyle = color;
-
-    ctx.beginPath();
-    ctx.roundRect(x, y, w, h, r);
-    ctx.fill();
-}
-
-function drawRoad() {
-    ctx.fillStyle = "#17613b";
-    ctx.fillRect(0, 0, W, H);
-
-    // Grass stripes
-    for (let y = -90; y < H + 90; y += 90) {
-        const yy = (y + roadOffset * 0.35) % (H + 90);
-
-        ctx.fillStyle = "#1e7145";
-
-        ctx.fillRect(0, yy, road.left, 35);
-        ctx.fillRect(
-            road.right,
-            yy,
-            W - road.right,
-            35
-        );
-    }
-
-    // Road surface
-    const gradient = ctx.createLinearGradient(
-        road.left, 0, road.right, 0
-    );
-
-    gradient.addColorStop(0, "#343b45");
-    gradient.addColorStop(0.5, "#484f59");
-    gradient.addColorStop(1, "#343b45");
-
-    ctx.fillStyle = gradient;
-    ctx.fillRect(road.left, 0, road.width, H);
-
-    // Shoulder
-    ctx.fillStyle = "#d8d8d8";
-    ctx.fillRect(road.left, 0, 6, H);
-    ctx.fillRect(road.right - 6, 0, 6, H);
-
-    // Wider road: four lanes
-    const laneCount = 4;
-    const laneWidth = road.width / laneCount;
-
-    // Lane markings
-    ctx.fillStyle = "#f5f0cc";
-
-    for (let lane = 1; lane < laneCount; lane++) {
-        const x = road.left + laneWidth * lane;
-
-        for (let y = -75; y < H + 75; y += 95) {
-            const yy = (y + roadOffset) % (H + 95);
-
-            ctx.fillRect(x - 2, yy, 4, 48);
-        }
-    }
-
-    // Roadside markers
-    for (let y = -50; y < H + 50; y += 70) {
-        const yy = (y + roadOffset) % (H + 70);
-
-        roundedRect(
-            road.left - 9, yy, 7, 28, 2, "#ff4242"
-        );
-
-        roundedRect(
-            road.right + 2, yy, 7, 28, 2, "#ff4242"
-        );
-    }
-}
-
-/* =========================
-   CAR DRAWING
-========================= */
-
-function drawCar(x, y, w, h, color, isPlayer = false) {
-    ctx.save();
-    ctx.translate(x, y);
-
-    // Shadow
-    roundedRect(
-        -w / 2 + 3,
-        -h / 2 + 5,
-        w,
-        h,
-        8,
-        "rgba(0,0,0,.35)"
-    );
-
-    // Wheels
-    roundedRect(
-        -w / 2 - 3, -h * .32, 7, h * .23, 3, "#101318"
-    );
-
-    roundedRect(
-        w / 2 - 4, -h * .32, 7, h * .23, 3, "#101318"
-    );
-
-    roundedRect(
-        -w / 2 - 3, h * .13, 7, h * .23, 3, "#101318"
-    );
-
-    roundedRect(
-        w / 2 - 4, h * .13, 7, h * .23, 3, "#101318"
-    );
-
-    // Car body
-    const body = ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
-
-    if (isPlayer) {
-        body.addColorStop(0, "#0075b8");
-        body.addColorStop(.45, "#20dfff");
-        body.addColorStop(1, "#00629c");
-    } else {
-        body.addColorStop(0, "#7d1820");
-        body.addColorStop(.45, color);
-        body.addColorStop(1, "#77101b");
-    }
-
-    roundedRect(-w / 2, -h / 2, w, h, 8, body);
-
-    // Windshields
-    roundedRect(
-        -w * .34, -h * .25, w * .68, h * .23, 5, "#182c40"
-    );
-
-    roundedRect(
-        -w * .31, h * .08, w * .62, h * .20, 4, "#20394d"
-    );
-
-    // White racing stripes
-    if (isPlayer) {
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(-w * .05, -h * .44, w * .1, h * .88);
-    }
-
-    // Headlights
-    roundedRect(
-        -w * .37, -h * .43, w * .22, h * .07, 2, "#fff3bf"
-    );
-
-    roundedRect(
-        w * .15, -h * .43, w * .22, h * .07, 2, "#fff3bf"
-    );
-
-    // Rear lights
-    roundedRect(
-        -w * .37, h * .38, w * .22, h * .07, 2, "#ff233c"
-    );
-
-    roundedRect(
-        w * .15, h * .38, w * .22, h * .07, 2, "#ff233c"
-    );
-
-    ctx.restore();
-}
-
-/* =========================
-   TRAFFIC
-========================= */
-
-function spawnTraffic() {
-    const laneCount = 4;
-    const laneWidth = road.width / laneCount;
-
-    const lane = Math.floor(Math.random() * laneCount);
-
-    const carW = Math.max(28, W * .065);
-    const carH = carW * 1.7;
-
-    const colors = [
-        "#ff3b51",
-        "#ffd23f",
-        "#9a62ff",
-        "#f2f4f8",
-        "#ff7d32",
-        "#47e08b"
-    ];
-
-    traffic.push({
-        x: road.left + laneWidth * (lane + .5),
-        y: -carH - 10,
-        w: carW,
-        h: carH,
-        color: colors[
-            Math.floor(Math.random() * colors.length)
-        ],
-        extraSpeed: Math.random() * 80 - 15
+        map.appendChild(btn);
     });
 }
 
-function collides(a, b) {
-    return (
-        Math.abs(a.x - b.x) < (a.w + b.w) * .39 &&
-        Math.abs(a.y - b.y) < (a.h + b.h) * .40
-    );
-}
+function showQuestion(index) {
+    if (index < 0 || index >= questions.length) return;
 
-/* =========================
-   TOUCH STEERING
-========================= */
+    currentQuestion = index;
 
-// Touch anywhere on the gameplay canvas and move finger.
-// The car follows the finger horizontally.
-let touchActive = false;
-let touchStartX = 0;
-let carStartX = 0;
+    const q = questions[index];
+    const container = document.getElementById("questionContainer");
 
-canvas.addEventListener("pointerdown", function(e) {
-    if (!running || paused) return;
+    let html = `
+        <div class="question-card">
+            <div class="question-top">
+                <span class="question-number">
+                    Question ${index + 1} of ${questions.length}
+                </span>
+                <span class="section-tag">${q.section}</span>
+            </div>
 
-    // Start drag steering
-    touchActive = true;
-    touchStartX = e.clientX;
-    carStartX = player.x;
+            <div class="question-text">${q.q}</div>
+            <div class="options">
+    `;
 
-    try {
-        canvas.setPointerCapture(e.pointerId);
-    } catch(err) {}
+    q.o.forEach((option, i) => {
+        const selected = answers[index] === i;
 
-    e.preventDefault();
-});
+        html += `
+            <label class="option ${selected ? "selected" : ""}">
+                <input type="radio"
+                    name="answer${index}"
+                    value="${i}"
+                    ${selected ? "checked" : ""}
+                    onchange="selectAnswer(${index},${i})">
 
-canvas.addEventListener("pointermove", function(e) {
-    if (!touchActive || !running || paused) return;
-
-    const rect = canvas.getBoundingClientRect();
-
-    const dx = e.clientX - touchStartX;
-
-    player.x = clamp(
-        carStartX + dx,
-        road.left + player.w / 2 + 8,
-        road.right - player.w / 2 - 8
-    );
-
-    e.preventDefault();
-});
-
-function stopTouch() {
-    touchActive = false;
-}
-
-canvas.addEventListener("pointerup", stopTouch);
-canvas.addEventListener("pointercancel", stopTouch);
-canvas.addEventListener("lostpointercapture", stopTouch);
-
-// Holding left/right buttons
-function bindButton(id, direction) {
-    const btn = $(id);
-
-    btn.addEventListener("pointerdown", e => {
-        e.preventDefault();
-
-        keys[direction] = true;
-
-        try {
-            btn.setPointerCapture(e.pointerId);
-        } catch(err) {}
+                <span><b>${String.fromCharCode(65+i)}.</b>
+                ${option}</span>
+            </label>
+        `;
     });
 
-    function release(e) {
-        e.preventDefault();
-        keys[direction] = false;
-    }
+    html += `
+            </div>
+        </div>
+    `;
 
-    btn.addEventListener("pointerup", release);
-    btn.addEventListener("pointercancel", release);
-    btn.addEventListener("lostpointercapture", release);
+    container.innerHTML = html;
 
-    btn.addEventListener("contextmenu", e => e.preventDefault());
+    document.getElementById("progressText").textContent =
+        `Question ${index + 1} of ${questions.length}`;
+
+    document.getElementById("answeredText").textContent =
+        `Answered: ${answers.filter(a => a !== null).length}/${questions.length}`;
+
+    document.getElementById("progressBar").style.width =
+        ((index + 1) / questions.length * 100) + "%";
+
+    renderQuestionMap();
+    window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-bindButton("leftBtn", "left");
-bindButton("rightBtn", "right");
+function selectAnswer(questionIndex, optionIndex) {
+    if (testSubmitted) return;
 
-/* =========================
-   KEYBOARD
-========================= */
+    answers[questionIndex] = optionIndex;
+    showQuestion(questionIndex);
+}
 
-document.addEventListener("keydown", e => {
-    if ([
-        "ArrowLeft",
-        "ArrowRight",
-        "ArrowUp",
-        " "
-    ].includes(e.key)) {
-        e.preventDefault();
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        showQuestion(currentQuestion - 1);
     }
+}
 
-    if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
-        keys.left = true;
+function nextQuestion() {
+    if (currentQuestion < questions.length - 1) {
+        showQuestion(currentQuestion + 1);
     }
+}
 
-    if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
-        keys.right = true;
-    }
+function submitTest() {
+    if (testSubmitted) return;
 
-    if (e.key.toLowerCase() === "p" || e.key === "Escape") {
-        togglePause();
-    }
-});
+    const unanswered = answers.filter(a => a === null).length;
 
-document.addEventListener("keyup", e => {
-    if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
-        keys.left = false;
-    }
-
-    if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
-        keys.right = false;
-    }
-});
-
-/* =========================
-   GAME UPDATE
-========================= */
-
-function update(dt) {
-    if (!running || paused) return;
-
-    dt = Math.min(dt, .035);
-
-    speed = Math.min(760, 250 + score * .28);
-
-    roadOffset = (roadOffset + speed * dt) % 1200;
-
-    let direction = 0;
-
-    if (keys.left) direction -= 1;
-    if (keys.right) direction += 1;
-
-    if (direction !== 0 && !touchActive) {
-        player.x += direction * player.moveSpeed * dt;
-    }
-
-    player.x = clamp(
-        player.x,
-        road.left + player.w / 2 + 8,
-        road.right - player.w / 2 - 8
-    );
-
-    spawnTimer -= dt;
-
-    if (spawnTimer <= 0) {
-        spawnTraffic();
-
-        spawnTimer = Math.max(
-            .48,
-            1.1 - score / 7000
+    if (unanswered > 0) {
+        const proceed = confirm(
+            `You have ${unanswered} unanswered question(s).\n\n` +
+            "Do you want to submit the test anyway?"
         );
+
+        if (!proceed) return;
     }
 
-    for (let i = traffic.length - 1; i >= 0; i--) {
-        const car = traffic[i];
+    testSubmitted = true;
 
-        car.y += (speed * .78 + car.extraSpeed) * dt;
+    let correct = 0;
 
-        if (car.y > H + 100) {
-            traffic.splice(i, 1);
-            continue;
+    questions.forEach((q, i) => {
+        if (answers[i] === q.a) {
+            correct++;
         }
+    });
 
-        if (collides(player, car)) {
-            endGame();
-            return;
-        }
+    const wrong = answers.filter((a, i) =>
+        a !== null && a !== questions[i].a
+    ).length;
+
+    const score = correct;
+    const percentage = (score / questions.length) * 100;
+
+    document.getElementById("testPanel").classList.add("hidden");
+    document.getElementById("resultPanel").classList.remove("hidden");
+
+    document.getElementById("scoreDisplay").textContent =
+        `${score}/${questions.length}`;
+
+    document.getElementById("correctCount").textContent = correct;
+    document.getElementById("wrongCount").textContent = wrong;
+    document.getElementById("unansweredCount").textContent = unanswered;
+    document.getElementById("totalMarks").textContent = questions.length;
+
+    document.getElementById("percentageDisplay").textContent =
+        `Percentage: ${percentage.toFixed(2)}%`;
+
+    let message;
+
+    if (percentage >= 90) {
+        message = "Outstanding! Excellent preparation! 🏆";
+    } else if (percentage >= 75) {
+        message = "Very Good! Keep practising! 🌟";
+    } else if (percentage >= 60) {
+        message = "Good effort. Revise the difficult topics! 👍";
+    } else if (percentage >= 40) {
+        message = "Keep learning. Practice will improve your score.";
+    } else {
+        message = "Revise the chapter carefully and try again.";
     }
 
-    score += speed * dt * .035;
+    document.getElementById("resultMessage").textContent = message;
 
-    scoreEl.textContent = Math.floor(score) + " m";
-    speedEl.textContent = Math.floor(speed) + " km/h";
-
-    updateEngine();
+    window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-/* =========================
-   RENDERING
-========================= */
+function showReview() {
+    const box = document.getElementById("reviewContainer");
+    const content = document.getElementById("reviewContent");
 
-function draw() {
-    if (!W || !H) return;
+    box.classList.remove("hidden");
+    content.innerHTML = "";
 
-    ctx.clearRect(0, 0, W, H);
+    questions.forEach((q, i) => {
+        const userAnswer = answers[i];
+        const isCorrect = userAnswer === q.a;
 
-    drawRoad();
+        const div = document.createElement("div");
 
-    for (const car of traffic) {
-        drawCar(
-            car.x, car.y, car.w, car.h, car.color, false
-        );
-    }
+        div.className = "review-item " +
+            (isCorrect ? "correct-review" : "wrong-review");
 
-    if (started) {
-        drawCar(
-            player.x,
-            player.y,
-            player.w,
-            player.h,
-            "#20dfff",
-            true
-        );
-    }
+        let html = `
+            <b>Q${i+1}. ${q.q}</b><br>
+            <span class="section-tag">${q.section}</span>
+            <br><br>
+        `;
+
+        q.o.forEach((option, j) => {
+            let marker = "";
+
+            if (j === q.a) {
+                marker = " ✓ Correct answer";
+            } else if (j === userAnswer && !isCorrect) {
+                marker = " ✗ Your answer";
+            }
+
+            html += `
+                <div style="margin:5px 0">
+                    ${String.fromCharCode(65+j)}. ${option}
+                    <b>${marker}</b>
+                </div>
+            `;
+        });
+
+        html += `
+            <div class="explanation">
+                <b>Explanation:</b> ${q.e}
+            </div>
+        `;
+
+        div.innerHTML = html;
+        content.appendChild(div);
+    });
+
+    box.scrollIntoView({behavior: "smooth"});
 }
 
-function loop(timestamp) {
-    if (!lastTime) lastTime = timestamp;
+function restartTest() {
+    answers = new Array(questions.length).fill(null);
+    currentQuestion = 0;
+    testStarted = false;
+    testSubmitted = false;
 
-    const dt = Math.min((timestamp - lastTime) / 1000, .05);
+    document.getElementById("resultPanel").classList.add("hidden");
+    document.getElementById("reviewContainer").classList.add("hidden");
+    document.getElementById("instructionsPanel").classList.remove("hidden");
 
-    lastTime = timestamp;
+    document.getElementById("questionContainer").innerHTML = "";
 
-    if (running && !paused) {
-        update(dt);
-    }
-
-    draw();
-
-    requestAnimationFrame(loop);
+    window.scrollTo({top: 0, behavior: "smooth"});
 }
-
-/* =========================
-   GAME CONTROLS
-========================= */
-
-function startGame() {
-    initAudio();
-
-    score = 0;
-    speed = 250;
-    roadOffset = 0;
-    spawnTimer = .5;
-
-    traffic = [];
-    particles = [];
-
-    keys.left = false;
-    keys.right = false;
-
-    touchActive = false;
-
-    player.x = W / 2;
-    player.y = H * .72;
-
-    started = true;
-    running = true;
-    paused = false;
-
-    $("startScreen").classList.add("hidden");
-    $("pauseScreen").classList.add("hidden");
-    $("gameOverScreen").classList.add("hidden");
-
-    $("pauseBtn").textContent = "Ⅱ";
-
-    lastTime = 0;
-
-    updateSound();
-
-    if (musicEnabled) {
-        startMusic();
-    }
-
-    draw();
-}
-
-function togglePause() {
-    if (!running) return;
-
-    paused = !paused;
-
-    $("pauseScreen").classList.toggle("hidden", !paused);
-
-    $("pauseBtn").textContent = paused ? "▶" : "Ⅱ";
-
-    keys.left = false;
-    keys.right = false;
-    touchActive = false;
-
-    updateSound();
-
-    if (paused) {
-        stopMusic();
-    } else if (musicEnabled) {
-        startMusic();
-    }
-
-    lastTime = 0;
-}
-
-function endGame() {
-    running = false;
-    paused = false;
-    touchActive = false;
-
-    crashSound();
-
-    highScore = Math.max(
-        highScore,
-        Math.floor(score)
-    );
-
-    try {
-        localStorage.setItem(
-            "ultimateCarHighScore",
-            highScore
-        );
-    } catch(e) {}
-
-    $("finalScore").textContent =
-        Math.floor(score) + " m";
-
-    $("finalHigh").textContent =
-        highScore + " m";
-
-    $("highScore").textContent =
-        highScore + " m";
-
-    $("gameOverScreen").classList.remove("hidden");
-
-    $("pauseScreen").classList.add("hidden");
-
-    updateSound();
-    stopMusic();
-
-    if (navigator.vibrate) {
-        navigator.vibrate([100, 50, 180]);
-    }
-}
-
-$("startBtn").addEventListener("click", startGame);
-$("restartBtn").addEventListener("click", startGame);
-$("resumeBtn").addEventListener("click", togglePause);
-$("pauseBtn").addEventListener("click", togglePause);
-
-/* Pause automatically when tab is hidden */
-document.addEventListener("visibilitychange", () => {
-    if (document.hidden && running && !paused) {
-        togglePause();
-    }
-});
-
-/* Start */
-resize();
-requestAnimationFrame(loop);
 
 </script>
 
