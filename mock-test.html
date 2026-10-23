@@ -5,374 +5,306 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#10264b">
 
-<title>Class 7 Science | Advanced MCQ Test</title>
+<title>Advanced MCQ Paper Generator</title>
 
 <style>
 :root {
     --navy: #10264b;
     --blue: #2459c4;
     --light: #edf4ff;
+    --white: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
     --border: #dbe4f0;
-    --text: #24334d;
-    --green: #168047;
-    --red: #d93030;
+    --green: #15803d;
+    --red: #dc2626;
+    --shadow: 0 12px 35px rgba(16,38,75,.10);
 }
 
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6fc;
     color: var(--text);
-    background: #f2f5fb;
+    line-height: 1.6;
 }
 
 header {
     background: linear-gradient(135deg, #10264b, #2459c4);
     color: white;
+    padding: 28px 16px;
     text-align: center;
-    padding: 28px 15px;
 }
 
 header h1 {
-    margin: 0 0 10px;
-    font-size: clamp(24px, 5vw, 36px);
+    font-size: clamp(23px, 4vw, 34px);
+    margin-bottom: 8px;
 }
 
 header p {
-    margin: 6px 0;
-    line-height: 1.6;
-}
-
-.badge {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    background: #ffffff22;
-    margin-top: 8px;
-    font-size: 13px;
-}
-
-.container {
-    width: 100%;
-    max-width: 1100px;
-    margin: auto;
-    padding: 16px;
-}
-
-.panel {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 15px #10264b0a;
-}
-
-h2, h3 {
-    color: var(--navy);
-}
-
-.instructions {
-    line-height: 1.8;
-    background: var(--light);
-    border-radius: 10px;
-    padding: 15px;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.info-card {
-    text-align: center;
-    padding: 15px 8px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-}
-
-.info-card strong {
-    display: block;
-    color: var(--blue);
-    font-size: 24px;
-    margin-bottom: 5px;
-}
-
-button {
-    border: none;
-    border-radius: 8px;
-    padding: 12px 17px;
-    background: var(--blue);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+    opacity: .9;
     font-size: 14px;
 }
 
-button:hover {
-    filter: brightness(.94);
+.container {
+    width: min(1100px, 94%);
+    margin: 28px auto;
 }
 
-button:disabled {
-    opacity: .5;
-    cursor: not-allowed;
-}
-
-button.secondary {
-    background: #e7edf8;
-    color: var(--navy);
-}
-
-button.success {
-    background: var(--green);
-}
-
-.start-area {
-    text-align: center;
-}
-
-.progress-wrap {
-    background: #e6ebf4;
-    height: 9px;
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 12px 0;
-}
-
-#progressBar {
-    height: 100%;
-    width: 0;
-    background: var(--green);
-    transition: width .2s;
-}
-
-.progress-info {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-    font-size: 13px;
-}
-
-.question-card {
+.card {
     background: white;
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    padding: 20px;
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    color: var(--navy);
+    font-size: 20px;
+}
+
+.number {
+    display: inline-flex;
+    width: 35px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue);
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.section-description {
+    color: var(--muted);
+    font-size: 13px;
     margin-bottom: 16px;
 }
 
-.question-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.question-number {
-    color: var(--blue);
-    font-weight: bold;
-}
-
-.section-tag {
-    font-size: 11px;
-    color: #52627b;
-    background: #eef2f8;
-    border-radius: 20px;
-    padding: 6px 10px;
-}
-
-.question-text {
-    font-size: 17px;
-    line-height: 1.7;
-    margin: 10px 0 17px;
-    font-weight: bold;
-}
-
-.options {
+.checkbox-grid {
     display: grid;
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    gap: 12px;
 }
 
 .option {
     display: flex;
-    align-items: flex-start;
-    gap: 11px;
-    border: 1px solid #dbe3ef;
-    border-radius: 9px;
-    padding: 13px;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
     cursor: pointer;
-    line-height: 1.6;
-    transition: .15s;
+    background: white;
+    transition: .2s;
+    min-height: 48px;
 }
 
 .option:hover {
-    background: #f5f8ff;
-    border-color: #8da9e4;
+    border-color: var(--blue);
+    background: var(--light);
+}
+
+.option:has(input:checked) {
+    background: #e8f0ff;
+    border-color: var(--blue);
+    color: var(--navy);
+    font-weight: 600;
 }
 
 .option input {
-    margin-top: 5px;
+    width: 18px;
+    height: 18px;
     accent-color: var(--blue);
     flex-shrink: 0;
 }
 
-.option.selected {
-    background: #edf4ff;
-    border-color: var(--blue);
+.option span {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.subject-group {
+    border: 1px solid var(--border);
+    padding: 18px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+}
+
+.subject-group h3 {
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-size: 17px;
+}
+
+.subject-group h3 small {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.empty-message {
+    padding: 18px;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--muted);
+    text-align: center;
+    border: 1px dashed var(--border);
+}
+
+.level-easy:has(input:checked) {
+    background: #dcfce7;
+    border-color: #16a34a;
+}
+
+.level-moderate:has(input:checked) {
+    background: #fef3c7;
+    border-color: #d97706;
+}
+
+.level-hard:has(input:checked) {
+    background: #fee2e2;
+    border-color: #dc2626;
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+button {
+    border: none;
+    padding: 13px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: .2s;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+.primary-btn {
+    background: var(--blue);
+    color: white;
+    flex: 1;
+}
+
+.secondary-btn {
+    background: #e2e8f0;
+    color: var(--navy);
+}
+
+.success-btn {
+    background: var(--green);
+    color: white;
+}
+
+.danger-btn {
+    background: #fee2e2;
+    color: var(--red);
 }
 
 .hidden {
     display: none !important;
 }
 
-.navigation {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-between;
-    margin: 18px 0;
-}
-
-.question-map {
-    display: grid;
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-    gap: 7px;
-    margin-top: 14px;
-}
-
-.map-btn {
-    padding: 9px 0;
-    background: #e8edf5;
-    color: var(--navy);
-    border: 1px solid #d6dfec;
-}
-
-.map-btn.answered {
-    background: #d8f2e2;
-    border-color: #91d3a8;
-}
-
-.map-btn.current {
-    outline: 2px solid var(--blue);
-}
-
-.result-score {
-    font-size: 48px;
-    color: var(--blue);
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-.result-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.result-box {
-    padding: 16px 8px;
-    background: #f4f7fc;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.result-box strong {
-    display: block;
-    font-size: 25px;
-    margin-bottom: 6px;
-}
-
-.green-text {
-    color: var(--green);
-}
-
-.red-text {
-    color: var(--red);
-}
-
-.review-item {
-    padding: 15px;
+.summary-box {
     border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.summary-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-bottom: 1px solid var(--border);
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    background: #f1f5f9;
+    font-weight: bold;
+    padding: 14px;
+}
+
+.summary-value {
+    padding: 14px;
+    overflow-wrap: anywhere;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #e8f0ff;
+    color: #1745a0;
+    border-radius: 20px;
+    font-size: 12px;
+    margin: 3px;
+}
+
+.notice {
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    padding: 15px;
     border-radius: 10px;
-    margin: 12px 0;
-    line-height: 1.7;
-}
-
-.review-item.correct-review {
-    border-left: 5px solid var(--green);
-}
-
-.review-item.wrong-review {
-    border-left: 5px solid var(--red);
-}
-
-.explanation {
-    margin-top: 13px;
-    padding: 13px;
-    background: #f5f7fb;
-    border-radius: 8px;
-    line-height: 1.7;
-    border-left: 4px solid var(--blue);
+    color: #92400e;
+    font-size: 14px;
+    margin-top: 18px;
 }
 
 footer {
-    background: var(--navy);
-    color: white;
-    padding: 22px 12px;
     text-align: center;
-    line-height: 1.7;
+    padding: 25px;
+    color: var(--muted);
+    font-size: 13px;
 }
 
 @media(max-width:600px) {
-    .container {
-        padding: 9px;
+    .card {
+        padding: 17px;
     }
 
-    .panel, .question-card {
-        padding: 14px;
+    .checkbox-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
     }
 
-    .info-grid {
+    .option {
+        padding: 10px;
+    }
+
+    .summary-row {
         grid-template-columns: 1fr;
     }
 
-    .result-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .summary-label {
+        padding-bottom: 5px;
     }
 
-    .question-map {
-        grid-template-columns: repeat(5, 1fr);
-    }
-
-    .question-text {
-        font-size: 16px;
+    .summary-value {
+        padding-top: 5px;
     }
 
     button {
-        padding: 11px 13px;
-    }
-}
-
-@media print {
-    header, #instructionsPanel, #testPanel, .no-print, footer {
-        display: none !important;
-    }
-
-    body {
-        background: white;
-    }
-
-    #resultPanel {
-        display: block !important;
+        width: 100%;
     }
 }
 </style>
@@ -381,810 +313,1493 @@ footer {
 <body>
 
 <header>
-    <h1>🔬 CLASS 7 SCIENCE MCQ TEST</h1>
-    <p>Acids, Bases, Changes, Electricity & Plant Life</p>
-    <p>Advanced Practice Examination</p>
-    <div class="badge">30 Challenging Questions • 30 Marks</div>
+    <h1>Advanced MCQ Paper Generator</h1>
+    <p>Create your own question paper by selecting classes, subjects, chapters and difficulty levels.</p>
 </header>
 
 <main class="container">
 
-<section class="panel" id="instructionsPanel">
+    <!-- STEP 1: CLASS SELECTION -->
+    <section class="card" id="setupPage">
 
-    <h2>📝 Examination Instructions</h2>
-
-    <div class="instructions">
-
-        <b>Topics Covered</b>
-
-        <ul>
-            <li>Acidic, Basic and Neutral Substances</li>
-            <li>Indicators and Neutralisation</li>
-            <li>Physical and Chemical Changes</li>
-            <li>Combustion and Rusting</li>
-            <li>Electricity and Circuit Components</li>
-            <li>Photosynthesis and Starch Test</li>
-            <li>Stomata and Transport in Plants</li>
-        </ul>
-
-        <b>Rules</b>
-
-        <ul>
-            <li>Total questions: 30</li>
-            <li>Each correct answer carries 1 mark.</li>
-            <li>No negative marking.</li>
-            <li>Select one option per question.</li>
-            <li>Submit the test to view your result.</li>
-        </ul>
-
-    </div>
-
-    <div class="info-grid">
-
-        <div class="info-card">
-            <strong>30</strong>
-            Questions
+        <div class="section-title">
+            <span class="number">1</span>
+            <h2>Select Class</h2>
         </div>
 
-        <div class="info-card">
-            <strong>30</strong>
-            Maximum Marks
-        </div>
-
-        <div class="info-card">
-            <strong>100%</strong>
-            Maximum Score
-        </div>
-
-    </div>
-
-    <div class="start-area" style="margin-top:22px">
-        <button onclick="startTest()">🚀 Start Examination</button>
-    </div>
-
-</section>
-
-
-<section id="testPanel" class="hidden">
-
-    <div class="panel">
-
-        <div class="progress-info">
-            <span id="progressText">Question 1 of 30</span>
-            <span id="answeredText">Answered: 0/30</span>
-        </div>
-
-        <div class="progress-wrap">
-            <div id="progressBar"></div>
-        </div>
-
-        <h3>Question Navigator</h3>
-
-        <p style="font-size:13px;line-height:1.6">
-            Green = Answered. Tap any number to jump to that question.
+        <p class="section-description">
+            Select one or multiple classes for your question paper.
         </p>
 
-        <div id="questionMap" class="question-map"></div>
+        <div class="checkbox-grid" id="classOptions">
 
-    </div>
+            <label class="option">
+                <input type="checkbox" value="6">
+                <span>Class 6</span>
+            </label>
 
-    <div id="questionContainer"></div>
+            <label class="option">
+                <input type="checkbox" value="7">
+                <span>Class 7</span>
+            </label>
 
-    <div class="navigation no-print">
+            <label class="option">
+                <input type="checkbox" value="8">
+                <span>Class 8</span>
+            </label>
 
-        <button class="secondary" onclick="previousQuestion()">
-            ◀ Previous
-        </button>
+            <label class="option">
+                <input type="checkbox" value="9">
+                <span>Class 9</span>
+            </label>
 
-        <button class="secondary" onclick="nextQuestion()">
-            Next ▶
-        </button>
+            <label class="option">
+                <input type="checkbox" value="10">
+                <span>Class 10</span>
+            </label>
 
-        <button class="success" onclick="submitTest()">
-            Submit Test ✓
-        </button>
+            <label class="option">
+                <input type="checkbox" value="11">
+                <span>Class 11</span>
+            </label>
 
-    </div>
+            <label class="option">
+                <input type="checkbox" value="12">
+                <span>Class 12</span>
+            </label>
 
-</section>
-
-
-<section id="resultPanel" class="panel hidden">
-
-    <h2>🏆 Examination Result</h2>
-
-    <div style="text-align:center">
-        <div class="result-score" id="scoreDisplay">0/30</div>
-        <h3 id="resultMessage">Test Completed</h3>
-        <p id="percentageDisplay"></p>
-    </div>
-
-    <div class="result-grid">
-
-        <div class="result-box">
-            <strong class="green-text" id="correctCount">0</strong>
-            Correct
         </div>
 
-        <div class="result-box">
-            <strong class="red-text" id="wrongCount">0</strong>
-            Incorrect
+        <div class="button-row">
+            <button class="secondary-btn" onclick="selectAllClasses()">
+                Select All Classes
+            </button>
+
+            <button class="secondary-btn" onclick="clearClasses()">
+                Clear Classes
+            </button>
         </div>
 
-        <div class="result-box">
-            <strong id="unansweredCount">0</strong>
-            Unanswered
+    </section>
+
+
+    <!-- STEP 2: SUBJECT SELECTION -->
+    <section class="card">
+
+        <div class="section-title">
+            <span class="number">2</span>
+            <h2>Select Subject</h2>
         </div>
 
-        <div class="result-box">
-            <strong id="totalMarks">30</strong>
-            Total Marks
+        <p class="section-description">
+            Subjects will appear according to the classes you select.
+            Multiple subjects can be selected.
+        </p>
+
+        <div id="subjectContainer">
+            <div class="empty-message">
+                Please select at least one class first.
+            </div>
         </div>
 
-    </div>
+        <div class="button-row">
+            <button class="secondary-btn" onclick="selectAllSubjects()">
+                Select All Subjects
+            </button>
 
-    <div class="no-print" style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="secondary-btn" onclick="clearSubjects()">
+                Clear Subjects
+            </button>
+        </div>
 
-        <button onclick="showReview()">📖 Review Answers</button>
+    </section>
 
-        <button class="secondary" onclick="window.print()">
-            🖨️ Print Result
-        </button>
 
-        <button class="success" onclick="restartTest()">
-            🔄 Retake Test
-        </button>
+    <!-- STEP 3: CHAPTER SELECTION -->
+    <section class="card">
 
-    </div>
+        <div class="section-title">
+            <span class="number">3</span>
+            <h2>Select Chapters</h2>
+        </div>
 
-    <div id="reviewContainer" class="hidden">
-        <h2>Answer Review & Explanations</h2>
-        <div id="reviewContent"></div>
-    </div>
+        <p class="section-description">
+            Select the chapters from which you want to create MCQs.
+            Chapter lists depend on your selected class and subject.
+        </p>
 
-</section>
+        <div id="chapterContainer">
+            <div class="empty-message">
+                Select a class and subject to view chapters.
+            </div>
+        </div>
+
+        <div class="button-row">
+            <button class="secondary-btn" onclick="selectAllChapters()">
+                Select All Chapters
+            </button>
+
+            <button class="secondary-btn" onclick="clearChapters()">
+                Clear Chapters
+            </button>
+        </div>
+
+    </section>
+
+
+    <!-- STEP 4: DIFFICULTY -->
+    <section class="card">
+
+        <div class="section-title">
+            <span class="number">4</span>
+            <h2>Level of Paper</h2>
+        </div>
+
+        <p class="section-description">
+            Choose one or multiple difficulty levels.
+        </p>
+
+        <div class="checkbox-grid">
+
+            <label class="option level-easy">
+                <input type="checkbox" name="level" value="Easy">
+                <span>Easy</span>
+            </label>
+
+            <label class="option level-moderate">
+                <input type="checkbox" name="level" value="Moderate">
+                <span>Moderate</span>
+            </label>
+
+            <label class="option level-hard">
+                <input type="checkbox" name="level" value="Hard">
+                <span>Hard</span>
+            </label>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACTIONS -->
+    <section class="card">
+
+        <h2 style="color:#10264b;">Ready to Continue?</h2>
+
+        <p class="section-description" style="margin-top:8px;">
+            Your selections will be saved and displayed on the next screen.
+        </p>
+
+        <div class="button-row">
+
+            <button class="primary-btn" onclick="continueToSummary()">
+                Continue →
+            </button>
+
+            <button class="secondary-btn" onclick="resetEverything()">
+                Reset All
+            </button>
+
+        </div>
+
+        <p id="errorMessage"
+           style="color:#dc2626; margin-top:14px; font-weight:bold;"
+           role="alert">
+        </p>
+
+    </section>
+
+
+    <!-- STEP 5: SUMMARY -->
+    <section class="card hidden" id="summaryPage">
+
+        <div class="section-title">
+            <span class="number">✓</span>
+            <h2>Your Paper Configuration</h2>
+        </div>
+
+        <p class="section-description">
+            Review all your selected options before proceeding to paper creation.
+        </p>
+
+        <div class="summary-box">
+
+            <div class="summary-row">
+                <div class="summary-label">Selected Classes</div>
+                <div class="summary-value" id="summaryClasses"></div>
+            </div>
+
+            <div class="summary-row">
+                <div class="summary-label">Selected Subjects</div>
+                <div class="summary-value" id="summarySubjects"></div>
+            </div>
+
+            <div class="summary-row">
+                <div class="summary-label">Selected Chapters</div>
+                <div class="summary-value" id="summaryChapters"></div>
+            </div>
+
+            <div class="summary-row">
+                <div class="summary-label">Difficulty Levels</div>
+                <div class="summary-value" id="summaryLevels"></div>
+            </div>
+
+        </div>
+
+        <div class="notice">
+            <strong>Next Step:</strong>
+            Your configuration is ready. The actual MCQ generation engine,
+            question count, answer key, explanations and PDF export can be
+            connected to this screen in the next development stage.
+        </div>
+
+        <div class="button-row">
+
+            <button class="secondary-btn" onclick="backToSetup()">
+                ← Edit Selection
+            </button>
+
+            <button class="success-btn" onclick="downloadConfiguration()">
+                Download Configuration
+            </button>
+
+        </div>
+
+    </section>
 
 </main>
 
 <footer>
-    <strong>CLASS 7 SCIENCE ADVANCED MCQ TEST</strong><br>
-    Learn • Practise • Improve
+    Advanced MCQ Paper Generator | Custom Question Paper Builder
 </footer>
 
 
 <script>
 
-const questions = [
+/*
+====================================================
+1. SUBJECT DATABASE
+====================================================
 
-{
-section:"Acids and Bases",
-q:"A student tests three solutions. P turns blue litmus red, Q turns red litmus blue, and R changes neither. Which conclusion is correct?",
-o:[
-"P is basic, Q is acidic, and R is neutral.",
-"P is acidic, Q is basic, and R is neutral.",
-"P and R are acidic, while Q is neutral.",
-"P is neutral, Q is basic, and R is acidic."
-],
-a:1,
-e:"Acids turn blue litmus red, bases turn red litmus blue, and neutral solutions do not change either litmus paper."
-},
+Add or edit subjects for each class here.
+*/
 
-{
-section:"Neutralisation",
-q:"Blue litmus solution is added to lemon juice and turns red. Lime water is then added gradually until the solution turns blue. What does this indicate?",
-o:[
-"Lime water increases acidity.",
-"The solution must remain acidic.",
-"Lime water neutralises the acid; further addition makes the solution basic.",
-"Litmus cannot change colour more than once."
-],
-a:2,
-e:"Lime water is basic. It neutralises the acid, and excess lime water makes the solution basic."
-},
+const subjectDatabase = {
 
-{
-section:"Natural Indicators",
-q:"Which statement about natural indicators is correct?",
-o:[
-"Litmus comes from flowers, while turmeric comes from lichens.",
-"Litmus is obtained from lichens, and turmeric turns red in basic solutions.",
-"Turmeric turns red in acidic solutions only.",
-"All natural indicators show identical colour changes."
-],
-a:1,
-e:"Litmus is obtained from lichens. Turmeric turns red in basic solutions but remains yellow in acidic and neutral solutions."
-},
+    6: [
+        "English",
+        "Hindi",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Sanskrit",
+        "Computer"
+    ],
 
-{
-section:"Testing Substances",
-q:"Three unlabelled samples are vinegar, soap solution and sugar solution. Which observations identify them correctly?",
-o:[
-"Vinegar turns red litmus blue; soap turns blue litmus red; sugar changes neither.",
-"Vinegar turns blue litmus red; soap turns red litmus blue; sugar changes neither.",
-"Vinegar changes neither; soap turns blue litmus red; sugar turns red litmus blue.",
-"Vinegar and soap both turn blue litmus red."
-],
-a:1,
-e:"Vinegar is acidic, soap solution is basic, and sugar solution is neutral."
-},
+    7: [
+        "English",
+        "Hindi",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Sanskrit",
+        "Computer"
+    ],
 
-{
-section:"Neutralisation in Daily Life",
-q:"A farmer finds that excessive fertiliser use has made soil acidic. Which remedy matches the textbook explanation?",
-o:[
-"Add vinegar to increase acidity.",
-"Add lime because it is basic and can neutralise acidic soil.",
-"Add sugar because it always improves soil fertility.",
-"Add another acidic substance."
-],
-a:1,
-e:"The textbook describes using lime, a base, to treat acidic soil."
-},
+    8: [
+        "English",
+        "Hindi",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Sanskrit",
+        "Computer"
+    ],
 
-{
-section:"Neutralisation",
-q:"Consider these statements: (1) An acid reacts with a base. (2) Salt and water form. (3) Heat is released. (4) The resulting solution must always remain acidic. Which are correct?",
-o:[
-"1 and 2 only",
-"1, 2 and 3 only",
-"2, 3 and 4 only",
-"All four"
-],
-a:1,
-e:"Neutralisation forms salt and water and releases heat. The resulting solution does not have to remain acidic."
-},
+    9: [
+        "English",
+        "Hindi",
+        "Mathematics",
+        "Science",
+        "History",
+        "Geography",
+        "Civics",
+        "Economics",
+        "Sanskrit",
+        "Computer"
+    ],
 
-{
-section:"Neutralisation in Daily Life",
-q:"A red ant bite causes stinging because formic acid enters the skin. Why can moist baking soda help?",
-o:[
-"It increases the acid concentration.",
-"It acts as a base and neutralises the acid's effect.",
-"It converts the acid into oxygen.",
-"It removes the skin's colour."
-],
-a:1,
-e:"Baking soda is basic and can neutralise the acidic liquid responsible for the sting."
-},
+    10: [
+        "English",
+        "Hindi",
+        "Mathematics",
+        "Science",
+        "History",
+        "Geography",
+        "Civics",
+        "Economics",
+        "Sanskrit",
+        "Computer"
+    ],
 
-{
-section:"Natural Indicators",
-q:"A message is written using soap solution and sprayed with turmeric solution. Why can the writing become visible?",
-o:[
-"Soap is acidic and turns turmeric yellow.",
-"Turmeric changes colour in the basic soap solution.",
-"Soap dissolves the paper where it is written.",
-"Turmeric forms a metallic substance with paper."
-],
-a:1,
-e:"Turmeric turns red in a basic solution such as soap solution."
-},
+    11: [
+        "English",
+        "Hindi",
+        "Physics",
+        "Chemistry",
+        "Biology",
+        "Mathematics",
+        "History",
+        "Geography",
+        "Political Science",
+        "Economics",
+        "Sociology",
+        "Computer Science"
+    ],
 
-{
-section:"Physical and Chemical Changes",
-q:"A student folds a sheet of paper into a boat and later unfolds it. Another student burns paper. Which comparison is correct?",
-o:[
-"Both are physical changes.",
-"Folding is physical; burning is chemical because new substances form.",
-"Folding is chemical; burning is physical.",
-"Both are chemical because the appearance changes."
-],
-a:1,
-e:"Folding changes shape without forming a new substance. Burning produces new substances."
-},
+    12: [
+        "English",
+        "Hindi",
+        "Physics",
+        "Chemistry",
+        "Biology",
+        "Mathematics",
+        "History",
+        "Geography",
+        "Political Science",
+        "Economics",
+        "Sociology",
+        "Computer Science"
+    ]
 
-{
-section:"Chemical Changes",
-q:"A student blows air into two containers: one with tap water and one with lime water. Which observation indicates a chemical change in the lime water?",
-o:[
-"Bubbles appear in both containers.",
-"Tap water remains transparent.",
-"Lime water turns milky and a white substance forms.",
-"Air moves through both straws."
-],
-a:2,
-e:"Carbon dioxide in exhaled air reacts with lime water to form insoluble calcium carbonate, making it milky."
-},
+};
 
-{
-section:"Chemical Changes",
-q:"Gas produced by mixing vinegar and baking soda is passed through lime water, which turns milky. What is the best inference?",
-o:[
-"The gas is oxygen.",
-"The gas is carbon dioxide, showing a new substance was formed.",
-"The gas is nitrogen.",
-"The gas is only water vapour."
-],
-a:1,
-e:"Carbon dioxide reacts with lime water to form calcium carbonate, which makes it appear milky."
-},
 
-{
-section:"Classifying Changes",
-q:"Which pair consists of physical changes?",
-o:[
-"Melting ice and rusting iron",
-"Rusting iron and burning magnesium",
-"Melting ice and crushing chalk",
-"Burning wood and crushing chalk"
-],
-a:2,
-e:"Melting ice and crushing chalk change physical properties without forming new substances. Rusting and burning are chemical changes."
-},
+/*
+====================================================
+2. CHAPTER DATABASE
+====================================================
 
-{
-section:"Physical Changes",
-q:"Which example best disproves the claim that every irreversible change is chemical?",
-o:[
-"Rusting of iron",
-"Burning of wood",
-"Erosion of rocks by flowing water",
-"Formation of magnesium oxide"
-],
-a:2,
-e:"Erosion is a physical change: rocks and sediments are broken down and transported. Some physical changes are difficult to reverse."
-},
+These are sample chapter lists.
+Replace or expand them with your complete syllabus.
 
-{
-section:"Combustion",
-q:"Which statement correctly describes combustion?",
-o:[
-"Any change in shape",
-"A reaction with oxygen that produces heat and/or light",
-"A process that occurs only when mixed with water",
-"A process in which no new substance forms"
-],
-a:1,
-e:"Combustion is a chemical reaction with oxygen that releases heat and/or light."
-},
+Chapter mapping format:
+class -> subject -> chapter list
+*/
 
-{
-section:"Combustion",
-q:"A burning candle is covered by an inverted glass container and eventually goes out. What is the best explanation?",
-o:[
-"Oxygen supply becomes insufficient for combustion.",
-"Carbon dioxide is required for combustion.",
-"Glass converts wax directly into water.",
-"Combustion requires sunlight."
-],
-a:0,
-e:"Combustion requires oxygen. Covering the candle restricts fresh air, and the flame eventually goes out."
-},
+const chapterDatabase = {
 
-{
-section:"Chemical Changes",
-q:"Which observation most strongly supports that a chemical change occurred?",
-o:[
-"Paper is folded.",
-"Chalk is crushed into powder.",
-"Iron develops a brown layer of rust.",
-"Water freezes into ice."
-],
-a:2,
-e:"Rusting forms iron oxide, a new substance. The other examples are physical changes."
-},
+    6: {
 
-{
-section:"Electric Cells",
-q:"An electric cell has a protruding metal cap at one end and a flat metal disc at the other. Which identification is correct?",
-o:[
-"Cap is negative; disc is positive.",
-"Both ends are positive.",
-"Cap is positive; disc is negative.",
-"Both ends are negative."
-],
-a:2,
-e:"The protruding cap is the positive terminal; the flat metal disc is the negative terminal."
-},
+        "History": [
+            "What, Where, How and When?",
+            "From Hunting-Gathering to Growing Food",
+            "In the Earliest Cities",
+            "What Books and Burials Tell Us",
+            "Kingdoms, Kings and an Early Republic"
+        ],
 
-{
-section:"Batteries",
-q:"A torch lamp glows when the positive terminal of one cell connects to the negative terminal of the next. What is this combination called?",
-o:[
-"An insulator",
-"A battery",
-"An open switch",
-"A filament"
-],
-a:1,
-e:"A combination of two or more cells is called a battery."
-},
+        "Geography": [
+            "The Earth in the Solar System",
+            "Globe: Latitudes and Longitudes",
+            "Motions of the Earth",
+            "Maps",
+            "Major Domains of the Earth"
+        ],
 
-{
-section:"LEDs",
-q:"An LED's longer wire is connected to the negative terminal and its shorter wire to the positive terminal. What should happen?",
-o:[
-"It glows normally.",
-"It glows more brightly.",
-"It does not light because the polarity is reversed.",
-"It behaves exactly like a wire."
-],
-a:2,
-e:"The longer wire is positive and the shorter wire is negative. An LED lights when connected with correct polarity."
-},
+        "Civics": [
+            "Understanding Diversity",
+            "Diversity and Discrimination",
+            "What is Government?",
+            "Key Elements of a Democratic Government"
+        ],
 
-{
-section:"Electric Lamps",
-q:"Which statement correctly distinguishes an incandescent lamp from an LED?",
-o:[
-"Both contain a glowing filament.",
-"An incandescent lamp uses a filament; an LED does not.",
-"An LED has no terminals.",
-"An incandescent lamp always needs two batteries."
-],
-a:1,
-e:"An incandescent lamp's filament becomes hot and glows. LEDs have no filament and have positive and negative terminals."
-},
+        "Social Science": [
+            "History: Early Humans",
+            "Geography: The Earth",
+            "Civics: Understanding Diversity",
+            "Economics: Basic Concepts"
+        ],
 
-{
-section:"Electric Circuits",
-q:"A circuit contains a cell, lamp, wires and switch. The lamp does not glow when the switch is OFF. Why?",
-o:[
-"The cell becomes an insulator.",
-"The open switch breaks the conducting path.",
-"Wires produce electricity only when OFF.",
-"A lamp glows if only one terminal is connected."
-],
-a:1,
-e:"A switch completes or breaks the circuit. In the OFF position the circuit is open and current cannot flow through the complete path."
-},
+        "Science": [
+            "The Wonderful World of Science",
+            "Diversity in the Living World",
+            "Mindful Eating",
+            "Materials Around Us"
+        ],
 
-{
-section:"Conductors and Insulators",
-q:"A metal strip inserted between two circuit ends allows the lamp to glow. Replacing it with plastic stops the lamp. What is the best conclusion?",
-o:[
-"Metal is a conductor and plastic is an insulator under these conditions.",
-"Plastic is a better conductor than metal.",
-"Metal creates electricity and plastic destroys it.",
-"Both are conductors, but plastic always increases current."
-],
-a:0,
-e:"Metal generally conducts electricity; plastic is an insulator."
-},
+        "Mathematics": [
+            "Patterns in Mathematics",
+            "Lines and Angles",
+            "Number Play",
+            "Data Handling"
+        ],
 
-{
-section:"Circuit Diagrams",
-q:"In the symbol for an electric cell, what do the long and short lines represent?",
-o:[
-"Long is negative; short is positive.",
-"Both are positive.",
-"Long is positive; short is negative.",
-"They show switch ON and OFF."
-],
-a:2,
-e:"The long line represents the positive terminal, and the short line represents the negative terminal."
-},
+        "English": [
+            "Reading Comprehension",
+            "Grammar",
+            "Writing Skills",
+            "Literature"
+        ],
 
-{
-section:"Plant Growth",
-q:"Three similar plants are grown: A receives sunlight and water, B receives sunlight but no water, and C receives water but is kept in darkness. Which conclusion is supported by the experiment?",
-o:[
-"Sunlight alone is sufficient.",
-"Water alone is sufficient.",
-"Both sunlight and water are important for plant growth.",
-"Neither affects growth."
-],
-a:2,
-e:"The textbook experiment indicates that plants require both sunlight and water for growth."
-},
+        "Hindi": [
+            "गद्य",
+            "पद्य",
+            "व्याकरण",
+            "लेखन कौशल"
+        ]
 
-{
-section:"Starch Test",
-q:"A green leaf is boiled in water, heated in alcohol using a water bath, then treated with iodine. Why is it decolourised first?",
-o:[
-"To remove all starch",
-"To make iodine's colour change easier to observe",
-"To convert chlorophyll into glucose",
-"To stop iodine reacting with starch"
-],
-a:1,
-e:"Alcohol removes the green colour so the blue-black colour indicating starch is easier to observe."
-},
+    },
 
-{
-section:"Starch Test",
-q:"A leaf turns blue-black after iodine solution is added. What does this indicate?",
-o:[
-"Starch is present.",
-"Only water is present.",
-"No carbohydrates are present.",
-"The leaf cannot photosynthesise."
-],
-a:0,
-e:"Iodine solution turns blue-black in the presence of starch."
-},
+    7: {
 
-{
-section:"Chlorophyll",
-q:"A leaf has green and non-green patches. After a starch test, only the green patches turn blue-black. What does this support?",
-o:[
-"All patches contain equal chlorophyll.",
-"Chlorophyll is associated with starch production in green parts.",
-"Non-green parts always make more starch.",
-"Sunlight prevents starch formation."
-],
-a:1,
-e:"The variegated-leaf experiment supports the role of chlorophyll in food production."
-},
+        "History": [
+            "Tracing Changes Through a Thousand Years",
+            "New Kings and Kingdoms",
+            "The Delhi Sultans",
+            "The Mughal Empire",
+            "Rulers and Buildings"
+        ],
 
-{
-section:"Plant Nutrition",
-q:"Why are leaves called the food factories of plants?",
-o:[
-"They absorb ready-made food from soil.",
-"They prepare food, which can be stored as starch.",
-"They absorb all minerals directly from air.",
-"They convert every substance into oxygen."
-],
-a:1,
-e:"Green leaves contain chlorophyll to capture sunlight. Plants prepare food, and starch is a form in which food is stored."
-},
+        "Geography": [
+            "Environment",
+            "Inside Our Earth",
+            "Our Changing Earth",
+            "Air",
+            "Water"
+        ],
 
-{
-section:"Stomata",
-q:"A student observes tiny pores on the lower surface of a leaf under a microscope. What are these pores called, and what do they do?",
-o:[
-"Filaments; conduct electric current",
-"Stomata; help exchange gases",
-"Chloroplasts; transport water through roots",
-"Root hairs; absorb sunlight"
-],
-a:1,
-e:"Stomata are tiny pores on leaf surfaces that help in the exchange of gases."
-},
+        "Civics": [
+            "On Equality",
+            "Role of the Government in Health",
+            "How the State Government Works",
+            "Growing up as Boys and Girls"
+        ],
 
-{
-section:"Transport in Plants",
-q:"A twig from a plant with white flowers is placed in water containing red ink. Later, the flower becomes reddish. What best explains this?",
-o:[
-"Red ink is converted into food by the flower.",
-"Water moves through the plant carrying the coloured solution towards the flower.",
-"The flower absorbs ink directly from air.",
-"Red ink produces sunlight inside the stem."
-],
-a:1,
-e:"The coloured solution moves through the plant with water, making water transport visible in the stem and flower."
+        "Social Science": [
+            "History: Medieval India",
+            "Geography: Environment",
+            "Civics: On Equality",
+            "Economics: Basic Concepts"
+        ],
+
+        "Science": [
+            "Nutrition in Plants",
+            "Nutrition in Animals",
+            "Heat",
+            "Acids, Bases and Salts",
+            "Physical and Chemical Changes"
+        ],
+
+        "Mathematics": [
+            "Integers",
+            "Fractions and Decimals",
+            "Data Handling",
+            "Simple Equations"
+        ],
+
+        "English": [
+            "Reading Comprehension",
+            "Grammar",
+            "Writing Skills",
+            "Literature"
+        ],
+
+        "Hindi": [
+            "गद्य",
+            "पद्य",
+            "व्याकरण",
+            "लेखन कौशल"
+        ]
+
+    },
+
+    8: {
+
+        "History": [
+            "How, When and Where",
+            "From Trade to Territory",
+            "Ruling the Countryside",
+            "Tribals, Dikus and the Vision of a Golden Age",
+            "When People Rebel"
+        ],
+
+        "Geography": [
+            "Resources",
+            "Land, Soil, Water, Natural Vegetation and Wildlife",
+            "Mineral and Power Resources",
+            "Agriculture",
+            "Industries"
+        ],
+
+        "Civics": [
+            "The Indian Constitution",
+            "Understanding Secularism",
+            "Why Do We Need a Parliament?",
+            "Understanding Laws",
+            "Judiciary"
+        ],
+
+        "Social Science": [
+            "History: Modern India",
+            "Geography: Resources",
+            "Civics: The Indian Constitution",
+            "Economics: Basic Concepts"
+        ],
+
+        "Science": [
+            "Crop Production and Management",
+            "Microorganisms: Friend and Foe",
+            "Coal and Petroleum",
+            "Combustion and Flame",
+            "Conservation of Plants and Animals"
+        ],
+
+        "Mathematics": [
+            "Rational Numbers",
+            "Linear Equations in One Variable",
+            "Understanding Quadrilaterals",
+            "Data Handling"
+        ],
+
+        "English": [
+            "Reading Comprehension",
+            "Grammar",
+            "Writing Skills",
+            "Literature"
+        ],
+
+        "Hindi": [
+            "गद्य",
+            "पद्य",
+            "व्याकरण",
+            "लेखन कौशल"
+        ]
+
+    },
+
+    9: {
+
+        "History": [
+            "The French Revolution",
+            "Socialism in Europe and the Russian Revolution",
+            "Nazism and the Rise of Hitler",
+            "Forest Society and Colonialism",
+            "Pastoralists in the Modern World"
+        ],
+
+        "Geography": [
+            "India: Size and Location",
+            "Physical Features of India",
+            "Drainage",
+            "Climate",
+            "Natural Vegetation and Wildlife",
+            "Population"
+        ],
+
+        "Civics": [
+            "What is Democracy? Why Democracy?",
+            "Constitutional Design",
+            "Electoral Politics",
+            "Working of Institutions",
+            "Democratic Rights"
+        ],
+
+        "Economics": [
+            "The Story of Village Palampur",
+            "People as Resource",
+            "Poverty as a Challenge",
+            "Food Security in India"
+        ],
+
+        "Science": [
+            "Matter in Our Surroundings",
+            "Is Matter Around Us Pure?",
+            "Atoms and Molecules",
+            "Structure of the Atom",
+            "The Fundamental Unit of Life",
+            "Tissues",
+            "Motion",
+            "Force and Laws of Motion",
+            "Gravitation"
+        ],
+
+        "Mathematics": [
+            "Number Systems",
+            "Polynomials",
+            "Coordinate Geometry",
+            "Linear Equations in Two Variables",
+            "Lines and Angles",
+            "Triangles",
+            "Statistics"
+        ],
+
+        "English": [
+            "Reading Comprehension",
+            "Grammar",
+            "Writing Skills",
+            "Literature"
+        ],
+
+        "Hindi": [
+            "गद्य",
+            "पद्य",
+            "व्याकरण",
+            "लेखन कौशल"
+        ]
+
+    },
+
+    10: {
+
+        "History": [
+            "The Rise of Nationalism in Europe",
+            "Nationalism in India",
+            "The Making of a Global World",
+            "The Age of Industrialisation",
+            "Print Culture and the Modern World"
+        ],
+
+        "Geography": [
+            "Resources and Development",
+            "Forest and Wildlife Resources",
+            "Water Resources",
+            "Agriculture",
+            "Minerals and Energy Resources",
+            "Manufacturing Industries",
+            "Lifelines of National Economy"
+        ],
+
+        "Civics": [
+            "Power Sharing",
+            "Federalism",
+            "Gender, Religion and Caste",
+            "Political Parties",
+            "Outcomes of Democracy"
+        ],
+
+        "Economics": [
+            "Development",
+            "Sectors of the Indian Economy",
+            "Money and Credit",
+            "Globalisation and the Indian Economy",
+            "Consumer Rights"
+        ],
+
+        "Science": [
+            "Chemical Reactions and Equations",
+            "Acids, Bases and Salts",
+            "Metals and Non-metals",
+            "Carbon and Its Compounds",
+            "Life Processes",
+            "Control and Coordination",
+            "Light",
+            "Electricity",
+            "Magnetic Effects of Electric Current"
+        ],
+
+        "Mathematics": [
+            "Real Numbers",
+            "Polynomials",
+            "Pair of Linear Equations in Two Variables",
+            "Quadratic Equations",
+            "Arithmetic Progressions",
+            "Triangles",
+            "Statistics",
+            "Probability"
+        ],
+
+        "English": [
+            "Reading Comprehension",
+            "Grammar",
+            "Writing Skills",
+            "Literature"
+        ],
+
+        "Hindi": [
+            "गद्य",
+            "पद्य",
+            "व्याकरण",
+            "लेखन कौशल"
+        ]
+
+    },
+
+    11: {
+
+        "History": [
+            "Writing and City Life",
+            "An Empire Across Three Continents",
+            "Nomadic Empires",
+            "The Three Orders",
+            "Changing Cultural Traditions"
+        ],
+
+        "Geography": [
+            "Geography as a Discipline",
+            "The Origin and Evolution of the Earth",
+            "Interior of the Earth",
+            "Distribution of Oceans and Continents",
+            "Geomorphic Processes"
+        ],
+
+        "Political Science": [
+            "Constitution: Why and How?",
+            "Rights in the Indian Constitution",
+            "Election and Representation",
+            "Executive",
+            "Legislature",
+            "Judiciary"
+        ],
+
+        "Economics": [
+            "Introduction to Microeconomics",
+            "Consumer's Equilibrium",
+            "Demand",
+            "Elasticity of Demand",
+            "Production and Costs",
+            "Market Equilibrium"
+        ],
+
+        "Physics": [
+            "Units and Measurements",
+            "Motion in a Straight Line",
+            "Motion in a Plane",
+            "Laws of Motion",
+            "Work, Energy and Power"
+        ],
+
+        "Chemistry": [
+            "Some Basic Concepts of Chemistry",
+            "Structure of Atom",
+            "Classification of Elements",
+            "Chemical Bonding",
+            "Thermodynamics"
+        ],
+
+        "Biology": [
+            "The Living World",
+            "Biological Classification",
+            "Plant Kingdom",
+            "Animal Kingdom",
+            "Cell: The Unit of Life"
+        ],
+
+        "Mathematics": [
+            "Sets",
+            "Relations and Functions",
+            "Trigonometric Functions",
+            "Complex Numbers",
+            "Linear Inequalities",
+            "Permutations and Combinations"
+        ],
+
+        "English": [
+            "Reading Comprehension",
+            "Grammar",
+            "Writing Skills",
+            "Literature"
+        ],
+
+        "Hindi": [
+            "गद्य",
+            "पद्य",
+            "व्याकरण",
+            "लेखन कौशल"
+        ]
+
+    },
+
+    12: {
+
+        "History": [
+            "Bricks, Beads and Bones",
+            "Kings, Farmers and Towns",
+            "Kinship, Caste and Class",
+            "Thinkers, Beliefs and Buildings",
+            "Through the Eyes of Travellers",
+            "Bhakti-Sufi Traditions",
+            "An Imperial Capital: Vijayanagara"
+        ],
+
+        "Geography": [
+            "Human Geography: Nature and Scope",
+            "The World Population",
+            "Human Development",
+            "Primary Activities",
+            "Secondary Activities",
+            "Tertiary and Quaternary Activities"
+        ],
+
+        "Political Science": [
+            "The End of Bipolarity",
+            "Contemporary Centres of Power",
+            "Contemporary South Asia",
+            "International Organisations",
+            "Security in the Contemporary World",
+            "Environment and Natural Resources"
+        ],
+
+        "Economics": [
+            "National Income Accounting",
+            "Money and Banking",
+            "Determination of Income and Employment",
+            "Government Budget and the Economy",
+            "Balance of Payments"
+        ],
+
+        "Physics": [
+            "Electric Charges and Fields",
+            "Electrostatic Potential and Capacitance",
+            "Current Electricity",
+            "Moving Charges and Magnetism",
+            "Electromagnetic Induction",
+            "Ray Optics"
+        ],
+
+        "Chemistry": [
+            "Solutions",
+            "Electrochemistry",
+            "Chemical Kinetics",
+            "The d- and f-Block Elements",
+            "Coordination Compounds",
+            "Haloalkanes and Haloarenes"
+        ],
+
+        "Biology": [
+            "Sexual Reproduction in Flowering Plants",
+            "Human Reproduction",
+            "Reproductive Health",
+            "Principles of Inheritance and Variation",
+            "Molecular Basis of Inheritance",
+            "Evolution"
+        ],
+
+        "Mathematics": [
+            "Relations and Functions",
+            "Inverse Trigonometric Functions",
+            "Matrices",
+            "Determinants",
+            "Continuity and Differentiability",
+            "Applications of Derivatives",
+            "Integrals",
+            "Probability"
+        ],
+
+        "English": [
+            "Reading Comprehension",
+            "Grammar",
+            "Writing Skills",
+            "Literature"
+        ],
+
+        "Hindi": [
+            "गद्य",
+            "पद्य",
+            "व्याकरण",
+            "लेखन कौशल"
+        ]
+
+    }
+
+};
+
+
+/*
+====================================================
+3. SAVE AND RESTORE SELECTIONS
+====================================================
+*/
+
+const STORAGE_KEY = "advancedMCQPaperConfig";
+
+let previousSelection = {};
+
+try {
+    previousSelection =
+        JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+} catch (error) {
+    previousSelection = {};
 }
 
-];
+function saveSelections() {
 
-let answers = new Array(questions.length).fill(null);
-let currentQuestion = 0;
-let testSubmitted = false;
+    const data = {
+        classes: getSelectedClasses(),
+        subjects: getSelectedSubjects(),
+        chapters: getSelectedChapters(),
+        levels: getSelectedLevels()
+    };
 
-function startTest() {
-    document.getElementById("instructionsPanel").classList.add("hidden");
-    document.getElementById("testPanel").classList.remove("hidden");
-    renderQuestionMap();
-    showQuestion(0);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-function renderQuestionMap() {
-    const map = document.getElementById("questionMap");
-    map.innerHTML = "";
 
-    questions.forEach((q, i) => {
-        const btn = document.createElement("button");
-        btn.textContent = i + 1;
-        btn.className = "map-btn";
+/*
+====================================================
+4. COMMON HELPERS
+====================================================
+*/
 
-        if (answers[i] !== null) {
-            btn.classList.add("answered");
-        }
+function getSelectedClasses() {
 
-        if (i === currentQuestion) {
-            btn.classList.add("current");
-        }
+    return Array.from(
+        document.querySelectorAll("#classOptions input:checked")
+    ).map(input => Number(input.value));
 
-        btn.onclick = () => showQuestion(i);
-        map.appendChild(btn);
+}
+
+function getSelectedSubjects() {
+
+    return Array.from(
+        document.querySelectorAll("#subjectContainer input:checked")
+    ).map(input => ({
+        className: Number(input.dataset.class),
+        subject: input.value
+    }));
+
+}
+
+function getSelectedChapters() {
+
+    return Array.from(
+        document.querySelectorAll("#chapterContainer input:checked")
+    ).map(input => ({
+        className: Number(input.dataset.class),
+        subject: input.dataset.subject,
+        chapter: input.value
+    }));
+
+}
+
+function getSelectedLevels() {
+
+    return Array.from(
+        document.querySelectorAll('input[name="level"]:checked')
+    ).map(input => input.value);
+
+}
+
+function makeCheckbox(label, value, data = {}) {
+
+    const wrapper = document.createElement("label");
+    wrapper.className = "option";
+
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.value = value;
+
+    Object.entries(data).forEach(([key, val]) => {
+        input.dataset[key] = val;
     });
+
+    const span = document.createElement("span");
+    span.textContent = label;
+
+    wrapper.append(input, span);
+
+    return wrapper;
+
 }
 
-function showQuestion(index) {
-    if (index < 0 || index >= questions.length) return;
 
-    currentQuestion = index;
-    const q = questions[index];
-    const container = document.getElementById("questionContainer");
+/*
+====================================================
+5. CLASS CHANGES
+====================================================
+*/
 
-    let html = `
-        <div class="question-card">
-            <div class="question-top">
-                <span class="question-number">
-                    Question ${index + 1} of ${questions.length}
-                </span>
-                <span class="section-tag">${q.section}</span>
-            </div>
+document.querySelectorAll(
+    '#classOptions input[type="checkbox"]'
+).forEach(input => {
 
-            <div class="question-text">${q.q}</div>
-            <div class="options">
-    `;
+    input.addEventListener("change", () => {
 
-    q.o.forEach((option, i) => {
-        const selected = answers[index] === i;
+        renderSubjects();
+        renderChapters();
+        saveSelections();
 
-        html += `
-            <label class="option ${selected ? "selected" : ""}">
-                <input type="radio"
-                    name="answer${index}"
-                    value="${i}"
-                    ${selected ? "checked" : ""}
-                    onchange="selectAnswer(${index},${i})">
-
-                <span>
-                    <b>${String.fromCharCode(65 + i)}.</b>
-                    ${option}
-                </span>
-            </label>
-        `;
     });
 
-    html += `
-            </div>
-        </div>
-    `;
+});
 
-    container.innerHTML = html;
 
-    document.getElementById("progressText").textContent =
-        `Question ${index + 1} of ${questions.length}`;
+function selectAllClasses() {
 
-    document.getElementById("answeredText").textContent =
-        `Answered: ${answers.filter(a => a !== null).length}/${questions.length}`;
+    document.querySelectorAll(
+        '#classOptions input[type="checkbox"]'
+    ).forEach(input => input.checked = true);
 
-    document.getElementById("progressBar").style.width =
-        ((index + 1) / questions.length * 100) + "%";
+    renderSubjects();
+    renderChapters();
+    saveSelections();
 
-    renderQuestionMap();
-    window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-function selectAnswer(questionIndex, optionIndex) {
-    if (testSubmitted) return;
 
-    answers[questionIndex] = optionIndex;
-    showQuestion(questionIndex);
+function clearClasses() {
+
+    document.querySelectorAll(
+        '#classOptions input[type="checkbox"]'
+    ).forEach(input => input.checked = false);
+
+    renderSubjects();
+    renderChapters();
+    saveSelections();
+
 }
 
-function previousQuestion() {
-    if (currentQuestion > 0) {
-        showQuestion(currentQuestion - 1);
-    }
-}
 
-function nextQuestion() {
-    if (currentQuestion < questions.length - 1) {
-        showQuestion(currentQuestion + 1);
-    }
-}
+/*
+====================================================
+6. RENDER SUBJECTS
+====================================================
+*/
 
-function submitTest() {
-    if (testSubmitted) return;
+function renderSubjects() {
 
-    const unanswered = answers.filter(a => a === null).length;
+    const container = document.getElementById("subjectContainer");
 
-    if (unanswered > 0) {
-        const proceed = confirm(
-            `You have ${unanswered} unanswered question(s).\n\n` +
-            "Do you want to submit the test anyway?"
-        );
+    container.replaceChildren();
 
-        if (!proceed) return;
-    }
+    const classes = getSelectedClasses();
 
-    testSubmitted = true;
+    if (!classes.length) {
 
-    let correct = 0;
+        container.innerHTML =
+            '<div class="empty-message">' +
+            'Please select at least one class first.' +
+            '</div>';
 
-    questions.forEach((q, i) => {
-        if (answers[i] === q.a) {
-            correct++;
-        }
-    });
+        return;
 
-    const wrong = answers.filter((a, i) =>
-        a !== null && a !== questions[i].a
-    ).length;
-
-    const percentage = (correct / questions.length) * 100;
-
-    document.getElementById("testPanel").classList.add("hidden");
-    document.getElementById("resultPanel").classList.remove("hidden");
-
-    document.getElementById("scoreDisplay").textContent =
-        `${correct}/${questions.length}`;
-
-    document.getElementById("correctCount").textContent = correct;
-    document.getElementById("wrongCount").textContent = wrong;
-    document.getElementById("unansweredCount").textContent = unanswered;
-    document.getElementById("totalMarks").textContent = questions.length;
-
-    document.getElementById("percentageDisplay").textContent =
-        `Percentage: ${percentage.toFixed(2)}%`;
-
-    let message;
-
-    if (percentage >= 90) {
-        message = "Outstanding! Excellent preparation! 🏆";
-    } else if (percentage >= 75) {
-        message = "Very Good! Keep practising! 🌟";
-    } else if (percentage >= 60) {
-        message = "Good effort. Revise the difficult topics! 👍";
-    } else if (percentage >= 40) {
-        message = "Keep learning. Practice will improve your score.";
-    } else {
-        message = "Revise the chapters carefully and try again.";
     }
 
-    document.getElementById("resultMessage").textContent = message;
+    classes.forEach(classNumber => {
 
-    window.scrollTo({top: 0, behavior: "smooth"});
-}
+        const group = document.createElement("div");
+        group.className = "subject-group";
 
-function showReview() {
-    const box = document.getElementById("reviewContainer");
-    const content = document.getElementById("reviewContent");
+        const heading = document.createElement("h3");
+        heading.textContent = "Class " + classNumber + " Subjects ";
 
-    box.classList.remove("hidden");
-    content.innerHTML = "";
+        const small = document.createElement("small");
+        small.textContent = "(Select multiple)";
+        heading.appendChild(small);
 
-    questions.forEach((q, i) => {
-        const userAnswer = answers[i];
-        const isCorrect = userAnswer === q.a;
-        const div = document.createElement("div");
+        const grid = document.createElement("div");
+        grid.className = "checkbox-grid";
 
-        div.className = "review-item " +
-            (isCorrect ? "correct-review" : "wrong-review");
+        const subjects = subjectDatabase[classNumber] || [];
 
-        let html = `
-            <b>Q${i + 1}. ${q.q}</b><br>
-            <span class="section-tag">${q.section}</span>
-            <br><br>
-        `;
+        subjects.forEach(subject => {
 
-        q.o.forEach((option, j) => {
-            let marker = "";
+            const option = makeCheckbox(
+                subject,
+                subject,
+                { class: classNumber }
+            );
 
-            if (j === q.a) {
-                marker = " ✓ Correct answer";
-            } else if (j === userAnswer && !isCorrect) {
-                marker = " ✗ Your answer";
-            }
+            const input = option.querySelector("input");
 
-            html += `
-                <div style="margin:5px 0">
-                    ${String.fromCharCode(65 + j)}. ${option}
-                    <b>${marker}</b>
-                </div>
-            `;
+            const oldSelection = previousSelection.subjects || [];
+
+            input.checked = oldSelection.some(item =>
+                Number(item.className) === classNumber &&
+                item.subject === subject
+            );
+
+            input.addEventListener("change", () => {
+
+                renderChapters();
+                saveSelections();
+
+            });
+
+            grid.appendChild(option);
+
         });
 
-        html += `
-            <div class="explanation">
-                <b>Explanation:</b> ${q.e}
-            </div>
-        `;
+        group.append(heading, grid);
+        container.appendChild(group);
 
-        div.innerHTML = html;
-        content.appendChild(div);
     });
 
-    box.scrollIntoView({behavior: "smooth"});
 }
 
-function restartTest() {
-    answers = new Array(questions.length).fill(null);
-    currentQuestion = 0;
-    testSubmitted = false;
 
-    document.getElementById("resultPanel").classList.add("hidden");
-    document.getElementById("reviewContainer").classList.add("hidden");
-    document.getElementById("instructionsPanel").classList.remove("hidden");
-    document.getElementById("questionContainer").innerHTML = "";
+/*
+====================================================
+7. RENDER CHAPTERS
+====================================================
+*/
 
-    window.scrollTo({top: 0, behavior: "smooth"});
+function renderChapters() {
+
+    const container = document.getElementById("chapterContainer");
+
+    container.replaceChildren();
+
+    const subjects = getSelectedSubjects();
+
+    if (!subjects.length) {
+
+        container.innerHTML =
+            '<div class="empty-message">' +
+            'Select a class and at least one subject to view chapters.' +
+            '</div>';
+
+        return;
+
+    }
+
+    subjects.forEach(item => {
+
+        const classNumber = item.className;
+        const subject = item.subject;
+
+        const group = document.createElement("div");
+        group.className = "subject-group";
+
+        const heading = document.createElement("h3");
+        heading.textContent = "Class " + classNumber + " — " + subject;
+
+        const grid = document.createElement("div");
+        grid.className = "checkbox-grid";
+
+        const chapters =
+            (chapterDatabase[classNumber] || {})[subject] || [];
+
+        if (!chapters.length) {
+
+            const message = document.createElement("div");
+            message.className = "empty-message";
+            message.textContent =
+                "Sample chapter list is not available for this subject yet.";
+
+            group.append(heading, message);
+            container.appendChild(group);
+
+            return;
+
+        }
+
+        chapters.forEach(chapter => {
+
+            const option = makeCheckbox(
+                chapter,
+                chapter,
+                {
+                    class: classNumber,
+                    subject: subject
+                }
+            );
+
+            const input = option.querySelector("input");
+
+            const oldSelection = previousSelection.chapters || [];
+
+            input.checked = oldSelection.some(item =>
+                Number(item.className) === classNumber &&
+                item.subject === subject &&
+                item.chapter === chapter
+            );
+
+            input.addEventListener("change", saveSelections);
+
+            grid.appendChild(option);
+
+        });
+
+        group.append(heading, grid);
+        container.appendChild(group);
+
+    });
+
 }
+
+
+/*
+====================================================
+8. SUBJECT AND CHAPTER BULK ACTIONS
+====================================================
+*/
+
+function selectAllSubjects() {
+
+    document.querySelectorAll(
+        "#subjectContainer input[type='checkbox']"
+    ).forEach(input => input.checked = true);
+
+    renderChapters();
+    saveSelections();
+
+}
+
+
+function clearSubjects() {
+
+    document.querySelectorAll(
+        "#subjectContainer input[type='checkbox']"
+    ).forEach(input => input.checked = false);
+
+    renderChapters();
+    saveSelections();
+
+}
+
+
+function selectAllChapters() {
+
+    document.querySelectorAll(
+        "#chapterContainer input[type='checkbox']"
+    ).forEach(input => input.checked = true);
+
+    saveSelections();
+
+}
+
+
+function clearChapters() {
+
+    document.querySelectorAll(
+        "#chapterContainer input[type='checkbox']"
+    ).forEach(input => input.checked = false);
+
+    saveSelections();
+
+}
+
+
+/*
+====================================================
+9. LEVEL CHANGES
+====================================================
+*/
+
+document.querySelectorAll('input[name="level"]').forEach(input => {
+
+    input.addEventListener("change", saveSelections);
+
+});
+
+
+/*
+====================================================
+10. CONTINUE AND VALIDATION
+====================================================
+*/
+
+function continueToSummary() {
+
+    const classes = getSelectedClasses();
+    const subjects = getSelectedSubjects();
+    const chapters = getSelectedChapters();
+    const levels = getSelectedLevels();
+
+    const error = document.getElementById("errorMessage");
+
+    error.textContent = "";
+
+    if (!classes.length) {
+        error.textContent = "Please select at least one class.";
+        return;
+    }
+
+    if (!subjects.length) {
+        error.textContent = "Please select at least one subject.";
+        return;
+    }
+
+    if (!chapters.length) {
+        error.textContent = "Please select at least one chapter.";
+        return;
+    }
+
+    if (!levels.length) {
+        error.textContent = "Please select at least one paper level.";
+        return;
+    }
+
+    saveSelections();
+
+    showList("summaryClasses", classes.map(c => "Class " + c));
+
+    showList(
+        "summarySubjects",
+        subjects.map(s => "Class " + s.className + ": " + s.subject)
+    );
+
+    showList(
+        "summaryChapters",
+        chapters.map(c =>
+            "Class " + c.className +
+            " — " + c.subject +
+            " — " + c.chapter
+        )
+    );
+
+    showList("summaryLevels", levels);
+
+    document.getElementById("setupPage").classList.add("hidden");
+
+    document.querySelectorAll(
+        "#setupPage, main > .card"
+    );
+
+    document.getElementById("summaryPage").classList.remove("hidden");
+
+    document.getElementById("summaryPage").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+function showList(elementId, items) {
+
+    const container = document.getElementById(elementId);
+    container.replaceChildren();
+
+    items.forEach(item => {
+
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = item;
+
+        container.appendChild(badge);
+
+    });
+
+}
+
+
+/*
+====================================================
+11. BACK TO EDIT
+====================================================
+*/
+
+function backToSetup() {
+
+    document.getElementById("setupPage").classList.remove("hidden");
+    document.getElementById("summaryPage").classList.add("hidden");
+
+    document.getElementById("setupPage").scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+/*
+====================================================
+12. RESET
+====================================================
+*/
+
+function resetEverything() {
+
+    const confirmReset = confirm(
+        "Do you want to clear all classes, subjects, chapters and levels?"
+    );
+
+    if (!confirmReset) return;
+
+    document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+        input.checked = false;
+    });
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    previousSelection = {};
+
+    renderSubjects();
+    renderChapters();
+
+    document.getElementById("summaryPage").classList.add("hidden");
+    document.getElementById("setupPage").classList.remove("hidden");
+
+    document.getElementById("errorMessage").textContent = "";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/*
+====================================================
+13. DOWNLOAD CONFIGURATION AS JSON
+====================================================
+*/
+
+function downloadConfiguration() {
+
+    const data = {
+        createdAt: new Date().toISOString(),
+        classes: getSelectedClasses(),
+        subjects: getSelectedSubjects(),
+        chapters: getSelectedChapters(),
+        levels: getSelectedLevels()
+    };
+
+    const blob = new Blob(
+        [JSON.stringify(data, null, 2)],
+        { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "MCQ-Paper-Configuration.json";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/*
+====================================================
+14. INITIALIZE
+====================================================
+*/
+
+function initialize() {
+
+    const saved = previousSelection;
+
+    document.querySelectorAll(
+        '#classOptions input[type="checkbox"]'
+    ).forEach(input => {
+
+        input.checked = (saved.classes || []).includes(
+            Number(input.value)
+        );
+
+    });
+
+    document.querySelectorAll('input[name="level"]').forEach(input => {
+
+        input.checked = (saved.levels || []).includes(input.value);
+
+    });
+
+    renderSubjects();
+    renderChapters();
+
+}
+
+initialize();
 
 </script>
 
