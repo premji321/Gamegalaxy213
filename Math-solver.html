@@ -1,27 +1,23 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d1c">
+<meta name="theme-color" content="#090e1c">
 
-<title>Math Voice & Photo Solver Pro</title>
-
-<!-- OCR: फोटो से टेक्स्ट पढ़ने के लिए -->
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<title>Echo Studio - Advanced Audio Recorder</title>
 
 <style>
 :root {
-    --bg: #080d1c;
-    --panel: #111a30;
-    --panel2: #182642;
-    --accent: #7c5cff;
-    --cyan: #00d4ff;
-    --green: #24d98b;
-    --red: #ff5470;
-    --text: #f2f5ff;
-    --muted: #a8b4d1;
-    --border: rgba(255,255,255,.11);
+    --bg: #090e1c;
+    --panel: #121a2c;
+    --panel2: #19243b;
+    --blue: #5b8cff;
+    --purple: #a17aff;
+    --green: #36dfae;
+    --text: #f4f7ff;
+    --muted: #96a4c1;
+    --border: rgba(255,255,255,.09);
 }
 
 * {
@@ -30,363 +26,412 @@
 
 body {
     margin: 0;
-    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
     background:
-        radial-gradient(circle at top left, #172554 0, transparent 38%),
+        radial-gradient(ellipse at top left, #1b2750 0, transparent 40%),
+        radial-gradient(ellipse at bottom right, #29174d 0, transparent 40%),
         var(--bg);
     color: var(--text);
-    font-family: Arial, "Noto Sans Devanagari", sans-serif;
+    min-height: 100vh;
 }
 
-header {
-    text-align: center;
-    padding: 28px 14px 20px;
-}
-
-.logo {
-    width: 72px;
-    height: 72px;
-    display: grid;
-    place-items: center;
-    margin: auto;
-    border-radius: 23px;
-    background: linear-gradient(135deg, var(--accent), var(--cyan));
-    font-size: 36px;
-    box-shadow: 0 0 35px #7c5cff55;
-}
-
-header h1 {
-    font-size: clamp(25px, 5vw, 38px);
-    background: linear-gradient(90deg, white, #84e8ff, #bcaaff);
-    -webkit-background-clip: text;
-    color: transparent;
-    margin-bottom: 10px;
-}
-
-header p {
-    color: var(--muted);
-    line-height: 1.8;
-    max-width: 650px;
-    margin: auto;
-}
-
-.container {
-    width: min(960px, 94%);
-    margin: auto;
-}
-
-.card {
-    background: linear-gradient(145deg, #131d35, #0f172b);
-    border: 1px solid var(--border);
-    border-radius: 21px;
-    padding: 21px;
-    margin-bottom: 20px;
-    box-shadow: 0 15px 45px #0002;
-}
-
-.card h2 {
-    margin-top: 0;
-    font-size: 21px;
-}
-
-.muted {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.8;
-}
-
-textarea {
-    width: 100%;
-    min-height: 115px;
-    resize: vertical;
-    background: #080f20;
-    border: 1px solid #34415f;
-    color: white;
-    border-radius: 14px;
-    padding: 15px;
-    font-size: 17px;
-    line-height: 1.7;
-    outline: none;
-}
-
-textarea:focus {
-    border-color: var(--cyan);
-    box-shadow: 0 0 0 3px #00d4ff18;
+button, input, select {
+    font: inherit;
 }
 
 button {
-    font-family: inherit;
     cursor: pointer;
-    border: none;
-    transition: .2s;
 }
 
-button:active {
-    transform: scale(.97);
-}
-
-button:disabled {
-    opacity: .5;
-    cursor: not-allowed;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 14px;
-}
-
-.btn {
-    padding: 12px 16px;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 14px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 7px;
-}
-
-.primary {
-    background: linear-gradient(135deg, #7557ff, #4b8dff);
-    color: white;
-}
-
-.voice {
-    background: linear-gradient(135deg, #ed4264, #ff7b54);
-    color: white;
-}
-
-.secondary {
-    background: #243351;
-    color: white;
-    border: 1px solid #405071;
-}
-
-.green {
-    background: var(--green);
-    color: #06251a;
-}
-
-.status {
-    display: flex;
-    gap: 9px;
-    align-items: center;
-    min-height: 25px;
-    margin-top: 13px;
-    font-size: 13px;
-    color: var(--muted);
-}
-
-.dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #71809e;
-    flex-shrink: 0;
-}
-
-.dot.active {
-    background: var(--green);
-    box-shadow: 0 0 12px var(--green);
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    50% { opacity: .3; }
-}
-
-.upload-zone {
-    border: 2px dashed #43567b;
-    border-radius: 17px;
-    padding: 23px 15px;
-    text-align: center;
-    background: #0b1325;
-}
-
-.upload-icon {
-    font-size: 45px;
-    margin-bottom: 8px;
-}
-
-.upload-zone p {
-    color: var(--muted);
-    line-height: 1.8;
-    font-size: 14px;
-}
-
-.image-preview {
-    display: none;
-    margin-top: 18px;
-}
-
-.image-preview.show {
-    display: block;
-}
-
-.image-preview img {
-    display: block;
-    max-width: 100%;
-    max-height: 430px;
+.app {
+    max-width: 1100px;
     margin: auto;
-    border-radius: 13px;
-    border: 1px solid #344766;
-    object-fit: contain;
+    padding: 22px;
 }
 
-.file-name {
-    text-align: center;
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 10px;
-    overflow-wrap: anywhere;
-}
-
-.progress-wrap {
-    display: none;
-    margin-top: 17px;
-}
-
-.progress-wrap.show {
-    display: block;
-}
-
-.progress-bar {
-    height: 9px;
-    background: #27344f;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-top: 8px;
-}
-
-.progress-inner {
-    width: 0;
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--cyan));
-    transition: width .2s;
-}
-
-.answer-card {
-    display: none;
-}
-
-.answer-card.show {
-    display: block;
-    animation: appear .3s ease;
-}
-
-@keyframes appear {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.question-box {
-    padding: 15px;
-    background: #080f20;
-    border: 1px solid #263957;
-    border-radius: 12px;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
-}
-
-.heading-small {
-    color: var(--green);
-    margin-top: 23px;
-    font-weight: bold;
-}
-
-.steps {
-    display: grid;
-    gap: 11px;
-    margin-top: 12px;
-}
-
-.step {
+header {
     display: flex;
-    gap: 12px;
-    padding: 14px;
-    border-radius: 13px;
-    background: #17243d;
-    border: 1px solid #2b3c5b;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
 }
 
-.step-num {
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
     display: grid;
     place-items: center;
-    min-width: 29px;
-    height: 29px;
-    border-radius: 9px;
-    background: var(--accent);
-    font-weight: bold;
+    font-size: 26px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    box-shadow: 0 8px 30px #5b8cff44;
 }
 
-.final-answer {
-    margin-top: 12px;
-    padding: 19px;
-    background: linear-gradient(135deg, #12382e, #102c2d);
-    border: 1px solid #24d98b66;
-    border-radius: 14px;
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 1.7;
-    overflow-wrap: anywhere;
+h1 {
+    font-size: 24px;
+    margin: 0;
 }
 
-.example-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 9px;
-}
-
-.example {
-    background: #202e4b;
-    border: 1px solid #344766;
-    color: #e2eaff;
-    border-radius: 20px;
-    padding: 10px 13px;
+.subtitle {
+    color: var(--muted);
     font-size: 13px;
+    margin-top: 5px;
 }
 
-.history-item {
+.badge {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    color: var(--green);
+    background: #36dfae10;
+    font-size: 12px;
+}
+
+.panel {
+    background: rgba(18,26,44,.93);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 15px 50px #00000020;
+}
+
+.panel-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    padding: 12px;
-    margin-top: 10px;
-    background: #17243d;
-    border: 1px solid #2b3c5b;
-    border-radius: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
 }
 
-.history-item span {
-    overflow-wrap: anywhere;
-    line-height: 1.7;
+h2 {
+    font-size: 17px;
+    margin: 0;
 }
 
-footer {
-    padding: 25px 12px;
+.small {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.recorder {
     text-align: center;
-    color: #7f8ca9;
+    padding: 28px 15px;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #72809d;
+    border-radius: 50%;
+}
+
+.dot.active {
+    background: #ff526c;
+    box-shadow: 0 0 12px #ff526c;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: .4; }
+}
+
+.timer {
+    font-size: clamp(38px, 8vw, 58px);
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-variant-numeric: tabular-nums;
+    margin: 6px 0 22px;
+}
+
+.visualizer {
+    width: 100%;
+    height: 125px;
+    background: #080d19;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    display: block;
+    margin-bottom: 25px;
+}
+
+.mic-button {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    border: 4px solid #ffffff16;
+    background: linear-gradient(145deg, #ff5574, #d62e5b);
+    color: white;
+    font-size: 32px;
+    box-shadow: 0 0 0 10px #ff557410, 0 12px 35px #ff557433;
+    transition: .2s;
+}
+
+.mic-button:hover {
+    transform: scale(1.05);
+}
+
+.mic-button.recording {
+    background: linear-gradient(145deg, #ff7777, #fa3156);
+    border-radius: 23px;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.btn {
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 12px 17px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.btn:hover {
+    border-color: var(--blue);
+    transform: translateY(-1px);
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, #477eff, #8059e8);
+    border: 0;
+}
+
+.btn.success {
+    background: #36dfae18;
+    color: var(--green);
+    border-color: #36dfae44;
+}
+
+.btn.danger {
+    color: #ff8292;
+}
+
+.btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.effects-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.effect {
+    text-align: left;
+    padding: 17px 12px;
+    background: #0d1526;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    min-width: 0;
+    transition: .2s;
+}
+
+.effect:hover {
+    border-color: #5b8cff99;
+}
+
+.effect.selected {
+    background: linear-gradient(135deg, #315bb733, #8159e833);
+    border-color: var(--blue);
+    box-shadow: inset 0 0 0 1px #5b8cff33;
+}
+
+.effect-icon {
+    font-size: 25px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.effect-name {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.effect-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 6px;
+}
+
+.range-row {
+    margin: 22px 0;
+}
+
+.range-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+output {
+    color: #9db9ff;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--blue);
+}
+
+select, input[type="text"] {
+    width: 100%;
+    color: var(--text);
+    background: #0c1425;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    outline: none;
+}
+
+select option {
+    background: #121a2c;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.field label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 9px;
+}
+
+.player {
+    width: 100%;
+    margin: 15px 0;
+    display: block;
+}
+
+.recording-item {
+    background: #0c1425;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-top: 12px;
+}
+
+.recording-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.recording-name {
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.recording-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.recording-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.recording-actions .btn {
+    padding: 9px 12px;
     font-size: 12px;
 }
 
-@media(max-width: 550px) {
-    .card {
+.notice {
+    background: #5b8cff12;
+    border: 1px solid #5b8cff35;
+    color: #c7d6ff;
+    padding: 14px;
+    border-radius: 12px;
+    line-height: 1.7;
+    font-size: 12px;
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #202c44;
+    border: 1px solid var(--border);
+    padding: 13px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 35px #0007;
+    display: none;
+    z-index: 20;
+    max-width: 90%;
+    font-size: 13px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 700px) {
+    .app {
+        padding: 12px;
+    }
+
+    .panel {
         padding: 16px;
         border-radius: 17px;
     }
 
-    .row .btn {
-        flex: 1 1 42%;
+    .effects-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .final-answer {
-        font-size: 19px;
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .logo-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    h1 {
+        font-size: 21px;
     }
 }
 </style>
@@ -394,1301 +439,1414 @@ footer {
 
 <body>
 
+<div class="app">
+
 <header>
-    <div class="logo">🧮</div>
-    <h1>Math Voice & Photo Solver Pro</h1>
-    <p>
-        प्रश्न बोलें, टाइप करें या फोटो खींचें।
-        गणित का हल प्राप्त करें।
-    </p>
+    <div class="logo">
+        <div class="logo-icon">🎙️</div>
+        <div>
+            <h1>Echo Studio</h1>
+            <div class="subtitle">Advanced Voice Recording & Effects</div>
+        </div>
+    </div>
+    <div class="badge">● AUDIO STUDIO</div>
 </header>
 
-<main class="container">
+<section class="panel recorder">
 
-    <!-- PHOTO UPLOAD -->
-    <section class="card">
-        <h2>📸 फोटो से गणित का प्रश्न हल करें</h2>
+    <div class="status">
+        <span class="dot" id="statusDot"></span>
+        <span id="statusText">Ready to record</span>
+    </div>
 
-        <p class="muted">
-            अपनी किताब, कॉपी या प्रश्न-पत्र की फोटो चुनें।
-            फोटो से पढ़ा गया टेक्स्ट नीचे दिखाई देगा।
-        </p>
+    <div class="timer" id="timer">00:00:00</div>
 
-        <div class="upload-zone">
-            <div class="upload-icon">📷</div>
+    <canvas id="visualizer" class="visualizer"></canvas>
 
-            <h3>अपना प्रश्न अपलोड करें</h3>
+    <button class="mic-button" id="recordBtn"
+            aria-label="Start recording" title="Start recording">🎙️</button>
 
-            <p>
-                कैमरे से फोटो खींचें या गैलरी से तस्वीर चुनें।
-                JPG, PNG और अन्य सामान्य इमेज फॉर्मेट चुन सकते हैं।
-            </p>
+    <div class="small" style="margin-top:16px" id="micHint">
+        Tap the microphone to begin
+    </div>
 
-            <div class="row" style="justify-content:center">
-                <button class="btn primary"
-                    onclick="document.getElementById('cameraInput').click()">
-                    📸 फोटो खींचें
-                </button>
+    <div class="controls">
+        <button class="btn" id="pauseBtn" disabled>⏸ Pause</button>
+        <button class="btn" id="resumeBtn" disabled>▶ Resume</button>
+        <button class="btn danger" id="stopBtn" disabled>⏹ Stop</button>
+        <button class="btn" id="monitorBtn">🔊 Live Monitor: OFF</button>
+    </div>
 
-                <button class="btn secondary"
-                    onclick="document.getElementById('galleryInput').click()">
-                    🖼️ गैलरी से चुनें
-                </button>
-            </div>
+</section>
 
-            <!-- मोबाइल कैमरा -->
-            <input
-                id="cameraInput"
-                type="file"
-                accept="image/*"
-                capture="environment"
-                hidden
-            >
+<section class="panel">
 
-            <!-- गैलरी -->
-            <input
-                id="galleryInput"
-                type="file"
-                accept="image/*"
-                hidden
-            >
+    <div class="panel-title">
+        <h2>🎚️ Choose Your Sound Environment</h2>
+        <span class="small">8 audio presets</span>
+    </div>
+
+    <div class="effects-grid" id="effectsGrid">
+
+        <button class="effect selected" data-effect="auditorium">
+            <span class="effect-icon">🏛️</span>
+            <div class="effect-name">Auditorium</div>
+            <div class="effect-desc">Large hall, warm and spacious echo.</div>
+        </button>
+
+        <button class="effect" data-effect="concert">
+            <span class="effect-icon">🎤</span>
+            <div class="effect-name">Concert Hall</div>
+            <div class="effect-desc">Stage performance ambience.</div>
+        </button>
+
+        <button class="effect" data-effect="studio">
+            <span class="effect-icon">🎧</span>
+            <div class="effect-name">Studio</div>
+            <div class="effect-desc">Controlled, professional room sound.</div>
+        </button>
+
+        <button class="effect" data-effect="cathedral">
+            <span class="effect-icon">⛪</span>
+            <div class="effect-name">Cathedral</div>
+            <div class="effect-desc">Long, spacious, dramatic reverb.</div>
+        </button>
+
+        <button class="effect" data-effect="echo">
+            <span class="effect-icon">🔁</span>
+            <div class="effect-name">Echo Chamber</div>
+            <div class="effect-desc">Distinct repeated voice echoes.</div>
+        </button>
+
+        <button class="effect" data-effect="room">
+            <span class="effect-icon">🏠</span>
+            <div class="effect-name">Small Room</div>
+            <div class="effect-desc">Subtle indoor reflections.</div>
+        </button>
+
+        <button class="effect" data-effect="cave">
+            <span class="effect-icon">🪨</span>
+            <div class="effect-name">Cave</div>
+            <div class="effect-desc">Deep, dark, cinematic resonance.</div>
+        </button>
+
+        <button class="effect" data-effect="clean">
+            <span class="effect-icon">✨</span>
+            <div class="effect-name">Clean Voice</div>
+            <div class="effect-desc">Natural voice with light processing.</div>
+        </button>
+
+    </div>
+
+    <div class="range-row">
+        <div class="range-heading">
+            <label for="intensity">Effect Intensity</label>
+            <output id="intensityValue">55%</output>
+        </div>
+        <input type="range" id="intensity" min="0" max="100" value="55">
+    </div>
+
+    <div class="range-row">
+        <div class="range-heading">
+            <label for="volume">Output Volume</label>
+            <output id="volumeValue">100%</output>
+        </div>
+        <input type="range" id="volume" min="0" max="150" value="100">
+    </div>
+
+    <div class="range-row">
+        <div class="range-heading">
+            <label for="delay">Echo Delay</label>
+            <output id="delayValue">300 ms</output>
+        </div>
+        <input type="range" id="delay" min="100" max="900" value="300">
+    </div>
+
+    <div class="range-row">
+        <div class="range-heading">
+            <label for="tone">Voice Tone</label>
+            <output id="toneValue">Neutral</output>
+        </div>
+        <input type="range" id="tone" min="-10" max="10" value="0">
+    </div>
+
+</section>
+
+<section class="panel">
+
+    <div class="panel-title">
+        <h2>⚙️ Recording Settings</h2>
+    </div>
+
+    <div class="grid-2">
+
+        <div class="field">
+            <label for="quality">Recording Quality</label>
+            <select id="quality">
+                <option value="high">High Quality</option>
+                <option value="standard" selected>Standard</option>
+                <option value="compact">Compact File</option>
+            </select>
         </div>
 
-        <div class="image-preview" id="imagePreview">
-            <img id="previewImage" alt="अपलोड किए गए प्रश्न की फोटो">
-            <div class="file-name" id="fileName"></div>
-
-            <div class="row">
-                <button class="btn primary" id="readPhotoBtn"
-                    onclick="readPhoto()">
-                    🔍 फोटो से प्रश्न पढ़ें
-                </button>
-
-                <button class="btn secondary" onclick="removePhoto()">
-                    🗑️ फोटो हटाएँ
-                </button>
-            </div>
+        <div class="field">
+            <label for="filename">Recording Name</label>
+            <input type="text" id="filename" value="My Voice Recording"
+                   maxlength="80">
         </div>
 
-        <div class="progress-wrap" id="progressWrap">
-            <div id="progressText" class="muted">
-                फोटो पढ़ने की तैयारी...
-            </div>
+    </div>
 
-            <div class="progress-bar">
-                <div class="progress-inner" id="progressInner"></div>
-            </div>
-        </div>
+    <div class="notice" style="margin-top:18px">
+        <strong>Important:</strong> Select an effect before recording.
+        The live monitor lets you hear the processed sound while recording.
+        Enable it only when needed, preferably with headphones, to avoid
+        microphone feedback. You can also change effects after recording
+        and export a processed audio file.
+    </div>
 
-        <div class="status" aria-live="polite">
-            <span class="dot" id="photoDot"></span>
-            <span id="photoStatus">
-                अभी कोई फोटो अपलोड नहीं की गई है।
-            </span>
-        </div>
-    </section>
+</section>
 
-    <!-- TEXT AND VOICE -->
-    <section class="card">
-        <h2>⌨️ प्रश्न लिखें या बोलें</h2>
+<section class="panel">
 
-        <textarea id="question"
-            placeholder="उदाहरण: 144 और 180 का HCF निकालिए।&#10;या फोटो पढ़ने के बाद यहाँ प्राप्त टेक्स्ट की जाँच करें।"></textarea>
+    <div class="panel-title">
+        <h2>🎵 Current Recording</h2>
+        <span class="small" id="recordingInfo">No recording yet</span>
+    </div>
 
-        <div class="row">
-            <button class="btn voice" id="micButton"
-                onclick="startVoice()">
-                🎙️ बोलकर पूछें
-            </button>
+    <audio id="player" class="player" controls></audio>
 
-            <button class="btn primary" id="solveButton"
-                onclick="solveQuestion()">
-                🧮 Answer निकालें
-            </button>
+    <div class="controls">
+        <button class="btn primary" id="exportBtn" disabled>
+            ⬇ Export With Effects
+        </button>
 
-            <button class="btn secondary" onclick="clearAll()">
-                🗑️ साफ करें
-            </button>
-        </div>
+        <button class="btn success" id="downloadRawBtn" disabled>
+            ⬇ Download Original
+        </button>
 
-        <div class="status">
-            <span class="dot" id="mainDot"></span>
-            <span id="mainStatus">अपना प्रश्न दर्ज कीजिए।</span>
-        </div>
-    </section>
+        <button class="btn" id="reprocessBtn" disabled>
+            🔄 Apply Current Effect
+        </button>
+    </div>
 
-    <!-- EXAMPLES -->
-    <section class="card">
-        <h2>⚡ उदाहरण</h2>
+    <div class="small" style="margin-top:12px;line-height:1.7">
+        Export With Effects creates a new audio file using the selected
+        effect and intensity. Download Original saves the untouched
+        microphone recording.
+    </div>
 
-        <div class="example-list">
-            <button class="example"
-                onclick="setExample('125 + 275')">
-                125 + 275
-            </button>
+</section>
 
-            <button class="example"
-                onclick="setExample('250 का 20 प्रतिशत')">
-                250 का 20%
-            </button>
+<section class="panel">
 
-            <button class="example"
-                onclick="setExample('144 और 180 का HCF')">
-                HCF
-            </button>
+    <div class="panel-title">
+        <h2>📁 My Recordings</h2>
+        <button class="btn danger" id="clearBtn">Clear List</button>
+    </div>
 
-            <button class="example"
-                onclick="setExample('12 और 18 का LCM')">
-                LCM
-            </button>
+    <div id="recordingsList">
+        <div class="small">Your saved session recordings will appear here.</div>
+    </div>
 
-            <button class="example"
-                onclick="setExample('2x + 5 = 15')">
-                समीकरण
-            </button>
-
-            <button class="example"
-                onclick="setExample('√144')">
-                वर्गमूल
-            </button>
-        </div>
-    </section>
-
-    <!-- ANSWER -->
-    <section class="card answer-card" id="answerCard">
-        <h2>📘 प्रश्न का समाधान</h2>
-
-        <div class="muted">प्रश्न</div>
-        <div class="question-box" id="questionDisplay"></div>
-
-        <div class="heading-small">📝 चरण-दर-चरण हल</div>
-        <div class="steps" id="steps"></div>
-
-        <div class="heading-small">✅ अंतिम उत्तर</div>
-        <div class="final-answer" id="finalAnswer"></div>
-
-        <div class="row">
-            <button class="btn green" onclick="speakAnswer()">
-                🔊 उत्तर सुनें
-            </button>
-
-            <button class="btn secondary" onclick="copyAnswer()">
-                📋 हल कॉपी करें
-            </button>
-        </div>
-
-        <p class="muted" id="answerNote"></p>
-    </section>
-
-    <!-- HISTORY -->
-    <section class="card">
-        <h2>🕘 प्रश्न इतिहास</h2>
-        <div id="history"></div>
-
-        <div class="row">
-            <button class="btn secondary" onclick="clearHistory()">
-                इतिहास मिटाएँ
-            </button>
-        </div>
-    </section>
-
-    <section class="card">
-        <h2>ℹ️ फोटो अपलोड करने के सुझाव</h2>
-
-        <div class="steps">
-            <div class="step">
-                <span class="step-num">1</span>
-                <span>प्रश्न की फोटो स्पष्ट और अच्छी रोशनी में खींचें।</span>
-            </div>
-
-            <div class="step">
-                <span class="step-num">2</span>
-                <span>प्रश्न को फोटो में पूरा रखें। अक्षर और गणितीय चिन्ह कटे नहीं होने चाहिए।</span>
-            </div>
-
-            <div class="step">
-                <span class="step-num">3</span>
-                <span>फोटो से प्रश्न पढ़ें बटन दबाएँ। OCR द्वारा पढ़े गए टेक्स्ट की जाँच करें।</span>
-            </div>
-
-            <div class="step">
-                <span class="step-num">4</span>
-                <span>यदि टेक्स्ट सही है, तो Answer निकालें दबाएँ।</span>
-            </div>
-        </div>
-
-        <p class="muted">
-            OCR हस्तलिखित प्रश्नों, भिन्न, घात, वर्गमूल और ज्यामितीय
-            चित्रों को हमेशा सही नहीं पढ़ सकता। इस संस्करण में फोटो
-            पहचान और गणित हल करना अलग-अलग चरण हैं।
-        </p>
-    </section>
-
-</main>
+</section>
 
 <footer>
-    Math Voice & Photo Solver Pro · Educational Tool
+    Echo Studio · Browser-based Audio Recorder<br>
+    Microphone access requires permission. Use HTTPS or localhost.
 </footer>
 
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
+(() => {
 "use strict";
 
-const questionInput = document.getElementById("question");
+/* -------------------------------------------
+   APPLICATION STATE
+------------------------------------------- */
 
-let selectedFile = null;
-let recognition = null;
-let isListening = false;
-let lastSolution = null;
+const $ = id => document.getElementById(id);
 
-function setMainStatus(message, active = false) {
-    document.getElementById("mainStatus").textContent = message;
-    document.getElementById("mainDot")
-        .classList.toggle("active", active);
-}
+let audioContext = null;
+let mediaStream = null;
+let sourceNode = null;
+let analyser = null;
+let micGain = null;
+let masterGain = null;
+let dryGain = null;
+let wetGain = null;
+let convolver = null;
+let delayNode = null;
+let feedbackGain = null;
+let echoWet = null;
+let filterNode = null;
+let compressor = null;
+let monitorGain = null;
+let recorder = null;
+let chunks = [];
+let rawBlob = null;
+let processedBlob = null;
+let rawURL = null;
+let processedURL = null;
+let isRecording = false;
+let isPaused = false;
+let recordingStart = 0;
+let elapsedBeforePause = 0;
+let timerInterval = null;
+let visualizerFrame = null;
+let monitorEnabled = false;
+let selectedEffect = "auditorium";
+let recordings = [];
+let activeExport = false;
 
-function setPhotoStatus(message, active = false) {
-    document.getElementById("photoStatus").textContent = message;
-    document.getElementById("photoDot")
-        .classList.toggle("active", active);
-}
-
-function normalizeText(text) {
-    return String(text)
-        .toLowerCase()
-        .replace(/[०-९]/g, d =>
-            String("०१२३४५६७८९".indexOf(d))
-        )
-        .replace(/,/g, "")
-        .replace(/[?।]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-}
-
-/* PHOTO INPUT */
-
-document.getElementById("cameraInput")
-    .addEventListener("change", handleImage);
-
-document.getElementById("galleryInput")
-    .addEventListener("change", handleImage);
-
-function handleImage(event) {
-    const file = event.target.files[0];
-
-    // अगली बार वही फोटो चुनने पर भी change event हो सके।
-    event.target.value = "";
-
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-        setPhotoStatus("कृपया एक इमेज फाइल चुनें।");
-        return;
+const presets = {
+    auditorium: {
+        decay: 2.5,
+        wet: 0.60,
+        delay: 0.28,
+        echo: 0.12,
+        low: 120,
+        high: 10000,
+        tone: 0
+    },
+    concert: {
+        decay: 3.5,
+        wet: 0.68,
+        delay: 0.34,
+        echo: 0.17,
+        low: 100,
+        high: 12000,
+        tone: 0
+    },
+    studio: {
+        decay: 0.45,
+        wet: 0.12,
+        delay: 0.12,
+        echo: 0.00,
+        low: 90,
+        high: 15000,
+        tone: 0
+    },
+    cathedral: {
+        decay: 6.0,
+        wet: 0.75,
+        delay: 0.42,
+        echo: 0.22,
+        low: 100,
+        high: 8500,
+        tone: -1
+    },
+    echo: {
+        decay: 1.8,
+        wet: 0.22,
+        delay: 0.38,
+        echo: 0.72,
+        low: 120,
+        high: 9000,
+        tone: 0
+    },
+    room: {
+        decay: 0.85,
+        wet: 0.28,
+        delay: 0.16,
+        echo: 0.04,
+        low: 100,
+        high: 12000,
+        tone: 0
+    },
+    cave: {
+        decay: 4.5,
+        wet: 0.72,
+        delay: 0.48,
+        echo: 0.30,
+        low: 70,
+        high: 4500,
+        tone: -3
+    },
+    clean: {
+        decay: 0.5,
+        wet: 0.03,
+        delay: 0.15,
+        echo: 0,
+        low: 80,
+        high: 16000,
+        tone: 1
     }
+};
 
-    const maxSize = 12 * 1024 * 1024;
+/* -------------------------------------------
+   UI UTILITIES
+------------------------------------------- */
 
-    if (file.size > maxSize) {
-        setPhotoStatus(
-            "फोटो का आकार 12 MB से कम रखें।"
+function toast(message) {
+    const el = $("toast");
+    el.textContent = message;
+    el.style.display = "block";
+    clearTimeout(toast.timeout);
+    toast.timeout = setTimeout(() => {
+        el.style.display = "none";
+    }, 3500);
+}
+
+function formatTime(seconds) {
+    seconds = Math.max(0, Math.floor(seconds));
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+
+    return [h, m, s]
+        .map(n => String(n).padStart(2, "0"))
+        .join(":");
+}
+
+function getElapsed() {
+    if (!recordingStart) return elapsedBeforePause;
+
+    if (isPaused) return elapsedBeforePause;
+
+    return elapsedBeforePause +
+        (performance.now() - recordingStart) / 1000;
+}
+
+function updateTimer() {
+    $("timer").textContent = formatTime(getElapsed());
+}
+
+function safeFilename(name) {
+    return (name || "voice-recording")
+        .replace(/[<>:"/\\|?*\x00-\x1F]/g, "_")
+        .trim()
+        .slice(0, 80) || "voice-recording";
+}
+
+function currentIntensity() {
+    return Number($("intensity").value) / 100;
+}
+
+function currentVolume() {
+    return Number($("volume").value) / 100;
+}
+
+/* -------------------------------------------
+   AUDIO CONTEXT AND GRAPH
+------------------------------------------- */
+
+async function ensureAudio() {
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
+        throw new Error(
+            "Microphone access is unavailable. Open this app on HTTPS or localhost."
         );
+    }
+
+    if (!audioContext) {
+        audioContext = new (
+            window.AudioContext || window.webkitAudioContext
+        )();
+
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 2048;
+        analyser.smoothingTimeConstant = 0.82;
+
+        micGain = audioContext.createGain();
+        masterGain = audioContext.createGain();
+        dryGain = audioContext.createGain();
+        wetGain = audioContext.createGain();
+        convolver = audioContext.createConvolver();
+        delayNode = audioContext.createDelay(2);
+        feedbackGain = audioContext.createGain();
+        echoWet = audioContext.createGain();
+        filterNode = audioContext.createBiquadFilter();
+        compressor = audioContext.createDynamicsCompressor();
+        monitorGain = audioContext.createGain();
+
+        filterNode.type = "lowpass";
+        filterNode.frequency.value = 12000;
+
+        compressor.threshold.value = -18;
+        compressor.knee.value = 18;
+        compressor.ratio.value = 3;
+        compressor.attack.value = 0.006;
+        compressor.release.value = 0.22;
+
+        masterGain.gain.value = currentVolume();
+        monitorGain.gain.value = 0;
+
+        /*
+          Parallel audio paths:
+          Dry path = original voice
+          Wet path = convolution reverb
+          Echo path = feedback delay
+        */
+
+        micGain.connect(filterNode);
+
+        filterNode.connect(dryGain);
+        dryGain.connect(compressor);
+
+        filterNode.connect(convolver);
+        convolver.connect(wetGain);
+        wetGain.connect(compressor);
+
+        filterNode.connect(delayNode);
+        delayNode.connect(feedbackGain);
+        feedbackGain.connect(delayNode);
+
+        delayNode.connect(echoWet);
+        echoWet.connect(compressor);
+
+        compressor.connect(masterGain);
+
+        // Output for headphones / speakers.
+        masterGain.connect(monitorGain);
+        monitorGain.connect(audioContext.destination);
+
+        // Visualizer uses processed signal.
+        masterGain.connect(analyser);
+
+        await updateImpulseResponse();
+        applyEffect();
+    }
+
+    if (audioContext.state === "suspended") {
+        await audioContext.resume();
+    }
+}
+
+/* -------------------------------------------
+   PROCEDURAL REVERB GENERATION
+------------------------------------------- */
+
+async function updateImpulseResponse() {
+    if (!audioContext || !convolver) return;
+
+    const p = presets[selectedEffect];
+    const intensity = currentIntensity();
+
+    const duration = Math.max(
+        0.15,
+        p.decay * (0.25 + intensity * 0.9)
+    );
+
+    const rate = audioContext.sampleRate;
+    const length = Math.floor(rate * duration);
+    const impulse = audioContext.createBuffer(2, length, rate);
+
+    for (let channel = 0; channel < 2; channel++) {
+        const data = impulse.getChannelData(channel);
+
+        for (let i = 0; i < length; i++) {
+            const t = i / length;
+
+            // Exponential decay approximates room reflections.
+            const envelope = Math.pow(1 - t, 2.7);
+            const randomNoise = Math.random() * 2 - 1;
+
+            // Add slight diffusion to avoid a harsh noise-like tail.
+            data[i] = randomNoise * envelope;
+        }
+    }
+
+    convolver.buffer = impulse;
+}
+
+/* -------------------------------------------
+   EFFECT PARAMETERS
+------------------------------------------- */
+
+function applyEffect() {
+    if (!audioContext) return;
+
+    const p = presets[selectedEffect];
+    const intensity = currentIntensity();
+    const volume = currentVolume();
+    const now = audioContext.currentTime;
+
+    /*
+      Clean voice keeps mostly dry sound.
+      Larger rooms add progressively more reverb.
+    */
+
+    const wet = p.wet * intensity;
+    const dry = selectedEffect === "clean"
+        ? 1
+        : Math.max(0.35, 1 - wet * 0.45);
+
+    dryGain.gain.setTargetAtTime(dry, now, 0.04);
+    wetGain.gain.setTargetAtTime(wet, now, 0.06);
+
+    delayNode.delayTime.setTargetAtTime(
+        Number($("delay").value) / 1000,
+        now,
+        0.04
+    );
+
+    feedbackGain.gain.setTargetAtTime(
+        Math.min(0.65, p.echo * intensity),
+        now,
+        0.04
+    );
+
+    echoWet.gain.setTargetAtTime(
+        p.echo * intensity,
+        now,
+        0.04
+    );
+
+    masterGain.gain.setTargetAtTime(volume, now, 0.04);
+
+    filterNode.frequency.setTargetAtTime(
+        p.high,
+        now,
+        0.05
+    );
+
+    // Voice tone: moderate low/high frequency adjustment.
+    filterNode.Q.value = 0.35;
+
+    $("intensityValue").textContent =
+        $("intensity").value + "%";
+
+    $("volumeValue").textContent =
+        $("volume").value + "%";
+
+    $("delayValue").textContent =
+        $("delay").value + " ms";
+
+    const tone = Number($("tone").value);
+
+    $("toneValue").textContent =
+        tone === 0
+            ? "Neutral"
+            : tone > 0
+                ? "Brighter +" + tone
+                : "Deeper " + tone;
+
+    if (audioContext && filterNode) {
+        // Slightly alter the output's spectral balance.
+        filterNode.frequency.setTargetAtTime(
+            Math.min(
+                18000,
+                Math.max(2500, p.high + tone * 400)
+            ),
+            now,
+            0.05
+        );
+    }
+}
+
+function selectEffect(effect) {
+    if (!presets[effect]) return;
+
+    selectedEffect = effect;
+
+    document.querySelectorAll(".effect").forEach(button => {
+        button.classList.toggle(
+            "selected",
+            button.dataset.effect === effect
+        );
+    });
+
+    if (audioContext) {
+        updateImpulseResponse();
+        applyEffect();
+    }
+
+    toast("Effect selected: " + effect.toUpperCase());
+}
+
+/* -------------------------------------------
+   MICROPHONE
+------------------------------------------- */
+
+async function startRecording() {
+    if (isRecording) return;
+
+    try {
+        await ensureAudio();
+
+        if (!mediaStream) {
+            mediaStream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    echoCancellation: false,
+                    noiseSuppression: false,
+                    autoGainControl: false
+                }
+            });
+        }
+
+        if (sourceNode) {
+            try {
+                sourceNode.disconnect();
+            } catch (_) {}
+        }
+
+        sourceNode = audioContext.createMediaStreamSource(mediaStream);
+        sourceNode.connect(micGain);
+
+        chunks = [];
+        rawBlob = null;
+        processedBlob = null;
+
+        if (rawURL) URL.revokeObjectURL(rawURL);
+        if (processedURL) URL.revokeObjectURL(processedURL);
+
+        rawURL = null;
+        processedURL = null;
+
+        $("player").removeAttribute("src");
+        $("player").load();
+
+        $("exportBtn").disabled = true;
+        $("downloadRawBtn").disabled = true;
+        $("reprocessBtn").disabled = true;
+
+        const quality = $("quality").value;
+
+        const options = {};
+
+        if (quality === "high") {
+            options.audioBitsPerSecond = 192000;
+        } else if (quality === "compact") {
+            options.audioBitsPerSecond = 64000;
+        } else {
+            options.audioBitsPerSecond = 128000;
+        }
+
+        const mimeType = [
+            "audio/webm;codecs=opus",
+            "audio/webm",
+            "audio/mp4",
+            "audio/ogg;codecs=opus"
+        ].find(type => {
+            return window.MediaRecorder &&
+                MediaRecorder.isTypeSupported(type);
+        });
+
+        if (!window.MediaRecorder) {
+            throw new Error(
+                "MediaRecorder is not supported in this browser."
+            );
+        }
+
+        if (mimeType) options.mimeType = mimeType;
+
+        recorder = new MediaRecorder(mediaStream, options);
+
+        recorder.ondataavailable = event => {
+            if (event.data && event.data.size > 0) {
+                chunks.push(event.data);
+            }
+        };
+
+        recorder.onstop = () => {
+            rawBlob = new Blob(chunks, {
+                type: recorder.mimeType || "audio/webm"
+            });
+
+            rawURL = URL.createObjectURL(rawBlob);
+
+            $("player").src = rawURL;
+            $("player").load();
+
+            $("exportBtn").disabled = false;
+            $("downloadRawBtn").disabled = false;
+            $("reprocessBtn").disabled = false;
+
+            $("recordingInfo").textContent =
+                "Original recording ready · " +
+                (rawBlob.size / 1024).toFixed(1) + " KB";
+
+            addRecording(rawBlob);
+
+            $("statusText").textContent = "Recording complete";
+            $("micHint").textContent = "Your voice has been recorded";
+
+            toast("Recording saved in this session.");
+        };
+
+        elapsedBeforePause = 0;
+        recordingStart = performance.now();
+        isPaused = false;
+        isRecording = true;
+
+        recorder.start(250);
+
+        $("recordBtn").classList.add("recording");
+        $("recordBtn").textContent = "⏺";
+        $("recordBtn").disabled = true;
+
+        $("pauseBtn").disabled = false;
+        $("resumeBtn").disabled = true;
+        $("stopBtn").disabled = false;
+
+        $("statusDot").classList.add("active");
+        $("statusText").textContent = "Recording in progress";
+        $("micHint").textContent = "Speak clearly into your microphone";
+
+        timerInterval = setInterval(updateTimer, 250);
+
+        drawVisualizer();
+
+        toast("Recording started.");
+
+    } catch (error) {
+        console.error(error);
+        toast(error.message || "Could not start recording.");
+
+        $("statusText").textContent = "Microphone unavailable";
+    }
+}
+
+function pauseRecording() {
+    if (!recorder || recorder.state !== "recording") return;
+
+    recorder.pause();
+
+    elapsedBeforePause +=
+        (performance.now() - recordingStart) / 1000;
+
+    isPaused = true;
+    recordingStart = 0;
+
+    $("pauseBtn").disabled = true;
+    $("resumeBtn").disabled = false;
+
+    $("statusDot").classList.remove("active");
+    $("statusText").textContent = "Recording paused";
+
+    updateTimer();
+}
+
+function resumeRecording() {
+    if (!recorder || recorder.state !== "paused") return;
+
+    recorder.resume();
+
+    recordingStart = performance.now();
+    isPaused = false;
+
+    $("pauseBtn").disabled = false;
+    $("resumeBtn").disabled = true;
+
+    $("statusDot").classList.add("active");
+    $("statusText").textContent = "Recording in progress";
+}
+
+function stopRecording() {
+    if (!recorder || recorder.state === "inactive") return;
+
+    if (!isPaused && recordingStart) {
+        elapsedBeforePause +=
+            (performance.now() - recordingStart) / 1000;
+    }
+
+    recordingStart = 0;
+    isPaused = false;
+    isRecording = false;
+
+    clearInterval(timerInterval);
+
+    recorder.stop();
+
+    $("recordBtn").classList.remove("recording");
+    $("recordBtn").textContent = "🎙️";
+    $("recordBtn").disabled = false;
+
+    $("pauseBtn").disabled = true;
+    $("resumeBtn").disabled = true;
+    $("stopBtn").disabled = true;
+
+    $("statusDot").classList.remove("active");
+    $("statusText").textContent = "Processing recording";
+
+    // Detach input while retaining the stream for the next recording.
+    if (sourceNode) {
+        try {
+            sourceNode.disconnect();
+        } catch (_) {}
+    }
+
+    updateTimer();
+}
+
+/* -------------------------------------------
+   LIVE MONITOR
+------------------------------------------- */
+
+function toggleMonitor() {
+    monitorEnabled = !monitorEnabled;
+
+    if (!audioContext) {
+        toast("Start recording first to enable live monitoring.");
+        monitorEnabled = false;
         return;
     }
 
-    selectedFile = file;
+    monitorGain.gain.setTargetAtTime(
+        monitorEnabled ? 1 : 0,
+        audioContext.currentTime,
+        0.03
+    );
 
-    const url = URL.createObjectURL(file);
+    $("monitorBtn").textContent =
+        monitorEnabled
+            ? "🔊 Live Monitor: ON"
+            : "🔊 Live Monitor: OFF";
 
-    const preview = document.getElementById("previewImage");
-    const oldUrl = preview.dataset.objectUrl;
+    $("monitorBtn").classList.toggle(
+        "success",
+        monitorEnabled
+    );
 
-    if (oldUrl) URL.revokeObjectURL(oldUrl);
+    if (monitorEnabled) {
+        toast("Live monitor enabled. Use headphones to avoid feedback.");
+    }
+}
 
-    preview.src = url;
-    preview.dataset.objectUrl = url;
+/* -------------------------------------------
+   WAVEFORM VISUALIZER
+------------------------------------------- */
 
-    document.getElementById("fileName").textContent =
-        file.name + " · " + (file.size / 1024).toFixed(1) + " KB";
+const canvas = $("visualizer");
+const ctx = canvas.getContext("2d");
 
-    document.getElementById("imagePreview")
-        .classList.add("show");
+function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
 
-    document.getElementById("progressWrap")
-        .classList.remove("show");
+    canvas.width = Math.floor(rect.width * dpr);
+    canvas.height = Math.floor(rect.height * dpr);
 
-    setPhotoStatus(
-        "फोटो तैयार है। अब फोटो से प्रश्न पढ़ें दबाएँ।"
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function drawVisualizer() {
+    if (visualizerFrame) {
+        cancelAnimationFrame(visualizerFrame);
+    }
+
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+
+    if (!width || !height) return;
+
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.fillStyle = "#080d19";
+    ctx.fillRect(0, 0, width, height);
+
+    const bars = 100;
+    const gap = 3;
+    const barWidth = (width - gap * (bars - 1)) / bars;
+    const data = new Uint8Array(analyser.frequencyBinCount);
+
+    function render() {
+        if (!canvas.isConnected) return;
+
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = "#080d19";
+        ctx.fillRect(0, 0, w, h);
+
+        analyser.getByteFrequencyData(data);
+
+        const barW = (w - gap * (bars - 1)) / bars;
+
+        for (let i = 0; i < bars; i++) {
+            const index = Math.floor(
+                i * data.length / bars
+            );
+
+            const value = data[index] / 255;
+            const barHeight = Math.max(3, value * h * 0.85);
+
+            const gradient = ctx.createLinearGradient(
+                0, h / 2 - barHeight / 2,
+                0, h / 2 + barHeight / 2
+            );
+
+            gradient.addColorStop(0, "#a17aff");
+            gradient.addColorStop(0.5, "#5b8cff");
+            gradient.addColorStop(1, "#36dfae");
+
+            ctx.fillStyle = gradient;
+
+            const x = i * (barW + gap);
+            const y = (h - barHeight) / 2;
+
+            ctx.beginPath();
+            ctx.roundRect(
+                x,
+                y,
+                Math.max(1, barW),
+                barHeight,
+                4
+            );
+            ctx.fill();
+        }
+
+        visualizerFrame = requestAnimationFrame(render);
+    }
+
+    render();
+}
+
+/* -------------------------------------------
+   RECORDINGS LIST
+------------------------------------------- */
+
+function addRecording(blob) {
+    const item = {
+        id: Date.now() + Math.random(),
+        name: safeFilename($("filename").value),
+        blob: blob,
+        url: URL.createObjectURL(blob),
+        duration: getElapsed(),
+        date: new Date().toLocaleString()
+    };
+
+    recordings.unshift(item);
+    renderRecordings();
+}
+
+function renderRecordings() {
+    const container = $("recordingsList");
+    container.innerHTML = "";
+
+    if (!recordings.length) {
+        container.innerHTML =
+            '<div class="small">No recordings in this session yet.</div>';
+        return;
+    }
+
+    recordings.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "recording-item";
+
+        const top = document.createElement("div");
+        top.className = "recording-top";
+
+        const info = document.createElement("div");
+
+        const name = document.createElement("div");
+        name.className = "recording-name";
+        name.textContent = item.name;
+
+        const meta = document.createElement("div");
+        meta.className = "recording-meta";
+        meta.textContent =
+            item.date + " · " +
+            formatTime(item.duration) + " · " +
+            (item.blob.size / 1024).toFixed(1) + " KB";
+
+        info.append(name, meta);
+
+        const actions = document.createElement("div");
+        actions.className = "recording-actions";
+
+        const play = document.createElement("button");
+        play.className = "btn";
+        play.textContent = "▶ Play";
+
+        play.addEventListener("click", () => {
+            $("player").src = item.url;
+            $("player").load();
+            $("player").play().catch(() => {});
+            $("recordingInfo").textContent = item.name;
+        });
+
+        const download = document.createElement("button");
+        download.className = "btn success";
+        download.textContent = "⬇ Download";
+
+        download.addEventListener("click", () => {
+            downloadBlob(item.blob, item.name + ".webm");
+        });
+
+        const remove = document.createElement("button");
+        remove.className = "btn danger";
+        remove.textContent = "✕";
+
+        remove.addEventListener("click", () => {
+            URL.revokeObjectURL(item.url);
+            recordings = recordings.filter(r => r.id !== item.id);
+            renderRecordings();
+        });
+
+        actions.append(play, download, remove);
+        top.append(info, actions);
+        card.append(top);
+
+        container.append(card);
+    });
+}
+
+/* -------------------------------------------
+   DOWNLOAD HELPERS
+------------------------------------------- */
+
+function downloadBlob(blob, filename) {
+    if (!blob) {
+        toast("No audio file available.");
+        return;
+    }
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = filename;
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+
+function downloadOriginal() {
+    if (!rawBlob) return;
+
+    const name = safeFilename($("filename").value);
+
+    downloadBlob(
+        rawBlob,
+        name + "-original." + extensionForMime(rawBlob.type)
     );
 }
 
-function removePhoto() {
-    selectedFile = null;
-
-    const preview = document.getElementById("previewImage");
-
-    if (preview.dataset.objectUrl) {
-        URL.revokeObjectURL(preview.dataset.objectUrl);
-        delete preview.dataset.objectUrl;
-    }
-
-    preview.removeAttribute("src");
-
-    document.getElementById("imagePreview")
-        .classList.remove("show");
-
-    document.getElementById("progressWrap")
-        .classList.remove("show");
-
-    setPhotoStatus("फोटो हटा दी गई है।");
+function extensionForMime(type) {
+    if (type.includes("mp4")) return "m4a";
+    if (type.includes("ogg")) return "ogg";
+    return "webm";
 }
 
-/* OCR */
+/* -------------------------------------------
+   OFFLINE EFFECT EXPORT
+------------------------------------------- */
 
-async function readPhoto() {
-    if (!selectedFile) {
-        setPhotoStatus("पहले फोटो खींचें या अपलोड करें।");
+async function exportWithEffects() {
+    if (!rawBlob || activeExport) {
+        if (!rawBlob) toast("Record some audio first.");
         return;
     }
 
-    if (!window.Tesseract) {
-        setPhotoStatus(
-            "OCR लाइब्रेरी लोड नहीं हुई। इंटरनेट कनेक्शन जाँचें।"
-        );
-        return;
-    }
-
-    const button = document.getElementById("readPhotoBtn");
-    const progressWrap = document.getElementById("progressWrap");
-    const progressInner = document.getElementById("progressInner");
-    const progressText = document.getElementById("progressText");
-
-    button.disabled = true;
-    progressWrap.classList.add("show");
-    progressInner.style.width = "0%";
-    progressText.textContent = "फोटो पढ़ने की तैयारी...";
-    setPhotoStatus("फोटो का टेक्स्ट पहचाना जा रहा है...", true);
+    activeExport = true;
+    $("exportBtn").disabled = true;
+    $("exportBtn").textContent = "⏳ Rendering audio...";
 
     try {
+        const arrayBuffer = await rawBlob.arrayBuffer();
+
+        const decodeContext = new (
+            window.AudioContext || window.webkitAudioContext
+        )();
+
+        const decoded = await decodeContext.decodeAudioData(
+            arrayBuffer.slice(0)
+        );
+
+        const sampleRate = decoded.sampleRate;
+        const p = presets[selectedEffect];
+        const intensity = currentIntensity();
+
+        const tail = Math.max(
+            0.2,
+            p.decay * (0.25 + intensity * 0.9),
+            Number($("delay").value) / 1000 * 3
+        );
+
+        const duration = decoded.duration + tail;
+
+        const offline = new OfflineAudioContext(
+            2,
+            Math.ceil(sampleRate * duration),
+            sampleRate
+        );
+
+        const source = offline.createBufferSource();
+        source.buffer = decoded;
+
+        const filter = offline.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.value = Math.min(
+            18000,
+            Math.max(2500, p.high + Number($("tone").value) * 400)
+        );
+        filter.Q.value = 0.35;
+
+        const dry = offline.createGain();
+        const wet = offline.createGain();
+        const convolverOffline = offline.createConvolver();
+        const delay = offline.createDelay(2);
+        const feedback = offline.createGain();
+        const echo = offline.createGain();
+        const master = offline.createGain();
+        const comp = offline.createDynamicsCompressor();
+
+        const wetLevel = p.wet * intensity;
+        const dryLevel = selectedEffect === "clean"
+            ? 1
+            : Math.max(0.35, 1 - wetLevel * 0.45);
+
+        dry.gain.value = dryLevel;
+        wet.gain.value = wetLevel;
+
+        delay.delayTime.value =
+            Number($("delay").value) / 1000;
+
+        feedback.gain.value =
+            Math.min(0.65, p.echo * intensity);
+
+        echo.gain.value = p.echo * intensity;
+
+        master.gain.value = currentVolume();
+
+        comp.threshold.value = -18;
+        comp.knee.value = 18;
+        comp.ratio.value = 3;
+        comp.attack.value = 0.006;
+        comp.release.value = 0.22;
+
         /*
-          OCR के लिए अंग्रेजी और अंकों का मॉडल इस्तेमाल किया जा रहा है।
-          यह सामान्य गणितीय प्रश्नों में उपयोगी हो सकता है।
-          हिंदी प्रश्नों के लिए हिंदी OCR मॉडल की जरूरत पड़ सकती है।
+          Create a stereo procedural impulse response
+          so that reverb is embedded in the exported file.
         */
 
-        const result = await Tesseract.recognize(
-            selectedFile,
-            "eng",
-            {
-                logger: function(info) {
-                    if (typeof info.progress === "number") {
-                        const percent = Math.round(info.progress * 100);
-
-                        progressInner.style.width = percent + "%";
-
-                        progressText.textContent =
-                            (info.status || "फोटो पढ़ी जा रही है") +
-                            " · " + percent + "%";
-                    }
-                }
-            }
+        const irLength = Math.max(
+            1,
+            Math.floor(sampleRate * p.decay *
+                (0.25 + intensity * 0.9))
         );
 
-        const extracted = (result.data.text || "").trim();
+        const impulse = offline.createBuffer(
+            2,
+            irLength,
+            sampleRate
+        );
 
-        if (!extracted) {
-            setPhotoStatus(
-                "फोटो से टेक्स्ट नहीं पढ़ा गया। बेहतर रोशनी में दोबारा फोटो लें।"
-            );
-            return;
+        for (let ch = 0; ch < 2; ch++) {
+            const data = impulse.getChannelData(ch);
+
+            for (let i = 0; i < irLength; i++) {
+                const t = i / irLength;
+                const envelope = Math.pow(1 - t, 2.7);
+
+                data[i] = (Math.random() * 2 - 1) * envelope;
+            }
         }
 
-        questionInput.value = extracted;
+        convolverOffline.buffer = impulse;
 
-        progressInner.style.width = "100%";
-        progressText.textContent = "फोटो पढ़ ली गई।";
+        source.connect(filter);
 
-        setPhotoStatus(
-            "प्रश्न पढ़ लिया गया। नीचे टेक्स्ट जाँचकर Answer निकालें दबाएँ।"
+        filter.connect(dry);
+        dry.connect(comp);
+
+        filter.connect(convolverOffline);
+        convolverOffline.connect(wet);
+        wet.connect(comp);
+
+        filter.connect(delay);
+        delay.connect(feedback);
+        feedback.connect(delay);
+
+        delay.connect(echo);
+        echo.connect(comp);
+
+        comp.connect(master);
+        master.connect(offline.destination);
+
+        source.start(0);
+
+        const renderedBuffer = await offline.startRendering();
+
+        processedBlob = audioBufferToWav(renderedBuffer);
+
+        if (processedURL) {
+            URL.revokeObjectURL(processedURL);
+        }
+
+        processedURL = URL.createObjectURL(processedBlob);
+
+        $("player").src = processedURL;
+        $("player").load();
+
+        $("recordingInfo").textContent =
+            "Processed WAV · " +
+            (processedBlob.size / 1024).toFixed(1) + " KB";
+
+        const name = safeFilename($("filename").value);
+
+        downloadBlob(
+            processedBlob,
+            name + "-" + selectedEffect + ".wav"
         );
 
-        questionInput.focus();
+        toast("Processed WAV file exported successfully.");
 
-        questionInput.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+        await decodeContext.close();
 
     } catch (error) {
         console.error(error);
 
-        setPhotoStatus(
-            "फोटो पढ़ने में समस्या आई। इंटरनेट कनेक्शन जाँचकर दोबारा प्रयास करें।"
+        toast(
+            "Export failed. Try another browser or shorter recording."
         );
 
     } finally {
-        button.disabled = false;
+        activeExport = false;
+        $("exportBtn").disabled = !rawBlob;
+        $("exportBtn").textContent = "⬇ Export With Effects";
     }
 }
 
-/* VOICE INPUT */
+/* -------------------------------------------
+   WAV ENCODER
+------------------------------------------- */
 
-function startVoice() {
-    const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
+function audioBufferToWav(buffer) {
+    const channels = buffer.numberOfChannels;
+    const sampleRate = buffer.sampleRate;
+    const frames = buffer.length;
 
-    if (!SpeechRecognition) {
-        setMainStatus(
-            "इस ब्राउज़र में आवाज पहचान उपलब्ध नहीं है। Chrome में HTTPS वेबसाइट आजमाएँ।"
-        );
-        return;
-    }
+    const bytesPerSample = 2;
+    const dataLength = frames * channels * bytesPerSample;
 
-    if (isListening && recognition) {
-        recognition.stop();
-        return;
-    }
+    const output = new ArrayBuffer(44 + dataLength);
+    const view = new DataView(output);
 
-    recognition = new SpeechRecognition();
-    recognition.lang = "hi-IN";
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    recognition.maxAlternatives = 1;
-
-    isListening = true;
-
-    document.getElementById("micButton").textContent =
-        "⏹️ सुनना बंद करें";
-
-    setMainStatus("सुन रहा हूँ... अपना प्रश्न बोलिए।", true);
-
-    recognition.onresult = function(event) {
-        let text = "";
-
-        for (
-            let i = event.resultIndex;
-            i < event.results.length;
-            i++
-        ) {
-            text += event.results[i][0].transcript;
+    function writeString(offset, str) {
+        for (let i = 0; i < str.length; i++) {
+            view.setUint8(offset + i, str.charCodeAt(i));
         }
-
-        questionInput.value = text;
-    };
-
-    recognition.onerror = function(event) {
-        setMainStatus(
-            event.error === "not-allowed"
-                ? "माइक्रोफोन की अनुमति दें।"
-                : "आवाज पहचान में समस्या हुई। दोबारा प्रयास करें।"
-        );
-    };
-
-    recognition.onend = function() {
-        isListening = false;
-
-        document.getElementById("micButton").textContent =
-            "🎙️ बोलकर पूछें";
-
-        if (questionInput.value.trim()) {
-            setMainStatus("प्रश्न दर्ज हो गया।");
-        } else {
-            setMainStatus("अब प्रश्न लिखें या फिर बोलकर पूछें।");
-        }
-    };
-
-    try {
-        recognition.start();
-    } catch (error) {
-        isListening = false;
-
-        document.getElementById("micButton").textContent =
-            "🎙️ बोलकर पूछें";
-
-        setMainStatus("माइक्रोफोन शुरू नहीं हो सका।");
-    }
-}
-
-/* SAFE EXPRESSION PARSER */
-
-function tokenizeExpression(input) {
-    const tokens = [];
-    let i = 0;
-
-    while (i < input.length) {
-        const ch = input[i];
-
-        if (/\s/.test(ch)) {
-            i++;
-            continue;
-        }
-
-        if (/[0-9.]/.test(ch)) {
-            const start = i;
-            let dots = 0;
-
-            while (
-                i < input.length &&
-                /[0-9.]/.test(input[i])
-            ) {
-                if (input[i] === ".") dots++;
-                i++;
-            }
-
-            if (dots > 1) {
-                throw new Error("संख्या का प्रारूप गलत है।");
-            }
-
-            tokens.push({
-                type: "number",
-                value: Number(input.slice(start, i))
-            });
-
-            continue;
-        }
-
-        if ("+-*/^()%".includes(ch)) {
-            tokens.push({type: "symbol", value: ch});
-            i++;
-            continue;
-        }
-
-        throw new Error(
-            "प्रश्न में ऐसे अक्षर हैं जिन्हें गणितीय अभिव्यक्ति के रूप में नहीं समझा जा सका।"
-        );
     }
 
-    return tokens;
-}
+    writeString(0, "RIFF");
+    view.setUint32(4, 36 + dataLength, true);
+    writeString(8, "WAVE");
+    writeString(12, "fmt ");
 
-function parseExpression(input) {
-    const tokens = tokenizeExpression(input);
-    let pos = 0;
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, channels, true);
+    view.setUint32(24, sampleRate, true);
 
-    function peek(value) {
-        return tokens[pos] && tokens[pos].value === value;
-    }
-
-    function take() {
-        return tokens[pos++];
-    }
-
-    function primary() {
-        if (peek("+") || peek("-")) {
-            const op = take().value;
-            const v = primary();
-            return op === "-" ? -v : v;
-        }
-
-        if (peek("(")) {
-            take();
-            const v = addSub();
-
-            if (!peek(")")) {
-                throw new Error("ब्रैकेट बंद नहीं है।");
-            }
-
-            take();
-            return v;
-        }
-
-        const token = take();
-
-        if (!token || token.type !== "number") {
-            throw new Error("गणितीय प्रश्न का प्रारूप सही नहीं है।");
-        }
-
-        return token.value;
-    }
-
-    function power() {
-        let v = primary();
-
-        if (peek("^")) {
-            take();
-            v = Math.pow(v, unaryPower());
-        }
-
-        return v;
-    }
-
-    function unaryPower() {
-        if (peek("+")) {
-            take();
-            return unaryPower();
-        }
-
-        if (peek("-")) {
-            take();
-            return -unaryPower();
-        }
-
-        return power();
-    }
-
-    function mulDiv() {
-        let v = power();
-
-        while (
-            peek("*") ||
-            peek("/") ||
-            peek("%")
-        ) {
-            const op = take().value;
-            const r = power();
-
-            if (r === 0 && (op === "/" || op === "%")) {
-                throw new Error("शून्य से भाग नहीं दे सकते।");
-            }
-
-            if (op === "*") v *= r;
-            if (op === "/") v /= r;
-            if (op === "%") v %= r;
-        }
-
-        return v;
-    }
-
-    function addSub() {
-        let v = mulDiv();
-
-        while (peek("+") || peek("-")) {
-            const op = take().value;
-            const r = mulDiv();
-
-            v = op === "+" ? v + r : v - r;
-        }
-
-        return v;
-    }
-
-    if (!tokens.length) {
-        throw new Error("पहले प्रश्न लिखें।");
-    }
-
-    const result = addSub();
-
-    if (pos !== tokens.length) {
-        throw new Error("प्रश्न का प्रारूप सही नहीं है।");
-    }
-
-    if (!Number.isFinite(result)) {
-        throw new Error("इस गणना का सीमित उत्तर नहीं मिला।");
-    }
-
-    return result;
-}
-
-function formatNumber(n) {
-    if (!Number.isFinite(n)) return String(n);
-
-    if (Math.abs(n) < 1e-10) return "0";
-
-    if (Number.isInteger(n)) return String(n);
-
-    return Number(n.toPrecision(12)).toString();
-}
-
-function parseNumbers(text) {
-    const matches = normalizeText(text)
-        .match(/-?\d+(?:\.\d+)?/g);
-
-    return matches ? matches.map(Number) : [];
-}
-
-function gcd(a, b) {
-    a = Math.abs(Math.trunc(a));
-    b = Math.abs(Math.trunc(b));
-
-    while (b !== 0) {
-        const r = a % b;
-        a = b;
-        b = r;
-    }
-
-    return a;
-}
-
-function lcm(a, b) {
-    if (a === 0 || b === 0) return 0;
-
-    return Math.abs(
-        (Math.trunc(a) / gcd(a, b)) * Math.trunc(b)
+    view.setUint32(
+        28,
+        sampleRate * channels * bytesPerSample,
+        true
     );
-}
 
-function makeSolution(answer, steps, note = "") {
-    return {
-        finalAnswer: String(answer),
-        steps,
-        note
-    };
-}
-
-function solveHCF(text) {
-    const nums = parseNumbers(text);
-
-    if (nums.length < 2) {
-        throw new Error("HCF के लिए कम-से-कम दो संख्याएँ दें।");
-    }
-
-    if (nums.some(n => !Number.isInteger(n))) {
-        throw new Error("HCF के लिए पूर्ण संख्याएँ दें।");
-    }
-
-    let result = Math.abs(nums[0]);
-    const steps = [];
-
-    for (let i = 1; i < nums.length; i++) {
-        const n = Math.abs(nums[i]);
-
-        steps.push(
-            `HCF(${result}, ${n}) निकालते हैं।`
-        );
-
-        result = gcd(result, n);
-
-        steps.push(`इस चरण का HCF = ${result}`);
-    }
-
-    return makeSolution(
-        result,
-        steps,
-        "HCF का अर्थ महत्तम समापवर्तक है।"
+    view.setUint16(
+        32,
+        channels * bytesPerSample,
+        true
     );
-}
 
-function solveLCM(text) {
-    const nums = parseNumbers(text);
+    view.setUint16(34, 16, true);
+    writeString(36, "data");
+    view.setUint32(40, dataLength, true);
 
-    if (nums.length < 2) {
-        throw new Error("LCM के लिए कम-से-कम दो संख्याएँ दें।");
+    let offset = 44;
+
+    const channelData = [];
+
+    for (let ch = 0; ch < channels; ch++) {
+        channelData.push(buffer.getChannelData(ch));
     }
 
-    if (nums.some(n => !Number.isInteger(n))) {
-        throw new Error("LCM के लिए पूर्ण संख्याएँ दें।");
-    }
+    for (let i = 0; i < frames; i++) {
+        for (let ch = 0; ch < channels; ch++) {
+            let sample = channelData[ch][i];
 
-    let result = Math.abs(nums[0]);
-    const steps = [];
+            sample = Math.max(-1, Math.min(1, sample));
 
-    for (let i = 1; i < nums.length; i++) {
-        const n = Math.abs(nums[i]);
-        const h = gcd(result, n);
+            const intSample = sample < 0
+                ? sample * 32768
+                : sample * 32767;
 
-        steps.push(
-            `LCM(${result}, ${n}) = (${result} × ${n}) ÷ ${h}`
-        );
-
-        result = lcm(result, n);
-
-        steps.push(`LCM = ${result}`);
-    }
-
-    return makeSolution(
-        result,
-        steps,
-        "LCM का अर्थ लघुत्तम समापवर्त्य है।"
-    );
-}
-
-function solvePercentage(text) {
-    const nums = parseNumbers(text);
-
-    if (nums.length < 2) {
-        throw new Error(
-            "प्रतिशत निकालने के लिए प्रतिशत और संख्या दोनों दें।"
-        );
-    }
-
-    const normalized = normalizeText(text);
-
-    let percent = nums[0];
-    let base = nums[1];
-
-    const percentIndex = normalized.indexOf("%");
-
-    if (percentIndex >= 0) {
-        const before = parseNumbers(
-            normalized.slice(0, percentIndex)
-        );
-
-        const after = parseNumbers(
-            normalized.slice(percentIndex + 1)
-        );
-
-        if (before.length && after.length) {
-            percent = before[before.length - 1];
-            base = after[0];
-        }
-    }
-
-    const result = percent * base / 100;
-
-    return makeSolution(
-        formatNumber(result),
-        [
-            `प्रतिशत = ${percent}%`,
-            `संख्या = ${base}`,
-            "सूत्र = प्रतिशत × संख्या ÷ 100",
-            `${percent} × ${base} ÷ 100 = ${formatNumber(result)}`
-        ]
-    );
-}
-
-function solveSquareRoot(text) {
-    let nums = parseNumbers(text);
-
-    if (!nums.length) {
-        throw new Error("वर्गमूल निकालने के लिए संख्या दें।");
-    }
-
-    const n = nums[0];
-
-    if (n < 0) {
-        throw new Error(
-            "ऋणात्मक संख्या का वास्तविक वर्गमूल नहीं है।"
-        );
-    }
-
-    const result = Math.sqrt(n);
-
-    return makeSolution(
-        formatNumber(result),
-        [
-            `दी गई संख्या = ${n}`,
-            "वर्गमूल वह संख्या है जिसका वर्ग मूल संख्या हो।",
-            `${formatNumber(result)} × ${formatNumber(result)} = ${formatNumber(n)}`
-        ]
-    );
-}
-
-function solveSquare(text) {
-    const nums = parseNumbers(text);
-
-    if (!nums.length) {
-        throw new Error("वर्ग निकालने के लिए संख्या दें।");
-    }
-
-    const n = nums[0];
-
-    return makeSolution(
-        formatNumber(n * n),
-        [
-            `दी गई संख्या = ${n}`,
-            "वर्ग = संख्या × संख्या",
-            `${n} × ${n} = ${formatNumber(n * n)}`
-        ]
-    );
-}
-
-function solveEquation(text) {
-    const parts = text.toLowerCase().split("=");
-
-    if (parts.length !== 2) {
-        throw new Error("समीकरण में एक बराबर (=) चिह्न होना चाहिए।");
-    }
-
-    const variableMatch = text.match(/[a-z]/i);
-
-    if (!variableMatch) {
-        throw new Error("समीकरण में x जैसा एक चर होना चाहिए।");
-    }
-
-    const variable = variableMatch[0].toLowerCase();
-
-    function coefficients(expression) {
-        const compact = expression
-            .replace(/\s+/g, "")
-            .replace(/-/g, "+-");
-
-        const parts = compact.split("+").filter(Boolean);
-
-        let a = 0;
-        let b = 0;
-
-        for (let part of parts) {
-            if (part.includes(variable)) {
-                const coefficient = part
-                    .replace(variable, "")
-                    .replace(/\*/g, "");
-
-                let c;
-
-                if (coefficient === "" || coefficient === "+") {
-                    c = 1;
-                } else if (coefficient === "-") {
-                    c = -1;
-                } else {
-                    c = Number(coefficient);
-                }
-
-                if (!Number.isFinite(c)) {
-                    throw new Error(
-                        "समीकरण में गुणांक समझ नहीं आया।"
-                    );
-                }
-
-                a += c;
-            } else {
-                b += parseExpression(part);
-            }
-        }
-
-        return {a, b};
-    }
-
-    const left = coefficients(parts[0]);
-    const right = coefficients(parts[1]);
-
-    const a = left.a - right.a;
-    const b = right.b - left.b;
-
-    if (Math.abs(a) < 1e-12) {
-        if (Math.abs(b) < 1e-12) {
-            return makeSolution(
-                "अनंत हल",
-                ["यह समानता सभी मानों के लिए सही है।"]
+            view.setInt16(
+                offset,
+                Math.round(intSample),
+                true
             );
+
+            offset += 2;
         }
-
-        return makeSolution(
-            "कोई हल नहीं",
-            ["समीकरण असंगत है।"]
-        );
     }
 
-    const answer = b / a;
-
-    return makeSolution(
-        `${variable} = ${formatNumber(answer)}`,
-        [
-            `दिया गया समीकरण: ${text}`,
-            `चर वाले पद एक तरफ लाते हैं: ${formatNumber(a)}${variable} = ${formatNumber(b)}`,
-            `${variable} = ${formatNumber(b)} ÷ ${formatNumber(a)}`,
-            `${variable} = ${formatNumber(answer)}`
-        ]
-    );
+    return new Blob([output], { type: "audio/wav" });
 }
 
-function solveArithmetic(text) {
-    const expression = text
-        .toLowerCase()
-        .replace(/×/g, "*")
-        .replace(/÷/g, "/")
-        .replace(/−/g, "-")
-        .replace(/[^0-9+\-*/^().%\s]/g, " ")
-        .trim();
-
-    if (!expression || !/\d/.test(expression)) {
-        throw new Error(
-            "प्रश्न को नहीं समझ पाया। पढ़े गए टेक्स्ट को जाँचकर सही करें।"
-        );
-    }
-
-    const result = parseExpression(expression);
-
-    return makeSolution(
-        formatNumber(result),
-        [
-            `गणितीय अभिव्यक्ति: ${expression}`,
-            "गणना में ब्रैकेट, घात, गुणा/भाग और जोड़/घटाव के नियम लागू होते हैं।",
-            `गणना का परिणाम = ${formatNumber(result)}`
-        ]
-    );
-}
-
-/* SOLVE */
-
-function solveQuestion() {
-    const original = questionInput.value.trim();
-
-    if (!original) {
-        setMainStatus("पहले प्रश्न लिखें, बोलें या फोटो से पढ़ें।");
-        return;
-    }
-
-    setMainStatus("प्रश्न हल किया जा रहा है...", true);
-
-    try {
-        const text = normalizeText(original);
-
-        let solution;
-
-        if (/\bhcf\b|\bgcd\b|महत्तम समापवर्तक/.test(text)) {
-            solution = solveHCF(original);
-        } else if (/\blcm\b|लघुत्तम समापवर्त्य/.test(text)) {
-            solution = solveLCM(original);
-        } else if (
-            /=/.test(original) &&
-            /[a-z]/i.test(original)
-        ) {
-            solution = solveEquation(original);
-        } else if (/%|प्रतिशत|percent/.test(text)) {
-            solution = solvePercentage(original);
-        } else if (
-            /वर्गमूल|square root|sqrt/.test(text) ||
-            original.includes("√")
-        ) {
-            solution = solveSquareRoot(original);
-        } else if (
-            /वर्ग|square|squared/.test(text)
-        ) {
-            solution = solveSquare(original);
-        } else {
-            solution = solveArithmetic(original);
-        }
-
-        showSolution(original, solution);
-        saveHistory(original, solution.finalAnswer);
-
-        setMainStatus("उत्तर तैयार है।");
-
-    } catch (error) {
-        showSolution(
-            original,
-            makeSolution(
-                "प्रश्न हल नहीं हो सका।",
-                [
-                    error.message,
-                    "फोटो से पढ़े गए प्रश्न में गलत अक्षर या गणितीय चिन्ह हो सकता है।",
-                    "प्रश्न को जाँचकर सही करें और फिर कोशिश करें।"
-                ]
-            )
-        );
-
-        setMainStatus("प्रश्न हल नहीं हो सका।");
-    }
-
-    document.getElementById("answerCard")
-        .scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-}
-
-function showSolution(question, solution) {
-    document.getElementById("questionDisplay").textContent =
-        question;
-
-    const box = document.getElementById("steps");
-    box.replaceChildren();
-
-    solution.steps.forEach((step, index) => {
-        const row = document.createElement("div");
-        row.className = "step";
-
-        const number = document.createElement("span");
-        number.className = "step-num";
-        number.textContent = index + 1;
-
-        const text = document.createElement("span");
-        text.textContent = step;
-
-        row.append(number, text);
-        box.appendChild(row);
-    });
-
-    document.getElementById("finalAnswer").textContent =
-        solution.finalAnswer;
-
-    document.getElementById("answerNote").textContent =
-        solution.note || "";
-
-    document.getElementById("answerCard")
-        .classList.add("show");
-
-    lastSolution = {
-        question,
-        ...solution
-    };
-}
-
-function setExample(text) {
-    questionInput.value = text;
-    solveQuestion();
-}
-
-/* SPEAK */
-
-function speakAnswer() {
-    if (!lastSolution) {
-        setMainStatus("पहले प्रश्न हल करें।");
-        return;
-    }
-
-    if (!("speechSynthesis" in window)) {
-        setMainStatus("इस ब्राउज़र में आवाज की सुविधा उपलब्ध नहीं है।");
-        return;
-    }
-
-    speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(
-        [
-            "प्रश्न।",
-            lastSolution.question,
-            "हल।",
-            ...lastSolution.steps,
-            "अंतिम उत्तर।",
-            lastSolution.finalAnswer
-        ].join(". ")
-    );
-
-    utterance.lang = "hi-IN";
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    speechSynthesis.speak(utterance);
-}
-
-/* COPY */
-
-async function copyAnswer() {
-    if (!lastSolution) {
-        setMainStatus("पहले प्रश्न हल करें।");
-        return;
-    }
-
-    const text = [
-        "प्रश्न: " + lastSolution.question,
-        "",
-        "हल:",
-        ...lastSolution.steps.map((s, i) => `${i + 1}. ${s}`),
-        "",
-        "अंतिम उत्तर: " + lastSolution.finalAnswer
-    ].join("\n");
-
-    try {
-        await navigator.clipboard.writeText(text);
-        setMainStatus("पूरा हल कॉपी हो गया।");
-    } catch (error) {
-        const area = document.createElement("textarea");
-
-        area.value = text;
-        document.body.appendChild(area);
-        area.select();
-
-        const ok = document.execCommand("copy");
-
-        area.remove();
-
-        setMainStatus(
-            ok ? "पूरा हल कॉपी हो गया।" : "कॉपी नहीं हो पाया।"
-        );
-    }
-}
-
-/* HISTORY */
-
-function getHistory() {
-    try {
-        return JSON.parse(
-            localStorage.getItem("mathPhotoHistory") || "[]"
-        );
-    } catch {
-        return [];
-    }
-}
-
-function saveHistory(question, answer) {
-    const history = getHistory();
-
-    history.unshift({
-        question,
-        answer
-    });
-
-    localStorage.setItem(
-        "mathPhotoHistory",
-        JSON.stringify(history.slice(0, 10))
-    );
-
-    renderHistory();
-}
-
-function renderHistory() {
-    const box = document.getElementById("history");
-    const history = getHistory();
-
-    box.replaceChildren();
-
-    if (!history.length) {
-        const p = document.createElement("p");
-        p.className = "muted";
-        p.textContent = "अभी तक कोई प्रश्न हल नहीं किया गया है।";
-        box.appendChild(p);
-        return;
-    }
-
-    history.forEach(item => {
-        const row = document.createElement("div");
-        row.className = "history-item";
-
-        const span = document.createElement("span");
-        span.textContent =
-            item.question + " = " + item.answer;
-
-        const button = document.createElement("button");
-        button.className = "btn secondary";
-        button.textContent = "फिर खोलें";
-
-        button.addEventListener("click", () => {
-            questionInput.value = item.question;
-            solveQuestion();
-        });
-
-        row.append(span, button);
-        box.appendChild(row);
-    });
-}
-
-function clearHistory() {
-    if (!confirm("क्या प्रश्नों का इतिहास मिटाना चाहते हैं?")) {
-        return;
-    }
-
-    localStorage.removeItem("mathPhotoHistory");
-    renderHistory();
-
-    setMainStatus("इतिहास साफ कर दिया गया।");
-}
-
-function clearAll() {
-    if (recognition && isListening) {
-        recognition.stop();
-    }
-
-    questionInput.value = "";
-
-    document.getElementById("answerCard")
-        .classList.remove("show");
-
-    document.getElementById("questionDisplay").textContent = "";
-    document.getElementById("steps").replaceChildren();
-    document.getElementById("finalAnswer").textContent = "";
-
-    lastSolution = null;
-
-    if ("speechSynthesis" in window) {
-        speechSynthesis.cancel();
-    }
-
-    setMainStatus("प्रश्न साफ कर दिया गया।");
-}
-
-questionInput.addEventListener("keydown", event => {
-    if (
-        event.key === "Enter" &&
-        !event.shiftKey &&
-        !event.isComposing
-    ) {
-        event.preventDefault();
-        solveQuestion();
-    }
+/* -------------------------------------------
+   UI EVENTS
+------------------------------------------- */
+
+$("recordBtn").addEventListener("click", startRecording);
+$("pauseBtn").addEventListener("click", pauseRecording);
+$("resumeBtn").addEventListener("click", resumeRecording);
+$("stopBtn").addEventListener("click", stopRecording);
+$("monitorBtn").addEventListener("click", toggleMonitor);
+
+$("effectsGrid").addEventListener("click", event => {
+    const button = event.target.closest(".effect");
+    if (!button) return;
+
+    selectEffect(button.dataset.effect);
 });
 
-renderHistory();
+["intensity", "volume", "delay", "tone"].forEach(id => {
+    $(id).addEventListener("input", () => {
+        if (id === "intensity" && audioContext) {
+            updateImpulseResponse();
+        }
+
+        applyEffect();
+    });
+});
+
+$("exportBtn").addEventListener("click", exportWithEffects);
+$("downloadRawBtn").addEventListener("click", downloadOriginal);
+
+$("reprocessBtn").addEventListener("click", () => {
+    if (!rawBlob) return;
+    exportWithEffects();
+});
+
+$("clearBtn").addEventListener("click", () => {
+    recordings.forEach(item => URL.revokeObjectURL(item.url));
+
+    recordings = [];
+    renderRecordings();
+
+    toast("Recording list cleared.");
+});
+
+window.addEventListener("beforeunload", () => {
+    if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+    }
+
+    if (rawURL) URL.revokeObjectURL(rawURL);
+    if (processedURL) URL.revokeObjectURL(processedURL);
+
+    recordings.forEach(item => URL.revokeObjectURL(item.url));
+});
+
+renderRecordings();
+updateTimer();
+
+})();
 </script>
 
 </body>
