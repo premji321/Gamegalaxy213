@@ -4,23 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#10264b">
-<title>MCQ QUIZ PRO | Smart Test Generator</title>
+<title>MCQ QUIZ PRO | Smart Test System</title>
 
 <style>
 :root {
     --navy: #10264b;
-    --navy-light: #1c3975;
     --blue: #2459c4;
-    --cyan: #16c7e8;
-    --green: #128654;
-    --red: #d93443;
-    --orange: #d98b00;
+    --green: #118653;
+    --red: #d73545;
+    --gold: #e5a000;
     --bg: #f2f5fc;
-    --card: #ffffff;
     --text: #17233d;
     --muted: #718096;
-    --border: #e0e6f0;
-    --shadow: 0 8px 28px rgba(16,38,75,.08);
+    --border: #dfe6f1;
+    --white: #ffffff;
+    --shadow: 0 8px 25px rgba(16,38,75,.08);
 }
 
 * {
@@ -29,12 +27,12 @@
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
     background: var(--bg);
     color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-button, input, select {
+button, select, input {
     font: inherit;
 }
 
@@ -43,7 +41,7 @@ button {
 }
 
 button:disabled {
-    opacity: .45;
+    opacity: .5;
     cursor: not-allowed;
 }
 
@@ -52,17 +50,17 @@ button:disabled {
 }
 
 .topbar {
-    background: linear-gradient(120deg, var(--navy), var(--navy-light));
+    background: linear-gradient(120deg, #10264b, #203d85);
     color: white;
-    padding: 12px 16px;
+    padding: 13px 16px;
     position: sticky;
     top: 0;
-    z-index: 50;
-    box-shadow: 0 4px 18px rgba(16,38,75,.15);
+    z-index: 20;
+    box-shadow: var(--shadow);
 }
 
 .topbar-inner {
-    max-width: 1250px;
+    max-width: 1200px;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -79,57 +77,55 @@ button:disabled {
 .brand-icon {
     width: 42px;
     height: 42px;
+    border-radius: 12px;
     display: grid;
     place-items: center;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    font-size: 23px;
+    background: linear-gradient(135deg, #2459c4, #16c7e8);
+    font-size: 24px;
 }
 
 .brand h1 {
+    font-size: 17px;
     margin: 0;
-    font-size: 18px;
 }
 
 .brand p {
     margin: 4px 0 0;
     font-size: 10px;
-    color: #d5e2ff;
+    color: #dbe5ff;
 }
 
 .status {
+    font-size: 11px;
+    border-radius: 20px;
     padding: 8px 11px;
     background: #ffffff18;
-    border: 1px solid #ffffff28;
-    border-radius: 25px;
-    font-size: 10px;
 }
 
 .container {
-    max-width: 1250px;
-    margin: 22px auto;
-    padding: 0 15px 35px;
+    max-width: 1200px;
+    padding: 18px 14px 35px;
+    margin: auto;
 }
 
 .hero {
-    background: linear-gradient(120deg, var(--navy), #315efb);
+    background: linear-gradient(120deg, #10264b, #315efb);
     color: white;
-    border-radius: 20px;
-    padding: 28px;
-    margin-bottom: 21px;
+    border-radius: 17px;
+    padding: 26px;
+    margin-bottom: 20px;
 }
 
 .hero h2 {
-    margin: 0 0 12px;
-    font-size: clamp(24px, 4vw, 34px);
-    line-height: 1.3;
+    margin: 0 0 10px;
+    font-size: clamp(23px, 4vw, 32px);
 }
 
 .hero p {
     margin: 0;
     font-size: 13px;
-    line-height: 1.9;
-    color: #e1eaff;
+    line-height: 1.8;
+    color: #e4ebff;
 }
 
 .stats {
@@ -139,76 +135,68 @@ button:disabled {
     margin-bottom: 25px;
 }
 
-.stat {
+.stat, .card, .mode-card, .sidebar {
     background: white;
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 16px;
     box-shadow: var(--shadow);
 }
 
+.stat {
+    padding: 15px;
+}
+
 .stat-icon {
-    font-size: 22px;
-    margin-bottom: 8px;
+    font-size: 21px;
 }
 
 .stat strong {
     display: block;
     font-size: 23px;
-    margin-bottom: 5px;
+    margin: 7px 0;
 }
 
 .stat span {
-    font-size: 11px;
     color: var(--muted);
+    font-size: 11px;
 }
 
-.section-heading {
-    font-size: 23px;
-    margin: 0 0 8px;
+.section-title {
+    margin: 0 0 7px;
+    font-size: 22px;
 }
 
-.description {
+.muted {
     color: var(--muted);
     font-size: 12px;
-    line-height: 1.9;
+    line-height: 1.8;
 }
 
 .mode-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 20px;
+    gap: 16px;
+    margin-top: 18px;
 }
 
 .mode-card {
-    background: white;
-    padding: 23px;
-    border: 2px solid var(--border);
-    border-radius: 18px;
-    box-shadow: var(--shadow);
-    transition: .2s;
-}
-
-.mode-card:hover {
-    border-color: var(--blue);
-    transform: translateY(-2px);
+    padding: 22px;
 }
 
 .mode-icon {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
     display: grid;
     place-items: center;
     background: #edf2ff;
-    border-radius: 15px;
-    font-size: 30px;
-    margin-bottom: 15px;
+    font-size: 29px;
+    margin-bottom: 13px;
 }
 
 .mode-card h3 {
-    font-size: 21px;
     margin: 0 0 10px;
+    font-size: 20px;
 }
 
 .mode-card p {
@@ -225,10 +213,34 @@ button:disabled {
 }
 
 .tags span {
-    background: #f0f3fa;
+    background: #eff3fa;
     border-radius: 20px;
     padding: 7px 10px;
     font-size: 10px;
+}
+
+.card {
+    padding: 19px;
+    margin-bottom: 16px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 17px;
+    font-size: 16px;
+}
+
+.step {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    background: #eaf0ff;
+    color: var(--blue);
+    font-weight: bold;
 }
 
 .btn {
@@ -237,11 +249,6 @@ button:disabled {
     padding: 12px 15px;
     font-size: 12px;
     font-weight: bold;
-    transition: .15s;
-}
-
-.btn:hover:not(:disabled) {
-    filter: brightness(.96);
 }
 
 .btn-primary {
@@ -269,49 +276,15 @@ button:disabled {
 }
 
 .btn-small {
-    padding: 8px 11px;
+    padding: 8px 10px;
     font-size: 11px;
 }
 
-.card, .sidebar {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    min-width: 0;
-}
-
-.card {
-    margin-bottom: 17px;
-}
-
-.card-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 17px;
-    margin: 0 0 16px;
-}
-
-.step {
-    width: 33px;
-    height: 33px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 9px;
-    background: #eaf0ff;
-    color: var(--blue);
-    font-weight: bold;
-}
-
 .form-group {
-    margin-bottom: 19px;
+    margin-bottom: 18px;
 }
 
-.form-group label,
-.field-label {
+.form-group label, .field-label {
     display: block;
     font-size: 12px;
     font-weight: bold;
@@ -321,16 +294,15 @@ button:disabled {
 select {
     width: 100%;
     padding: 12px;
-    border: 1px solid #d7dfed;
+    border: 1px solid #d4deed;
     border-radius: 9px;
     background: white;
     color: var(--text);
-    outline: none;
 }
 
 select:focus {
+    outline: 2px solid #2459c430;
     border-color: var(--blue);
-    box-shadow: 0 0 0 3px #2459c414;
 }
 
 .toolbar {
@@ -339,7 +311,7 @@ select:focus {
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 13px;
 }
 
 .toolbar strong {
@@ -352,15 +324,47 @@ select:focus {
     gap: 7px;
 }
 
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 245px;
+    gap: 17px;
+    align-items: start;
+}
+
+.sidebar {
+    padding: 17px;
+    margin-bottom: 15px;
+}
+
+.sidebar h3 {
+    margin: 0 0 12px;
+    font-size: 13px;
+}
+
+.sidebar p {
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+.sidebar-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.sidebar-item:last-child {
+    border-bottom: 0;
+}
+
 .subject-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 9px;
 }
 
-.check-card,
-.chapter-check,
-.difficulty-card {
+.check-card, .chapter-check, .difficulty-card {
     display: flex;
     align-items: flex-start;
     gap: 9px;
@@ -374,6 +378,12 @@ select:focus {
     overflow-wrap: anywhere;
 }
 
+.check-card input, .chapter-check input, .difficulty-card input {
+    margin-top: 4px;
+    accent-color: var(--blue);
+    flex-shrink: 0;
+}
+
 .check-card:has(input:checked),
 .chapter-check:has(input:checked),
 .difficulty-card:has(input:checked) {
@@ -381,29 +391,21 @@ select:focus {
     border-color: var(--blue);
 }
 
-.check-card input,
-.chapter-check input,
-.difficulty-card input {
-    accent-color: var(--blue);
-    margin-top: 3px;
-    flex-shrink: 0;
-}
-
-.subject-info {
+.subject-name {
     min-width: 0;
     overflow-wrap: anywhere;
 }
 
 .subject-count {
     display: block;
-    font-size: 10px;
     color: var(--muted);
+    font-size: 10px;
     margin-top: 4px;
 }
 
 .chapter-group {
-    border: 1px solid var(--border);
     padding: 13px;
+    border: 1px solid var(--border);
     border-radius: 11px;
     margin-bottom: 12px;
 }
@@ -411,15 +413,15 @@ select:focus {
 .chapter-heading {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
-    font-size: 12px;
     margin-bottom: 12px;
+    font-size: 12px;
 }
 
 .chapter-heading span {
-    color: var(--muted);
     font-size: 10px;
+    color: var(--muted);
 }
 
 .chapter-grid {
@@ -441,105 +443,71 @@ select:focus {
 
 .difficulty-card small {
     display: block;
-    color: var(--muted);
     font-size: 10px;
+    color: var(--muted);
     margin-top: 4px;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    padding: 18px;
+    text-align: center;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
 }
 
 .info-box, .error-box, .success-box {
     padding: 12px;
     border-radius: 9px;
     font-size: 12px;
-    line-height: 1.9;
+    line-height: 1.8;
     margin-bottom: 14px;
     overflow-wrap: anywhere;
 }
 
 .info-box {
     background: #fff7e6;
-    border: 1px solid #f1dda6;
     color: #855e06;
+    border: 1px solid #f1dda6;
 }
 
 .error-box {
     background: #fff0f0;
-    border: 1px solid #f3c2c2;
     color: #a51e2b;
+    border: 1px solid #f3c2c2;
 }
 
 .success-box {
     background: #e9f9ef;
-    border: 1px solid #b9e9cd;
     color: #087543;
-}
-
-.empty {
-    grid-column: 1 / -1;
-    padding: 20px 13px;
-    border: 1px dashed #cbd5e1;
-    border-radius: 10px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.9;
-}
-
-.layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 260px;
-    gap: 18px;
-    align-items: start;
-}
-
-.sidebar {
-    padding: 17px;
-    margin-bottom: 15px;
-}
-
-.sidebar h3 {
-    font-size: 13px;
-    margin: 0 0 12px;
-}
-
-.sidebar-item {
-    padding: 9px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 11px;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
-}
-
-.sidebar-item:last-child {
-    border-bottom: 0;
-}
-
-.back-btn {
-    margin-bottom: 15px;
+    border: 1px solid #b9e9cd;
 }
 
 .quiz-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 10px;
+}
+
+.badge, .timer {
+    padding: 9px 11px;
+    border-radius: 8px;
+    font-size: 11px;
 }
 
 .badge {
     background: #edf2ff;
     color: var(--blue);
-    padding: 8px 11px;
-    border-radius: 8px;
-    font-size: 10px;
-    overflow-wrap: anywhere;
 }
 
 .timer {
     background: #ffeded;
     color: #b51e2c;
-    padding: 9px 11px;
-    border-radius: 8px;
-    font-size: 12px;
     font-weight: bold;
 }
 
@@ -554,13 +522,12 @@ select:focus {
 .progress-fill {
     height: 100%;
     width: 0;
-    background: linear-gradient(90deg, var(--blue), var(--cyan));
-    transition: width .2s;
+    background: linear-gradient(90deg, var(--blue), #16c7e8);
 }
 
 .question-meta {
-    color: var(--muted);
     font-size: 11px;
+    color: var(--muted);
     line-height: 1.8;
 }
 
@@ -580,9 +547,9 @@ select:focus {
     display: flex;
     align-items: flex-start;
     gap: 11px;
-    padding: 14px;
     border: 1px solid var(--border);
     border-radius: 10px;
+    padding: 14px;
     cursor: pointer;
     font-size: 13px;
     line-height: 1.8;
@@ -599,11 +566,11 @@ select:focus {
     height: 27px;
     display: grid;
     place-items: center;
-    background: #edf0f7;
-    border-radius: 7px;
-    font-size: 11px;
-    font-weight: bold;
     flex-shrink: 0;
+    border-radius: 7px;
+    background: #edf0f7;
+    font-weight: bold;
+    font-size: 11px;
 }
 
 .option.selected .option-letter {
@@ -613,8 +580,8 @@ select:focus {
 
 .quiz-actions {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    gap: 8px;
     margin-top: 22px;
 }
 
@@ -655,7 +622,7 @@ select:focus {
 }
 
 .result-hero {
-    background: linear-gradient(120deg, var(--navy), #315efb);
+    background: linear-gradient(120deg, #10264b, #315efb);
     color: white;
     text-align: center;
     padding: 28px;
@@ -664,19 +631,19 @@ select:focus {
 }
 
 .score-circle {
-    width: 125px;
-    height: 125px;
+    width: 120px;
+    height: 120px;
     border: 7px solid #ffffff55;
     border-radius: 50%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     margin: 20px auto;
 }
 
 .score-circle strong {
-    font-size: 32px;
+    font-size: 31px;
 }
 
 .result-grid {
@@ -688,9 +655,9 @@ select:focus {
 
 .result-stat {
     text-align: center;
+    padding: 15px 5px;
     background: #f4f6fb;
     border-radius: 10px;
-    padding: 15px 5px;
 }
 
 .result-stat strong {
@@ -700,8 +667,8 @@ select:focus {
 }
 
 .result-stat span {
-    font-size: 10px;
     color: var(--muted);
+    font-size: 10px;
 }
 
 .review-row {
@@ -723,10 +690,10 @@ select:focus {
 }
 
 footer {
+    padding: 24px 10px;
     text-align: center;
     color: var(--muted);
     font-size: 10px;
-    padding: 22px 0;
 }
 
 .toast {
@@ -734,18 +701,18 @@ footer {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--navy);
+    z-index: 100;
+    background: #10264b;
     color: white;
     padding: 13px 17px;
     border-radius: 10px;
-    z-index: 100;
     max-width: 90%;
     font-size: 12px;
     text-align: center;
     box-shadow: var(--shadow);
 }
 
-@media (max-width: 900px) {
+@media(max-width: 850px) {
     .layout {
         grid-template-columns: 1fr;
     }
@@ -755,48 +722,18 @@ footer {
     }
 }
 
-@media (max-width: 600px) {
-    .topbar {
-        padding: 10px;
-    }
-
-    .brand h1 {
-        font-size: 14px;
-    }
-
-    .brand p {
-        font-size: 9px;
-    }
-
-    .brand-icon {
-        width: 36px;
-        height: 36px;
-    }
-
-    .status {
-        display: none;
-    }
-
+@media(max-width: 600px) {
     .container {
-        padding: 0 10px 25px;
-        margin-top: 15px;
+        padding: 13px 10px 25px;
     }
 
     .hero {
-        padding: 22px 17px;
-    }
-
-    .card {
-        padding: 15px;
+        padding: 21px 16px;
     }
 
     .stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 9px;
-    }
-
-    .stat {
-        padding: 13px;
     }
 
     .mode-grid {
@@ -812,35 +749,34 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .result-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .card {
+        padding: 14px;
     }
 
-    .question-text {
-        font-size: 16px;
+    .status {
+        display: none;
+    }
+
+    .result-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .palette {
         grid-template-columns: repeat(6, minmax(0, 1fr));
     }
+
+    .question-text {
+        font-size: 16px;
+    }
 }
 
 @media print {
-    .topbar,
-    footer,
-    .back-btn,
-    .quiz-actions,
-    .sidebar,
-    .toast {
+    .topbar, footer, .back-btn, .quiz-actions, .sidebar, .toast {
         display: none !important;
     }
 
     body {
         background: white;
-    }
-
-    .container {
-        max-width: 100%;
     }
 }
 </style>
@@ -857,22 +793,18 @@ footer {
                 <p>School &amp; Competitive Examination System</p>
             </div>
         </div>
-        <div class="status" id="status">● Initializing</div>
+        <div class="status" id="status">Connecting to question bank...</div>
     </div>
 </header>
 
 <main class="container">
 
-<!-- HOME SCREEN -->
+<!-- HOME -->
 <section id="homeScreen">
 
     <div class="hero">
         <h2>Your Preparation, Your Test! 🚀</h2>
-        <p>
-            Create customized multiple-choice tests for school examinations,
-            BPSC, UPSC, SSC, Railway and other competitive examinations.
-            Select your class, subjects, chapters and difficulty levels.
-        </p>
+        <p>Create customized multiple-choice tests for Classes 6–12, BPSC, UPSC, SSC, Railway and other competitive examinations.</p>
     </div>
 
     <div class="stats">
@@ -881,19 +813,16 @@ footer {
             <strong id="statQuestions">0</strong>
             <span>Total Questions</span>
         </div>
-
         <div class="stat">
             <div class="stat-icon">🏫</div>
             <strong id="statClasses">0</strong>
             <span>School Classes</span>
         </div>
-
         <div class="stat">
             <div class="stat-icon">📖</div>
             <strong id="statSubjects">0</strong>
             <span>Subjects</span>
         </div>
-
         <div class="stat">
             <div class="stat-icon">🗂️</div>
             <strong id="statChapters">0</strong>
@@ -901,61 +830,41 @@ footer {
         </div>
     </div>
 
-    <h2 class="section-heading">Choose Your Section</h2>
-    <p class="description">Select the examination category you want to prepare for.</p>
+    <h2 class="section-title">Choose Your Section</h2>
+    <p class="muted">Choose the type of examination you want to prepare for.</p>
 
     <div class="mode-grid">
-
         <div class="mode-card">
             <div class="mode-icon">🏫</div>
             <h3>School Student</h3>
-            <p>
-                Create customized tests for Classes 6–12 by selecting your
-                class, subjects, chapters and difficulty levels.
-            </p>
-
+            <p>Select your class, one or more subjects, chapters and difficulty levels to create a customized test.</p>
             <div class="tags">
                 <span>Classes 6–12</span>
                 <span>Multiple Subjects</span>
                 <span>Chapter Selection</span>
             </div>
-
-            <button type="button" class="btn btn-green btn-block" id="openSchool">
-                Open School Section →
-            </button>
+            <button class="btn btn-green btn-block" id="openSchool" type="button">Open School Section →</button>
         </div>
 
         <div class="mode-card">
             <div class="mode-icon">🎯</div>
             <h3>Competitive Student</h3>
-            <p>
-                Prepare for BPSC, UPSC, SSC, Railway and other competitive
-                examinations using your question bank.
-            </p>
-
+            <p>Create practice tests for BPSC, UPSC, SSC, Railway and other competitive examinations.</p>
             <div class="tags">
                 <span>BPSC</span>
                 <span>UPSC</span>
                 <span>SSC</span>
                 <span>Railway</span>
             </div>
-
-            <button type="button" class="btn btn-primary btn-block" id="openCompetitive">
-                Open Competitive Section →
-            </button>
+            <button class="btn btn-primary btn-block" id="openCompetitive" type="button">Open Competitive Section →</button>
         </div>
-
     </div>
 
     <div class="card" style="margin-top:18px">
         <h3 class="card-title">📡 Question Bank Status</h3>
-        <p id="dataInfo" class="description">Loading questions...</p>
-
+        <p class="muted" id="dataInfo">Loading questions...</p>
         <div id="loadError" class="error-box hidden"></div>
-
-        <button type="button" class="btn btn-light btn-small" id="reloadButton">
-            ↻ Reload Questions
-        </button>
+        <button class="btn btn-light btn-small" id="reloadButton" type="button">↻ Reload Questions</button>
     </div>
 
 </section>
@@ -963,89 +872,76 @@ footer {
 <!-- SCHOOL SETUP -->
 <section id="schoolScreen" class="hidden">
 
-    <button type="button" class="btn btn-light back-btn" data-home>
-        ← Back to Home
-    </button>
+    <button class="btn btn-light back-btn" data-home type="button">← Back to Home</button>
 
     <div class="hero">
         <h2>🏫 School Student Test</h2>
-        <p>Select a class, language-independent English content, subjects, chapters and difficulty levels.</p>
+        <p>Select a class first. The available subjects and chapters will then appear automatically.</p>
     </div>
 
     <div class="layout">
         <div>
 
             <div class="card">
-                <h3 class="card-title"><span class="step">1</span> Choose Class</h3>
+                <h3 class="card-title"><span class="step">1</span> Select Class</h3>
 
                 <div class="form-group">
-                    <label for="classSelect">Class</label>
+                    <label for="classSelect">Choose Class</label>
                     <select id="classSelect">
-                        <option value="">-- Choose Class --</option>
+                        <option value="">Loading available classes...</option>
                     </select>
+                    <p class="muted" id="classHelp">Available classes are detected from your question bank.</p>
                 </div>
             </div>
 
             <div class="card">
-                <h3 class="card-title"><span class="step">2</span> Choose Difficulty</h3>
+                <h3 class="card-title"><span class="step">2</span> Select Difficulty</h3>
 
-                <div class="form-group">
-                    <span class="field-label">Difficulty Levels</span>
-
-                    <div class="difficulty-grid">
-                        <label class="difficulty-card">
-                            <input type="checkbox" name="schoolLevel" value="Easy">
-                            <span><strong>🟢 Easy</strong><small>Basic questions</small></span>
-                        </label>
-
-                        <label class="difficulty-card">
-                            <input type="checkbox" name="schoolLevel" value="Moderate">
-                            <span><strong>🟡 Moderate</strong><small>Intermediate questions</small></span>
-                        </label>
-
-                        <label class="difficulty-card">
-                            <input type="checkbox" name="schoolLevel" value="Tough">
-                            <span><strong>🔴 Tough</strong><small>Advanced questions</small></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="info-box">
-                    Select one or more difficulty levels. The test will include questions matching your selections.
+                <div class="difficulty-grid">
+                    <label class="difficulty-card">
+                        <input type="checkbox" name="schoolLevel" value="Easy">
+                        <span><strong>🟢 Easy</strong><small>Basic questions</small></span>
+                    </label>
+                    <label class="difficulty-card">
+                        <input type="checkbox" name="schoolLevel" value="Moderate">
+                        <span><strong>🟡 Moderate</strong><small>Intermediate questions</small></span>
+                    </label>
+                    <label class="difficulty-card">
+                        <input type="checkbox" name="schoolLevel" value="Tough">
+                        <span><strong>🔴 Tough</strong><small>Advanced questions</small></span>
+                    </label>
                 </div>
             </div>
 
             <div class="card">
-                <h3 class="card-title"><span class="step">3</span> Choose Subjects</h3>
+                <h3 class="card-title"><span class="step">3</span> Select Subjects</h3>
 
                 <div class="toolbar">
                     <strong id="schoolSubjectCount">0 subjects</strong>
-
                     <div class="toolbar-actions">
-                        <button type="button" class="btn btn-light btn-small" id="schoolSelectAll">Select All</button>
-                        <button type="button" class="btn btn-light btn-small" id="schoolClearAll">Clear All</button>
+                        <button class="btn btn-light btn-small" id="schoolSelectAll" type="button">Select All</button>
+                        <button class="btn btn-light btn-small" id="schoolClearAll" type="button">Clear All</button>
                     </div>
                 </div>
 
                 <div id="schoolSubjects" class="subject-grid">
-                    <div class="empty">Choose a class first.</div>
+                    <div class="empty">Loading subjects...</div>
                 </div>
             </div>
 
             <div class="card">
-                <h3 class="card-title"><span class="step">4</span> Choose Chapters</h3>
+                <h3 class="card-title"><span class="step">4</span> Select Chapters</h3>
 
                 <div class="toolbar">
                     <strong id="schoolChapterCount">0 chapters</strong>
-
                     <div class="toolbar-actions">
-                        <button type="button" class="btn btn-light btn-small" id="schoolChapterAll">Select All</button>
-                        <button type="button" class="btn btn-light btn-small" id="schoolChapterClear">Clear All</button>
+                        <button class="btn btn-light btn-small" id="schoolChapterAll" type="button">Select All</button>
+                        <button class="btn btn-light btn-small" id="schoolChapterClear" type="button">Clear All</button>
                     </div>
                 </div>
 
                 <div id="schoolChapters">
-                    <div class="empty">Select one or more subjects first.</div>
+                    <div class="empty">Select a class and subject first.</div>
                 </div>
             </div>
 
@@ -1075,48 +971,39 @@ footer {
                     </select>
                 </div>
 
-                <div class="info-box" id="schoolSummary">Choose your class and subjects.</div>
-
-                <button type="button" class="btn btn-green btn-block" id="startSchool">
-                    🚀 Start School Test
-                </button>
+                <div class="info-box" id="schoolSummary">Choose a class, subjects and chapters.</div>
+                <button class="btn btn-green btn-block" id="startSchool" type="button">🚀 Start School Test</button>
             </div>
-
         </div>
 
         <aside>
             <div class="sidebar">
-                <h3>📘 School Test Features</h3>
+                <h3>School Test Features</h3>
                 <div class="sidebar-item">✓ Class-based questions</div>
                 <div class="sidebar-item">✓ Multiple subjects</div>
-                <div class="sidebar-item">✓ Multiple chapters</div>
-                <div class="sidebar-item">✓ Multiple difficulty levels</div>
-                <div class="sidebar-item">✓ Timed examination</div>
-                <div class="sidebar-item">✓ Results and explanations</div>
+                <div class="sidebar-item">✓ Chapter-wise selection</div>
+                <div class="sidebar-item">✓ Three difficulty levels</div>
+                <div class="sidebar-item">✓ Timer and answer review</div>
             </div>
         </aside>
-
     </div>
 </section>
 
 <!-- COMPETITIVE SETUP -->
 <section id="competitiveScreen" class="hidden">
 
-    <button type="button" class="btn btn-light back-btn" data-home>
-        ← Back to Home
-    </button>
+    <button class="btn btn-light back-btn" data-home type="button">← Back to Home</button>
 
     <div class="hero">
-        <h2>🎯 Competitive Exam Preparation</h2>
-        <p>Prepare for competitive examinations using questions marked as Competitive in your question bank.</p>
+        <h2>🎯 Competitive Examination</h2>
+        <p>Select your target examination, subjects, chapters and difficulty levels.</p>
     </div>
 
     <div class="layout">
         <div>
 
             <div class="card">
-                <h3 class="card-title"><span class="step">1</span> Choose Examination</h3>
-
+                <h3 class="card-title"><span class="step">1</span> Select Examination</h3>
                 <div class="form-group">
                     <label for="examSelect">Target Examination</label>
                     <select id="examSelect">
@@ -1131,19 +1018,16 @@ footer {
             </div>
 
             <div class="card">
-                <h3 class="card-title"><span class="step">2</span> Choose Difficulty</h3>
-
+                <h3 class="card-title"><span class="step">2</span> Select Difficulty</h3>
                 <div class="difficulty-grid">
                     <label class="difficulty-card">
                         <input type="checkbox" name="competitiveLevel" value="Easy">
                         <span><strong>🟢 Easy</strong><small>Basic questions</small></span>
                     </label>
-
                     <label class="difficulty-card">
                         <input type="checkbox" name="competitiveLevel" value="Moderate">
                         <span><strong>🟡 Moderate</strong><small>Intermediate questions</small></span>
                     </label>
-
                     <label class="difficulty-card">
                         <input type="checkbox" name="competitiveLevel" value="Tough">
                         <span><strong>🔴 Tough</strong><small>Advanced questions</small></span>
@@ -1152,42 +1036,35 @@ footer {
             </div>
 
             <div class="card">
-                <h3 class="card-title"><span class="step">3</span> Choose Subjects</h3>
-
+                <h3 class="card-title"><span class="step">3</span> Select Subjects</h3>
                 <div class="toolbar">
                     <strong id="competitiveSubjectCount">0 subjects</strong>
-
                     <div class="toolbar-actions">
-                        <button type="button" class="btn btn-light btn-small" id="competitiveSelectAll">Select All</button>
-                        <button type="button" class="btn btn-light btn-small" id="competitiveClearAll">Clear All</button>
+                        <button class="btn btn-light btn-small" id="competitiveSelectAll" type="button">Select All</button>
+                        <button class="btn btn-light btn-small" id="competitiveClearAll" type="button">Clear All</button>
                     </div>
                 </div>
-
                 <div id="competitiveSubjects" class="subject-grid">
                     <div class="empty">Loading competitive subjects...</div>
                 </div>
             </div>
 
             <div class="card">
-                <h3 class="card-title"><span class="step">4</span> Choose Chapters</h3>
-
+                <h3 class="card-title"><span class="step">4</span> Select Chapters</h3>
                 <div class="toolbar">
                     <strong id="competitiveChapterCount">0 chapters</strong>
-
                     <div class="toolbar-actions">
-                        <button type="button" class="btn btn-light btn-small" id="competitiveChapterAll">Select All</button>
-                        <button type="button" class="btn btn-light btn-small" id="competitiveChapterClear">Clear All</button>
+                        <button class="btn btn-light btn-small" id="competitiveChapterAll" type="button">Select All</button>
+                        <button class="btn btn-light btn-small" id="competitiveChapterClear" type="button">Clear All</button>
                     </div>
                 </div>
-
                 <div id="competitiveChapters">
-                    <div class="empty">Choose one or more subjects first.</div>
+                    <div class="empty">Select a subject first.</div>
                 </div>
             </div>
 
             <div class="card">
                 <h3 class="card-title"><span class="step">5</span> Test Settings</h3>
-
                 <div class="form-group">
                     <label for="competitiveLimit">Number of Questions</label>
                     <select id="competitiveLimit">
@@ -1213,43 +1090,31 @@ footer {
                 </div>
 
                 <div class="info-box" id="competitiveSummary">Choose subjects and chapters.</div>
-
-                <button type="button" class="btn btn-primary btn-block" id="startCompetitive">
-                    🚀 Generate Competitive Test
-                </button>
+                <button class="btn btn-primary btn-block" id="startCompetitive" type="button">🚀 Generate Competitive Test</button>
             </div>
-
         </div>
 
         <aside>
             <div class="sidebar">
-                <h3>🎯 Competitive Preparation</h3>
-                <div class="sidebar-item">Ancient History</div>
-                <div class="sidebar-item">Medieval History</div>
-                <div class="sidebar-item">Modern History</div>
-                <div class="sidebar-item">Indian Geography</div>
-                <div class="sidebar-item">World Geography</div>
+                <h3>Competitive Subjects</h3>
+                <div class="sidebar-item">History</div>
+                <div class="sidebar-item">Geography</div>
                 <div class="sidebar-item">Indian Polity</div>
-                <div class="sidebar-item">Indian Economy</div>
+                <div class="sidebar-item">Economics</div>
                 <div class="sidebar-item">General Science</div>
                 <div class="sidebar-item">Current Affairs</div>
                 <div class="sidebar-item">Bihar Special GK</div>
             </div>
         </aside>
-
     </div>
 </section>
 
-<!-- QUIZ SCREEN -->
+<!-- QUIZ -->
 <section id="quizScreen" class="hidden">
-
-    <button type="button" class="btn btn-light back-btn" id="exitQuiz">
-        ← Exit Test
-    </button>
+    <button class="btn btn-light back-btn" id="exitQuiz" type="button">← Exit Test</button>
 
     <div class="layout">
         <div class="card">
-
             <div class="quiz-top">
                 <span class="badge" id="quizBadge">MCQ TEST</span>
                 <span class="timer" id="timer">00:00</span>
@@ -1261,38 +1126,33 @@ footer {
 
             <div class="toolbar">
                 <strong id="questionNumber">Question 1</strong>
-                <button type="button" class="btn btn-light btn-small" id="reviewToggle">
-                    ⭐ Mark for Review
-                </button>
+                <button class="btn btn-light btn-small" id="reviewToggle" type="button">⭐ Mark for Review</button>
             </div>
 
             <div id="questionMeta" class="question-meta"></div>
             <div id="questionText" class="question-text"></div>
             <div id="options" class="options"></div>
 
-            <div id="explanation" class="info-box hidden"></div>
-
             <div class="quiz-actions">
-                <button type="button" class="btn btn-light" id="previous">← Previous</button>
-                <button type="button" class="btn btn-light" id="clearAnswer">Clear Answer</button>
-                <button type="button" class="btn btn-primary" id="next">Next →</button>
-                <button type="button" class="btn btn-green" id="submit">Submit Test ✓</button>
+                <button class="btn btn-light" id="previous" type="button">← Previous</button>
+                <button class="btn btn-light" id="clearAnswer" type="button">Clear Answer</button>
+                <button class="btn btn-primary" id="next" type="button">Next →</button>
+                <button class="btn btn-green" id="submit" type="button">Submit Test ✓</button>
             </div>
-
         </div>
 
         <aside>
             <div class="sidebar">
-                <h3>📋 Question Palette</h3>
+                <h3>Question Palette</h3>
                 <div id="palette" class="palette"></div>
                 <div class="sidebar-item">Green: Answered</div>
-                <div class="sidebar-item">Yellow: Marked for review</div>
+                <div class="sidebar-item">Yellow: Review</div>
                 <div class="sidebar-item">Blue: Current question</div>
             </div>
 
             <div class="sidebar">
-                <h3>📊 Progress</h3>
-                <div class="sidebar-item">Total Questions: <strong id="liveTotal">0</strong></div>
+                <h3>Test Progress</h3>
+                <div class="sidebar-item">Total: <strong id="liveTotal">0</strong></div>
                 <div class="sidebar-item">Answered: <strong id="liveAnswered">0</strong></div>
                 <div class="sidebar-item">Remaining: <strong id="liveRemaining">0</strong></div>
                 <div class="sidebar-item">Review: <strong id="liveReview">0</strong></div>
@@ -1301,66 +1161,45 @@ footer {
     </div>
 </section>
 
-<!-- RESULT SCREEN -->
+<!-- RESULTS -->
 <section id="resultScreen" class="hidden">
-
     <div class="result-hero">
         <div style="font-size:40px">🏆</div>
         <h2>Test Completed!</h2>
-
         <div class="score-circle">
             <strong id="percentage">0%</strong>
             <span>Score</span>
         </div>
-
         <h3 id="performance">Keep Practising!</h3>
     </div>
 
     <div class="card">
-
         <div class="result-grid">
-            <div class="result-stat">
-                <strong id="correctCount">0</strong>
-                <span>Correct</span>
-            </div>
-
-            <div class="result-stat">
-                <strong id="wrongCount">0</strong>
-                <span>Incorrect</span>
-            </div>
-
-            <div class="result-stat">
-                <strong id="skippedCount">0</strong>
-                <span>Skipped</span>
-            </div>
-
-            <div class="result-stat">
-                <strong id="accuracy">0%</strong>
-                <span>Accuracy</span>
-            </div>
+            <div class="result-stat"><strong id="correctCount">0</strong><span>Correct</span></div>
+            <div class="result-stat"><strong id="wrongCount">0</strong><span>Incorrect</span></div>
+            <div class="result-stat"><strong id="skippedCount">0</strong><span>Skipped</span></div>
+            <div class="result-stat"><strong id="accuracy">0%</strong><span>Accuracy</span></div>
         </div>
 
-        <p id="resultDetails" class="description"></p>
+        <p id="resultDetails" class="muted"></p>
 
         <div class="quiz-actions">
-            <button type="button" class="btn btn-primary" id="showReview">📝 Review Answers</button>
-            <button type="button" class="btn btn-light" id="homeButton">🏠 Home</button>
-            <button type="button" class="btn btn-green" id="retryButton">↻ Retry Test</button>
-            <button type="button" class="btn btn-light" id="printButton">🖨 Print</button>
+            <button class="btn btn-primary" id="showReview" type="button">📝 Review Answers</button>
+            <button class="btn btn-light" id="homeButton" type="button">🏠 Home</button>
+            <button class="btn btn-green" id="retryButton" type="button">↻ Back to Setup</button>
+            <button class="btn btn-light" id="printButton" type="button">🖨 Print</button>
         </div>
-
     </div>
 
     <div class="card hidden" id="reviewCard">
-        <h3 class="card-title">📝 Answer Review</h3>
+        <h3 class="card-title">Answer Review</h3>
         <div id="reviewList"></div>
     </div>
-
 </section>
 
 </main>
 
-<footer>MCQ QUIZ PRO · School &amp; Competitive Examination System</footer>
+<footer>MCQ QUIZ PRO | School &amp; Competitive Examination System</footer>
 <div id="toast" class="toast hidden"></div>
 
 <script>
@@ -1375,28 +1214,7 @@ const QUESTION_FILE_URL =
 
 const $ = id => document.getElementById(id);
 
-const OPTION_KEYS = ["A", "B", "C", "D"];
-
-/*
-Question record format:
-
-CLASS: 6
-SUBJECT: History
-CHAPTER: Ancient India
-LEVEL: Easy
-Q: Question text?
-A: Option A
-B: Option B
-C: Option C
-D: Option D
-ANSWER: B
-EXPLANATION: Explanation text.
-
-Separate records with a blank line.
-
-Competitive questions must use:
-CLASS: Competitive
-*/
+const LETTERS = ["A", "B", "C", "D"];
 
 let allQuestions = [];
 let quizQuestions = [];
@@ -1411,12 +1229,13 @@ let selectedLevels = [];
 let timerInterval = null;
 let timeRemaining = 0;
 let quizFinished = false;
+let loadVersion = 0;
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-function norm(value) {
+function normalize(value) {
     return String(value ?? "")
         .trim()
         .toLowerCase()
@@ -1424,78 +1243,76 @@ function norm(value) {
 }
 
 function uniqueSorted(values) {
-    const valuesMap = new Map();
+    const map = new Map();
 
     values.forEach(value => {
-        const text = String(value ?? "").trim();
+        const original = String(value ?? "").trim();
 
-        if (text && !valuesMap.has(norm(text))) {
-            valuesMap.set(norm(text), text);
+        if (original && !map.has(normalize(original))) {
+            map.set(normalize(original), original);
         }
     });
 
-    return [...valuesMap.values()].sort((a, b) =>
+    return [...map.values()].sort((a, b) =>
         a.localeCompare(b, undefined, { numeric: true })
     );
 }
 
 function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
         "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
         '"': "&quot;",
         "'": "&#39;"
-    })[char]);
+    })[character]);
 }
 
-function showToast(message) {
-    const toast = $("toast");
+function toast(message) {
+    const element = $("toast");
 
-    toast.textContent = message;
-    toast.classList.remove("hidden");
+    element.textContent = message;
+    element.classList.remove("hidden");
 
-    clearTimeout(showToast.timeout);
+    clearTimeout(toast.timeout);
 
-    showToast.timeout = setTimeout(() => {
-        toast.classList.add("hidden");
+    toast.timeout = setTimeout(() => {
+        element.classList.add("hidden");
     }, 3500);
 }
 
-function setStatus(message, success = true) {
+function setStatus(message, ok = true) {
     $("status").textContent = "● " + message;
-    $("status").style.color = success ? "#caffdf" : "#ffd3d3";
+    $("status").style.color = ok ? "#caffdf" : "#ffd3d3";
 }
 
 function showScreen(screenId) {
-    const screenIds = [
+    [
         "homeScreen",
         "schoolScreen",
         "competitiveScreen",
         "quizScreen",
         "resultScreen"
-    ];
-
-    screenIds.forEach(id => {
+    ].forEach(id => {
         $(id).classList.toggle("hidden", id !== screenId);
     });
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function shuffleArray(array) {
-    const copy = [...array];
+function shuffle(array) {
+    const result = [...array];
 
-    for (let i = copy.length - 1; i > 0; i--) {
+    for (let i = result.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-
-        [copy[i], copy[j]] = [copy[j], copy[i]];
+        [result[i], result[j]] = [result[j], result[i]];
     }
 
-    return copy;
+    return result;
+}
+
+function isCompetitive(question) {
+    return normalize(question.className) === "competitive";
 }
 
 /* =========================================================
@@ -1504,78 +1321,81 @@ function shuffleArray(array) {
 
 $("openSchool").addEventListener("click", () => {
     showScreen("schoolScreen");
+
+    if (allQuestions.length) {
+        populateClasses();
+        refreshSchoolSubjects();
+    }
 });
 
 $("openCompetitive").addEventListener("click", () => {
     showScreen("competitiveScreen");
+    renderCompetitiveSubjects();
 });
 
 document.querySelectorAll("[data-home]").forEach(button => {
-    button.addEventListener("click", () => {
-        showScreen("homeScreen");
-    });
+    button.addEventListener("click", () => showScreen("homeScreen"));
 });
 
 /* =========================================================
-   QUESTION PARSER
+   FLEXIBLE QUESTION FILE PARSER
 
-   This parser starts a new question record whenever it
-   encounters CLASS:. Metadata before Q: is preserved.
+   Supports records such as:
 
-   Records can be separated by blank lines or placed one
-   after another, provided each record starts with CLASS:.
+   CLASS: 6
+   SUBJECT: History
+   CHAPTER: Ancient India
+   LEVEL: Easy
+   Q: Question text?
+   A: Option A
+   B: Option B
+   C: Option C
+   D: Option D
+   ANSWER: B
+   EXPLANATION: Explanation text.
+
+   Also supports:
+   QUESTION: instead of Q:
+   CORRECT ANSWER: instead of ANSWER:
+   DIFFICULTY: instead of LEVEL:
+   Blank lines between records are optional.
+
+   Every question must start with CLASS:.
 ========================================================= */
 
-function parseQuestions(text) {
-    const lines = String(text || "")
+function parseQuestions(rawText) {
+    const text = String(rawText || "")
         .replace(/^\uFEFF/, "")
-        .replace(/\r\n/g, "\n")
-        .replace(/\r/g, "\n")
-        .split("\n");
+        .replace(/\r\n?/g, "\n");
 
+    const lines = text.split("\n");
     const records = [];
-    let currentRecord = [];
+    let current = [];
 
     for (const line of lines) {
         if (/^\s*CLASS\s*:/i.test(line)) {
-            if (currentRecord.length) {
-                records.push(currentRecord);
+            if (current.length) {
+                records.push(current);
             }
 
-            currentRecord = [line];
-        } else if (currentRecord.length) {
-            currentRecord.push(line);
+            current = [line];
+        } else if (current.length) {
+            current.push(line);
         }
     }
 
-    if (currentRecord.length) {
-        records.push(currentRecord);
+    if (current.length) {
+        records.push(current);
     }
 
-    const fieldMap = {
-        CLASS: "className",
-        SUBJECT: "subject",
-        CHAPTER: "chapter",
-        LEVEL: "level",
-        LANGUAGE: "language",
-        Q: "question",
-        A: "A",
-        B: "B",
-        C: "C",
-        D: "D",
-        ANSWER: "answer",
-        EXPLANATION: "explanation"
-    };
+    const parsed = [];
 
-    const result = [];
-
-    for (const recordLines of records) {
-        const question = {
+    for (const record of records) {
+        const item = {
             className: "",
             subject: "",
             chapter: "",
             level: "",
-            language: "English",
             question: "",
             A: "",
             B: "",
@@ -1585,82 +1405,129 @@ function parseQuestions(text) {
             explanation: ""
         };
 
-        for (const line of recordLines) {
+        for (const line of record) {
             const match = line.match(
-                /^\s*(CLASS|SUBJECT|CHAPTER|LEVEL|LANGUAGE|Q|A|B|C|D|ANSWER|EXPLANATION)\s*:\s*(.*)$/i
+                /^\s*(CLASS|SUBJECT|CHAPTER|LEVEL|DIFFICULTY|Q|QUESTION|A|B|C|D|ANSWER|CORRECT ANSWER|EXPLANATION)\s*:\s*(.*?)\s*$/i
             );
 
-            if (!match) {
-                continue;
-            }
+            if (!match) continue;
 
             const key = match[1].toUpperCase();
             const value = match[2].trim();
 
-            if (fieldMap[key]) {
-                question[fieldMap[key]] =
-                    key === "ANSWER" ? value.toUpperCase() : value;
+            switch (key) {
+                case "CLASS":
+                    item.className = value;
+                    break;
+                case "SUBJECT":
+                    item.subject = value;
+                    break;
+                case "CHAPTER":
+                    item.chapter = value;
+                    break;
+                case "LEVEL":
+                case "DIFFICULTY":
+                    item.level = value;
+                    break;
+                case "Q":
+                case "QUESTION":
+                    item.question = value;
+                    break;
+                case "A":
+                case "B":
+                case "C":
+                case "D":
+                    item[key] = value;
+                    break;
+                case "ANSWER":
+                case "CORRECT ANSWER":
+                    item.answer = value.toUpperCase().replace(/[^A-D]/g, "").charAt(0);
+                    break;
+                case "EXPLANATION":
+                    item.explanation = value;
+                    break;
             }
         }
 
+        /*
+         Normalize common level variations.
+        */
+        const levelValue = normalize(item.level);
+
+        if (["medium", "moderate", "intermediate"].includes(levelValue)) {
+            item.level = "Moderate";
+        } else if (["hard", "difficult", "advanced"].includes(levelValue)) {
+            item.level = "Tough";
+        } else if (levelValue === "easy") {
+            item.level = "Easy";
+        }
+
         const valid =
-            question.className &&
-            question.subject &&
-            question.chapter &&
-            question.level &&
-            question.question &&
-            question.A &&
-            question.B &&
-            question.C &&
-            question.D &&
-            OPTION_KEYS.includes(question.answer);
+            item.className &&
+            item.subject &&
+            item.chapter &&
+            item.level &&
+            item.question &&
+            item.A &&
+            item.B &&
+            item.C &&
+            item.D &&
+            LETTERS.includes(item.answer);
 
         if (valid) {
-            question.id = result.length + 1;
-            result.push(question);
+            item.id = parsed.length + 1;
+            parsed.push(item);
         }
     }
 
-    return result;
+    return parsed;
 }
 
 /* =========================================================
-   LOAD QUESTION BANK
+   QUESTION BANK LOADING
 ========================================================= */
 
 async function loadQuestions() {
-    setStatus("Loading questions...", false);
+    const version = ++loadVersion;
 
-    $("dataInfo").textContent = "Connecting to question bank...";
+    setStatus("Loading question bank...", false);
+
+    $("dataInfo").textContent = "Connecting to GitHub question bank...";
     $("loadError").classList.add("hidden");
 
     try {
         const separator = QUESTION_FILE_URL.includes("?") ? "&" : "?";
 
         const response = await fetch(
-            QUESTION_FILE_URL + separator + "t=" + Date.now(),
+            QUESTION_FILE_URL + separator + "v=" + Date.now(),
             { cache: "no-store" }
         );
 
         if (!response.ok) {
-            throw new Error("HTTP " + response.status);
+            throw new Error("The question file returned HTTP " + response.status);
         }
 
-        const fileText = await response.text();
+        const text = await response.text();
 
-        const parsedQuestions = parseQuestions(fileText);
+        if (!text.trim()) {
+            throw new Error("The question file is empty.");
+        }
 
-        if (!parsedQuestions.length) {
+        const parsed = parseQuestions(text);
+
+        if (version !== loadVersion) return;
+
+        if (!parsed.length) {
             throw new Error(
-                "No valid questions found. Check the CLASS, Q, A, B, C, D and ANSWER fields."
+                "No valid questions were detected. Check your questions.txt field names and question format."
             );
         }
 
-        allQuestions = parsedQuestions;
+        allQuestions = parsed;
 
         updateStatistics();
         populateClasses();
-        renderSchoolSubjects();
+        refreshSchoolSubjects();
         renderCompetitiveSubjects();
 
         $("dataInfo").textContent =
@@ -1669,33 +1536,38 @@ async function loadQuestions() {
         setStatus("Question Bank Ready", true);
 
     } catch (error) {
-        console.error("Question loading failed:", error);
+        if (version !== loadVersion) return;
+
+        console.error("Question loading error:", error);
 
         allQuestions = [];
 
         updateStatistics();
 
-        $("dataInfo").textContent = "Unable to load the question bank.";
+        $("dataInfo").textContent = "Question bank could not be loaded.";
 
         $("loadError").textContent =
             error.message +
-            ". Check the GitHub Raw URL, internet connection and questions.txt format.";
+            " Check the GitHub Raw URL, internet connection and questions.txt format.";
 
         $("loadError").classList.remove("hidden");
 
+        $("classSelect").innerHTML =
+            '<option value="">Question bank unavailable</option>';
+
         $("schoolSubjects").innerHTML =
-            '<div class="empty">Questions could not be loaded.</div>';
+            '<div class="empty">The question bank is unavailable. Use Reload Questions to try again.</div>';
 
         $("schoolChapters").innerHTML =
-            '<div class="empty">Questions could not be loaded.</div>';
+            '<div class="empty">Chapters will appear after questions load.</div>';
 
         $("competitiveSubjects").innerHTML =
-            '<div class="empty">Questions could not be loaded.</div>';
+            '<div class="empty">The question bank is unavailable.</div>';
 
         $("competitiveChapters").innerHTML =
-            '<div class="empty">Questions could not be loaded.</div>';
+            '<div class="empty">Chapters will appear after questions load.</div>';
 
-        setStatus("Question Loading Failed", false);
+        setStatus("Loading Failed", false);
     }
 }
 
@@ -1719,17 +1591,13 @@ function updateStatistics() {
     ).length;
 }
 
-function isCompetitive(question) {
-    return norm(question.className) === "competitive";
-}
-
 /* =========================================================
-   SCHOOL SUBJECTS AND CHAPTERS
+   SCHOOL CLASS, SUBJECT AND CHAPTER SELECTION
 ========================================================= */
 
 function populateClasses() {
     const select = $("classSelect");
-    const previousValue = select.value;
+    const oldValue = select.value;
 
     const classes = uniqueSorted(
         allQuestions
@@ -1740,58 +1608,53 @@ function populateClasses() {
     select.innerHTML = "";
 
     const placeholder = document.createElement("option");
-
     placeholder.value = "";
-    placeholder.textContent = "-- Choose Class --";
+    placeholder.textContent = classes.length
+        ? "-- Select Class --"
+        : "No school classes found";
 
     select.appendChild(placeholder);
 
     classes.forEach(className => {
         const option = document.createElement("option");
-
         option.value = className;
-        option.textContent = className;
-
+        option.textContent = "Class " + className.replace(/^class\s*/i, "");
         select.appendChild(option);
     });
 
-    if (classes.includes(previousValue)) {
-        select.value = previousValue;
+    if (classes.includes(oldValue)) {
+        select.value = oldValue;
     }
+
+    $("classHelp").textContent = classes.length
+        ? classes.length + " class options detected from the question bank."
+        : "No school classes were detected. Check the CLASS field in questions.txt.";
 }
 
-function getSelectedLevels(mode) {
-    const name = mode === "school"
-        ? "schoolLevel"
-        : "competitiveLevel";
+function selectedLevels(mode) {
+    const name = mode === "school" ? "schoolLevel" : "competitiveLevel";
 
-    return [
-        ...document.querySelectorAll(
-            'input[name="' + name + '"]:checked'
-        )
-    ].map(input => input.value);
+    return [...document.querySelectorAll(
+        'input[name="' + name + '"]:checked'
+    )].map(input => input.value);
 }
 
-function getSelectedSchoolSubjects() {
-    return [
-        ...document.querySelectorAll(
-            'input[name="schoolSubject"]:checked'
-        )
-    ].map(input => input.value);
+function selectedSchoolSubjects() {
+    return [...document.querySelectorAll(
+        'input[name="schoolSubject"]:checked'
+    )].map(input => input.value);
 }
 
-function getSelectedSchoolPairs() {
-    return [
-        ...document.querySelectorAll(
-            'input[name="schoolChapter"]:checked'
-        )
-    ].map(input => ({
+function selectedSchoolChapters() {
+    return [...document.querySelectorAll(
+        'input[name="schoolChapter"]:checked'
+    )].map(input => ({
         subject: input.dataset.subject,
         chapter: input.value
     }));
 }
 
-function renderSchoolSubjects() {
+function refreshSchoolSubjects() {
     const className = $("classSelect").value;
     const container = $("schoolSubjects");
 
@@ -1799,105 +1662,99 @@ function renderSchoolSubjects() {
 
     if (!className) {
         container.innerHTML =
-            '<div class="empty">Choose a class first.</div>';
+            '<div class="empty">Select a class above to load its subjects.</div>';
 
         $("schoolSubjectCount").textContent = "0 subjects";
 
         $("schoolChapters").innerHTML =
-            '<div class="empty">Choose a class first.</div>';
+            '<div class="empty">Select a class and subject to load chapters.</div>';
 
         updateSchoolSummary();
-
         return;
     }
 
-    const classQuestions = allQuestions.filter(question =>
+    const questions = allQuestions.filter(question =>
         !isCompetitive(question) &&
-        norm(question.className) === norm(className)
+        normalize(question.className) === normalize(className)
     );
 
-    const subjects = uniqueSorted(
-        classQuestions.map(question => question.subject)
-    );
+    const subjects = uniqueSorted(questions.map(question => question.subject));
 
-    $("schoolSubjectCount").textContent =
-        subjects.length + " subjects";
+    $("schoolSubjectCount").textContent = subjects.length + " subjects";
 
     if (!subjects.length) {
         container.innerHTML =
-            '<div class="empty">No questions found for this class.</div>';
+            '<div class="empty">No questions found for Class ' +
+            escapeHTML(className) +
+            '. Check that your questions.txt uses CLASS: ' +
+            escapeHTML(className) + '.</div>';
 
         $("schoolChapters").innerHTML =
-            '<div class="empty">No chapters available.</div>';
+            '<div class="empty">No chapters available for this class.</div>';
 
         updateSchoolSummary();
-
         return;
     }
 
     subjects.forEach(subject => {
-        const count = classQuestions.filter(question =>
-            norm(question.subject) === norm(subject)
+        const count = questions.filter(question =>
+            normalize(question.subject) === normalize(subject)
         ).length;
 
         const label = document.createElement("label");
         label.className = "check-card";
 
-        const input = document.createElement("input");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "schoolSubject";
+        checkbox.value = subject;
 
-        input.type = "checkbox";
-        input.name = "schoolSubject";
-        input.value = subject;
+        const text = document.createElement("span");
+        text.className = "subject-name";
+        text.textContent = subject;
 
-        const info = document.createElement("span");
-        info.className = "subject-info";
-        info.textContent = subject;
+        const countLabel = document.createElement("span");
+        countLabel.className = "subject-count";
+        countLabel.textContent = count + " questions";
 
-        const countText = document.createElement("span");
-        countText.className = "subject-count";
-        countText.textContent = count + " questions";
-
-        info.appendChild(countText);
-
-        label.append(input, info);
-
+        text.appendChild(countLabel);
+        label.append(checkbox, text);
         container.appendChild(label);
 
-        input.addEventListener("change", () => {
-            renderSchoolChapters();
-            updateSchoolSummary();
-        });
+        checkbox.addEventListener("change", refreshSchoolChapters);
     });
 
-    renderSchoolChapters();
+    refreshSchoolChapters();
 }
 
-function renderSchoolChapters() {
+function refreshSchoolChapters() {
     const className = $("classSelect").value;
-    const selectedSubjects = getSelectedSchoolSubjects();
+    const subjects = selectedSchoolSubjects();
     const container = $("schoolChapters");
 
     container.innerHTML = "";
 
-    if (!className || !selectedSubjects.length) {
+    if (!className || !subjects.length) {
         container.innerHTML =
-            '<div class="empty">Choose one or more subjects first.</div>';
+            '<div class="empty">Select at least one subject to see its chapters.</div>';
 
+        $("schoolChapterCount").textContent = "0 chapters";
         updateSchoolSummary();
-
         return;
     }
 
-    selectedSubjects.forEach(subject => {
+    let totalChapters = 0;
+
+    subjects.forEach(subject => {
         const questions = allQuestions.filter(question =>
             !isCompetitive(question) &&
-            norm(question.className) === norm(className) &&
-            norm(question.subject) === norm(subject)
+            normalize(question.className) === normalize(className) &&
+            normalize(question.subject) === normalize(subject)
         );
 
-        const chapters = uniqueSorted(
-            questions.map(question => question.chapter)
-        );
+        const chapters = uniqueSorted(questions.map(question => question.chapter));
+
+        totalChapters += chapters.length;
 
         const group = document.createElement("div");
         group.className = "chapter-group";
@@ -1918,123 +1775,106 @@ function renderSchoolChapters() {
         grid.className = "chapter-grid";
 
         chapters.forEach(chapter => {
-            const number = questions.filter(question =>
-                norm(question.chapter) === norm(chapter)
+            const questionCount = questions.filter(question =>
+                normalize(question.chapter) === normalize(chapter)
             ).length;
 
             const label = document.createElement("label");
             label.className = "chapter-check";
 
-            const input = document.createElement("input");
-
-            input.type = "checkbox";
-            input.name = "schoolChapter";
-            input.value = chapter;
-            input.dataset.subject = subject;
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "schoolChapter";
+            checkbox.value = chapter;
+            checkbox.dataset.subject = subject;
 
             const text = document.createElement("span");
-            text.textContent = chapter + " (" + number + ")";
+            text.textContent = chapter + " (" + questionCount + ")";
 
-            label.append(input, text);
-
+            label.append(checkbox, text);
             grid.appendChild(label);
 
-            input.addEventListener("change", updateSchoolSummary);
+            checkbox.addEventListener("change", updateSchoolSummary);
         });
 
         if (!chapters.length) {
             grid.innerHTML =
-                '<div class="empty">No chapters available.</div>';
+                '<div class="empty">No chapters found for this subject.</div>';
         }
 
         group.appendChild(grid);
         container.appendChild(group);
     });
 
+    $("schoolChapterCount").textContent = totalChapters + " chapters available";
+
     updateSchoolSummary();
 }
 
 function getSchoolBaseQuestions() {
     const className = $("classSelect").value;
-    const pairs = getSelectedSchoolPairs();
+    const pairs = selectedSchoolChapters();
 
     return allQuestions.filter(question =>
         !isCompetitive(question) &&
-        norm(question.className) === norm(className) &&
+        normalize(question.className) === normalize(className) &&
         pairs.some(pair =>
-            norm(pair.subject) === norm(question.subject) &&
-            norm(pair.chapter) === norm(question.chapter)
+            normalize(pair.subject) === normalize(question.subject) &&
+            normalize(pair.chapter) === normalize(question.chapter)
         )
     );
 }
 
-function getSelectedSchoolPairs() {
-    return [
-        ...document.querySelectorAll(
-            'input[name="schoolChapter"]:checked'
-        )
-    ].map(input => ({
-        subject: input.dataset.subject,
-        chapter: input.value
-    }));
-}
-
-function filterByLevels(questions, levels) {
-    if (!levels.length) {
-        return [];
-    }
+function applyDifficulty(questions, levels) {
+    if (!levels.length) return [];
 
     return questions.filter(question =>
-        levels.some(level => norm(level) === norm(question.level))
+        levels.some(level =>
+            normalize(level) === normalize(question.level)
+        )
     );
 }
 
 function getSchoolQuestions() {
-    return filterByLevels(
+    return applyDifficulty(
         getSchoolBaseQuestions(),
-        getSelectedLevels("school")
+        selectedLevels("school")
     );
 }
 
 function updateSchoolSummary() {
-    if (!$("schoolSummary")) {
-        return;
-    }
-
     const className = $("classSelect").value;
-    const subjectCount = getSelectedSchoolSubjects().length;
-    const chapterCount = getSelectedSchoolPairs().length;
-    const levels = getSelectedLevels("school");
-    const questionCount = getSchoolQuestions().length;
-
-    $("schoolChapterCount").textContent =
-        chapterCount + " chapters selected";
+    const subjects = selectedSchoolSubjects();
+    const chapters = selectedSchoolChapters();
+    const levels = selectedLevels("school");
+    const available = getSchoolQuestions();
 
     $("schoolSummary").textContent =
         "Class: " + (className || "Not selected") +
-        " | Subjects: " + subjectCount +
-        " | Chapters: " + chapterCount +
-        " | Matching questions: " + questionCount +
-        " | Levels: " + (levels.join(", ") || "Not selected");
+        " | Subjects: " + subjects.length +
+        " | Chapters: " + chapters.length +
+        " | Difficulty: " + (levels.join(", ") || "Not selected") +
+        " | Matching questions: " + available.length;
 }
 
-$("classSelect").addEventListener("change", () => {
-    renderSchoolSubjects();
-    updateSchoolSummary();
+$("classSelect").addEventListener("change", refreshSchoolSubjects);
+
+document.querySelectorAll('input[name="schoolLevel"]').forEach(input => {
+    input.addEventListener("change", updateSchoolSummary);
 });
 
 $("schoolSelectAll").addEventListener("click", () => {
     document.querySelectorAll('input[name="schoolSubject"]')
         .forEach(input => input.checked = true);
 
-    renderSchoolChapters();
+    refreshSchoolChapters();
 });
 
 $("schoolClearAll").addEventListener("click", () => {
     document.querySelectorAll('input[name="schoolSubject"]')
         .forEach(input => input.checked = false);
 
-    renderSchoolChapters();
+    refreshSchoolChapters();
 });
 
 $("schoolChapterAll").addEventListener("click", () => {
@@ -2051,29 +1891,20 @@ $("schoolChapterClear").addEventListener("click", () => {
     updateSchoolSummary();
 });
 
-document.querySelectorAll('input[name="schoolLevel"]')
-    .forEach(input => {
-        input.addEventListener("change", updateSchoolSummary);
-    });
-
 /* =========================================================
    COMPETITIVE SUBJECTS AND CHAPTERS
 ========================================================= */
 
-function getSelectedCompetitiveSubjects() {
-    return [
-        ...document.querySelectorAll(
-            'input[name="competitiveSubject"]:checked'
-        )
-    ].map(input => input.value);
+function selectedCompetitiveSubjects() {
+    return [...document.querySelectorAll(
+        'input[name="competitiveSubject"]:checked'
+    )].map(input => input.value);
 }
 
-function getSelectedCompetitivePairs() {
-    return [
-        ...document.querySelectorAll(
-            'input[name="competitiveChapter"]:checked'
-        )
-    ].map(input => ({
+function selectedCompetitiveChapters() {
+    return [...document.querySelectorAll(
+        'input[name="competitiveChapter"]:checked'
+    )].map(input => ({
         subject: input.dataset.subject,
         chapter: input.value
     }));
@@ -2083,87 +1914,79 @@ function renderCompetitiveSubjects() {
     const container = $("competitiveSubjects");
     container.innerHTML = "";
 
-    const subjects = uniqueSorted(
-        allQuestions
-            .filter(isCompetitive)
-            .map(question => question.subject)
-    );
+    const questions = allQuestions.filter(isCompetitive);
+    const subjects = uniqueSorted(questions.map(question => question.subject));
 
-    $("competitiveSubjectCount").textContent =
-        subjects.length + " subjects";
+    $("competitiveSubjectCount").textContent = subjects.length + " subjects";
 
     if (!subjects.length) {
         container.innerHTML =
-            '<div class="empty">No competitive questions found. Add records with CLASS: Competitive to questions.txt.</div>';
+            '<div class="empty">No competitive questions found. Add questions with CLASS: Competitive to questions.txt.</div>';
 
         $("competitiveChapters").innerHTML =
-            '<div class="empty">No competitive chapters are available.</div>';
+            '<div class="empty">Competitive chapters will appear when competitive questions are available.</div>';
 
         updateCompetitiveSummary();
-
         return;
     }
 
     subjects.forEach(subject => {
-        const questions = allQuestions.filter(question =>
-            isCompetitive(question) &&
-            norm(question.subject) === norm(subject)
-        );
+        const count = questions.filter(question =>
+            normalize(question.subject) === normalize(subject)
+        ).length;
 
         const label = document.createElement("label");
         label.className = "check-card";
 
-        const input = document.createElement("input");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "competitiveSubject";
+        checkbox.value = subject;
 
-        input.type = "checkbox";
-        input.name = "competitiveSubject";
-        input.value = subject;
+        const text = document.createElement("span");
+        text.className = "subject-name";
+        text.textContent = subject;
 
-        const info = document.createElement("span");
-        info.className = "subject-info";
-        info.textContent = subject;
+        const countLabel = document.createElement("span");
+        countLabel.className = "subject-count";
+        countLabel.textContent = count + " questions";
 
-        const countText = document.createElement("span");
-        countText.className = "subject-count";
-        countText.textContent = questions.length + " questions";
-
-        info.appendChild(countText);
-        label.append(input, info);
+        text.appendChild(countLabel);
+        label.append(checkbox, text);
         container.appendChild(label);
 
-        input.addEventListener("change", () => {
-            renderCompetitiveChapters();
-            updateCompetitiveSummary();
-        });
+        checkbox.addEventListener("change", renderCompetitiveChapters);
     });
 
     renderCompetitiveChapters();
 }
 
 function renderCompetitiveChapters() {
-    const subjects = getSelectedCompetitiveSubjects();
+    const subjects = selectedCompetitiveSubjects();
     const container = $("competitiveChapters");
 
     container.innerHTML = "";
 
     if (!subjects.length) {
         container.innerHTML =
-            '<div class="empty">Choose one or more subjects first.</div>';
+            '<div class="empty">Select at least one subject to see chapters.</div>';
 
+        $("competitiveChapterCount").textContent = "0 chapters";
         updateCompetitiveSummary();
-
         return;
     }
+
+    let total = 0;
 
     subjects.forEach(subject => {
         const questions = allQuestions.filter(question =>
             isCompetitive(question) &&
-            norm(question.subject) === norm(subject)
+            normalize(question.subject) === normalize(subject)
         );
 
-        const chapters = uniqueSorted(
-            questions.map(question => question.chapter)
-        );
+        const chapters = uniqueSorted(questions.map(question => question.chapter));
+
+        total += chapters.length;
 
         const group = document.createElement("div");
         group.className = "chapter-group";
@@ -2185,76 +2008,69 @@ function renderCompetitiveChapters() {
 
         chapters.forEach(chapter => {
             const number = questions.filter(question =>
-                norm(question.chapter) === norm(chapter)
+                normalize(question.chapter) === normalize(chapter)
             ).length;
 
             const label = document.createElement("label");
             label.className = "chapter-check";
 
-            const input = document.createElement("input");
-
-            input.type = "checkbox";
-            input.name = "competitiveChapter";
-            input.value = chapter;
-            input.dataset.subject = subject;
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "competitiveChapter";
+            checkbox.value = chapter;
+            checkbox.dataset.subject = subject;
 
             const text = document.createElement("span");
             text.textContent = chapter + " (" + number + ")";
 
-            label.append(input, text);
+            label.append(checkbox, text);
             grid.appendChild(label);
 
-            input.addEventListener("change", updateCompetitiveSummary);
+            checkbox.addEventListener("change", updateCompetitiveSummary);
         });
-
-        if (!chapters.length) {
-            grid.innerHTML =
-                '<div class="empty">No chapters available.</div>';
-        }
 
         group.appendChild(grid);
         container.appendChild(group);
     });
 
+    $("competitiveChapterCount").textContent = total + " chapters available";
+
     updateCompetitiveSummary();
 }
 
 function getCompetitiveBaseQuestions() {
-    const pairs = getSelectedCompetitivePairs();
+    const pairs = selectedCompetitiveChapters();
 
     return allQuestions.filter(question =>
         isCompetitive(question) &&
         pairs.some(pair =>
-            norm(pair.subject) === norm(question.subject) &&
-            norm(pair.chapter) === norm(question.chapter)
+            normalize(pair.subject) === normalize(question.subject) &&
+            normalize(pair.chapter) === normalize(question.chapter)
         )
     );
 }
 
 function getCompetitiveQuestions() {
-    return filterByLevels(
+    return applyDifficulty(
         getCompetitiveBaseQuestions(),
-        getSelectedLevels("competitive")
+        selectedLevels("competitive")
     );
 }
 
 function updateCompetitiveSummary() {
-    if (!$("competitiveSummary")) {
-        return;
-    }
-
-    const levels = getSelectedLevels("competitive");
-
-    $("competitiveChapterCount").textContent =
-        getSelectedCompetitivePairs().length + " chapters selected";
-
     $("competitiveSummary").textContent =
         "Exam: " + $("examSelect").value +
-        " | Subjects: " + getSelectedCompetitiveSubjects().length +
-        " | Chapters: " + getSelectedCompetitivePairs().length +
-        " | Matching questions: " + getCompetitiveQuestions().length +
-        " | Levels: " + (levels.join(", ") || "Not selected");
+        " | Subjects: " + selectedCompetitiveSubjects().length +
+        " | Chapters: " + selectedCompetitiveChapters().length +
+        " | Difficulty: " + (selectedLevels("competitive").join(", ") || "Not selected") +
+        " | Matching questions: " + getCompetitiveQuestions().length;
 }
+
+document.querySelectorAll('input[name="competitiveLevel"]').forEach(input => {
+    input.addEventListener("change", updateCompetitiveSummary);
+});
+
+$("examSelect").addEventListener("change", updateCompetitiveSummary);
 
 $("competitiveSelectAll").addEventListener("click", () => {
     document.querySelectorAll('input[name="competitiveSubject"]')
@@ -2284,13 +2100,6 @@ $("competitiveChapterClear").addEventListener("click", () => {
     updateCompetitiveSummary();
 });
 
-document.querySelectorAll('input[name="competitiveLevel"]')
-    .forEach(input => {
-        input.addEventListener("change", updateCompetitiveSummary);
-    });
-
-$("examSelect").addEventListener("change", updateCompetitiveSummary);
-
 /* =========================================================
    START TEST
 ========================================================= */
@@ -2298,73 +2107,67 @@ $("examSelect").addEventListener("change", updateCompetitiveSummary);
 function startTest(mode) {
     try {
         if (!allQuestions.length) {
-            showToast("The question bank is not loaded. Please reload it first.");
-            loadQuestions();
+            toast("The question bank has not loaded. Please reload it.");
             return;
         }
 
-        const isSchool = mode === "school";
-        const levels = getSelectedLevels(mode);
+        const school = mode === "school";
+        const levels = selectedLevels(mode);
 
         if (!levels.length) {
-            showToast("Please select at least one difficulty level.");
+            toast("Select at least one difficulty level.");
             return;
         }
 
-        if (isSchool && !$("classSelect").value) {
-            showToast("Please select a class.");
+        if (school && !$("classSelect").value) {
+            toast("Please select a class first.");
             return;
         }
 
-        const selectedSubjects = isSchool
-            ? getSelectedSchoolSubjects()
-            : getSelectedCompetitiveSubjects();
+        const subjects = school
+            ? selectedSchoolSubjects()
+            : selectedCompetitiveSubjects();
 
-        const selectedChapters = isSchool
-            ? getSelectedSchoolPairs()
-            : getSelectedCompetitivePairs();
+        const chapters = school
+            ? selectedSchoolChapters()
+            : selectedCompetitiveChapters();
 
-        if (!selectedSubjects.length) {
-            showToast("Please select at least one subject.");
+        if (!subjects.length) {
+            toast("Please select at least one subject.");
             return;
         }
 
-        if (!selectedChapters.length) {
-            showToast("Please select at least one chapter.");
+        if (!chapters.length) {
+            toast("Please select at least one chapter.");
             return;
         }
 
-        const available = isSchool
+        const available = school
             ? getSchoolQuestions()
             : getCompetitiveQuestions();
 
         if (!available.length) {
-            showToast(
-                "No questions match your selections. Check the question bank and difficulty labels."
-            );
+            toast("No questions match your selections. Check difficulty labels and question records.");
             return;
         }
 
         const limit = $(
-            isSchool ? "schoolLimit" : "competitiveLimit"
+            school ? "schoolLimit" : "competitiveLimit"
         ).value;
 
         const minutes = Number($(
-            isSchool ? "schoolTime" : "competitiveTime"
+            school ? "schoolTime" : "competitiveTime"
         ).value);
 
-        quizQuestions = limit === "all"
-            ? shuffleArray(available)
-            : shuffleArray(available).slice(0, Number(limit));
+        const mixed = shuffle(available);
 
-        if (!quizQuestions.length) {
-            showToast("No questions are available for this test.");
-            return;
-        }
+        quizQuestions = limit === "all"
+            ? mixed
+            : mixed.slice(0, Number(limit));
 
         currentMode = mode;
 
-        currentExam = isSchool
+        currentExam = school
             ? $("classSelect").value
             : $("examSelect").value;
 
@@ -2381,16 +2184,14 @@ function startTest(mode) {
 
         $("reviewCard").classList.add("hidden");
 
+        stopTimer();
         showScreen("quizScreen");
-
         renderQuestion();
         updateTimer();
-        stopTimer();
 
         if (minutes > 0) {
             timerInterval = setInterval(() => {
                 timeRemaining--;
-
                 updateTimer();
 
                 if (timeRemaining <= 0) {
@@ -2400,18 +2201,13 @@ function startTest(mode) {
         }
 
     } catch (error) {
-        console.error("Test initialization error:", error);
-        showToast("Unable to start the test: " + error.message);
+        console.error("Could not start test:", error);
+        toast("Unable to start the test. Please check the console for details.");
     }
 }
 
-$("startSchool").addEventListener("click", () => {
-    startTest("school");
-});
-
-$("startCompetitive").addEventListener("click", () => {
-    startTest("competitive");
-});
+$("startSchool").addEventListener("click", () => startTest("school"));
+$("startCompetitive").addEventListener("click", () => startTest("competitive"));
 
 /* =========================================================
    QUIZ ENGINE
@@ -2425,11 +2221,11 @@ function stopTimer() {
 }
 
 function updateTimer() {
-    const select = $(
+    const setting = $(
         currentMode === "school" ? "schoolTime" : "competitiveTime"
     );
 
-    if (select && select.value === "0") {
+    if (setting && setting.value === "0") {
         $("timer").textContent = "No Time Limit";
         return;
     }
@@ -2438,18 +2234,14 @@ function updateTimer() {
     const seconds = Math.max(0, timeRemaining) % 60;
 
     $("timer").textContent =
-        "⏱ " +
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(seconds).padStart(2, "0");
+        "⏱ " + String(minutes).padStart(2, "0") +
+        ":" + String(seconds).padStart(2, "0");
 }
 
 function renderQuestion() {
     const question = quizQuestions[currentIndex];
 
-    if (!question) {
-        return;
-    }
+    if (!question) return;
 
     $("questionNumber").textContent =
         "Question " + (currentIndex + 1) +
@@ -2474,33 +2266,31 @@ function renderQuestion() {
         ? "⭐ Remove Review"
         : "⭐ Mark for Review";
 
-    $("explanation").classList.add("hidden");
+    const options = $("options");
+    options.innerHTML = "";
 
-    const optionsContainer = $("options");
-    optionsContainer.innerHTML = "";
-
-    OPTION_KEYS.forEach(key => {
+    LETTERS.forEach(letter => {
         const option = document.createElement("div");
 
         option.className =
             "option" +
-            (answers[currentIndex] === key ? " selected" : "");
+            (answers[currentIndex] === letter ? " selected" : "");
 
-        const letter = document.createElement("span");
-        letter.className = "option-letter";
-        letter.textContent = key;
+        const badge = document.createElement("span");
+        badge.className = "option-letter";
+        badge.textContent = letter;
 
         const text = document.createElement("span");
-        text.textContent = question[key];
+        text.textContent = question[letter];
 
-        option.append(letter, text);
+        option.append(badge, text);
 
         option.addEventListener("click", () => {
-            answers[currentIndex] = key;
+            answers[currentIndex] = letter;
             renderQuestion();
         });
 
-        optionsContainer.appendChild(option);
+        options.appendChild(option);
     });
 
     renderPalette();
@@ -2517,17 +2307,9 @@ function renderPalette() {
         button.type = "button";
         button.textContent = index + 1;
 
-        if (answers[index]) {
-            button.classList.add("answered");
-        }
-
-        if (reviewFlags[index]) {
-            button.classList.add("review");
-        }
-
-        if (index === currentIndex) {
-            button.classList.add("current");
-        }
+        if (answers[index]) button.classList.add("answered");
+        if (reviewFlags[index]) button.classList.add("review");
+        if (index === currentIndex) button.classList.add("current");
 
         button.addEventListener("click", () => {
             currentIndex = index;
@@ -2539,13 +2321,12 @@ function renderPalette() {
 }
 
 function updateLiveProgress() {
-    const answeredCount = Object.keys(answers)
+    const answered = Object.keys(answers)
         .filter(key => answers[key]).length;
 
     $("liveTotal").textContent = quizQuestions.length;
-    $("liveAnswered").textContent = answeredCount;
-    $("liveRemaining").textContent =
-        quizQuestions.length - answeredCount;
+    $("liveAnswered").textContent = answered;
+    $("liveRemaining").textContent = quizQuestions.length - answered;
 
     $("liveReview").textContent =
         Object.values(reviewFlags).filter(Boolean).length;
@@ -2567,20 +2348,17 @@ $("next").addEventListener("click", () => {
 
 $("clearAnswer").addEventListener("click", () => {
     delete answers[currentIndex];
-
     renderQuestion();
-
-    showToast("Your answer has been cleared.");
+    toast("Answer cleared.");
 });
 
 $("reviewToggle").addEventListener("click", () => {
     reviewFlags[currentIndex] = !reviewFlags[currentIndex];
-
     renderQuestion();
 });
 
 $("exitQuiz").addEventListener("click", () => {
-    if (confirm("Do you want to exit the current test?")) {
+    if (confirm("Exit this test? Your current attempt will not be saved.")) {
         stopTimer();
         quizFinished = true;
 
@@ -2593,28 +2371,24 @@ $("exitQuiz").addEventListener("click", () => {
 });
 
 $("submit").addEventListener("click", () => {
-    const answeredCount = Object.keys(answers)
+    const answered = Object.keys(answers)
         .filter(key => answers[key]).length;
 
-    const unanswered = quizQuestions.length - answeredCount;
+    const unanswered = quizQuestions.length - answered;
 
-    const message = unanswered > 0
-        ? unanswered + " questions are unanswered. Submit the test?"
+    const message = unanswered
+        ? unanswered + " questions are unanswered. Submit anyway?"
         : "Are you sure you want to submit the test?";
 
-    if (confirm(message)) {
-        finishTest(false);
-    }
+    if (confirm(message)) finishTest(false);
 });
 
 /* =========================================================
-   RESULTS
+   RESULTS AND ANSWER REVIEW
 ========================================================= */
 
-function finishTest(autoSubmitted) {
-    if (quizFinished) {
-        return;
-    }
+function finishTest(automatic = false) {
+    if (quizFinished) return;
 
     quizFinished = true;
     stopTimer();
@@ -2634,16 +2408,9 @@ function finishTest(autoSubmitted) {
     });
 
     const total = quizQuestions.length;
-
-    const percentage = total
-        ? Math.round(correct / total * 100)
-        : 0;
-
     const attempted = total - skipped;
-
-    const accuracy = attempted
-        ? Math.round(correct / attempted * 100)
-        : 0;
+    const percentage = total ? Math.round(correct / total * 100) : 0;
+    const accuracy = attempted ? Math.round(correct / attempted * 100) : 0;
 
     $("percentage").textContent = percentage + "%";
     $("correctCount").textContent = correct;
@@ -2651,33 +2418,25 @@ function finishTest(autoSubmitted) {
     $("skippedCount").textContent = skipped;
     $("accuracy").textContent = accuracy + "%";
 
-    let performance;
-
-    if (percentage >= 90) {
-        performance = "Outstanding Performance!";
-    } else if (percentage >= 75) {
-        performance = "Very Good!";
-    } else if (percentage >= 50) {
-        performance = "Good Effort!";
-    } else {
-        performance = "Keep Practising!";
-    }
-
-    $("performance").textContent = performance;
+    $("performance").textContent =
+        percentage >= 90 ? "Outstanding Performance!" :
+        percentage >= 75 ? "Very Good!" :
+        percentage >= 50 ? "Good Effort!" :
+        "Keep Practising!";
 
     $("resultDetails").textContent =
         "Examination: " + currentExam +
-        " | Total Questions: " + total +
+        " | Total: " + total +
         " | Attempted: " + attempted +
         " | Difficulty: " + selectedLevels.join(", ") +
-        (autoSubmitted ? " | Automatically submitted when time expired." : "");
+        (automatic ? " | Automatically submitted when time expired." : "");
 
     $("reviewCard").classList.add("hidden");
 
     showScreen("resultScreen");
 }
 
-function renderReview() {
+function renderAnswerReview() {
     const container = $("reviewList");
     container.innerHTML = "";
 
@@ -2686,64 +2445,46 @@ function renderReview() {
         row.className = "review-row";
 
         const title = document.createElement("strong");
-        title.textContent =
-            (index + 1) + ". " + question.question;
+        title.textContent = (index + 1) + ". " + question.question;
 
-        const answerStatus = document.createElement("div");
+        const status = document.createElement("div");
 
         if (!answers[index]) {
-            answerStatus.textContent = "Your Answer: Not Answered";
-            answerStatus.className = "wrong-text";
+            status.textContent = "Your Answer: Not Answered";
+            status.className = "wrong-text";
         } else if (answers[index] === question.answer) {
-            answerStatus.textContent =
-                "Your Answer: " + answers[index] + " — Correct";
-
-            answerStatus.className = "correct-text";
+            status.textContent = "Your Answer: " + answers[index] + " — Correct";
+            status.className = "correct-text";
         } else {
-            answerStatus.textContent =
-                "Your Answer: " + answers[index] + " — Incorrect";
-
-            answerStatus.className = "wrong-text";
+            status.textContent = "Your Answer: " + answers[index] + " — Incorrect";
+            status.className = "wrong-text";
         }
 
         const correctAnswer = document.createElement("div");
-
         correctAnswer.textContent =
-            "Correct Answer: " + question.answer +
-            ". " + question[question.answer];
+            "Correct Answer: " + question.answer + ". " +
+            question[question.answer];
+
+        const explanation = document.createElement("div");
+        explanation.textContent =
+            "Explanation: " + (question.explanation || "No explanation provided.");
 
         const metadata = document.createElement("div");
-
         metadata.textContent =
             "Subject: " + question.subject +
             " | Chapter: " + question.chapter +
-            " | Level: " + question.level;
+            " | Difficulty: " + question.level;
 
-        const explanation = document.createElement("div");
-
-        explanation.textContent =
-            "Explanation: " +
-            (question.explanation || "No explanation available.");
-
-        row.append(
-            title,
-            answerStatus,
-            correctAnswer,
-            metadata,
-            explanation
-        );
-
+        row.append(title, status, correctAnswer, metadata, explanation);
         container.appendChild(row);
     });
 
     $("reviewCard").classList.remove("hidden");
 
-    $("reviewCard").scrollIntoView({
-        behavior: "smooth"
-    });
+    $("reviewCard").scrollIntoView({ behavior: "smooth" });
 }
 
-$("showReview").addEventListener("click", renderReview);
+$("showReview").addEventListener("click", renderAnswerReview);
 
 $("homeButton").addEventListener("click", () => {
     stopTimer();
@@ -2758,57 +2499,36 @@ $("retryButton").addEventListener("click", () => {
     );
 });
 
-$("printButton").addEventListener("click", () => {
-    window.print();
-});
+$("printButton").addEventListener("click", () => window.print());
 
-/* =========================================================
-   KEYBOARD SUPPORT
-========================================================= */
-
+/* Keyboard shortcuts: 1=A, 2=B, 3=C, 4=D */
 document.addEventListener("keydown", event => {
-    if ($("quizScreen").classList.contains("hidden") || quizFinished) {
-        return;
-    }
+    if ($("quizScreen").classList.contains("hidden") || quizFinished) return;
 
     if (event.key === "ArrowRight" && currentIndex < quizQuestions.length - 1) {
         currentIndex++;
         renderQuestion();
-    }
-
-    if (event.key === "ArrowLeft" && currentIndex > 0) {
+    } else if (event.key === "ArrowLeft" && currentIndex > 0) {
         currentIndex--;
         renderQuestion();
-    }
+    } else {
+        const mapping = { "1": "A", "2": "B", "3": "C", "4": "D" };
 
-    const keyMap = {
-        "1": "A",
-        "2": "B",
-        "3": "C",
-        "4": "D"
-    };
-
-    if (keyMap[event.key]) {
-        answers[currentIndex] = keyMap[event.key];
-        renderQuestion();
+        if (mapping[event.key]) {
+            answers[currentIndex] = mapping[event.key];
+            renderQuestion();
+        }
     }
 });
 
 /* =========================================================
-   ERROR HANDLING AND INITIALIZATION
+   INITIALIZATION
 ========================================================= */
 
 window.addEventListener("error", event => {
-    console.error("Application error:", event.message, event.error);
-    setStatus("Application Error", false);
+    console.error("Application error:", event.error || event.message);
 });
 
-window.addEventListener("unhandledrejection", event => {
-    console.error("Unexpected asynchronous error:", event.reason);
-    setStatus("Loading Error", false);
-});
-
-/* Start the application */
 loadQuestions();
 
 </script>
