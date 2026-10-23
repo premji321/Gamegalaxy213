@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10172a">
+<meta name="theme-color" content="#0b1020">
 
 <title>AI Assistant Pro | Smart AI Workspace</title>
 
 <style>
 :root {
     --bg: #0b1020;
+    --sidebar: #0e1628;
     --panel: #111a2e;
     --panel2: #17233b;
     --border: #293752;
@@ -24,11 +25,16 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", sans-serif;
     min-height: 100vh;
 }
 
@@ -40,41 +46,58 @@ button {
     cursor: pointer;
 }
 
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
 .app {
     display: flex;
     min-height: 100vh;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 
 .sidebar {
     width: 270px;
     flex-shrink: 0;
-    background: #0e1628;
+    background: var(--sidebar);
     border-right: 1px solid var(--border);
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 18px;
+    z-index: 20;
 }
 
 .brand {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 800;
 }
 
 .logo {
-    width: 42px;
-    height: 42px;
+    width: 43px;
+    height: 43px;
     border-radius: 14px;
     display: grid;
     place-items: center;
     background: linear-gradient(135deg, #7c6cff, #00c9a7);
     color: white;
-    font-size: 23px;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a69cff, #44e4c3);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
 }
 
 .new-chat {
@@ -85,18 +108,20 @@ button {
     padding: 13px;
     border-radius: 12px;
     text-align: left;
+    transition: .2s;
 }
 
 .new-chat:hover {
     border-color: var(--primary);
+    background: #202d49;
 }
 
 .sidebar-title {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--muted);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 10px;
+    letter-spacing: 1.2px;
+    margin-top: 8px;
 }
 
 .nav-item {
@@ -107,6 +132,7 @@ button {
     border-radius: 9px;
     text-align: left;
     width: 100%;
+    transition: .2s;
 }
 
 .nav-item:hover,
@@ -117,7 +143,7 @@ button {
 .history {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
     overflow-y: auto;
     max-height: 250px;
 }
@@ -133,9 +159,15 @@ button {
     color: var(--muted);
     font-size: 12px;
     line-height: 1.8;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
 }
 
-/* MAIN */
+.sidebar-bottom strong {
+    color: white;
+}
+
+/* ================= MAIN ================= */
 
 .main {
     flex: 1;
@@ -146,12 +178,22 @@ button {
 
 .topbar {
     min-height: 68px;
-    padding: 15px 25px;
+    padding: 14px 24px;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 12px;
+    background: #0b1020;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .topbar h2 {
@@ -162,52 +204,73 @@ button {
 .status {
     font-size: 12px;
     color: var(--secondary);
+    white-space: nowrap;
+}
+
+.mobile-menu {
+    display: none;
+    border: 1px solid var(--border);
+    color: white;
+    background: var(--panel);
+    border-radius: 9px;
+    padding: 8px 11px;
 }
 
 .workspace {
     width: 100%;
-    max-width: 1000px;
-    margin: auto;
-    padding: 28px 24px;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 24px;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
+/* ================= WELCOME ================= */
+
 .welcome {
     text-align: center;
-    padding: 35px 0 24px;
+    padding: 35px 0 22px;
 }
 
 .welcome-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 15px;
+    border-radius: 24px;
+    display: grid;
+    place-items: center;
+    font-size: 38px;
+    background: linear-gradient(135deg, #7c6cff33, #00c9a733);
+    border: 1px solid var(--border);
 }
 
 .welcome h1 {
-    font-size: clamp(26px, 4vw, 39px);
+    font-size: clamp(26px, 4vw, 40px);
     margin: 8px 0;
     letter-spacing: -1px;
 }
 
-.gradient {
-    background: linear-gradient(90deg, #a69cff, #44e4c3);
-    color: transparent;
-    background-clip: text;
-}
-
 .welcome p {
     color: var(--muted);
-    line-height: 1.7;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 12px auto;
 }
 
-/* QUICK ACTIONS */
+/* ================= QUICK TOOLS ================= */
+
+.quick-heading {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 15px 0 12px;
+}
 
 .quick-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
-    margin: 12px 0 24px;
+    margin: 10px 0 28px;
 }
 
 .quick-card {
@@ -217,7 +280,7 @@ button {
     background: var(--panel);
     color: white;
     text-align: left;
-    transition: .2s;
+    transition: transform .2s, border-color .2s;
 }
 
 .quick-card:hover {
@@ -240,16 +303,57 @@ button {
     color: var(--muted);
     display: block;
     margin-top: 7px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-/* CHAT */
+/* ================= SETTINGS ================= */
+
+.settings {
+    display: none;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.settings.open {
+    display: block;
+}
+
+.settings h3 {
+    margin-top: 0;
+}
+
+.settings label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 15px 0 7px;
+}
+
+.settings select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: #0b1020;
+    color: white;
+}
+
+.settings p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* ================= CHAT ================= */
 
 .chat {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding-bottom: 25px;
+    gap: 24px;
+    padding-bottom: 20px;
 }
 
 .message {
@@ -259,8 +363,8 @@ button {
 }
 
 .avatar {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     flex-shrink: 0;
     border-radius: 12px;
     display: grid;
@@ -277,7 +381,7 @@ button {
 .message-role {
     font-size: 12px;
     color: var(--muted);
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 }
 
 .message-text {
@@ -302,12 +406,13 @@ button {
 .message-actions {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
     margin-top: 10px;
 }
 
 .mini-btn {
     font-size: 12px;
-    padding: 6px 10px;
+    padding: 7px 10px;
     border: 1px solid var(--border);
     border-radius: 8px;
     background: transparent;
@@ -319,13 +424,42 @@ button {
     border-color: var(--primary);
 }
 
-/* COMPOSER */
+.typing {
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.typing span {
+    width: 7px;
+    height: 7px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: pulse 1s infinite alternate;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: .2s;
+}
+
+.typing span:nth-child(3) {
+    animation-delay: .4s;
+}
+
+@keyframes pulse {
+    from { opacity: .3; transform: translateY(0); }
+    to { opacity: 1; transform: translateY(-4px); }
+}
+
+/* ================= COMPOSER ================= */
 
 .composer-area {
     position: sticky;
     bottom: 0;
     background: linear-gradient(transparent, var(--bg) 18%);
-    padding-top: 15px;
+    padding-top: 18px;
+    margin-top: auto;
 }
 
 .composer {
@@ -337,16 +471,17 @@ button {
 }
 
 .composer textarea {
+    display: block;
     width: 100%;
-    min-height: 54px;
-    max-height: 180px;
+    min-height: 56px;
+    max-height: 200px;
     resize: vertical;
     background: transparent;
     border: 0;
     outline: none;
     color: white;
-    padding: 8px;
-    line-height: 1.6;
+    padding: 9px;
+    line-height: 1.7;
 }
 
 .composer textarea::placeholder {
@@ -387,6 +522,11 @@ button {
     padding: 10px 19px;
     border-radius: 10px;
     font-weight: 700;
+    transition: .2s;
+}
+
+.send-btn:hover {
+    background: #6655ec;
 }
 
 .send-btn:disabled {
@@ -398,47 +538,29 @@ button {
     color: #8190aa;
     font-size: 11px;
     text-align: center;
-    line-height: 1.6;
+    line-height: 1.8;
     margin: 12px 0;
 }
 
-/* SETTINGS */
+/* ================= BUTTONS ================= */
 
-.settings {
-    display: none;
-    border: 1px solid var(--border);
-    background: var(--panel);
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 20px;
-}
-
-.settings.open {
-    display: block;
-}
-
-.settings label {
-    display: block;
-    color: var(--muted);
-    font-size: 13px;
-    margin: 12px 0 6px;
-}
-
-.settings select,
-.settings input {
-    width: 100%;
-    padding: 11px;
-    border-radius: 9px;
-    border: 1px solid var(--border);
-    background: #0b1020;
+.primary-button {
+    background: var(--primary);
     color: white;
+    border: 0;
+    padding: 10px 15px;
+    border-radius: 9px;
 }
 
-.settings p {
+.secondary-button {
+    background: transparent;
     color: var(--muted);
-    font-size: 12px;
-    line-height: 1.7;
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+    border-radius: 9px;
 }
+
+/* ================= TOAST ================= */
 
 .toast {
     position: fixed;
@@ -450,26 +572,38 @@ button {
     padding: 12px 18px;
     border-radius: 12px;
     display: none;
-    z-index: 10;
+    z-index: 50;
+    max-width: 90%;
+    font-size: 13px;
 }
 
 .toast.show {
     display: block;
 }
 
-.mobile-menu {
-    display: none;
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 850px) {
+    .sidebar {
+        width: 245px;
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .workspace {
+        padding: 18px;
+    }
 }
 
-/* MOBILE */
-
-@media (max-width: 760px) {
+@media (max-width: 650px) {
     .sidebar {
         position: fixed;
-        z-index: 20;
         top: 0;
         bottom: 0;
-        left: -290px;
+        left: -280px;
+        width: 270px;
         transition: left .25s;
         box-shadow: 15px 0 40px #0005;
     }
@@ -480,11 +614,6 @@ button {
 
     .mobile-menu {
         display: inline-block;
-        border: 1px solid var(--border);
-        color: white;
-        background: var(--panel);
-        border-radius: 9px;
-        padding: 8px 11px;
     }
 
     .topbar {
@@ -492,11 +621,7 @@ button {
     }
 
     .workspace {
-        padding: 15px 12px;
-    }
-
-    .quick-grid {
-        grid-template-columns: repeat(2, 1fr);
+        padding: 14px 12px;
     }
 
     .welcome {
@@ -513,12 +638,21 @@ button {
 
     .tool-btn {
         padding: 8px;
+        font-size: 12px;
+    }
+
+    .status {
+        font-size: 10px;
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 370px) {
     .quick-grid {
         grid-template-columns: 1fr;
+    }
+
+    .welcome h1 {
+        font-size: 25px;
     }
 }
 </style>
@@ -527,6 +661,8 @@ button {
 <body>
 
 <div class="app">
+
+    <!-- SIDEBAR -->
 
     <aside class="sidebar" id="sidebar">
 
@@ -560,27 +696,36 @@ button {
         <div class="sidebar-bottom">
             <strong>AI Assistant Pro</strong><br>
             Smart tools for everyone.<br>
-            API-connected AI workspace.
+            Version 1.0
         </div>
 
     </aside>
+
+    <!-- MAIN -->
 
     <main class="main">
 
         <header class="topbar">
 
-            <div style="display:flex;align-items:center;gap:12px">
-                <button class="mobile-menu" id="mobileMenu">☰</button>
+            <div class="topbar-left">
+
+                <button class="mobile-menu" id="mobileMenu">
+                    ☰
+                </button>
+
                 <h2>AI Workspace</h2>
+
             </div>
 
             <div class="status" id="connectionStatus">
-                ● Checking configuration
+                ● Checking connection
             </div>
 
         </header>
 
         <section class="workspace">
+
+            <!-- SETTINGS -->
 
             <div class="settings" id="settings">
 
@@ -594,11 +739,11 @@ button {
                 </select>
 
                 <p>
-                    मॉडल का चयन सर्वर की अनुमति और आपकी API उपलब्धता पर
-                    निर्भर करेगा। API Key सर्वर पर सुरक्षित रखी जाएगी।
+                    मॉडल की उपलब्धता आपके API अकाउंट और सर्वर की
+                    configuration पर निर्भर करती है।
                 </p>
 
-                <label for="language">Preferred Response Language</label>
+                <label for="language">Preferred Language</label>
 
                 <select id="language">
                     <option value="auto">Auto Detect</option>
@@ -606,68 +751,103 @@ button {
                     <option value="English">English</option>
                 </select>
 
-                <button class="send-btn" id="saveSettings">
+                <button class="primary-button" id="saveSettings">
                     Save Settings
                 </button>
 
             </div>
+
+            <!-- WELCOME -->
 
             <div class="welcome" id="welcome">
 
                 <div class="welcome-icon">✦</div>
 
                 <h1>
-                    What can I help <span class="gradient">you with?</span>
+                    What can I help
+                    <span class="gradient">you with?</span>
                 </h1>
 
                 <p>
-                    Ask questions, create study materials, generate code
-                    and explore new ideas with AI.
+                    सवाल पूछें, प्रश्नपत्र बनाएँ, नोट्स तैयार करें,
+                    कोड लिखें और नए विचारों को विकसित करें।
                 </p>
 
             </div>
 
-            <div class="quick-grid" id="quickGrid">
+            <!-- QUICK ACTIONS -->
 
-                <button class="quick-card" data-prompt="कक्षा 10 के इतिहास के लिए 30 कठिन MCQ प्रश्न बनाइए। प्रत्येक प्रश्न के चार विकल्प, सही उत्तर और विस्तृत व्याख्या दीजिए।">
-                    <span class="icon">📚</span>
-                    <strong>MCQ Generator</strong>
-                    <small>प्रश्न, उत्तर और व्याख्या</small>
-                </button>
+            <div id="quickSection">
 
-                <button class="quick-card" data-prompt="कक्षा 10 सामाजिक विज्ञान के लिए 80 अंकों का एक संतुलित प्रश्नपत्र तैयार कीजिए। इसमें वस्तुनिष्ठ, लघु उत्तरीय और दीर्घ उत्तरीय प्रश्न शामिल करें।">
-                    <span class="icon">📝</span>
-                    <strong>Question Paper</strong>
-                    <small>पूरा प्रश्नपत्र तैयार करें</small>
-                </button>
+                <div class="quick-heading">
+                    शुरुआत करने के लिए कोई विकल्प चुनें
+                </div>
 
-                <button class="quick-card" data-prompt="इस विषय पर विद्यार्थियों के लिए व्यवस्थित हिंदी नोट्स तैयार कीजिए। परिभाषाएँ, मुख्य बिंदु, उदाहरण और महत्वपूर्ण प्रश्न शामिल करें: ">
-                    <span class="icon">📖</span>
-                    <strong>Notes Maker</strong>
-                    <small>व्यवस्थित अध्ययन सामग्री</small>
-                </button>
+                <div class="quick-grid" id="quickGrid">
 
-                <button class="quick-card" data-prompt="इस विषय को सरल हिंदी में उदाहरण सहित समझाइए: ">
-                    <span class="icon">💡</span>
-                    <strong>Explain a Topic</strong>
-                    <small>सरल भाषा में समझें</small>
-                </button>
+                    <button class="quick-card"
+                        data-prompt="कक्षा 10 के इतिहास के लिए 30 कठिन MCQ प्रश्न बनाइए। प्रत्येक प्रश्न के चार विकल्प, सही उत्तर और विस्तृत व्याख्या दीजिए।">
 
-                <button class="quick-card" data-prompt="मेरे लिए एक पूरा HTML, CSS और JavaScript वेब एप्लिकेशन तैयार करने में सहायता कीजिए। मेरी आवश्यकता है: ">
-                    <span class="icon">💻</span>
-                    <strong>Code Assistant</strong>
-                    <small>कोड और प्रोग्रामिंग</small>
-                </button>
+                        <span class="icon">📚</span>
+                        <strong>MCQ Generator</strong>
+                        <small>प्रश्न, उत्तर और व्याख्या</small>
 
-                <button class="quick-card" data-prompt="इस विषय पर विद्यार्थियों के लिए एक रोचक शैक्षणिक गतिविधि, उसके नियम, आवश्यक सामग्री और मूल्यांकन विधि सहित तैयार कीजिए: ">
-                    <span class="icon">🎯</span>
-                    <strong>Activity Maker</strong>
-                    <small>कक्षा की गतिविधियाँ</small>
-                </button>
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="कक्षा 10 सामाजिक विज्ञान के लिए 80 अंकों का एक प्रश्नपत्र तैयार कीजिए। इसमें MCQ, लघु उत्तरीय और दीर्घ उत्तरीय प्रश्न शामिल करें।">
+
+                        <span class="icon">📝</span>
+                        <strong>Question Paper</strong>
+                        <small>पूरा प्रश्नपत्र तैयार करें</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="इस विषय पर विद्यार्थियों के लिए व्यवस्थित हिंदी नोट्स तैयार कीजिए। परिभाषाएँ, मुख्य बिंदु, उदाहरण और महत्वपूर्ण प्रश्न शामिल करें: ">
+
+                        <span class="icon">📖</span>
+                        <strong>Notes Maker</strong>
+                        <small>अध्ययन सामग्री तैयार करें</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="इस विषय को सरल हिंदी में उदाहरण सहित समझाइए: ">
+
+                        <span class="icon">💡</span>
+                        <strong>Explain a Topic</strong>
+                        <small>आसान भाषा में समझें</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="मेरे लिए एक पूरा HTML, CSS और JavaScript वेब एप्लिकेशन तैयार कीजिए। मेरी आवश्यकता है: ">
+
+                        <span class="icon">💻</span>
+                        <strong>Code Assistant</strong>
+                        <small>कोड और प्रोग्रामिंग</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="इस विषय पर विद्यार्थियों के लिए एक रोचक शैक्षणिक गतिविधि, उसके नियम, आवश्यक सामग्री और मूल्यांकन विधि सहित तैयार कीजिए: ">
+
+                        <span class="icon">🎯</span>
+                        <strong>Activity Maker</strong>
+                        <small>कक्षा की गतिविधियाँ</small>
+
+                    </button>
+
+                </div>
 
             </div>
 
-            <div class="chat" id="chat"></div>
+            <!-- CHAT -->
+
+            <div class="chat" id="chat" aria-live="polite"></div>
+
+            <!-- INPUT -->
 
             <div class="composer-area">
 
@@ -675,7 +855,7 @@ button {
 
                     <textarea
                         id="prompt"
-                        placeholder="Ask anything... हिंदी या English में लिखें"
+                        placeholder="यहाँ अपना सवाल लिखें..."
                         aria-label="अपना सवाल लिखें"
                         required
                     ></textarea>
@@ -684,17 +864,23 @@ button {
 
                         <div class="composer-tools">
 
-                            <button type="button" class="tool-btn" id="voiceBtn">
+                            <button type="button"
+                                class="tool-btn"
+                                id="voiceBtn">
                                 🎤 Voice
                             </button>
 
-                            <button type="button" class="tool-btn" id="clearInput">
+                            <button type="button"
+                                class="tool-btn"
+                                id="clearInput">
                                 ✕ Clear
                             </button>
 
                         </div>
 
-                        <button type="submit" class="send-btn" id="sendBtn">
+                        <button type="submit"
+                            class="send-btn"
+                            id="sendBtn">
                             Send ↑
                         </button>
 
@@ -703,10 +889,9 @@ button {
                 </form>
 
                 <div class="disclaimer">
-                    AI द्वारा दिए गए उत्तरों में गलतियाँ हो सकती हैं।
-                    महत्वपूर्ण जानकारी को सत्यापित करें।
-                    API का उपयोग आपके सर्वर की configuration और
-                    provider की नीतियों के अधीन है।
+                    AI के जवाबों में गलतियाँ हो सकती हैं।
+                    महत्वपूर्ण तथ्यों की जाँच करें।
+                    API के उपयोग पर शुल्क लग सकता है।
                 </div>
 
             </div>
@@ -717,17 +902,18 @@ button {
 
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
+"use strict";
+
+/* ================= HELPERS ================= */
+
 const $ = id => document.getElementById(id);
 
 const chat = $("chat");
 const promptInput = $("prompt");
 const sendBtn = $("sendBtn");
-const welcome = $("welcome");
-const quickGrid = $("quickGrid");
-const settings = $("settings");
 
 let messages = [];
 let busy = false;
@@ -736,15 +922,22 @@ let activeController = null;
 const STORAGE_KEY = "ai_assistant_history_v1";
 const SETTINGS_KEY = "ai_assistant_settings_v1";
 
+/* ================= NOTIFICATIONS ================= */
+
 function toast(message) {
     const el = $("toast");
+
     el.textContent = message;
     el.classList.add("show");
 
-    setTimeout(() => {
+    clearTimeout(toast.timer);
+
+    toast.timer = setTimeout(() => {
         el.classList.remove("show");
-    }, 2800);
+    }, 3000);
 }
+
+/* ================= SETTINGS ================= */
 
 function loadSettings() {
     try {
@@ -752,24 +945,33 @@ function loadSettings() {
             localStorage.getItem(SETTINGS_KEY) || "{}"
         );
 
-        if (saved.model) $("model").value = saved.model;
-        if (saved.language) $("language").value = saved.language;
-    } catch (e) {
-        console.error(e);
+        if (saved.model) {
+            $("model").value = saved.model;
+        }
+
+        if (saved.language) {
+            $("language").value = saved.language;
+        }
+    } catch (error) {
+        console.error("Settings could not be loaded.");
     }
 }
 
 function saveSettings() {
+    const data = {
+        model: $("model").value,
+        language: $("language").value
+    };
+
     localStorage.setItem(
         SETTINGS_KEY,
-        JSON.stringify({
-            model: $("model").value,
-            language: $("language").value
-        })
+        JSON.stringify(data)
     );
 
-    toast("Settings saved");
+    toast("Settings saved successfully");
 }
+
+/* ================= STATUS ================= */
 
 function updateStatus(text, color) {
     $("connectionStatus").textContent = "● " + text;
@@ -777,15 +979,65 @@ function updateStatus(text, color) {
 }
 
 function showWelcome(show) {
-    welcome.style.display = show ? "block" : "none";
-    quickGrid.style.display = show ? "grid" : "none";
+    $("welcome").style.display = show ? "block" : "none";
+    $("quickSection").style.display = show ? "block" : "none";
+}
+
+/* ================= MESSAGE UI ================= */
+
+function addActionButton(parent, label, action) {
+    const button = document.createElement("button");
+
+    button.className = "mini-btn";
+    button.type = "button";
+    button.textContent = label;
+    button.addEventListener("click", action);
+
+    parent.appendChild(button);
+
+    return button;
+}
+
+function downloadText(text) {
+    const blob = new Blob(
+        [text],
+        { type: "text/plain;charset=utf-8" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "AI-Assistant-Answer.txt";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function copyText(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+        toast("उत्तर कॉपी हो गया");
+    } catch (error) {
+        const textarea = document.createElement("textarea");
+
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        const success = document.execCommand("copy");
+
+        textarea.remove();
+
+        toast(success ? "उत्तर कॉपी हो गया" : "कॉपी नहीं हो सका");
+    }
 }
 
 function createMessage(role, content, save = true) {
-    const item = {
-        role,
-        content
-    };
+    const item = { role, content };
 
     if (save) {
         messages.push(item);
@@ -803,7 +1055,9 @@ function createMessage(role, content, save = true) {
 
     const roleLabel = document.createElement("div");
     roleLabel.className = "message-role";
-    roleLabel.textContent = role === "user" ? "You" : "AI Assistant";
+
+    roleLabel.textContent =
+        role === "user" ? "You" : "AI Assistant";
 
     const text = document.createElement("div");
     text.className = "message-text";
@@ -816,190 +1070,229 @@ function createMessage(role, content, save = true) {
         const actions = document.createElement("div");
         actions.className = "message-actions";
 
-        const copyBtn = document.createElement("button");
-        copyBtn.className = "mini-btn";
-        copyBtn.textContent = "📋 Copy";
+        addActionButton(actions, "📋 Copy", () => {
+            copyText(content);
+        });
 
-        copyBtn.onclick = async () => {
-            try {
-                await navigator.clipboard.writeText(content);
-                toast("Answer copied");
-            } catch {
-                toast("Copy सुविधा उपलब्ध नहीं है");
-            }
-        };
+        addActionButton(actions, "⬇ Download TXT", () => {
+            downloadText(content);
+        });
 
-        const downloadBtn = document.createElement("button");
-        downloadBtn.className = "mini-btn";
-        downloadBtn.textContent = "⬇ Download TXT";
-
-        downloadBtn.onclick = () => downloadText(content);
-
-        actions.append(copyBtn, downloadBtn);
         contentBox.appendChild(actions);
     }
 
     chat.appendChild(row);
-    row.scrollIntoView({ behavior: "smooth", block: "end" });
+
+    row.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+    });
 
     return { row, text };
 }
 
-function downloadText(text) {
-    const blob = new Blob([text], {
-        type: "text/plain;charset=utf-8"
+function createTypingMessage() {
+    const row = document.createElement("div");
+    row.className = "message";
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = "✦";
+
+    const box = document.createElement("div");
+    box.className = "message-content";
+
+    const role = document.createElement("div");
+    role.className = "message-role";
+    role.textContent = "AI Assistant";
+
+    const typing = document.createElement("div");
+    typing.className = "typing";
+
+    for (let i = 0; i < 3; i++) {
+        typing.appendChild(document.createElement("span"));
+    }
+
+    box.append(role, typing);
+    row.append(avatar, box);
+    chat.appendChild(row);
+
+    row.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
     });
 
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = "AI-Answer.txt";
-    a.click();
-
-    URL.revokeObjectURL(url);
+    return row;
 }
 
-function renderHistory() {
-    const history = $("history");
-    history.replaceChildren();
+/* ================= CHAT HISTORY ================= */
 
-    let saved = [];
-
+function getSavedHistory() {
     try {
-        saved = JSON.parse(
+        const saved = JSON.parse(
             localStorage.getItem(STORAGE_KEY) || "[]"
         );
-    } catch (e) {}
 
-    saved.slice(0, 10).forEach((conversation, index) => {
-        const button = document.createElement("button");
-
-        button.className = "nav-item";
-        button.textContent =
-            "💬 " + (conversation.title || "Conversation " + (index + 1));
-
-        button.onclick = () => {
-            messages = Array.isArray(conversation.messages)
-                ? conversation.messages.slice()
-                : [];
-
-            chat.replaceChildren();
-            showWelcome(messages.length === 0);
-
-            messages.forEach(m => {
-                createMessage(m.role, m.content, false);
-            });
-
-            $("sidebar").classList.remove("open");
-        };
-
-        history.appendChild(button);
-    });
+        return Array.isArray(saved) ? saved : [];
+    } catch {
+        return [];
+    }
 }
 
 function saveConversation() {
     if (!messages.length) return;
 
-    let saved = [];
-
-    try {
-        saved = JSON.parse(
-            localStorage.getItem(STORAGE_KEY) || "[]"
-        );
-    } catch (e) {}
-
-    const firstUser = messages.find(m => m.role === "user");
+    const firstUser = messages.find(
+        item => item.role === "user"
+    );
 
     const title = firstUser
         ? firstUser.content.slice(0, 45)
         : "New Conversation";
 
+    const saved = getSavedHistory();
+
     saved.unshift({
+        id: Date.now(),
         title,
         messages: messages.slice()
     });
 
-    saved = saved.slice(0, 10);
-
     try {
         localStorage.setItem(
             STORAGE_KEY,
-            JSON.stringify(saved)
+            JSON.stringify(saved.slice(0, 15))
         );
-    } catch (e) {
-        toast("Storage full: कुछ पुरानी बातचीत हटाएँ");
-    }
 
-    renderHistory();
+        renderHistory();
+    } catch {
+        toast("Storage भर गया है। कुछ पुरानी बातचीत हटाएँ।");
+    }
 }
 
+function renderHistory() {
+    const container = $("history");
+
+    container.replaceChildren();
+
+    getSavedHistory().forEach(conversation => {
+        const button = document.createElement("button");
+
+        button.className = "nav-item";
+        button.textContent =
+            "💬 " + (conversation.title || "Conversation");
+
+        button.title = conversation.title || "Conversation";
+
+        button.addEventListener("click", () => {
+            if (busy) {
+                toast("पहले वर्तमान अनुरोध पूरा होने दें।");
+                return;
+            }
+
+            messages = Array.isArray(conversation.messages)
+                ? conversation.messages.slice()
+                : [];
+
+            chat.replaceChildren();
+
+            showWelcome(messages.length === 0);
+
+            messages.forEach(message => {
+                createMessage(
+                    message.role,
+                    message.content,
+                    false
+                );
+            });
+
+            $("sidebar").classList.remove("open");
+        });
+
+        container.appendChild(button);
+    });
+}
+
+/* ================= NEW CHAT ================= */
+
 function newChat() {
-    if (busy && activeController) {
+    if (activeController) {
         activeController.abort();
     }
 
     busy = false;
     activeController = null;
+
     messages = [];
 
     chat.replaceChildren();
     promptInput.value = "";
 
     showWelcome(true);
+
     sendBtn.disabled = false;
     sendBtn.textContent = "Send ↑";
 
-    $("sidebar").classList.remove("open");
-
     updateStatus("Ready", "#00c9a7");
+
+    $("sidebar").classList.remove("open");
+    promptInput.focus();
 }
 
-function setBusy(value) {
-    busy = value;
-    sendBtn.disabled = value;
-    sendBtn.textContent = value ? "Thinking..." : "Send ↑";
-}
+/* ================= AI CONNECTION ================= */
 
 async function askAI(userText) {
-    if (busy) return;
+    if (busy) {
+        toast("कृपया वर्तमान जवाब का इंतजार करें।");
+        return;
+    }
 
     showWelcome(false);
 
     createMessage("user", userText);
+
     promptInput.value = "";
 
-    setBusy(true);
+    busy = true;
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Thinking...";
+
     updateStatus("AI is responding...", "#f5c56a");
 
-    const pending = createMessage(
-        "assistant",
-        "AI जवाब तैयार कर रहा है...",
-        false
-    );
+    const typing = createTypingMessage();
 
     activeController = new AbortController();
 
     try {
-        const language = $("language").value;
-        const model = $("model").value;
+        const response = await fetch(
+            "/.netlify/functions/chat",
+            {
+                method: "POST",
 
-        const response = await fetch("/.netlify/functions/chat", {
-            method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                body: JSON.stringify({
+                    message: userText,
+                    history: messages.slice(-21, -1),
+                    language: $("language").value,
+                    model: $("model").value
+                }),
 
-            body: JSON.stringify({
-                message: userText,
-                history: messages.slice(-20, -1),
-                language,
-                model
-            }),
+                signal: activeController.signal
+            }
+        );
 
-            signal: activeController.signal
-        });
+        const contentType =
+            response.headers.get("content-type") || "";
+
+        if (!contentType.includes("application/json")) {
+            throw new Error(
+                "AI Backend उपलब्ध नहीं है। " +
+                "Netlify पर वेबसाइट और Functions की Deployment जाँचें।"
+            );
+        }
 
         const data = await response.json();
 
@@ -1009,67 +1302,55 @@ async function askAI(userText) {
             );
         }
 
-        const answer = data.answer || "कोई जवाब प्राप्त नहीं हुआ।";
+        if (typeof data.answer !== "string") {
+            throw new Error("AI का जवाब सही प्रारूप में नहीं मिला।");
+        }
 
-        pending.text.textContent = answer;
+        typing.remove();
 
-        messages.push({
-            role: "assistant",
-            content: answer
-        });
-
-        const actions = document.createElement("div");
-        actions.className = "message-actions";
-
-        const copy = document.createElement("button");
-        copy.className = "mini-btn";
-        copy.textContent = "📋 Copy";
-
-        copy.onclick = async () => {
-            try {
-                await navigator.clipboard.writeText(answer);
-                toast("Answer copied");
-            } catch {
-                toast("Copy सुविधा उपलब्ध नहीं है");
-            }
-        };
-
-        const download = document.createElement("button");
-        download.className = "mini-btn";
-        download.textContent = "⬇ Download TXT";
-        download.onclick = () => downloadText(answer);
-
-        actions.append(copy, download);
-        pending.text.parentElement.appendChild(actions);
+        createMessage("assistant", data.answer);
 
         saveConversation();
 
         updateStatus("Connected", "#00c9a7");
 
     } catch (error) {
+        typing.remove();
+
         if (error.name === "AbortError") {
-            pending.text.textContent = "यह अनुरोध रद्द कर दिया गया।";
+            updateStatus("Request cancelled", "#f5c56a");
         } else {
-            pending.text.textContent =
-                "त्रुटि: " + error.message +
-                "\n\nजाँचें कि Netlify Function डिप्लॉय है और " +
-                "OPENAI_API_KEY सही तरीके से सेट की गई है।";
+            createMessage(
+                "assistant",
+                "⚠️ कनेक्शन में समस्या आई।\n\n" +
+                error.message +
+                "\n\nजाँचें कि Netlify Function डिप्लॉय है, " +
+                "OPENAI_API_KEY सेट है और API उपलब्ध है।"
+            );
 
             updateStatus("Connection error", "#ff647c");
         }
 
     } finally {
-        setBusy(false);
+        busy = false;
         activeController = null;
+
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Send ↑";
     }
 }
+
+/* ================= FORM ================= */
 
 $("chatForm").addEventListener("submit", async event => {
     event.preventDefault();
 
     const text = promptInput.value.trim();
 
-    if (!text) return;
+    if (!text) {
+        toast("कृपया अपना सवाल लिखें।");
+        return;
+    }
 
     await askAI(text);
 });
@@ -1081,49 +1362,16 @@ promptInput.addEventListener("keydown", event => {
     }
 });
 
+/* ================= QUICK PROMPTS ================= */
+
 document.querySelectorAll("[data-prompt]").forEach(button => {
     button.addEventListener("click", () => {
         promptInput.value = button.dataset.prompt;
         promptInput.focus();
     });
-
-    button.addEventListener("dblclick", () => {
-        promptInput.value = button.dataset.prompt;
-        promptInput.focus();
-    });
 });
 
-$("newChatBtn").onclick = newChat;
-
-$("settingsBtn").onclick = () => {
-    settings.classList.toggle("open");
-};
-
-$("saveSettings").onclick = saveSettings;
-
-$("clearInput").onclick = () => {
-    promptInput.value = "";
-    promptInput.focus();
-};
-
-$("mobileMenu").onclick = () => {
-    $("sidebar").classList.toggle("open");
-};
-
-$("clearHistoryBtn").onclick = () => {
-    if (!confirm("क्या आप सभी सेव की गई बातचीत हटाना चाहते हैं?")) {
-        return;
-    }
-
-    localStorage.removeItem(STORAGE_KEY);
-    renderHistory();
-    toast("History cleared");
-};
-
-$("chatNav").onclick = () => {
-    $("sidebar").classList.remove("open");
-    settings.classList.remove("open");
-};
+/* ================= VOICE INPUT ================= */
 
 const SpeechRecognition =
     window.SpeechRecognition ||
@@ -1136,16 +1384,16 @@ if (SpeechRecognition) {
     recognition.continuous = false;
     recognition.interimResults = false;
 
-    $("voiceBtn").onclick = () => {
+    $("voiceBtn").addEventListener("click", () => {
         if (busy) return;
 
         try {
             recognition.start();
             toast("अब बोलकर अपना सवाल पूछें");
         } catch {
-            toast("माइक्रोफोन पहले से सक्रिय है");
+            toast("Voice input पहले से सक्रिय है।");
         }
-    };
+    });
 
     recognition.onresult = event => {
         const transcript =
@@ -1158,17 +1406,59 @@ if (SpeechRecognition) {
     };
 
     recognition.onerror = () => {
-        toast("Voice input उपलब्ध नहीं हुआ");
+        toast("माइक्रोफोन की अनुमति और ब्राउज़र सेटिंग जाँचें।");
     };
 
 } else {
-    $("voiceBtn").onclick = () => {
-        toast("इस ब्राउज़र में Voice Recognition समर्थित नहीं है");
-    };
+    $("voiceBtn").addEventListener("click", () => {
+        toast("इस ब्राउज़र में Voice Recognition उपलब्ध नहीं है।");
+    });
 }
+
+/* ================= NAVIGATION ================= */
+
+$("newChatBtn").addEventListener("click", newChat);
+
+$("settingsBtn").addEventListener("click", () => {
+    $("settings").classList.toggle("open");
+    $("sidebar").classList.remove("open");
+});
+
+$("saveSettings").addEventListener("click", saveSettings);
+
+$("clearInput").addEventListener("click", () => {
+    promptInput.value = "";
+    promptInput.focus();
+});
+
+$("mobileMenu").addEventListener("click", () => {
+    $("sidebar").classList.toggle("open");
+});
+
+$("chatNav").addEventListener("click", () => {
+    $("sidebar").classList.remove("open");
+    $("settings").classList.remove("open");
+});
+
+$("clearHistoryBtn").addEventListener("click", () => {
+    const confirmClear = confirm(
+        "क्या आप इस ब्राउज़र में सेव की गई सभी बातचीत हटाना चाहते हैं?"
+    );
+
+    if (!confirmClear) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    renderHistory();
+
+    toast("Chat history cleared");
+});
+
+/* ================= INITIALIZE ================= */
 
 loadSettings();
 renderHistory();
+
 updateStatus("Ready", "#00c9a7");
 </script>
 
