@@ -1,264 +1,658 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d1c">
+<meta name="theme-color" content="#0b1020">
 
-<title>Code Execution Center | GameGalaxy213</title>
+<title>AI Assistant Pro | Smart AI Workspace</title>
 
 <style>
 :root {
-    --bg: #080d1c;
-    --panel: #111a30;
-    --card: #15213c;
-    --primary: #5378ff;
-    --cyan: #00d4ff;
-    --text: #f5f7ff;
-    --muted: #aab5d0;
-    --border: rgba(255,255,255,.10);
+    --bg: #0b1020;
+    --sidebar: #0e1628;
+    --panel: #111a2e;
+    --panel2: #17233b;
+    --border: #293752;
+    --text: #f3f6ff;
+    --muted: #a3afc8;
+    --primary: #7c6cff;
+    --secondary: #00c9a7;
+    --danger: #ff647c;
 }
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background:
-        radial-gradient(circle at top left, #182957, transparent 40%),
-        var(--bg);
+    margin: 0;
+    background: var(--bg);
     color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", sans-serif;
     min-height: 100vh;
 }
 
-.header {
-    text-align: center;
-    padding: 40px 15px 30px;
-    border-bottom: 1px solid var(--border);
+button, textarea, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 20;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 800;
 }
 
 .logo {
-    color: var(--cyan);
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 3px;
-    margin-bottom: 15px;
-}
-
-.header h1 {
-    font-size: clamp(25px, 5vw, 42px);
-    line-height: 1.4;
-    margin-bottom: 12px;
-}
-
-.header h1 span {
-    color: var(--cyan);
-}
-
-.header p {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-.container {
-    max-width: 1400px;
-    margin: auto;
-    padding: 25px 18px 40px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 25px;
-}
-
-.stat {
-    background: var(--panel);
-    border: 1px solid var(--border);
+    width: 43px;
+    height: 43px;
     border-radius: 14px;
-    padding: 18px 8px;
-    text-align: center;
-}
-
-.stat strong {
-    display: block;
-    color: var(--cyan);
-    font-size: 25px;
-    margin-bottom: 7px;
-}
-
-.stat span {
-    font-size: 11px;
-    color: var(--muted);
-}
-
-.search-box {
-    margin-bottom: 25px;
-}
-
-.search-box label {
-    display: block;
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-#searchInput {
-    width: 100%;
-    padding: 15px;
-    border-radius: 12px;
-    background: var(--panel);
-    color: white;
-    border: 1px solid var(--border);
-    font-size: 15px;
-    outline: none;
-}
-
-#searchInput:focus {
-    border-color: var(--cyan);
-}
-
-.section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 18px;
-}
-
-.section-heading h2 {
-    font-size: 21px;
-}
-
-.section-heading span {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.app-grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 15px;
-}
-
-.app-card {
-    min-width: 0;
-    background: linear-gradient(145deg, #192747, #111a30);
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    padding: 18px 10px;
-    text-align: center;
-    transition: .25s;
-}
-
-.app-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--cyan);
-}
-
-.app-icon {
-    width: 46px;
-    height: 46px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 12px;
-    border-radius: 13px;
-    background: linear-gradient(135deg, var(--primary), #824cff);
-    font-weight: bold;
-}
-
-.app-card h3 {
-    font-size: 13px;
-    margin-bottom: 8px;
-    overflow-wrap: anywhere;
-}
-
-.app-card p {
-    font-size: 11px;
-    color: var(--muted);
-    overflow-wrap: anywhere;
-    margin-bottom: 14px;
-}
-
-.open-btn {
-    display: block;
-    width: 100%;
-    padding: 11px 5px;
-    background: var(--primary);
+    place-items: center;
+    background: linear-gradient(135deg, #7c6cff, #00c9a7);
     color: white;
-    text-decoration: none;
-    border-radius: 9px;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a69cff, #44e4c3);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.new-chat {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: white;
+    padding: 13px;
+    border-radius: 12px;
+    text-align: left;
     transition: .2s;
 }
 
-.open-btn:hover {
-    background: var(--cyan);
-    color: #080d1c;
+.new-chat:hover {
+    border-color: var(--primary);
+    background: #202d49;
 }
 
-.no-results {
-    display: none;
-    padding: 30px 10px;
-    text-align: center;
+.sidebar-title {
+    font-size: 11px;
     color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-top: 8px;
 }
 
-.footer {
-    margin-top: 40px;
-    padding: 25px 10px;
-    text-align: center;
-    border-top: 1px solid var(--border);
+.nav-item {
+    border: 0;
+    background: transparent;
+    color: #d8e0f5;
+    padding: 11px;
+    border-radius: 9px;
+    text-align: left;
+    width: 100%;
+    transition: .2s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: var(--panel2);
+}
+
+.history {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.history button {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
     color: var(--muted);
     font-size: 12px;
-    line-height: 1.9;
+    line-height: 1.8;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
 }
 
-@media(max-width: 1000px) {
-    .app-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+.sidebar-bottom strong {
+    color: white;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    min-height: 68px;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #0b1020;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar h2 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.status {
+    font-size: 12px;
+    color: var(--secondary);
+    white-space: nowrap;
+}
+
+.mobile-menu {
+    display: none;
+    border: 1px solid var(--border);
+    color: white;
+    background: var(--panel);
+    border-radius: 9px;
+    padding: 8px 11px;
+}
+
+.workspace {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= WELCOME ================= */
+
+.welcome {
+    text-align: center;
+    padding: 35px 0 22px;
+}
+
+.welcome-icon {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 15px;
+    border-radius: 24px;
+    display: grid;
+    place-items: center;
+    font-size: 38px;
+    background: linear-gradient(135deg, #7c6cff33, #00c9a733);
+    border: 1px solid var(--border);
+}
+
+.welcome h1 {
+    font-size: clamp(26px, 4vw, 40px);
+    margin: 8px 0;
+    letter-spacing: -1px;
+}
+
+.welcome p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 12px auto;
+}
+
+/* ================= QUICK TOOLS ================= */
+
+.quick-heading {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 15px 0 12px;
+}
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 10px 0 28px;
+}
+
+.quick-card {
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 16px;
+    background: var(--panel);
+    color: white;
+    text-align: left;
+    transition: transform .2s, border-color .2s;
+}
+
+.quick-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.quick-card .icon {
+    font-size: 25px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.quick-card strong {
+    display: block;
+    font-size: 14px;
+}
+
+.quick-card small {
+    color: var(--muted);
+    display: block;
+    margin-top: 7px;
+    line-height: 1.6;
+}
+
+/* ================= SETTINGS ================= */
+
+.settings {
+    display: none;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.settings.open {
+    display: block;
+}
+
+.settings h3 {
+    margin-top: 0;
+}
+
+.settings label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 15px 0 7px;
+}
+
+.settings select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: #0b1020;
+    color: white;
+}
+
+.settings p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* ================= CHAT ================= */
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 20px;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+}
+
+.message-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.message-role {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.message-text {
+    line-height: 1.85;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.message-text pre {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    background: #080d18;
+    border: 1px solid var(--border);
+    padding: 14px;
+    border-radius: 10px;
+}
+
+.message-text code {
+    font-family: monospace;
+}
+
+.message-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.mini-btn {
+    font-size: 12px;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+}
+
+.mini-btn:hover {
+    color: white;
+    border-color: var(--primary);
+}
+
+.typing {
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.typing span {
+    width: 7px;
+    height: 7px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: pulse 1s infinite alternate;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: .2s;
+}
+
+.typing span:nth-child(3) {
+    animation-delay: .4s;
+}
+
+@keyframes pulse {
+    from { opacity: .3; transform: translateY(0); }
+    to { opacity: 1; transform: translateY(-4px); }
+}
+
+/* ================= COMPOSER ================= */
+
+.composer-area {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(transparent, var(--bg) 18%);
+    padding-top: 18px;
+    margin-top: auto;
+}
+
+.composer {
+    background: var(--panel);
+    border: 1px solid #3a4968;
+    border-radius: 18px;
+    padding: 12px;
+    box-shadow: 0 10px 35px #0003;
+}
+
+.composer textarea {
+    display: block;
+    width: 100%;
+    min-height: 56px;
+    max-height: 200px;
+    resize: vertical;
+    background: transparent;
+    border: 0;
+    outline: none;
+    color: white;
+    padding: 9px;
+    line-height: 1.7;
+}
+
+.composer textarea::placeholder {
+    color: #8491aa;
+}
+
+.composer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.composer-tools {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.tool-btn {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 11px;
+}
+
+.tool-btn:hover {
+    color: white;
+    border-color: var(--primary);
+}
+
+.send-btn {
+    background: var(--primary);
+    border: 0;
+    color: white;
+    padding: 10px 19px;
+    border-radius: 10px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.send-btn:hover {
+    background: #6655ec;
+}
+
+.send-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.disclaimer {
+    color: #8190aa;
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.8;
+    margin: 12px 0;
+}
+
+/* ================= BUTTONS ================= */
+
+.primary-button {
+    background: var(--primary);
+    color: white;
+    border: 0;
+    padding: 10px 15px;
+    border-radius: 9px;
+}
+
+.secondary-button {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+    border-radius: 9px;
+}
+
+/* ================= TOAST ================= */
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #202c45;
+    border: 1px solid var(--border);
+    padding: 12px 18px;
+    border-radius: 12px;
+    display: none;
+    z-index: 50;
+    max-width: 90%;
+    font-size: 13px;
+}
+
+.toast.show {
+    display: block;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 850px) {
+    .sidebar {
+        width: 245px;
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .workspace {
+        padding: 18px;
     }
 }
 
-@media(max-width: 700px) {
-    .container {
-        padding: 20px 12px 35px;
+@media (max-width: 650px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: -280px;
+        width: 270px;
+        transition: left .25s;
+        box-shadow: 15px 0 40px #0005;
     }
 
-    .app-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 10px;
+    .sidebar.open {
+        left: 0;
     }
 
-    .app-card {
-        padding: 15px 7px;
+    .mobile-menu {
+        display: inline-block;
     }
 
-    .stats {
-        gap: 7px;
+    .topbar {
+        padding: 12px;
     }
 
-    .stat strong {
-        font-size: 21px;
+    .workspace {
+        padding: 14px 12px;
     }
 
-    .stat span {
+    .welcome {
+        padding-top: 25px;
+    }
+
+    .quick-card {
+        padding: 12px;
+    }
+
+    .composer-tools {
+        gap: 5px;
+    }
+
+    .tool-btn {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .status {
         font-size: 10px;
     }
 }
 
-@media(max-width: 360px) {
-    .app-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 370px) {
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome h1 {
+        font-size: 25px;
     }
 }
 </style>
@@ -266,299 +660,806 @@ body {
 
 <body>
 
-<header class="header">
+<div class="app">
 
-    <div class="logo">GAMEGALAXY213 • PERSONAL DASHBOARD</div>
+    <!-- SIDEBAR -->
 
-    <h1>
-        Welcome to
-        <span>Code Execution Section</span>
-    </h1>
+    <aside class="sidebar" id="sidebar">
 
-    <p>
-        Your Personal Application Center<br>
-        All Your HTML Applications in One Place
-    </p>
-
-</header>
-
-<main class="container">
-
-    <section class="stats">
-
-        <div class="stat">
-            <strong id="totalApps">0</strong>
-            <span>Total Applications</span>
+        <div class="brand">
+            <div class="logo">✦</div>
+            <span>AI Assistant <span class="gradient">Pro</span></span>
         </div>
 
-        <div class="stat">
-            <strong id="visibleApps">0</strong>
-            <span>Applications Displayed</span>
+        <button class="new-chat" id="newChatBtn">
+            ＋ &nbsp; New Chat
+        </button>
+
+        <div class="sidebar-title">Workspace</div>
+
+        <button class="nav-item active" id="chatNav">
+            💬 AI Conversation
+        </button>
+
+        <button class="nav-item" id="settingsBtn">
+            ⚙️ AI Settings
+        </button>
+
+        <button class="nav-item" id="clearHistoryBtn">
+            🗑️ Clear History
+        </button>
+
+        <div class="sidebar-title">Recent Chats</div>
+
+        <div class="history" id="history"></div>
+
+        <div class="sidebar-bottom">
+            <strong>AI Assistant Pro</strong><br>
+            Smart tools for everyone.<br>
+            Version 1.0
         </div>
 
-        <div class="stat">
-            <strong>HTML</strong>
-            <span>Application Format</span>
-        </div>
+    </aside>
 
-    </section>
+    <!-- MAIN -->
 
-    <section class="search-box">
+    <main class="main">
 
-        <label for="searchInput">
-            🔎 Search Your Applications
-        </label>
+        <header class="topbar">
 
-        <input
-            type="search"
-            id="searchInput"
-            placeholder="Search application by name..."
-            autocomplete="off"
-        >
+            <div class="topbar-left">
 
-    </section>
+                <button class="mobile-menu" id="mobileMenu">
+                    ☰
+                </button>
 
-    <section>
+                <h2>AI Workspace</h2>
 
-        <div class="section-heading">
-            <h2>🚀 My Applications</h2>
-            <span>Click any button to launch</span>
-        </div>
+            </div>
 
-        <div class="app-grid" id="appGrid"></div>
+            <div class="status" id="connectionStatus">
+                ● Checking connection
+            </div>
 
-        <div class="no-results" id="noResults">
-            No application found.
-        </div>
+        </header>
 
-    </section>
+        <section class="workspace">
 
-    <footer class="footer">
+            <!-- SETTINGS -->
 
-        <p><strong>CODE EXECUTION CENTER</strong></p>
+            <div class="settings" id="settings">
 
-        <p>One Dashboard. All Applications. Easy Access.</p>
+                <h3>⚙️ AI Configuration</h3>
 
-        <p>Powered by GitHub Pages</p>
+                <label for="model">AI Model</label>
 
-    </footer>
+                <select id="model">
+                    <option value="gpt-4.1-mini">GPT-4.1 mini</option>
+                    <option value="gpt-4.1">GPT-4.1</option>
+                </select>
 
-</main>
+                <p>
+                    मॉडल की उपलब्धता आपके API अकाउंट और सर्वर की
+                    configuration पर निर्भर करती है।
+                </p>
+
+                <label for="language">Preferred Language</label>
+
+                <select id="language">
+                    <option value="auto">Auto Detect</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="English">English</option>
+                </select>
+
+                <button class="primary-button" id="saveSettings">
+                    Save Settings
+                </button>
+
+            </div>
+
+            <!-- WELCOME -->
+
+            <div class="welcome" id="welcome">
+
+                <div class="welcome-icon">✦</div>
+
+                <h1>
+                    What can I help
+                    <span class="gradient">you with?</span>
+                </h1>
+
+                <p>
+                    सवाल पूछें, प्रश्नपत्र बनाएँ, नोट्स तैयार करें,
+                    कोड लिखें और नए विचारों को विकसित करें।
+                </p>
+
+            </div>
+
+            <!-- QUICK ACTIONS -->
+
+            <div id="quickSection">
+
+                <div class="quick-heading">
+                    शुरुआत करने के लिए कोई विकल्प चुनें
+                </div>
+
+                <div class="quick-grid" id="quickGrid">
+
+                    <button class="quick-card"
+                        data-prompt="कक्षा 10 के इतिहास के लिए 30 कठिन MCQ प्रश्न बनाइए। प्रत्येक प्रश्न के चार विकल्प, सही उत्तर और विस्तृत व्याख्या दीजिए।">
+
+                        <span class="icon">📚</span>
+                        <strong>MCQ Generator</strong>
+                        <small>प्रश्न, उत्तर और व्याख्या</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="कक्षा 10 सामाजिक विज्ञान के लिए 80 अंकों का एक प्रश्नपत्र तैयार कीजिए। इसमें MCQ, लघु उत्तरीय और दीर्घ उत्तरीय प्रश्न शामिल करें।">
+
+                        <span class="icon">📝</span>
+                        <strong>Question Paper</strong>
+                        <small>पूरा प्रश्नपत्र तैयार करें</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="इस विषय पर विद्यार्थियों के लिए व्यवस्थित हिंदी नोट्स तैयार कीजिए। परिभाषाएँ, मुख्य बिंदु, उदाहरण और महत्वपूर्ण प्रश्न शामिल करें: ">
+
+                        <span class="icon">📖</span>
+                        <strong>Notes Maker</strong>
+                        <small>अध्ययन सामग्री तैयार करें</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="इस विषय को सरल हिंदी में उदाहरण सहित समझाइए: ">
+
+                        <span class="icon">💡</span>
+                        <strong>Explain a Topic</strong>
+                        <small>आसान भाषा में समझें</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="मेरे लिए एक पूरा HTML, CSS और JavaScript वेब एप्लिकेशन तैयार कीजिए। मेरी आवश्यकता है: ">
+
+                        <span class="icon">💻</span>
+                        <strong>Code Assistant</strong>
+                        <small>कोड और प्रोग्रामिंग</small>
+
+                    </button>
+
+                    <button class="quick-card"
+                        data-prompt="इस विषय पर विद्यार्थियों के लिए एक रोचक शैक्षणिक गतिविधि, उसके नियम, आवश्यक सामग्री और मूल्यांकन विधि सहित तैयार कीजिए: ">
+
+                        <span class="icon">🎯</span>
+                        <strong>Activity Maker</strong>
+                        <small>कक्षा की गतिविधियाँ</small>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- CHAT -->
+
+            <div class="chat" id="chat" aria-live="polite"></div>
+
+            <!-- INPUT -->
+
+            <div class="composer-area">
+
+                <form class="composer" id="chatForm">
+
+                    <textarea
+                        id="prompt"
+                        placeholder="यहाँ अपना सवाल लिखें..."
+                        aria-label="अपना सवाल लिखें"
+                        required
+                    ></textarea>
+
+                    <div class="composer-bottom">
+
+                        <div class="composer-tools">
+
+                            <button type="button"
+                                class="tool-btn"
+                                id="voiceBtn">
+                                🎤 Voice
+                            </button>
+
+                            <button type="button"
+                                class="tool-btn"
+                                id="clearInput">
+                                ✕ Clear
+                            </button>
+
+                        </div>
+
+                        <button type="submit"
+                            class="send-btn"
+                            id="sendBtn">
+                            Send ↑
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <div class="disclaimer">
+                    AI के जवाबों में गलतियाँ हो सकती हैं।
+                    महत्वपूर्ण तथ्यों की जाँच करें।
+                    API के उपयोग पर शुल्क लग सकता है।
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div class="toast" id="toast" role="status"></div>
 
 <script>
+"use strict";
 
-/* =====================================================
-   1. GITHUB SETTINGS
-   ===================================================== */
+/* ================= HELPERS ================= */
 
-const GITHUB_USERNAME = "premji321";
-const REPOSITORY_NAME = "Gamegalaxy213";
+const $ = id => document.getElementById(id);
 
-const BASE_URL =
-    `https://${GITHUB_USERNAME}.github.io/${REPOSITORY_NAME}/`;
+const chat = $("chat");
+const promptInput = $("prompt");
+const sendBtn = $("sendBtn");
 
+let messages = [];
+let busy = false;
+let activeController = null;
 
-/* =====================================================
-   2. EDITABLE APPLICATION LIST
+const STORAGE_KEY = "ai_assistant_history_v1";
+const SETTINGS_KEY = "ai_assistant_settings_v1";
 
-   IMPORTANT:
-   Apni HTML files ke naam sirf isi list mein likhein.
+/* ================= NOTIFICATIONS ================= */
 
-   filename = GitHub par maujood asli HTML file ka naam
-   title    = Dashboard button par dikhne wala naam
+function toast(message) {
+    const el = $("toast");
 
-   File names case-sensitive ho sakte hain.
-   ===================================================== */
+    el.textContent = message;
+    el.classList.add("show");
 
-const APPLICATIONS = [
+    clearTimeout(toast.timer);
 
-    {
-        filename: "Quiz.html",
-        title: "Application 1"
-    },
-
-    {
-        filename: "1857-revolution.html",
-        title: "1857 Revolution Game"
-    },
-
-    {
-        filename: "alien-shooter.html",
-        title: "Alien Shooter Game"
-    },
-
-    {
-        filename: "train-information.html",
-        title: "Train Information"
-    },
-
-    {
-        filename: "pdf-editor.html",
-        title: "PDF Editor"
-    },
-
-    {
-        filename: "mock-test.html",
-        title: "Mock Test Application"
-    },
-
-    {
-        filename: "Text-to-Speech.html",
-        title: "Text-to-Speech"
-    },
-
-    {
-        filename:  "Image-to-Movie.html",
-        title: "Movie Maker"
-    },
-
-
-    {
-        filename:  "calculator.html",
-        title: "Advance Calculator"
-    },
-
-    {
-        filename:  "Math-solver.html",
-        title: "Math-solver"
-    },
-    {
-        filename:  "AI-Assistant.html",
-        title: "AI Assistant"
-    },
-
-
-
-
-    /*
-      NEW APPLICATION ADD KARNE KA TARIKA:
-
-      {
-          filename: "your-file-name.html",
-          title: "Your Application Name"
-      },
-      
-
-      Comma ka dhyan rakhein.
-      File ka naam GitHub wale naam se bilkul match hona chahiye.
-    */
-
-
-
-
-
-
-
-];
-
-
-/* =====================================================
-   3. DASHBOARD ELEMENTS
-   ===================================================== */
-
-const appGrid = document.getElementById("appGrid");
-const searchInput = document.getElementById("searchInput");
-const noResults = document.getElementById("noResults");
-
-
-/* =====================================================
-   4. CREATE APPLICATION BUTTONS
-   ===================================================== */
-
-function createApplications() {
-
-    appGrid.innerHTML = "";
-
-    APPLICATIONS.forEach((app, index) => {
-
-        const card = document.createElement("article");
-        card.className = "app-card";
-
-        card.dataset.search =
-            `${app.title} ${app.filename}`.toLowerCase();
-
-        const icon = document.createElement("div");
-        icon.className = "app-icon";
-        icon.textContent = String(index + 1).padStart(2, "0");
-
-        const title = document.createElement("h3");
-        title.textContent = app.title;
-
-        const file = document.createElement("p");
-        file.textContent = app.filename;
-
-        const button = document.createElement("a");
-        button.className = "open-btn";
-        button.textContent = "OPEN APP";
-
-        /*
-          URL automatically uses the filename
-          provided in the APPLICATIONS list.
-        */
-
-        button.href =
-            BASE_URL + encodeURIComponent(app.filename);
-
-        button.target = "_blank";
-        button.rel = "noopener noreferrer";
-
-        card.append(icon, title, file, button);
-
-        appGrid.appendChild(card);
-
-    });
-
-    document.getElementById("totalApps").textContent =
-        APPLICATIONS.length;
-
-    document.getElementById("visibleApps").textContent =
-        APPLICATIONS.length;
-
-    noResults.style.display =
-        APPLICATIONS.length === 0 ? "block" : "none";
+    toast.timer = setTimeout(() => {
+        el.classList.remove("show");
+    }, 3000);
 }
 
+/* ================= SETTINGS ================= */
 
-/* =====================================================
-   5. SEARCH APPLICATIONS
-   ===================================================== */
+function loadSettings() {
+    try {
+        const saved = JSON.parse(
+            localStorage.getItem(SETTINGS_KEY) || "{}"
+        );
 
-searchInput.addEventListener("input", function() {
-
-    const query = this.value.trim().toLowerCase();
-
-    const cards = document.querySelectorAll(".app-card");
-
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-
-        const matches =
-            card.dataset.search.includes(query);
-
-        card.style.display = matches ? "" : "none";
-
-        if (matches) {
-            visibleCount++;
+        if (saved.model) {
+            $("model").value = saved.model;
         }
 
+        if (saved.language) {
+            $("language").value = saved.language;
+        }
+    } catch (error) {
+        console.error("Settings could not be loaded.");
+    }
+}
+
+function saveSettings() {
+    const data = {
+        model: $("model").value,
+        language: $("language").value
+    };
+
+    localStorage.setItem(
+        SETTINGS_KEY,
+        JSON.stringify(data)
+    );
+
+    toast("Settings saved successfully");
+}
+
+/* ================= STATUS ================= */
+
+function updateStatus(text, color) {
+    $("connectionStatus").textContent = "● " + text;
+    $("connectionStatus").style.color = color;
+}
+
+function showWelcome(show) {
+    $("welcome").style.display = show ? "block" : "none";
+    $("quickSection").style.display = show ? "block" : "none";
+}
+
+/* ================= MESSAGE UI ================= */
+
+function addActionButton(parent, label, action) {
+    const button = document.createElement("button");
+
+    button.className = "mini-btn";
+    button.type = "button";
+    button.textContent = label;
+    button.addEventListener("click", action);
+
+    parent.appendChild(button);
+
+    return button;
+}
+
+function downloadText(text) {
+    const blob = new Blob(
+        [text],
+        { type: "text/plain;charset=utf-8" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "AI-Assistant-Answer.txt";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function copyText(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+        toast("उत्तर कॉपी हो गया");
+    } catch (error) {
+        const textarea = document.createElement("textarea");
+
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        const success = document.execCommand("copy");
+
+        textarea.remove();
+
+        toast(success ? "उत्तर कॉपी हो गया" : "कॉपी नहीं हो सका");
+    }
+}
+
+function createMessage(role, content, save = true) {
+    const item = { role, content };
+
+    if (save) {
+        messages.push(item);
+    }
+
+    const row = document.createElement("div");
+    row.className = "message";
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = role === "user" ? "👤" : "✦";
+
+    const contentBox = document.createElement("div");
+    contentBox.className = "message-content";
+
+    const roleLabel = document.createElement("div");
+    roleLabel.className = "message-role";
+
+    roleLabel.textContent =
+        role === "user" ? "You" : "AI Assistant";
+
+    const text = document.createElement("div");
+    text.className = "message-text";
+    text.textContent = content;
+
+    contentBox.append(roleLabel, text);
+    row.append(avatar, contentBox);
+
+    if (role === "assistant") {
+        const actions = document.createElement("div");
+        actions.className = "message-actions";
+
+        addActionButton(actions, "📋 Copy", () => {
+            copyText(content);
+        });
+
+        addActionButton(actions, "⬇ Download TXT", () => {
+            downloadText(content);
+        });
+
+        contentBox.appendChild(actions);
+    }
+
+    chat.appendChild(row);
+
+    row.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
     });
 
-    document.getElementById("visibleApps").textContent =
-        visibleCount;
+    return { row, text };
+}
 
-    noResults.style.display =
-        visibleCount === 0 ? "block" : "none";
+function createTypingMessage() {
+    const row = document.createElement("div");
+    row.className = "message";
 
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = "✦";
+
+    const box = document.createElement("div");
+    box.className = "message-content";
+
+    const role = document.createElement("div");
+    role.className = "message-role";
+    role.textContent = "AI Assistant";
+
+    const typing = document.createElement("div");
+    typing.className = "typing";
+
+    for (let i = 0; i < 3; i++) {
+        typing.appendChild(document.createElement("span"));
+    }
+
+    box.append(role, typing);
+    row.append(avatar, box);
+    chat.appendChild(row);
+
+    row.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+    });
+
+    return row;
+}
+
+/* ================= CHAT HISTORY ================= */
+
+function getSavedHistory() {
+    try {
+        const saved = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "[]"
+        );
+
+        return Array.isArray(saved) ? saved : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveConversation() {
+    if (!messages.length) return;
+
+    const firstUser = messages.find(
+        item => item.role === "user"
+    );
+
+    const title = firstUser
+        ? firstUser.content.slice(0, 45)
+        : "New Conversation";
+
+    const saved = getSavedHistory();
+
+    saved.unshift({
+        id: Date.now(),
+        title,
+        messages: messages.slice()
+    });
+
+    try {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(saved.slice(0, 15))
+        );
+
+        renderHistory();
+    } catch {
+        toast("Storage भर गया है। कुछ पुरानी बातचीत हटाएँ।");
+    }
+}
+
+function renderHistory() {
+    const container = $("history");
+
+    container.replaceChildren();
+
+    getSavedHistory().forEach(conversation => {
+        const button = document.createElement("button");
+
+        button.className = "nav-item";
+        button.textContent =
+            "💬 " + (conversation.title || "Conversation");
+
+        button.title = conversation.title || "Conversation";
+
+        button.addEventListener("click", () => {
+            if (busy) {
+                toast("पहले वर्तमान अनुरोध पूरा होने दें।");
+                return;
+            }
+
+            messages = Array.isArray(conversation.messages)
+                ? conversation.messages.slice()
+                : [];
+
+            chat.replaceChildren();
+
+            showWelcome(messages.length === 0);
+
+            messages.forEach(message => {
+                createMessage(
+                    message.role,
+                    message.content,
+                    false
+                );
+            });
+
+            $("sidebar").classList.remove("open");
+        });
+
+        container.appendChild(button);
+    });
+}
+
+/* ================= NEW CHAT ================= */
+
+function newChat() {
+    if (activeController) {
+        activeController.abort();
+    }
+
+    busy = false;
+    activeController = null;
+
+    messages = [];
+
+    chat.replaceChildren();
+    promptInput.value = "";
+
+    showWelcome(true);
+
+    sendBtn.disabled = false;
+    sendBtn.textContent = "Send ↑";
+
+    updateStatus("Ready", "#00c9a7");
+
+    $("sidebar").classList.remove("open");
+    promptInput.focus();
+}
+
+/* ================= AI CONNECTION ================= */
+
+async function askAI(userText) {
+    if (busy) {
+        toast("कृपया वर्तमान जवाब का इंतजार करें।");
+        return;
+    }
+
+    showWelcome(false);
+
+    createMessage("user", userText);
+
+    promptInput.value = "";
+
+    busy = true;
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Thinking...";
+
+    updateStatus("AI is responding...", "#f5c56a");
+
+    const typing = createTypingMessage();
+
+    activeController = new AbortController();
+
+    try {
+        const response = await fetch(
+            "/.netlify/functions/chat",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    message: userText,
+                    history: messages.slice(-21, -1),
+                    language: $("language").value,
+                    model: $("model").value
+                }),
+
+                signal: activeController.signal
+            }
+        );
+
+        const contentType =
+            response.headers.get("content-type") || "";
+
+        if (!contentType.includes("application/json")) {
+            throw new Error(
+                "AI Backend उपलब्ध नहीं है। " +
+                "Netlify पर वेबसाइट और Functions की Deployment जाँचें।"
+            );
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "AI सेवा से जवाब नहीं मिला।"
+            );
+        }
+
+        if (typeof data.answer !== "string") {
+            throw new Error("AI का जवाब सही प्रारूप में नहीं मिला।");
+        }
+
+        typing.remove();
+
+        createMessage("assistant", data.answer);
+
+        saveConversation();
+
+        updateStatus("Connected", "#00c9a7");
+
+    } catch (error) {
+        typing.remove();
+
+        if (error.name === "AbortError") {
+            updateStatus("Request cancelled", "#f5c56a");
+        } else {
+            createMessage(
+                "assistant",
+                "⚠️ कनेक्शन में समस्या आई।\n\n" +
+                error.message +
+                "\n\nजाँचें कि Netlify Function डिप्लॉय है, " +
+                "OPENAI_API_KEY सेट है और API उपलब्ध है।"
+            );
+
+            updateStatus("Connection error", "#ff647c");
+        }
+
+    } finally {
+        busy = false;
+        activeController = null;
+
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Send ↑";
+    }
+}
+
+/* ================= FORM ================= */
+
+$("chatForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const text = promptInput.value.trim();
+
+    if (!text) {
+        toast("कृपया अपना सवाल लिखें।");
+        return;
+    }
+
+    await askAI(text);
 });
 
+promptInput.addEventListener("keydown", event => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        $("chatForm").requestSubmit();
+    }
+});
 
-/* =====================================================
-   6. START DASHBOARD
-   ===================================================== */
+/* ================= QUICK PROMPTS ================= */
 
-createApplications();
+document.querySelectorAll("[data-prompt]").forEach(button => {
+    button.addEventListener("click", () => {
+        promptInput.value = button.dataset.prompt;
+        promptInput.focus();
+    });
+});
 
+/* ================= VOICE INPUT ================= */
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "hi-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    $("voiceBtn").addEventListener("click", () => {
+        if (busy) return;
+
+        try {
+            recognition.start();
+            toast("अब बोलकर अपना सवाल पूछें");
+        } catch {
+            toast("Voice input पहले से सक्रिय है।");
+        }
+    });
+
+    recognition.onresult = event => {
+        const transcript =
+            event.results[0][0].transcript;
+
+        promptInput.value +=
+            (promptInput.value ? " " : "") + transcript;
+
+        promptInput.focus();
+    };
+
+    recognition.onerror = () => {
+        toast("माइक्रोफोन की अनुमति और ब्राउज़र सेटिंग जाँचें।");
+    };
+
+} else {
+    $("voiceBtn").addEventListener("click", () => {
+        toast("इस ब्राउज़र में Voice Recognition उपलब्ध नहीं है।");
+    });
+}
+
+/* ================= NAVIGATION ================= */
+
+$("newChatBtn").addEventListener("click", newChat);
+
+$("settingsBtn").addEventListener("click", () => {
+    $("settings").classList.toggle("open");
+    $("sidebar").classList.remove("open");
+});
+
+$("saveSettings").addEventListener("click", saveSettings);
+
+$("clearInput").addEventListener("click", () => {
+    promptInput.value = "";
+    promptInput.focus();
+});
+
+$("mobileMenu").addEventListener("click", () => {
+    $("sidebar").classList.toggle("open");
+});
+
+$("chatNav").addEventListener("click", () => {
+    $("sidebar").classList.remove("open");
+    $("settings").classList.remove("open");
+});
+
+$("clearHistoryBtn").addEventListener("click", () => {
+    const confirmClear = confirm(
+        "क्या आप इस ब्राउज़र में सेव की गई सभी बातचीत हटाना चाहते हैं?"
+    );
+
+    if (!confirmClear) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    renderHistory();
+
+    toast("Chat history cleared");
+});
+
+/* ================= INITIALIZE ================= */
+
+loadSettings();
+renderHistory();
+
+updateStatus("Ready", "#00c9a7");
 </script>
 
 </body>
