@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10172a">
+
+<title>AI Assistant Pro | Smart AI Workspace</title>
+
+<style>
+:root {
+    --bg: #0b1020;
+    --panel: #111a2e;
+    --panel2: #17233b;
+    --border: #293752;
+    --text: #f3f6ff;
+    --muted: #a3afc8;
+    --primary: #7c6cff;
+    --secondary: #00c9a7;
+    --danger: #ff647c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+}
+
+button, textarea, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    background: #0e1628;
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #7c6cff, #00c9a7);
+    color: white;
+    font-size: 23px;
+}
+
+.new-chat {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: white;
+    padding: 13px;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.new-chat:hover {
+    border-color: var(--primary);
+}
+
+.sidebar-title {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+.nav-item {
+    border: 0;
+    background: transparent;
+    color: #d8e0f5;
+    padding: 11px;
+    border-radius: 9px;
+    text-align: left;
+    width: 100%;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: var(--panel2);
+}
+
+.history {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.history button {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* MAIN */
+
+.main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    min-height: 68px;
+    padding: 15px 25px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.topbar h2 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.status {
+    font-size: 12px;
+    color: var(--secondary);
+}
+
+.workspace {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    padding: 28px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome {
+    text-align: center;
+    padding: 35px 0 24px;
+}
+
+.welcome-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.welcome h1 {
+    font-size: clamp(26px, 4vw, 39px);
+    margin: 8px 0;
+    letter-spacing: -1px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a69cff, #44e4c3);
+    color: transparent;
+    background-clip: text;
+}
+
+.welcome p {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+/* QUICK ACTIONS */
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 12px 0 24px;
+}
+
+.quick-card {
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 16px;
+    background: var(--panel);
+    color: white;
+    text-align: left;
+    transition: .2s;
+}
+
+.quick-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.quick-card .icon {
+    font-size: 25px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.quick-card strong {
+    display: block;
+    font-size: 14px;
+}
+
+.quick-card small {
+    color: var(--muted);
+    display: block;
+    margin-top: 7px;
+    line-height: 1.5;
+}
+
+/* CHAT */
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 25px;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+}
+
+.message-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.message-role {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.message-text {
+    line-height: 1.85;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.message-text pre {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    background: #080d18;
+    border: 1px solid var(--border);
+    padding: 14px;
+    border-radius: 10px;
+}
+
+.message-text code {
+    font-family: monospace;
+}
+
+.message-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.mini-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+}
+
+.mini-btn:hover {
+    color: white;
+    border-color: var(--primary);
+}
+
+/* COMPOSER */
+
+.composer-area {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(transparent, var(--bg) 18%);
+    padding-top: 15px;
+}
+
+.composer {
+    background: var(--panel);
+    border: 1px solid #3a4968;
+    border-radius: 18px;
+    padding: 12px;
+    box-shadow: 0 10px 35px #0003;
+}
+
+.composer textarea {
+    width: 100%;
+    min-height: 54px;
+    max-height: 180px;
+    resize: vertical;
+    background: transparent;
+    border: 0;
+    outline: none;
+    color: white;
+    padding: 8px;
+    line-height: 1.6;
+}
+
+.composer textarea::placeholder {
+    color: #8491aa;
+}
+
+.composer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.composer-tools {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.tool-btn {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 11px;
+}
+
+.tool-btn:hover {
+    color: white;
+    border-color: var(--primary);
+}
+
+.send-btn {
+    background: var(--primary);
+    border: 0;
+    color: white;
+    padding: 10px 19px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.send-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.disclaimer {
+    color: #8190aa;
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.6;
+    margin: 12px 0;
+}
+
+/* SETTINGS */
+
+.settings {
+    display: none;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.settings.open {
+    display: block;
+}
+
+.settings label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 12px 0 6px;
+}
+
+.settings select,
+.settings input {
+    width: 100%;
+    padding: 11px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: #0b1020;
+    color: white;
+}
+
+.settings p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #202c45;
+    border: 1px solid var(--border);
+    padding: 12px 18px;
+    border-radius: 12px;
+    display: none;
+    z-index: 10;
+}
+
+.toast.show {
+    display: block;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+    .sidebar {
+        position: fixed;
+        z-index: 20;
+        top: 0;
+        bottom: 0;
+        left: -290px;
+        transition: left .25s;
+        box-shadow: 15px 0 40px #0005;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .mobile-menu {
+        display: inline-block;
+        border: 1px solid var(--border);
+        color: white;
+        background: var(--panel);
+        border-radius: 9px;
+        padding: 8px 11px;
+    }
+
+    .topbar {
+        padding: 12px;
+    }
+
+    .workspace {
+        padding: 15px 12px;
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .welcome {
+        padding-top: 25px;
+    }
+
+    .quick-card {
+        padding: 12px;
+    }
+
+    .composer-tools {
+        gap: 5px;
+    }
+
+    .tool-btn {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 360px) {
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="logo">✦</div>
+            <span>AI Assistant <span class="gradient">Pro</span></span>
+        </div>
+
+        <button class="new-chat" id="newChatBtn">
+            ＋ &nbsp; New Chat
+        </button>
+
+        <div class="sidebar-title">Workspace</div>
+
+        <button class="nav-item active" id="chatNav">
+            💬 AI Conversation
+        </button>
+
+        <button class="nav-item" id="settingsBtn">
+            ⚙️ AI Settings
+        </button>
+
+        <button class="nav-item" id="clearHistoryBtn">
+            🗑️ Clear History
+        </button>
+
+        <div class="sidebar-title">Recent Chats</div>
+
+        <div class="history" id="history"></div>
+
+        <div class="sidebar-bottom">
+            <strong>AI Assistant Pro</strong><br>
+            Smart tools for everyone.<br>
+            API-connected AI workspace.
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div style="display:flex;align-items:center;gap:12px">
+                <button class="mobile-menu" id="mobileMenu">☰</button>
+                <h2>AI Workspace</h2>
+            </div>
+
+            <div class="status" id="connectionStatus">
+                ● Checking configuration
+            </div>
+
+        </header>
+
+        <section class="workspace">
+
+            <div class="settings" id="settings">
+
+                <h3>⚙️ AI Configuration</h3>
+
+                <label for="model">AI Model</label>
+
+                <select id="model">
+                    <option value="gpt-4.1-mini">GPT-4.1 mini</option>
+                    <option value="gpt-4.1">GPT-4.1</option>
+                </select>
+
+                <p>
+                    मॉडल का चयन सर्वर की अनुमति और आपकी API उपलब्धता पर
+                    निर्भर करेगा। API Key सर्वर पर सुरक्षित रखी जाएगी।
+                </p>
+
+                <label for="language">Preferred Response Language</label>
+
+                <select id="language">
+                    <option value="auto">Auto Detect</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="English">English</option>
+                </select>
+
+                <button class="send-btn" id="saveSettings">
+                    Save Settings
+                </button>
+
+            </div>
+
+            <div class="welcome" id="welcome">
+
+                <div class="welcome-icon">✦</div>
+
+                <h1>
+                    What can I help <span class="gradient">you with?</span>
+                </h1>
+
+                <p>
+                    Ask questions, create study materials, generate code
+                    and explore new ideas with AI.
+                </p>
+
+            </div>
+
+            <div class="quick-grid" id="quickGrid">
+
+                <button class="quick-card" data-prompt="कक्षा 10 के इतिहास के लिए 30 कठिन MCQ प्रश्न बनाइए। प्रत्येक प्रश्न के चार विकल्प, सही उत्तर और विस्तृत व्याख्या दीजिए।">
+                    <span class="icon">📚</span>
+                    <strong>MCQ Generator</strong>
+                    <small>प्रश्न, उत्तर और व्याख्या</small>
+                </button>
+
+                <button class="quick-card" data-prompt="कक्षा 10 सामाजिक विज्ञान के लिए 80 अंकों का एक संतुलित प्रश्नपत्र तैयार कीजिए। इसमें वस्तुनिष्ठ, लघु उत्तरीय और दीर्घ उत्तरीय प्रश्न शामिल करें।">
+                    <span class="icon">📝</span>
+                    <strong>Question Paper</strong>
+                    <small>पूरा प्रश्नपत्र तैयार करें</small>
+                </button>
+
+                <button class="quick-card" data-prompt="इस विषय पर विद्यार्थियों के लिए व्यवस्थित हिंदी नोट्स तैयार कीजिए। परिभाषाएँ, मुख्य बिंदु, उदाहरण और महत्वपूर्ण प्रश्न शामिल करें: ">
+                    <span class="icon">📖</span>
+                    <strong>Notes Maker</strong>
+                    <small>व्यवस्थित अध्ययन सामग्री</small>
+                </button>
+
+                <button class="quick-card" data-prompt="इस विषय को सरल हिंदी में उदाहरण सहित समझाइए: ">
+                    <span class="icon">💡</span>
+                    <strong>Explain a Topic</strong>
+                    <small>सरल भाषा में समझें</small>
+                </button>
+
+                <button class="quick-card" data-prompt="मेरे लिए एक पूरा HTML, CSS और JavaScript वेब एप्लिकेशन तैयार करने में सहायता कीजिए। मेरी आवश्यकता है: ">
+                    <span class="icon">💻</span>
+                    <strong>Code Assistant</strong>
+                    <small>कोड और प्रोग्रामिंग</small>
+                </button>
+
+                <button class="quick-card" data-prompt="इस विषय पर विद्यार्थियों के लिए एक रोचक शैक्षणिक गतिविधि, उसके नियम, आवश्यक सामग्री और मूल्यांकन विधि सहित तैयार कीजिए: ">
+                    <span class="icon">🎯</span>
+                    <strong>Activity Maker</strong>
+                    <small>कक्षा की गतिविधियाँ</small>
+                </button>
+
+            </div>
+
+            <div class="chat" id="chat"></div>
+
+            <div class="composer-area">
+
+                <form class="composer" id="chatForm">
+
+                    <textarea
+                        id="prompt"
+                        placeholder="Ask anything... हिंदी या English में लिखें"
+                        aria-label="अपना सवाल लिखें"
+                        required
+                    ></textarea>
+
+                    <div class="composer-bottom">
+
+                        <div class="composer-tools">
+
+                            <button type="button" class="tool-btn" id="voiceBtn">
+                                🎤 Voice
+                            </button>
+
+                            <button type="button" class="tool-btn" id="clearInput">
+                                ✕ Clear
+                            </button>
+
+                        </div>
+
+                        <button type="submit" class="send-btn" id="sendBtn">
+                            Send ↑
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <div class="disclaimer">
+                    AI द्वारा दिए गए उत्तरों में गलतियाँ हो सकती हैं।
+                    महत्वपूर्ण जानकारी को सत्यापित करें।
+                    API का उपयोग आपके सर्वर की configuration और
+                    provider की नीतियों के अधीन है।
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const chat = $("chat");
+const promptInput = $("prompt");
+const sendBtn = $("sendBtn");
+const welcome = $("welcome");
+const quickGrid = $("quickGrid");
+const settings = $("settings");
+
+let messages = [];
+let busy = false;
+let activeController = null;
+
+const STORAGE_KEY = "ai_assistant_history_v1";
+const SETTINGS_KEY = "ai_assistant_settings_v1";
+
+function toast(message) {
+    const el = $("toast");
+    el.textContent = message;
+    el.classList.add("show");
+
+    setTimeout(() => {
+        el.classList.remove("show");
+    }, 2800);
+}
+
+function loadSettings() {
+    try {
+        const saved = JSON.parse(
+            localStorage.getItem(SETTINGS_KEY) || "{}"
+        );
+
+        if (saved.model) $("model").value = saved.model;
+        if (saved.language) $("language").value = saved.language;
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+function saveSettings() {
+    localStorage.setItem(
+        SETTINGS_KEY,
+        JSON.stringify({
+            model: $("model").value,
+            language: $("language").value
+        })
+    );
+
+    toast("Settings saved");
+}
+
+function updateStatus(text, color) {
+    $("connectionStatus").textContent = "● " + text;
+    $("connectionStatus").style.color = color;
+}
+
+function showWelcome(show) {
+    welcome.style.display = show ? "block" : "none";
+    quickGrid.style.display = show ? "grid" : "none";
+}
+
+function createMessage(role, content, save = true) {
+    const item = {
+        role,
+        content
+    };
+
+    if (save) {
+        messages.push(item);
+    }
+
+    const row = document.createElement("div");
+    row.className = "message";
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = role === "user" ? "👤" : "✦";
+
+    const contentBox = document.createElement("div");
+    contentBox.className = "message-content";
+
+    const roleLabel = document.createElement("div");
+    roleLabel.className = "message-role";
+    roleLabel.textContent = role === "user" ? "You" : "AI Assistant";
+
+    const text = document.createElement("div");
+    text.className = "message-text";
+    text.textContent = content;
+
+    contentBox.append(roleLabel, text);
+    row.append(avatar, contentBox);
+
+    if (role === "assistant") {
+        const actions = document.createElement("div");
+        actions.className = "message-actions";
+
+        const copyBtn = document.createElement("button");
+        copyBtn.className = "mini-btn";
+        copyBtn.textContent = "📋 Copy";
+
+        copyBtn.onclick = async () => {
+            try {
+                await navigator.clipboard.writeText(content);
+                toast("Answer copied");
+            } catch {
+                toast("Copy सुविधा उपलब्ध नहीं है");
+            }
+        };
+
+        const downloadBtn = document.createElement("button");
+        downloadBtn.className = "mini-btn";
+        downloadBtn.textContent = "⬇ Download TXT";
+
+        downloadBtn.onclick = () => downloadText(content);
+
+        actions.append(copyBtn, downloadBtn);
+        contentBox.appendChild(actions);
+    }
+
+    chat.appendChild(row);
+    row.scrollIntoView({ behavior: "smooth", block: "end" });
+
+    return { row, text };
+}
+
+function downloadText(text) {
+    const blob = new Blob([text], {
+        type: "text/plain;charset=utf-8"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "AI-Answer.txt";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function renderHistory() {
+    const history = $("history");
+    history.replaceChildren();
+
+    let saved = [];
+
+    try {
+        saved = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "[]"
+        );
+    } catch (e) {}
+
+    saved.slice(0, 10).forEach((conversation, index) => {
+        const button = document.createElement("button");
+
+        button.className = "nav-item";
+        button.textContent =
+            "💬 " + (conversation.title || "Conversation " + (index + 1));
+
+        button.onclick = () => {
+            messages = Array.isArray(conversation.messages)
+                ? conversation.messages.slice()
+                : [];
+
+            chat.replaceChildren();
+            showWelcome(messages.length === 0);
+
+            messages.forEach(m => {
+                createMessage(m.role, m.content, false);
+            });
+
+            $("sidebar").classList.remove("open");
+        };
+
+        history.appendChild(button);
+    });
+}
+
+function saveConversation() {
+    if (!messages.length) return;
+
+    let saved = [];
+
+    try {
+        saved = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "[]"
+        );
+    } catch (e) {}
+
+    const firstUser = messages.find(m => m.role === "user");
+
+    const title = firstUser
+        ? firstUser.content.slice(0, 45)
+        : "New Conversation";
+
+    saved.unshift({
+        title,
+        messages: messages.slice()
+    });
+
+    saved = saved.slice(0, 10);
+
+    try {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(saved)
+        );
+    } catch (e) {
+        toast("Storage full: कुछ पुरानी बातचीत हटाएँ");
+    }
+
+    renderHistory();
+}
+
+function newChat() {
+    if (busy && activeController) {
+        activeController.abort();
+    }
+
+    busy = false;
+    activeController = null;
+    messages = [];
+
+    chat.replaceChildren();
+    promptInput.value = "";
+
+    showWelcome(true);
+    sendBtn.disabled = false;
+    sendBtn.textContent = "Send ↑";
+
+    $("sidebar").classList.remove("open");
+
+    updateStatus("Ready", "#00c9a7");
+}
+
+function setBusy(value) {
+    busy = value;
+    sendBtn.disabled = value;
+    sendBtn.textContent = value ? "Thinking..." : "Send ↑";
+}
+
+async function askAI(userText) {
+    if (busy) return;
+
+    showWelcome(false);
+
+    createMessage("user", userText);
+    promptInput.value = "";
+
+    setBusy(true);
+    updateStatus("AI is responding...", "#f5c56a");
+
+    const pending = createMessage(
+        "assistant",
+        "AI जवाब तैयार कर रहा है...",
+        false
+    );
+
+    activeController = new AbortController();
+
+    try {
+        const language = $("language").value;
+        const model = $("model").value;
+
+        const response = await fetch("/.netlify/functions/chat", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message: userText,
+                history: messages.slice(-20, -1),
+                language,
+                model
+            }),
+
+            signal: activeController.signal
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "AI सेवा से जवाब नहीं मिला।"
+            );
+        }
+
+        const answer = data.answer || "कोई जवाब प्राप्त नहीं हुआ।";
+
+        pending.text.textContent = answer;
+
+        messages.push({
+            role: "assistant",
+            content: answer
+        });
+
+        const actions = document.createElement("div");
+        actions.className = "message-actions";
+
+        const copy = document.createElement("button");
+        copy.className = "mini-btn";
+        copy.textContent = "📋 Copy";
+
+        copy.onclick = async () => {
+            try {
+                await navigator.clipboard.writeText(answer);
+                toast("Answer copied");
+            } catch {
+                toast("Copy सुविधा उपलब्ध नहीं है");
+            }
+        };
+
+        const download = document.createElement("button");
+        download.className = "mini-btn";
+        download.textContent = "⬇ Download TXT";
+        download.onclick = () => downloadText(answer);
+
+        actions.append(copy, download);
+        pending.text.parentElement.appendChild(actions);
+
+        saveConversation();
+
+        updateStatus("Connected", "#00c9a7");
+
+    } catch (error) {
+        if (error.name === "AbortError") {
+            pending.text.textContent = "यह अनुरोध रद्द कर दिया गया।";
+        } else {
+            pending.text.textContent =
+                "त्रुटि: " + error.message +
+                "\n\nजाँचें कि Netlify Function डिप्लॉय है और " +
+                "OPENAI_API_KEY सही तरीके से सेट की गई है।";
+
+            updateStatus("Connection error", "#ff647c");
+        }
+
+    } finally {
+        setBusy(false);
+        activeController = null;
+    }
+}
+
+$("chatForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const text = promptInput.value.trim();
+
+    if (!text) return;
+
+    await askAI(text);
+});
+
+promptInput.addEventListener("keydown", event => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        $("chatForm").requestSubmit();
+    }
+});
+
+document.querySelectorAll("[data-prompt]").forEach(button => {
+    button.addEventListener("click", () => {
+        promptInput.value = button.dataset.prompt;
+        promptInput.focus();
+    });
+
+    button.addEventListener("dblclick", () => {
+        promptInput.value = button.dataset.prompt;
+        promptInput.focus();
+    });
+});
+
+$("newChatBtn").onclick = newChat;
+
+$("settingsBtn").onclick = () => {
+    settings.classList.toggle("open");
+};
+
+$("saveSettings").onclick = saveSettings;
+
+$("clearInput").onclick = () => {
+    promptInput.value = "";
+    promptInput.focus();
+};
+
+$("mobileMenu").onclick = () => {
+    $("sidebar").classList.toggle("open");
+};
+
+$("clearHistoryBtn").onclick = () => {
+    if (!confirm("क्या आप सभी सेव की गई बातचीत हटाना चाहते हैं?")) {
+        return;
+    }
+
+    localStorage.removeItem(STORAGE_KEY);
+    renderHistory();
+    toast("History cleared");
+};
+
+$("chatNav").onclick = () => {
+    $("sidebar").classList.remove("open");
+    settings.classList.remove("open");
+};
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "hi-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    $("voiceBtn").onclick = () => {
+        if (busy) return;
+
+        try {
+            recognition.start();
+            toast("अब बोलकर अपना सवाल पूछें");
+        } catch {
+            toast("माइक्रोफोन पहले से सक्रिय है");
+        }
+    };
+
+    recognition.onresult = event => {
+        const transcript =
+            event.results[0][0].transcript;
+
+        promptInput.value +=
+            (promptInput.value ? " " : "") + transcript;
+
+        promptInput.focus();
+    };
+
+    recognition.onerror = () => {
+        toast("Voice input उपलब्ध नहीं हुआ");
+    };
+
+} else {
+    $("voiceBtn").onclick = () => {
+        toast("इस ब्राउज़र में Voice Recognition समर्थित नहीं है");
+    };
+}
+
+loadSettings();
+renderHistory();
+updateStatus("Ready", "#00c9a7");
+</script>
+
+</body>
+</html>
