@@ -1,261 +1,847 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#10264b">
-<title>MCQ QUIZ PRO</title>
+<title>MCQ QUIZ PRO | Smart Test Generator</title>
 
 <style>
-:root{
-  --navy:#10264b;
-  --blue:#2459c4;
-  --cyan:#16c7e8;
-  --green:#128654;
-  --red:#d93443;
-  --orange:#d98b00;
-  --bg:#f2f5fc;
-  --card:#fff;
-  --text:#17233d;
-  --muted:#718096;
-  --border:#e0e6f0;
-  --shadow:0 8px 28px rgba(16,38,75,.08);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.45;cursor:not-allowed}
-.hidden{display:none!important}
-
-.topbar{
-  background:linear-gradient(120deg,var(--navy),#1c3975);
-  color:#fff;
-  padding:12px 15px;
-  position:sticky;
-  top:0;
-  z-index:20;
-  box-shadow:0 4px 18px #10264b25;
-}
-.topbar-inner{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-.brand{display:flex;align-items:center;gap:10px}
-.brand-icon{
-  width:40px;height:40px;
-  display:grid;place-items:center;
-  background:linear-gradient(135deg,#2459c4,#16c7e8);
-  border-radius:12px;font-size:22px;
-}
-.brand h1{font-size:17px;margin:0}
-.brand p{font-size:10px;margin:4px 0 0;color:#d4e1ff}
-.header-right{display:flex;align-items:center;gap:9px}
-.status{
-  padding:7px 10px;
-  border-radius:20px;
-  background:#ffffff18;
-  font-size:10px;
-}
-.language-select{
-  width:auto;min-width:100px;
-  border:1px solid #ffffff55;
-  border-radius:8px;padding:9px;
-  background:white;color:#17233d;
+:root {
+    --navy: #10264b;
+    --navy-light: #1c3975;
+    --blue: #2459c4;
+    --cyan: #16c7e8;
+    --green: #128654;
+    --red: #d93443;
+    --orange: #d98b00;
+    --bg: #f2f5fc;
+    --card: #ffffff;
+    --text: #17233d;
+    --muted: #718096;
+    --border: #e0e6f0;
+    --shadow: 0 8px 28px rgba(16,38,75,.08);
 }
 
-.container{max-width:1200px;margin:22px auto;padding:0 14px 35px}
-.hero{
-  color:white;
-  background:linear-gradient(120deg,#10264b,#315efb);
-  border-radius:19px;
-  padding:27px;
-  margin-bottom:20px;
+* {
+    box-sizing: border-box;
 }
-.hero h2{font-size:clamp(23px,4vw,33px);margin:0 0 12px}
-.hero p{font-size:13px;line-height:1.9;margin:0;color:#e2eaff}
 
-.stats{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:12px;margin-bottom:23px;
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
 }
-.stat,.card,.mode-card,.sidebar{
-  background:white;border:1px solid var(--border);
-  border-radius:15px;box-shadow:var(--shadow);
-}
-.stat{padding:16px}
-.stat-icon{font-size:21px;margin-bottom:8px}
-.stat strong{font-size:22px;display:block}
-.stat span{font-size:11px;color:var(--muted)}
 
-h2,h3{overflow-wrap:anywhere}
-.section-heading{font-size:22px;margin:0 0 8px}
-.muted{color:var(--muted);font-size:12px;line-height:1.8}
-.mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.mode-card{padding:22px;cursor:pointer;transition:.2s;border:2px solid var(--border)}
-.mode-card:hover{border-color:var(--blue);transform:translateY(-2px)}
-.mode-icon{
-  width:55px;height:55px;border-radius:15px;
-  background:#edf2ff;display:grid;place-items:center;
-  font-size:29px;margin-bottom:15px;
+button, input, select {
+    font: inherit;
 }
-.mode-card h3{font-size:20px;margin:0 0 10px}
-.mode-card p{font-size:12px;color:var(--muted);line-height:1.9}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
-.tags span{background:#f0f3fa;border-radius:20px;padding:6px 9px;font-size:10px}
 
-.btn{
-  border:0;border-radius:9px;
-  padding:12px 15px;font-weight:bold;
-  font-size:12px;
+button {
+    cursor: pointer;
 }
-.btn-primary{background:var(--blue);color:white}
-.btn-green{background:var(--green);color:white}
-.btn-light{background:#edf2ff;color:#2448a5}
-.btn-danger{background:#ffebed;color:#b51e2c}
-.btn-block{width:100%}
-.btn-small{padding:8px 10px;font-size:11px}
 
-.card{padding:20px;margin-bottom:17px;min-width:0}
-.card-title{display:flex;align-items:center;gap:10px;font-size:17px;margin:0 0 12px}
-.step{
-  width:32px;height:32px;border-radius:9px;
-  display:grid;place-items:center;
-  background:#eaf0ff;color:var(--blue);font-weight:bold;
-  flex-shrink:0;
+button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
 }
-.form-group{margin:0 0 18px}
-.form-group label,.field-label{
-  display:block;font-size:12px;font-weight:bold;margin-bottom:9px;
+
+.hidden {
+    display: none !important;
 }
-select{
-  width:100%;padding:12px;border-radius:9px;
-  border:1px solid #d7dfed;background:white;color:var(--text);
-  outline:none;
+
+.topbar {
+    background: linear-gradient(120deg, var(--navy), var(--navy-light));
+    color: white;
+    padding: 12px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 4px 18px rgba(16,38,75,.15);
 }
-select:focus{border-color:var(--blue)}
-.toolbar{
-  display:flex;justify-content:space-between;align-items:center;
-  flex-wrap:wrap;gap:10px;margin-bottom:14px;
+
+.topbar-inner {
+    max-width: 1250px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
 }
-.toolbar strong{font-size:12px}
-.toolbar-actions{display:flex;gap:6px;flex-wrap:wrap}
-.subject-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.check-card,.chapter-check,.difficulty-card{
-  display:flex;align-items:flex-start;gap:9px;
-  border:1px solid var(--border);border-radius:10px;
-  padding:12px;cursor:pointer;font-size:12px;line-height:1.7;
-  min-width:0;overflow-wrap:anywhere;
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    font-size: 23px;
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.brand p {
+    margin: 4px 0 0;
+    font-size: 10px;
+    color: #d5e2ff;
+}
+
+.status {
+    padding: 8px 11px;
+    background: #ffffff18;
+    border: 1px solid #ffffff28;
+    border-radius: 25px;
+    font-size: 10px;
+}
+
+.container {
+    max-width: 1250px;
+    margin: 22px auto;
+    padding: 0 15px 35px;
+}
+
+.hero {
+    background: linear-gradient(120deg, var(--navy), #315efb);
+    color: white;
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 21px;
+}
+
+.hero h2 {
+    margin: 0 0 12px;
+    font-size: clamp(24px, 4vw, 34px);
+    line-height: 1.3;
+}
+
+.hero p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #e1eaff;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+}
+
+.stat-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+.stat span {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.section-heading {
+    font-size: 23px;
+    margin: 0 0 8px;
+}
+
+.description {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.mode-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.mode-card {
+    background: white;
+    padding: 23px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    transition: .2s;
+}
+
+.mode-card:hover {
+    border-color: var(--blue);
+    transform: translateY(-2px);
+}
+
+.mode-icon {
+    width: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+    background: #edf2ff;
+    border-radius: 15px;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.mode-card h3 {
+    font-size: 21px;
+    margin: 0 0 10px;
+}
+
+.mode-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 15px 0;
+}
+
+.tags span {
+    background: #f0f3fa;
+    border-radius: 20px;
+    padding: 7px 10px;
+    font-size: 10px;
+}
+
+.btn {
+    border: 0;
+    border-radius: 9px;
+    padding: 12px 15px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: .15s;
+}
+
+.btn:hover:not(:disabled) {
+    filter: brightness(.96);
+}
+
+.btn-primary {
+    background: var(--blue);
+    color: white;
+}
+
+.btn-green {
+    background: var(--green);
+    color: white;
+}
+
+.btn-light {
+    background: #edf2ff;
+    color: #2448a5;
+}
+
+.btn-danger {
+    background: #ffebed;
+    color: #b51e2c;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-small {
+    padding: 8px 11px;
+    font-size: 11px;
+}
+
+.card, .sidebar {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    min-width: 0;
+}
+
+.card {
+    margin-bottom: 17px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    margin: 0 0 16px;
+}
+
+.step {
+    width: 33px;
+    height: 33px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: #eaf0ff;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 19px;
+}
+
+.form-group label,
+.field-label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 9px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d7dfed;
+    border-radius: 9px;
+    background: white;
+    color: var(--text);
+    outline: none;
+}
+
+select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px #2459c414;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.toolbar strong {
+    font-size: 12px;
+}
+
+.toolbar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.check-card,
+.chapter-check,
+.difficulty-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1.7;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
 .check-card:has(input:checked),
 .chapter-check:has(input:checked),
-.difficulty-card:has(input:checked){
-  background:#edf2ff;border-color:var(--blue);
-}
-.check-card input,.chapter-check input,.difficulty-card input{
-  accent-color:var(--blue);margin-top:3px;flex-shrink:0;
-}
-.subject-info{min-width:0}
-.subject-count{display:block;font-size:10px;color:var(--muted);margin-top:4px}
-.chapter-group{border:1px solid var(--border);padding:13px;border-radius:11px;margin-bottom:12px}
-.chapter-heading{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin-bottom:12px}
-.chapter-heading span{color:var(--muted)}
-.chapter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.difficulty-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.difficulty-card strong{display:block;font-size:12px}
-.difficulty-card small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
-.info-box,.error-box,.success-box{
-  padding:12px;border-radius:9px;font-size:12px;line-height:1.9;margin-bottom:14px;
-}
-.info-box{background:#fff7e6;border:1px solid #f1dda6;color:#855e06}
-.error-box{background:#fff0f0;border:1px solid #f3c2c2;color:#a51e2b}
-.success-box{background:#e9f9ef;border:1px solid #b9e9cd;color:#087543}
-.empty{
-  grid-column:1/-1;text-align:center;padding:20px;
-  border:1px dashed #cbd5e1;border-radius:10px;
-  color:var(--muted);font-size:12px;line-height:1.9;
-}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 255px;gap:17px;align-items:start}
-.sidebar{padding:16px;margin-bottom:15px}
-.sidebar h3{font-size:13px;margin:0 0 12px}
-.sidebar-item{font-size:11px;padding:9px 0;border-bottom:1px solid var(--border);line-height:1.7}
-.sidebar-item:last-child{border:0}
-
-.quiz-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
-.badge{background:#edf2ff;color:var(--blue);padding:8px 10px;border-radius:8px;font-size:10px}
-.timer{background:#ffeded;color:#b51e2c;padding:9px 11px;border-radius:8px;font-weight:bold;font-size:12px}
-.progress-track{height:6px;background:#e8edf6;border-radius:10px;overflow:hidden;margin:17px 0}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0}
-.question-meta{font-size:11px;color:var(--muted);line-height:1.8}
-.question-text{font-size:18px;line-height:1.9;margin:18px 0}
-.options{display:grid;gap:10px}
-.option{
-  display:flex;align-items:flex-start;gap:10px;
-  padding:13px;border:1px solid var(--border);
-  border-radius:10px;cursor:pointer;font-size:13px;line-height:1.8;
-}
-.option.selected{background:#edf2ff;border-color:var(--blue)}
-.option-letter{
-  width:26px;height:26px;display:grid;place-items:center;
-  background:#edf0f7;border-radius:7px;font-size:11px;font-weight:bold;flex-shrink:0;
-}
-.option.selected .option-letter{background:var(--blue);color:white}
-.quiz-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-.quiz-actions button{flex:1;min-width:90px}
-.palette{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
-.palette button{border:0;border-radius:7px;aspect-ratio:1;background:#edf0f7;font-size:11px}
-.palette button.answered{background:#d8f7e8;color:#087543}
-.palette button.current{outline:2px solid var(--blue);background:#e8efff;color:var(--blue)}
-.palette button.review{background:#fff0cb;color:#865900}
-.result-hero{
-  background:linear-gradient(120deg,#10264b,#315efb);
-  color:white;text-align:center;padding:28px;border-radius:17px;margin-bottom:18px;
-}
-.score-circle{
-  width:125px;height:125px;border:7px solid #ffffff55;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;margin:20px auto;
-}
-.score-circle strong{font-size:32px}
-.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:18px}
-.result-stat{text-align:center;background:#f4f6fb;border-radius:10px;padding:15px 5px}
-.result-stat strong{display:block;font-size:22px;margin-bottom:5px}
-.result-stat span{font-size:10px;color:var(--muted)}
-.review-row{padding:14px 0;border-bottom:1px solid var(--border);font-size:12px;line-height:1.9;overflow-wrap:anywhere}
-.correct{color:var(--green);font-weight:bold}.wrong{color:var(--red);font-weight:bold}
-footer{text-align:center;color:var(--muted);font-size:10px;padding:22px 0}
-.toast{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-  background:#10264b;color:white;padding:13px 17px;border-radius:10px;
-  z-index:99;max-width:90%;font-size:12px;text-align:center;
+.difficulty-card:has(input:checked) {
+    background: #edf2ff;
+    border-color: var(--blue);
 }
 
-@media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
-@media(max-width:600px){
- .topbar{padding:9px}.brand h1{font-size:14px}.brand p{font-size:9px}
- .brand-icon{width:35px;height:35px}.status{display:none}
- .language-select{min-width:80px;padding:8px 4px;font-size:11px}
- .container{padding:0 10px 25px;margin-top:15px}
- .hero{padding:22px 17px}.card{padding:15px}
- .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .stat{padding:13px}.stat strong{font-size:20px}
- .mode-grid{grid-template-columns:1fr}
- .subject-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .chapter-grid,.difficulty-grid{grid-template-columns:1fr}
- .result-grid{grid-template-columns:repeat(2,1fr)}
- .question-text{font-size:16px}.palette{grid-template-columns:repeat(6,minmax(0,1fr))}
+.check-card input,
+.chapter-check input,
+.difficulty-card input {
+    accent-color: var(--blue);
+    margin-top: 3px;
+    flex-shrink: 0;
 }
-@media print{
- .topbar,footer,.back-btn,.quiz-actions,.sidebar{display:none!important}
- body{background:white}.container{max-width:100%}
+
+.subject-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.subject-count {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.chapter-group {
+    border: 1px solid var(--border);
+    padding: 13px;
+    border-radius: 11px;
+    margin-bottom: 12px;
+}
+
+.chapter-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.chapter-heading span {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.difficulty-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.difficulty-card strong {
+    display: block;
+    font-size: 12px;
+}
+
+.difficulty-card small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+.info-box, .error-box, .success-box {
+    padding: 12px;
+    border-radius: 9px;
+    font-size: 12px;
+    line-height: 1.9;
+    margin-bottom: 14px;
+    overflow-wrap: anywhere;
+}
+
+.info-box {
+    background: #fff7e6;
+    border: 1px solid #f1dda6;
+    color: #855e06;
+}
+
+.error-box {
+    background: #fff0f0;
+    border: 1px solid #f3c2c2;
+    color: #a51e2b;
+}
+
+.success-box {
+    background: #e9f9ef;
+    border: 1px solid #b9e9cd;
+    color: #087543;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    padding: 20px 13px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 18px;
+    align-items: start;
+}
+
+.sidebar {
+    padding: 17px;
+    margin-bottom: 15px;
+}
+
+.sidebar h3 {
+    font-size: 13px;
+    margin: 0 0 12px;
+}
+
+.sidebar-item {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.sidebar-item:last-child {
+    border-bottom: 0;
+}
+
+.back-btn {
+    margin-bottom: 15px;
+}
+
+.quiz-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: #edf2ff;
+    color: var(--blue);
+    padding: 8px 11px;
+    border-radius: 8px;
+    font-size: 10px;
+    overflow-wrap: anywhere;
+}
+
+.timer {
+    background: #ffeded;
+    color: #b51e2c;
+    padding: 9px 11px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.progress-track {
+    height: 6px;
+    background: #e8edf6;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 18px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    transition: width .2s;
+}
+
+.question-meta {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.question-text {
+    font-size: 18px;
+    line-height: 1.9;
+    margin: 18px 0 22px;
+    overflow-wrap: anywhere;
+}
+
+.options {
+    display: grid;
+    gap: 10px;
+}
+
+.option {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.option.selected {
+    background: #edf2ff;
+    border-color: var(--blue);
+}
+
+.option-letter {
+    width: 27px;
+    height: 27px;
+    display: grid;
+    place-items: center;
+    background: #edf0f7;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.option.selected .option-letter {
+    background: var(--blue);
+    color: white;
+}
+
+.quiz-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.quiz-actions button {
+    flex: 1;
+    min-width: 90px;
+}
+
+.palette {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 7px;
+}
+
+.palette button {
+    border: 0;
+    border-radius: 7px;
+    aspect-ratio: 1;
+    background: #edf0f7;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.palette button.answered {
+    background: #d8f7e8;
+    color: #087543;
+}
+
+.palette button.current {
+    outline: 2px solid var(--blue);
+    background: #e8efff;
+    color: var(--blue);
+}
+
+.palette button.review {
+    background: #fff0cb;
+    color: #865900;
+}
+
+.result-hero {
+    background: linear-gradient(120deg, var(--navy), #315efb);
+    color: white;
+    text-align: center;
+    padding: 28px;
+    border-radius: 17px;
+    margin-bottom: 18px;
+}
+
+.score-circle {
+    width: 125px;
+    height: 125px;
+    border: 7px solid #ffffff55;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px auto;
+}
+
+.score-circle strong {
+    font-size: 32px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+    margin-bottom: 18px;
+}
+
+.result-stat {
+    text-align: center;
+    background: #f4f6fb;
+    border-radius: 10px;
+    padding: 15px 5px;
+}
+
+.result-stat strong {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.result-stat span {
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.review-row {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+}
+
+.correct-text {
+    color: var(--green);
+    font-weight: bold;
+}
+
+.wrong-text {
+    color: var(--red);
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 10px;
+    padding: 22px 0;
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy);
+    color: white;
+    padding: 13px 17px;
+    border-radius: 10px;
+    z-index: 100;
+    max-width: 90%;
+    font-size: 12px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .topbar {
+        padding: 10px;
+    }
+
+    .brand h1 {
+        font-size: 14px;
+    }
+
+    .brand p {
+        font-size: 9px;
+    }
+
+    .brand-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .status {
+        display: none;
+    }
+
+    .container {
+        padding: 0 10px 25px;
+        margin-top: 15px;
+    }
+
+    .hero {
+        padding: 22px 17px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .stat {
+        padding: 13px;
+    }
+
+    .mode-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .subject-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chapter-grid,
+    .difficulty-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .question-text {
+        font-size: 16px;
+    }
+
+    .palette {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+
+@media print {
+    .topbar,
+    footer,
+    .back-btn,
+    .quiz-actions,
+    .sidebar,
+    .toast {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .container {
+        max-width: 100%;
+    }
 }
 </style>
 </head>
@@ -263,1448 +849,1968 @@ footer{text-align:center;color:var(--muted);font-size:10px;padding:22px 0}
 <body>
 
 <header class="topbar">
- <div class="topbar-inner">
-  <div class="brand">
-   <div class="brand-icon">🎓</div>
-   <div>
-    <h1>MCQ QUIZ PRO</h1>
-    <p data-t="tagline">School & Competitive Examination System</p>
-   </div>
-  </div>
-  <div class="header-right">
-   <div class="status" id="status">● Loading</div>
-   <select id="uiLanguage" class="language-select" aria-label="Interface language">
-    <option value="hi">हिन्दी</option>
-    <option value="en">English</option>
-   </select>
-  </div>
- </div>
+    <div class="topbar-inner">
+        <div class="brand">
+            <div class="brand-icon">🎓</div>
+            <div>
+                <h1>MCQ QUIZ PRO</h1>
+                <p>School &amp; Competitive Examination System</p>
+            </div>
+        </div>
+        <div class="status" id="status">● Initializing</div>
+    </div>
 </header>
 
 <main class="container">
 
-<!-- HOME -->
+<!-- HOME SCREEN -->
 <section id="homeScreen">
- <div class="hero">
-  <h2 data-t="heroTitle">अपनी तैयारी, अपना टेस्ट! 🚀</h2>
-  <p data-t="heroDesc">अपनी कक्षा, विषय, अध्याय और कठिनाई स्तर चुनकर प्रश्नपत्र तैयार करें।</p>
- </div>
 
- <div class="stats">
-  <div class="stat"><div class="stat-icon">📚</div><strong id="statQuestions">0</strong><span data-t="totalQuestions">कुल प्रश्न</span></div>
-  <div class="stat"><div class="stat-icon">🏫</div><strong id="statClasses">0</strong><span data-t="schoolClasses">स्कूल कक्षाएँ</span></div>
-  <div class="stat"><div class="stat-icon">📖</div><strong id="statSubjects">0</strong><span data-t="subjects">विषय</span></div>
-  <div class="stat"><div class="stat-icon">🗂️</div><strong id="statChapters">0</strong><span data-t="chapters">अध्याय</span></div>
- </div>
+    <div class="hero">
+        <h2>Your Preparation, Your Test! 🚀</h2>
+        <p>
+            Create customized multiple-choice tests for school examinations,
+            BPSC, UPSC, SSC, Railway and other competitive examinations.
+            Select your class, subjects, chapters and difficulty levels.
+        </p>
+    </div>
 
- <h2 class="section-heading" data-t="chooseSection">अपना सेक्शन चुनें</h2>
- <p class="muted" data-t="chooseSectionDesc">परीक्षा की तैयारी शुरू करने के लिए एक सेक्शन चुनें।</p>
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-icon">📚</div>
+            <strong id="statQuestions">0</strong>
+            <span>Total Questions</span>
+        </div>
 
- <div class="mode-grid">
-  <div class="mode-card">
-   <div class="mode-icon">🏫</div>
-   <h3 data-t="schoolStudent">School Student</h3>
-   <p data-t="schoolDesc">कक्षा 6 से 12 तक के विद्यार्थी अपनी कक्षा, विषय और अध्याय चुन सकते हैं।</p>
-   <div class="tags"><span>Class 6–12</span><span>Multiple Subjects</span><span>Chapter Selection</span></div>
-   <button type="button" class="btn btn-green btn-block" id="openSchool" data-t="openSchool">School Section खोलें →</button>
-  </div>
-  <div class="mode-card">
-   <div class="mode-icon">🎯</div>
-   <h3 data-t="competitiveStudent">Competitive Student</h3>
-   <p data-t="competitiveDesc">BPSC, UPSC, SSC, Railway और अन्य प्रतियोगी परीक्षाओं की तैयारी करें।</p>
-   <div class="tags"><span>BPSC</span><span>UPSC</span><span>SSC</span><span>Railway</span></div>
-   <button type="button" class="btn btn-primary btn-block" id="openCompetitive" data-t="openCompetitive">Competitive Section खोलें →</button>
-  </div>
- </div>
+        <div class="stat">
+            <div class="stat-icon">🏫</div>
+            <strong id="statClasses">0</strong>
+            <span>School Classes</span>
+        </div>
 
- <div class="card" style="margin-top:18px">
-  <h3 class="card-title" data-t="bankStatus">📡 Question Bank Status</h3>
-  <p id="dataInfo" class="muted">प्रश्न लोड हो रहे हैं...</p>
-  <div id="loadError" class="error-box hidden" style="margin-top:10px"></div>
-  <button type="button" class="btn btn-light btn-small" id="reloadButton" style="margin-top:10px" data-t="reload">↻ Reload Questions</button>
- </div>
+        <div class="stat">
+            <div class="stat-icon">📖</div>
+            <strong id="statSubjects">0</strong>
+            <span>Subjects</span>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">🗂️</div>
+            <strong id="statChapters">0</strong>
+            <span>Chapters</span>
+        </div>
+    </div>
+
+    <h2 class="section-heading">Choose Your Section</h2>
+    <p class="description">Select the examination category you want to prepare for.</p>
+
+    <div class="mode-grid">
+
+        <div class="mode-card">
+            <div class="mode-icon">🏫</div>
+            <h3>School Student</h3>
+            <p>
+                Create customized tests for Classes 6–12 by selecting your
+                class, subjects, chapters and difficulty levels.
+            </p>
+
+            <div class="tags">
+                <span>Classes 6–12</span>
+                <span>Multiple Subjects</span>
+                <span>Chapter Selection</span>
+            </div>
+
+            <button type="button" class="btn btn-green btn-block" id="openSchool">
+                Open School Section →
+            </button>
+        </div>
+
+        <div class="mode-card">
+            <div class="mode-icon">🎯</div>
+            <h3>Competitive Student</h3>
+            <p>
+                Prepare for BPSC, UPSC, SSC, Railway and other competitive
+                examinations using your question bank.
+            </p>
+
+            <div class="tags">
+                <span>BPSC</span>
+                <span>UPSC</span>
+                <span>SSC</span>
+                <span>Railway</span>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-block" id="openCompetitive">
+                Open Competitive Section →
+            </button>
+        </div>
+
+    </div>
+
+    <div class="card" style="margin-top:18px">
+        <h3 class="card-title">📡 Question Bank Status</h3>
+        <p id="dataInfo" class="description">Loading questions...</p>
+
+        <div id="loadError" class="error-box hidden"></div>
+
+        <button type="button" class="btn btn-light btn-small" id="reloadButton">
+            ↻ Reload Questions
+        </button>
+    </div>
+
 </section>
 
 <!-- SCHOOL SETUP -->
 <section id="schoolScreen" class="hidden">
- <button type="button" class="btn btn-light back-btn" data-home data-t="home">← मुख्य पृष्ठ</button>
- <div class="hero"><h2 data-t="schoolSetup">🏫 School Student Test</h2><p data-t="schoolSetupDesc">कक्षा, भाषा, कठिनाई स्तर, विषय और अध्याय चुनें।</p></div>
 
- <div class="layout"><div>
-  <div class="card">
-   <h3 class="card-title"><span class="step">1</span><span data-t="chooseClass">कक्षा चुनें</span></h3>
-   <div class="form-group"><label for="classSelect" data-t="class">कक्षा</label><select id="classSelect"><option value="">-- कक्षा चुनें --</option></select></div>
-  </div>
+    <button type="button" class="btn btn-light back-btn" data-home>
+        ← Back to Home
+    </button>
 
-  <div class="card">
-   <h3 class="card-title"><span class="step">2</span><span data-t="languageDifficulty">भाषा और कठिनाई स्तर</span></h3>
-   <div class="form-group"><label for="schoolLanguage" data-t="paperLanguage">प्रश्नपत्र की भाषा</label>
-    <select id="schoolLanguage"><option value="Hindi">हिन्दी</option><option value="English">English</option></select>
-   </div>
-   <div class="form-group">
-    <span class="field-label" data-t="difficulty">कठिनाई स्तर</span>
-    <div class="difficulty-grid">
-     <label class="difficulty-card"><input type="checkbox" name="schoolLevel" value="Easy"><span><strong data-t="easy">🟢 Easy</strong><small data-t="easyDesc">आसान प्रश्न</small></span></label>
-     <label class="difficulty-card"><input type="checkbox" name="schoolLevel" value="Moderate"><span><strong data-t="moderate">🟡 Moderate</strong><small data-t="moderateDesc">मध्यम स्तर</small></span></label>
-     <label class="difficulty-card"><input type="checkbox" name="schoolLevel" value="Tough"><span><strong data-t="tough">🔴 Tough</strong><small data-t="toughDesc">कठिन प्रश्न</small></span></label>
+    <div class="hero">
+        <h2>🏫 School Student Test</h2>
+        <p>Select a class, language-independent English content, subjects, chapters and difficulty levels.</p>
     </div>
-   </div>
-   <div class="info-box" data-t="levelHelp">एक या अधिक कठिनाई स्तर चुन सकते हैं।</div>
-  </div>
 
-  <div class="card">
-   <h3 class="card-title"><span class="step">3</span><span data-t="chooseSubjects">विषय चुनें</span></h3>
-   <div class="toolbar"><strong id="schoolSubjectCount">0</strong><div class="toolbar-actions"><button type="button" class="btn btn-light btn-small" id="schoolSelectAll" data-t="selectAll">सभी चुनें</button><button type="button" class="btn btn-light btn-small" id="schoolClearAll" data-t="clearAll">सभी हटाएँ</button></div></div>
-   <div id="schoolSubjects" class="subject-grid"><div class="empty">पहले कक्षा चुनें।</div></div>
-  </div>
+    <div class="layout">
+        <div>
 
-  <div class="card">
-   <h3 class="card-title"><span class="step">4</span><span data-t="chooseChapters">अध्याय चुनें</span></h3>
-   <div class="toolbar"><strong id="schoolChapterCount">0</strong><div class="toolbar-actions"><button type="button" class="btn btn-light btn-small" id="schoolChapterAll" data-t="selectAll">सभी चुनें</button><button type="button" class="btn btn-light btn-small" id="schoolChapterClear" data-t="clearAll">सभी हटाएँ</button></div></div>
-   <div id="schoolChapters"><div class="empty">पहले विषय चुनें।</div></div>
-  </div>
+            <div class="card">
+                <h3 class="card-title"><span class="step">1</span> Choose Class</h3>
 
-  <div class="card">
-   <h3 class="card-title"><span class="step">5</span><span data-t="testSettings">टेस्ट सेटिंग्स</span></h3>
-   <div class="form-group"><label for="schoolLimit" data-t="questionCount">प्रश्नों की संख्या</label>
-    <select id="schoolLimit"><option value="10">10</option><option value="20">20</option><option value="30" selected>30</option><option value="50">50</option><option value="100">100</option><option value="all" data-t="allQuestions">सभी उपलब्ध प्रश्न</option></select>
-   </div>
-   <div class="form-group"><label for="schoolTime" data-t="timeLimit">समय सीमा</label>
-    <select id="schoolTime"><option value="10">10 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="60">60 minutes</option><option value="0" data-t="noTimeLimit">बिना समय सीमा</option></select>
-   </div>
-   <div class="info-box" id="schoolSummary">कक्षा और विषय चुनें।</div>
-   <button type="button" class="btn btn-green btn-block" id="startSchool" data-t="startSchool">🚀 स्कूल टेस्ट शुरू करें</button>
-  </div>
- </div>
+                <div class="form-group">
+                    <label for="classSelect">Class</label>
+                    <select id="classSelect">
+                        <option value="">-- Choose Class --</option>
+                    </select>
+                </div>
+            </div>
 
- <aside class="sidebar">
-  <h3 data-t="schoolFeatures">📘 School Test Features</h3>
-  <div class="sidebar-item" data-t="classBased">✓ कक्षा के अनुसार प्रश्न</div>
-  <div class="sidebar-item" data-t="hindiEnglish">✓ हिन्दी और English</div>
-  <div class="sidebar-item">✓ Easy / Moderate / Tough</div>
-  <div class="sidebar-item" data-t="multipleSubjects">✓ Multiple Subjects</div>
-  <div class="sidebar-item" data-t="multipleChapters">✓ Multiple Chapters</div>
-  <div class="sidebar-item" data-t="resultExplanation">✓ रिजल्ट और व्याख्या</div>
- </aside></div>
+            <div class="card">
+                <h3 class="card-title"><span class="step">2</span> Choose Difficulty</h3>
+
+                <div class="form-group">
+                    <span class="field-label">Difficulty Levels</span>
+
+                    <div class="difficulty-grid">
+                        <label class="difficulty-card">
+                            <input type="checkbox" name="schoolLevel" value="Easy">
+                            <span><strong>🟢 Easy</strong><small>Basic questions</small></span>
+                        </label>
+
+                        <label class="difficulty-card">
+                            <input type="checkbox" name="schoolLevel" value="Moderate">
+                            <span><strong>🟡 Moderate</strong><small>Intermediate questions</small></span>
+                        </label>
+
+                        <label class="difficulty-card">
+                            <input type="checkbox" name="schoolLevel" value="Tough">
+                            <span><strong>🔴 Tough</strong><small>Advanced questions</small></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    Select one or more difficulty levels. The test will include questions matching your selections.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title"><span class="step">3</span> Choose Subjects</h3>
+
+                <div class="toolbar">
+                    <strong id="schoolSubjectCount">0 subjects</strong>
+
+                    <div class="toolbar-actions">
+                        <button type="button" class="btn btn-light btn-small" id="schoolSelectAll">Select All</button>
+                        <button type="button" class="btn btn-light btn-small" id="schoolClearAll">Clear All</button>
+                    </div>
+                </div>
+
+                <div id="schoolSubjects" class="subject-grid">
+                    <div class="empty">Choose a class first.</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title"><span class="step">4</span> Choose Chapters</h3>
+
+                <div class="toolbar">
+                    <strong id="schoolChapterCount">0 chapters</strong>
+
+                    <div class="toolbar-actions">
+                        <button type="button" class="btn btn-light btn-small" id="schoolChapterAll">Select All</button>
+                        <button type="button" class="btn btn-light btn-small" id="schoolChapterClear">Clear All</button>
+                    </div>
+                </div>
+
+                <div id="schoolChapters">
+                    <div class="empty">Select one or more subjects first.</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title"><span class="step">5</span> Test Settings</h3>
+
+                <div class="form-group">
+                    <label for="schoolLimit">Number of Questions</label>
+                    <select id="schoolLimit">
+                        <option value="10">10 Questions</option>
+                        <option value="20">20 Questions</option>
+                        <option value="30" selected>30 Questions</option>
+                        <option value="50">50 Questions</option>
+                        <option value="100">100 Questions</option>
+                        <option value="all">All Available Questions</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="schoolTime">Time Limit</label>
+                    <select id="schoolTime">
+                        <option value="10">10 Minutes</option>
+                        <option value="20">20 Minutes</option>
+                        <option value="30" selected>30 Minutes</option>
+                        <option value="60">60 Minutes</option>
+                        <option value="0">No Time Limit</option>
+                    </select>
+                </div>
+
+                <div class="info-box" id="schoolSummary">Choose your class and subjects.</div>
+
+                <button type="button" class="btn btn-green btn-block" id="startSchool">
+                    🚀 Start School Test
+                </button>
+            </div>
+
+        </div>
+
+        <aside>
+            <div class="sidebar">
+                <h3>📘 School Test Features</h3>
+                <div class="sidebar-item">✓ Class-based questions</div>
+                <div class="sidebar-item">✓ Multiple subjects</div>
+                <div class="sidebar-item">✓ Multiple chapters</div>
+                <div class="sidebar-item">✓ Multiple difficulty levels</div>
+                <div class="sidebar-item">✓ Timed examination</div>
+                <div class="sidebar-item">✓ Results and explanations</div>
+            </div>
+        </aside>
+
+    </div>
 </section>
 
 <!-- COMPETITIVE SETUP -->
 <section id="competitiveScreen" class="hidden">
- <button type="button" class="btn btn-light back-btn" data-home data-t="home">← मुख्य पृष्ठ</button>
- <div class="hero"><h2 data-t="competitiveSetup">🎯 Competitive Exam Preparation</h2><p data-t="competitiveSetupDesc">परीक्षा, भाषा, कठिनाई स्तर, विषय और अध्याय चुनें।</p></div>
 
- <div class="layout"><div>
-  <div class="card">
-   <h3 class="card-title"><span class="step">1</span><span data-t="chooseExam">परीक्षा चुनें</span></h3>
-   <div class="form-group"><label for="examSelect" data-t="targetExam">लक्षित परीक्षा</label>
-    <select id="examSelect"><option value="All Competitive Exams">All Competitive Exams</option><option value="BPSC">BPSC</option><option value="UPSC">UPSC</option><option value="SSC">SSC</option><option value="Railway">Railway</option><option value="Other">Other</option></select>
-   </div>
-  </div>
+    <button type="button" class="btn btn-light back-btn" data-home>
+        ← Back to Home
+    </button>
 
-  <div class="card">
-   <h3 class="card-title"><span class="step">2</span><span data-t="languageDifficulty">भाषा और कठिनाई स्तर</span></h3>
-   <div class="form-group"><label for="competitiveLanguage" data-t="paperLanguage">प्रश्नपत्र की भाषा</label>
-    <select id="competitiveLanguage"><option value="Hindi">हिन्दी</option><option value="English">English</option></select>
-   </div>
-   <div class="form-group"><span class="field-label" data-t="difficulty">कठिनाई स्तर</span>
-    <div class="difficulty-grid">
-     <label class="difficulty-card"><input type="checkbox" name="competitiveLevel" value="Easy"><span><strong data-t="easy">🟢 Easy</strong><small data-t="easyDesc">आसान प्रश्न</small></span></label>
-     <label class="difficulty-card"><input type="checkbox" name="competitiveLevel" value="Moderate"><span><strong data-t="moderate">🟡 Moderate</strong><small data-t="moderateDesc">मध्यम स्तर</small></span></label>
-     <label class="difficulty-card"><input type="checkbox" name="competitiveLevel" value="Tough"><span><strong data-t="tough">🔴 Tough</strong><small data-t="toughDesc">कठिन प्रश्न</small></span></label>
+    <div class="hero">
+        <h2>🎯 Competitive Exam Preparation</h2>
+        <p>Prepare for competitive examinations using questions marked as Competitive in your question bank.</p>
     </div>
-   </div>
-  </div>
 
-  <div class="card">
-   <h3 class="card-title"><span class="step">3</span><span data-t="chooseSubjects">विषय चुनें</span></h3>
-   <div class="toolbar"><strong id="competitiveSubjectCount">0</strong><div class="toolbar-actions"><button type="button" class="btn btn-light btn-small" id="competitiveSelectAll" data-t="selectAll">सभी चुनें</button><button type="button" class="btn btn-light btn-small" id="competitiveClearAll" data-t="clearAll">सभी हटाएँ</button></div></div>
-   <div id="competitiveSubjects" class="subject-grid"><div class="empty">प्रश्न लोड हो रहे हैं।</div></div>
-  </div>
+    <div class="layout">
+        <div>
 
-  <div class="card">
-   <h3 class="card-title"><span class="step">4</span><span data-t="chooseChapters">अध्याय चुनें</span></h3>
-   <div class="toolbar"><strong id="competitiveChapterCount">0</strong><div class="toolbar-actions"><button type="button" class="btn btn-light btn-small" id="competitiveChapterAll" data-t="selectAll">सभी चुनें</button><button type="button" class="btn btn-light btn-small" id="competitiveChapterClear" data-t="clearAll">सभी हटाएँ</button></div></div>
-   <div id="competitiveChapters"><div class="empty">पहले विषय चुनें।</div></div>
-  </div>
+            <div class="card">
+                <h3 class="card-title"><span class="step">1</span> Choose Examination</h3>
 
-  <div class="card">
-   <h3 class="card-title"><span class="step">5</span><span data-t="testSettings">टेस्ट सेटिंग्स</span></h3>
-   <div class="form-group"><label for="competitiveLimit" data-t="questionCount">प्रश्नों की संख्या</label>
-    <select id="competitiveLimit"><option value="10">10</option><option value="20">20</option><option value="30" selected>30</option><option value="50">50</option><option value="100">100</option><option value="all" data-t="allQuestions">सभी उपलब्ध प्रश्न</option></select>
-   </div>
-   <div class="form-group"><label for="competitiveTime" data-t="timeLimit">समय सीमा</label>
-    <select id="competitiveTime"><option value="10">10 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="60">60 minutes</option><option value="120">120 minutes</option><option value="0" data-t="noTimeLimit">बिना समय सीमा</option></select>
-   </div>
-   <div class="info-box" id="competitiveSummary">विषय और अध्याय चुनें।</div>
-   <button type="button" class="btn btn-primary btn-block" id="startCompetitive" data-t="startCompetitive">🚀 Competitive Test Generate करें</button>
-  </div>
- </div>
+                <div class="form-group">
+                    <label for="examSelect">Target Examination</label>
+                    <select id="examSelect">
+                        <option value="All Competitive Exams">All Competitive Exams</option>
+                        <option value="BPSC">BPSC</option>
+                        <option value="UPSC">UPSC Civil Services</option>
+                        <option value="SSC">SSC</option>
+                        <option value="Railway">Railway</option>
+                        <option value="Other">Other Competitive Exams</option>
+                    </select>
+                </div>
+            </div>
 
- <aside class="sidebar">
-  <h3 data-t="competitiveFeatures">🎯 Competitive Subjects</h3>
-  <div class="sidebar-item">Ancient History</div><div class="sidebar-item">Medieval History</div>
-  <div class="sidebar-item">Modern History</div><div class="sidebar-item">Indian Geography</div>
-  <div class="sidebar-item">Indian Polity</div><div class="sidebar-item">Indian Economy</div>
-  <div class="sidebar-item">General Science</div><div class="sidebar-item">Current Affairs</div>
-  <div class="sidebar-item">Bihar Special GK</div><div class="sidebar-item">Environment & Ecology</div>
- </aside></div>
+            <div class="card">
+                <h3 class="card-title"><span class="step">2</span> Choose Difficulty</h3>
+
+                <div class="difficulty-grid">
+                    <label class="difficulty-card">
+                        <input type="checkbox" name="competitiveLevel" value="Easy">
+                        <span><strong>🟢 Easy</strong><small>Basic questions</small></span>
+                    </label>
+
+                    <label class="difficulty-card">
+                        <input type="checkbox" name="competitiveLevel" value="Moderate">
+                        <span><strong>🟡 Moderate</strong><small>Intermediate questions</small></span>
+                    </label>
+
+                    <label class="difficulty-card">
+                        <input type="checkbox" name="competitiveLevel" value="Tough">
+                        <span><strong>🔴 Tough</strong><small>Advanced questions</small></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title"><span class="step">3</span> Choose Subjects</h3>
+
+                <div class="toolbar">
+                    <strong id="competitiveSubjectCount">0 subjects</strong>
+
+                    <div class="toolbar-actions">
+                        <button type="button" class="btn btn-light btn-small" id="competitiveSelectAll">Select All</button>
+                        <button type="button" class="btn btn-light btn-small" id="competitiveClearAll">Clear All</button>
+                    </div>
+                </div>
+
+                <div id="competitiveSubjects" class="subject-grid">
+                    <div class="empty">Loading competitive subjects...</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title"><span class="step">4</span> Choose Chapters</h3>
+
+                <div class="toolbar">
+                    <strong id="competitiveChapterCount">0 chapters</strong>
+
+                    <div class="toolbar-actions">
+                        <button type="button" class="btn btn-light btn-small" id="competitiveChapterAll">Select All</button>
+                        <button type="button" class="btn btn-light btn-small" id="competitiveChapterClear">Clear All</button>
+                    </div>
+                </div>
+
+                <div id="competitiveChapters">
+                    <div class="empty">Choose one or more subjects first.</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title"><span class="step">5</span> Test Settings</h3>
+
+                <div class="form-group">
+                    <label for="competitiveLimit">Number of Questions</label>
+                    <select id="competitiveLimit">
+                        <option value="10">10 Questions</option>
+                        <option value="20">20 Questions</option>
+                        <option value="30" selected>30 Questions</option>
+                        <option value="50">50 Questions</option>
+                        <option value="100">100 Questions</option>
+                        <option value="all">All Available Questions</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="competitiveTime">Time Limit</label>
+                    <select id="competitiveTime">
+                        <option value="10">10 Minutes</option>
+                        <option value="20">20 Minutes</option>
+                        <option value="30" selected>30 Minutes</option>
+                        <option value="60">60 Minutes</option>
+                        <option value="120">120 Minutes</option>
+                        <option value="0">No Time Limit</option>
+                    </select>
+                </div>
+
+                <div class="info-box" id="competitiveSummary">Choose subjects and chapters.</div>
+
+                <button type="button" class="btn btn-primary btn-block" id="startCompetitive">
+                    🚀 Generate Competitive Test
+                </button>
+            </div>
+
+        </div>
+
+        <aside>
+            <div class="sidebar">
+                <h3>🎯 Competitive Preparation</h3>
+                <div class="sidebar-item">Ancient History</div>
+                <div class="sidebar-item">Medieval History</div>
+                <div class="sidebar-item">Modern History</div>
+                <div class="sidebar-item">Indian Geography</div>
+                <div class="sidebar-item">World Geography</div>
+                <div class="sidebar-item">Indian Polity</div>
+                <div class="sidebar-item">Indian Economy</div>
+                <div class="sidebar-item">General Science</div>
+                <div class="sidebar-item">Current Affairs</div>
+                <div class="sidebar-item">Bihar Special GK</div>
+            </div>
+        </aside>
+
+    </div>
 </section>
 
-<!-- QUIZ -->
+<!-- QUIZ SCREEN -->
 <section id="quizScreen" class="hidden">
- <button type="button" class="btn btn-light back-btn" id="exitQuiz" data-t="exitTest">← टेस्ट छोड़ें</button>
- <div class="layout">
-  <div class="card">
-   <div class="quiz-top"><span class="badge" id="quizBadge">MCQ TEST</span><span class="timer" id="timer">⏱ 30:00</span></div>
-   <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
-   <div class="toolbar"><strong id="questionNumber">प्रश्न 1</strong><button type="button" class="btn btn-light btn-small" id="reviewToggle">⭐ Review</button></div>
-   <div id="questionMeta" class="question-meta"></div>
-   <div id="questionText" class="question-text"></div>
-   <div id="options" class="options"></div>
-   <div id="explanation" class="info-box hidden"></div>
-   <div class="quiz-actions">
-    <button type="button" class="btn btn-light" id="previous" data-t="previous">← पिछला</button>
-    <button type="button" class="btn btn-light" id="clearAnswer" data-t="clearAnswer">उत्तर हटाएँ</button>
-    <button type="button" class="btn btn-primary" id="next" data-t="next">अगला →</button>
-    <button type="button" class="btn btn-green" id="submit" data-t="submitTest">टेस्ट जमा करें ✓</button>
-   </div>
-  </div>
-  <aside>
-   <div class="sidebar"><h3 data-t="questionPalette">📋 प्रश्न सूची</h3><div id="palette" class="palette"></div>
-    <div class="sidebar-item" data-t="legendAnswered">हरा: उत्तर दिया</div>
-    <div class="sidebar-item" data-t="legendReview">पीला: Review</div>
-    <div class="sidebar-item" data-t="legendCurrent">नीला: वर्तमान प्रश्न</div>
-   </div>
-   <div class="sidebar"><h3 data-t="progressHeading">📊 प्रगति</h3>
-    <div class="sidebar-item"><span data-t="total">कुल प्रश्न</span>: <strong id="liveTotal">0</strong></div>
-    <div class="sidebar-item"><span data-t="answered">उत्तर दिए</span>: <strong id="liveAnswered">0</strong></div>
-    <div class="sidebar-item"><span data-t="remaining">बाकी</span>: <strong id="liveRemaining">0</strong></div>
-    <div class="sidebar-item"><span data-t="reviewCount">Review</span>: <strong id="liveReview">0</strong></div>
-   </div>
-  </aside>
- </div>
+
+    <button type="button" class="btn btn-light back-btn" id="exitQuiz">
+        ← Exit Test
+    </button>
+
+    <div class="layout">
+        <div class="card">
+
+            <div class="quiz-top">
+                <span class="badge" id="quizBadge">MCQ TEST</span>
+                <span class="timer" id="timer">00:00</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+
+            <div class="toolbar">
+                <strong id="questionNumber">Question 1</strong>
+                <button type="button" class="btn btn-light btn-small" id="reviewToggle">
+                    ⭐ Mark for Review
+                </button>
+            </div>
+
+            <div id="questionMeta" class="question-meta"></div>
+            <div id="questionText" class="question-text"></div>
+            <div id="options" class="options"></div>
+
+            <div id="explanation" class="info-box hidden"></div>
+
+            <div class="quiz-actions">
+                <button type="button" class="btn btn-light" id="previous">← Previous</button>
+                <button type="button" class="btn btn-light" id="clearAnswer">Clear Answer</button>
+                <button type="button" class="btn btn-primary" id="next">Next →</button>
+                <button type="button" class="btn btn-green" id="submit">Submit Test ✓</button>
+            </div>
+
+        </div>
+
+        <aside>
+            <div class="sidebar">
+                <h3>📋 Question Palette</h3>
+                <div id="palette" class="palette"></div>
+                <div class="sidebar-item">Green: Answered</div>
+                <div class="sidebar-item">Yellow: Marked for review</div>
+                <div class="sidebar-item">Blue: Current question</div>
+            </div>
+
+            <div class="sidebar">
+                <h3>📊 Progress</h3>
+                <div class="sidebar-item">Total Questions: <strong id="liveTotal">0</strong></div>
+                <div class="sidebar-item">Answered: <strong id="liveAnswered">0</strong></div>
+                <div class="sidebar-item">Remaining: <strong id="liveRemaining">0</strong></div>
+                <div class="sidebar-item">Review: <strong id="liveReview">0</strong></div>
+            </div>
+        </aside>
+    </div>
 </section>
 
-<!-- RESULT -->
+<!-- RESULT SCREEN -->
 <section id="resultScreen" class="hidden">
- <div class="result-hero"><div style="font-size:38px">🏆</div><h2 data-t="testCompleted">टेस्ट पूरा हुआ!</h2>
-  <div class="score-circle"><strong id="percentage">0%</strong><span data-t="score">Score</span></div>
-  <h3 id="performance">अच्छा प्रयास!</h3>
- </div>
- <div class="card">
-  <div class="result-grid">
-   <div class="result-stat"><strong id="correctCount">0</strong><span data-t="correct">सही</span></div>
-   <div class="result-stat"><strong id="wrongCount">0</strong><span data-t="wrong">गलत</span></div>
-   <div class="result-stat"><strong id="skippedCount">0</strong><span data-t="skipped">छोड़े</span></div>
-   <div class="result-stat"><strong id="accuracy">0%</strong><span data-t="accuracy">Accuracy</span></div>
-  </div>
-  <p id="resultDetails" class="muted"></p>
-  <div class="quiz-actions">
-   <button type="button" class="btn btn-primary" id="showReview" data-t="reviewAnswers">📝 उत्तरों की समीक्षा</button>
-   <button type="button" class="btn btn-light" id="homeButton" data-t="homeButton">🏠 मुख्य पृष्ठ</button>
-   <button type="button" class="btn btn-green" id="retryButton" data-t="retry">↻ फिर से टेस्ट</button>
-   <button type="button" class="btn btn-light" id="printButton" data-t="print">🖨 Print</button>
-  </div>
- </div>
- <div class="card hidden" id="reviewCard"><h3 data-t="reviewAnswers">उत्तर समीक्षा</h3><div id="reviewList"></div></div>
+
+    <div class="result-hero">
+        <div style="font-size:40px">🏆</div>
+        <h2>Test Completed!</h2>
+
+        <div class="score-circle">
+            <strong id="percentage">0%</strong>
+            <span>Score</span>
+        </div>
+
+        <h3 id="performance">Keep Practising!</h3>
+    </div>
+
+    <div class="card">
+
+        <div class="result-grid">
+            <div class="result-stat">
+                <strong id="correctCount">0</strong>
+                <span>Correct</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="wrongCount">0</strong>
+                <span>Incorrect</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="skippedCount">0</strong>
+                <span>Skipped</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="accuracy">0%</strong>
+                <span>Accuracy</span>
+            </div>
+        </div>
+
+        <p id="resultDetails" class="description"></p>
+
+        <div class="quiz-actions">
+            <button type="button" class="btn btn-primary" id="showReview">📝 Review Answers</button>
+            <button type="button" class="btn btn-light" id="homeButton">🏠 Home</button>
+            <button type="button" class="btn btn-green" id="retryButton">↻ Retry Test</button>
+            <button type="button" class="btn btn-light" id="printButton">🖨 Print</button>
+        </div>
+
+    </div>
+
+    <div class="card hidden" id="reviewCard">
+        <h3 class="card-title">📝 Answer Review</h3>
+        <div id="reviewList"></div>
+    </div>
+
 </section>
+
 </main>
 
-<footer data-t="footer">MCQ QUIZ PRO · School & Competitive Examination System</footer>
+<footer>MCQ QUIZ PRO · School &amp; Competitive Examination System</footer>
 <div id="toast" class="toast hidden"></div>
 
 <script>
 "use strict";
 
-/* -------------------------------------------------------
+/* =========================================================
    CONFIGURATION
-------------------------------------------------------- */
+========================================================= */
+
 const QUESTION_FILE_URL =
- "https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
+    "https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
 
 const $ = id => document.getElementById(id);
-const OPTION_KEYS = ["A","B","C","D"];
 
-const TRANSLATIONS = {
-hi:{
- tagline:"स्कूल और प्रतियोगी परीक्षा प्रणाली",
- heroTitle:"अपनी तैयारी, अपना टेस्ट! 🚀",
- heroDesc:"अपनी कक्षा, विषय, अध्याय और कठिनाई स्तर चुनकर प्रश्नपत्र तैयार करें।",
- totalQuestions:"कुल प्रश्न",schoolClasses:"स्कूल कक्षाएँ",subjects:"विषय",chapters:"अध्याय",
- chooseSection:"अपना सेक्शन चुनें",chooseSectionDesc:"परीक्षा की तैयारी शुरू करने के लिए एक सेक्शन चुनें।",
- schoolStudent:"School Student",schoolDesc:"कक्षा 6 से 12 तक के विद्यार्थी अपनी कक्षा, विषय और अध्याय चुन सकते हैं।",
- openSchool:"School Section खोलें →",competitiveStudent:"Competitive Student",
- competitiveDesc:"BPSC, UPSC, SSC, Railway और अन्य प्रतियोगी परीक्षाओं की तैयारी करें।",
- openCompetitive:"Competitive Section खोलें →",bankStatus:"📡 Question Bank Status",
- reload:"↻ Reload Questions",home:"← मुख्य पृष्ठ",
- schoolSetup:"🏫 School Student Test",schoolSetupDesc:"कक्षा, भाषा, कठिनाई स्तर, विषय और अध्याय चुनें।",
- chooseClass:"कक्षा चुनें",class:"कक्षा",languageDifficulty:"भाषा और कठिनाई स्तर",
- paperLanguage:"प्रश्नपत्र की भाषा",difficulty:"कठिनाई स्तर",
- easy:"🟢 आसान",moderate:"🟡 मध्यम",tough:"🔴 कठिन",
- easyDesc:"आसान प्रश्न",moderateDesc:"मध्यम स्तर",toughDesc:"कठिन प्रश्न",
- levelHelp:"एक या अधिक कठिनाई स्तर चुन सकते हैं।",
- chooseSubjects:"विषय चुनें",selectAll:"सभी चुनें",clearAll:"सभी हटाएँ",
- chooseChapters:"अध्याय चुनें",testSettings:"टेस्ट सेटिंग्स",
- questionCount:"प्रश्नों की संख्या",allQuestions:"सभी उपलब्ध प्रश्न",
- timeLimit:"समय सीमा",noTimeLimit:"बिना समय सीमा",
- startSchool:"🚀 स्कूल टेस्ट शुरू करें",schoolFeatures:"📘 स्कूल टेस्ट सुविधाएँ",
- classBased:"✓ कक्षा के अनुसार प्रश्न",hindiEnglish:"✓ हिन्दी और English",
- multipleSubjects:"✓ कई विषय",multipleChapters:"✓ कई अध्याय",
- resultExplanation:"✓ रिजल्ट और व्याख्या",
- competitiveSetup:"🎯 प्रतियोगी परीक्षा की तैयारी",
- competitiveSetupDesc:"परीक्षा, भाषा, कठिनाई स्तर, विषय और अध्याय चुनें।",
- chooseExam:"परीक्षा चुनें",targetExam:"लक्षित परीक्षा",
- startCompetitive:"🚀 प्रतियोगी टेस्ट बनाएँ",
- competitiveFeatures:"🎯 प्रतियोगी विषय",
- exitTest:"← टेस्ट छोड़ें",previous:"← पिछला",clearAnswer:"उत्तर हटाएँ",
- next:"अगला →",submitTest:"टेस्ट जमा करें ✓",
- questionPalette:"📋 प्रश्न सूची",legendAnswered:"हरा: उत्तर दिया",
- legendReview:"पीला: Review",legendCurrent:"नीला: वर्तमान प्रश्न",
- progressHeading:"📊 प्रगति",total:"कुल प्रश्न",answered:"उत्तर दिए",
- remaining:"बाकी",reviewCount:"Review",testCompleted:"टेस्ट पूरा हुआ!",
- score:"स्कोर",correct:"सही",wrong:"गलत",skipped:"छोड़े",
- accuracy:"सटीकता",reviewAnswers:"📝 उत्तरों की समीक्षा",
- homeButton:"🏠 मुख्य पृष्ठ",retry:"↻ फिर से टेस्ट",print:"🖨 Print",
- footer:"MCQ QUIZ PRO · स्कूल और प्रतियोगी परीक्षा प्रणाली",
- chooseClassOption:"-- कक्षा चुनें --",chooseClassFirst:"पहले कक्षा चुनें।",
- chooseSubjectFirst:"पहले एक या अधिक विषय चुनें।",noChapters:"अध्याय उपलब्ध नहीं हैं।",
- questionsAvailable:"उपलब्ध प्रश्न",chaptersSelected:"अध्याय चुने गए",
- notSelected:"नहीं चुना",select:"चुनें",noCompetitive:"प्रतियोगी प्रश्न नहीं मिले।",
- loading:"प्रश्न लोड हो रहे हैं...",loadSuccess:"प्रश्न लोड हो गए।",
- loadError:"प्रश्न लोड नहीं हुए",checkConnection:"इंटरनेट और प्रश्न फ़ाइल का URL जाँचें।",
- chooseLevel:"कम से कम एक कठिनाई स्तर चुनें।",
- noQuestions:"आपके चयन के अनुसार प्रश्न उपलब्ध नहीं हैं।",
- confirmExit:"क्या आप वर्तमान टेस्ट छोड़ना चाहते हैं?",
- confirmSubmit:"क्या आप टेस्ट जमा करना चाहते हैं?",
- unanswered:"प्रश्न अनुत्तरित हैं। क्या टेस्ट जमा करें?",
- clearToast:"उत्तर हटा दिया गया।",question:"प्रश्न",markReview:"⭐ समीक्षा के लिए चिह्नित करें",
- removeReview:"⭐ समीक्षा हटाएँ",notAnswered:"उत्तर नहीं दिया गया",
- yourAnswer:"आपका उत्तर",correctAnswer:"सही उत्तर",explanation:"व्याख्या",
- noExplanation:"व्याख्या उपलब्ध नहीं है।",great:"🏆 शानदार प्रदर्शन!",
- veryGood:"🌟 बहुत अच्छा!",good:"👍 अच्छा प्रयास!",
- practise:"💪 अभ्यास जारी रखें!",autoSubmitted:"समय समाप्त होने पर टेस्ट जमा हुआ।",
- loadQuestionBank:"प्रश्न बैंक लोड करें",minutes:"मिनट",selectSubjects:"विषय चुनें",
- noClassQuestions:"इस कक्षा के लिए प्रश्न नहीं मिले।",
- noCompetitiveQuestions:"questions.txt में CLASS: Competitive वाले प्रश्न जोड़ें।",
- languageChanged:"भाषा बदल दी गई।"
-},
-en:{
- tagline:"School & Competitive Examination System",
- heroTitle:"Your Preparation, Your Test! 🚀",
- heroDesc:"Create tests by selecting your class, subjects, chapters and difficulty levels.",
- totalQuestions:"Total Questions",schoolClasses:"School Classes",subjects:"Subjects",chapters:"Chapters",
- chooseSection:"Choose Your Section",chooseSectionDesc:"Select a section to start preparing.",
- schoolStudent:"School Student",schoolDesc:"Students in Classes 6–12 can select their class, subjects and chapters.",
- openSchool:"Open School Section →",competitiveStudent:"Competitive Student",
- competitiveDesc:"Prepare for BPSC, UPSC, SSC, Railway and other competitive examinations.",
- openCompetitive:"Open Competitive Section →",bankStatus:"📡 Question Bank Status",
- reload:"↻ Reload Questions",home:"← Home",
- schoolSetup:"🏫 School Student Test",schoolSetupDesc:"Choose class, language, difficulty, subjects and chapters.",
- chooseClass:"Choose Class",class:"Class",languageDifficulty:"Language & Difficulty",
- paperLanguage:"Question Paper Language",difficulty:"Difficulty Level",
- easy:"🟢 Easy",moderate:"🟡 Moderate",tough:"🔴 Tough",
- easyDesc:"Easy questions",moderateDesc:"Medium level",toughDesc:"Difficult questions",
- levelHelp:"You can select one or more difficulty levels.",
- chooseSubjects:"Choose Subjects",selectAll:"Select All",clearAll:"Clear All",
- chooseChapters:"Choose Chapters",testSettings:"Test Settings",
- questionCount:"Number of Questions",allQuestions:"All Available Questions",
- timeLimit:"Time Limit",noTimeLimit:"No Time Limit",
- startSchool:"🚀 Start School Test",schoolFeatures:"📘 School Test Features",
- classBased:"✓ Questions by class",hindiEnglish:"✓ Hindi and English",
- multipleSubjects:"✓ Multiple subjects",multipleChapters:"✓ Multiple chapters",
- resultExplanation:"✓ Results and explanations",
- competitiveSetup:"🎯 Competitive Exam Preparation",
- competitiveSetupDesc:"Choose exam, language, difficulty, subjects and chapters.",
- chooseExam:"Choose Exam",targetExam:"Target Examination",
- startCompetitive:"🚀 Generate Competitive Test",
- competitiveFeatures:"🎯 Competitive Subjects",
- exitTest:"← Exit Test",previous:"← Previous",clearAnswer:"Clear Answer",
- next:"Next →",submitTest:"Submit Test ✓",
- questionPalette:"📋 Question Palette",legendAnswered:"Green: Answered",
- legendReview:"Yellow: Review",legendCurrent:"Blue: Current question",
- progressHeading:"📊 Progress",total:"Total questions",answered:"Answered",
- remaining:"Remaining",reviewCount:"Review",testCompleted:"Test Completed!",
- score:"Score",correct:"Correct",wrong:"Wrong",skipped:"Skipped",
- accuracy:"Accuracy",reviewAnswers:"📝 Review Answers",
- homeButton:"🏠 Home",retry:"↻ Retry Test",print:"🖨 Print",
- footer:"MCQ QUIZ PRO · School & Competitive Examination System",
- chooseClassOption:"-- Choose Class --",chooseClassFirst:"Choose a class first.",
- chooseSubjectFirst:"Choose one or more subjects first.",noChapters:"No chapters available.",
- questionsAvailable:"Available questions",chaptersSelected:"chapters selected",
- notSelected:"Not selected",select:"Select",noCompetitive:"No competitive questions found.",
- loading:"Loading questions...",loadSuccess:"questions loaded.",
- loadError:"Questions could not be loaded",checkConnection:"Check your internet and question file URL.",
- chooseLevel:"Please select at least one difficulty level.",
- noQuestions:"No questions match your selection.",
- confirmExit:"Do you want to leave the current test?",
- confirmSubmit:"Do you want to submit the test?",
- unanswered:"questions are unanswered. Submit the test?",
- clearToast:"Answer cleared.",question:"Question",markReview:"⭐ Mark for review",
- removeReview:"⭐ Remove review",notAnswered:"Not answered",
- yourAnswer:"Your answer",correctAnswer:"Correct answer",explanation:"Explanation",
- noExplanation:"Explanation not available.",great:"🏆 Outstanding performance!",
- veryGood:"🌟 Very good!",good:"👍 Good effort!",
- practise:"💪 Keep practising!",autoSubmitted:"Test submitted because time ran out.",
- loadQuestionBank:"Load question bank",minutes:"minutes",selectSubjects:"Select subjects",
- noClassQuestions:"No questions found for this class.",
- noCompetitiveQuestions:"Add questions with CLASS: Competitive to questions.txt.",
- languageChanged:"Language changed."
-}
-};
+const OPTION_KEYS = ["A", "B", "C", "D"];
 
-let uiLanguage=localStorage.getItem("mcqUiLanguage")||"hi";
-let allQuestions=[];
-let quizQuestions=[];
-let answers={};
-let reviewFlags={};
-let currentIndex=0;
-let currentMode="school";
-let currentExam="";
-let paperLanguage="Hindi";
-let selectedLevels=[];
-let timerInterval=null;
-let timeRemaining=0;
-let quizFinished=false;
+/*
+Question record format:
 
-/* -------------------------------------------------------
-   GENERAL HELPERS
-------------------------------------------------------- */
-function tr(key){
- return TRANSLATIONS[uiLanguage]?.[key] ?? TRANSLATIONS.hi[key] ?? key;
+CLASS: 6
+SUBJECT: History
+CHAPTER: Ancient India
+LEVEL: Easy
+Q: Question text?
+A: Option A
+B: Option B
+C: Option C
+D: Option D
+ANSWER: B
+EXPLANATION: Explanation text.
+
+Separate records with a blank line.
+
+Competitive questions must use:
+CLASS: Competitive
+*/
+
+let allQuestions = [];
+let quizQuestions = [];
+let answers = {};
+let reviewFlags = {};
+
+let currentIndex = 0;
+let currentMode = "school";
+let currentExam = "";
+let selectedLevels = [];
+
+let timerInterval = null;
+let timeRemaining = 0;
+let quizFinished = false;
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function norm(value) {
+    return String(value ?? "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
 }
 
-function setText(id,text){
- const el=$(id);
- if(el)el.textContent=text;
+function uniqueSorted(values) {
+    const valuesMap = new Map();
+
+    values.forEach(value => {
+        const text = String(value ?? "").trim();
+
+        if (text && !valuesMap.has(norm(text))) {
+            valuesMap.set(norm(text), text);
+        }
+    });
+
+    return [...valuesMap.values()].sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true })
+    );
 }
 
-function showToast(message){
- const el=$("toast");
- el.textContent=message;
- el.classList.remove("hidden");
- clearTimeout(showToast._timer);
- showToast._timer=setTimeout(()=>el.classList.add("hidden"),3200);
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
 }
 
-function setStatus(message,good=true){
- setText("status",(good?"● ":"● ")+message);
- $("status").style.color=good?"#caffdf":"#ffd3d3";
+function showToast(message) {
+    const toast = $("toast");
+
+    toast.textContent = message;
+    toast.classList.remove("hidden");
+
+    clearTimeout(showToast.timeout);
+
+    showToast.timeout = setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 3500);
 }
 
-function showScreen(screenId){
- ["homeScreen","schoolScreen","competitiveScreen","quizScreen","resultScreen"]
- .forEach(id=>$(id).classList.toggle("hidden",id!==screenId));
- window.scrollTo({top:0,behavior:"smooth"});
+function setStatus(message, success = true) {
+    $("status").textContent = "● " + message;
+    $("status").style.color = success ? "#caffdf" : "#ffd3d3";
 }
 
-function norm(value){
- return String(value??"").trim().toLowerCase().replace(/\s+/g," ");
+function showScreen(screenId) {
+    const screenIds = [
+        "homeScreen",
+        "schoolScreen",
+        "competitiveScreen",
+        "quizScreen",
+        "resultScreen"
+    ];
+
+    screenIds.forEach(id => {
+        $(id).classList.toggle("hidden", id !== screenId);
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
-function uniqueSorted(values){
- const map=new Map();
- values.forEach(v=>{
-  const s=String(v??"").trim();
-  if(s&&!map.has(norm(s)))map.set(norm(s),s);
- });
- return [...map.values()].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+function shuffleArray(array) {
+    const copy = [...array];
+
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+
+    return copy;
 }
 
-function escapeHTML(value){
- return String(value??"").replace(/[&<>"']/g,ch=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- })[ch]);
-}
-
-/* -------------------------------------------------------
-   LANGUAGE SWITCHER
-------------------------------------------------------- */
-function applyLanguage(){
- document.documentElement.lang=uiLanguage;
- $("uiLanguage").value=uiLanguage;
- document.querySelectorAll("[data-t]").forEach(el=>{
-  const key=el.dataset.t;
-  if(TRANSLATIONS[uiLanguage][key]!==undefined){
-   el.textContent=TRANSLATIONS[uiLanguage][key];
-  }
- });
- document.title="MCQ QUIZ PRO";
- updateClassPlaceholder();
- updateSchoolSummary();
- updateCompetitiveSummary();
-
- if(!quizFinished&&!$("quizScreen").classList.contains("hidden")&&quizQuestions.length){
-  renderQuestion();
- }
- if(allQuestions.length){
-  setText("dataInfo",allQuestions.length+" "+tr("loadSuccess"));
- }
-}
-
-$("uiLanguage").addEventListener("change",()=>{
- uiLanguage=$("uiLanguage").value;
- localStorage.setItem("mcqUiLanguage",uiLanguage);
- applyLanguage();
- showToast(tr("languageChanged"));
-});
-
-function updateClassPlaceholder(){
- const sel=$("classSelect");
- if(sel.options.length&&sel.options[0].value===""){
-  sel.options[0].textContent=tr("chooseClassOption");
- }
-}
-
-/* -------------------------------------------------------
-   QUESTION FILE PARSER
-   Supported fields:
-   CLASS, SUBJECT, CHAPTER, LANGUAGE, LEVEL,
-   Q, Q_EN, A, B, C, D, A_EN, B_EN, C_EN, D_EN,
-   ANSWER, EXPLANATION, EXPLANATION_EN
-------------------------------------------------------- */
-function parseQuestions(text){
- const lines=String(text||"")
-  .replace(/^\uFEFF/,"")
-  .replace(/\r\n/g,"\n")
-  .replace(/\r/g,"\n")
-  .split("\n");
-
- const blocks=[];
- let block=[];
-
- for(const line of lines){
-  if(/^\s*Q\s*:/i.test(line)){
-   if(block.length)blocks.push(block);
-   block=[line];
-  }else if(block.length){
-   block.push(line);
-  }
- }
- if(block.length)blocks.push(block);
-
- const fieldMap={
-  CLASS:"className",SUBJECT:"subject",CHAPTER:"chapter",
-  LANGUAGE:"language",LEVEL:"level",
-  Q:"question",Q_EN:"questionEn",
-  A:"A",B:"B",C:"C",D:"D",
-  A_EN:"A_EN",B_EN:"B_EN",C_EN:"C_EN",D_EN:"D_EN",
-  ANSWER:"answer",EXPLANATION:"explanation",
-  EXPLANATION_EN:"explanationEn"
- };
-
- const result=[];
-
- for(const linesInBlock of blocks){
-  const q={
-   className:"",subject:"",chapter:"",language:"",level:"",
-   question:"",questionEn:"",
-   A:"",B:"",C:"",D:"",
-   A_EN:"",B_EN:"",C_EN:"",D_EN:"",
-   answer:"",explanation:"",explanationEn:""
-  };
-
-  for(const line of linesInBlock){
-   const match=line.match(/^\s*(CLASS|SUBJECT|CHAPTER|LANGUAGE|LEVEL|Q_EN|A_EN|B_EN|C_EN|D_EN|EXPLANATION_EN|Q|A|B|C|D|ANSWER|EXPLANATION)\s*:\s*(.*)$/i);
-   if(!match)continue;
-
-   const key=match[1].toUpperCase();
-   const value=match[2].trim();
-   if(fieldMap[key]){
-    q[fieldMap[key]]=key==="ANSWER"?value.toUpperCase():value;
-   }
-  }
-
-  if(
-   q.question&&q.A&&q.B&&q.C&&q.D&&
-   OPTION_KEYS.includes(q.answer)
-  ){
-   q.id=result.length+1;
-   result.push(q);
-  }
- }
- return result;
-}
-
-/* -------------------------------------------------------
-   LOAD QUESTIONS
-------------------------------------------------------- */
-async function loadQuestions(){
- setStatus("Loading...",false);
- setText("dataInfo",tr("loading"));
- $("loadError").classList.add("hidden");
-
- try{
-  const url=QUESTION_FILE_URL+
-   (QUESTION_FILE_URL.includes("?")?"&":"?")+"t="+Date.now();
-
-  const response=await fetch(url,{cache:"no-store"});
-
-  if(!response.ok){
-   throw new Error("HTTP "+response.status);
-  }
-
-  const fileText=await response.text();
-  const parsed=parseQuestions(fileText);
-
-  if(!parsed.length){
-   throw new Error("No valid MCQ records found in questions.txt");
-  }
-
-  allQuestions=parsed;
-  updateStats();
-  populateClasses();
-  renderSchoolSubjects();
-  renderCompetitiveSubjects();
-
-  setText("dataInfo",allQuestions.length+" "+tr("loadSuccess"));
-  setStatus("Questions Loaded",true);
- }catch(error){
-  console.error("Question loading error:",error);
-  allQuestions=[];
-  updateStats();
-
-  setText("dataInfo",tr("loadError"));
-  $("loadError").textContent=
-   error.message+" — "+tr("checkConnection");
-  $("loadError").classList.remove("hidden");
-
-  $("schoolSubjects").innerHTML=
-   '<div class="empty">'+escapeHTML(tr("loadError"))+'</div>';
-  $("competitiveSubjects").innerHTML=
-   '<div class="empty">'+escapeHTML(tr("loadError"))+'</div>';
-
-  setStatus("Load Error",false);
- }
-}
-
-function updateStats(){
- setText("statQuestions",allQuestions.length);
- setText("statClasses",uniqueSorted(
-  allQuestions.filter(q=>!isCompetitive(q)).map(q=>q.className)
- ).length);
- setText("statSubjects",uniqueSorted(allQuestions.map(q=>q.subject)).length);
- setText("statChapters",uniqueSorted(allQuestions.map(q=>q.chapter)).length);
-}
-
-$("reloadButton").addEventListener("click",loadQuestions);
-
-/* -------------------------------------------------------
+/* =========================================================
    NAVIGATION
-------------------------------------------------------- */
-$("openSchool").addEventListener("click",()=>{
- showScreen("schoolScreen");
- if(!allQuestions.length)showToast(tr("loadError"));
+========================================================= */
+
+$("openSchool").addEventListener("click", () => {
+    showScreen("schoolScreen");
 });
 
-$("openCompetitive").addEventListener("click",()=>{
- showScreen("competitiveScreen");
- if(!allQuestions.length)showToast(tr("loadError"));
+$("openCompetitive").addEventListener("click", () => {
+    showScreen("competitiveScreen");
 });
 
-document.querySelectorAll("[data-home]").forEach(btn=>{
- btn.addEventListener("click",()=>showScreen("homeScreen"));
+document.querySelectorAll("[data-home]").forEach(button => {
+    button.addEventListener("click", () => {
+        showScreen("homeScreen");
+    });
 });
 
-/* -------------------------------------------------------
-   SCHOOL SETUP
-------------------------------------------------------- */
-function isCompetitive(q){
- return norm(q.className)==="competitive";
+/* =========================================================
+   QUESTION PARSER
+
+   This parser starts a new question record whenever it
+   encounters CLASS:. Metadata before Q: is preserved.
+
+   Records can be separated by blank lines or placed one
+   after another, provided each record starts with CLASS:.
+========================================================= */
+
+function parseQuestions(text) {
+    const lines = String(text || "")
+        .replace(/^\uFEFF/, "")
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n")
+        .split("\n");
+
+    const records = [];
+    let currentRecord = [];
+
+    for (const line of lines) {
+        if (/^\s*CLASS\s*:/i.test(line)) {
+            if (currentRecord.length) {
+                records.push(currentRecord);
+            }
+
+            currentRecord = [line];
+        } else if (currentRecord.length) {
+            currentRecord.push(line);
+        }
+    }
+
+    if (currentRecord.length) {
+        records.push(currentRecord);
+    }
+
+    const fieldMap = {
+        CLASS: "className",
+        SUBJECT: "subject",
+        CHAPTER: "chapter",
+        LEVEL: "level",
+        LANGUAGE: "language",
+        Q: "question",
+        A: "A",
+        B: "B",
+        C: "C",
+        D: "D",
+        ANSWER: "answer",
+        EXPLANATION: "explanation"
+    };
+
+    const result = [];
+
+    for (const recordLines of records) {
+        const question = {
+            className: "",
+            subject: "",
+            chapter: "",
+            level: "",
+            language: "English",
+            question: "",
+            A: "",
+            B: "",
+            C: "",
+            D: "",
+            answer: "",
+            explanation: ""
+        };
+
+        for (const line of recordLines) {
+            const match = line.match(
+                /^\s*(CLASS|SUBJECT|CHAPTER|LEVEL|LANGUAGE|Q|A|B|C|D|ANSWER|EXPLANATION)\s*:\s*(.*)$/i
+            );
+
+            if (!match) {
+                continue;
+            }
+
+            const key = match[1].toUpperCase();
+            const value = match[2].trim();
+
+            if (fieldMap[key]) {
+                question[fieldMap[key]] =
+                    key === "ANSWER" ? value.toUpperCase() : value;
+            }
+        }
+
+        const valid =
+            question.className &&
+            question.subject &&
+            question.chapter &&
+            question.level &&
+            question.question &&
+            question.A &&
+            question.B &&
+            question.C &&
+            question.D &&
+            OPTION_KEYS.includes(question.answer);
+
+        if (valid) {
+            question.id = result.length + 1;
+            result.push(question);
+        }
+    }
+
+    return result;
 }
 
-function populateClasses(){
- const sel=$("classSelect");
- const oldValue=sel.value;
- const classes=uniqueSorted(
-  allQuestions.filter(q=>!isCompetitive(q)).map(q=>q.className)
- );
+/* =========================================================
+   LOAD QUESTION BANK
+========================================================= */
 
- sel.innerHTML="";
- const first=document.createElement("option");
- first.value="";
- first.textContent=tr("chooseClassOption");
- sel.appendChild(first);
+async function loadQuestions() {
+    setStatus("Loading questions...", false);
 
- classes.forEach(c=>{
-  const option=document.createElement("option");
-  option.value=c;
-  option.textContent=c;
-  sel.appendChild(option);
- });
+    $("dataInfo").textContent = "Connecting to question bank...";
+    $("loadError").classList.add("hidden");
 
- if(classes.includes(oldValue))sel.value=oldValue;
- updateClassPlaceholder();
+    try {
+        const separator = QUESTION_FILE_URL.includes("?") ? "&" : "?";
+
+        const response = await fetch(
+            QUESTION_FILE_URL + separator + "t=" + Date.now(),
+            { cache: "no-store" }
+        );
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const fileText = await response.text();
+
+        const parsedQuestions = parseQuestions(fileText);
+
+        if (!parsedQuestions.length) {
+            throw new Error(
+                "No valid questions found. Check the CLASS, Q, A, B, C, D and ANSWER fields."
+            );
+        }
+
+        allQuestions = parsedQuestions;
+
+        updateStatistics();
+        populateClasses();
+        renderSchoolSubjects();
+        renderCompetitiveSubjects();
+
+        $("dataInfo").textContent =
+            allQuestions.length + " valid questions loaded successfully.";
+
+        setStatus("Question Bank Ready", true);
+
+    } catch (error) {
+        console.error("Question loading failed:", error);
+
+        allQuestions = [];
+
+        updateStatistics();
+
+        $("dataInfo").textContent = "Unable to load the question bank.";
+
+        $("loadError").textContent =
+            error.message +
+            ". Check the GitHub Raw URL, internet connection and questions.txt format.";
+
+        $("loadError").classList.remove("hidden");
+
+        $("schoolSubjects").innerHTML =
+            '<div class="empty">Questions could not be loaded.</div>';
+
+        $("schoolChapters").innerHTML =
+            '<div class="empty">Questions could not be loaded.</div>';
+
+        $("competitiveSubjects").innerHTML =
+            '<div class="empty">Questions could not be loaded.</div>';
+
+        $("competitiveChapters").innerHTML =
+            '<div class="empty">Questions could not be loaded.</div>';
+
+        setStatus("Question Loading Failed", false);
+    }
 }
 
-function selectedLevels(mode){
- const name=mode==="school"?"schoolLevel":"competitiveLevel";
- return [...document.querySelectorAll('input[name="'+name+'"]:checked')]
-  .map(el=>el.value);
+$("reloadButton").addEventListener("click", loadQuestions);
+
+function updateStatistics() {
+    $("statQuestions").textContent = allQuestions.length;
+
+    $("statClasses").textContent = uniqueSorted(
+        allQuestions
+            .filter(question => !isCompetitive(question))
+            .map(question => question.className)
+    ).length;
+
+    $("statSubjects").textContent = uniqueSorted(
+        allQuestions.map(question => question.subject)
+    ).length;
+
+    $("statChapters").textContent = uniqueSorted(
+        allQuestions.map(question => question.chapter)
+    ).length;
 }
 
-function selectedSchoolSubjects(){
- return [...document.querySelectorAll('input[name="schoolSubject"]:checked')]
-  .map(el=>el.value);
+function isCompetitive(question) {
+    return norm(question.className) === "competitive";
 }
 
-function selectedSchoolPairs(){
- return [...document.querySelectorAll('input[name="schoolChapter"]:checked')]
-  .map(el=>({subject:el.dataset.subject,chapter:el.value}));
+/* =========================================================
+   SCHOOL SUBJECTS AND CHAPTERS
+========================================================= */
+
+function populateClasses() {
+    const select = $("classSelect");
+    const previousValue = select.value;
+
+    const classes = uniqueSorted(
+        allQuestions
+            .filter(question => !isCompetitive(question))
+            .map(question => question.className)
+    );
+
+    select.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+
+    placeholder.value = "";
+    placeholder.textContent = "-- Choose Class --";
+
+    select.appendChild(placeholder);
+
+    classes.forEach(className => {
+        const option = document.createElement("option");
+
+        option.value = className;
+        option.textContent = className;
+
+        select.appendChild(option);
+    });
+
+    if (classes.includes(previousValue)) {
+        select.value = previousValue;
+    }
 }
 
-function renderSchoolSubjects(){
- const cls=$("classSelect").value;
- const box=$("schoolSubjects");
- box.innerHTML="";
+function getSelectedLevels(mode) {
+    const name = mode === "school"
+        ? "schoolLevel"
+        : "competitiveLevel";
 
- if(!cls){
-  box.innerHTML='<div class="empty">'+escapeHTML(tr("chooseClassFirst"))+'</div>';
-  setText("schoolSubjectCount","0 "+tr("subjects"));
-  $("schoolChapters").innerHTML='<div class="empty">'+escapeHTML(tr("chooseSubjectFirst"))+'</div>';
-  updateSchoolSummary();
-  return;
- }
-
- const questions=allQuestions.filter(q=>!isCompetitive(q)&&norm(q.className)===norm(cls));
- const subjects=uniqueSorted(questions.map(q=>q.subject));
-
- setText("schoolSubjectCount",subjects.length+" "+tr("subjects"));
-
- if(!subjects.length){
-  box.innerHTML='<div class="empty">'+escapeHTML(tr("noClassQuestions"))+'</div>';
-  $("schoolChapters").innerHTML='<div class="empty">'+escapeHTML(tr("noChapters"))+'</div>';
-  updateSchoolSummary();
-  return;
- }
-
- subjects.forEach(subject=>{
-  const count=questions.filter(q=>norm(q.subject)===norm(subject)).length;
-  const label=document.createElement("label");
-  label.className="check-card";
-
-  const input=document.createElement("input");
-  input.type="checkbox";
-  input.name="schoolSubject";
-  input.value=subject;
-
-  const info=document.createElement("span");
-  info.className="subject-info";
-  info.textContent=subject;
-
-  const small=document.createElement("span");
-  small.className="subject-count";
-  small.textContent=count+" "+tr("totalQuestions");
-  info.appendChild(small);
-
-  label.append(input,info);
-  box.appendChild(label);
-
-  input.addEventListener("change",()=>{
-   renderSchoolChapters();
-   updateSchoolSummary();
-  });
- });
-
- renderSchoolChapters();
+    return [
+        ...document.querySelectorAll(
+            'input[name="' + name + '"]:checked'
+        )
+    ].map(input => input.value);
 }
 
-function renderSchoolChapters(){
- const cls=$("classSelect").value;
- const subjects=selectedSchoolSubjects();
- const box=$("schoolChapters");
- box.innerHTML="";
-
- if(!cls||!subjects.length){
-  box.innerHTML='<div class="empty">'+escapeHTML(tr("chooseSubjectFirst"))+'</div>';
-  updateSchoolSummary();
-  return;
- }
-
- subjects.forEach(subject=>{
-  const qs=allQuestions.filter(q=>
-   !isCompetitive(q)&&
-   norm(q.className)===norm(cls)&&
-   norm(q.subject)===norm(subject)
-  );
-
-  const chapters=uniqueSorted(qs.map(q=>q.chapter));
-  const group=document.createElement("div");
-  group.className="chapter-group";
-
-  const heading=document.createElement("div");
-  heading.className="chapter-heading";
-
-  const title=document.createElement("strong");
-  title.textContent=subject;
-
-  const count=document.createElement("span");
-  count.textContent=chapters.length+" "+tr("chapters");
-
-  heading.append(title,count);
-  group.appendChild(heading);
-
-  const grid=document.createElement("div");
-  grid.className="chapter-grid";
-
-  chapters.forEach(chapter=>{
-   const number=qs.filter(q=>norm(q.chapter)===norm(chapter)).length;
-   const label=document.createElement("label");
-   label.className="chapter-check";
-
-   const input=document.createElement("input");
-   input.type="checkbox";
-   input.name="schoolChapter";
-   input.value=chapter;
-   input.dataset.subject=subject;
-
-   const text=document.createElement("span");
-   text.textContent=chapter+" ("+number+")";
-
-   label.append(input,text);
-   grid.appendChild(label);
-   input.addEventListener("change",updateSchoolSummary);
-  });
-
-  if(!chapters.length){
-   grid.innerHTML='<div class="empty">'+escapeHTML(tr("noChapters"))+'</div>';
-  }
-
-  group.appendChild(grid);
-  box.appendChild(group);
- });
-
- updateSchoolSummary();
+function getSelectedSchoolSubjects() {
+    return [
+        ...document.querySelectorAll(
+            'input[name="schoolSubject"]:checked'
+        )
+    ].map(input => input.value);
 }
 
-function getSchoolBaseQuestions(){
- const cls=$("classSelect").value;
- const pairs=selectedSchoolPairs();
-
- return allQuestions.filter(q=>
-  !isCompetitive(q)&&
-  norm(q.className)===norm(cls)&&
-  pairs.some(p=>
-   norm(p.subject)===norm(q.subject)&&
-   norm(p.chapter)===norm(q.chapter)
-  )
- );
+function getSelectedSchoolPairs() {
+    return [
+        ...document.querySelectorAll(
+            'input[name="schoolChapter"]:checked'
+        )
+    ].map(input => ({
+        subject: input.dataset.subject,
+        chapter: input.value
+    }));
 }
 
-function filterByLevels(questions,levels){
- if(!levels.length)return [];
- return questions.filter(q=>levels.some(level=>norm(level)===norm(q.level)));
+function renderSchoolSubjects() {
+    const className = $("classSelect").value;
+    const container = $("schoolSubjects");
+
+    container.innerHTML = "";
+
+    if (!className) {
+        container.innerHTML =
+            '<div class="empty">Choose a class first.</div>';
+
+        $("schoolSubjectCount").textContent = "0 subjects";
+
+        $("schoolChapters").innerHTML =
+            '<div class="empty">Choose a class first.</div>';
+
+        updateSchoolSummary();
+
+        return;
+    }
+
+    const classQuestions = allQuestions.filter(question =>
+        !isCompetitive(question) &&
+        norm(question.className) === norm(className)
+    );
+
+    const subjects = uniqueSorted(
+        classQuestions.map(question => question.subject)
+    );
+
+    $("schoolSubjectCount").textContent =
+        subjects.length + " subjects";
+
+    if (!subjects.length) {
+        container.innerHTML =
+            '<div class="empty">No questions found for this class.</div>';
+
+        $("schoolChapters").innerHTML =
+            '<div class="empty">No chapters available.</div>';
+
+        updateSchoolSummary();
+
+        return;
+    }
+
+    subjects.forEach(subject => {
+        const count = classQuestions.filter(question =>
+            norm(question.subject) === norm(subject)
+        ).length;
+
+        const label = document.createElement("label");
+        label.className = "check-card";
+
+        const input = document.createElement("input");
+
+        input.type = "checkbox";
+        input.name = "schoolSubject";
+        input.value = subject;
+
+        const info = document.createElement("span");
+        info.className = "subject-info";
+        info.textContent = subject;
+
+        const countText = document.createElement("span");
+        countText.className = "subject-count";
+        countText.textContent = count + " questions";
+
+        info.appendChild(countText);
+
+        label.append(input, info);
+
+        container.appendChild(label);
+
+        input.addEventListener("change", () => {
+            renderSchoolChapters();
+            updateSchoolSummary();
+        });
+    });
+
+    renderSchoolChapters();
 }
 
-function getSchoolQuestions(){
- return filterByLevels(getSchoolBaseQuestions(),selectedLevels("school"));
+function renderSchoolChapters() {
+    const className = $("classSelect").value;
+    const selectedSubjects = getSelectedSchoolSubjects();
+    const container = $("schoolChapters");
+
+    container.innerHTML = "";
+
+    if (!className || !selectedSubjects.length) {
+        container.innerHTML =
+            '<div class="empty">Choose one or more subjects first.</div>';
+
+        updateSchoolSummary();
+
+        return;
+    }
+
+    selectedSubjects.forEach(subject => {
+        const questions = allQuestions.filter(question =>
+            !isCompetitive(question) &&
+            norm(question.className) === norm(className) &&
+            norm(question.subject) === norm(subject)
+        );
+
+        const chapters = uniqueSorted(
+            questions.map(question => question.chapter)
+        );
+
+        const group = document.createElement("div");
+        group.className = "chapter-group";
+
+        const heading = document.createElement("div");
+        heading.className = "chapter-heading";
+
+        const title = document.createElement("strong");
+        title.textContent = subject;
+
+        const count = document.createElement("span");
+        count.textContent = chapters.length + " chapters";
+
+        heading.append(title, count);
+        group.appendChild(heading);
+
+        const grid = document.createElement("div");
+        grid.className = "chapter-grid";
+
+        chapters.forEach(chapter => {
+            const number = questions.filter(question =>
+                norm(question.chapter) === norm(chapter)
+            ).length;
+
+            const label = document.createElement("label");
+            label.className = "chapter-check";
+
+            const input = document.createElement("input");
+
+            input.type = "checkbox";
+            input.name = "schoolChapter";
+            input.value = chapter;
+            input.dataset.subject = subject;
+
+            const text = document.createElement("span");
+            text.textContent = chapter + " (" + number + ")";
+
+            label.append(input, text);
+
+            grid.appendChild(label);
+
+            input.addEventListener("change", updateSchoolSummary);
+        });
+
+        if (!chapters.length) {
+            grid.innerHTML =
+                '<div class="empty">No chapters available.</div>';
+        }
+
+        group.appendChild(grid);
+        container.appendChild(group);
+    });
+
+    updateSchoolSummary();
 }
 
-function updateSchoolSummary(){
- if(!$("schoolSummary"))return;
+function getSchoolBaseQuestions() {
+    const className = $("classSelect").value;
+    const pairs = getSelectedSchoolPairs();
 
- const cls=$("classSelect").value;
- const subjectCount=selectedSchoolSubjects().length;
- const chapterCount=selectedSchoolPairs().length;
- const levels=selectedLevels("school");
- const count=getSchoolQuestions().length;
-
- $("schoolChapterCount").textContent=chapterCount+" "+tr("chaptersSelected");
-
- $("schoolSummary").textContent=
-  tr("class")+": "+(cls||tr("select"))+
-  " | "+tr("subjects")+": "+subjectCount+
-  " | "+tr("chapters")+": "+chapterCount+
-  " | "+tr("questionsAvailable")+": "+count+
-  " | "+tr("difficulty")+": "+(levels.join(", ")||tr("notSelected"));
+    return allQuestions.filter(question =>
+        !isCompetitive(question) &&
+        norm(question.className) === norm(className) &&
+        pairs.some(pair =>
+            norm(pair.subject) === norm(question.subject) &&
+            norm(pair.chapter) === norm(question.chapter)
+        )
+    );
 }
 
-$("classSelect").addEventListener("change",()=>{
- renderSchoolSubjects();
- updateSchoolSummary();
+function getSelectedSchoolPairs() {
+    return [
+        ...document.querySelectorAll(
+            'input[name="schoolChapter"]:checked'
+        )
+    ].map(input => ({
+        subject: input.dataset.subject,
+        chapter: input.value
+    }));
+}
+
+function filterByLevels(questions, levels) {
+    if (!levels.length) {
+        return [];
+    }
+
+    return questions.filter(question =>
+        levels.some(level => norm(level) === norm(question.level))
+    );
+}
+
+function getSchoolQuestions() {
+    return filterByLevels(
+        getSchoolBaseQuestions(),
+        getSelectedLevels("school")
+    );
+}
+
+function updateSchoolSummary() {
+    if (!$("schoolSummary")) {
+        return;
+    }
+
+    const className = $("classSelect").value;
+    const subjectCount = getSelectedSchoolSubjects().length;
+    const chapterCount = getSelectedSchoolPairs().length;
+    const levels = getSelectedLevels("school");
+    const questionCount = getSchoolQuestions().length;
+
+    $("schoolChapterCount").textContent =
+        chapterCount + " chapters selected";
+
+    $("schoolSummary").textContent =
+        "Class: " + (className || "Not selected") +
+        " | Subjects: " + subjectCount +
+        " | Chapters: " + chapterCount +
+        " | Matching questions: " + questionCount +
+        " | Levels: " + (levels.join(", ") || "Not selected");
+}
+
+$("classSelect").addEventListener("change", () => {
+    renderSchoolSubjects();
+    updateSchoolSummary();
 });
 
-$("schoolSelectAll").addEventListener("click",()=>{
- document.querySelectorAll('input[name="schoolSubject"]').forEach(el=>el.checked=true);
- renderSchoolChapters();
+$("schoolSelectAll").addEventListener("click", () => {
+    document.querySelectorAll('input[name="schoolSubject"]')
+        .forEach(input => input.checked = true);
+
+    renderSchoolChapters();
 });
 
-$("schoolClearAll").addEventListener("click",()=>{
- document.querySelectorAll('input[name="schoolSubject"]').forEach(el=>el.checked=false);
- renderSchoolChapters();
+$("schoolClearAll").addEventListener("click", () => {
+    document.querySelectorAll('input[name="schoolSubject"]')
+        .forEach(input => input.checked = false);
+
+    renderSchoolChapters();
 });
 
-$("schoolChapterAll").addEventListener("click",()=>{
- document.querySelectorAll('input[name="schoolChapter"]').forEach(el=>el.checked=true);
- updateSchoolSummary();
+$("schoolChapterAll").addEventListener("click", () => {
+    document.querySelectorAll('input[name="schoolChapter"]')
+        .forEach(input => input.checked = true);
+
+    updateSchoolSummary();
 });
 
-$("schoolChapterClear").addEventListener("click",()=>{
- document.querySelectorAll('input[name="schoolChapter"]').forEach(el=>el.checked=false);
- updateSchoolSummary();
+$("schoolChapterClear").addEventListener("click", () => {
+    document.querySelectorAll('input[name="schoolChapter"]')
+        .forEach(input => input.checked = false);
+
+    updateSchoolSummary();
 });
 
-document.querySelectorAll('input[name="schoolLevel"]').forEach(el=>{
- el.addEventListener("change",updateSchoolSummary);
-});
+document.querySelectorAll('input[name="schoolLevel"]')
+    .forEach(input => {
+        input.addEventListener("change", updateSchoolSummary);
+    });
 
-/* -------------------------------------------------------
-   COMPETITIVE SETUP
-------------------------------------------------------- */
-function selectedCompetitiveSubjects(){
- return [...document.querySelectorAll('input[name="competitiveSubject"]:checked')]
-  .map(el=>el.value);
+/* =========================================================
+   COMPETITIVE SUBJECTS AND CHAPTERS
+========================================================= */
+
+function getSelectedCompetitiveSubjects() {
+    return [
+        ...document.querySelectorAll(
+            'input[name="competitiveSubject"]:checked'
+        )
+    ].map(input => input.value);
 }
 
-function selectedCompetitivePairs(){
- return [...document.querySelectorAll('input[name="competitiveChapter"]:checked')]
-  .map(el=>({subject:el.dataset.subject,chapter:el.value}));
+function getSelectedCompetitivePairs() {
+    return [
+        ...document.querySelectorAll(
+            'input[name="competitiveChapter"]:checked'
+        )
+    ].map(input => ({
+        subject: input.dataset.subject,
+        chapter: input.value
+    }));
 }
 
-function availableCompetitiveSubjects(){
- return uniqueSorted(allQuestions.filter(isCompetitive).map(q=>q.subject));
+function renderCompetitiveSubjects() {
+    const container = $("competitiveSubjects");
+    container.innerHTML = "";
+
+    const subjects = uniqueSorted(
+        allQuestions
+            .filter(isCompetitive)
+            .map(question => question.subject)
+    );
+
+    $("competitiveSubjectCount").textContent =
+        subjects.length + " subjects";
+
+    if (!subjects.length) {
+        container.innerHTML =
+            '<div class="empty">No competitive questions found. Add records with CLASS: Competitive to questions.txt.</div>';
+
+        $("competitiveChapters").innerHTML =
+            '<div class="empty">No competitive chapters are available.</div>';
+
+        updateCompetitiveSummary();
+
+        return;
+    }
+
+    subjects.forEach(subject => {
+        const questions = allQuestions.filter(question =>
+            isCompetitive(question) &&
+            norm(question.subject) === norm(subject)
+        );
+
+        const label = document.createElement("label");
+        label.className = "check-card";
+
+        const input = document.createElement("input");
+
+        input.type = "checkbox";
+        input.name = "competitiveSubject";
+        input.value = subject;
+
+        const info = document.createElement("span");
+        info.className = "subject-info";
+        info.textContent = subject;
+
+        const countText = document.createElement("span");
+        countText.className = "subject-count";
+        countText.textContent = questions.length + " questions";
+
+        info.appendChild(countText);
+        label.append(input, info);
+        container.appendChild(label);
+
+        input.addEventListener("change", () => {
+            renderCompetitiveChapters();
+            updateCompetitiveSummary();
+        });
+    });
+
+    renderCompetitiveChapters();
 }
 
-function renderCompetitiveSubjects(){
- const box=$("competitiveSubjects");
- box.innerHTML="";
+function renderCompetitiveChapters() {
+    const subjects = getSelectedCompetitiveSubjects();
+    const container = $("competitiveChapters");
 
- const subjects=availableCompetitiveSubjects();
+    container.innerHTML = "";
 
- if(!subjects.length){
-  box.innerHTML='<div class="empty">'+escapeHTML(tr("noCompetitiveQuestions"))+'</div>';
-  setText("competitiveSubjectCount","0 "+tr("subjects"));
-  $("competitiveChapters").innerHTML='<div class="empty">'+escapeHTML(tr("chooseSubjectFirst"))+'</div>';
-  updateCompetitiveSummary();
-  return;
- }
+    if (!subjects.length) {
+        container.innerHTML =
+            '<div class="empty">Choose one or more subjects first.</div>';
 
- subjects.forEach(subject=>{
-  const qs=allQuestions.filter(q=>isCompetitive(q)&&norm(q.subject)===norm(subject));
+        updateCompetitiveSummary();
 
-  const label=document.createElement("label");
-  label.className="check-card";
+        return;
+    }
 
-  const input=document.createElement("input");
-  input.type="checkbox";
-  input.name="competitiveSubject";
-  input.value=subject;
+    subjects.forEach(subject => {
+        const questions = allQuestions.filter(question =>
+            isCompetitive(question) &&
+            norm(question.subject) === norm(subject)
+        );
 
-  const info=document.createElement("span");
-  info.className="subject-info";
-  info.textContent=subject;
+        const chapters = uniqueSorted(
+            questions.map(question => question.chapter)
+        );
 
-  const small=document.createElement("span");
-  small.className="subject-count";
-  small.textContent=qs.length+" "+tr("totalQuestions");
-  info.appendChild(small);
+        const group = document.createElement("div");
+        group.className = "chapter-group";
 
-  label.append(input,info);
-  box.appendChild(label);
+        const heading = document.createElement("div");
+        heading.className = "chapter-heading";
 
-  input.addEventListener("change",()=>{
-   renderCompetitiveChapters();
-   updateCompetitiveSummary();
-  });
- });
+        const title = document.createElement("strong");
+        title.textContent = subject;
 
- setText("competitiveSubjectCount",subjects.length+" "+tr("subjects"));
- renderCompetitiveChapters();
+        const count = document.createElement("span");
+        count.textContent = chapters.length + " chapters";
+
+        heading.append(title, count);
+        group.appendChild(heading);
+
+        const grid = document.createElement("div");
+        grid.className = "chapter-grid";
+
+        chapters.forEach(chapter => {
+            const number = questions.filter(question =>
+                norm(question.chapter) === norm(chapter)
+            ).length;
+
+            const label = document.createElement("label");
+            label.className = "chapter-check";
+
+            const input = document.createElement("input");
+
+            input.type = "checkbox";
+            input.name = "competitiveChapter";
+            input.value = chapter;
+            input.dataset.subject = subject;
+
+            const text = document.createElement("span");
+            text.textContent = chapter + " (" + number + ")";
+
+            label.append(input, text);
+            grid.appendChild(label);
+
+            input.addEventListener("change", updateCompetitiveSummary);
+        });
+
+        if (!chapters.length) {
+            grid.innerHTML =
+                '<div class="empty">No chapters available.</div>';
+        }
+
+        group.appendChild(grid);
+        container.appendChild(group);
+    });
+
+    updateCompetitiveSummary();
 }
 
-function renderCompetitiveChapters(){
- const subjects=selectedCompetitiveSubjects();
- const box=$("competitiveChapters");
- box.innerHTML="";
+function getCompetitiveBaseQuestions() {
+    const pairs = getSelectedCompetitivePairs();
 
- if(!subjects.length){
-  box.innerHTML='<div class="empty">'+escapeHTML(tr("chooseSubjectFirst"))+'</div>';
-  updateCompetitiveSummary();
-  return;
- }
-
- subjects.forEach(subject=>{
-  const qs=allQuestions.filter(q=>isCompetitive(q)&&norm(q.subject)===norm(subject));
-  const chapters=uniqueSorted(qs.map(q=>q.chapter));
-
-  const group=document.createElement("div");
-  group.className="chapter-group";
-
-  const heading=document.createElement("div");
-  heading.className="chapter-heading";
-
-  const title=document.createElement("strong");
-  title.textContent=subject;
-
-  const count=document.createElement("span");
-  count.textContent=chapters.length+" "+tr("chapters");
-
-  heading.append(title,count);
-  group.appendChild(heading);
-
-  const grid=document.createElement("div");
-  grid.className="chapter-grid";
-
-  chapters.forEach(chapter=>{
-   const n=qs.filter(q=>norm(q.chapter)===norm(chapter)).length;
-   const label=document.createElement("label");
-   label.className="chapter-check";
-
-   const input=document.createElement("input");
-   input.type="checkbox";
-   input.name="competitiveChapter";
-   input.value=chapter;
-   input.dataset.subject=subject;
-
-   const text=document.createElement("span");
-   text.textContent=chapter+" ("+n+")";
-
-   label.append(input,text);
-   grid.appendChild(label);
-   input.addEventListener("change",updateCompetitiveSummary);
-  });
-
-  if(!chapters.length){
-   grid.innerHTML='<div class="empty">'+escapeHTML(tr("noChapters"))+'</div>';
-  }
-
-  group.appendChild(grid);
-  box.appendChild(group);
- });
-
- updateCompetitiveSummary();
+    return allQuestions.filter(question =>
+        isCompetitive(question) &&
+        pairs.some(pair =>
+            norm(pair.subject) === norm(question.subject) &&
+            norm(pair.chapter) === norm(question.chapter)
+        )
+    );
 }
 
-function getCompetitiveBaseQuestions(){
- const pairs=selectedCompetitivePairs();
-
- return allQuestions.filter(q=>
-  isCompetitive(q)&&
-  pairs.some(p=>
-   norm(p.subject)===norm(q.subject)&&
-   norm(p.chapter)===norm(q.chapter)
-  )
- );
+function getCompetitiveQuestions() {
+    return filterByLevels(
+        getCompetitiveBaseQuestions(),
+        getSelectedLevels("competitive")
+    );
 }
 
-function getCompetitiveQuestions(){
- return filterByLevels(getCompetitiveBaseQuestions(),selectedLevels("competitive"));
+function updateCompetitiveSummary() {
+    if (!$("competitiveSummary")) {
+        return;
+    }
+
+    const levels = getSelectedLevels("competitive");
+
+    $("competitiveChapterCount").textContent =
+        getSelectedCompetitivePairs().length + " chapters selected";
+
+    $("competitiveSummary").textContent =
+        "Exam: " + $("examSelect").value +
+        " | Subjects: " + getSelectedCompetitiveSubjects().length +
+        " | Chapters: " + getSelectedCompetitivePairs().length +
+        " | Matching questions: " + getCompetitiveQuestions().length +
+        " | Levels: " + (levels.join(", ") || "Not selected");
 }
 
-function updateCompetitiveSummary(){
- if(!$("competitiveSummary"))return;
+$("competitiveSelectAll").addEventListener("click", () => {
+    document.querySelectorAll('input[name="competitiveSubject"]')
+        .forEach(input => input.checked = true);
 
- const levels=selectedLevels("competitive");
- const count=getCompetitiveQuestions().length;
-
- $("competitiveChapterCount").textContent=
-  selectedCompetitivePairs().length+" "+tr("chaptersSelected");
-
- $("competitiveSummary").textContent=
-  tr("targetExam")+": "+$("examSelect").value+
-  " | "+tr("subjects")+": "+selectedCompetitiveSubjects().length+
-  " | "+tr("chapters")+": "+selectedCompetitivePairs().length+
-  " | "+tr("questionsAvailable")+": "+count+
-  " | "+tr("difficulty")+": "+(levels.join(", ")||tr("notSelected"));
-}
-
-$("competitiveSelectAll").addEventListener("click",()=>{
- document.querySelectorAll('input[name="competitiveSubject"]').forEach(el=>el.checked=true);
- renderCompetitiveChapters();
+    renderCompetitiveChapters();
 });
 
-$("competitiveClearAll").addEventListener("click",()=>{
- document.querySelectorAll('input[name="competitiveSubject"]').forEach(el=>el.checked=false);
- renderCompetitiveChapters();
+$("competitiveClearAll").addEventListener("click", () => {
+    document.querySelectorAll('input[name="competitiveSubject"]')
+        .forEach(input => input.checked = false);
+
+    renderCompetitiveChapters();
 });
 
-$("competitiveChapterAll").addEventListener("click",()=>{
- document.querySelectorAll('input[name="competitiveChapter"]').forEach(el=>el.checked=true);
- updateCompetitiveSummary();
+$("competitiveChapterAll").addEventListener("click", () => {
+    document.querySelectorAll('input[name="competitiveChapter"]')
+        .forEach(input => input.checked = true);
+
+    updateCompetitiveSummary();
 });
 
-$("competitiveChapterClear").addEventListener("click",()=>{
- document.querySelectorAll('input[name="competitiveChapter"]').forEach(el=>el.checked=false);
- updateCompetitiveSummary();
+$("competitiveChapterClear").addEventListener("click", () => {
+    document.querySelectorAll('input[name="competitiveChapter"]')
+        .forEach(input => input.checked = false);
+
+    updateCompetitiveSummary();
 });
 
-document.querySelectorAll('input[name="competitiveLevel"]').forEach(el=>{
- el.addEventListener("change",updateCompetitiveSummary);
-});
+document.querySelectorAll('input[name="competitiveLevel"]')
+    .forEach(input => {
+        input.addEventListener("change", updateCompetitiveSummary);
+    });
 
-$("examSelect").addEventListener("change",updateCompetitiveSummary);
+$("examSelect").addEventListener("change", updateCompetitiveSummary);
 
-/* -------------------------------------------------------
+/* =========================================================
    START TEST
-------------------------------------------------------- */
-function shuffleArray(array){
- const copy=[...array];
- for(let i=copy.length-1;i>0;i--){
-  const j=Math.floor(Math.random()*(i+1));
-  [copy[i],copy[j]]=[copy[j],copy[i]];
- }
- return copy;
+========================================================= */
+
+function startTest(mode) {
+    try {
+        if (!allQuestions.length) {
+            showToast("The question bank is not loaded. Please reload it first.");
+            loadQuestions();
+            return;
+        }
+
+        const isSchool = mode === "school";
+        const levels = getSelectedLevels(mode);
+
+        if (!levels.length) {
+            showToast("Please select at least one difficulty level.");
+            return;
+        }
+
+        if (isSchool && !$("classSelect").value) {
+            showToast("Please select a class.");
+            return;
+        }
+
+        const selectedSubjects = isSchool
+            ? getSelectedSchoolSubjects()
+            : getSelectedCompetitiveSubjects();
+
+        const selectedChapters = isSchool
+            ? getSelectedSchoolPairs()
+            : getSelectedCompetitivePairs();
+
+        if (!selectedSubjects.length) {
+            showToast("Please select at least one subject.");
+            return;
+        }
+
+        if (!selectedChapters.length) {
+            showToast("Please select at least one chapter.");
+            return;
+        }
+
+        const available = isSchool
+            ? getSchoolQuestions()
+            : getCompetitiveQuestions();
+
+        if (!available.length) {
+            showToast(
+                "No questions match your selections. Check the question bank and difficulty labels."
+            );
+            return;
+        }
+
+        const limit = $(
+            isSchool ? "schoolLimit" : "competitiveLimit"
+        ).value;
+
+        const minutes = Number($(
+            isSchool ? "schoolTime" : "competitiveTime"
+        ).value);
+
+        quizQuestions = limit === "all"
+            ? shuffleArray(available)
+            : shuffleArray(available).slice(0, Number(limit));
+
+        if (!quizQuestions.length) {
+            showToast("No questions are available for this test.");
+            return;
+        }
+
+        currentMode = mode;
+
+        currentExam = isSchool
+            ? $("classSelect").value
+            : $("examSelect").value;
+
+        selectedLevels = [...levels];
+
+        answers = {};
+        reviewFlags = {};
+        currentIndex = 0;
+        quizFinished = false;
+        timeRemaining = minutes * 60;
+
+        $("quizBadge").textContent =
+            currentExam + " | " + levels.join(" + ");
+
+        $("reviewCard").classList.add("hidden");
+
+        showScreen("quizScreen");
+
+        renderQuestion();
+        updateTimer();
+        stopTimer();
+
+        if (minutes > 0) {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+
+                updateTimer();
+
+                if (timeRemaining <= 0) {
+                    finishTest(true);
+                }
+            }, 1000);
+        }
+
+    } catch (error) {
+        console.error("Test initialization error:", error);
+        showToast("Unable to start the test: " + error.message);
+    }
 }
 
-function startTest(mode){
- try{
-  if(!allQuestions.length){
-   showToast(tr("loadError"));
-   loadQuestions();
-   return;
-  }
+$("startSchool").addEventListener("click", () => {
+    startTest("school");
+});
 
-  const school=mode==="school";
-  const levels=selectedLevels(mode);
-  const base=school?getSchoolBaseQuestions():getCompetitiveBaseQuestions();
+$("startCompetitive").addEventListener("click", () => {
+    startTest("competitive");
+});
 
-  if(!levels.length){
-   showToast(tr("chooseLevel"));
-   return;
-  }
-
-  if(school&&!$("classSelect").value){
-   showToast(tr("chooseClassFirst"));
-   return;
-  }
-
-  const subjects=school?selectedSchoolSubjects():selectedCompetitiveSubjects();
-  const chapters=school?selectedSchoolPairs():selectedCompetitivePairs();
-
-  if(!subjects.length||!chapters.length){
-   showToast(tr("chooseSubjectFirst"));
-   return;
-  }
-
-  const available=filterByLevels(base,levels);
-
-  if(!available.length){
-   showToast(tr("noQuestions"));
-   return;
-  }
-
-  const limit=$(school?"schoolLimit":"competitiveLimit").value;
-  const minutes=Number($(school?"schoolTime":"competitiveTime").value);
-
-  quizQuestions=limit==="all"
-   ?shuffleArray(available)
-   :shuffleArray(available).slice(0,Number(limit));
-
-  if(!quizQuestions.length){
-   showToast(tr("noQuestions"));
-   return;
-  }
-
-  currentMode=mode;
-  currentExam=school?$("classSelect").value:$("examSelect").value;
-  paperLanguage=$(school?"schoolLanguage":"competitiveLanguage").value;
-  selectedLevels.length=0;
-  selectedLevels.push(...levels);
-
-  answers={};
-  reviewFlags={};
-  currentIndex=0;
-  quizFinished=false;
-  timeRemaining=minutes*60;
-
-  $("quizBadge").textContent=
-   currentExam+" | "+paperLanguage+" | "+levels.join(" + ");
-
-  showScreen("quizScreen");
-  renderQuestion();
-  updateTimer();
-  stopTimer();
-
-  if(minutes>0){
-   timerInterval=setInterval(()=>{
-    timeRemaining--;
-    updateTimer();
-    if(timeRemaining<=0)finishTest(true);
-   },1000);
-  }
-
- }catch(error){
-  console.error("Unable to start test:",error);
-  showToast("Error: "+error.message);
- }
-}
-
-$("startSchool").addEventListener("click",()=>startTest("school"));
-$("startCompetitive").addEventListener("click",()=>startTest("competitive"));
-
-/* -------------------------------------------------------
+/* =========================================================
    QUIZ ENGINE
-------------------------------------------------------- */
-function stopTimer(){
- if(timerInterval){
-  clearInterval(timerInterval);
-  timerInterval=null;
- }
+========================================================= */
+
+function stopTimer() {
+    if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
 }
 
-function updateTimer(){
- const timeControl=$(currentMode==="school"?"schoolTime":"competitiveTime");
- if(timeControl&&timeControl.value==="0"){
-  setText("timer","⏱ "+tr("noTimeLimit"));
-  return;
- }
- const mins=Math.floor(Math.max(0,timeRemaining)/60);
- const secs=Math.max(0,timeRemaining)%60;
- setText("timer","⏱ "+String(mins).padStart(2,"0")+":"+String(secs).padStart(2,"0"));
+function updateTimer() {
+    const select = $(
+        currentMode === "school" ? "schoolTime" : "competitiveTime"
+    );
+
+    if (select && select.value === "0") {
+        $("timer").textContent = "No Time Limit";
+        return;
+    }
+
+    const minutes = Math.floor(Math.max(0, timeRemaining) / 60);
+    const seconds = Math.max(0, timeRemaining) % 60;
+
+    $("timer").textContent =
+        "⏱ " +
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
 }
 
-function questionText(q){
- if(paperLanguage==="English")return q.questionEn||q.question;
- return q.question;
+function renderQuestion() {
+    const question = quizQuestions[currentIndex];
+
+    if (!question) {
+        return;
+    }
+
+    $("questionNumber").textContent =
+        "Question " + (currentIndex + 1) +
+        " of " + quizQuestions.length;
+
+    $("questionMeta").textContent =
+        question.subject + " | " +
+        question.chapter + " | " +
+        question.level;
+
+    $("questionText").textContent = question.question;
+
+    $("progress").style.width =
+        ((currentIndex + 1) / quizQuestions.length * 100) + "%";
+
+    $("previous").disabled = currentIndex === 0;
+
+    $("next").disabled =
+        currentIndex === quizQuestions.length - 1;
+
+    $("reviewToggle").textContent = reviewFlags[currentIndex]
+        ? "⭐ Remove Review"
+        : "⭐ Mark for Review";
+
+    $("explanation").classList.add("hidden");
+
+    const optionsContainer = $("options");
+    optionsContainer.innerHTML = "";
+
+    OPTION_KEYS.forEach(key => {
+        const option = document.createElement("div");
+
+        option.className =
+            "option" +
+            (answers[currentIndex] === key ? " selected" : "");
+
+        const letter = document.createElement("span");
+        letter.className = "option-letter";
+        letter.textContent = key;
+
+        const text = document.createElement("span");
+        text.textContent = question[key];
+
+        option.append(letter, text);
+
+        option.addEventListener("click", () => {
+            answers[currentIndex] = key;
+            renderQuestion();
+        });
+
+        optionsContainer.appendChild(option);
+    });
+
+    renderPalette();
+    updateLiveProgress();
 }
 
-function optionText(q,key){
- if(paperLanguage==="English")return q[key+"_EN"]||q[key];
- return q[key];
+function renderPalette() {
+    const palette = $("palette");
+    palette.innerHTML = "";
+
+    quizQuestions.forEach((question, index) => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.textContent = index + 1;
+
+        if (answers[index]) {
+            button.classList.add("answered");
+        }
+
+        if (reviewFlags[index]) {
+            button.classList.add("review");
+        }
+
+        if (index === currentIndex) {
+            button.classList.add("current");
+        }
+
+        button.addEventListener("click", () => {
+            currentIndex = index;
+            renderQuestion();
+        });
+
+        palette.appendChild(button);
+    });
 }
 
-function explanationText(q){
- if(paperLanguage==="English")return q.explanationEn||q.explanation||"No explanation available.";
- return q.explanation||tr("noExplanation");
+function updateLiveProgress() {
+    const answeredCount = Object.keys(answers)
+        .filter(key => answers[key]).length;
+
+    $("liveTotal").textContent = quizQuestions.length;
+    $("liveAnswered").textContent = answeredCount;
+    $("liveRemaining").textContent =
+        quizQuestions.length - answeredCount;
+
+    $("liveReview").textContent =
+        Object.values(reviewFlags).filter(Boolean).length;
 }
 
-function renderQuestion(){
- const q=quizQuestions[currentIndex];
- if(!q)return;
-
- setText("questionNumber",tr("question")+" "+(currentIndex+1)+" / "+quizQuestions.length);
- setText("questionMeta",q.subject+" | "+q.chapter+" | "+q.level);
- setText("questionText",questionText(q));
-
- $("progress").style.width=((currentIndex+1)/quizQuestions.length*100)+"%";
- $("previous").disabled=currentIndex===0;
- $("next").disabled=currentIndex===quizQuestions.length-1;
- setText("reviewToggle",reviewFlags[currentIndex]?tr("removeReview"):tr("markReview"));
-
- const box=$("options");
- box.innerHTML="";
-
- OPTION_KEYS.forEach(key=>{
-  const row=document.createElement("div");
-  row.className="option"+(answers[currentIndex]===key?" selected":"");
-
-  const letter=document.createElement("span");
-  letter.className="option-letter";
-  letter.textContent=key;
-
-  const text=document.createElement("span");
-  text.textContent=optionText(q,key);
-
-  row.append(letter,text);
-  row.addEventListener("click",()=>{
-   answers[currentIndex]=key;
-   renderQuestion();
-  });
-
-  box.appendChild(row);
- });
-
- $("explanation").classList.add("hidden");
- renderPalette();
- updateLiveProgress();
-}
-
-function renderPalette(){
- const box=$("palette");
- box.innerHTML="";
-
- quizQuestions.forEach((q,index)=>{
-  const button=document.createElement("button");
-  button.type="button";
-  button.textContent=index+1;
-
-  if(answers[index])button.classList.add("answered");
-  if(reviewFlags[index])button.classList.add("review");
-  if(index===currentIndex)button.classList.add("current");
-
-  button.addEventListener("click",()=>{
-   currentIndex=index;
-   renderQuestion();
-  });
-
-  box.appendChild(button);
- });
-}
-
-function updateLiveProgress(){
- setText("liveTotal",quizQuestions.length);
- setText("liveAnswered",Object.keys(answers).filter(k=>answers[k]).length);
- setText("liveRemaining",quizQuestions.length-Object.keys(answers).filter(k=>answers[k]).length);
- setText("liveReview",Object.values(reviewFlags).filter(Boolean).length);
-}
-
-$("previous").addEventListener("click",()=>{
- if(currentIndex>0){currentIndex--;renderQuestion();}
+$("previous").addEventListener("click", () => {
+    if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+    }
 });
 
-$("next").addEventListener("click",()=>{
- if(currentIndex<quizQuestions.length-1){currentIndex++;renderQuestion();}
+$("next").addEventListener("click", () => {
+    if (currentIndex < quizQuestions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+    }
 });
 
-$("clearAnswer").addEventListener("click",()=>{
- delete answers[currentIndex];
- renderQuestion();
- showToast(tr("clearToast"));
+$("clearAnswer").addEventListener("click", () => {
+    delete answers[currentIndex];
+
+    renderQuestion();
+
+    showToast("Your answer has been cleared.");
 });
 
-$("reviewToggle").addEventListener("click",()=>{
- reviewFlags[currentIndex]=!reviewFlags[currentIndex];
- renderQuestion();
+$("reviewToggle").addEventListener("click", () => {
+    reviewFlags[currentIndex] = !reviewFlags[currentIndex];
+
+    renderQuestion();
 });
 
-$("exitQuiz").addEventListener("click",()=>{
- if(confirm(tr("confirmExit"))){
-  stopTimer();
-  quizFinished=true;
-  showScreen(currentMode==="school"?"schoolScreen":"competitiveScreen");
- }
+$("exitQuiz").addEventListener("click", () => {
+    if (confirm("Do you want to exit the current test?")) {
+        stopTimer();
+        quizFinished = true;
+
+        showScreen(
+            currentMode === "school"
+                ? "schoolScreen"
+                : "competitiveScreen"
+        );
+    }
 });
 
-$("submit").addEventListener("click",()=>{
- const unanswered=quizQuestions.length-
-  Object.keys(answers).filter(k=>answers[k]).length;
+$("submit").addEventListener("click", () => {
+    const answeredCount = Object.keys(answers)
+        .filter(key => answers[key]).length;
 
- const message=unanswered
-  ?unanswered+" "+tr("unanswered")
-  :tr("confirmSubmit");
+    const unanswered = quizQuestions.length - answeredCount;
 
- if(confirm(message))finishTest(false);
+    const message = unanswered > 0
+        ? unanswered + " questions are unanswered. Submit the test?"
+        : "Are you sure you want to submit the test?";
+
+    if (confirm(message)) {
+        finishTest(false);
+    }
 });
 
-/* -------------------------------------------------------
+/* =========================================================
    RESULTS
-------------------------------------------------------- */
-function finishTest(autoSubmitted){
- if(quizFinished)return;
- quizFinished=true;
- stopTimer();
+========================================================= */
 
- let correct=0,wrong=0,skipped=0;
+function finishTest(autoSubmitted) {
+    if (quizFinished) {
+        return;
+    }
 
- quizQuestions.forEach((q,index)=>{
-  if(!answers[index])skipped++;
-  else if(answers[index]===q.answer)correct++;
-  else wrong++;
- });
+    quizFinished = true;
+    stopTimer();
 
- const total=quizQuestions.length;
- const percent=total?Math.round(correct/total*100):0;
- const attempted=total-skipped;
- const accuracy=attempted?Math.round(correct/attempted*100):0;
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
 
- setText("percentage",percent+"%");
- setText("correctCount",correct);
- setText("wrongCount",wrong);
- setText("skippedCount",skipped);
- setText("accuracy",accuracy+"%");
+    quizQuestions.forEach((question, index) => {
+        if (!answers[index]) {
+            skipped++;
+        } else if (answers[index] === question.answer) {
+            correct++;
+        } else {
+            wrong++;
+        }
+    });
 
- let performance;
- if(percent>=90)performance=tr("great");
- else if(percent>=75)performance=tr("veryGood");
- else if(percent>=50)performance=tr("good");
- else performance=tr("practise");
+    const total = quizQuestions.length;
 
- setText("performance",performance);
- setText("resultDetails",
-  currentExam+" | "+paperLanguage+
-  " | "+tr("total")+": "+total+
-  (autoSubmitted?" | "+tr("autoSubmitted"):"")
- );
+    const percentage = total
+        ? Math.round(correct / total * 100)
+        : 0;
 
- $("reviewCard").classList.add("hidden");
- showScreen("resultScreen");
+    const attempted = total - skipped;
+
+    const accuracy = attempted
+        ? Math.round(correct / attempted * 100)
+        : 0;
+
+    $("percentage").textContent = percentage + "%";
+    $("correctCount").textContent = correct;
+    $("wrongCount").textContent = wrong;
+    $("skippedCount").textContent = skipped;
+    $("accuracy").textContent = accuracy + "%";
+
+    let performance;
+
+    if (percentage >= 90) {
+        performance = "Outstanding Performance!";
+    } else if (percentage >= 75) {
+        performance = "Very Good!";
+    } else if (percentage >= 50) {
+        performance = "Good Effort!";
+    } else {
+        performance = "Keep Practising!";
+    }
+
+    $("performance").textContent = performance;
+
+    $("resultDetails").textContent =
+        "Examination: " + currentExam +
+        " | Total Questions: " + total +
+        " | Attempted: " + attempted +
+        " | Difficulty: " + selectedLevels.join(", ") +
+        (autoSubmitted ? " | Automatically submitted when time expired." : "");
+
+    $("reviewCard").classList.add("hidden");
+
+    showScreen("resultScreen");
 }
 
-function renderReview(){
- const box=$("reviewList");
- box.innerHTML="";
+function renderReview() {
+    const container = $("reviewList");
+    container.innerHTML = "";
 
- quizQuestions.forEach((q,index)=>{
-  const row=document.createElement("div");
-  row.className="review-row";
+    quizQuestions.forEach((question, index) => {
+        const row = document.createElement("div");
+        row.className = "review-row";
 
-  const question=document.createElement("strong");
-  question.textContent=(index+1)+". "+questionText(q);
+        const title = document.createElement("strong");
+        title.textContent =
+            (index + 1) + ". " + question.question;
 
-  const result=document.createElement("div");
+        const answerStatus = document.createElement("div");
 
-  if(!answers[index]){
-   result.textContent=tr("yourAnswer")+": "+tr("notAnswered");
-   result.className="wrong";
-  }else if(answers[index]===q.answer){
-   result.textContent=tr("yourAnswer")+": "+answers[index]+" — "+tr("correct");
-   result.className="correct";
-  }else{
-   result.textContent=tr("yourAnswer")+": "+answers[index]+" — "+tr("wrong");
-   result.className="wrong";
-  }
+        if (!answers[index]) {
+            answerStatus.textContent = "Your Answer: Not Answered";
+            answerStatus.className = "wrong-text";
+        } else if (answers[index] === question.answer) {
+            answerStatus.textContent =
+                "Your Answer: " + answers[index] + " — Correct";
 
-  const correct=document.createElement("div");
-  correct.textContent=tr("correctAnswer")+": "+q.answer+". "+optionText(q,q.answer);
+            answerStatus.className = "correct-text";
+        } else {
+            answerStatus.textContent =
+                "Your Answer: " + answers[index] + " — Incorrect";
 
-  const meta=document.createElement("div");
-  meta.textContent=q.subject+" | "+q.chapter+" | "+q.level;
+            answerStatus.className = "wrong-text";
+        }
 
-  const explanation=document.createElement("div");
-  explanation.textContent=tr("explanation")+": "+explanationText(q);
+        const correctAnswer = document.createElement("div");
 
-  row.append(question,result,correct,meta,explanation);
-  box.appendChild(row);
- });
+        correctAnswer.textContent =
+            "Correct Answer: " + question.answer +
+            ". " + question[question.answer];
 
- $("reviewCard").classList.remove("hidden");
- $("reviewCard").scrollIntoView({behavior:"smooth"});
+        const metadata = document.createElement("div");
+
+        metadata.textContent =
+            "Subject: " + question.subject +
+            " | Chapter: " + question.chapter +
+            " | Level: " + question.level;
+
+        const explanation = document.createElement("div");
+
+        explanation.textContent =
+            "Explanation: " +
+            (question.explanation || "No explanation available.");
+
+        row.append(
+            title,
+            answerStatus,
+            correctAnswer,
+            metadata,
+            explanation
+        );
+
+        container.appendChild(row);
+    });
+
+    $("reviewCard").classList.remove("hidden");
+
+    $("reviewCard").scrollIntoView({
+        behavior: "smooth"
+    });
 }
 
-$("showReview").addEventListener("click",renderReview);
+$("showReview").addEventListener("click", renderReview);
 
-$("homeButton").addEventListener("click",()=>{
- stopTimer();
- showScreen("homeScreen");
+$("homeButton").addEventListener("click", () => {
+    stopTimer();
+    showScreen("homeScreen");
 });
 
-$("retryButton").addEventListener("click",()=>{
- showScreen(currentMode==="school"?"schoolScreen":"competitiveScreen");
+$("retryButton").addEventListener("click", () => {
+    showScreen(
+        currentMode === "school"
+            ? "schoolScreen"
+            : "competitiveScreen"
+    );
 });
 
-$("printButton").addEventListener("click",()=>window.print());
-
-/* Keyboard navigation */
-document.addEventListener("keydown",event=>{
- if($("quizScreen").classList.contains("hidden")||quizFinished)return;
-
- if(event.key==="ArrowRight"&&currentIndex<quizQuestions.length-1){
-  currentIndex++;renderQuestion();
- }
- if(event.key==="ArrowLeft"&&currentIndex>0){
-  currentIndex--;renderQuestion();
- }
-
- const keys={"1":"A","2":"B","3":"C","4":"D"};
- if(keys[event.key]){
-  answers[currentIndex]=keys[event.key];
-  renderQuestion();
- }
+$("printButton").addEventListener("click", () => {
+    window.print();
 });
 
-/* Global error reporting */
-window.addEventListener("error",event=>{
- console.error("Application error:",event.message,event.error);
- setStatus("JavaScript Error",false);
+/* =========================================================
+   KEYBOARD SUPPORT
+========================================================= */
+
+document.addEventListener("keydown", event => {
+    if ($("quizScreen").classList.contains("hidden") || quizFinished) {
+        return;
+    }
+
+    if (event.key === "ArrowRight" && currentIndex < quizQuestions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+    }
+
+    if (event.key === "ArrowLeft" && currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+    }
+
+    const keyMap = {
+        "1": "A",
+        "2": "B",
+        "3": "C",
+        "4": "D"
+    };
+
+    if (keyMap[event.key]) {
+        answers[currentIndex] = keyMap[event.key];
+        renderQuestion();
+    }
 });
 
-window.addEventListener("unhandledrejection",event=>{
- console.error("Async error:",event.reason);
- setStatus("Loading Error",false);
+/* =========================================================
+   ERROR HANDLING AND INITIALIZATION
+========================================================= */
+
+window.addEventListener("error", event => {
+    console.error("Application error:", event.message, event.error);
+    setStatus("Application Error", false);
 });
 
-/* Start the app */
-applyLanguage();
+window.addEventListener("unhandledrejection", event => {
+    console.error("Unexpected asynchronous error:", event.reason);
+    setStatus("Loading Error", false);
+});
+
+/* Start the application */
 loadQuestions();
+
 </script>
 </body>
 </html>
