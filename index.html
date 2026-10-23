@@ -3,253 +3,535 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#173b8f">
+<meta name="theme-color" content="#101b3d">
 
-<title>MCQ Quiz Pro | GitHub Text File Quiz</title>
+<title>MCQ QUIZ PRO | Advanced Examination System</title>
 
 <style>
 :root{
-    --primary:#315bea;
-    --primary-dark:#173b8f;
-    --bg:#f2f5fd;
+    --navy:#101b3d;
+    --navy2:#1b2d5a;
+    --blue:#315efb;
+    --cyan:#16c7e8;
+    --green:#13a66b;
+    --red:#e5484d;
+    --orange:#f59e0b;
+    --bg:#f2f5fb;
     --card:#ffffff;
-    --text:#172033;
-    --muted:#778198;
-    --green:#159b69;
-    --red:#e34c62;
-    --border:#e5eaf4;
-    --shadow:0 8px 28px rgba(25,48,95,.08);
+    --text:#17213b;
+    --muted:#718096;
+    --border:#e2e8f0;
+    --shadow:0 12px 35px rgba(16,27,61,.09);
 }
 
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-    margin:0;
     font-family:Arial,"Noto Sans Devanagari",sans-serif;
     background:var(--bg);
     color:var(--text);
+    min-height:100vh;
 }
 
-button,select,input{
+button,input,select{
     font:inherit;
 }
 
 button{
     cursor:pointer;
+    border:none;
 }
 
 button:disabled{
+    opacity:.45;
     cursor:not-allowed;
-    opacity:.55;
 }
 
-.header{
-    background:linear-gradient(115deg,#10275f,#315bea);
-    color:#fff;
+.topbar{
+    background:linear-gradient(120deg,var(--navy),var(--navy2));
+    color:white;
     padding:17px 20px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    box-shadow:0 4px 20px #101b3d25;
+}
+
+.topbar-inner{
+    max-width:1200px;
+    margin:auto;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:12px;
-    flex-wrap:wrap;
+    gap:15px;
 }
 
 .brand{
-    font-size:21px;
-    font-weight:800;
-}
-
-.brand small{
-    display:block;
-    font-size:11px;
-    font-weight:400;
-    opacity:.8;
-    margin-top:5px;
-}
-
-.header-actions{
     display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-}
-
-.btn{
-    border:0;
-    padding:11px 14px;
-    border-radius:9px;
-    font-weight:700;
-}
-
-.btn-white{
-    background:#fff;
-    color:#173b8f;
-}
-
-.btn-primary{
-    background:var(--primary);
-    color:white;
-}
-
-.btn-secondary{
-    background:#edf1ff;
-    color:#2648b4;
-}
-
-.btn-danger{
-    background:#fff0f2;
-    color:#c92e46;
-}
-
-.container{
-    max-width:1400px;
-    margin:20px auto;
-    padding:0 14px;
-}
-
-.status{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:13px 15px;
-    margin-bottom:16px;
-    display:flex;
-    justify-content:space-between;
     align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
-    box-shadow:var(--shadow);
+    gap:12px;
 }
 
-.status small{
-    color:var(--muted);
-    display:block;
+.brand-icon{
+    width:45px;
+    height:45px;
+    background:linear-gradient(135deg,var(--blue),var(--cyan));
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    font-size:24px;
+}
+
+.brand h1{
+    font-size:20px;
+    letter-spacing:.4px;
+}
+
+.brand p{
+    font-size:11px;
+    color:#c8d6ff;
     margin-top:4px;
 }
 
-.status-count{
+.status-pill{
+    padding:8px 12px;
+    border-radius:30px;
+    background:#ffffff18;
+    border:1px solid #ffffff35;
+    font-size:12px;
+}
+
+.container{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 16px 40px;
+}
+
+.hero{
+    background:linear-gradient(120deg,#142450,#315efb);
+    color:white;
+    border-radius:22px;
+    padding:30px;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:24px;
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-70px;
+    top:-110px;
+    border:35px solid #ffffff12;
+    border-radius:50%;
+}
+
+.hero h2{
+    font-size:clamp(23px,4vw,34px);
+    margin-bottom:10px;
+    position:relative;
+    z-index:1;
+}
+
+.hero p{
+    color:#dce5ff;
+    max-width:650px;
+    line-height:1.7;
+    font-size:14px;
+    position:relative;
+    z-index:1;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:24px;
+}
+
+.stat{
+    background:var(--card);
+    padding:17px;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+}
+
+.stat .icon{
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.stat strong{
+    display:block;
+    font-size:23px;
+    margin-bottom:4px;
+}
+
+.stat span{
     font-size:12px;
     color:var(--muted);
 }
 
 .layout{
     display:grid;
-    grid-template-columns:minmax(0,1fr) 290px;
-    gap:16px;
+    grid-template-columns:minmax(0,1fr) 310px;
+    gap:22px;
     align-items:start;
 }
 
 .card{
     background:var(--card);
     border:1px solid var(--border);
-    border-radius:15px;
-    padding:19px;
+    border-radius:19px;
+    padding:24px;
     box-shadow:var(--shadow);
-    margin-bottom:15px;
+    margin-bottom:20px;
 }
 
-.card-title{
-    font-size:16px;
-    font-weight:800;
-    margin-bottom:16px;
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    margin-bottom:8px;
+    font-size:19px;
 }
 
-.welcome{
-    text-align:center;
-    padding:45px 20px;
+.section-number{
+    width:34px;
+    height:34px;
+    background:#e9efff;
+    color:var(--blue);
+    border-radius:10px;
+    display:grid;
+    place-items:center;
+    font-weight:bold;
 }
 
-.welcome .icon{
-    font-size:45px;
-}
-
-.welcome h2{
-    margin:12px 0;
-}
-
-.muted{
-    color:var(--muted);
-    line-height:1.7;
+.section-description{
     font-size:13px;
+    line-height:1.6;
+    color:var(--muted);
+    margin-bottom:20px;
 }
 
-.error-box{
-    display:none;
-    background:#fff0f1;
-    color:#a32137;
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:9px;
+}
+
+select,input[type="number"]{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #d8dfeb;
+    border-radius:11px;
+    outline:none;
+    background:white;
+    color:var(--text);
+}
+
+select:focus,input:focus{
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px #315efb15;
+}
+
+.subject-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
+}
+
+.subject-option{
+    position:relative;
+}
+
+.subject-option input{
+    position:absolute;
+    opacity:0;
+}
+
+.subject-option label{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:13px 10px;
+    cursor:pointer;
+    min-height:62px;
+    font-weight:normal;
+    font-size:12px;
+    margin:0;
+    transition:.2s;
+}
+
+.subject-option label span{
+    font-size:20px;
+}
+
+.subject-option input:checked+label{
+    border-color:var(--blue);
+    background:#edf2ff;
+    color:#2146d8;
+    box-shadow:0 0 0 2px #315efb10;
+}
+
+.subject-option input:focus-visible+label{
+    outline:2px solid var(--blue);
+}
+
+.chapter-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:13px;
+}
+
+.chapter-toolbar strong{
+    font-size:14px;
+}
+
+.small-btn{
+    padding:8px 11px;
+    border:1px solid var(--border);
+    background:#fff;
+    border-radius:8px;
+    font-size:12px;
+}
+
+.chapter-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.chapter-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    border:1px solid var(--border);
+    padding:13px;
+    border-radius:11px;
+    cursor:pointer;
+    font-size:12px;
+    line-height:1.5;
+    transition:.2s;
+}
+
+.chapter-item:hover{
+    border-color:#a9bbff;
+}
+
+.chapter-item:has(input:checked){
+    border-color:var(--blue);
+    background:#f1f5ff;
+}
+
+.chapter-item input{
+    accent-color:var(--blue);
+    margin-top:3px;
+    width:16px;
+    height:16px;
+    flex-shrink:0;
+}
+
+.chapter-meta{
+    display:block;
+    color:var(--muted);
+    margin-top:4px;
+    font-size:11px;
+}
+
+.empty-state{
+    grid-column:1/-1;
+    text-align:center;
+    border:1px dashed #cbd5e1;
+    border-radius:12px;
+    padding:25px 15px;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.8;
+}
+
+.settings-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.primary-btn{
+    background:linear-gradient(120deg,var(--blue),#2346d6);
+    color:white;
+    border-radius:12px;
+    padding:15px 20px;
+    font-weight:bold;
+    width:100%;
+    box-shadow:0 7px 18px #315efb30;
+    transition:.2s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-1px);
+}
+
+.secondary-btn{
+    background:#edf2ff;
+    color:#2448d8;
+    border-radius:10px;
+    padding:12px 15px;
+    font-weight:bold;
+}
+
+.warning-box{
     padding:13px;
     border-radius:10px;
-    margin:12px 0;
-    text-align:left;
-    font-size:13px;
+    background:#fff8e7;
+    border:1px solid #f5dfa1;
+    color:#875d05;
+    font-size:12px;
     line-height:1.7;
-    overflow-wrap:anywhere;
+    margin-top:15px;
 }
 
-.success-box{
+.sidebar-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+    margin-bottom:17px;
+    box-shadow:var(--shadow);
+}
+
+.sidebar-card h3{
+    font-size:15px;
+    margin-bottom:14px;
+}
+
+.step{
+    display:flex;
+    gap:11px;
+    margin-bottom:15px;
+    font-size:12px;
+    line-height:1.6;
+    color:#59657b;
+}
+
+.step:last-child{
+    margin-bottom:0;
+}
+
+.step-number{
+    width:25px;
+    height:25px;
+    border-radius:8px;
+    background:#e9efff;
+    color:var(--blue);
+    display:grid;
+    place-items:center;
+    flex-shrink:0;
+    font-weight:bold;
+}
+
+.feature{
+    padding:11px 0;
+    border-bottom:1px solid var(--border);
+    font-size:12px;
+    color:#566176;
+    display:flex;
+    gap:9px;
+}
+
+.feature:last-child{
+    border-bottom:none;
+}
+
+.hidden{
+    display:none!important;
+}
+
+#quizScreen,#resultScreen{
     display:none;
-    background:#e9fff5;
-    color:#08774e;
-    padding:12px;
-    border-radius:10px;
-    margin-top:12px;
-    font-size:13px;
 }
 
 .quiz-top{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    gap:10px;
+    gap:12px;
+    align-items:center;
     flex-wrap:wrap;
-    margin-bottom:14px;
+    margin-bottom:18px;
 }
 
-.badge{
-    display:inline-block;
-    padding:7px 10px;
-    background:#edf1ff;
-    color:#284bbd;
-    border-radius:7px;
+.quiz-label{
+    background:#edf2ff;
+    color:#315efb;
+    padding:8px 11px;
+    border-radius:9px;
     font-size:12px;
-    font-weight:800;
+    font-weight:bold;
 }
 
 .timer{
-    font-weight:800;
-    color:#b52e43;
-    background:#fff0f2;
-    padding:9px 12px;
-    border-radius:8px;
+    background:#fff1f1;
+    color:#c52c37;
+    padding:10px 13px;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:15px;
 }
 
 .progress-track{
-    height:7px;
-    background:#e8edf7;
-    border-radius:20px;
+    height:8px;
+    background:#e9edf5;
+    border-radius:10px;
     overflow:hidden;
-    margin:14px 0 20px;
+    margin-bottom:22px;
 }
 
 .progress-fill{
-    width:0%;
     height:100%;
-    background:linear-gradient(90deg,#315bea,#14b8a6);
-    transition:width .2s;
+    width:0;
+    background:linear-gradient(90deg,var(--blue),var(--cyan));
+    transition:width .25s;
 }
 
-.question{
-    font-size:20px;
-    font-weight:800;
+.question-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+}
+
+.question-heading h3{
+    font-size:16px;
+}
+
+.question-text{
+    font-size:19px;
     line-height:1.8;
-    margin:15px 0 22px;
+    margin-bottom:23px;
     overflow-wrap:anywhere;
 }
 
 .options{
     display:grid;
-    gap:11px;
+    gap:12px;
 }
 
 .option{
@@ -258,35 +540,48 @@ button:disabled{
     align-items:flex-start;
     padding:15px;
     border:1px solid var(--border);
-    background:#fff;
-    border-radius:11px;
-    text-align:left;
+    border-radius:12px;
+    cursor:pointer;
+    transition:.2s;
+    font-size:14px;
     line-height:1.7;
-    color:var(--text);
-    transition:.15s;
-    overflow-wrap:anywhere;
 }
 
-.option:hover:not(:disabled){
-    border-color:var(--primary);
-    background:#f7f9ff;
+.option:hover{
+    border-color:#9db0ff;
+    background:#f8faff;
+}
+
+.option.selected{
+    background:#edf2ff;
+    border-color:var(--blue);
+}
+
+.option.correct{
+    background:#e9fbf2;
+    border-color:var(--green);
+}
+
+.option.wrong{
+    background:#fff0f0;
+    border-color:var(--red);
 }
 
 .option-letter{
     width:29px;
     height:29px;
-    min-width:29px;
+    border-radius:8px;
+    background:#edf0f7;
     display:grid;
     place-items:center;
-    background:#edf1ff;
-    color:#294ab9;
-    border-radius:8px;
-    font-weight:800;
+    font-size:12px;
+    font-weight:bold;
+    flex-shrink:0;
 }
 
-.option.correct{
-    background:#e8fff4;
-    border-color:var(--green);
+.option.selected .option-letter{
+    background:var(--blue);
+    color:white;
 }
 
 .option.correct .option-letter{
@@ -294,241 +589,291 @@ button:disabled{
     color:white;
 }
 
-.option.wrong{
-    background:#fff0f2;
-    border-color:var(--red);
-}
-
 .option.wrong .option-letter{
     background:var(--red);
     color:white;
 }
 
-.feedback{
-    display:none;
-    margin-top:18px;
-    border-radius:11px;
-    padding:15px;
-    line-height:1.8;
-    font-size:14px;
-}
-
-.feedback.good{
-    display:block;
-    background:#e8fff4;
-    color:#08774e;
-}
-
-.feedback.bad{
-    display:block;
-    background:#fff0f2;
-    color:#a32137;
-}
-
-.quiz-nav{
+.quiz-actions{
     display:flex;
-    justify-content:space-between;
-    gap:10px;
     flex-wrap:wrap;
-    margin-top:22px;
+    gap:10px;
+    margin-top:23px;
 }
 
-.nav-group{
-    display:flex;
+.quiz-actions button{
+    flex:1;
+    min-width:100px;
+    border-radius:10px;
+    padding:13px 10px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.btn-light{
+    background:#edf0f7;
+    color:#35415a;
+}
+
+.btn-blue{
+    background:var(--blue);
+    color:white;
+}
+
+.btn-green{
+    background:var(--green);
+    color:white;
+}
+
+.question-palette{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
     gap:8px;
 }
 
-.stats{
+.palette-btn{
+    aspect-ratio:1;
+    border-radius:9px;
+    background:#edf0f7;
+    color:#536078;
+    font-weight:bold;
+    font-size:12px;
+    position:relative;
+}
+
+.palette-btn.answered{
+    background:#d8f7e8;
+    color:#08794a;
+}
+
+.palette-btn.current{
+    outline:2px solid var(--blue);
+    outline-offset:1px;
+    background:#edf2ff;
+    color:var(--blue);
+}
+
+.palette-btn.review{
+    background:#fff0ce;
+    color:#9b6600;
+}
+
+.palette-btn.answered.review{
+    background:#cdeee1;
+}
+
+.palette-legend{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px;
+    gap:9px;
+    font-size:11px;
+    color:var(--muted);
+    margin-top:15px;
 }
 
-.stat{
-    background:#f5f7fd;
-    padding:15px 8px;
-    text-align:center;
-    border-radius:11px;
+.legend-dot{
+    width:10px;
+    height:10px;
+    display:inline-block;
+    border-radius:3px;
+    margin-right:5px;
 }
 
-.stat strong{
+.explanation{
+    margin-top:18px;
+    background:#f1f7ff;
+    border:1px solid #d6e5ff;
+    border-radius:12px;
+    padding:15px;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.explanation strong{
     display:block;
-    font-size:22px;
     margin-bottom:6px;
 }
 
-.stat small{
-    color:var(--muted);
-    font-size:11px;
-}
-
-.settings label{
-    display:block;
-    font-size:12px;
-    color:var(--muted);
-    margin:15px 0 7px;
-}
-
-.settings select{
-    width:100%;
-    padding:11px;
-    border:1px solid var(--border);
-    border-radius:9px;
-    background:white;
-    color:var(--text);
-}
-
-.check-label{
-    display:flex!important;
-    align-items:center;
-    gap:8px;
-    color:var(--text)!important;
-}
-
-.full{
-    width:100%;
-    margin-top:13px;
-}
-
-.palette{
-    display:grid;
-    grid-template-columns:repeat(5,minmax(0,1fr));
-    gap:7px;
-}
-
-.palette button{
-    min-width:0;
-    padding:10px 2px;
-    border:1px solid var(--border);
-    background:#f5f7fd;
-    border-radius:7px;
-    font-size:12px;
-    font-weight:700;
-}
-
-.palette button.current{
-    border:2px solid var(--primary);
-}
-
-.palette button.correct{
-    background:#d9f9e9;
-    border-color:#159b69;
-    color:#08774e;
-}
-
-.palette button.wrong{
-    background:#ffe0e5;
-    border-color:#e34c62;
-    color:#a32137;
-}
-
-.palette button.unanswered{
-    background:#f5f7fd;
-}
-
-.legend{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    font-size:11px;
-    color:var(--muted);
-    margin-top:13px;
-}
-
-.legend span{
-    display:flex;
-    align-items:center;
-    gap:5px;
-}
-
-.dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    display:inline-block;
-}
-
-.green{background:#159b69}
-.red{background:#e34c62}
-.gray{background:#cbd2e1}
-
-.hidden{
-    display:none!important;
-}
-
-.results{
+.result-hero{
     text-align:center;
-    padding:30px 15px;
+    background:linear-gradient(135deg,#142450,#315efb);
+    color:white;
+    border-radius:20px;
+    padding:32px 20px;
+    margin-bottom:20px;
 }
 
-.score{
-    font-size:48px;
-    color:var(--primary);
-    font-weight:900;
-    margin:20px 0;
+.result-score{
+    width:145px;
+    height:145px;
+    margin:20px auto;
+    border:8px solid #ffffff40;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:#ffffff12;
 }
 
-.result-review{
-    text-align:left;
-    border-top:1px solid var(--border);
-    padding:14px 0;
+.result-score strong{
+    font-size:36px;
+}
+
+.result-score span{
+    font-size:12px;
+    color:#dce5ff;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.result-stat{
+    text-align:center;
+    padding:18px 8px;
+    background:#f7f9fd;
+    border-radius:12px;
+}
+
+.result-stat strong{
+    display:block;
+    font-size:23px;
+    margin-bottom:5px;
+}
+
+.result-stat span{
+    font-size:11px;
+    color:var(--muted);
+}
+
+.review-row{
+    border-bottom:1px solid var(--border);
+    padding:15px 0;
+    font-size:13px;
     line-height:1.8;
+}
+
+.review-row:last-child{
+    border-bottom:none;
+}
+
+.review-correct{
+    color:var(--green);
+    font-weight:bold;
+}
+
+.review-wrong{
+    color:var(--red);
+    font-weight:bold;
 }
 
 footer{
     text-align:center;
     color:var(--muted);
-    padding:25px 10px 40px;
     font-size:11px;
+    padding:15px 0 25px;
+    line-height:1.8;
 }
 
-@media(max-width:850px){
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#142450;
+    color:white;
+    border-radius:10px;
+    padding:13px 18px;
+    font-size:13px;
+    z-index:100;
+    box-shadow:var(--shadow);
+    max-width:calc(100% - 30px);
+    text-align:center;
+}
+
+@media(max-width:900px){
     .layout{
         grid-template-columns:1fr;
     }
     .sidebar{
         display:grid;
         grid-template-columns:1fr 1fr;
-        gap:12px;
+        gap:15px;
     }
-    .sidebar .card{
-        margin:0;
-    }
-    .question{
-        font-size:18px;
+    .stats{
+        grid-template-columns:repeat(2,1fr);
     }
 }
 
-@media(max-width:520px){
-    .header{
-        padding:14px;
+@media(max-width:600px){
+    .topbar{
+        padding:13px;
     }
-    .brand{
-        font-size:18px;
+    .brand h1{
+        font-size:16px;
     }
-    .header-actions{
-        width:100%;
+    .brand p{
+        font-size:10px;
     }
-    .header-actions .btn{
-        flex:1;
-        padding:10px 8px;
-        font-size:12px;
+    .brand-icon{
+        width:39px;
+        height:39px;
+    }
+    .status-pill{
+        font-size:10px;
+        padding:7px;
     }
     .container{
-        margin:12px auto;
-        padding:0 9px;
+        margin-top:16px;
+        padding:0 11px 25px;
+    }
+    .hero{
+        padding:23px 19px;
+        border-radius:17px;
+    }
+    .stats{
+        gap:9px;
+    }
+    .stat{
+        padding:13px;
+    }
+    .stat strong{
+        font-size:20px;
     }
     .card{
-        padding:14px;
+        padding:17px;
+        border-radius:15px;
+    }
+    .subject-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    .chapter-list{
+        grid-template-columns:1fr;
+    }
+    .settings-grid{
+        grid-template-columns:1fr;
     }
     .sidebar{
         grid-template-columns:1fr;
     }
-    .welcome{
-        padding:30px 10px;
+    .question-text{
+        font-size:17px;
     }
     .option{
-        padding:12px 10px;
+        padding:12px;
+    }
+    .quiz-actions button{
+        min-width:calc(50% - 10px);
+    }
+    .result-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+    .question-palette{
+        grid-template-columns:repeat(6,1fr);
     }
 }
 </style>
@@ -536,1049 +881,1476 @@ footer{
 
 <body>
 
-<header class="header">
-    <div class="brand">
-        🎯 MCQ QUIZ PRO
-        <small>Your Questions • Your Text File • Your Quiz</small>
-    </div>
-
-    <div class="header-actions">
-        <button class="btn btn-white" id="reloadBtn">
-            ↻ Reload Questions
-        </button>
-
-        <button class="btn btn-white" id="importBtn">
-            📂 Import TXT
-        </button>
-
-        <input
-            type="file"
-            id="fileInput"
-            accept=".txt,text/plain"
-            class="hidden"
-        >
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">
+            <div class="brand-icon">🎓</div>
+            <div>
+                <h1>MCQ QUIZ PRO</h1>
+                <p>Advanced Examination System</p>
+            </div>
+        </div>
+        <div class="status-pill" id="connectionStatus">● Ready</div>
     </div>
 </header>
 
-<div class="container">
+<main class="container">
 
-    <div class="status">
-        <div>
-            <strong id="statusTitle">GitHub Text File से प्रश्न लोड हो रहे हैं...</strong>
-            <small id="statusMessage">कृपया प्रतीक्षा करें।</small>
+    <section class="hero">
+        <h2>अपनी तैयारी को परखिए! 🚀</h2>
+        <p>
+            कक्षा चुनिए, विषय चुनिए और अपने पसंदीदा अध्यायों से
+            MCQ टेस्ट दीजिए। अपना स्कोर, सटीकता और प्रदर्शन जानिए।
+        </p>
+    </section>
+
+    <section class="stats" id="homeStats">
+        <div class="stat">
+            <div class="icon">📚</div>
+            <strong id="statQuestions">—</strong>
+            <span>कुल उपलब्ध प्रश्न</span>
         </div>
-
-        <div class="status-count" id="questionCount">
-            0 Questions
+        <div class="stat">
+            <div class="icon">🏫</div>
+            <strong id="statClasses">—</strong>
+            <span>उपलब्ध कक्षाएँ</span>
         </div>
-    </div>
+        <div class="stat">
+            <div class="icon">📖</div>
+            <strong id="statSubjects">—</strong>
+            <span>उपलब्ध विषय</span>
+        </div>
+        <div class="stat">
+            <div class="icon">🗂️</div>
+            <strong id="statChapters">—</strong>
+            <span>उपलब्ध अध्याय</span>
+        </div>
+    </section>
 
-    <div class="layout">
+    <!-- SETUP SCREEN -->
+    <section id="setupScreen">
 
-        <main>
+        <div class="layout">
 
-            <div class="card welcome" id="welcomeCard">
-                <div class="icon">📄</div>
-                <h2>Text File से Quiz तैयार करें</h2>
+            <div class="main-column">
 
-                <p class="muted">
-                    आपके GitHub की questions.txt फाइल से प्रश्न अपने
-                    आप लोड होंगे। Text File में बदलाव करने के बाद
-                    Reload Questions दबाएँ।
-                </p>
+                <div class="card">
+                    <div class="section-title">
+                        <div class="section-number">1</div>
+                        कक्षा चुनिए
+                    </div>
+                    <p class="section-description">
+                        जिस कक्षा का टेस्ट देना चाहते हैं, उसे चुनें।
+                        उपलब्ध कक्षाएँ आपकी प्रश्न फाइल से अपने आप दिखाई देंगी।
+                    </p>
 
-                <div id="errorBox" class="error-box"></div>
+                    <div class="form-group">
+                        <label for="classSelect">Select Class / कक्षा</label>
+                        <select id="classSelect">
+                            <option value="">पहले प्रश्न लोड करें...</option>
+                        </select>
+                    </div>
+                </div>
 
-                <div id="successBox" class="success-box"></div>
+                <div class="card">
+                    <div class="section-title">
+                        <div class="section-number">2</div>
+                        विषय चुनिए
+                    </div>
+                    <p class="section-description">
+                        कक्षा चुनने के बाद उसी कक्षा के उपलब्ध विषय यहाँ दिखाई देंगे।
+                    </p>
 
-                <div style="display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:15px">
-                    <button class="btn btn-primary" id="tryAgainBtn">
-                        Try Again
+                    <div class="subject-grid" id="subjectGrid">
+                        <div class="empty-state">
+                            पहले कक्षा चुनिए।
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section-title">
+                        <div class="section-number">3</div>
+                        अध्याय चुनिए
+                    </div>
+                    <p class="section-description">
+                        एक या एक से अधिक अध्याय चुन सकते हैं।
+                        टेस्ट में केवल चुने हुए अध्यायों के प्रश्न आएँगे।
+                    </p>
+
+                    <div class="chapter-toolbar">
+                        <strong id="chapterCount">0 अध्याय उपलब्ध</strong>
+                        <div>
+                            <button class="small-btn" id="selectAllChapters">
+                                सभी चुनें
+                            </button>
+                            <button class="small-btn" id="clearChapters">
+                                हटाएँ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-list" id="chapterList">
+                        <div class="empty-state">
+                            पहले कक्षा और विषय चुनिए।
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section-title">
+                        <div class="section-number">4</div>
+                        टेस्ट सेटिंग्स
+                    </div>
+                    <p class="section-description">
+                        अपनी जरूरत के अनुसार प्रश्नों की संख्या और समय तय करें।
+                    </p>
+
+                    <div class="settings-grid">
+                        <div class="form-group">
+                            <label for="questionLimit">प्रश्नों की संख्या</label>
+                            <select id="questionLimit">
+                                <option value="10">10 Questions</option>
+                                <option value="20">20 Questions</option>
+                                <option value="30" selected>30 Questions</option>
+                                <option value="50">50 Questions</option>
+                                <option value="100">100 Questions</option>
+                                <option value="all">सभी उपलब्ध प्रश्न</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="timeLimit">समय सीमा</label>
+                            <select id="timeLimit">
+                                <option value="10">10 मिनट</option>
+                                <option value="20">20 मिनट</option>
+                                <option value="30" selected>30 मिनट</option>
+                                <option value="60">60 मिनट</option>
+                                <option value="0">बिना समय सीमा</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="warning-box" id="setupSummary">
+                        प्रश्न लोड होने के बाद यहाँ टेस्ट की जानकारी दिखाई देगी।
+                    </div>
+
+                    <button class="primary-btn" id="startQuiz" style="margin-top:18px">
+                        🚀 START TEST / टेस्ट शुरू करें
                     </button>
+                </div>
 
-                    <button class="btn btn-secondary" id="welcomeImportBtn">
-                        Import TXT From Device
+            </div>
+
+            <aside class="sidebar">
+
+                <div class="sidebar-card">
+                    <h3>🧭 टेस्ट कैसे दें?</h3>
+
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div><strong>कक्षा चुनें</strong><br>अपनी कक्षा का चुनाव करें।</div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div><strong>विषय चुनें</strong><br>उपलब्ध विषयों में से एक चुनें।</div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div><strong>अध्याय चुनें</strong><br>एक या अधिक अध्याय चुन सकते हैं।</div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div><strong>टेस्ट शुरू करें</strong><br>उत्तर देकर अंत में परिणाम देखें।</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>✨ प्रमुख सुविधाएँ</h3>
+                    <div class="feature">✅ कक्षा के अनुसार प्रश्न</div>
+                    <div class="feature">✅ विषय और अध्याय फ़िल्टर</div>
+                    <div class="feature">✅ उलटी गिनती वाला टाइमर</div>
+                    <div class="feature">✅ Question Palette</div>
+                    <div class="feature">✅ Mark for Review</div>
+                    <div class="feature">✅ स्कोर और Accuracy</div>
+                    <div class="feature">✅ उत्तरों की व्याख्या</div>
+                    <div class="feature">✅ मोबाइल के अनुकूल डिजाइन</div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>📡 प्रश्नों की स्थिति</h3>
+                    <p id="dataInfo" style="font-size:12px;color:#718096;line-height:1.8">
+                        प्रश्नों की फाइल लोड की जा रही है...
+                    </p>
+                    <button class="secondary-btn" id="reloadQuestions"
+                        style="width:100%;margin-top:14px">
+                        ↻ प्रश्न दोबारा लोड करें
                     </button>
+                </div>
+
+            </aside>
+        </div>
+    </section>
+
+    <!-- QUIZ SCREEN -->
+    <section id="quizScreen">
+
+        <div class="layout">
+
+            <div class="main-column">
+
+                <div class="card">
+
+                    <div class="quiz-top">
+                        <span class="quiz-label" id="quizCategory">Class 10 | History</span>
+                        <span class="timer" id="timerDisplay">⏱ 30:00</span>
+                    </div>
+
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+
+                    <div class="question-heading">
+                        <h3 id="questionNumber">प्रश्न 1 / 30</h3>
+                        <button class="small-btn" id="reviewButton">
+                            ⭐ Mark for Review
+                        </button>
+                    </div>
+
+                    <div style="font-size:12px;color:#718096;margin-bottom:15px"
+                        id="questionChapter"></div>
+
+                    <div class="question-text" id="questionText"></div>
+
+                    <div class="options" id="optionsContainer"></div>
+
+                    <div id="explanationBox" class="explanation hidden"></div>
+
+                    <div class="quiz-actions">
+                        <button class="btn-light" id="previousButton">← Previous</button>
+                        <button class="btn-light" id="clearAnswerButton">✕ Clear</button>
+                        <button class="btn-blue" id="nextButton">Next →</button>
+                        <button class="btn-green" id="submitButton">Submit Test ✓</button>
+                    </div>
+
                 </div>
             </div>
 
-            <section class="card hidden" id="quizCard">
+            <aside class="sidebar">
 
-                <div class="quiz-top">
-                    <span class="badge" id="questionBadge">
-                        Question 1
-                    </span>
-
-                    <span class="timer" id="timer">
-                        ⏱ 10:00
-                    </span>
-                </div>
-
-                <div class="progress-track">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-
-                <div class="question" id="questionText"></div>
-
-                <div class="options" id="optionsContainer"></div>
-
-                <div class="feedback" id="feedback"></div>
-
-                <div class="quiz-nav">
-                    <div class="nav-group">
-                        <button class="btn btn-secondary" id="prevBtn">
-                            ← Previous
-                        </button>
-                        <button class="btn btn-secondary" id="nextBtn">
-                            Next →
-                        </button>
-                    </div>
-
-                    <button class="btn btn-primary" id="submitBtn">
-                        Submit Quiz
-                    </button>
-                </div>
-
-            </section>
-
-            <section class="card hidden" id="resultCard">
-                <div class="results">
-                    <div style="font-size:48px">🏆</div>
-                    <h2>Quiz Result</h2>
-                    <p class="muted" id="resultSubtitle">
-                        आपका परिणाम तैयार है।
+                <div class="sidebar-card">
+                    <h3>📋 Question Palette</h3>
+                    <p style="font-size:12px;color:#718096;line-height:1.6;margin-bottom:15px">
+                        किसी भी नंबर पर क्लिक करके उस प्रश्न पर जा सकते हैं।
                     </p>
 
-                    <div class="score" id="scoreText">0 / 0</div>
+                    <div class="question-palette" id="questionPalette"></div>
 
-                    <div class="stats">
-                        <div class="stat">
-                            <strong id="resultCorrect">0</strong>
-                            <small>Correct Answers</small>
-                        </div>
-
-                        <div class="stat">
-                            <strong id="resultWrong">0</strong>
-                            <small>Wrong Answers</small>
-                        </div>
-
-                        <div class="stat">
-                            <strong id="resultUnanswered">0</strong>
-                            <small>Unanswered</small>
-                        </div>
-
-                        <div class="stat">
-                            <strong id="resultAccuracy">0%</strong>
-                            <small>Accuracy</small>
-                        </div>
+                    <div class="palette-legend">
+                        <span><i class="legend-dot" style="background:#d8f7e8"></i>Answered</span>
+                        <span><i class="legend-dot" style="background:#edf0f7"></i>Unanswered</span>
+                        <span><i class="legend-dot" style="background:#fff0ce"></i>Review</span>
+                        <span><i class="legend-dot" style="background:#edf2ff;border:1px solid #315efb"></i>Current</span>
                     </div>
                 </div>
 
-                <h3>📘 Answer Review</h3>
-                <div id="reviewContainer"></div>
+                <div class="sidebar-card">
+                    <h3>📊 Live Progress</h3>
 
-                <button class="btn btn-primary full" id="restartBtn">
-                    Start New Quiz
+                    <div class="feature">
+                        कुल प्रश्न: <strong id="liveTotal">0</strong>
+                    </div>
+                    <div class="feature">
+                        उत्तर दिए: <strong id="liveAnswered">0</strong>
+                    </div>
+                    <div class="feature">
+                        बाकी: <strong id="liveRemaining">0</strong>
+                    </div>
+                    <div class="feature">
+                        Review: <strong id="liveReview">0</strong>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </section>
+
+    <!-- RESULT SCREEN -->
+    <section id="resultScreen">
+
+        <div class="result-hero">
+            <div style="font-size:44px">🏆</div>
+            <h2>टेस्ट पूरा हुआ!</h2>
+            <p style="margin-top:8px;color:#dce5ff;font-size:13px">
+                आपके प्रदर्शन का विस्तृत परिणाम नीचे दिया गया है।
+            </p>
+
+            <div class="result-score">
+                <strong id="finalPercentage">0%</strong>
+                <span>Overall Score</span>
+            </div>
+
+            <h3 id="performanceMessage">अच्छा प्रयास!</h3>
+        </div>
+
+        <div class="card">
+            <div class="result-grid">
+                <div class="result-stat">
+                    <strong id="finalCorrect">0</strong>
+                    <span>सही उत्तर</span>
+                </div>
+                <div class="result-stat">
+                    <strong id="finalWrong">0</strong>
+                    <span>गलत उत्तर</span>
+                </div>
+                <div class="result-stat">
+                    <strong id="finalSkipped">0</strong>
+                    <span>छोड़े गए</span>
+                </div>
+                <div class="result-stat">
+                    <strong id="finalAccuracy">0%</strong>
+                    <span>Accuracy</span>
+                </div>
+            </div>
+
+            <div style="font-size:13px;line-height:1.9;color:#566176" id="resultDetails"></div>
+
+            <div class="quiz-actions" style="margin-top:22px">
+                <button class="btn-blue" id="reviewAnswersButton">
+                    📝 उत्तरों की समीक्षा
                 </button>
-            </section>
-
-        </main>
-
-        <aside class="sidebar">
-
-            <section class="card">
-                <div class="card-title">📊 Quiz Statistics</div>
-
-                <div class="stats">
-                    <div class="stat">
-                        <strong id="totalStat">0</strong>
-                        <small>Total Questions</small>
-                    </div>
-
-                    <div class="stat">
-                        <strong id="attemptedStat">0</strong>
-                        <small>Attempted</small>
-                    </div>
-
-                    <div class="stat">
-                        <strong id="correctStat">0</strong>
-                        <small>Correct</small>
-                    </div>
-
-                    <div class="stat">
-                        <strong id="accuracyStat">0%</strong>
-                        <small>Accuracy</small>
-                    </div>
-                </div>
-            </section>
-
-            <section class="card">
-                <div class="card-title">🧭 Question Palette</div>
-
-                <div class="palette" id="palette">
-                    <p class="muted">Quiz शुरू होने पर प्रश्न यहाँ दिखाई देंगे।</p>
-                </div>
-
-                <div class="legend">
-                    <span><i class="dot green"></i> Correct</span>
-                    <span><i class="dot red"></i> Wrong</span>
-                    <span><i class="dot gray"></i> Unanswered</span>
-                </div>
-            </section>
-
-            <section class="card settings">
-                <div class="card-title">⚙️ Quiz Settings</div>
-
-                <label for="questionLimit">Questions per test</label>
-
-                <select id="questionLimit">
-                    <option value="10">10 Questions</option>
-                    <option value="20" selected>20 Questions</option>
-                    <option value="30">30 Questions</option>
-                    <option value="50">50 Questions</option>
-                    <option value="100">100 Questions</option>
-                    <option value="all">All Questions</option>
-                </select>
-
-                <label for="duration">Quiz Duration</label>
-
-                <select id="duration">
-                    <option value="5">5 Minutes</option>
-                    <option value="10" selected>10 Minutes</option>
-                    <option value="15">15 Minutes</option>
-                    <option value="30">30 Minutes</option>
-                    <option value="60">60 Minutes</option>
-                </select>
-
-                <label class="check-label">
-                    <input type="checkbox" id="shuffleQuestions" checked>
-                    Shuffle Questions
-                </label>
-
-                <label class="check-label">
-                    <input type="checkbox" id="shuffleOptions">
-                    Shuffle Options
-                </label>
-
-                <button class="btn btn-primary full" id="startBtn" disabled>
-                    Start New Quiz
+                <button class="btn-light" id="backHomeButton">
+                    🏠 Home पर जाएँ
                 </button>
+                <button class="btn-green" id="retryButton">
+                    ↻ फिर से टेस्ट दें
+                </button>
+                <button class="btn-light" id="printButton">
+                    🖨 Print Result
+                </button>
+            </div>
+        </div>
 
-                <p class="muted" style="background:#fff8df;padding:10px;border-radius:8px;font-size:11px">
-                    💡 Text File बदलने के बाद Reload Questions दबाएँ।
-                    GitHub पर फाइल अपडेट करना न भूलें।
-                </p>
-            </section>
+        <div class="card hidden" id="answerReviewCard">
+            <div class="section-title">📝 उत्तरों की समीक्षा</div>
+            <p class="section-description">
+                प्रत्येक प्रश्न का सही उत्तर, आपका उत्तर और व्याख्या देखें।
+            </p>
+            <div id="answerReviewList"></div>
+        </div>
 
-        </aside>
+    </section>
 
-    </div>
-</div>
+</main>
 
 <footer>
-    MCQ Quiz Pro • Questions are loaded from your text file.
-    <br><br>
-    प्रश्नों की सटीकता आपके Text File में दिए गए उत्तरों पर निर्भर करती है।
+    MCQ QUIZ PRO · Advanced Examination System<br>
+    प्रश्न आपकी GitHub TXT फाइल से लोड होते हैं।
 </footer>
+
+<div id="toast" class="toast hidden"></div>
 
 <script>
 "use strict";
 
 /*
-=========================================================
+==========================================================
 MCQ QUIZ PRO
-GitHub TXT + Local TXT Import
-=========================================================
+==========================================================
 
-आपकी GitHub Text File:
-https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt
+अपनी questions.txt फाइल का Raw GitHub URL यहाँ डालें।
 
-Supported format:
+प्रश्नों की फाइल में प्रत्येक प्रश्न के लिए ये तीन फ़ील्ड
+होना आवश्यक है:
 
-Q: भारत की राजधानी क्या है?
-A: मुंबई
-B: नई दिल्ली
-C: कोलकाता
-D: चेन्नई
-ANSWER: B
-EXPLANATION: नई दिल्ली भारत की राजधानी है।
+CLASS: Class 10
+SUBJECT: History
+CHAPTER: Nationalism in India
 
-=========================================================
+पुराने प्रश्न जिनमें CLASS/SUBJECT/CHAPTER नहीं हैं,
+वे सही फ़िल्टर के लिए पर्याप्त जानकारी नहीं देते।
+==========================================================
 */
 
 const QUESTION_FILE_URL =
 "https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
 
-const $ = id => document.getElementById(id);
+const OPTION_KEYS = ["A","B","C","D"];
+
+const SUBJECT_ICONS = {
+    "History":"🏛️",
+    "इतिहास":"🏛️",
+    "Geography":"🌍",
+    "भूगोल":"🌍",
+    "Civics":"⚖️",
+    "नागरिक शास्त्र":"⚖️",
+    "Political Science":"⚖️",
+    "Economics":"📈",
+    "अर्थशास्त्र":"📈",
+    "Science":"🔬",
+    "विज्ञान":"🔬",
+    "Mathematics":"📐",
+    "Math":"📐",
+    "गणित":"📐",
+    "English":"🔤",
+    "Hindi":"📝",
+    "Computer":"💻",
+    "Computer Science":"💻",
+    "Bihar GK":"🏞️",
+    "General Knowledge":"🌐",
+    "GK":"🌐",
+    "Current Affairs":"📰"
+};
 
 let allQuestions = [];
+let filteredQuestions = [];
 let quizQuestions = [];
+
 let currentIndex = 0;
-let answers = [];
-let secondsRemaining = 600;
+let answers = {};
+let reviewFlags = {};
+let timeRemaining = 0;
 let timerInterval = null;
 let quizStarted = false;
-let quizSubmitted = false;
-let currentSource = "GitHub Text File";
+let quizFinished = false;
+let currentSubject = "";
+let currentClass = "";
 
-const LETTERS = ["A", "B", "C", "D"];
+const $ = id => document.getElementById(id);
 
-/* ---------- HTML safety ---------- */
+function showToast(message, duration=3000){
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.remove("hidden");
 
-function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[char]);
+    clearTimeout(showToast.timeout);
+
+    showToast.timeout = setTimeout(()=>{
+        toast.classList.add("hidden");
+    }, duration);
 }
 
-/* ---------- Status messages ---------- */
-
-function setStatus(title, message) {
-    $("statusTitle").textContent = title;
-    $("statusMessage").textContent = message;
+function normalize(value){
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g," ");
 }
 
-function showError(message) {
-    $("errorBox").style.display = "block";
-    $("errorBox").textContent = message;
-    $("successBox").style.display = "none";
+function cleanValue(value){
+    return String(value || "").trim();
 }
 
-function showSuccess(message) {
-    $("successBox").style.display = "block";
-    $("successBox").textContent = message;
-    $("errorBox").style.display = "none";
+function splitLines(text){
+    return text
+        .replace(/^\uFEFF/,"")
+        .replace(/\r\n/g,"\n")
+        .replace(/\r/g,"\n")
+        .split("\n");
 }
-
-function clearMessages() {
-    $("errorBox").style.display = "none";
-    $("successBox").style.display = "none";
-}
-
-/* ---------- Parse questions.txt ---------- */
 
 /*
-प्रत्येक प्रश्न को खाली लाइन से अलग रखें।
-ANSWER में A, B, C या D होना चाहिए।
+TXT format parser.
+
+हर प्रश्न एक नए Q: से शुरू होना चाहिए।
+एक प्रश्न के सभी फ़ील्ड अगले Q: तक पढ़े जाते हैं।
 */
 
-function parseQuestions(text) {
-    const normalized = String(text || "")
-        .replace(/^\uFEFF/, "")
-        .replace(/\r/g, "")
-        .trim();
+function parseQuestionFile(text){
+    const lines = splitLines(text);
+    const blocks = [];
+    let currentBlock = [];
 
-    if (!normalized) {
-        return [];
+    for(const line of lines){
+        if(/^\s*Q\s*:/i.test(line)){
+            if(currentBlock.length){
+                blocks.push(currentBlock);
+            }
+            currentBlock = [line];
+        }else if(currentBlock.length){
+            currentBlock.push(line);
+        }
     }
 
-    // Q: से शुरू होने वाले प्रत्येक प्रश्न को अलग करें।
-    const blocks = normalized
-        .split(/(?=^[ \t]*Q[ \t]*:)/gim)
-        .map(block => block.trim())
-        .filter(Boolean);
+    if(currentBlock.length){
+        blocks.push(currentBlock);
+    }
 
     const parsed = [];
 
-    for (const block of blocks) {
-        const lines = block.split("\n");
+    for(const block of blocks){
+        const q = {
+            className:"",
+            subject:"",
+            chapter:"",
+            question:"",
+            A:"",
+            B:"",
+            C:"",
+            D:"",
+            answer:"",
+            explanation:""
+        };
 
-        let question = "";
-        const optionMap = {};
-        let answer = "";
-        let explanation = "";
+        for(const line of block){
+            const match = line.match(
+                /^\s*(CLASS|SUBJECT|CHAPTER|Q|A|B|C|D|ANSWER|EXPLANATION)\s*:\s*(.*)$/i
+            );
 
-        let currentField = "";
+            if(!match) continue;
 
-        for (const rawLine of lines) {
-            const line = rawLine.trim();
+            const key = match[1].toUpperCase();
+            const value = match[2].trim();
 
-            if (!line) continue;
-
-            let match;
-
-            if ((match = line.match(/^Q\s*:\s*(.*)$/i))) {
-                question = match[1].trim();
-                currentField = "Q";
-                continue;
-            }
-
-            if ((match = line.match(/^([A-D])\s*:\s*(.*)$/i))) {
-                const letter = match[1].toUpperCase();
-                optionMap[letter] = match[2].trim();
-                currentField = letter;
-                continue;
-            }
-
-            if ((match = line.match(/^ANSWER\s*:\s*(.*)$/i))) {
-                answer = match[1].trim().toUpperCase();
-                currentField = "ANSWER";
-                continue;
-            }
-
-            if ((match = line.match(/^EXPLANATION\s*:\s*(.*)$/i))) {
-                explanation = match[1].trim();
-                currentField = "EXPLANATION";
-                continue;
-            }
-
-            // यदि प्रश्न या विकल्प कई लाइनों में हो।
-            if (currentField === "Q") {
-                question += (question ? "\n" : "") + line;
-            } else if (["A", "B", "C", "D"].includes(currentField)) {
-                optionMap[currentField] +=
-                    (optionMap[currentField] ? "\n" : "") + line;
-            } else if (currentField === "EXPLANATION") {
-                explanation += (explanation ? "\n" : "") + line;
-            } else if (currentField === "ANSWER") {
-                answer += line.toUpperCase();
+            switch(key){
+                case "CLASS":
+                    q.className = value;
+                    break;
+                case "SUBJECT":
+                    q.subject = value;
+                    break;
+                case "CHAPTER":
+                    q.chapter = value;
+                    break;
+                case "Q":
+                    q.question = value;
+                    break;
+                case "A":
+                    q.A = value;
+                    break;
+                case "B":
+                    q.B = value;
+                    break;
+                case "C":
+                    q.C = value;
+                    break;
+                case "D":
+                    q.D = value;
+                    break;
+                case "ANSWER":
+                    q.answer = value.toUpperCase();
+                    break;
+                case "EXPLANATION":
+                    q.explanation = value;
+                    break;
             }
         }
 
-        answer = answer.replace(/[^A-D]/g, "").charAt(0);
-
-        const options = LETTERS
-            .filter(letter => typeof optionMap[letter] === "string"
-                && optionMap[letter].trim() !== "")
-            .map(letter => ({
-                originalLetter: letter,
-                text: optionMap[letter].trim()
-            }));
-
-        if (
-            question &&
-            options.length === 4 &&
-            LETTERS.includes(answer) &&
-            optionMap[answer]
-        ) {
-            parsed.push({
-                question: question.trim(),
-                options,
-                answer,
-                explanation: explanation.trim()
-            });
+        if(
+            q.question &&
+            q.A &&
+            q.B &&
+            q.C &&
+            q.D &&
+            OPTION_KEYS.includes(q.answer)
+        ){
+            q.id = parsed.length + 1;
+            parsed.push(q);
         }
     }
 
     return parsed;
 }
 
-/* ---------- Load from GitHub ---------- */
+function uniqueSorted(values){
+    const map = new Map();
 
-async function loadGitHubQuestions() {
-    clearMessages();
+    values.forEach(value=>{
+        const clean = cleanValue(value);
+        if(clean && !map.has(normalize(clean))){
+            map.set(normalize(clean),clean);
+        }
+    });
 
-    setStatus(
-        "GitHub Text File से प्रश्न लोड हो रहे हैं...",
-        "आपकी questions.txt फाइल डाउनलोड की जा रही है।"
+    return [...map.values()].sort((a,b)=>
+        a.localeCompare(b,"hi",{numeric:true,sensitivity:"base"})
+    );
+}
+
+function findMatchingValue(list, value){
+    const wanted = normalize(value);
+    return list.find(item=>normalize(item)===wanted) || "";
+}
+
+function updateStats(){
+    $("statQuestions").textContent = allQuestions.length;
+
+    $("statClasses").textContent =
+        uniqueSorted(allQuestions.map(q=>q.className)).length;
+
+    $("statSubjects").textContent =
+        uniqueSorted(allQuestions.map(q=>q.subject)).length;
+
+    $("statChapters").textContent =
+        uniqueSorted(allQuestions.map(q=>q.chapter)).length;
+}
+
+function updateConnection(message, good=true){
+    $("connectionStatus").textContent =
+        (good ? "● " : "● ") + message;
+
+    $("connectionStatus").style.color =
+        good ? "#d5ffea" : "#ffd5d5";
+}
+
+function renderClassOptions(){
+    const select = $("classSelect");
+    const oldValue = select.value;
+
+    select.innerHTML = "";
+
+    const classes = uniqueSorted(
+        allQuestions.map(q=>q.className)
     );
 
-    $("reloadBtn").disabled = true;
-    $("tryAgainBtn").disabled = true;
+    if(!classes.length){
+        select.innerHTML =
+            '<option value="">कोई कक्षा उपलब्ध नहीं</option>';
+        return;
+    }
 
-    try {
+    select.innerHTML =
+        '<option value="">-- कक्षा चुनें --</option>';
+
+    classes.forEach(className=>{
+        const option = document.createElement("option");
+        option.value = className;
+        option.textContent = className;
+        select.appendChild(option);
+    });
+
+    if(classes.includes(oldValue)){
+        select.value = oldValue;
+    }
+}
+
+function renderSubjectOptions(){
+    const className = $("classSelect").value;
+    const grid = $("subjectGrid");
+
+    grid.innerHTML = "";
+
+    if(!className){
+        grid.innerHTML =
+            '<div class="empty-state">पहले कक्षा चुनिए।</div>';
+        renderChapterList();
+        updateSetupSummary();
+        return;
+    }
+
+    const subjects = uniqueSorted(
+        allQuestions
+            .filter(q=>normalize(q.className)===normalize(className))
+            .map(q=>q.subject)
+    );
+
+    if(!subjects.length){
+        grid.innerHTML =
+            '<div class="empty-state">इस कक्षा के लिए विषय नहीं मिले।</div>';
+        renderChapterList();
+        return;
+    }
+
+    subjects.forEach((subject,index)=>{
+        const id = "subject_" + index;
+        const wrapper = document.createElement("div");
+        wrapper.className = "subject-option";
+
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "subjectChoice";
+        input.id = id;
+        input.value = subject;
+
+        const label = document.createElement("label");
+        label.htmlFor = id;
+
+        const icon = document.createElement("span");
+        icon.textContent = SUBJECT_ICONS[subject] || "📘";
+
+        const text = document.createElement("span");
+        text.textContent = subject;
+        text.style.fontSize = "12px";
+
+        label.append(icon,text);
+        wrapper.append(input,label);
+        grid.appendChild(wrapper);
+
+        input.addEventListener("change",()=>{
+            currentSubject = subject;
+            renderChapterList();
+            updateSetupSummary();
+        });
+    });
+
+    currentSubject = "";
+    renderChapterList();
+    updateSetupSummary();
+}
+
+function getSelectedChapters(){
+    return [...document.querySelectorAll(
+        'input[name="chapterChoice"]:checked'
+    )].map(input=>input.value);
+}
+
+function renderChapterList(){
+    const className = $("classSelect").value;
+    const subjectInput = document.querySelector(
+        'input[name="subjectChoice"]:checked'
+    );
+
+    const subject = subjectInput ? subjectInput.value : "";
+    const chapterList = $("chapterList");
+
+    chapterList.innerHTML = "";
+
+    if(!className || !subject){
+        chapterList.innerHTML =
+            '<div class="empty-state">कक्षा और विषय चुनने के बाद अध्याय यहाँ दिखाई देंगे।</div>';
+
+        $("chapterCount").textContent = "0 अध्याय उपलब्ध";
+        updateSetupSummary();
+        return;
+    }
+
+    const matching = allQuestions.filter(q=>
+        normalize(q.className)===normalize(className) &&
+        normalize(q.subject)===normalize(subject)
+    );
+
+    const chapters = uniqueSorted(matching.map(q=>q.chapter));
+
+    if(!chapters.length){
+        chapterList.innerHTML =
+            '<div class="empty-state">इस विषय में कोई अध्याय नहीं मिला।<br>अपनी questions.txt फाइल में CHAPTER: की जाँच करें।</div>';
+
+        $("chapterCount").textContent = "0 अध्याय उपलब्ध";
+        updateSetupSummary();
+        return;
+    }
+
+    $("chapterCount").textContent =
+        chapters.length + " अध्याय उपलब्ध";
+
+    chapters.forEach((chapter,index)=>{
+        const count = matching.filter(q=>
+            normalize(q.chapter)===normalize(chapter)
+        ).length;
+
+        const label = document.createElement("label");
+        label.className = "chapter-item";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "chapterChoice";
+        checkbox.value = chapter;
+        checkbox.id = "chapter_" + index;
+
+        const textWrap = document.createElement("span");
+        textWrap.textContent = chapter;
+
+        const meta = document.createElement("span");
+        meta.className = "chapter-meta";
+        meta.textContent = count + " प्रश्न";
+
+        textWrap.appendChild(meta);
+        label.append(checkbox,textWrap);
+        chapterList.appendChild(label);
+
+        checkbox.addEventListener("change",updateSetupSummary);
+    });
+
+    updateSetupSummary();
+}
+
+function getAvailableQuestions(){
+    const className = $("classSelect").value;
+
+    const subjectInput = document.querySelector(
+        'input[name="subjectChoice"]:checked'
+    );
+
+    const subject = subjectInput ? subjectInput.value : "";
+    const chapters = getSelectedChapters();
+
+    if(!className || !subject || !chapters.length){
+        return [];
+    }
+
+    return allQuestions.filter(q=>
+        normalize(q.className)===normalize(className) &&
+        normalize(q.subject)===normalize(subject) &&
+        chapters.some(chapter=>
+            normalize(chapter)===normalize(q.chapter)
+        )
+    );
+}
+
+function updateSetupSummary(){
+    const selected = getSelectedChapters();
+    const questions = getAvailableQuestions();
+
+    const chapterText = selected.length
+        ? selected.length + " अध्याय चुने गए"
+        : "कोई अध्याय नहीं चुना गया";
+
+    $("setupSummary").textContent =
+        "उपलब्ध प्रश्न: " + questions.length +
+        " | " + chapterText +
+        " | टेस्ट में प्रश्नों की संख्या सेटिंग के अनुसार होगी।";
+}
+
+function updateQuestionLimitOptions(){
+    const select = $("questionLimit");
+    const available = getAvailableQuestions();
+    const current = select.value;
+
+    [...select.options].forEach(option=>{
+        if(option.value==="all"){
+            option.disabled = available.length===0;
+        }else{
+            option.disabled = Number(option.value)>available.length;
+        }
+    });
+
+    if(current!=="all" && Number(current)>available.length){
+        const allowed = ["100","50","30","20","10"]
+            .find(value=>Number(value)<=available.length);
+
+        select.value = allowed || "all";
+    }
+
+    if(available.length===0){
+        select.value = "10";
+    }
+}
+
+async function loadQuestions(){
+    updateConnection("Loading questions...",false);
+    $("dataInfo").textContent =
+        "GitHub से प्रश्नों की फाइल डाउनलोड की जा रही है...";
+
+    try{
         const url = QUESTION_FILE_URL +
             (QUESTION_FILE_URL.includes("?") ? "&" : "?") +
             "t=" + Date.now();
 
-        const response = await fetch(url, {
-            method: "GET",
-            cache: "no-store"
+        const response = await fetch(url,{
+            cache:"no-store"
         });
 
-        if (!response.ok) {
+        if(!response.ok){
             throw new Error(
-                "GitHub से फाइल नहीं मिली। HTTP Status: " +
-                response.status
+                "HTTP " + response.status
             );
         }
 
         const text = await response.text();
+        const questions = parseQuestionFile(text);
 
-        // कभी-कभी गलत URL पर HTML error page मिल सकता है।
-        if (
-            /^\s*<!doctype html/i.test(text) ||
-            /^\s*<html/i.test(text)
-        ) {
+        if(!questions.length){
             throw new Error(
-                "URL से Text File के बजाय HTML पेज मिला। GitHub Repository, branch और file path जाँचें।"
-            );
-        }
-
-        const questions = parseQuestions(text);
-
-        if (questions.length === 0) {
-            throw new Error(
-                "फाइल खुल गई, लेकिन कोई वैध MCQ नहीं मिला। प्रत्येक प्रश्न में Q:, A:, B:, C:, D: और ANSWER: होना चाहिए।"
+                "कोई मान्य प्रश्न नहीं मिला। TXT format जाँचें।"
             );
         }
 
         allQuestions = questions;
-        currentSource = "GitHub Text File";
 
-        updateLoadedUI();
+        updateStats();
+        renderClassOptions();
 
-        showSuccess(
-            "सफलता! GitHub से " + questions.length +
-            " प्रश्न लोड हुए।"
-        );
+        $("dataInfo").textContent =
+            allQuestions.length +
+            " प्रश्न सफलतापूर्वक लोड हुए। " +
+            "अब कक्षा और विषय चुनें।";
 
-    } catch (error) {
-        console.error("Question loading error:", error);
+        updateConnection("Questions Loaded",true);
+        showToast(allQuestions.length + " प्रश्न लोड हो गए।");
 
-        setStatus(
-            "Questions लोड नहीं हुए",
-            "GitHub URL या Text File का प्रारूप जाँचें।"
-        );
+        const incomplete = allQuestions.filter(q=>
+            !q.className || !q.subject || !q.chapter
+        ).length;
 
-        $("questionCount").textContent = "0 Questions";
-        $("startBtn").disabled = true;
-
-        showError(
-            "समस्या: " + error.message +
-            "\n\nयदि GitHub फाइल मौजूद है, तो Import TXT From Device दबाकर questions.txt मोबाइल से भी लोड कर सकते हैं।"
-        );
-
-    } finally {
-        $("reloadBtn").disabled = false;
-        $("tryAgainBtn").disabled = false;
-    }
-}
-
-/* ---------- Import local TXT ---------- */
-
-function importTextFile(file) {
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = function() {
-        const questions = parseQuestions(reader.result);
-
-        if (!questions.length) {
-            showError(
-                "इस Text File में कोई वैध MCQ नहीं मिला। फाइल का प्रारूप जाँचें।"
-            );
-            return;
+        if(incomplete){
+            $("dataInfo").textContent +=
+                " ध्यान दें: " + incomplete +
+                " प्रश्नों में CLASS, SUBJECT या CHAPTER अधूरा है; वे फ़िल्टर में नहीं दिख सकते।";
         }
 
-        allQuestions = questions;
-        currentSource = "Imported Text File";
+    }catch(error){
+        console.error(error);
 
-        updateLoadedUI();
+        allQuestions = [];
+        updateStats();
 
-        showSuccess(
-            "सफलता! आपकी चुनी हुई Text File से " +
-            questions.length + " प्रश्न लोड हुए।"
+        $("classSelect").innerHTML =
+            '<option value="">प्रश्न लोड नहीं हुए</option>';
+
+        $("subjectGrid").innerHTML =
+            '<div class="empty-state">प्रश्न फाइल लोड नहीं हुई।</div>';
+
+        $("chapterList").innerHTML =
+            '<div class="empty-state">GitHub Raw URL और TXT format जाँचें।</div>';
+
+        $("dataInfo").textContent =
+            "त्रुटि: " + error.message +
+            " | इंटरनेट, Raw URL और फाइल की उपलब्धता जाँचें।";
+
+        updateConnection("Load Error",false);
+
+        showToast(
+            "प्रश्न लोड नहीं हुए। URL और TXT फाइल जाँचें।",
+            4500
         );
-    };
-
-    reader.onerror = function() {
-        showError("Text File पढ़ने में समस्या आई।");
-    };
-
-    reader.readAsText(file, "UTF-8");
+    }
 }
 
-/* ---------- Update loaded state ---------- */
+/* CHAPTER CONTROLS */
 
-function updateLoadedUI() {
-    $("questionCount").textContent =
-        allQuestions.length + " Questions";
+$("classSelect").addEventListener("change",()=>{
+    currentSubject = "";
+    renderSubjectOptions();
+    updateQuestionLimitOptions();
+});
 
-    $("totalStat").textContent = allQuestions.length;
+$("selectAllChapters").addEventListener("click",()=>{
+    document.querySelectorAll(
+        'input[name="chapterChoice"]'
+    ).forEach(input=>input.checked=true);
 
-    $("startBtn").disabled = allQuestions.length === 0;
+    updateSetupSummary();
+    updateQuestionLimitOptions();
+});
 
-    setStatus(
-        "Questions लोड हो गए ✓",
-        currentSource + " से प्रश्न प्राप्त हुए।"
-    );
+$("clearChapters").addEventListener("click",()=>{
+    document.querySelectorAll(
+        'input[name="chapterChoice"]'
+    ).forEach(input=>input.checked=false);
 
-    $("welcomeCard").classList.remove("hidden");
-    $("quizCard").classList.add("hidden");
-    $("resultCard").classList.add("hidden");
+    updateSetupSummary();
+    updateQuestionLimitOptions();
+});
 
-    clearMessages();
-}
+$("questionLimit").addEventListener("change",updateSetupSummary);
+$("timeLimit").addEventListener("change",updateSetupSummary);
 
-/* ---------- Start quiz ---------- */
+/* QUIZ START */
 
-function startQuiz() {
-    if (!allQuestions.length) {
-        showError("पहले Text File से प्रश्न लोड करें।");
-        return;
-    }
-
-    stopTimer();
-
-    let selected = [...allQuestions];
-
-    if ($("shuffleQuestions").checked) {
-        selected = shuffleArray(selected);
-    }
-
-    const limit = $("questionLimit").value;
-
-    if (limit !== "all") {
-        selected = selected.slice(0, Number(limit));
-    }
-
-    if ($("shuffleOptions").checked) {
-        selected = selected.map(q => {
-            const shuffledOptions = shuffleArray(
-                q.options.map(option => ({...option}))
-            );
-
-            return {
-                ...q,
-                options: shuffledOptions
-            };
-        });
-    } else {
-        selected = selected.map(q => ({
-            ...q,
-            options: q.options.map(option => ({...option}))
-        }));
-    }
-
-    quizQuestions = selected;
-
-    if ($("shuffleOptions").checked) {
-        quizQuestions = quizQuestions.map(q => {
-            const answerText = q.options.find(
-                option => option.originalLetter === q.answer
-            );
-
-            return {
-                ...q,
-                answerText: answerText ? answerText.text : ""
-            };
-        });
-    } else {
-        quizQuestions = quizQuestions.map(q => ({
-            ...q,
-            answerText: q.options.find(
-                option => option.originalLetter === q.answer
-            )?.text || ""
-        }));
-    }
-
-    currentIndex = 0;
-    answers = new Array(quizQuestions.length).fill(null);
-    quizStarted = true;
-    quizSubmitted = false;
-
-    secondsRemaining = Number($("duration").value) * 60;
-
-    $("welcomeCard").classList.add("hidden");
-    $("resultCard").classList.add("hidden");
-    $("quizCard").classList.remove("hidden");
-
-    renderQuestion();
-    renderPalette();
-    updateStats();
-    updateTimerDisplay();
-
-    startTimer();
-
-    window.scrollTo({top: 0, behavior: "smooth"});
-}
-
-function shuffleArray(array) {
+function shuffleArray(array){
     const result = [...array];
 
-    for (let i = result.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [result[i], result[j]] = [result[j], result[i]];
+    for(let i=result.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [result[i],result[j]]=[result[j],result[i]];
     }
 
     return result;
 }
 
-/* ---------- Render current question ---------- */
+function startQuiz(){
+    const available = getAvailableQuestions();
 
-function renderQuestion() {
+    if(!available.length){
+        showToast("कक्षा, विषय और कम से कम एक अध्याय चुनें।");
+        return;
+    }
+
+    const limit = $("questionLimit").value;
+
+    const selectedQuestions =
+        limit==="all"
+            ? [...available]
+            : shuffleArray(available).slice(0,Number(limit));
+
+    if(!selectedQuestions.length){
+        showToast("चुने गए अध्यायों में प्रश्न उपलब्ध नहीं हैं।");
+        return;
+    }
+
+    quizQuestions = selectedQuestions;
+
+    currentClass = $("classSelect").value;
+
+    const subjectInput = document.querySelector(
+        'input[name="subjectChoice"]:checked'
+    );
+
+    currentSubject = subjectInput ? subjectInput.value : "";
+
+    currentIndex = 0;
+    answers = {};
+    reviewFlags = {};
+    quizFinished = false;
+    quizStarted = true;
+
+    const minutes = Number($("timeLimit").value);
+    timeRemaining = minutes*60;
+
+    $("setupScreen").style.display = "none";
+    $("homeStats").style.display = "none";
+    $("quizScreen").style.display = "block";
+    $("resultScreen").style.display = "none";
+
+    $("quizCategory").textContent =
+        currentClass + " | " + currentSubject;
+
+    $("liveTotal").textContent = quizQuestions.length;
+
+    renderQuestionPalette();
+    renderQuestion();
+    updateLiveProgress();
+    updateTimerDisplay();
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+    }
+
+    if(minutes>0){
+        timerInterval = setInterval(()=>{
+            if(quizFinished) return;
+
+            timeRemaining--;
+            updateTimerDisplay();
+
+            if(timeRemaining<=0){
+                clearInterval(timerInterval);
+                finishQuiz(true);
+            }
+        },1000);
+    }
+
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function updateTimerDisplay(){
+    if(Number($("timeLimit").value)===0){
+        $("timerDisplay").textContent = "⏱ No Limit";
+        return;
+    }
+
+    const minutes = Math.floor(Math.max(0,timeRemaining)/60);
+    const seconds = Math.max(0,timeRemaining)%60;
+
+    $("timerDisplay").textContent =
+        "⏱ " +
+        String(minutes).padStart(2,"0") + ":" +
+        String(seconds).padStart(2,"0");
+
+    if(timeRemaining<=60){
+        $("timerDisplay").style.background="#e5484d";
+        $("timerDisplay").style.color="#fff";
+    }else{
+        $("timerDisplay").style.background="#fff1f1";
+        $("timerDisplay").style.color="#c52c37";
+    }
+}
+
+function renderQuestion(){
     const q = quizQuestions[currentIndex];
 
-    if (!q) return;
+    if(!q) return;
 
-    $("questionBadge").textContent =
-        "Question " + (currentIndex + 1) +
-        " of " + quizQuestions.length;
+    $("questionNumber").textContent =
+        "प्रश्न " + (currentIndex+1) +
+        " / " + quizQuestions.length;
 
-    $("progressFill").style.width =
-        ((currentIndex + 1) / quizQuestions.length * 100) + "%";
+    $("questionChapter").textContent =
+        "📖 अध्याय: " + q.chapter;
 
     $("questionText").textContent = q.question;
 
-    $("optionsContainer").innerHTML = "";
+    $("progressFill").style.width =
+        ((currentIndex+1)/quizQuestions.length*100)+"%";
 
-    q.options.forEach((option, index) => {
-        const button = document.createElement("button");
+    $("previousButton").disabled = currentIndex===0;
 
-        button.className = "option";
+    $("nextButton").disabled =
+        currentIndex===quizQuestions.length-1;
+
+    $("reviewButton").textContent =
+        reviewFlags[currentIndex]
+            ? "⭐ Review हटाएँ"
+            : "⭐ Mark for Review";
+
+    $("explanationBox").classList.add("hidden");
+    $("explanationBox").innerHTML = "";
+
+    const options = $("optionsContainer");
+    options.innerHTML = "";
+
+    OPTION_KEYS.forEach(key=>{
+        const label = document.createElement("div");
+        label.className = "option";
+
+        const selected = answers[currentIndex]===key;
+
+        if(selected) label.classList.add("selected");
+
+        if(quizFinished){
+            if(key===q.answer){
+                label.classList.add("correct");
+            }else if(selected){
+                label.classList.add("wrong");
+            }
+        }
 
         const letter = document.createElement("span");
         letter.className = "option-letter";
-        letter.textContent = LETTERS[index];
+        letter.textContent = key;
 
         const text = document.createElement("span");
-        text.textContent = option.text;
+        text.textContent = q[key];
 
-        button.append(letter, text);
+        label.append(letter,text);
 
-        const chosenIndex = answers[currentIndex];
-
-        if (chosenIndex === index) {
-            button.style.borderColor = "#315bea";
-            button.style.background = "#f0f4ff";
+        if(!quizFinished){
+            label.addEventListener("click",()=>{
+                answers[currentIndex]=key;
+                renderQuestion();
+                updateLiveProgress();
+                renderQuestionPalette();
+            });
         }
 
-        button.disabled = quizSubmitted;
-
-        button.addEventListener("click", () => {
-            if (quizSubmitted) return;
-
-            answers[currentIndex] = index;
-
-            renderQuestion();
-            renderPalette();
-            updateStats();
-        });
-
-        $("optionsContainer").appendChild(button);
+        options.appendChild(label);
     });
 
-    $("prevBtn").disabled = currentIndex === 0;
-    $("nextBtn").disabled =
-        currentIndex === quizQuestions.length - 1;
+    if(quizFinished){
+        const explanation = $("explanationBox");
+        explanation.classList.remove("hidden");
 
-    $("submitBtn").textContent =
-        currentIndex === quizQuestions.length - 1
-            ? "Submit Quiz"
-            : "Submit Quiz";
+        const heading = document.createElement("strong");
+        heading.textContent =
+            "व्याख्या | सही उत्तर: " + q.answer;
 
-    $("feedback").style.display = "none";
+        const body = document.createElement("div");
+        body.textContent =
+            q.explanation || "इस प्रश्न की विस्तृत व्याख्या उपलब्ध नहीं है।";
 
-    if (quizSubmitted) {
-        showQuestionFeedback();
+        explanation.append(heading,body);
     }
 
-    renderPalette();
+    renderQuestionPalette();
+    updateLiveProgress();
 }
 
-/* ---------- Answer mapping ---------- */
+function renderQuestionPalette(){
+    const palette = $("questionPalette");
+    palette.innerHTML = "";
 
-function isCorrect(questionIndex) {
-    const q = quizQuestions[questionIndex];
-    const selectedIndex = answers[questionIndex];
-
-    if (selectedIndex === null || selectedIndex === undefined) {
-        return false;
-    }
-
-    return q.options[selectedIndex].text === q.answerText;
-}
-
-/* ---------- Question palette ---------- */
-
-function renderPalette() {
-    if (!quizQuestions.length) {
-        $("palette").innerHTML =
-            '<p class="muted">Quiz शुरू होने पर प्रश्न यहाँ दिखाई देंगे।</p>';
-        return;
-    }
-
-    $("palette").innerHTML = "";
-
-    quizQuestions.forEach((q, index) => {
+    quizQuestions.forEach((q,index)=>{
         const button = document.createElement("button");
+        button.className = "palette-btn";
+        button.textContent = index+1;
 
-        button.textContent = index + 1;
+        if(answers[index]) button.classList.add("answered");
+        if(reviewFlags[index]) button.classList.add("review");
+        if(index===currentIndex) button.classList.add("current");
 
-        let className = "unanswered";
-
-        if (answers[index] !== null && answers[index] !== undefined) {
-            className = quizSubmitted
-                ? (isCorrect(index) ? "correct" : "wrong")
-                : "current";
-        }
-
-        button.className =
-            className + (index === currentIndex ? " current" : "");
-
-        button.addEventListener("click", () => {
-            currentIndex = index;
+        button.addEventListener("click",()=>{
+            currentIndex=index;
             renderQuestion();
         });
 
-        $("palette").appendChild(button);
+        palette.appendChild(button);
     });
 }
 
-/* ---------- Statistics ---------- */
+function updateLiveProgress(){
+    const answered = Object.keys(answers).filter(key=>
+        Number(key)>=0 && answers[key]
+    ).length;
 
-function updateStats() {
-    let attempted = 0;
-    let correct = 0;
+    const reviewed = Object.values(reviewFlags)
+        .filter(Boolean).length;
 
-    answers.forEach((answer, index) => {
-        if (answer !== null && answer !== undefined) {
-            attempted++;
+    $("liveAnswered").textContent = answered;
 
-            if (quizQuestions.length && isCorrect(index)) {
-                correct++;
-            }
-        }
-    });
+    $("liveRemaining").textContent =
+        quizQuestions.length-answered;
 
-    const accuracy = attempted
-        ? Math.round(correct / attempted * 100)
-        : 0;
-
-    $("attemptedStat").textContent = attempted;
-    $("correctStat").textContent = correct;
-    $("accuracyStat").textContent = accuracy + "%";
+    $("liveReview").textContent = reviewed;
 }
 
-/* ---------- Feedback ---------- */
+$("startQuiz").addEventListener("click",startQuiz);
 
-function showQuestionFeedback() {
-    const q = quizQuestions[currentIndex];
-    const feedback = $("feedback");
-
-    const selected = answers[currentIndex];
-
-    if (selected === null || selected === undefined) {
-        feedback.className = "feedback bad";
-        feedback.innerHTML =
-            "<strong>उत्तर नहीं दिया गया।</strong><br>" +
-            "सही उत्तर: " +
-            escapeHTML(q.answerText) +
-            (q.explanation
-                ? "<br><br><strong>Explanation:</strong> " +
-                    escapeHTML(q.explanation)
-                : "");
-        return;
-    }
-
-    if (isCorrect(currentIndex)) {
-        feedback.className = "feedback good";
-        feedback.innerHTML =
-            "<strong>✓ सही उत्तर!</strong>" +
-            (q.explanation
-                ? "<br><br><strong>Explanation:</strong> " +
-                    escapeHTML(q.explanation)
-                : "");
-    } else {
-        feedback.className = "feedback bad";
-        feedback.innerHTML =
-            "<strong>✗ गलत उत्तर।</strong><br>" +
-            "सही उत्तर: " + escapeHTML(q.answerText) +
-            (q.explanation
-                ? "<br><br><strong>Explanation:</strong> " +
-                    escapeHTML(q.explanation)
-                : "");
-    }
-}
-
-/* ---------- Timer ---------- */
-
-function startTimer() {
-    stopTimer();
-
-    timerInterval = setInterval(() => {
-        if (quizSubmitted) {
-            stopTimer();
-            return;
-        }
-
-        secondsRemaining--;
-
-        updateTimerDisplay();
-
-        if (secondsRemaining <= 0) {
-            submitQuiz(true);
-        }
-    }, 1000);
-}
-
-function stopTimer() {
-    if (timerInterval !== null) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-    }
-}
-
-function updateTimerDisplay() {
-    const minutes = Math.floor(secondsRemaining / 60);
-    const seconds = secondsRemaining % 60;
-
-    $("timer").textContent =
-        "⏱ " +
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(seconds).padStart(2, "0");
-}
-
-/* ---------- Navigation ---------- */
-
-$("prevBtn").addEventListener("click", () => {
-    if (currentIndex > 0) {
+$("previousButton").addEventListener("click",()=>{
+    if(currentIndex>0){
         currentIndex--;
         renderQuestion();
     }
 });
 
-$("nextBtn").addEventListener("click", () => {
-    if (currentIndex < quizQuestions.length - 1) {
+$("nextButton").addEventListener("click",()=>{
+    if(currentIndex<quizQuestions.length-1){
         currentIndex++;
         renderQuestion();
     }
 });
 
-/* ---------- Submit quiz ---------- */
+$("clearAnswerButton").addEventListener("click",()=>{
+    delete answers[currentIndex];
+    renderQuestion();
+    showToast("उत्तर हटा दिया गया।");
+});
 
-function submitQuiz(autoSubmitted = false) {
-    if (!quizStarted || quizSubmitted) return;
+$("reviewButton").addEventListener("click",()=>{
+    reviewFlags[currentIndex]=!reviewFlags[currentIndex];
+    renderQuestion();
+});
 
-    if (!autoSubmitted) {
-        const unanswered = answers.filter(
-            answer => answer === null || answer === undefined
-        ).length;
+$("submitButton").addEventListener("click",()=>{
+    const unanswered = quizQuestions.length-
+        Object.keys(answers).filter(key=>answers[key]).length;
 
-        const message = unanswered
-            ? "आपने " + unanswered +
-              " प्रश्नों का उत्तर नहीं दिया है। क्या आप Quiz Submit करना चाहते हैं?"
-            : "क्या आप Quiz Submit करना चाहते हैं?";
+    const message = unanswered
+        ? unanswered+" प्रश्न अभी अनुत्तरित हैं। क्या टेस्ट जमा करना चाहते हैं?"
+        : "क्या आप टेस्ट जमा करना चाहते हैं?";
 
-        if (!confirm(message)) return;
+    if(confirm(message)){
+        finishQuiz(false);
+    }
+});
+
+/* RESULTS */
+
+function finishQuiz(autoSubmitted){
+    if(quizFinished) return;
+
+    quizFinished = true;
+    quizStarted = false;
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
     }
 
-    quizSubmitted = true;
-    stopTimer();
+    let correct=0;
+    let wrong=0;
+    let skipped=0;
 
-    let correct = 0;
-    let wrong = 0;
-    let unanswered = 0;
-
-    quizQuestions.forEach((q, index) => {
-        if (answers[index] === null || answers[index] === undefined) {
-            unanswered++;
-        } else if (isCorrect(index)) {
+    quizQuestions.forEach((q,index)=>{
+        if(!answers[index]){
+            skipped++;
+        }else if(answers[index]===q.answer){
             correct++;
-        } else {
+        }else{
             wrong++;
         }
     });
 
-    const attempted = correct + wrong;
-    const accuracy = attempted
-        ? Math.round(correct / attempted * 100)
+    const total=quizQuestions.length;
+    const percentage=total ? Math.round(correct/total*100) : 0;
+    const accuracy=total-skipped
+        ? Math.round(correct/(total-skipped)*100)
         : 0;
 
-    $("quizCard").classList.add("hidden");
-    $("resultCard").classList.remove("hidden");
+    $("quizScreen").style.display="none";
+    $("resultScreen").style.display="block";
 
-    $("scoreText").textContent =
-        correct + " / " + quizQuestions.length;
+    $("finalPercentage").textContent=percentage+"%";
+    $("finalCorrect").textContent=correct;
+    $("finalWrong").textContent=wrong;
+    $("finalSkipped").textContent=skipped;
+    $("finalAccuracy").textContent=accuracy+"%";
 
-    $("resultCorrect").textContent = correct;
-    $("resultWrong").textContent = wrong;
-    $("resultUnanswered").textContent = unanswered;
-    $("resultAccuracy").textContent = accuracy + "%";
+    let message="अच्छा प्रयास! अभ्यास जारी रखें।";
 
-    $("resultSubtitle").textContent = autoSubmitted
-        ? "समय समाप्त हो गया। आपका Quiz अपने आप Submit कर दिया गया।"
-        : "आपने Quiz पूरा कर लिया है।";
-
-    $("totalStat").textContent = quizQuestions.length;
-    $("attemptedStat").textContent = attempted;
-    $("correctStat").textContent = correct;
-    $("accuracyStat").textContent = accuracy + "%";
-
-    $("reviewContainer").innerHTML = "";
-
-    quizQuestions.forEach((q, index) => {
-        const selected = answers[index];
-
-        const item = document.createElement("div");
-        item.className = "result-review";
-
-        const isAnswered =
-            selected !== null && selected !== undefined;
-
-        const correctAnswer = q.answerText;
-
-        const yourAnswer = isAnswered
-            ? q.options[selected].text
-            : "उत्तर नहीं दिया गया";
-
-        const correctNow = isAnswered && isCorrect(index);
-
-        item.innerHTML =
-            "<strong>" + (index + 1) + ". " +
-            escapeHTML(q.question) + "</strong><br>" +
-
-            "<span style='color:" +
-            (correctNow ? "#08774e" : "#a32137") +
-            "'>आपका उत्तर: " + escapeHTML(yourAnswer) +
-            "</span><br>" +
-
-            "<strong>सही उत्तर:</strong> " +
-            escapeHTML(correctAnswer) +
-
-            (q.explanation
-                ? "<br><strong>Explanation:</strong> " +
-                    escapeHTML(q.explanation)
-                : "");
-
-        $("reviewContainer").appendChild(item);
-    });
-
-    renderPalette();
-
-    window.scrollTo({top: 0, behavior: "smooth"});
-}
-
-/* ---------- Event listeners ---------- */
-
-$("reloadBtn").addEventListener("click", loadGitHubQuestions);
-$("tryAgainBtn").addEventListener("click", loadGitHubQuestions);
-
-$("startBtn").addEventListener("click", startQuiz);
-$("restartBtn").addEventListener("click", startQuiz);
-
-$("submitBtn").addEventListener("click", () => submitQuiz(false));
-
-$("importBtn").addEventListener("click", () => {
-    $("fileInput").click();
-});
-
-$("welcomeImportBtn").addEventListener("click", () => {
-    $("fileInput").click();
-});
-
-$("fileInput").addEventListener("change", event => {
-    const file = event.target.files[0];
-
-    if (file) {
-        importTextFile(file);
+    if(percentage>=90){
+        message="🏆 शानदार! आपकी तैयारी बहुत अच्छी है।";
+    }else if(percentage>=75){
+        message="🌟 बहुत अच्छा! आप सही दिशा में हैं।";
+    }else if(percentage>=50){
+        message="👍 अच्छा प्रयास! थोड़ी और मेहनत करें।";
+    }else{
+        message="💪 हार मत मानिए। गलत उत्तरों से सीखिए और फिर प्रयास करें।";
     }
 
-    // एक ही फाइल दोबारा चुनने की अनुमति।
-    event.target.value = "";
+    $("performanceMessage").textContent=message;
+
+    const minutesSetting=Number($("timeLimit").value);
+    let timeUsed="समय सीमा नहीं थी";
+
+    if(minutesSetting>0){
+        const usedSeconds=Math.max(
+            0,minutesSetting*60-timeRemaining
+        );
+
+        timeUsed=
+            Math.floor(usedSeconds/60)+" मिनट "+
+            (usedSeconds%60)+" सेकंड";
+    }
+
+    $("resultDetails").textContent=
+        "कक्षा: "+currentClass+
+        " | विषय: "+currentSubject+
+        " | कुल प्रश्न: "+total+
+        " | समय: "+timeUsed+
+        (autoSubmitted ? " | समय समाप्त होने पर टेस्ट अपने आप जमा हुआ।" : "");
+
+    $("answerReviewCard").classList.add("hidden");
+
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderAnswerReview(){
+    const list=$("answerReviewList");
+    list.innerHTML="";
+
+    quizQuestions.forEach((q,index)=>{
+        const row=document.createElement("div");
+        row.className="review-row";
+
+        const title=document.createElement("strong");
+        title.textContent=(index+1)+". "+q.question;
+
+        const status=document.createElement("div");
+
+        if(!answers[index]){
+            status.textContent="आपका उत्तर: नहीं दिया गया";
+            status.className="review-wrong";
+        }else if(answers[index]===q.answer){
+            status.textContent="आपका उत्तर: "+answers[index]+" — सही";
+            status.className="review-correct";
+        }else{
+            status.textContent=
+                "आपका उत्तर: "+answers[index]+" — गलत";
+            status.className="review-wrong";
+        }
+
+        const correct=document.createElement("div");
+        correct.textContent=
+            "सही उत्तर: "+q.answer+". "+q[q.answer];
+
+        const chapter=document.createElement("div");
+        chapter.textContent="अध्याय: "+q.chapter;
+        chapter.style.color="#718096";
+
+        const explanation=document.createElement("div");
+        explanation.textContent=
+            "व्याख्या: "+(q.explanation || "उपलब्ध नहीं है।");
+
+        row.append(title,status,correct,chapter,explanation);
+        list.appendChild(row);
+    });
+
+    $("answerReviewCard").classList.remove("hidden");
+
+    $("answerReviewCard").scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+}
+
+$("reviewAnswersButton").addEventListener("click",renderAnswerReview);
+
+function goHome(){
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval=null;
+    }
+
+    quizStarted=false;
+    quizFinished=false;
+
+    $("resultScreen").style.display="none";
+    $("quizScreen").style.display="none";
+    $("setupScreen").style.display="block";
+    $("homeStats").style.display="grid";
+
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+$("backHomeButton").addEventListener("click",goHome);
+
+$("retryButton").addEventListener("click",()=>{
+    $("resultScreen").style.display="none";
+    $("setupScreen").style.display="block";
+    $("homeStats").style.display="grid";
+    startQuiz();
 });
 
-/* ---------- Initial load ---------- */
+$("printButton").addEventListener("click",()=>{
+    window.print();
+});
 
-loadGitHubQuestions();
+$("reloadQuestions").addEventListener("click",async()=>{
+    await loadQuestions();
+    renderClassOptions();
+    renderSubjectOptions();
+    updateSetupSummary();
+    updateQuestionLimitOptions();
+});
 
+/* Keyboard shortcuts */
+
+document.addEventListener("keydown",event=>{
+    if(!quizStarted || quizFinished) return;
+
+    if(event.key==="ArrowRight"){
+        if(currentIndex<quizQuestions.length-1){
+            currentIndex++;
+            renderQuestion();
+        }
+    }
+
+    if(event.key==="ArrowLeft"){
+        if(currentIndex>0){
+            currentIndex--;
+            renderQuestion();
+        }
+    }
+
+    const optionMap={
+        "1":"A",
+        "2":"B",
+        "3":"C",
+        "4":"D"
+    };
+
+    if(optionMap[event.key]){
+        answers[currentIndex]=optionMap[event.key];
+        renderQuestion();
+    }
+});
+
+/* Print styling */
+
+const printStyle=document.createElement("style");
+printStyle.textContent=`
+@media print{
+    .topbar, .hero, .stats, .sidebar, .quiz-actions,
+    #setupScreen, #quizScreen, footer, .toast{
+        display:none!important;
+    }
+    body{background:white!important}
+    .container{max-width:100%;margin:0;padding:0}
+    #resultScreen{display:block!important}
+    .card{box-shadow:none;border:1px solid #ddd}
+    .result-hero{
+        background:white!important;
+        color:black!important;
+        border:1px solid #ddd;
+    }
+    .result-hero p,.result-score span{color:#333!important}
+    #answerReviewCard{display:block!important}
+}
+`;
+document.head.appendChild(printStyle);
+
+/* INITIAL LOAD */
+
+(async function init(){
+    await loadQuestions();
+
+    $("classSelect").addEventListener("change",updateQuestionLimitOptions);
+
+    updateSetupSummary();
+})();
 </script>
 
 </body>
