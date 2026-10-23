@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10264b">
+<meta name="theme-color" content="#10172a">
 
-<title>PDF Pro Editor | Reader & Editing Engine</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<title>Advanced Digital Harmonium Studio</title>
 
 <style>
 :root {
-    --navy: #10264b;
-    --blue: #2459c4;
-    --light: #edf4ff;
-    --border: #dbe4f0;
-    --text: #24334d;
-    --green: #168047;
-    --red: #d93030;
+    --bg: #10172a;
+    --panel: #19243b;
+    --panel2: #202e49;
+    --gold: #f2c46d;
+    --gold2: #ffe2a0;
+    --text: #f3f6ff;
+    --muted: #a9b6cf;
+    --green: #44d7a0;
+    --red: #ff6577;
+    --border: #34435f;
 }
 
 * {
@@ -27,315 +27,455 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    background: var(--bg);
     color: var(--text);
-    background: #f3f6fc;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background .2s;
 }
 
-header {
-    background: linear-gradient(135deg, #10264b, #2459c4);
-    color: white;
-    padding: 20px;
-    text-align: center;
+body.light {
+    --bg: #eef2f8;
+    --panel: #ffffff;
+    --panel2: #e4eaf4;
+    --text: #16213a;
+    --muted: #64748b;
+    --border: #cbd5e1;
 }
 
-header h1 {
-    margin: 0 0 8px;
-}
-
-header p {
-    margin: 0;
-    line-height: 1.6;
-}
-
-.toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    justify-content: center;
-    padding: 12px;
-    background: white;
-    border-bottom: 1px solid var(--border);
-}
-
-button,
-.file-label {
-    border: none;
-    border-radius: 7px;
-    padding: 10px 13px;
-    font-weight: bold;
-    cursor: pointer;
-    background: var(--blue);
-    color: white;
-    font-size: 13px;
-}
-
-button.secondary {
-    background: #e7edf8;
-    color: var(--navy);
-}
-
-button.success {
-    background: var(--green);
-}
-
-button.danger {
-    background: var(--red);
-}
-
-button:disabled {
-    opacity: .45;
-    cursor: not-allowed;
-}
-
-.file-label {
-    display: inline-block;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-input,
-select,
-textarea {
-    max-width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 7px;
+button, input, select {
     font: inherit;
 }
 
-input[type="text"],
-textarea {
+button {
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--panel2);
+    color: var(--text);
+    padding: 10px 13px;
+    cursor: pointer;
+    transition: .15s;
+}
+
+button:hover {
+    border-color: var(--gold);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: scale(.97);
+}
+
+button.primary {
+    background: var(--gold);
+    color: #172033;
+    border-color: var(--gold);
+    font-weight: bold;
+}
+
+button.danger {
+    background: #6d2535;
+    color: white;
+}
+
+button.success {
+    background: #145941;
+    color: white;
+}
+
+button.active {
+    background: var(--gold);
+    color: #142039;
+}
+
+input, select {
+    accent-color: var(--gold);
+}
+
+input[type="range"] {
     width: 100%;
 }
 
-.app {
+header {
+    background: linear-gradient(120deg, #111a30, #263958);
+    border-bottom: 2px solid var(--gold);
+    padding: 18px;
+}
+
+.header-row {
     max-width: 1400px;
-    padding: 15px;
     margin: auto;
-}
-
-.status {
-    padding: 12px;
-    border-radius: 8px;
-    background: var(--light);
-    line-height: 1.5;
-    margin: 10px 0;
-    overflow-wrap: anywhere;
-}
-
-.status.error {
-    background: #fff0f0;
-    color: #a31515;
-}
-
-.status.ok {
-    background: #eaf8ef;
-    color: #126b3c;
-}
-
-.workspace {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 15px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--gold);
+    color: #172033;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0 0 6px;
+}
+
+.subtitle {
+    color: #c4d0e6;
+    font-size: 13px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 18px;
 }
 
 .panel {
-    background: white;
+    background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    min-width: 0;
+    border-radius: 15px;
+    padding: 17px;
+    margin-bottom: 17px;
+    box-shadow: 0 5px 20px #00000012;
 }
 
-.panel-title {
-    padding: 14px;
-    background: #f8faff;
-    border-bottom: 1px solid var(--border);
-    font-weight: bold;
-    color: var(--navy);
+.panel h2 {
+    font-size: 18px;
+    margin: 0 0 15px;
 }
 
-.panel-body {
-    padding: 14px;
-}
-
-.reader-controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 12px;
-}
-
-.reader-controls input {
-    width: 70px;
-}
-
-#viewer {
-    position: relative;
-    background: #e8edf5;
-    padding: 12px;
-    min-height: 350px;
-    max-height: 78vh;
-    overflow: auto;
-    text-align: center;
-}
-
-#pageStage {
-    position: relative;
-    display: inline-block;
-    background: white;
-    line-height: 0;
-    box-shadow: 0 3px 14px #0002;
-}
-
-#pdfCanvas {
-    display: block;
-    max-width: none;
-}
-
-#textLayer {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    line-height: 1;
-    text-align: initial;
-    user-select: text;
-    -webkit-user-select: text;
-}
-
-#textLayer span {
-    position: absolute;
-    white-space: pre;
-    color: transparent;
-    transform-origin: 0 0;
-    cursor: text;
-    line-height: 1;
-}
-
-#textLayer span::selection {
-    background: rgba(40, 120, 255, .4);
-}
-
-#textLayer.editing span:hover {
-    background: rgba(36, 89, 196, .15);
-    outline: 1px dashed #2459c4;
-}
-
-#textLayer.editing span.selected {
-    background: rgba(255, 190, 50, .3);
-    outline: 1px solid #e3a300;
-}
-
-#textLayer.editing {
-    cursor: text;
-}
-
-.editor-box {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    margin-top: 14px;
-}
-
-.editor-box h3 {
+.panel h3 {
+    font-size: 15px;
     margin-top: 0;
-    color: var(--navy);
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-}
-
-.row input {
-    flex: 1;
-    min-width: 100px;
-}
-
-.note {
-    background: #fff8e7;
-    border: 1px solid #eedba9;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    line-height: 1.6;
-    margin: 12px 0;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
 }
 
-.tool-card {
-    padding: 14px;
+.control-group {
+    min-width: 0;
+    background: var(--panel2);
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.control-group label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 9px;
+}
+
+.control-group select {
+    width: 100%;
+    padding: 9px;
+    border-radius: 7px;
+    background: var(--bg);
+    color: var(--text);
     border: 1px solid var(--border);
+}
+
+.value {
+    float: right;
+    color: var(--gold);
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.status-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+}
+
+.status {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.status strong {
+    color: var(--green);
+}
+
+.note-display {
+    text-align: center;
+    background: linear-gradient(135deg, #14223c, #243a5d);
+    border: 1px solid #405477;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 17px;
+}
+
+.note-display .big-note {
+    color: var(--gold2);
+    font-size: 38px;
+    font-weight: bold;
+}
+
+.note-display .frequency {
+    color: #c1cfe5;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.harmonium-shell {
+    padding: 15px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #512b1b, #874b28);
+    border: 4px solid #c7954c;
+    box-shadow: 0 10px 25px #0004;
+}
+
+.keyboard-scroll {
+    overflow-x: auto;
+    padding-bottom: 10px;
+    touch-action: pan-x;
+}
+
+.keyboard {
+    position: relative;
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    height: 245px;
+    user-select: none;
+}
+
+.white-key {
+    flex: 1;
+    min-width: 56px;
+    max-width: 100px;
+    height: 245px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, #ddd, #fff 20%, #f8f8f8 85%, #ccc);
+    border: 1px solid #555;
+    border-radius: 0 0 8px 8px;
+    color: #152038;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 13px;
+    font-weight: bold;
+    touch-action: none;
+}
+
+.white-key .key-info {
+    pointer-events: none;
+    text-align: center;
+    font-size: 13px;
+}
+
+.white-key .keyboard-shortcut {
+    display: block;
+    font-size: 10px;
+    color: #68748a;
+    margin-top: 6px;
+}
+
+.black-key {
+    position: absolute;
+    z-index: 3;
+    width: 38px;
+    height: 145px;
+    top: 0;
+    border-radius: 0 0 7px 7px;
+    background: linear-gradient(90deg, #111, #363636, #080808);
+    border: 1px solid #050505;
+    box-shadow: 0 6px 6px #0005;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 12px;
+    touch-action: none;
+}
+
+.black-key .key-info {
+    text-align: center;
+    font-size: 11px;
+    pointer-events: none;
+}
+
+.white-key.pressed {
+    background: linear-gradient(#ffecba, #f3c65f);
+}
+
+.black-key.pressed {
+    background: linear-gradient(#d79a39, #855319);
+}
+
+.key-label {
+    font-size: 11px;
+    display: block;
+    opacity: .75;
+    margin-top: 5px;
+}
+
+.help-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.practice-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.practice-button {
+    padding: 13px 5px;
+    font-weight: bold;
+}
+
+.practice-button span {
+    display: block;
+    font-size: 11px;
+    margin-top: 5px;
+    opacity: .7;
+}
+
+.recorder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+}
+
+.timer {
+    color: var(--gold);
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: auto;
+}
+
+.song-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.song-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel2);
+    padding: 10px;
     border-radius: 9px;
 }
 
-.tool-card h3 {
-    margin-top: 0;
-    color: var(--navy);
+.song-item .song-name {
+    flex: 1;
+    min-width: 120px;
 }
 
-.tool-card input {
-    margin: 7px 0;
+.song-item small {
+    display: block;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.song-item button {
+    padding: 8px 10px;
+}
+
+.rhythm-display {
+    font-size: 30px;
+    text-align: center;
+    color: var(--gold);
+    padding: 12px;
+}
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 20px;
+    font-size: 12px;
 }
 
 .hidden {
     display: none !important;
 }
 
-footer {
-    background: var(--navy);
-    color: white;
-    text-align: center;
-    padding: 22px;
-    margin-top: 25px;
-    line-height: 1.7;
+@media(max-width: 850px) {
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .keyboard {
+        height: 220px;
+    }
+
+    .white-key {
+        height: 220px;
+        min-width: 55px;
+    }
+
+    .black-key {
+        height: 125px;
+        width: 35px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
 }
 
-@media (min-width: 900px) {
-    .workspace {
-        grid-template-columns: minmax(0, 1fr) 340px;
-        align-items: start;
+@media(max-width: 420px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .side-panel {
-        position: sticky;
-        top: 90px;
-    }
-}
-
-@media (max-width: 600px) {
-    .app {
-        padding: 8px;
+    .panel {
+        padding: 12px;
     }
 
-    .toolbar {
-        gap: 5px;
-        padding: 8px;
+    .practice-grid {
+        grid-template-columns: repeat(4, 1fr);
     }
 
-    button,
-    .file-label {
-        padding: 9px;
-        font-size: 12px;
+    .white-key {
+        min-width: 54px;
     }
 
-    #viewer {
-        padding: 5px;
+    .black-key {
+        width: 34px;
     }
 }
 </style>
@@ -344,1245 +484,1558 @@ footer {
 <body>
 
 <header>
-    <h1>📄 PDF Pro Editor</h1>
-    <p>Read, Search, Replace Text, Merge, Split & Convert PDF</p>
+    <div class="header-row">
+
+        <div class="brand">
+            <div class="logo">🎹</div>
+            <div>
+                <h1>Advanced Harmonium Studio</h1>
+                <div class="subtitle">
+                    Digital Music • Sargam • Recording • Rhythm
+                </div>
+            </div>
+        </div>
+
+        <div class="header-buttons">
+            <button class="primary" id="startAudio">🔊 Start Audio</button>
+            <button id="themeButton">🌙 Theme</button>
+            <button id="stopAll">⏹ Stop All</button>
+        </div>
+
+    </div>
 </header>
 
-<div class="toolbar">
+<main class="container">
 
-    <label class="file-label" for="pdfInput">📂 Open PDF</label>
-    <input type="file" id="pdfInput" accept=".pdf,application/pdf">
+    <!-- STATUS -->
 
-    <button class="secondary" onclick="setEditMode(false)">📖 Reader</button>
-    <button onclick="setEditMode(true)">✏️ Edit Mode</button>
-    <button class="success" onclick="savePDF()">💾 Save PDF</button>
-    <button class="secondary" onclick="downloadOriginal()">Download Original</button>
-
-</div>
-
-<main class="app">
-
-    <div id="globalStatus" class="status">
-        Open a PDF file to begin.
-    </div>
-
-    <div class="workspace">
-
-        <section class="panel">
-
-            <div class="panel-title">📖 PDF Reader & Editing Canvas</div>
-
-            <div class="reader-controls">
-
-                <button class="secondary" onclick="previousPage()">◀</button>
-
-                <span>Page</span>
-                <input type="number" id="pageInput" value="1" min="1">
-
-                <span id="totalPages">/ 0</span>
-
-                <button class="secondary" onclick="goPage()">Go</button>
-                <button class="secondary" onclick="nextPage()">▶</button>
-
-                <button class="secondary" onclick="zoomBy(-0.2)">−</button>
-                <span id="zoomValue">100%</span>
-                <button class="secondary" onclick="zoomBy(0.2)">+</button>
-
+    <section class="panel">
+        <div class="status-bar">
+            <div class="status">
+                Audio: <strong id="audioStatus">Not Started</strong>
             </div>
 
-            <div id="viewer">
-
-                <div id="pageStage">
-
-                    <canvas id="pdfCanvas"></canvas>
-
-                    <div id="textLayer"></div>
-
-                </div>
-
+            <div class="status">
+                Current Scale: <strong id="scaleStatus">C</strong>
             </div>
 
-            <div class="panel-body">
+            <div class="status">
+                Playing Notes: <strong id="playingCount">0</strong>
+            </div>
+        </div>
+    </section>
 
-                <div class="note">
-                    Edit Mode में टेक्स्ट की किसी लाइन पर क्लिक करके उसे चुनें।
-                    फिर नीचे Replace Text में नया टेक्स्ट डालें।
-                    यह संस्करण चुने हुए टेक्स्ट आइटम को बदलता है; पूरे PDF में
-                    किसी भी शब्द का सटीक inline replacement हर फाइल में संभव नहीं है।
-                </div>
+    <!-- NOTE DISPLAY -->
 
-                <div id="selectionInfo" class="status">
-                    No text selected.
-                </div>
+    <section class="note-display">
+        <div class="subtitle">CURRENT SWAR</div>
+        <div class="big-note" id="currentNote">सा</div>
+        <div class="frequency" id="frequencyDisplay">
+            Press Start Audio and play a key
+        </div>
+    </section>
 
-                <div class="editor-box">
+    <!-- SOUND CONTROLS -->
 
-                    <h3>✏️ Replace Selected Text</h3>
+    <section class="panel">
+        <h2>🎚️ Sound & Instrument Controls</h2>
 
-                    <label for="oldText">Selected / Original Text</label>
-                    <textarea id="oldText" rows="2"
-                              placeholder="Select a text item from the page"></textarea>
+        <div class="grid">
 
-                    <label for="newText">New Text</label>
-                    <textarea id="newText" rows="2"
-                              placeholder="Enter replacement text"></textarea>
-
-                    <div class="row" style="margin-top:10px">
-                        <button onclick="replaceSelectedText()">Replace Text</button>
-                        <button class="secondary" onclick="clearSelection()">Clear</button>
-                        <button class="secondary" onclick="undoLastChange()">Undo Last</button>
-                    </div>
-
-                    <div id="editStatus" class="status">
-                        Open a PDF and select a text item in Edit Mode.
-                    </div>
-
-                </div>
-
-                <div class="editor-box">
-
-                    <h3>🔎 Search Text</h3>
-
-                    <div class="row">
-                        <input type="text" id="searchText"
-                               placeholder="Search in current PDF">
-                        <button onclick="searchText()">Search</button>
-                    </div>
-
-                    <div id="searchStatus" class="status"></div>
-
-                </div>
-
+            <div class="control-group">
+                <label for="waveform">Instrument Tone</label>
+                <select id="waveform">
+                    <option value="sawtooth">Reed / Harmonium</option>
+                    <option value="triangle">Soft Reed</option>
+                    <option value="square">Organ</option>
+                    <option value="sine">Flute-like Tone</option>
+                </select>
             </div>
 
-        </section>
-
-
-        <aside class="panel side-panel">
-
-            <div class="panel-title">🛠️ PDF Tools</div>
-
-            <div class="panel-body">
-
-                <div class="tool-card">
-
-                    <h3>📚 Merge PDF</h3>
-
-                    <input type="file" id="mergeInput"
-                           accept=".pdf,application/pdf" multiple
-                           style="display:block;width:100%">
-
-                    <button onclick="mergePDFs()">Merge & Download</button>
-
-                    <div id="mergeStatus" class="status"></div>
-
-                </div>
-
-                <div class="tool-card" style="margin-top:12px">
-
-                    <h3>✂️ Extract Pages</h3>
-
-                    <input type="text" id="pageRanges"
-                           placeholder="Example: 1,3,5-8">
-
-                    <button onclick="extractPages()">Extract PDF</button>
-
-                    <div id="splitStatus" class="status"></div>
-
-                </div>
-
-                <div class="tool-card" style="margin-top:12px">
-
-                    <h3>🔄 Rotate PDF</h3>
-
-                    <select id="rotateAngle" style="width:100%">
-                        <option value="90">90° clockwise</option>
-                        <option value="180">180°</option>
-                        <option value="270">270° clockwise</option>
-                    </select>
-
-                    <button onclick="rotatePDF()" style="margin-top:8px">
-                        Rotate All Pages
-                    </button>
-
-                    <div id="rotateStatus" class="status"></div>
-
-                </div>
-
-                <div class="tool-card" style="margin-top:12px">
-
-                    <h3>🖼️ Image to PDF</h3>
-
-                    <input type="file" id="imageInput"
-                           accept="image/*" multiple
-                           style="display:block;width:100%">
-
-                    <button onclick="imagesToPDF()">Convert Images</button>
-
-                    <div id="imageStatus" class="status"></div>
-
-                </div>
-
-                <div class="tool-card" style="margin-top:12px">
-
-                    <h3>📷 PDF to PNG</h3>
-
-                    <button onclick="exportPNG()">Download Current Page</button>
-
-                    <div id="pngStatus" class="status"></div>
-
-                </div>
-
+            <div class="control-group">
+                <label for="volume">
+                    Master Volume
+                    <span class="value" id="volumeValue">60%</span>
+                </label>
+                <input type="range" id="volume" min="0" max="100" value="60">
             </div>
 
-        </aside>
+            <div class="control-group">
+                <label for="attack">
+                    Attack
+                    <span class="value" id="attackValue">30 ms</span>
+                </label>
+                <input type="range" id="attack" min="5" max="300" value="30">
+            </div>
 
-    </div>
+            <div class="control-group">
+                <label for="release">
+                    Release
+                    <span class="value" id="releaseValue">180 ms</span>
+                </label>
+                <input type="range" id="release" min="30" max="1000" value="180">
+            </div>
+
+            <div class="control-group">
+                <label for="reverb">
+                    Reverb
+                    <span class="value" id="reverbValue">10%</span>
+                </label>
+                <input type="range" id="reverb" min="0" max="60" value="10">
+            </div>
+
+            <div class="control-group">
+                <label for="brightness">
+                    Brightness
+                    <span class="value" id="brightnessValue">1800 Hz</span>
+                </label>
+                <input type="range" id="brightness" min="300" max="6000" value="1800">
+            </div>
+
+            <div class="control-group">
+                <label for="scale">Scale / Sa Position</label>
+                <select id="scale">
+                    <option value="0">C / सा</option>
+                    <option value="1">C# / सा</option>
+                    <option value="2">D / सा</option>
+                    <option value="3">D# / सा</option>
+                    <option value="4">E / सा</option>
+                    <option value="5">F / सा</option>
+                    <option value="6">F# / सा</option>
+                    <option value="7">G / सा</option>
+                    <option value="8">G# / सा</option>
+                    <option value="9">A / सा</option>
+                    <option value="10">A# / सा</option>
+                    <option value="11">B / सा</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="octave">Octave / Saptak</label>
+                <select id="octave">
+                    <option value="2">Very Low</option>
+                    <option value="3">Mandra</option>
+                    <option value="4" selected>Madhya</option>
+                    <option value="5">Taar</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="reed">Reed Blend</label>
+                <select id="reed">
+                    <option value="1">Single Reed</option>
+                    <option value="2">Double Reed</option>
+                    <option value="3">Triple Reed</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="transpose">Transpose</label>
+                <select id="transpose">
+                    <option value="-5">-5 Semitones</option>
+                    <option value="-4">-4 Semitones</option>
+                    <option value="-3">-3 Semitones</option>
+                    <option value="-2">-2 Semitones</option>
+                    <option value="-1">-1 Semitone</option>
+                    <option value="0" selected>0 / Normal</option>
+                    <option value="1">+1 Semitone</option>
+                    <option value="2">+2 Semitones</option>
+                    <option value="3">+3 Semitones</option>
+                    <option value="4">+4 Semitones</option>
+                    <option value="5">+5 Semitones</option>
+                </select>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- HARMONIUM KEYBOARD -->
+
+    <section class="panel">
+        <h2>🎹 Virtual Harmonium Keyboard</h2>
+
+        <div class="button-row" style="margin-bottom:12px">
+            <button id="previousOctave">◀ Lower Octave</button>
+            <button id="middleOctave" class="primary">Middle Octave</button>
+            <button id="nextOctave">Higher Octave ▶</button>
+            <button id="releaseKeys">Release All Keys</button>
+        </div>
+
+        <div class="harmonium-shell">
+            <div class="keyboard-scroll">
+                <div id="keyboard" class="keyboard"></div>
+            </div>
+        </div>
+
+        <p class="help-text">
+            Mobile: कुंजी को दबाकर रखें और छोड़ने पर स्वर बंद होगा।
+            Computer: माउस से कुंजियाँ दबाएँ। नीचे दिए गए keyboard shortcuts
+            भी इस्तेमाल कर सकते हैं।
+        </p>
+
+        <div class="button-row">
+            <button id="octaveDown">− Octave</button>
+            <button id="octaveUp">+ Octave</button>
+            <button id="showShortcuts">⌨️ Keyboard Help</button>
+        </div>
+
+        <div id="shortcutHelp" class="help-text hidden">
+            Computer shortcuts: A S D F G H J K L से शुद्ध स्वरों के
+            कुछ स्वर बजाएँ। W E T Y U से काली कुंजियों के स्वर बजाएँ।
+            Shift दबाकर रखने पर अगले सप्तक के स्वर बजेंगे।
+        </div>
+    </section>
+
+    <!-- QUICK SWAR BUTTONS -->
+
+    <section class="panel">
+        <h2>🎼 Quick Swar Pad</h2>
+
+        <div class="practice-grid" id="quickPad"></div>
+
+        <div class="button-row" style="margin-top:14px">
+            <button id="ascending">⬆️ आरोह</button>
+            <button id="descending">⬇️ अवरोह</button>
+            <button id="fullSargam" class="primary">▶ पूर्ण सरगम</button>
+            <button id="stopSequence" class="danger">⏹ Stop Sequence</button>
+        </div>
+    </section>
+
+    <!-- PRACTICE SETTINGS -->
+
+    <section class="panel">
+        <h2>🎓 Learning & Practice</h2>
+
+        <div class="grid">
+
+            <div class="control-group">
+                <label for="practiceSpeed">Practice Speed</label>
+                <select id="practiceSpeed">
+                    <option value="900">Slow</option>
+                    <option value="600" selected>Normal</option>
+                    <option value="350">Fast</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="practicePattern">Practice Pattern</label>
+                <select id="practicePattern">
+                    <option value="basic">Basic Sargam</option>
+                    <option value="repeat">Repeated Notes</option>
+                    <option value="alternate">Alternate Notes</option>
+                    <option value="octave">Octave Practice</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="droneNote">Drone / Tanpura Note</label>
+                <select id="droneNote">
+                    <option value="0">Sa</option>
+                    <option value="7">Pa</option>
+                    <option value="5">Ma</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="droneVolume">
+                    Drone Volume
+                    <span class="value" id="droneVolumeValue">20%</span>
+                </label>
+                <input type="range" id="droneVolume" min="0" max="100" value="20">
+            </div>
+
+        </div>
+
+        <div class="button-row" style="margin-top:14px">
+            <button id="startDrone">🎵 Start Drone</button>
+            <button id="stopDrone">Stop Drone</button>
+            <button id="startPractice" class="primary">Start Practice</button>
+        </div>
+    </section>
+
+    <!-- RHYTHM -->
+
+    <section class="panel">
+        <h2>🥁 Rhythm & Metronome</h2>
+
+        <div class="grid">
+
+            <div class="control-group">
+                <label for="bpm">
+                    Tempo / BPM
+                    <span class="value" id="bpmValue">80</span>
+                </label>
+                <input type="range" id="bpm" min="40" max="200" value="80">
+            </div>
+
+            <div class="control-group">
+                <label for="beats">Beats Per Cycle</label>
+                <select id="beats">
+                    <option value="3">3 Beats</option>
+                    <option value="4" selected>4 Beats</option>
+                    <option value="6">6 Beats</option>
+                    <option value="8">8 Beats</option>
+                    <option value="16">16 Beats</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="metronomeVolume">
+                    Click Volume
+                    <span class="value" id="metronomeVolumeValue">35%</span>
+                </label>
+                <input type="range" id="metronomeVolume" min="0" max="100" value="35">
+            </div>
+
+            <div class="control-group">
+                <label>Metronome</label>
+                <div class="button-row">
+                    <button id="startMetro" class="primary">▶ Start</button>
+                    <button id="stopMetro">⏹ Stop</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="rhythmDisplay" class="rhythm-display">Ready</div>
+    </section>
+
+    <!-- RECORDING -->
+
+    <section class="panel">
+        <h2>⏺ Recording Studio</h2>
+
+        <p class="help-text">
+            रिकॉर्डिंग आपके द्वारा बजाए गए स्वरों और उनके समय को सेव करती है।
+            इससे धुन दोबारा बजाई जा सकती है। यह ऑडियो फ़ाइल की रिकॉर्डिंग
+            नहीं है।
+        </p>
+
+        <div class="recorder">
+            <button id="recordButton" class="danger">⏺ Start Recording</button>
+            <button id="finishRecord">■ Finish</button>
+            <button id="playLast" class="success">▶ Play Last</button>
+            <button id="exportRecording">⬇ Export Notes JSON</button>
+            <span class="timer" id="recordTimer">00:00</span>
+        </div>
+
+        <div class="control-group" style="margin-top:14px">
+            <label for="recordingName">Recording Name</label>
+            <input
+                id="recordingName"
+                type="text"
+                placeholder="My First Tune"
+                style="width:100%;padding:10px;border-radius:8px">
+        </div>
+
+        <div class="song-list" id="recordingList"></div>
+    </section>
+
+    <!-- SAVED SONGS -->
+
+    <section class="panel">
+        <h2>💾 Saved Tunes</h2>
+
+        <div class="button-row">
+            <button id="saveLast" class="primary">Save Last Recording</button>
+            <button id="exportAll">Export Saved Tunes</button>
+            <button id="clearSaved" class="danger">Clear Saved Tunes</button>
+        </div>
+
+        <div class="song-list" id="savedList"></div>
+    </section>
+
+    <!-- TIPS -->
+
+    <section class="panel">
+        <h2>📘 Harmonium Learning Guide</h2>
+
+        <div class="grid">
+            <div class="control-group">
+                <h3>1. Basic Sargam</h3>
+                <p class="help-text">सा रे ग म प ध नि सा का अभ्यास करें। फिर अवरोह में वापस आएँ।</p>
+            </div>
+
+            <div class="control-group">
+                <h3>2. Finger Practice</h3>
+                <p class="help-text">धीरे-धीरे स्वर बजाएँ। उँगलियों की समान गति और सही ताल पर ध्यान दें।</p>
+            </div>
+
+            <div class="control-group">
+                <h3>3. Scale Practice</h3>
+                <p class="help-text">अपनी सुविधानुसार स्केल चुनें। गायन के साथ सुर मिलाने का अभ्यास करें।</p>
+            </div>
+
+            <div class="control-group">
+                <h3>4. Rhythm Practice</h3>
+                <p class="help-text">मेट्रोनोम चालू करके प्रत्येक स्वर को ताल के साथ बजाने का अभ्यास करें।</p>
+            </div>
+        </div>
+    </section>
 
 </main>
 
-<footer>
-    <strong>PDF Pro Editor</strong><br>
-    Browser-based PDF reader and document editing tools.
+<footer class="footer">
+    Advanced Digital Harmonium Studio · Practice · Record · Learn
 </footer>
 
-
 <script>
+"use strict";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+/* =========================================================
+   ADVANCED DIGITAL HARMONIUM ENGINE
+   ========================================================= */
 
-const { PDFDocument, rgb, StandardFonts, degrees } = PDFLib;
+const $ = id => document.getElementById(id);
 
-let pdfDoc = null;
-let originalBytes = null;
-let currentFileName = "document.pdf";
-let currentPage = 1;
-let zoom = 1;
-let editMode = false;
-let selectedItem = null;
-let pageItems = [];
-let overlays = [];
-let history = [];
-let rendering = false;
-let renderQueue = null;
+let audio = null;
+let master = null;
+let compressor = null;
+let dryGain = null;
+let wetGain = null;
+let convolver = null;
 
+let activeVoices = new Map();
+let droneVoices = [];
+let metroTimer = null;
+let metroBeat = 0;
 
-/* =====================================================
-   HELPERS
-===================================================== */
+let sequenceTimers = [];
+let sequenceToken = 0;
 
-function setStatus(id, message, type = "") {
-    const element = document.getElementById(id);
+let recording = false;
+let recordingStartedAt = 0;
+let recordingTimer = null;
+let recordedEvents = [];
+let lastRecording = [];
 
-    element.className = "status" + (type ? " " + type : "");
-    element.textContent = message;
-}
+let savedTunes = [];
 
-function cleanName(name) {
-    return name.replace(/\.[^.]+$/, "")
-               .replace(/[^a-z0-9_-]/gi, "_")
-               .slice(0, 70) || "document";
-}
+let currentBaseOctave = 4;
+let keyboardNotes = [];
 
-function downloadBytes(bytes, filename, type = "application/pdf") {
-    const blob = new Blob([bytes], { type });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+const SWARS = [
+    { label: "सा", western: "C", offset: 0, black: false },
+    { label: "रे♭", western: "C#", offset: 1, black: true },
+    { label: "रे", western: "D", offset: 2, black: false },
+    { label: "ग♭", western: "D#", offset: 3, black: true },
+    { label: "ग", western: "E", offset: 4, black: false },
+    { label: "म", western: "F", offset: 5, black: false },
+    { label: "म♯", western: "F#", offset: 6, black: true },
+    { label: "प", western: "G", offset: 7, black: false },
+    { label: "ध♭", western: "G#", offset: 8, black: true },
+    { label: "ध", western: "A", offset: 9, black: false },
+    { label: "नि♭", western: "A#", offset: 10, black: true },
+    { label: "नि", western: "B", offset: 11, black: false }
+];
 
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+const WHITE_SHORTCUTS = [
+    "A", "S", "D", "F", "G", "H", "J", "K"
+];
 
-    setTimeout(() => URL.revokeObjectURL(url), 30000);
-}
+const BLACK_SHORTCUTS = {
+    1: "W",
+    3: "E",
+    6: "T",
+    8: "Y",
+    10: "U"
+};
 
-function setEditMode(enabled) {
-    editMode = enabled;
+function ensureAudio() {
+    if (!audio) {
+        const AudioContextClass =
+            window.AudioContext || window.webkitAudioContext;
 
-    const layer = document.getElementById("textLayer");
+        if (!AudioContextClass) {
+            alert("इस ब्राउज़र में Web Audio API उपलब्ध नहीं है।");
+            return false;
+        }
 
-    layer.classList.toggle("editing", enabled);
+        audio = new AudioContextClass();
 
-    setStatus(
-        "globalStatus",
-        enabled
-            ? "Edit Mode enabled. Click a text item on the PDF page to select it."
-            : "Reader Mode enabled. Original PDF is displayed.",
-        "ok"
-    );
-}
+        master = audio.createGain();
+        compressor = audio.createDynamicsCompressor();
+        dryGain = audio.createGain();
+        wetGain = audio.createGain();
 
-function downloadOriginal() {
-    if (!originalBytes) {
-        setStatus("globalStatus", "Open a PDF first.", "error");
-        return;
+        compressor.threshold.value = -18;
+        compressor.knee.value = 20;
+        compressor.ratio.value = 4;
+        compressor.attack.value = 0.005;
+        compressor.release.value = 0.2;
+
+        dryGain.connect(compressor);
+        wetGain.connect(compressor);
+
+        compressor.connect(master);
+        master.connect(audio.destination);
+
+        convolver = audio.createConvolver();
+        convolver.buffer = createImpulse(audio, 1.8, 2.5);
+
+        convolver.connect(wetGain);
+
+        updateAudioSettings();
+
+        $("audioStatus").textContent = "Ready";
+        $("audioStatus").style.color = "#44d7a0";
     }
 
-    downloadBytes(
-        originalBytes.slice(0),
-        currentFileName
-    );
+    if (audio.state === "suspended") {
+        audio.resume();
+    }
+
+    return true;
 }
 
+function createImpulse(context, seconds, decay) {
+    const length = Math.floor(context.sampleRate * seconds);
+    const buffer = context.createBuffer(
+        2,
+        length,
+        context.sampleRate
+    );
 
-/* =====================================================
-   OPEN PDF
-===================================================== */
+    for (let channel = 0; channel < 2; channel++) {
+        const data = buffer.getChannelData(channel);
 
-document.getElementById("pdfInput").addEventListener(
-    "change",
-    async function() {
-
-        const file = this.files[0];
-
-        if (!file) return;
-
-        try {
-
-            setStatus("globalStatus", "Opening PDF...");
-
-            currentFileName = file.name;
-            originalBytes = await file.arrayBuffer();
-
-            const task = pdfjsLib.getDocument({
-                data: originalBytes.slice(0)
-            });
-
-            pdfDoc = await task.promise;
-
-            currentPage = 1;
-            zoom = 1;
-            overlays = [];
-            history = [];
-            selectedItem = null;
-
-            document.getElementById("totalPages").textContent =
-                "/ " + pdfDoc.numPages;
-
-            document.getElementById("pageInput").max =
-                pdfDoc.numPages;
-
-            await renderPage(1);
-
-            setStatus(
-                "globalStatus",
-                `${file.name} opened successfully. ${pdfDoc.numPages} pages.`,
-                "ok"
-            );
-
-        } catch (error) {
-
-            setStatus(
-                "globalStatus",
-                "Could not open PDF: " + error.message,
-                "error"
-            );
-
+        for (let i = 0; i < length; i++) {
+            const progress = i / length;
+            data[i] =
+                (Math.random() * 2 - 1) *
+                Math.pow(1 - progress, decay);
         }
     }
-);
 
-
-/* =====================================================
-   RENDER PDF + TEXT LAYER
-===================================================== */
-
-async function renderPage(pageNumber) {
-
-    if (!pdfDoc) return;
-
-    if (rendering) {
-        renderQueue = pageNumber;
-        return;
-    }
-
-    rendering = true;
-
-    try {
-
-        const page = await pdfDoc.getPage(pageNumber);
-
-        const viewport = page.getViewport({
-            scale: zoom
-        });
-
-        const canvas = document.getElementById("pdfCanvas");
-        const context = canvas.getContext("2d");
-
-        canvas.width = Math.ceil(viewport.width);
-        canvas.height = Math.ceil(viewport.height);
-
-        const stage = document.getElementById("pageStage");
-
-        stage.style.width = canvas.width + "px";
-        stage.style.height = canvas.height + "px";
-
-        document.getElementById("textLayer").style.width =
-            canvas.width + "px";
-
-        document.getElementById("textLayer").style.height =
-            canvas.height + "px";
-
-        await page.render({
-            canvasContext: context,
-            viewport: viewport
-        }).promise;
-
-        await buildTextLayer(page, viewport);
-
-        currentPage = pageNumber;
-
-        document.getElementById("pageInput").value = pageNumber;
-        document.getElementById("zoomValue").textContent =
-            Math.round(zoom * 100) + "%";
-
-    } catch (error) {
-
-        setStatus("globalStatus", error.message, "error");
-
-    } finally {
-
-        rendering = false;
-
-        if (renderQueue !== null) {
-            const next = renderQueue;
-            renderQueue = null;
-            await renderPage(next);
-        }
-    }
+    return buffer;
 }
 
-async function buildTextLayer(page, viewport) {
+function updateAudioSettings() {
+    if (!audio) return;
 
-    const layer = document.getElementById("textLayer");
+    const now = audio.currentTime;
 
-    layer.innerHTML = "";
-    pageItems = [];
+    master.gain.setTargetAtTime(
+        Number($("volume").value) / 100,
+        now,
+        0.03
+    );
 
-    const content = await page.getTextContent();
+    dryGain.gain.setTargetAtTime(
+        1 - Number($("reverb").value) / 100,
+        now,
+        0.03
+    );
 
-    let index = 0;
-
-    for (const item of content.items) {
-
-        if (!item.str || !item.str.trim()) continue;
-
-        const tx = pdfjsLib.Util.transform(
-            viewport.transform,
-            item.transform
-        );
-
-        const fontHeight = Math.hypot(tx[2], tx[3]);
-
-        const span = document.createElement("span");
-
-        span.textContent = item.str;
-
-        span.style.left = tx[4] + "px";
-        span.style.top = (tx[5] - fontHeight) + "px";
-        span.style.fontSize = fontHeight + "px";
-        span.style.height = fontHeight + "px";
-
-        span.style.fontFamily = "sans-serif";
-
-        // Width is based on PDF.js's item width, scaled to the viewport.
-        span.style.width =
-            Math.max(1, item.width * zoom) + "px";
-
-        span.dataset.index = index;
-
-        const record = {
-            index: index,
-            text: item.str,
-            x: item.transform[4],
-            y: item.transform[5],
-            width: item.width,
-            height: Math.abs(item.transform[3]) || fontHeight,
-            fontSize: fontHeight / zoom,
-            fontName: item.fontName || "",
-            page: currentPage
-        };
-
-        pageItems.push(record);
-
-        span.addEventListener("click", () => {
-
-            if (!editMode) return;
-
-            selectItem(record, span);
-        });
-
-        layer.appendChild(span);
-
-        index++;
-    }
-
-    applyOverlaysToCanvas(page, viewport);
-}
-
-
-/* =====================================================
-   SELECT TEXT
-===================================================== */
-
-function selectItem(record, span) {
-
-    selectedItem = record;
-
-    document.querySelectorAll("#textLayer span")
-        .forEach(el => el.classList.remove("selected"));
-
-    span.classList.add("selected");
-
-    document.getElementById("oldText").value =
-        record.text;
-
-    document.getElementById("newText").value =
-        record.text;
-
-    setStatus(
-        "selectionInfo",
-        `Selected: "${record.text}" | Page ${record.page}`,
-        "ok"
+    wetGain.gain.setTargetAtTime(
+        Number($("reverb").value) / 100,
+        now,
+        0.03
     );
 }
 
-function clearSelection() {
-
-    selectedItem = null;
-
-    document.getElementById("oldText").value = "";
-    document.getElementById("newText").value = "";
-
-    document.querySelectorAll("#textLayer span")
-        .forEach(el => el.classList.remove("selected"));
-
-    setStatus("selectionInfo", "No text selected.");
+function currentSemitone(noteOffset) {
+    return (
+        60 +
+        Number($("scale").value) +
+        (Number($("octave").value) - 4) * 12 +
+        Number($("transpose").value) +
+        noteOffset
+    );
 }
 
+function midiFrequency(midi) {
+    return 440 * Math.pow(2, (midi - 69) / 12);
+}
 
-/* =====================================================
-   TEXT REPLACEMENT OVERLAY
-===================================================== */
+function noteFrequency(offset) {
+    return midiFrequency(currentSemitone(offset));
+}
 
-/*
- * Important:
- * This implementation creates a white rectangle over the selected
- * PDF text and draws the replacement text on top.
- *
- * It does not modify the original PDF's internal text objects.
- * Complex backgrounds, overlapping graphics, transparency, and
- * embedded font metrics may require a more advanced editing engine.
- */
+function updateNoteDisplay(offset, freq) {
+    const note = SWARS[((offset % 12) + 12) % 12];
 
-function replaceSelectedText() {
+    $("currentNote").textContent =
+        note.label + (offset >= 12 ? "'" : "");
 
-    if (!pdfDoc || !originalBytes) {
-        setStatus("editStatus", "Open a PDF first.", "error");
-        return;
+    $("frequencyDisplay").textContent =
+        note.western + " · " + freq.toFixed(2) + " Hz";
+}
+
+function recordEvent(type, offset) {
+    if (!recording) return;
+
+    recordedEvents.push({
+        type: type,
+        offset: offset,
+        time: performance.now() - recordingStartedAt
+    });
+}
+
+/* =========================================================
+   NOTE PLAYBACK
+   ========================================================= */
+
+function playNote(offset, id) {
+    if (!ensureAudio()) return;
+
+    if (activeVoices.has(id)) return;
+
+    const freq = noteFrequency(offset);
+
+    const now = audio.currentTime;
+    const attack = Number($("attack").value) / 1000;
+    const brightness = Number($("brightness").value);
+    const reedCount = Number($("reed").value);
+
+    const voiceGain = audio.createGain();
+    const filter = audio.createBiquadFilter();
+
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(brightness, now);
+
+    voiceGain.gain.setValueAtTime(0.0001, now);
+    voiceGain.gain.exponentialRampToValueAtTime(
+        0.18 / Math.sqrt(reedCount),
+        now + attack
+    );
+
+    filter.connect(voiceGain);
+    voiceGain.connect(dryGain);
+    voiceGain.connect(convolver);
+
+    const oscillators = [];
+
+    for (let i = 0; i < reedCount; i++) {
+        const oscillator = audio.createOscillator();
+
+        oscillator.type = $("waveform").value;
+
+        const detune = reedCount === 1
+            ? 0
+            : (i - (reedCount - 1) / 2) * 5;
+
+        oscillator.frequency.setValueAtTime(freq, now);
+        oscillator.detune.setValueAtTime(detune, now);
+
+        const partialGain = audio.createGain();
+        partialGain.gain.value = 1 / reedCount;
+
+        oscillator.connect(partialGain);
+        partialGain.connect(filter);
+
+        oscillator.start(now);
+
+        oscillators.push(oscillator);
     }
 
-    if (!editMode) {
-        setStatus(
-            "editStatus",
-            "Enable Edit Mode first.",
-            "error"
-        );
-        return;
-    }
-
-    if (!selectedItem) {
-        setStatus(
-            "editStatus",
-            "Select a text item from the page.",
-            "error"
-        );
-        return;
-    }
-
-    const oldText = document.getElementById("oldText").value;
-    const newText = document.getElementById("newText").value;
-
-    if (!oldText.trim()) {
-        setStatus("editStatus", "Original text is empty.", "error");
-        return;
-    }
-
-    if (!newText.trim()) {
-        setStatus(
-            "editStatus",
-            "Replacement text cannot be empty.",
-            "error"
-        );
-        return;
-    }
-
-    const record = selectedItem;
-
-    history.push({
-        page: record.page,
-        overlays: overlays.map(x => ({ ...x }))
+    activeVoices.set(id, {
+        oscillators: oscillators,
+        gain: voiceGain,
+        offset: offset
     });
 
-    const item = {
-        page: record.page,
-        x: record.x,
-        y: record.y,
-        width: record.width,
-        height: record.height,
-        fontSize: record.fontSize,
-        oldText: oldText,
-        newText: newText
+    const key = document.querySelector(
+        '[data-key-id="' + id + '"]'
+    );
+
+    if (key) key.classList.add("pressed");
+
+    updateNoteDisplay(offset, freq);
+    recordEvent("on", offset);
+
+    $("playingCount").textContent = activeVoices.size;
+}
+
+function stopNote(id) {
+    if (!audio || !activeVoices.has(id)) return;
+
+    const voice = activeVoices.get(id);
+    const now = audio.currentTime;
+    const release = Number($("release").value) / 1000;
+
+    voice.gain.gain.cancelScheduledValues(now);
+    voice.gain.gain.setTargetAtTime(
+        0.0001,
+        now,
+        Math.max(0.01, release / 5)
+    );
+
+    voice.oscillators.forEach(oscillator => {
+        try {
+            oscillator.stop(now + release);
+        } catch (error) {
+            // Already stopped.
+        }
+    });
+
+    activeVoices.delete(id);
+
+    const key = document.querySelector(
+        '[data-key-id="' + id + '"]'
+    );
+
+    if (key) key.classList.remove("pressed");
+
+    recordEvent("off", voice.offset);
+
+    $("playingCount").textContent = activeVoices.size;
+}
+
+function releaseAll() {
+    [...activeVoices.keys()].forEach(stopNote);
+}
+
+function stopAll() {
+    stopSequence();
+    stopMetronome();
+    stopDrone();
+    releaseAll();
+}
+
+/* =========================================================
+   KEYBOARD GENERATION
+   ========================================================= */
+
+function getKeyId(offset) {
+    return "note-" + offset;
+}
+
+function makeKey(offset, black, whiteIndex = -1) {
+    const note = SWARS[offset % 12];
+    const id = getKeyId(offset);
+
+    const key = document.createElement("button");
+
+    key.type = "button";
+    key.dataset.keyId = id;
+    key.dataset.offset = offset;
+    key.className = black ? "black-key" : "white-key";
+
+    const octaveNumber = Math.floor(offset / 12);
+
+    key.innerHTML = `
+        <div class="key-info">
+            ${note.label}
+            <span class="key-label">${note.western}${octaveNumber}</span>
+            ${!black
+                ? `<span class="keyboard-shortcut">${
+                    WHITE_SHORTCUTS[whiteIndex % WHITE_SHORTCUTS.length]
+                }</span>`
+                : `<span class="keyboard-shortcut">${
+                    BLACK_SHORTCUTS[offset % 12] || ""
+                }</span>`
+            }
+        </div>
+    `;
+
+    key.addEventListener("pointerdown", event => {
+        event.preventDefault();
+
+        try {
+            key.setPointerCapture(event.pointerId);
+        } catch (error) {}
+
+        playNote(offset, id);
+    });
+
+    const releaseHandler = event => {
+        if (event) event.preventDefault();
+        stopNote(id);
     };
 
-    overlays.push(item);
+    key.addEventListener("pointerup", releaseHandler);
+    key.addEventListener("pointercancel", releaseHandler);
+    key.addEventListener("lostpointercapture", releaseHandler);
 
-    setStatus(
-        "editStatus",
-        "Replacement recorded. Save PDF to export the changes.",
-        "ok"
-    );
-
-    clearSelection();
-
-    renderPage(currentPage);
+    return key;
 }
 
+function buildKeyboard() {
+    const keyboard = $("keyboard");
 
-/* =====================================================
-   APPLY EDIT OVERLAYS
-===================================================== */
+    keyboard.innerHTML = "";
+    keyboardNotes = [];
 
-async function applyOverlaysToCanvas(page, viewport) {
+    const totalSemitones = 36;
+    const whiteOffsets = [];
 
-    // The visible canvas is first rendered from the original PDF.
-    // Apply recorded replacements as a visual preview.
-
-    const ctx = document.getElementById("pdfCanvas").getContext("2d");
-
-    for (const item of overlays) {
-
-        if (item.page !== currentPage) continue;
-
-        const point = viewport.convertToViewportPoint(
-            item.x,
-            item.y
-        );
-
-        const x = point[0];
-        const y = point[1];
-
-        const height = Math.max(
-            8,
-            item.fontSize * zoom
-        );
-
-        const width = Math.max(
-            item.width * zoom,
-            height
-        );
-
-        // White-out the old text. This simple method works best
-        // on plain white backgrounds.
-        ctx.save();
-
-        ctx.fillStyle = "white";
-
-        ctx.fillRect(
-            x,
-            y - height,
-            width + 3,
-            height + 4
-        );
-
-        ctx.fillStyle = "#111111";
-
-        ctx.font = `${height}px sans-serif`;
-
-        ctx.textBaseline = "alphabetic";
-
-        ctx.fillText(
-            item.newText,
-            x,
-            y
-        );
-
-        ctx.restore();
-    }
-}
-
-
-/* =====================================================
-   SAVE PDF
-===================================================== */
-
-async function savePDF() {
-
-    if (!originalBytes) {
-        setStatus("globalStatus", "Open a PDF first.", "error");
-        return;
-    }
-
-    try {
-
-        setStatus(
-            "globalStatus",
-            "Saving PDF changes..."
-        );
-
-        const doc = await PDFDocument.load(
-            originalBytes.slice(0)
-        );
-
-        const font = await doc.embedFont(
-            StandardFonts.Helvetica
-        );
-
-        for (const item of overlays) {
-
-            const page = doc.getPage(item.page - 1);
-
-            const fontSize = Math.max(
-                6,
-                Math.min(72, item.fontSize || 12)
-            );
-
-            const padding = 2;
-
-            const boxWidth = Math.max(
-                item.width + padding * 2,
-                font.widthOfTextAtSize(
-                    item.newText,
-                    fontSize
-                ) + padding * 2
-            );
-
-            const boxHeight = Math.max(
-                item.height + padding * 2,
-                fontSize + padding * 2
-            );
-
-            /*
-             * Coordinates come from PDF.js text transforms.
-             * Exact font metrics may differ from the original.
-             */
-
-            page.drawRectangle({
-                x: item.x - padding,
-                y: item.y - padding,
-                width: boxWidth,
-                height: boxHeight,
-                color: rgb(1, 1, 1)
-            });
-
-            page.drawText(item.newText, {
-                x: item.x,
-                y: item.y,
-                size: fontSize,
-                font,
-                color: rgb(0.05, 0.05, 0.05),
-                maxWidth: Math.max(20, page.getWidth() - item.x - 10)
-            });
-        }
-
-        const bytes = await doc.save();
-
-        downloadBytes(
-            bytes,
-            cleanName(currentFileName) + "_edited.pdf"
-        );
-
-        setStatus(
-            "globalStatus",
-            "Edited PDF downloaded. The original file remains unchanged.",
-            "ok"
-        );
-
-    } catch (error) {
-
-        setStatus(
-            "globalStatus",
-            "Could not save PDF: " + error.message,
-            "error"
-        );
-
-    }
-}
-
-
-/* =====================================================
-   UNDO
-===================================================== */
-
-function undoLastChange() {
-
-    if (!history.length) {
-        setStatus("editStatus", "Nothing to undo.");
-        return;
-    }
-
-    const previous = history.pop();
-
-    overlays = previous.overlays;
-
-    renderPage(currentPage);
-
-    setStatus(
-        "editStatus",
-        "Last replacement undone.",
-        "ok"
-    );
-}
-
-
-/* =====================================================
-   PAGE NAVIGATION AND ZOOM
-===================================================== */
-
-function previousPage() {
-
-    if (pdfDoc && currentPage > 1) {
-        renderPage(currentPage - 1);
-    }
-}
-
-function nextPage() {
-
-    if (pdfDoc && currentPage < pdfDoc.numPages) {
-        renderPage(currentPage + 1);
-    }
-}
-
-function goPage() {
-
-    if (!pdfDoc) return;
-
-    const number = Number(
-        document.getElementById("pageInput").value
-    );
-
-    if (
-        !Number.isInteger(number) ||
-        number < 1 ||
-        number > pdfDoc.numPages
-    ) {
-        setStatus(
-            "globalStatus",
-            "Invalid page number.",
-            "error"
-        );
-        return;
-    }
-
-    renderPage(number);
-}
-
-function zoomBy(amount) {
-
-    if (!pdfDoc) return;
-
-    zoom = Math.max(
-        0.4,
-        Math.min(3, zoom + amount)
-    );
-
-    renderPage(currentPage);
-}
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-async function searchText() {
-
-    if (!pdfDoc) {
-        setStatus("searchStatus", "Open a PDF first.", "error");
-        return;
-    }
-
-    const query = document
-        .getElementById("searchText")
-        .value.trim().toLowerCase();
-
-    if (!query) {
-        setStatus("searchStatus", "Enter a search word.", "error");
-        return;
-    }
-
-    const matches = [];
-
-    try {
-
-        for (let p = 1; p <= pdfDoc.numPages; p++) {
-
-            const page = await pdfDoc.getPage(p);
-
-            const content = await page.getTextContent();
-
-            const text = content.items
-                .map(item => item.str || "")
-                .join(" ")
-                .toLowerCase();
-
-            if (text.includes(query)) {
-                matches.push(p);
-            }
-        }
-
-        setStatus(
-            "searchStatus",
-            matches.length
-                ? `Found on pages: ${matches.join(", ")}`
-                : "No matching text found.",
-            matches.length ? "ok" : ""
-        );
-
-        if (matches.length) {
-            renderPage(matches[0]);
-        }
-
-    } catch (error) {
-
-        setStatus("searchStatus", error.message, "error");
-
-    }
-}
-
-
-/* =====================================================
-   MERGE PDF
-===================================================== */
-
-async function mergePDFs() {
-
-    try {
-
-        const files = [
-            ...document.getElementById("mergeInput").files
-        ];
-
-        if (files.length < 2) {
-            throw new Error("Select at least two PDF files.");
-        }
-
-        setStatus("mergeStatus", "Merging files...");
-
-        const output = await PDFDocument.create();
-
-        for (const file of files) {
-
-            const bytes = await file.arrayBuffer();
-
-            const source = await PDFDocument.load(bytes);
-
-            const pages = await output.copyPages(
-                source,
-                source.getPageIndices()
-            );
-
-            pages.forEach(page => output.addPage(page));
-        }
-
-        const bytes = await output.save();
-
-        downloadBytes(bytes, "merged.pdf");
-
-        setStatus("mergeStatus", "PDFs merged successfully.", "ok");
-
-    } catch (error) {
-
-        setStatus("mergeStatus", error.message, "error");
-
-    }
-}
-
-
-/* =====================================================
-   EXTRACT PAGES
-===================================================== */
-
-function parseRanges(value, total) {
-
-    const result = new Set();
-
-    for (const part of value.split(",")) {
-
-        const item = part.trim();
-
-        if (/^\d+$/.test(item)) {
-
-            const page = Number(item);
-
-            if (page < 1 || page > total) {
-                throw new Error("Page number out of range.");
-            }
-
-            result.add(page - 1);
-
-        } else if (/^\d+\s*-\s*\d+$/.test(item)) {
-
-            const [start, end] = item
-                .split("-")
-                .map(n => Number(n.trim()));
-
-            if (start < 1 || end > total || start > end) {
-                throw new Error("Invalid page range.");
-            }
-
-            for (let i = start; i <= end; i++) {
-                result.add(i - 1);
-            }
-
-        } else {
-            throw new Error("Invalid range.");
+    for (let i = 0; i < totalSemitones; i++) {
+        if (!SWARS[i % 12].black) {
+            whiteOffsets.push(i);
         }
     }
 
-    return [...result].sort((a, b) => a - b);
-}
+    const whiteKeys = [];
 
-async function extractPages() {
+    whiteOffsets.forEach((offset, index) => {
+        const key = makeKey(offset, false, index);
 
-    try {
+        keyboard.appendChild(key);
+        whiteKeys.push({ offset: offset, element: key });
 
-        if (!originalBytes) {
-            throw new Error("Open a PDF first.");
+        keyboardNotes.push(offset);
+    });
+
+    const blackOffsets = [];
+
+    for (let i = 0; i < totalSemitones; i++) {
+        if (SWARS[i % 12].black) {
+            blackOffsets.push(i);
         }
-
-        const source = await PDFDocument.load(
-            originalBytes.slice(0)
-        );
-
-        const indexes = parseRanges(
-            document.getElementById("pageRanges").value,
-            source.getPageCount()
-        );
-
-        const output = await PDFDocument.create();
-
-        const pages = await output.copyPages(source, indexes);
-
-        pages.forEach(page => output.addPage(page));
-
-        const bytes = await output.save();
-
-        downloadBytes(bytes, "extracted_pages.pdf");
-
-        setStatus("splitStatus", "Pages extracted successfully.", "ok");
-
-    } catch (error) {
-
-        setStatus("splitStatus", error.message, "error");
-
     }
+
+    blackOffsets.forEach(offset => {
+        const previousWhiteIndex = whiteOffsets.findIndex(
+            whiteOffset => whiteOffset > offset
+        ) - 1;
+
+        if (previousWhiteIndex < 0) return;
+
+        const key = makeKey(offset, true);
+
+        const whiteKeyWidth = whiteKeys[0].element.offsetWidth || 60;
+
+        key.style.left =
+            (
+                (previousWhiteIndex + 1) * whiteKeyWidth -
+                19
+            ) + "px";
+
+        keyboard.appendChild(key);
+    });
 }
 
+/* =========================================================
+   QUICK PAD
+   ========================================================= */
 
-/* =====================================================
-   ROTATE PDF
-===================================================== */
+function buildQuickPad() {
+    const pad = $("quickPad");
 
-async function rotatePDF() {
+    pad.innerHTML = "";
 
-    try {
+    SWARS.forEach((note, index) => {
+        const button = document.createElement("button");
 
-        if (!originalBytes) {
-            throw new Error("Open a PDF first.");
-        }
+        button.className = "practice-button";
+        button.innerHTML =
+            note.label + "<span>" + note.western + "</span>";
 
-        const doc = await PDFDocument.load(
-            originalBytes.slice(0)
-        );
-
-        const angle = Number(
-            document.getElementById("rotateAngle").value
-        );
-
-        doc.getPages().forEach(page => {
-
-            const current = page.getRotation().angle;
-
-            page.setRotation(
-                degrees((current + angle) % 360)
-            );
-
+        button.addEventListener("pointerdown", event => {
+            event.preventDefault();
+            playNote(index, "quick-" + index);
         });
 
-        const bytes = await doc.save();
+        button.addEventListener("pointerup", () => {
+            stopNote("quick-" + index);
+        });
 
-        downloadBytes(bytes, "rotated.pdf");
+        button.addEventListener("pointerleave", () => {
+            stopNote("quick-" + index);
+        });
 
-        setStatus("rotateStatus", "PDF rotated successfully.", "ok");
+        button.addEventListener("pointercancel", () => {
+            stopNote("quick-" + index);
+        });
 
-    } catch (error) {
-
-        setStatus("rotateStatus", error.message, "error");
-
-    }
+        pad.appendChild(button);
+    });
 }
 
+/* =========================================================
+   SEQUENCE PLAYBACK
+   ========================================================= */
 
-/* =====================================================
-   IMAGE TO PDF
-===================================================== */
+function stopSequence() {
+    sequenceToken++;
 
-async function imagesToPDF() {
+    sequenceTimers.forEach(timer => clearTimeout(timer));
+    sequenceTimers = [];
 
-    try {
+    $("rhythmDisplay").textContent = "Ready";
+}
 
-        const files = [
-            ...document.getElementById("imageInput").files
-        ];
+function playSequence(sequence) {
+    stopSequence();
 
-        if (!files.length) {
-            throw new Error("Select images first.");
-        }
+    const token = sequenceToken;
+    const speed = Number($("practiceSpeed").value);
 
-        const doc = await PDFDocument.create();
+    sequence.forEach((offset, index) => {
+        const timer = setTimeout(() => {
+            if (token !== sequenceToken) return;
 
-        for (const file of files) {
+            const id = "sequence-" + index;
 
-            const url = URL.createObjectURL(file);
+            playNote(offset, id);
 
-            try {
+            setTimeout(() => {
+                if (token === sequenceToken) {
+                    stopNote(id);
+                }
+            }, speed * 0.8);
 
-                const img = await new Promise((resolve, reject) => {
+        }, index * speed);
 
-                    const image = new Image();
+        sequenceTimers.push(timer);
+    });
+}
 
-                    image.onload = () => resolve(image);
+function getSargamSequence() {
+    const pattern = $("practicePattern").value;
 
-                    image.onerror = () => reject(
-                        new Error("Could not load " + file.name)
-                    );
+    if (pattern === "repeat") {
+        return [0,0,2,2,4,4,5,5,7,7,9,9,11,11,12,12];
+    }
 
-                    image.src = url;
+    if (pattern === "alternate") {
+        return [0,4,2,5,4,7,5,9,7,11,9,12];
+    }
 
-                });
+    if (pattern === "octave") {
+        return [0,12,2,14,4,16,5,17,7,19,9,21,11,23,12,24];
+    }
 
-                const canvas = document.createElement("canvas");
+    return [0,2,4,5,7,9,11,12];
+}
 
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;
+$("ascending").addEventListener("click", () => {
+    playSequence([0,2,4,5,7,9,11,12]);
+});
 
-                const ctx = canvas.getContext("2d");
+$("descending").addEventListener("click", () => {
+    playSequence([12,11,9,7,5,4,2,0]);
+});
 
-                ctx.fillStyle = "white";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+$("fullSargam").addEventListener("click", () => {
+    playSequence([
+        0,2,4,5,7,9,11,12,
+        12,11,9,7,5,4,2,0
+    ]);
+});
 
-                ctx.drawImage(img, 0, 0);
+$("startPractice").addEventListener("click", () => {
+    playSequence(getSargamSequence());
+});
 
-                const blob = await new Promise(resolve =>
-                    canvas.toBlob(resolve, "image/jpeg", 0.92)
-                );
+$("stopSequence").addEventListener("click", stopSequence);
 
-                if (!blob) {
-                    throw new Error("Could not convert image.");
+/* =========================================================
+   DRONE / TANPURA
+   ========================================================= */
+
+function startDrone() {
+    if (!ensureAudio()) return;
+
+    stopDrone();
+
+    const offset = Number($("droneNote").value);
+    const freq = noteFrequency(offset);
+    const volume = Number($("droneVolume").value) / 100;
+
+    [freq, freq * 1.5, freq * 2].forEach((frequency, index) => {
+        const oscillator = audio.createOscillator();
+        const gain = audio.createGain();
+
+        oscillator.type = "triangle";
+        oscillator.frequency.value = frequency;
+
+        gain.gain.value = volume * [0.07, 0.035, 0.025][index];
+
+        oscillator.connect(gain);
+        gain.connect(dryGain);
+        gain.connect(convolver);
+
+        oscillator.start();
+
+        droneVoices.push({ oscillator, gain });
+    });
+
+    $("startDrone").classList.add("active");
+}
+
+function stopDrone() {
+    droneVoices.forEach(voice => {
+        try {
+            voice.oscillator.stop();
+        } catch (error) {}
+    });
+
+    droneVoices = [];
+
+    $("startDrone").classList.remove("active");
+}
+
+/* =========================================================
+   METRONOME
+   ========================================================= */
+
+function metronomeClick(accent) {
+    if (!ensureAudio()) return;
+
+    const oscillator = audio.createOscillator();
+    const gain = audio.createGain();
+
+    oscillator.type = "sine";
+
+    oscillator.frequency.value = accent ? 1400 : 900;
+
+    const now = audio.currentTime;
+    const volume = Number($("metronomeVolume").value) / 100;
+
+    gain.gain.setValueAtTime(volume * (accent ? 0.25 : 0.13), now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.07);
+
+    oscillator.connect(gain);
+    gain.connect(master);
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.08);
+}
+
+function startMetronome() {
+    stopMetronome();
+
+    if (!ensureAudio()) return;
+
+    metroBeat = 0;
+
+    const tick = () => {
+        const beats = Number($("beats").value);
+        const accent = metroBeat % beats === 0;
+
+        metronomeClick(accent);
+
+        $("rhythmDisplay").textContent =
+            "Beat " + (metroBeat % beats + 1) + " / " + beats;
+
+        metroBeat++;
+
+        const interval = 60000 / Number($("bpm").value);
+
+        metroTimer = setTimeout(tick, interval);
+    };
+
+    tick();
+}
+
+function stopMetronome() {
+    if (metroTimer) clearTimeout(metroTimer);
+
+    metroTimer = null;
+
+    $("rhythmDisplay").textContent = "Stopped";
+}
+
+/* =========================================================
+   RECORDING
+   ========================================================= */
+
+function formatTime(ms) {
+    const seconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(seconds / 60);
+
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds % 60).padStart(2, "0")
+    );
+}
+
+function startRecording() {
+    if (recording) return;
+
+    recordedEvents = [];
+    recording = true;
+    recordingStartedAt = performance.now();
+
+    $("recordButton").textContent = "🔴 Recording...";
+    $("recordButton").classList.add("active");
+
+    recordingTimer = setInterval(() => {
+        $("recordTimer").textContent =
+            formatTime(performance.now() - recordingStartedAt);
+    }, 250);
+}
+
+function finishRecording() {
+    if (!recording) return;
+
+    recording = false;
+
+    clearInterval(recordingTimer);
+
+    lastRecording = recordedEvents.slice();
+
+    $("recordButton").textContent = "⏺ Start Recording";
+    $("recordButton").classList.remove("active");
+
+    $("recordTimer").textContent =
+        formatTime(performance.now() - recordingStartedAt);
+
+    renderRecordings();
+}
+
+function playRecording(events) {
+    if (!events || !events.length) return;
+
+    stopSequence();
+
+    const token = sequenceToken;
+    const activeRecordedNotes = new Map();
+
+    events.forEach((event, index) => {
+        const timer = setTimeout(() => {
+            if (token !== sequenceToken) return;
+
+            const id = "record-play-" + event.offset;
+
+            if (event.type === "on") {
+                if (activeRecordedNotes.has(id)) {
+                    stopNote(id);
                 }
 
-                const embedded = await doc.embedJpg(
-                    await blob.arrayBuffer()
-                );
+                playNote(event.offset, id);
+                activeRecordedNotes.set(id, true);
 
-                const width = 595.28;
-                const height = 841.89;
-
-                const scale = Math.min(
-                    width / embedded.width,
-                    height / embedded.height
-                );
-
-                const w = embedded.width * scale;
-                const h = embedded.height * scale;
-
-                const page = doc.addPage([width, height]);
-
-                page.drawImage(embedded, {
-                    x: (width - w) / 2,
-                    y: (height - h) / 2,
-                    width: w,
-                    height: h
-                });
-
-            } finally {
-
-                URL.revokeObjectURL(url);
-
+            } else if (event.type === "off") {
+                stopNote(id);
+                activeRecordedNotes.delete(id);
             }
-        }
 
-        downloadBytes(
-            await doc.save(),
-            "images_to_pdf.pdf"
-        );
+        }, event.time);
 
-        setStatus("imageStatus", "Images converted successfully.", "ok");
+        sequenceTimers.push(timer);
+    });
 
-    } catch (error) {
+    const lastEvent = events[events.length - 1];
 
-        setStatus("imageStatus", error.message, "error");
+    const endTimer = setTimeout(() => {
+        if (token !== sequenceToken) return;
 
-    }
+        activeRecordedNotes.forEach((_, id) => stopNote(id));
+    }, lastEvent.time + 1000);
+
+    sequenceTimers.push(endTimer);
 }
 
+function renderRecordings() {
+    const list = $("recordingList");
 
-/* =====================================================
-   PDF TO PNG
-===================================================== */
+    list.innerHTML = "";
 
-async function exportPNG() {
+    if (!lastRecording.length) {
+        list.innerHTML =
+            '<p class="help-text">अभी कोई recording नहीं है।</p>';
+        return;
+    }
+
+    const item = document.createElement("div");
+    item.className = "song-item";
+
+    const title = document.createElement("div");
+    title.className = "song-name";
+
+    title.innerHTML =
+        "<strong>" +
+        escapeHTML($("recordingName").value || "Latest Recording") +
+        "</strong><small>" +
+        lastRecording.length +
+        " note events</small>";
+
+    const play = document.createElement("button");
+    play.textContent = "▶ Play";
+
+    play.addEventListener("click", () => {
+        playRecording(lastRecording);
+    });
+
+    const download = document.createElement("button");
+    download.textContent = "⬇ JSON";
+
+    download.addEventListener("click", () => {
+        downloadJSON(
+            lastRecording,
+            "harmonium-recording.json"
+        );
+    });
+
+    item.append(title, play, download);
+    list.appendChild(item);
+}
+
+/* =========================================================
+   SAVED TUNES
+   ========================================================= */
+
+function loadSavedTunes() {
+    try {
+        savedTunes = JSON.parse(
+            localStorage.getItem("harmoniumSavedTunes") || "[]"
+        );
+
+        if (!Array.isArray(savedTunes)) savedTunes = [];
+
+    } catch (error) {
+        savedTunes = [];
+    }
+
+    renderSavedTunes();
+}
+
+function saveLastRecording() {
+    if (!lastRecording.length) {
+        alert("पहले कोई धुन रिकॉर्ड करें।");
+        return;
+    }
+
+    const title =
+        $("recordingName").value.trim() ||
+        "Tune " + (savedTunes.length + 1);
+
+    savedTunes.push({
+        id: Date.now(),
+        title: title,
+        createdAt: new Date().toISOString(),
+        events: lastRecording.slice()
+    });
 
     try {
+        localStorage.setItem(
+            "harmoniumSavedTunes",
+            JSON.stringify(savedTunes)
+        );
+    } catch (error) {
+        alert("Storage भर गया है। कुछ पुरानी धुनें हटाएँ।");
+    }
 
-        if (!pdfDoc) {
-            throw new Error("Open a PDF first.");
-        }
+    renderSavedTunes();
+}
 
-        const page = await pdfDoc.getPage(currentPage);
+function deleteSavedTune(id) {
+    savedTunes = savedTunes.filter(tune => tune.id !== id);
 
-        const viewport = page.getViewport({
-            scale: 2
+    localStorage.setItem(
+        "harmoniumSavedTunes",
+        JSON.stringify(savedTunes)
+    );
+
+    renderSavedTunes();
+}
+
+function renderSavedTunes() {
+    const list = $("savedList");
+
+    list.innerHTML = "";
+
+    if (!savedTunes.length) {
+        list.innerHTML =
+            '<p class="help-text">कोई saved tune नहीं है।</p>';
+        return;
+    }
+
+    savedTunes.forEach(tune => {
+        const item = document.createElement("div");
+        item.className = "song-item";
+
+        const title = document.createElement("div");
+        title.className = "song-name";
+
+        title.innerHTML =
+            "<strong>" + escapeHTML(tune.title) +
+            "</strong><small>" +
+            tune.events.length + " events</small>";
+
+        const play = document.createElement("button");
+        play.textContent = "▶ Play";
+
+        play.addEventListener("click", () => {
+            playRecording(tune.events);
         });
 
-        const canvas = document.createElement("canvas");
+        const remove = document.createElement("button");
+        remove.textContent = "🗑 Delete";
 
-        canvas.width = Math.ceil(viewport.width);
-        canvas.height = Math.ceil(viewport.height);
+        remove.addEventListener("click", () => {
+            deleteSavedTune(tune.id);
+        });
 
-        await page.render({
-            canvasContext: canvas.getContext("2d"),
-            viewport
-        }).promise;
-
-        const blob = await new Promise(resolve =>
-            canvas.toBlob(resolve, "image/png")
-        );
-
-        if (!blob) {
-            throw new Error("PNG export failed.");
-        }
-
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-
-        a.href = url;
-        a.download = `page_${currentPage}.png`;
-        a.click();
-
-        setTimeout(() => URL.revokeObjectURL(url), 30000);
-
-        setStatus("pngStatus", "PNG downloaded.", "ok");
-
-    } catch (error) {
-
-        setStatus("pngStatus", error.message, "error");
-
-    }
+        item.append(title, play, remove);
+        list.appendChild(item);
+    });
 }
+
+/* =========================================================
+   DOWNLOADS
+   ========================================================= */
+
+function downloadJSON(data, filename) {
+    const blob = new Blob(
+        [JSON.stringify(data, null, 2)],
+        { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = filename;
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+/* =========================================================
+   COMPUTER KEYBOARD SUPPORT
+   ========================================================= */
+
+const computerMap = {
+    "a": 0,
+    "w": 1,
+    "s": 2,
+    "e": 3,
+    "d": 4,
+    "f": 5,
+    "t": 6,
+    "g": 7,
+    "y": 8,
+    "h": 9,
+    "u": 10,
+    "j": 11,
+    "k": 12,
+    "l": 14
+};
+
+const heldComputerKeys = new Set();
+
+document.addEventListener("keydown", event => {
+    if (event.repeat) return;
+
+    const tag = event.target.tagName;
+
+    if (
+        tag === "INPUT" ||
+        tag === "SELECT" ||
+        tag === "TEXTAREA"
+    ) return;
+
+    if (event.key === "Escape") {
+        stopAll();
+        return;
+    }
+
+    const key = event.key.toLowerCase();
+
+    if (!(key in computerMap)) return;
+
+    event.preventDefault();
+
+    if (heldComputerKeys.has(key)) return;
+
+    heldComputerKeys.add(key);
+
+    const offset =
+        computerMap[key] +
+        (event.shiftKey ? 12 : 0);
+
+    playNote(offset, "computer-" + key);
+});
+
+document.addEventListener("keyup", event => {
+    const key = event.key.toLowerCase();
+
+    if (heldComputerKeys.has(key)) {
+        heldComputerKeys.delete(key);
+        stopNote("computer-" + key);
+    }
+});
+
+window.addEventListener("blur", () => {
+    heldComputerKeys.forEach(key => {
+        stopNote("computer-" + key);
+    });
+
+    heldComputerKeys.clear();
+});
+
+/* =========================================================
+   CONTROL EVENTS
+   ========================================================= */
+
+$("startAudio").addEventListener("click", () => {
+    if (ensureAudio()) {
+        $("audioStatus").textContent = "Audio Enabled";
+    }
+});
+
+$("stopAll").addEventListener("click", stopAll);
+
+$("releaseKeys").addEventListener("click", releaseAll);
+
+$("startDrone").addEventListener("click", startDrone);
+$("stopDrone").addEventListener("click", stopDrone);
+
+$("startMetro").addEventListener("click", startMetronome);
+$("stopMetro").addEventListener("click", stopMetronome);
+
+$("recordButton").addEventListener("click", () => {
+    if (!recording) startRecording();
+    else finishRecording();
+});
+
+$("finishRecord").addEventListener("click", finishRecording);
+
+$("playLast").addEventListener("click", () => {
+    playRecording(lastRecording);
+});
+
+$("saveLast").addEventListener("click", saveLastRecording);
+
+$("exportRecording").addEventListener("click", () => {
+    if (!lastRecording.length) {
+        alert("कोई recording उपलब्ध नहीं है।");
+        return;
+    }
+
+    downloadJSON(lastRecording, "harmonium-recording.json");
+});
+
+$("exportAll").addEventListener("click", () => {
+    downloadJSON(savedTunes, "harmonium-saved-tunes.json");
+});
+
+$("clearSaved").addEventListener("click", () => {
+    if (!confirm("क्या सभी saved tunes हटाने हैं?")) return;
+
+    savedTunes = [];
+
+    localStorage.removeItem("harmoniumSavedTunes");
+
+    renderSavedTunes();
+});
+
+$("themeButton").addEventListener("click", () => {
+    document.body.classList.toggle("light");
+});
+
+$("showShortcuts").addEventListener("click", () => {
+    $("shortcutHelp").classList.toggle("hidden");
+});
+
+$("previousOctave").addEventListener("click", () => {
+    currentBaseOctave = Math.max(2, currentBaseOctave - 1);
+    $("octave").value = String(currentBaseOctave);
+    $("middleOctave").textContent =
+        "Current: " + currentBaseOctave;
+});
+
+$("nextOctave").addEventListener("click", () => {
+    currentBaseOctave = Math.min(5, currentBaseOctave + 1);
+    $("octave").value = String(currentBaseOctave);
+    $("middleOctave").textContent =
+        "Current: " + currentBaseOctave;
+});
+
+$("middleOctave").addEventListener("click", () => {
+    currentBaseOctave = 4;
+    $("octave").value = "4";
+    $("middleOctave").textContent = "Middle Octave";
+});
+
+$("octaveDown").addEventListener("click", () => {
+    $("octave").value = String(
+        Math.max(2, Number($("octave").value) - 1)
+    );
+});
+
+$("octaveUp").addEventListener("click", () => {
+    $("octave").value = String(
+        Math.min(5, Number($("octave").value) + 1)
+    );
+});
+
+/* =========================================================
+   LIVE SETTINGS
+   ========================================================= */
+
+const rangeSettings = [
+    ["volume", "volumeValue", value => value + "%"],
+    ["attack", "attackValue", value => value + " ms"],
+    ["release", "releaseValue", value => value + " ms"],
+    ["reverb", "reverbValue", value => value + "%"],
+    ["brightness", "brightnessValue", value => value + " Hz"],
+    ["droneVolume", "droneVolumeValue", value => value + "%"],
+    ["bpm", "bpmValue", value => value],
+    ["metronomeVolume", "metronomeVolumeValue", value => value + "%"]
+];
+
+rangeSettings.forEach(([inputId, valueId, formatter]) => {
+    $(inputId).addEventListener("input", () => {
+        $(valueId).textContent =
+            formatter($(inputId).value);
+
+        updateAudioSettings();
+
+        if (inputId === "bpm" && metroTimer) {
+            startMetronome();
+        }
+    });
+});
+
+$("scale").addEventListener("change", () => {
+    $("scaleStatus").textContent =
+        $("scale").selectedOptions[0].textContent.split("/")[0].trim();
+
+    stopDrone();
+});
+
+$("octave").addEventListener("change", () => {
+    currentBaseOctave = Number($("octave").value);
+});
+
+$("droneNote").addEventListener("change", () => {
+    if (droneVoices.length) startDrone();
+});
+
+$("droneVolume").addEventListener("change", () => {
+    if (droneVoices.length) startDrone();
+});
+
+$("beats").addEventListener("change", () => {
+    if (metroTimer) startMetronome();
+});
+
+$("waveform").addEventListener("change", releaseAll);
+$("reed").addEventListener("change", releaseAll);
+$("brightness").addEventListener("input", updateAudioSettings);
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+buildKeyboard();
+buildQuickPad();
+loadSavedTunes();
+renderRecordings();
+
+$("scaleStatus").textContent =
+    $("scale").selectedOptions[0].textContent.split("/")[0].trim();
+
+$("audioStatus").textContent = "Not Started";
 
 </script>
 
