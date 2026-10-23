@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#10264b">
 
-<title>Advanced MCQ Paper Generator</title>
+<title>NCERT MCQ Paper Generator</title>
 
 <style>
 :root {
@@ -18,42 +18,43 @@
     --border: #dbe4f0;
     --green: #15803d;
     --red: #dc2626;
+    --orange: #d97706;
     --shadow: 0 12px 35px rgba(16,38,75,.10);
 }
 
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
     background: #f3f6fc;
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
 header {
     background: linear-gradient(135deg, #10264b, #2459c4);
     color: white;
-    padding: 28px 16px;
     text-align: center;
+    padding: 28px 15px;
 }
 
 header h1 {
     font-size: clamp(23px, 4vw, 34px);
-    margin-bottom: 8px;
 }
 
 header p {
-    opacity: .9;
     font-size: 14px;
+    opacity: .9;
+    margin-top: 6px;
 }
 
 .container {
     width: min(1100px, 94%);
-    margin: 28px auto;
+    margin: 25px auto;
 }
 
 .card {
@@ -68,58 +69,50 @@ header p {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 18px;
     color: var(--navy);
-    font-size: 20px;
+    font-size: 21px;
+    margin-bottom: 16px;
 }
 
 .number {
-    display: inline-flex;
-    width: 35px;
-    height: 35px;
-    align-items: center;
-    justify-content: center;
     background: var(--blue);
     color: white;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
-    font-weight: bold;
+    flex-shrink: 0;
 }
 
-.section-description {
+.description {
     color: var(--muted);
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 16px;
 }
 
 .checkbox-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-    gap: 12px;
+    gap: 10px;
 }
 
 .option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 12px;
+    padding: 11px;
+    display: flex;
+    gap: 9px;
+    align-items: center;
     cursor: pointer;
     background: white;
-    transition: .2s;
-    min-height: 48px;
-}
-
-.option:hover {
-    border-color: var(--blue);
-    background: var(--light);
 }
 
 .option:has(input:checked) {
-    background: #e8f0ff;
     border-color: var(--blue);
-    color: var(--navy);
-    font-weight: 600;
+    background: #e8f0ff;
+    font-weight: bold;
 }
 
 .option input {
@@ -129,182 +122,268 @@ header p {
     flex-shrink: 0;
 }
 
-.option span {
-    font-size: 14px;
-    overflow-wrap: anywhere;
-}
-
-.subject-group {
+.group {
     border: 1px solid var(--border);
-    padding: 18px;
-    margin-bottom: 18px;
     border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 15px;
 }
 
-.subject-group h3 {
+.group h3 {
     color: var(--navy);
     margin-bottom: 12px;
     font-size: 17px;
 }
 
-.subject-group h3 small {
-    color: var(--muted);
-    font-size: 12px;
-    font-weight: normal;
-}
-
-.empty-message {
-    padding: 18px;
-    border-radius: 10px;
-    background: #f8fafc;
-    color: var(--muted);
+.empty {
+    padding: 16px;
     text-align: center;
+    color: var(--muted);
+    background: #f8fafc;
+    border-radius: 10px;
     border: 1px dashed var(--border);
-}
-
-.level-easy:has(input:checked) {
-    background: #dcfce7;
-    border-color: #16a34a;
-}
-
-.level-moderate:has(input:checked) {
-    background: #fef3c7;
-    border-color: #d97706;
-}
-
-.level-hard:has(input:checked) {
-    background: #fee2e2;
-    border-color: #dc2626;
 }
 
 .button-row {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-top: 22px;
+    margin-top: 20px;
 }
 
 button {
+    padding: 12px 19px;
     border: none;
-    padding: 13px 22px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 15px;
+    border-radius: 9px;
     font-weight: bold;
-    transition: .2s;
+    font-size: 14px;
+    cursor: pointer;
 }
 
-button:hover {
-    transform: translateY(-1px);
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
 }
 
-.primary-btn {
+.primary {
     background: var(--blue);
     color: white;
-    flex: 1;
 }
 
-.secondary-btn {
+.secondary {
     background: #e2e8f0;
     color: var(--navy);
 }
 
-.success-btn {
+.success {
     background: var(--green);
     color: white;
 }
 
-.danger-btn {
-    background: #fee2e2;
-    color: var(--red);
+.danger {
+    background: var(--red);
+    color: white;
 }
 
 .hidden {
     display: none !important;
 }
 
-.summary-box {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.summary-row {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    border-bottom: 1px solid var(--border);
-}
-
-.summary-row:last-child {
-    border-bottom: none;
-}
-
-.summary-label {
-    background: #f1f5f9;
-    font-weight: bold;
-    padding: 14px;
-}
-
-.summary-value {
-    padding: 14px;
-    overflow-wrap: anywhere;
-}
-
 .badge {
     display: inline-block;
-    padding: 5px 10px;
     background: #e8f0ff;
     color: #1745a0;
+    padding: 4px 10px;
     border-radius: 20px;
-    font-size: 12px;
     margin: 3px;
+    font-size: 12px;
 }
 
-.notice {
+.question {
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 19px;
+    margin-bottom: 17px;
+    background: white;
+    break-inside: avoid;
+}
+
+.question h3 {
+    font-size: 16px;
+    margin-bottom: 14px;
+}
+
+.question-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.answers {
+    display: grid;
+    gap: 9px;
+}
+
+.answer {
+    display: flex;
+    gap: 10px;
+    padding: 11px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    cursor: pointer;
+    align-items: flex-start;
+}
+
+.answer input {
+    margin-top: 5px;
+    accent-color: var(--blue);
+}
+
+.answer.selected {
+    background: #e8f0ff;
+    border-color: var(--blue);
+}
+
+.answer.correct {
+    background: #dcfce7;
+    border-color: #16a34a;
+}
+
+.answer.wrong {
+    background: #fee2e2;
+    border-color: #dc2626;
+}
+
+.explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 13px;
+    background: #f1f5f9;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.explanation.show {
+    display: block;
+}
+
+.result-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.result-number {
+    font-size: 34px;
+    color: var(--navy);
+    font-weight: bold;
+}
+
+.progress-wrap {
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress {
+    height: 100%;
+    background: var(--green);
+    width: 0;
+    transition: width .3s;
+}
+
+.alert {
     background: #fffbeb;
     border: 1px solid #fcd34d;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 13px;
+    border-radius: 9px;
+    margin-top: 14px;
     color: #92400e;
-    font-size: 14px;
-    margin-top: 18px;
+    font-size: 13px;
+}
+
+#paperHeader {
+    text-align: center;
+    border-bottom: 2px solid var(--navy);
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+}
+
+#paperHeader h2 {
+    color: var(--navy);
+}
+
+#timer {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--red);
 }
 
 footer {
     text-align: center;
-    padding: 25px;
     color: var(--muted);
+    padding: 25px;
     font-size: 13px;
 }
 
 @media(max-width:600px) {
     .card {
-        padding: 17px;
+        padding: 16px;
     }
 
     .checkbox-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
     }
 
-    .option {
-        padding: 10px;
-    }
-
-    .summary-row {
-        grid-template-columns: 1fr;
-    }
-
-    .summary-label {
-        padding-bottom: 5px;
-    }
-
-    .summary-value {
-        padding-top: 5px;
-    }
-
-    button {
+    .button-row button {
         width: 100%;
+    }
+
+    .question {
+        padding: 14px;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    header, footer, .no-print, #setupPage, #resultActions {
+        display: none !important;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0;
+    }
+
+    .card {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .question {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    .answer {
+        border: none;
+        padding: 3px;
+    }
+
+    .explanation {
+        display: block !important;
+    }
+
+    #resultPage {
+        display: none !important;
     }
 }
 </style>
@@ -313,975 +392,1015 @@ footer {
 <body>
 
 <header>
-    <h1>Advanced MCQ Paper Generator</h1>
-    <p>Create your own question paper by selecting classes, subjects, chapters and difficulty levels.</p>
+    <h1>NCERT MCQ Paper Generator</h1>
+    <p>अपनी कक्षा, विषय, अध्याय और कठिनाई स्तर चुनकर प्रश्नपत्र तैयार करें।</p>
 </header>
 
 <main class="container">
 
-    <!-- STEP 1: CLASS SELECTION -->
-    <section class="card" id="setupPage">
+<!-- ================= SETUP PAGE ================= -->
 
-        <div class="section-title">
-            <span class="number">1</span>
-            <h2>Select Class</h2>
+<section id="setupPage">
+
+<div class="card">
+    <div class="section-title">
+        <span class="number">1</span>
+        <h2>कक्षा चुनें</h2>
+    </div>
+
+    <p class="description">एक या एक से अधिक कक्षाएँ चुन सकते हैं।</p>
+
+    <div class="checkbox-grid" id="classOptions"></div>
+
+    <div class="button-row">
+        <button class="secondary" onclick="selectAllClasses()">सभी कक्षाएँ</button>
+        <button class="secondary" onclick="clearClasses()">कक्षा हटाएँ</button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="section-title">
+        <span class="number">2</span>
+        <h2>विषय चुनें</h2>
+    </div>
+
+    <p class="description">चुनी गई कक्षाओं के अनुसार विषय चुनें।</p>
+
+    <div id="subjectContainer">
+        <div class="empty">पहले कक्षा चुनें।</div>
+    </div>
+
+    <div class="button-row">
+        <button class="secondary" onclick="selectAllSubjects()">सभी विषय</button>
+        <button class="secondary" onclick="clearSubjects()">विषय हटाएँ</button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="section-title">
+        <span class="number">3</span>
+        <h2>अध्याय चुनें</h2>
+    </div>
+
+    <p class="description">आप एक या एक से अधिक अध्याय चुन सकते हैं।</p>
+
+    <div id="chapterContainer">
+        <div class="empty">पहले विषय चुनें।</div>
+    </div>
+
+    <div class="button-row">
+        <button class="secondary" onclick="selectAllChapters()">सभी अध्याय</button>
+        <button class="secondary" onclick="clearChapters()">अध्याय हटाएँ</button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="section-title">
+        <span class="number">4</span>
+        <h2>प्रश्नपत्र का स्तर</h2>
+    </div>
+
+    <div class="checkbox-grid">
+
+        <label class="option">
+            <input type="checkbox" name="level" value="Easy">
+            <span>Easy — आसान</span>
+        </label>
+
+        <label class="option">
+            <input type="checkbox" name="level" value="Moderate">
+            <span>Moderate — मध्यम</span>
+        </label>
+
+        <label class="option">
+            <input type="checkbox" name="level" value="Hard">
+            <span>Hard — कठिन</span>
+        </label>
+
+    </div>
+</div>
+
+<div class="card">
+    <div class="section-title">
+        <span class="number">5</span>
+        <h2>पेपर सेटिंग</h2>
+    </div>
+
+    <label for="questionCount">प्रश्नों की संख्या</label>
+
+    <select id="questionCount"
+            style="width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:9px;margin:8px 0 18px;">
+        <option value="30" selected>30 MCQ</option>
+    </select>
+
+    <label for="language">प्रश्नपत्र की भाषा</label>
+
+    <select id="language"
+            style="width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:9px;margin:8px 0 18px;">
+        <option value="hi">हिंदी</option>
+        <option value="en">English</option>
+    </select>
+
+    <label for="marks">प्रत्येक सही उत्तर के अंक</label>
+
+    <select id="marks"
+            style="width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:9px;margin:8px 0 18px;">
+        <option value="1">1 अंक</option>
+        <option value="2">2 अंक</option>
+        <option value="4">4 अंक</option>
+    </select>
+
+    <label for="negative">
+        <input type="checkbox" id="negative">
+        गलत उत्तर पर 1/3 अंक काटें
+    </label>
+
+    <div class="alert">
+        नोट: प्रश्नों की गुणवत्ता आपके प्रश्न बैंक पर निर्भर करेगी।
+        NCERT पुस्तक के किसी अध्याय की पूर्ण कवरेज के लिए अध्याय-वार
+        सत्यापित प्रश्न सामग्री आवश्यक है।
+    </div>
+
+    <p id="errorMessage" style="color:#dc2626;margin-top:15px;" role="alert"></p>
+
+    <div class="button-row">
+        <button class="primary" style="flex:1" onclick="generatePaper()">
+            Continue — प्रश्नपत्र बनाएँ →
+        </button>
+
+        <button class="secondary" onclick="resetAll()">
+            Reset All
+        </button>
+    </div>
+</div>
+
+</section>
+
+
+<!-- ================= PAPER PAGE ================= -->
+
+<section id="paperPage" class="hidden">
+
+<div class="card">
+
+    <div id="paperHeader">
+        <h2 id="paperTitle">NCERT MCQ QUESTION PAPER</h2>
+        <p id="paperSubtitle"></p>
+        <p>कुल प्रश्न: <strong id="totalQuestions">30</strong></p>
+        <p>पूर्णांक: <strong id="totalMarks">30</strong></p>
+        <p class="no-print">प्रयास किए गए प्रश्न: <strong id="attempted">0</strong></p>
+    </div>
+
+    <div class="no-print">
+        <div class="progress-wrap">
+            <div class="progress" id="progressBar"></div>
         </div>
 
-        <p class="section-description">
-            Select one or multiple classes for your question paper.
-        </p>
+        <p id="timer">समय: लागू नहीं</p>
+    </div>
 
-        <div class="checkbox-grid" id="classOptions">
+    <div id="questionContainer"></div>
 
-            <label class="option">
-                <input type="checkbox" value="6">
-                <span>Class 6</span>
-            </label>
+    <div class="button-row no-print">
+        <button class="success" style="flex:1" onclick="submitTest()">
+            Submit Test
+        </button>
 
-            <label class="option">
-                <input type="checkbox" value="7">
-                <span>Class 7</span>
-            </label>
+        <button class="secondary" onclick="window.print()">
+            Print Question Paper
+        </button>
 
-            <label class="option">
-                <input type="checkbox" value="8">
-                <span>Class 8</span>
-            </label>
+        <button class="secondary" onclick="backToSetup()">
+            वापस जाएँ
+        </button>
+    </div>
 
-            <label class="option">
-                <input type="checkbox" value="9">
-                <span>Class 9</span>
-            </label>
+</div>
 
-            <label class="option">
-                <input type="checkbox" value="10">
-                <span>Class 10</span>
-            </label>
+</section>
 
-            <label class="option">
-                <input type="checkbox" value="11">
-                <span>Class 11</span>
-            </label>
 
-            <label class="option">
-                <input type="checkbox" value="12">
-                <span>Class 12</span>
-            </label>
+<!-- ================= RESULT PAGE ================= -->
 
+<section id="resultPage" class="hidden">
+
+<div class="card">
+
+    <div class="section-title">
+        <span class="number">✓</span>
+        <h2>आपका परिणाम</h2>
+    </div>
+
+    <div class="result-box">
+        <p>आपके अंक</p>
+        <div class="result-number" id="resultScore">0 / 30</div>
+        <p id="resultPercentage"></p>
+        <p id="resultGrade"></p>
+    </div>
+
+    <div class="checkbox-grid">
+        <div class="group">
+            <p>सही उत्तर</p>
+            <h2 id="correctCount" style="color:#15803d">0</h2>
         </div>
 
-        <div class="button-row">
-            <button class="secondary-btn" onclick="selectAllClasses()">
-                Select All Classes
-            </button>
-
-            <button class="secondary-btn" onclick="clearClasses()">
-                Clear Classes
-            </button>
+        <div class="group">
+            <p>गलत उत्तर</p>
+            <h2 id="wrongCount" style="color:#dc2626">0</h2>
         </div>
 
-    </section>
-
-
-    <!-- STEP 2: SUBJECT SELECTION -->
-    <section class="card">
-
-        <div class="section-title">
-            <span class="number">2</span>
-            <h2>Select Subject</h2>
+        <div class="group">
+            <p>छोड़े गए प्रश्न</p>
+            <h2 id="skippedCount">0</h2>
         </div>
+    </div>
 
-        <p class="section-description">
-            Subjects will appear according to the classes you select.
-            Multiple subjects can be selected.
-        </p>
+    <h3 style="margin:22px 0 12px;color:#10264b;">
+        उत्तरमाला और विस्तृत समाधान
+    </h3>
 
-        <div id="subjectContainer">
-            <div class="empty-message">
-                Please select at least one class first.
-            </div>
-        </div>
+    <div id="answerReview"></div>
 
-        <div class="button-row">
-            <button class="secondary-btn" onclick="selectAllSubjects()">
-                Select All Subjects
-            </button>
+    <div class="button-row no-print" id="resultActions">
+        <button class="primary" onclick="window.print()">Print Result</button>
+        <button class="secondary" onclick="backToSetup()">नया पेपर बनाएँ</button>
+    </div>
 
-            <button class="secondary-btn" onclick="clearSubjects()">
-                Clear Subjects
-            </button>
-        </div>
+</div>
 
-    </section>
-
-
-    <!-- STEP 3: CHAPTER SELECTION -->
-    <section class="card">
-
-        <div class="section-title">
-            <span class="number">3</span>
-            <h2>Select Chapters</h2>
-        </div>
-
-        <p class="section-description">
-            Select the chapters from which you want to create MCQs.
-            Chapter lists depend on your selected class and subject.
-        </p>
-
-        <div id="chapterContainer">
-            <div class="empty-message">
-                Select a class and subject to view chapters.
-            </div>
-        </div>
-
-        <div class="button-row">
-            <button class="secondary-btn" onclick="selectAllChapters()">
-                Select All Chapters
-            </button>
-
-            <button class="secondary-btn" onclick="clearChapters()">
-                Clear Chapters
-            </button>
-        </div>
-
-    </section>
-
-
-    <!-- STEP 4: DIFFICULTY -->
-    <section class="card">
-
-        <div class="section-title">
-            <span class="number">4</span>
-            <h2>Level of Paper</h2>
-        </div>
-
-        <p class="section-description">
-            Choose one or multiple difficulty levels.
-        </p>
-
-        <div class="checkbox-grid">
-
-            <label class="option level-easy">
-                <input type="checkbox" name="level" value="Easy">
-                <span>Easy</span>
-            </label>
-
-            <label class="option level-moderate">
-                <input type="checkbox" name="level" value="Moderate">
-                <span>Moderate</span>
-            </label>
-
-            <label class="option level-hard">
-                <input type="checkbox" name="level" value="Hard">
-                <span>Hard</span>
-            </label>
-
-        </div>
-
-    </section>
-
-
-    <!-- ACTIONS -->
-    <section class="card">
-
-        <h2 style="color:#10264b;">Ready to Continue?</h2>
-
-        <p class="section-description" style="margin-top:8px;">
-            Your selections will be saved and displayed on the next screen.
-        </p>
-
-        <div class="button-row">
-
-            <button class="primary-btn" onclick="continueToSummary()">
-                Continue →
-            </button>
-
-            <button class="secondary-btn" onclick="resetEverything()">
-                Reset All
-            </button>
-
-        </div>
-
-        <p id="errorMessage"
-           style="color:#dc2626; margin-top:14px; font-weight:bold;"
-           role="alert">
-        </p>
-
-    </section>
-
-
-    <!-- STEP 5: SUMMARY -->
-    <section class="card hidden" id="summaryPage">
-
-        <div class="section-title">
-            <span class="number">✓</span>
-            <h2>Your Paper Configuration</h2>
-        </div>
-
-        <p class="section-description">
-            Review all your selected options before proceeding to paper creation.
-        </p>
-
-        <div class="summary-box">
-
-            <div class="summary-row">
-                <div class="summary-label">Selected Classes</div>
-                <div class="summary-value" id="summaryClasses"></div>
-            </div>
-
-            <div class="summary-row">
-                <div class="summary-label">Selected Subjects</div>
-                <div class="summary-value" id="summarySubjects"></div>
-            </div>
-
-            <div class="summary-row">
-                <div class="summary-label">Selected Chapters</div>
-                <div class="summary-value" id="summaryChapters"></div>
-            </div>
-
-            <div class="summary-row">
-                <div class="summary-label">Difficulty Levels</div>
-                <div class="summary-value" id="summaryLevels"></div>
-            </div>
-
-        </div>
-
-        <div class="notice">
-            <strong>Next Step:</strong>
-            Your configuration is ready. The actual MCQ generation engine,
-            question count, answer key, explanations and PDF export can be
-            connected to this screen in the next development stage.
-        </div>
-
-        <div class="button-row">
-
-            <button class="secondary-btn" onclick="backToSetup()">
-                ← Edit Selection
-            </button>
-
-            <button class="success-btn" onclick="downloadConfiguration()">
-                Download Configuration
-            </button>
-
-        </div>
-
-    </section>
+</section>
 
 </main>
 
 <footer>
-    Advanced MCQ Paper Generator | Custom Question Paper Builder
+    NCERT MCQ Paper Generator
 </footer>
 
 
 <script>
 
-/*
-====================================================
-1. SUBJECT DATABASE
-====================================================
+/* =================================================
+   SUBJECT DATABASE
+================================================= */
 
-Add or edit subjects for each class here.
-*/
-
-const subjectDatabase = {
-
-    6: [
-        "English",
-        "Hindi",
-        "Mathematics",
-        "Science",
-        "Social Science",
-        "Sanskrit",
-        "Computer"
-    ],
-
-    7: [
-        "English",
-        "Hindi",
-        "Mathematics",
-        "Science",
-        "Social Science",
-        "Sanskrit",
-        "Computer"
-    ],
-
-    8: [
-        "English",
-        "Hindi",
-        "Mathematics",
-        "Science",
-        "Social Science",
-        "Sanskrit",
-        "Computer"
-    ],
-
-    9: [
-        "English",
-        "Hindi",
-        "Mathematics",
-        "Science",
-        "History",
-        "Geography",
-        "Civics",
-        "Economics",
-        "Sanskrit",
-        "Computer"
-    ],
-
-    10: [
-        "English",
-        "Hindi",
-        "Mathematics",
-        "Science",
-        "History",
-        "Geography",
-        "Civics",
-        "Economics",
-        "Sanskrit",
-        "Computer"
-    ],
-
-    11: [
-        "English",
-        "Hindi",
-        "Physics",
-        "Chemistry",
-        "Biology",
-        "Mathematics",
-        "History",
-        "Geography",
-        "Political Science",
-        "Economics",
-        "Sociology",
-        "Computer Science"
-    ],
-
-    12: [
-        "English",
-        "Hindi",
-        "Physics",
-        "Chemistry",
-        "Biology",
-        "Mathematics",
-        "History",
-        "Geography",
-        "Political Science",
-        "Economics",
-        "Sociology",
-        "Computer Science"
-    ]
-
+const subjectDB = {
+    6: ["History","Geography","Civics","Social Science","Science","Mathematics","English","Hindi"],
+    7: ["History","Geography","Civics","Social Science","Science","Mathematics","English","Hindi"],
+    8: ["History","Geography","Civics","Social Science","Science","Mathematics","English","Hindi"],
+    9: ["History","Geography","Civics","Economics","Science","Mathematics","English","Hindi"],
+    10:["History","Geography","Civics","Economics","Science","Mathematics","English","Hindi"],
+    11:["History","Geography","Political Science","Economics","Physics","Chemistry","Biology","Mathematics","English","Hindi"],
+    12:["History","Geography","Political Science","Economics","Physics","Chemistry","Biology","Mathematics","English","Hindi"]
 };
 
 
-/*
-====================================================
-2. CHAPTER DATABASE
-====================================================
-
-These are sample chapter lists.
-Replace or expand them with your complete syllabus.
-
-Chapter mapping format:
-class -> subject -> chapter list
-*/
-
-const chapterDatabase = {
-
-    6: {
-
-        "History": [
-            "What, Where, How and When?",
-            "From Hunting-Gathering to Growing Food",
-            "In the Earliest Cities",
-            "What Books and Burials Tell Us",
-            "Kingdoms, Kings and an Early Republic"
-        ],
-
-        "Geography": [
-            "The Earth in the Solar System",
-            "Globe: Latitudes and Longitudes",
-            "Motions of the Earth",
-            "Maps",
-            "Major Domains of the Earth"
-        ],
-
-        "Civics": [
-            "Understanding Diversity",
-            "Diversity and Discrimination",
-            "What is Government?",
-            "Key Elements of a Democratic Government"
-        ],
-
-        "Social Science": [
-            "History: Early Humans",
-            "Geography: The Earth",
-            "Civics: Understanding Diversity",
-            "Economics: Basic Concepts"
-        ],
-
-        "Science": [
-            "The Wonderful World of Science",
-            "Diversity in the Living World",
-            "Mindful Eating",
-            "Materials Around Us"
-        ],
-
-        "Mathematics": [
-            "Patterns in Mathematics",
-            "Lines and Angles",
-            "Number Play",
-            "Data Handling"
-        ],
-
-        "English": [
-            "Reading Comprehension",
-            "Grammar",
-            "Writing Skills",
-            "Literature"
-        ],
-
-        "Hindi": [
-            "गद्य",
-            "पद्य",
-            "व्याकरण",
-            "लेखन कौशल"
-        ]
-
-    },
-
-    7: {
-
-        "History": [
-            "Tracing Changes Through a Thousand Years",
-            "New Kings and Kingdoms",
-            "The Delhi Sultans",
-            "The Mughal Empire",
-            "Rulers and Buildings"
-        ],
-
-        "Geography": [
-            "Environment",
-            "Inside Our Earth",
-            "Our Changing Earth",
-            "Air",
-            "Water"
-        ],
-
-        "Civics": [
-            "On Equality",
-            "Role of the Government in Health",
-            "How the State Government Works",
-            "Growing up as Boys and Girls"
-        ],
-
-        "Social Science": [
-            "History: Medieval India",
-            "Geography: Environment",
-            "Civics: On Equality",
-            "Economics: Basic Concepts"
-        ],
-
-        "Science": [
-            "Nutrition in Plants",
-            "Nutrition in Animals",
-            "Heat",
-            "Acids, Bases and Salts",
-            "Physical and Chemical Changes"
-        ],
-
-        "Mathematics": [
-            "Integers",
-            "Fractions and Decimals",
-            "Data Handling",
-            "Simple Equations"
-        ],
-
-        "English": [
-            "Reading Comprehension",
-            "Grammar",
-            "Writing Skills",
-            "Literature"
-        ],
-
-        "Hindi": [
-            "गद्य",
-            "पद्य",
-            "व्याकरण",
-            "लेखन कौशल"
-        ]
-
-    },
-
-    8: {
-
-        "History": [
-            "How, When and Where",
-            "From Trade to Territory",
-            "Ruling the Countryside",
-            "Tribals, Dikus and the Vision of a Golden Age",
-            "When People Rebel"
-        ],
-
-        "Geography": [
-            "Resources",
-            "Land, Soil, Water, Natural Vegetation and Wildlife",
-            "Mineral and Power Resources",
-            "Agriculture",
-            "Industries"
-        ],
-
-        "Civics": [
-            "The Indian Constitution",
-            "Understanding Secularism",
-            "Why Do We Need a Parliament?",
-            "Understanding Laws",
-            "Judiciary"
-        ],
-
-        "Social Science": [
-            "History: Modern India",
-            "Geography: Resources",
-            "Civics: The Indian Constitution",
-            "Economics: Basic Concepts"
-        ],
-
-        "Science": [
-            "Crop Production and Management",
-            "Microorganisms: Friend and Foe",
-            "Coal and Petroleum",
-            "Combustion and Flame",
-            "Conservation of Plants and Animals"
-        ],
-
-        "Mathematics": [
-            "Rational Numbers",
-            "Linear Equations in One Variable",
-            "Understanding Quadrilaterals",
-            "Data Handling"
-        ],
-
-        "English": [
-            "Reading Comprehension",
-            "Grammar",
-            "Writing Skills",
-            "Literature"
-        ],
-
-        "Hindi": [
-            "गद्य",
-            "पद्य",
-            "व्याकरण",
-            "लेखन कौशल"
-        ]
-
-    },
-
-    9: {
-
-        "History": [
-            "The French Revolution",
-            "Socialism in Europe and the Russian Revolution",
-            "Nazism and the Rise of Hitler",
-            "Forest Society and Colonialism",
-            "Pastoralists in the Modern World"
-        ],
-
-        "Geography": [
-            "India: Size and Location",
-            "Physical Features of India",
-            "Drainage",
-            "Climate",
-            "Natural Vegetation and Wildlife",
-            "Population"
-        ],
-
-        "Civics": [
-            "What is Democracy? Why Democracy?",
-            "Constitutional Design",
-            "Electoral Politics",
-            "Working of Institutions",
-            "Democratic Rights"
-        ],
-
-        "Economics": [
-            "The Story of Village Palampur",
-            "People as Resource",
-            "Poverty as a Challenge",
-            "Food Security in India"
-        ],
-
-        "Science": [
-            "Matter in Our Surroundings",
-            "Is Matter Around Us Pure?",
-            "Atoms and Molecules",
-            "Structure of the Atom",
-            "The Fundamental Unit of Life",
-            "Tissues",
-            "Motion",
-            "Force and Laws of Motion",
-            "Gravitation"
-        ],
-
-        "Mathematics": [
-            "Number Systems",
-            "Polynomials",
-            "Coordinate Geometry",
-            "Linear Equations in Two Variables",
-            "Lines and Angles",
-            "Triangles",
-            "Statistics"
-        ],
-
-        "English": [
-            "Reading Comprehension",
-            "Grammar",
-            "Writing Skills",
-            "Literature"
-        ],
-
-        "Hindi": [
-            "गद्य",
-            "पद्य",
-            "व्याकरण",
-            "लेखन कौशल"
-        ]
-
-    },
-
-    10: {
-
-        "History": [
-            "The Rise of Nationalism in Europe",
-            "Nationalism in India",
-            "The Making of a Global World",
-            "The Age of Industrialisation",
-            "Print Culture and the Modern World"
-        ],
-
-        "Geography": [
-            "Resources and Development",
-            "Forest and Wildlife Resources",
-            "Water Resources",
-            "Agriculture",
-            "Minerals and Energy Resources",
-            "Manufacturing Industries",
-            "Lifelines of National Economy"
-        ],
-
-        "Civics": [
-            "Power Sharing",
-            "Federalism",
-            "Gender, Religion and Caste",
-            "Political Parties",
-            "Outcomes of Democracy"
-        ],
-
-        "Economics": [
-            "Development",
-            "Sectors of the Indian Economy",
-            "Money and Credit",
-            "Globalisation and the Indian Economy",
-            "Consumer Rights"
-        ],
-
-        "Science": [
-            "Chemical Reactions and Equations",
-            "Acids, Bases and Salts",
-            "Metals and Non-metals",
-            "Carbon and Its Compounds",
-            "Life Processes",
-            "Control and Coordination",
-            "Light",
-            "Electricity",
-            "Magnetic Effects of Electric Current"
-        ],
-
-        "Mathematics": [
-            "Real Numbers",
-            "Polynomials",
-            "Pair of Linear Equations in Two Variables",
-            "Quadratic Equations",
-            "Arithmetic Progressions",
-            "Triangles",
-            "Statistics",
-            "Probability"
-        ],
-
-        "English": [
-            "Reading Comprehension",
-            "Grammar",
-            "Writing Skills",
-            "Literature"
-        ],
-
-        "Hindi": [
-            "गद्य",
-            "पद्य",
-            "व्याकरण",
-            "लेखन कौशल"
-        ]
-
-    },
-
-    11: {
-
-        "History": [
-            "Writing and City Life",
-            "An Empire Across Three Continents",
-            "Nomadic Empires",
-            "The Three Orders",
-            "Changing Cultural Traditions"
-        ],
-
-        "Geography": [
-            "Geography as a Discipline",
-            "The Origin and Evolution of the Earth",
-            "Interior of the Earth",
-            "Distribution of Oceans and Continents",
-            "Geomorphic Processes"
-        ],
-
-        "Political Science": [
-            "Constitution: Why and How?",
-            "Rights in the Indian Constitution",
-            "Election and Representation",
-            "Executive",
-            "Legislature",
-            "Judiciary"
-        ],
-
-        "Economics": [
-            "Introduction to Microeconomics",
-            "Consumer's Equilibrium",
-            "Demand",
-            "Elasticity of Demand",
-            "Production and Costs",
-            "Market Equilibrium"
-        ],
-
-        "Physics": [
-            "Units and Measurements",
-            "Motion in a Straight Line",
-            "Motion in a Plane",
-            "Laws of Motion",
-            "Work, Energy and Power"
-        ],
-
-        "Chemistry": [
-            "Some Basic Concepts of Chemistry",
-            "Structure of Atom",
-            "Classification of Elements",
-            "Chemical Bonding",
-            "Thermodynamics"
-        ],
-
-        "Biology": [
-            "The Living World",
-            "Biological Classification",
-            "Plant Kingdom",
-            "Animal Kingdom",
-            "Cell: The Unit of Life"
-        ],
-
-        "Mathematics": [
-            "Sets",
-            "Relations and Functions",
-            "Trigonometric Functions",
-            "Complex Numbers",
-            "Linear Inequalities",
-            "Permutations and Combinations"
-        ],
-
-        "English": [
-            "Reading Comprehension",
-            "Grammar",
-            "Writing Skills",
-            "Literature"
-        ],
-
-        "Hindi": [
-            "गद्य",
-            "पद्य",
-            "व्याकरण",
-            "लेखन कौशल"
-        ]
-
-    },
-
-    12: {
-
-        "History": [
-            "Bricks, Beads and Bones",
-            "Kings, Farmers and Towns",
-            "Kinship, Caste and Class",
-            "Thinkers, Beliefs and Buildings",
-            "Through the Eyes of Travellers",
-            "Bhakti-Sufi Traditions",
-            "An Imperial Capital: Vijayanagara"
-        ],
-
-        "Geography": [
-            "Human Geography: Nature and Scope",
-            "The World Population",
-            "Human Development",
-            "Primary Activities",
-            "Secondary Activities",
-            "Tertiary and Quaternary Activities"
-        ],
-
-        "Political Science": [
-            "The End of Bipolarity",
-            "Contemporary Centres of Power",
-            "Contemporary South Asia",
-            "International Organisations",
-            "Security in the Contemporary World",
-            "Environment and Natural Resources"
-        ],
-
-        "Economics": [
-            "National Income Accounting",
-            "Money and Banking",
-            "Determination of Income and Employment",
-            "Government Budget and the Economy",
-            "Balance of Payments"
-        ],
-
-        "Physics": [
-            "Electric Charges and Fields",
-            "Electrostatic Potential and Capacitance",
-            "Current Electricity",
-            "Moving Charges and Magnetism",
-            "Electromagnetic Induction",
-            "Ray Optics"
-        ],
-
-        "Chemistry": [
-            "Solutions",
-            "Electrochemistry",
-            "Chemical Kinetics",
-            "The d- and f-Block Elements",
-            "Coordination Compounds",
-            "Haloalkanes and Haloarenes"
-        ],
-
-        "Biology": [
-            "Sexual Reproduction in Flowering Plants",
-            "Human Reproduction",
-            "Reproductive Health",
-            "Principles of Inheritance and Variation",
-            "Molecular Basis of Inheritance",
-            "Evolution"
-        ],
-
-        "Mathematics": [
-            "Relations and Functions",
-            "Inverse Trigonometric Functions",
-            "Matrices",
-            "Determinants",
-            "Continuity and Differentiability",
-            "Applications of Derivatives",
-            "Integrals",
-            "Probability"
-        ],
-
-        "English": [
-            "Reading Comprehension",
-            "Grammar",
-            "Writing Skills",
-            "Literature"
-        ],
-
-        "Hindi": [
-            "गद्य",
-            "पद्य",
-            "व्याकरण",
-            "लेखन कौशल"
-        ]
-
-    }
-
+/* =================================================
+   SAMPLE CHAPTER DATABASE
+   Add complete chapter lists here.
+================================================= */
+
+const chapterDB = {
+6:{
+History:[
+"What, Where, How and When?",
+"From Hunting-Gathering to Growing Food",
+"In the Earliest Cities",
+"What Books and Burials Tell Us"
+],
+Geography:[
+"The Earth in the Solar System",
+"Globe: Latitudes and Longitudes",
+"Motions of the Earth",
+"Maps"
+],
+Civics:[
+"Understanding Diversity",
+"Diversity and Discrimination",
+"What is Government?"
+],
+Science:[
+"The Wonderful World of Science",
+"Diversity in the Living World",
+"Mindful Eating",
+"Materials Around Us"
+],
+Mathematics:[
+"Patterns in Mathematics",
+"Lines and Angles",
+"Number Play"
+],
+"Social Science":[
+"History: Early Humans",
+"Geography: The Earth",
+"Civics: Understanding Diversity"
+]
+},
+
+7:{
+History:[
+"Tracing Changes Through a Thousand Years",
+"New Kings and Kingdoms",
+"The Delhi Sultans",
+"The Mughal Empire"
+],
+Geography:[
+"Environment",
+"Inside Our Earth",
+"Our Changing Earth",
+"Air",
+"Water"
+],
+Civics:[
+"On Equality",
+"Role of the Government in Health",
+"How the State Government Works"
+],
+Science:[
+"Nutrition in Plants",
+"Nutrition in Animals",
+"Heat",
+"Acids, Bases and Salts"
+],
+Mathematics:[
+"Integers",
+"Fractions and Decimals",
+"Data Handling",
+"Simple Equations"
+]
+},
+
+8:{
+History:[
+"How, When and Where",
+"From Trade to Territory",
+"Ruling the Countryside",
+"When People Rebel"
+],
+Geography:[
+"Resources",
+"Land, Soil, Water, Natural Vegetation and Wildlife",
+"Mineral and Power Resources",
+"Agriculture"
+],
+Civics:[
+"The Indian Constitution",
+"Understanding Secularism",
+"Why Do We Need a Parliament?",
+"Understanding Laws"
+],
+Science:[
+"Crop Production and Management",
+"Microorganisms: Friend and Foe",
+"Coal and Petroleum"
+]
+},
+
+9:{
+History:[
+"The French Revolution",
+"Socialism in Europe and the Russian Revolution",
+"Nazism and the Rise of Hitler"
+],
+Geography:[
+"India: Size and Location",
+"Physical Features of India",
+"Drainage",
+"Climate",
+"Population"
+],
+Civics:[
+"What is Democracy? Why Democracy?",
+"Constitutional Design",
+"Electoral Politics",
+"Working of Institutions"
+],
+Economics:[
+"The Story of Village Palampur",
+"People as Resource",
+"Poverty as a Challenge",
+"Food Security in India"
+],
+Science:[
+"Matter in Our Surroundings",
+"Is Matter Around Us Pure?",
+"Atoms and Molecules",
+"Structure of the Atom"
+],
+Mathematics:[
+"Number Systems",
+"Polynomials",
+"Coordinate Geometry",
+"Linear Equations in Two Variables"
+]
+},
+
+10:{
+History:[
+"The Rise of Nationalism in Europe",
+"Nationalism in India",
+"The Making of a Global World",
+"The Age of Industrialisation",
+"Print Culture and the Modern World"
+],
+Geography:[
+"Resources and Development",
+"Forest and Wildlife Resources",
+"Water Resources",
+"Agriculture",
+"Minerals and Energy Resources",
+"Manufacturing Industries"
+],
+Civics:[
+"Power Sharing",
+"Federalism",
+"Gender, Religion and Caste",
+"Political Parties",
+"Outcomes of Democracy"
+],
+Economics:[
+"Development",
+"Sectors of the Indian Economy",
+"Money and Credit",
+"Globalisation and the Indian Economy",
+"Consumer Rights"
+],
+Science:[
+"Chemical Reactions and Equations",
+"Acids, Bases and Salts",
+"Metals and Non-metals",
+"Carbon and Its Compounds",
+"Life Processes",
+"Control and Coordination",
+"Electricity"
+],
+Mathematics:[
+"Real Numbers",
+"Polynomials",
+"Pair of Linear Equations in Two Variables",
+"Quadratic Equations",
+"Arithmetic Progressions",
+"Triangles",
+"Statistics",
+"Probability"
+]
+},
+
+11:{
+History:[
+"Writing and City Life",
+"An Empire Across Three Continents",
+"Nomadic Empires",
+"The Three Orders"
+],
+Geography:[
+"Geography as a Discipline",
+"The Origin and Evolution of the Earth",
+"Interior of the Earth"
+],
+"Political Science":[
+"Constitution: Why and How?",
+"Rights in the Indian Constitution",
+"Election and Representation",
+"Executive",
+"Legislature"
+],
+Economics:[
+"Introduction to Microeconomics",
+"Consumer's Equilibrium",
+"Demand",
+"Elasticity of Demand"
+],
+Physics:[
+"Units and Measurements",
+"Motion in a Straight Line",
+"Motion in a Plane",
+"Laws of Motion"
+],
+Chemistry:[
+"Some Basic Concepts of Chemistry",
+"Structure of Atom",
+"Classification of Elements"
+],
+Biology:[
+"The Living World",
+"Biological Classification",
+"Plant Kingdom",
+"Animal Kingdom"
+]
+},
+
+12:{
+History:[
+"Bricks, Beads and Bones",
+"Kings, Farmers and Towns",
+"Kinship, Caste and Class",
+"Thinkers, Beliefs and Buildings",
+"Through the Eyes of Travellers"
+],
+Geography:[
+"Human Geography: Nature and Scope",
+"The World Population",
+"Human Development"
+],
+"Political Science":[
+"The End of Bipolarity",
+"Contemporary Centres of Power",
+"Contemporary South Asia",
+"International Organisations"
+],
+Economics:[
+"National Income Accounting",
+"Money and Banking",
+"Determination of Income and Employment",
+"Government Budget and the Economy"
+],
+Physics:[
+"Electric Charges and Fields",
+"Electrostatic Potential and Capacitance",
+"Current Electricity"
+],
+Chemistry:[
+"Solutions",
+"Electrochemistry",
+"Chemical Kinetics"
+],
+Biology:[
+"Sexual Reproduction in Flowering Plants",
+"Human Reproduction",
+"Reproductive Health"
+]
+}
 };
 
 
-/*
-====================================================
-3. SAVE AND RESTORE SELECTIONS
-====================================================
-*/
+/* =================================================
+   QUESTION BANK
 
-const STORAGE_KEY = "advancedMCQPaperConfig";
+   These are sample questions, not a complete NCERT
+   question bank. Add verified questions for each
+   class, subject and chapter.
+================================================= */
 
-let previousSelection = {};
+const questionBank = [
 
-try {
-    previousSelection =
-        JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-} catch (error) {
-    previousSelection = {};
+{
+classes:[6,7,8],
+subjects:["History"],
+chapters:["What, Where, How and When?"],
+level:"Easy",
+q:"अतीत के बारे में जानकारी प्राप्त करने का एक प्रमुख स्रोत कौन-सा है?",
+options:["ऐतिहासिक पांडुलिपियाँ","केवल मोबाइल फोन","केवल टेलीविजन","केवल मौसम रिपोर्ट"],
+answer:0,
+explanation:"पांडुलिपियाँ अतीत के बारे में जानकारी देने वाले महत्वपूर्ण ऐतिहासिक स्रोतों में शामिल हैं।"
+},
+
+{
+classes:[6,7,8],
+subjects:["History"],
+chapters:["What, Where, How and When?"],
+level:"Moderate",
+q:"इतिहासकार अतीत का अध्ययन करते समय विभिन्न स्रोतों की तुलना क्यों करते हैं?",
+options:[
+"जानकारी की पुष्टि और अंतर समझने के लिए",
+"सभी स्रोतों को एक जैसा बनाने के लिए",
+"पुराने स्रोतों को नष्ट करने के लिए",
+"केवल एक कहानी लिखने के लिए"
+],
+answer:0,
+explanation:"विभिन्न स्रोतों की तुलना से इतिहासकार जानकारी की पुष्टि करते हैं और स्रोतों के बीच अंतर समझते हैं।"
+},
+
+{
+classes:[9,10],
+subjects:["History"],
+chapters:["Nationalism in India"],
+level:"Easy",
+q:"महात्मा गांधी ने नमक कानून तोड़ने के लिए 1930 में कौन-सी यात्रा शुरू की?",
+options:[
+"दांडी मार्च",
+"दिल्ली मार्च",
+"चंपारण मार्च",
+"लखनऊ मार्च"
+],
+answer:0,
+explanation:"महात्मा गांधी ने नमक सत्याग्रह के अंतर्गत साबरमती आश्रम से दांडी तक यात्रा की।"
+},
+
+{
+classes:[9,10],
+subjects:["History"],
+chapters:["Nationalism in India"],
+level:"Moderate",
+q:"दांडी मार्च का प्रमुख उद्देश्य क्या था?",
+options:[
+"नमक कानून का विरोध करना",
+"अलग निर्वाचन क्षेत्र बनाना",
+"रेलवे का राष्ट्रीयकरण करना",
+"नई मुद्रा जारी करना"
+],
+answer:0,
+explanation:"दांडी मार्च ब्रिटिश नमक कानून और नमक पर लगाए गए कर के विरुद्ध सविनय अवज्ञा आंदोलन का महत्वपूर्ण चरण था।"
+},
+
+{
+classes:[9,10],
+subjects:["History"],
+chapters:["The French Revolution"],
+level:"Easy",
+q:"फ्रांसीसी क्रांति किस वर्ष शुरू हुई?",
+options:["1789","1776","1815","1848"],
+answer:0,
+explanation:"1789 में फ्रांस में क्रांति शुरू हुई।"
+},
+
+{
+classes:[9,10],
+subjects:["History"],
+chapters:["The French Revolution"],
+level:"Moderate",
+q:"फ्रांस के पुराने शासन में प्रथम एस्टेट में कौन शामिल था?",
+options:["पादरी वर्ग","किसान वर्ग","व्यापारी वर्ग","कारीगर वर्ग"],
+answer:0,
+explanation:"फ्रांस के पुराने शासन में प्रथम एस्टेट पादरी वर्ग था, जबकि द्वितीय एस्टेट में कुलीन वर्ग शामिल था।"
+},
+
+{
+classes:[9,10],
+subjects:["Geography"],
+chapters:["India: Size and Location"],
+level:"Easy",
+q:"भारत किस गोलार्ध में स्थित है?",
+options:[
+"उत्तरी और पूर्वी गोलार्ध",
+"दक्षिणी और पश्चिमी गोलार्ध",
+"उत्तरी और पश्चिमी गोलार्ध",
+"दक्षिणी और पूर्वी गोलार्ध"
+],
+answer:0,
+explanation:"भारत भूमध्य रेखा के उत्तर और प्रधान मध्याह्न रेखा के पूर्व में स्थित है।"
+},
+
+{
+classes:[9,10],
+subjects:["Geography"],
+chapters:["Climate"],
+level:"Easy",
+q:"भारत की जलवायु का प्रमुख प्रकार क्या है?",
+options:[
+"मानसूनी जलवायु",
+"भूमध्यसागरीय जलवायु",
+"टुंड्रा जलवायु",
+"ध्रुवीय जलवायु"
+],
+answer:0,
+explanation:"भारत की जलवायु मानसूनी पवनों से बहुत प्रभावित होती है।"
+},
+
+{
+classes:[9,10],
+subjects:["Civics"],
+chapters:["Power Sharing"],
+level:"Easy",
+q:"सत्ता की साझेदारी का प्रमुख लाभ क्या है?",
+options:[
+"सामाजिक संघर्ष की संभावना कम होती है",
+"लोकतंत्र समाप्त हो जाता है",
+"नागरिक अधिकार समाप्त होते हैं",
+"सभी चुनाव रद्द हो जाते हैं"
+],
+answer:0,
+explanation:"सत्ता की साझेदारी विभिन्न सामाजिक समूहों के बीच संघर्ष कम करने और राजनीतिक स्थिरता बनाए रखने में सहायक है।"
+},
+
+{
+classes:[9,10],
+subjects:["Civics"],
+chapters:["Federalism"],
+level:"Moderate",
+q:"संघवाद की एक प्रमुख विशेषता क्या है?",
+options:[
+"सरकार के विभिन्न स्तरों के बीच शक्तियों का संवैधानिक विभाजन",
+"सभी शक्तियाँ एक ही अधिकारी के पास",
+"चुनावों का पूर्ण निषेध",
+"न्यायपालिका का उन्मूलन"
+],
+answer:0,
+explanation:"संघीय व्यवस्था में संविधान सरकार के विभिन्न स्तरों के बीच अधिकारों और शक्तियों का विभाजन करता है।"
+},
+
+{
+classes:[9,10],
+subjects:["Economics"],
+chapters:["Development"],
+level:"Easy",
+q:"प्रति व्यक्ति आय की गणना कैसे की जाती है?",
+options:[
+"कुल आय को कुल जनसंख्या से भाग देकर",
+"कुल जनसंख्या को कुल आय से गुणा करके",
+"केवल कृषि आय जोड़कर",
+"कुल आय से जनसंख्या घटाकर"
+],
+answer:0,
+explanation:"प्रति व्यक्ति आय का सामान्य सूत्र कुल आय ÷ कुल जनसंख्या है।"
+},
+
+{
+classes:[9,10],
+subjects:["Economics"],
+chapters:["Money and Credit"],
+level:"Moderate",
+q:"ऋण की शर्तों में सामान्यतः क्या शामिल होता है?",
+options:[
+"ब्याज दर और ऋण चुकाने की अवधि",
+"केवल उधारकर्ता का नाम",
+"केवल बैंक का पता",
+"केवल मुद्रा का रंग"
+],
+answer:0,
+explanation:"ऋण की शर्तों में ब्याज दर, जमानत, दस्तावेज और पुनर्भुगतान की अवधि शामिल हो सकती है।"
+},
+
+{
+classes:[9,10],
+subjects:["Science"],
+chapters:["Atoms and Molecules"],
+level:"Easy",
+q:"पानी का रासायनिक सूत्र क्या है?",
+options:["H₂O","CO₂","O₂","NaCl"],
+answer:0,
+explanation:"पानी के एक अणु में दो हाइड्रोजन परमाणु और एक ऑक्सीजन परमाणु होता है।"
+},
+
+{
+classes:[9,10],
+subjects:["Science"],
+chapters:["Life Processes"],
+level:"Easy",
+q:"पौधों में प्रकाश संश्लेषण के लिए कौन-सी गैस आवश्यक है?",
+options:["कार्बन डाइऑक्साइड","नाइट्रोजन","हीलियम","हाइड्रोजन"],
+answer:0,
+explanation:"पौधे प्रकाश संश्लेषण में कार्बन डाइऑक्साइड और पानी का उपयोग करके भोजन बनाते हैं।"
+},
+
+{
+classes:[9,10],
+subjects:["Science"],
+chapters:["Electricity"],
+level:"Moderate",
+q:"ओम के नियम के अनुसार विद्युत धारा का सूत्र क्या है?",
+options:["I = V/R","I = VR","I = R/V","I = V + R"],
+answer:0,
+explanation:"ओम के नियम के अनुसार I = V/R, जहाँ V विभवांतर और R प्रतिरोध है।"
+},
+
+{
+classes:[10],
+subjects:["History"],
+chapters:["Print Culture and the Modern World"],
+level:"Moderate",
+q:"मुद्रण संस्कृति ने आधुनिक समाज में किस प्रकार योगदान दिया?",
+options:[
+"विचारों और सूचनाओं के व्यापक प्रसार में",
+"सभी पुस्तकों को हस्तलिखित बनाने में",
+"समाचारों के प्रसार को पूर्णतः रोकने में",
+"शिक्षा को समाप्त करने में"
+],
+answer:0,
+explanation:"मुद्रण ने पुस्तकों, समाचारों और विचारों को अधिक लोगों तक पहुँचाना आसान बनाया।"
+},
+
+{
+classes:[10],
+subjects:["Geography"],
+chapters:["Water Resources"],
+level:"Moderate",
+q:"वर्षा जल संचयन का प्रमुख उद्देश्य क्या है?",
+options:[
+"वर्षा के पानी को एकत्र करके उपयोग या भूजल पुनर्भरण करना",
+"सभी नदियों को बंद करना",
+"वर्षा को रोकना",
+"भूमि की उर्वरता समाप्त करना"
+],
+answer:0,
+explanation:"वर्षा जल संचयन पानी का संग्रह और भूजल पुनर्भरण करने में मदद करता है।"
+},
+
+{
+classes:[6,7,8],
+subjects:["Geography"],
+chapters:["The Earth in the Solar System"],
+level:"Easy",
+q:"पृथ्वी का प्राकृतिक उपग्रह कौन है?",
+options:["चंद्रमा","मंगल","शुक्र","सूर्य"],
+answer:0,
+explanation:"चंद्रमा पृथ्वी का प्राकृतिक उपग्रह है।"
+},
+
+{
+classes:[6,7,8],
+subjects:["Civics"],
+chapters:["What is Government?"],
+level:"Easy",
+q:"लोकतंत्र में सरकार चुनने का प्रमुख माध्यम क्या है?",
+options:["चुनाव","वंशानुगत नियुक्ति","लॉटरी हमेशा","सैन्य आदेश"],
+answer:0,
+explanation:"लोकतंत्र में नागरिक सामान्यतः चुनावों के माध्यम से अपने प्रतिनिधि चुनते हैं।"
+},
+
+{
+classes:[11,12],
+subjects:["Political Science"],
+chapters:["Constitution: Why and How?"],
+level:"Moderate",
+q:"संविधान का प्रमुख कार्य क्या है?",
+options:[
+"सरकार की संरचना और शक्तियों के नियम निर्धारित करना",
+"केवल व्यापारिक कीमतें तय करना",
+"केवल मौसम का पूर्वानुमान देना",
+"सभी नागरिक अधिकार समाप्त करना"
+],
+answer:0,
+explanation:"संविधान शासन की संस्थाओं, शक्तियों, प्रक्रियाओं और नागरिक अधिकारों के मूल नियम निर्धारित करता है।"
+},
+
+{
+classes:[11,12],
+subjects:["Economics"],
+chapters:["Government Budget and the Economy"],
+level:"Easy",
+q:"सरकारी बजट क्या दर्शाता है?",
+options:[
+"सरकार की अनुमानित प्राप्तियाँ और व्यय",
+"केवल निजी कंपनियों का लाभ",
+"केवल विदेशी पर्यटकों की संख्या",
+"केवल मौसम संबंधी आँकड़े"
+],
+answer:0,
+explanation:"सरकारी बजट एक निश्चित अवधि के लिए सरकार की अनुमानित प्राप्तियों और व्यय का विवरण होता है।"
+},
+
+{
+classes:[11,12],
+subjects:["Physics"],
+chapters:["Current Electricity"],
+level:"Moderate",
+q:"विद्युत प्रतिरोध की SI इकाई क्या है?",
+options:["ओम","वोल्ट","एम्पियर","वाट"],
+answer:0,
+explanation:"विद्युत प्रतिरोध की SI इकाई ओम (Ω) है।"
+},
+
+{
+classes:[11,12],
+subjects:["Biology"],
+chapters:["The Living World"],
+level:"Easy",
+q:"जीवों की पहचान और नामकरण से संबंधित विज्ञान को क्या कहते हैं?",
+options:["वर्गिकी","खगोल विज्ञान","भूविज्ञान","मौसम विज्ञान"],
+answer:0,
+explanation:"वर्गिकी जीवों की पहचान, नामकरण और वर्गीकरण का अध्ययन करती है।"
+},
+
+{
+classes:[11,12],
+subjects:["Chemistry"],
+chapters:["Structure of Atom"],
+level:"Easy",
+q:"इलेक्ट्रॉन पर किस प्रकार का आवेश होता है?",
+options:["ऋणात्मक","धनात्मक","उदासीन","दोनों धनात्मक और ऋणात्मक"],
+answer:0,
+explanation:"इलेक्ट्रॉन पर ऋणात्मक विद्युत आवेश होता है।"
+},
+
+{
+classes:[11,12],
+subjects:["Mathematics"],
+chapters:["Sets"],
+level:"Easy",
+q:"रिक्त समुच्चय में कितने अवयव होते हैं?",
+options:["शून्य","एक","दो","अनंत"],
+answer:0,
+explanation:"रिक्त समुच्चय में कोई अवयव नहीं होता।"
+},
+
+{
+classes:[6,7,8],
+subjects:["Mathematics"],
+chapters:["Integers"],
+level:"Easy",
+q:"(-5) + 8 का मान क्या है?",
+options:["3","-13","13","-3"],
+answer:0,
+explanation:"(-5) + 8 = 3।"
+},
+
+{
+classes:[6,7,8],
+subjects:["Science"],
+chapters:["Heat"],
+level:"Easy",
+q:"तापमान मापने के लिए किस उपकरण का उपयोग किया जाता है?",
+options:["थर्मामीटर","बैरोमीटर","अमीटर","कंपास"],
+answer:0,
+explanation:"तापमान मापने के लिए थर्मामीटर का उपयोग किया जाता है।"
+},
+
+{
+classes:[9,10],
+subjects:["History"],
+chapters:["The Rise of Nationalism in Europe"],
+level:"Moderate",
+q:"वियना कांग्रेस का आयोजन किस वर्ष हुआ था?",
+options:["1815","1789","1848","1919"],
+answer:0,
+explanation:"1815 में नेपोलियन की हार के बाद यूरोप में पुरानी राजशाहियों को पुनर्स्थापित करने के उद्देश्य से वियना कांग्रेस आयोजित हुई।"
+},
+
+{
+classes:[9,10],
+subjects:["Geography"],
+chapters:["Agriculture"],
+level:"Moderate",
+q:"भारत में खरीफ फसलों की बुवाई सामान्यतः किस मौसम में होती है?",
+options:[
+"मानसून के आरंभ में",
+"शीत ऋतु के अंत में ही",
+"केवल वसंत ऋतु में",
+"मानसून समाप्त होने के बाद ही"
+],
+answer:0,
+explanation:"खरीफ फसलों की बुवाई सामान्यतः मानसून के आरंभ में की जाती है।"
+},
+
+{
+classes:[9,10],
+subjects:["Civics"],
+chapters:["Political Parties"],
+level:"Moderate",
+q:"राजनीतिक दलों का एक प्रमुख कार्य क्या है?",
+options:[
+"चुनाव लड़ना और नीतियाँ प्रस्तुत करना",
+"न्यायालयों को समाप्त करना",
+"संविधान को स्वतः बदलना",
+"सभी नागरिकों के मताधिकार को समाप्त करना"
+],
+answer:0,
+explanation:"राजनीतिक दल चुनावों में भाग लेते हैं, नीतियाँ प्रस्तुत करते हैं और सरकार बनाने का प्रयास करते हैं।"
 }
 
-function saveSelections() {
+];
 
-    const data = {
-        classes: getSelectedClasses(),
-        subjects: getSelectedSubjects(),
-        chapters: getSelectedChapters(),
-        levels: getSelectedLevels()
-    };
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+/* =================================================
+   APPLICATION STATE
+================================================= */
+
+let generatedQuestions = [];
+let submitted = false;
+let currentConfig = {};
+let selectedAnswers = {};
+
+
+/* =================================================
+   HELPERS
+================================================= */
+
+function el(id) {
+    return document.getElementById(id);
 }
 
-
-/*
-====================================================
-4. COMMON HELPERS
-====================================================
-*/
-
-function getSelectedClasses() {
-
-    return Array.from(
-        document.querySelectorAll("#classOptions input:checked")
-    ).map(input => Number(input.value));
-
+function getChecked(selector) {
+    return [...document.querySelectorAll(selector)]
+        .filter(x => x.checked)
+        .map(x => x.value);
 }
 
-function getSelectedSubjects() {
-
-    return Array.from(
-        document.querySelectorAll("#subjectContainer input:checked")
-    ).map(input => ({
-        className: Number(input.dataset.class),
-        subject: input.value
-    }));
-
+function selectedClasses() {
+    return getChecked("#classOptions input").map(Number);
 }
 
-function getSelectedChapters() {
-
-    return Array.from(
-        document.querySelectorAll("#chapterContainer input:checked")
-    ).map(input => ({
-        className: Number(input.dataset.class),
-        subject: input.dataset.subject,
-        chapter: input.value
-    }));
-
+function selectedSubjects() {
+    return [...document.querySelectorAll("#subjectContainer input:checked")]
+        .map(x => ({
+            classNumber: Number(x.dataset.class),
+            subject: x.value
+        }));
 }
 
-function getSelectedLevels() {
-
-    return Array.from(
-        document.querySelectorAll('input[name="level"]:checked')
-    ).map(input => input.value);
-
+function selectedChapters() {
+    return [...document.querySelectorAll("#chapterContainer input:checked")]
+        .map(x => ({
+            classNumber: Number(x.dataset.class),
+            subject: x.dataset.subject,
+            chapter: x.value
+        }));
 }
 
-function makeCheckbox(label, value, data = {}) {
+function selectedLevels() {
+    return getChecked('input[name="level"]');
+}
 
+function makeOption(label, value, data={}) {
     const wrapper = document.createElement("label");
     wrapper.className = "option";
 
@@ -1289,517 +1408,572 @@ function makeCheckbox(label, value, data = {}) {
     input.type = "checkbox";
     input.value = value;
 
-    Object.entries(data).forEach(([key, val]) => {
+    Object.entries(data).forEach(([key,val]) => {
         input.dataset[key] = val;
     });
 
     const span = document.createElement("span");
     span.textContent = label;
 
-    wrapper.append(input, span);
-
+    wrapper.append(input,span);
     return wrapper;
-
 }
 
 
-/*
-====================================================
-5. CLASS CHANGES
-====================================================
-*/
+/* =================================================
+   RENDER CLASSES
+================================================= */
 
-document.querySelectorAll(
-    '#classOptions input[type="checkbox"]'
-).forEach(input => {
+function renderClasses() {
+    const box = el("classOptions");
+    box.replaceChildren();
 
-    input.addEventListener("change", () => {
+    for(let c=6;c<=12;c++) {
+        const option = makeOption("Class "+c,String(c));
 
-        renderSubjects();
-        renderChapters();
-        saveSelections();
-
-    });
-
-});
-
-
-function selectAllClasses() {
-
-    document.querySelectorAll(
-        '#classOptions input[type="checkbox"]'
-    ).forEach(input => input.checked = true);
-
-    renderSubjects();
-    renderChapters();
-    saveSelections();
-
-}
-
-
-function clearClasses() {
-
-    document.querySelectorAll(
-        '#classOptions input[type="checkbox"]'
-    ).forEach(input => input.checked = false);
-
-    renderSubjects();
-    renderChapters();
-    saveSelections();
-
-}
-
-
-/*
-====================================================
-6. RENDER SUBJECTS
-====================================================
-*/
-
-function renderSubjects() {
-
-    const container = document.getElementById("subjectContainer");
-
-    container.replaceChildren();
-
-    const classes = getSelectedClasses();
-
-    if (!classes.length) {
-
-        container.innerHTML =
-            '<div class="empty-message">' +
-            'Please select at least one class first.' +
-            '</div>';
-
-        return;
-
-    }
-
-    classes.forEach(classNumber => {
-
-        const group = document.createElement("div");
-        group.className = "subject-group";
-
-        const heading = document.createElement("h3");
-        heading.textContent = "Class " + classNumber + " Subjects ";
-
-        const small = document.createElement("small");
-        small.textContent = "(Select multiple)";
-        heading.appendChild(small);
-
-        const grid = document.createElement("div");
-        grid.className = "checkbox-grid";
-
-        const subjects = subjectDatabase[classNumber] || [];
-
-        subjects.forEach(subject => {
-
-            const option = makeCheckbox(
-                subject,
-                subject,
-                { class: classNumber }
-            );
-
-            const input = option.querySelector("input");
-
-            const oldSelection = previousSelection.subjects || [];
-
-            input.checked = oldSelection.some(item =>
-                Number(item.className) === classNumber &&
-                item.subject === subject
-            );
-
-            input.addEventListener("change", () => {
-
-                renderChapters();
-                saveSelections();
-
-            });
-
-            grid.appendChild(option);
-
+        option.querySelector("input").addEventListener("change",()=>{
+            renderSubjects();
+            renderChapters();
         });
 
-        group.append(heading, grid);
-        container.appendChild(group);
+        box.appendChild(option);
+    }
+}
 
-    });
+function selectAllClasses() {
+    document.querySelectorAll("#classOptions input")
+        .forEach(x=>x.checked=true);
+    renderSubjects();
+    renderChapters();
+}
 
+function clearClasses() {
+    document.querySelectorAll("#classOptions input")
+        .forEach(x=>x.checked=false);
+    renderSubjects();
+    renderChapters();
 }
 
 
-/*
-====================================================
-7. RENDER CHAPTERS
-====================================================
-*/
+/* =================================================
+   RENDER SUBJECTS
+================================================= */
 
-function renderChapters() {
-
-    const container = document.getElementById("chapterContainer");
-
+function renderSubjects() {
+    const container = el("subjectContainer");
     container.replaceChildren();
 
-    const subjects = getSelectedSubjects();
+    const classes = selectedClasses();
 
-    if (!subjects.length) {
-
-        container.innerHTML =
-            '<div class="empty-message">' +
-            'Select a class and at least one subject to view chapters.' +
-            '</div>';
-
+    if(!classes.length) {
+        container.innerHTML='<div class="empty">पहले कक्षा चुनें।</div>';
         return;
-
     }
 
-    subjects.forEach(item => {
+    classes.forEach(c=>{
+        const group=document.createElement("div");
+        group.className="group";
 
-        const classNumber = item.className;
-        const subject = item.subject;
+        const heading=document.createElement("h3");
+        heading.textContent="Class "+c+" — Subjects";
 
-        const group = document.createElement("div");
-        group.className = "subject-group";
+        const grid=document.createElement("div");
+        grid.className="checkbox-grid";
 
-        const heading = document.createElement("h3");
-        heading.textContent = "Class " + classNumber + " — " + subject;
+        (subjectDB[c]||[]).forEach(subject=>{
+            const option=makeOption(subject,subject,{class:c});
 
-        const grid = document.createElement("div");
-        grid.className = "checkbox-grid";
+            option.querySelector("input").addEventListener("change",renderChapters);
+            grid.appendChild(option);
+        });
 
-        const chapters =
-            (chapterDatabase[classNumber] || {})[subject] || [];
+        group.append(heading,grid);
+        container.appendChild(group);
+    });
+}
 
-        if (!chapters.length) {
+function selectAllSubjects() {
+    document.querySelectorAll("#subjectContainer input")
+        .forEach(x=>x.checked=true);
+    renderChapters();
+}
 
-            const message = document.createElement("div");
-            message.className = "empty-message";
-            message.textContent =
-                "Sample chapter list is not available for this subject yet.";
+function clearSubjects() {
+    document.querySelectorAll("#subjectContainer input")
+        .forEach(x=>x.checked=false);
+    renderChapters();
+}
 
-            group.append(heading, message);
+
+/* =================================================
+   RENDER CHAPTERS
+================================================= */
+
+function renderChapters() {
+    const container=el("chapterContainer");
+    container.replaceChildren();
+
+    const subjects=selectedSubjects();
+
+    if(!subjects.length) {
+        container.innerHTML='<div class="empty">पहले विषय चुनें।</div>';
+        return;
+    }
+
+    subjects.forEach(item=>{
+        const group=document.createElement("div");
+        group.className="group";
+
+        const heading=document.createElement("h3");
+        heading.textContent="Class "+item.classNumber+" — "+item.subject;
+
+        const grid=document.createElement("div");
+        grid.className="checkbox-grid";
+
+        const chapters=
+            (chapterDB[item.classNumber]||{})[item.subject]||[];
+
+        if(!chapters.length) {
+            const msg=document.createElement("div");
+            msg.className="empty";
+            msg.textContent="इस विषय के अध्यायों की सूची अभी उपलब्ध नहीं है।";
+            group.append(heading,msg);
             container.appendChild(group);
-
             return;
-
         }
 
-        chapters.forEach(chapter => {
-
-            const option = makeCheckbox(
+        chapters.forEach(chapter=>{
+            const option=makeOption(
                 chapter,
                 chapter,
                 {
-                    class: classNumber,
-                    subject: subject
+                    class:item.classNumber,
+                    subject:item.subject
                 }
             );
 
-            const input = option.querySelector("input");
-
-            const oldSelection = previousSelection.chapters || [];
-
-            input.checked = oldSelection.some(item =>
-                Number(item.className) === classNumber &&
-                item.subject === subject &&
-                item.chapter === chapter
-            );
-
-            input.addEventListener("change", saveSelections);
-
             grid.appendChild(option);
+        });
+
+        group.append(heading,grid);
+        container.appendChild(group);
+    });
+}
+
+function selectAllChapters() {
+    document.querySelectorAll("#chapterContainer input")
+        .forEach(x=>x.checked=true);
+}
+
+function clearChapters() {
+    document.querySelectorAll("#chapterContainer input")
+        .forEach(x=>x.checked=false);
+}
+
+
+/* =================================================
+   MATCH QUESTIONS TO CONFIGURATION
+================================================= */
+
+function matchesSelection(question) {
+
+    const classes = currentConfig.classes;
+    const subjects = currentConfig.subjects;
+    const chapters = currentConfig.chapters;
+    const levels = currentConfig.levels;
+
+    return classes.some(c=>question.classes.includes(c)) &&
+        subjects.some(s=>question.subjects.includes(s.subject)) &&
+        chapters.some(ch=>question.chapters.includes(ch.chapter)) &&
+        levels.includes(question.level);
+}
+
+
+/* =================================================
+   GENERATE PAPER
+================================================= */
+
+function generatePaper() {
+
+    const classes=selectedClasses();
+    const subjects=selectedSubjects();
+    const chapters=selectedChapters();
+    const levels=selectedLevels();
+
+    el("errorMessage").textContent="";
+
+    if(!classes.length) {
+        el("errorMessage").textContent="कम से कम एक कक्षा चुनें।";
+        return;
+    }
+
+    if(!subjects.length) {
+        el("errorMessage").textContent="कम से कम एक विषय चुनें।";
+        return;
+    }
+
+    if(!chapters.length) {
+        el("errorMessage").textContent="कम से कम एक अध्याय चुनें।";
+        return;
+    }
+
+    if(!levels.length) {
+        el("errorMessage").textContent="कम से कम एक कठिनाई स्तर चुनें।";
+        return;
+    }
+
+    currentConfig={
+        classes,
+        subjects,
+        chapters,
+        levels,
+        language:el("language").value,
+        marks:Number(el("marks").value),
+        negative:el("negative").checked
+    };
+
+    /*
+       Only verified questions matching the selected
+       class, subject, chapter and level are included.
+    */
+
+    const matching=questionBank.filter(matchesSelection);
+
+    const unique = [];
+    const seen = new Set();
+
+    matching.forEach(q=>{
+        const key=q.q;
+
+        if(!seen.has(key)) {
+            seen.add(key);
+            unique.push(q);
+        }
+    });
+
+    shuffle(unique);
+
+    const count=Number(el("questionCount").value);
+
+    if(unique.length<count) {
+        el("errorMessage").textContent=
+            "चयनित अध्यायों और स्तरों के लिए केवल "+
+            unique.length+
+            " प्रश्न उपलब्ध हैं। 30 प्रश्न बनाने के लिए इस विषय के प्रश्न बैंक में और सत्यापित प्रश्न जोड़ने होंगे।";
+
+        return;
+    }
+
+    generatedQuestions=unique.slice(0,count);
+    selectedAnswers={};
+    submitted=false;
+
+    renderPaper();
+
+    el("setupPage").classList.add("hidden");
+    el("resultPage").classList.add("hidden");
+    el("paperPage").classList.remove("hidden");
+
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+
+/* =================================================
+   SHUFFLE
+================================================= */
+
+function shuffle(array) {
+    for(let i=array.length-1;i>0;i--) {
+        const j=Math.floor(Math.random()*(i+1));
+        [array[i],array[j]]=[array[j],array[i]];
+    }
+    return array;
+}
+
+
+/* =================================================
+   RENDER PAPER
+================================================= */
+
+function renderPaper() {
+
+    const isEnglish=currentConfig.language==="en";
+
+    el("paperTitle").textContent=isEnglish
+        ?"NCERT MCQ QUESTION PAPER"
+        :"NCERT आधारित बहुविकल्पीय प्रश्नपत्र";
+
+    const classText=currentConfig.classes
+        .map(c=>"Class "+c).join(", ");
+
+    const subjectText=currentConfig.subjects
+        .map(s=>"Class "+s.classNumber+": "+s.subject)
+        .join(" | ");
+
+    const chapterText=currentConfig.chapters
+        .map(c=>c.chapter)
+        .join(", ");
+
+    el("paperSubtitle").textContent=
+        classText+" | "+subjectText+" | "+chapterText;
+
+    el("totalQuestions").textContent=generatedQuestions.length;
+    el("totalMarks") .textContent=
+        generatedQuestions.length*currentConfig.marks;
+
+    const container=el("questionContainer");
+    container.replaceChildren();
+
+    generatedQuestions.forEach((q,index)=>{
+
+        const card=document.createElement("div");
+        card.className="question";
+        card.id="question-"+index;
+
+        const meta=document.createElement("div");
+        meta.className="question-meta";
+        meta.textContent=
+            "Question "+(index+1)+
+            " | "+q.level+
+            " | "+currentConfig.marks+" mark(s)";
+
+        const heading=document.createElement("h3");
+        heading.textContent=(index+1)+". "+q.q;
+
+        const answers=document.createElement("div");
+        answers.className="answers";
+
+        q.options.forEach((option,optionIndex)=>{
+
+            const label=document.createElement("label");
+            label.className="answer";
+
+            const input=document.createElement("input");
+            input.type="radio";
+            input.name="q"+index;
+            input.value=optionIndex;
+
+            input.addEventListener("change",()=>{
+                if(submitted)return;
+
+                selectedAnswers[index]=optionIndex;
+
+                answers.querySelectorAll(".answer")
+                    .forEach(a=>a.classList.remove("selected"));
+
+                label.classList.add("selected");
+
+                updateProgress();
+            });
+
+            const text=document.createElement("span");
+            text.textContent=
+                String.fromCharCode(65+optionIndex)+". "+option;
+
+            label.append(input,text);
+            answers.appendChild(label);
+        });
+
+        const explanation=document.createElement("div");
+        explanation.className="explanation";
+        explanation.id="explanation-"+index;
+
+        explanation.textContent=
+            "सही उत्तर: "+
+            String.fromCharCode(65+q.answer)+
+            ". "+q.options[q.answer]+
+            " — "+q.explanation;
+
+        card.append(meta,heading,answers,explanation);
+        container.appendChild(card);
+    });
+
+    updateProgress();
+}
+
+
+/* =================================================
+   PROGRESS
+================================================= */
+
+function updateProgress() {
+
+    const total=generatedQuestions.length;
+    const attempted=Object.keys(selectedAnswers).length;
+
+    el("attempted").textContent=attempted;
+    el("progressBar").style.width=(attempted/total*100)+"%";
+}
+
+
+/* =================================================
+   SUBMIT AND RESULT
+================================================= */
+
+function submitTest() {
+
+    if(submitted)return;
+
+    const unanswered=
+        generatedQuestions.length-Object.keys(selectedAnswers).length;
+
+    if(unanswered>0) {
+        const ok=confirm(
+            "आपने "+unanswered+
+            " प्रश्न छोड़ दिए हैं। क्या आप पेपर जमा करना चाहते हैं?"
+        );
+
+        if(!ok)return;
+    }
+
+    submitted=true;
+
+    let correct=0;
+    let wrong=0;
+    let skipped=0;
+    let score=0;
+
+    generatedQuestions.forEach((q,index)=>{
+
+        const chosen=selectedAnswers[index];
+
+        if(chosen===undefined) {
+            skipped++;
+        } else if(chosen===q.answer) {
+            correct++;
+            score+=currentConfig.marks;
+        } else {
+            wrong++;
+
+            if(currentConfig.negative) {
+                score-=currentConfig.marks/3;
+            }
+        }
+
+        const card=el("question-"+index);
+        const labels=card.querySelectorAll(".answer");
+
+        labels.forEach((label,optionIndex)=>{
+
+            label.querySelector("input").disabled=true;
+
+            if(optionIndex===q.answer) {
+                label.classList.add("correct");
+            } else if(optionIndex===chosen) {
+                label.classList.add("wrong");
+            }
 
         });
 
-        group.append(heading, grid);
-        container.appendChild(group);
-
+        el("explanation-"+index).classList.add("show");
     });
 
+    const maxMarks=generatedQuestions.length*currentConfig.marks;
+    const percentage=Math.max(0,score)/maxMarks*100;
+
+    el("resultScore").textContent=
+        score.toFixed(2)+" / "+maxMarks;
+
+    el("resultPercentage").textContent=
+        "प्रतिशत: "+percentage.toFixed(2)+"%";
+
+    el("resultGrade").textContent=
+        percentage>=90?"उत्कृष्ट प्रदर्शन!":
+        percentage>=75?"बहुत अच्छा!":
+        percentage>=60?"अच्छा प्रयास!":
+        percentage>=40?"अभ्यास जारी रखें।":
+        "अध्यायों का दोबारा अध्ययन करें।";
+
+    el("correctCount").textContent=correct;
+    el("wrongCount").textContent=wrong;
+    el("skippedCount").textContent=skipped;
+
+    el("paperPage").classList.add("hidden");
+    el("resultPage").classList.remove("hidden");
+
+    window.scrollTo({top:0,behavior:"smooth"});
+
+    renderAnswerReview();
 }
 
 
-/*
-====================================================
-8. SUBJECT AND CHAPTER BULK ACTIONS
-====================================================
-*/
+/* =================================================
+   ANSWER REVIEW
+================================================= */
 
-function selectAllSubjects() {
+function renderAnswerReview() {
 
-    document.querySelectorAll(
-        "#subjectContainer input[type='checkbox']"
-    ).forEach(input => input.checked = true);
-
-    renderChapters();
-    saveSelections();
-
-}
-
-
-function clearSubjects() {
-
-    document.querySelectorAll(
-        "#subjectContainer input[type='checkbox']"
-    ).forEach(input => input.checked = false);
-
-    renderChapters();
-    saveSelections();
-
-}
-
-
-function selectAllChapters() {
-
-    document.querySelectorAll(
-        "#chapterContainer input[type='checkbox']"
-    ).forEach(input => input.checked = true);
-
-    saveSelections();
-
-}
-
-
-function clearChapters() {
-
-    document.querySelectorAll(
-        "#chapterContainer input[type='checkbox']"
-    ).forEach(input => input.checked = false);
-
-    saveSelections();
-
-}
-
-
-/*
-====================================================
-9. LEVEL CHANGES
-====================================================
-*/
-
-document.querySelectorAll('input[name="level"]').forEach(input => {
-
-    input.addEventListener("change", saveSelections);
-
-});
-
-
-/*
-====================================================
-10. CONTINUE AND VALIDATION
-====================================================
-*/
-
-function continueToSummary() {
-
-    const classes = getSelectedClasses();
-    const subjects = getSelectedSubjects();
-    const chapters = getSelectedChapters();
-    const levels = getSelectedLevels();
-
-    const error = document.getElementById("errorMessage");
-
-    error.textContent = "";
-
-    if (!classes.length) {
-        error.textContent = "Please select at least one class.";
-        return;
-    }
-
-    if (!subjects.length) {
-        error.textContent = "Please select at least one subject.";
-        return;
-    }
-
-    if (!chapters.length) {
-        error.textContent = "Please select at least one chapter.";
-        return;
-    }
-
-    if (!levels.length) {
-        error.textContent = "Please select at least one paper level.";
-        return;
-    }
-
-    saveSelections();
-
-    showList("summaryClasses", classes.map(c => "Class " + c));
-
-    showList(
-        "summarySubjects",
-        subjects.map(s => "Class " + s.className + ": " + s.subject)
-    );
-
-    showList(
-        "summaryChapters",
-        chapters.map(c =>
-            "Class " + c.className +
-            " — " + c.subject +
-            " — " + c.chapter
-        )
-    );
-
-    showList("summaryLevels", levels);
-
-    document.getElementById("setupPage").classList.add("hidden");
-
-    document.querySelectorAll(
-        "#setupPage, main > .card"
-    );
-
-    document.getElementById("summaryPage").classList.remove("hidden");
-
-    document.getElementById("summaryPage").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-
-}
-
-
-function showList(elementId, items) {
-
-    const container = document.getElementById(elementId);
+    const container=el("answerReview");
     container.replaceChildren();
 
-    items.forEach(item => {
+    generatedQuestions.forEach((q,index)=>{
 
-        const badge = document.createElement("span");
-        badge.className = "badge";
-        badge.textContent = item;
+        const card=document.createElement("div");
+        card.className="question";
 
-        container.appendChild(badge);
+        const title=document.createElement("h3");
+        title.textContent=(index+1)+". "+q.q;
 
+        const selected=selectedAnswers[index];
+
+        const selectedText=selected===undefined
+            ?"उत्तर नहीं दिया"
+            :q.options[selected];
+
+        const yourAnswer=document.createElement("p");
+        yourAnswer.textContent="आपका उत्तर: "+selectedText;
+
+        const correctAnswer=document.createElement("p");
+        correctAnswer.style.color="#15803d";
+        correctAnswer.style.fontWeight="bold";
+
+        correctAnswer.textContent=
+            "सही उत्तर: "+q.options[q.answer];
+
+        const explanation=document.createElement("p");
+        explanation.style.marginTop="8px";
+        explanation.textContent="व्याख्या: "+q.explanation;
+
+        card.append(title,yourAnswer,correctAnswer,explanation);
+        container.appendChild(card);
     });
-
 }
 
 
-/*
-====================================================
-11. BACK TO EDIT
-====================================================
-*/
+/* =================================================
+   NAVIGATION
+================================================= */
 
 function backToSetup() {
 
-    document.getElementById("setupPage").classList.remove("hidden");
-    document.getElementById("summaryPage").classList.add("hidden");
+    el("setupPage").classList.remove("hidden");
+    el("paperPage").classList.add("hidden");
+    el("resultPage").classList.add("hidden");
 
-    document.getElementById("setupPage").scrollIntoView({
-        behavior: "smooth"
-    });
-
+    window.scrollTo({top:0,behavior:"smooth"});
 }
 
+function resetAll() {
 
-/*
-====================================================
-12. RESET
-====================================================
-*/
+    if(!confirm("क्या आप सभी चयन हटाना चाहते हैं?"))return;
 
-function resetEverything() {
-
-    const confirmReset = confirm(
-        "Do you want to clear all classes, subjects, chapters and levels?"
-    );
-
-    if (!confirmReset) return;
-
-    document.querySelectorAll('input[type="checkbox"]').forEach(input => {
-        input.checked = false;
-    });
-
-    localStorage.removeItem(STORAGE_KEY);
-
-    previousSelection = {};
+    document.querySelectorAll("input[type=checkbox]")
+        .forEach(x=>x.checked=false);
 
     renderSubjects();
     renderChapters();
 
-    document.getElementById("summaryPage").classList.add("hidden");
-    document.getElementById("setupPage").classList.remove("hidden");
+    el("errorMessage").textContent="";
 
-    document.getElementById("errorMessage").textContent = "";
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
+    backToSetup();
 }
 
 
-/*
-====================================================
-13. DOWNLOAD CONFIGURATION AS JSON
-====================================================
-*/
+/* =================================================
+   START APPLICATION
+================================================= */
 
-function downloadConfiguration() {
-
-    const data = {
-        createdAt: new Date().toISOString(),
-        classes: getSelectedClasses(),
-        subjects: getSelectedSubjects(),
-        chapters: getSelectedChapters(),
-        levels: getSelectedLevels()
-    };
-
-    const blob = new Blob(
-        [JSON.stringify(data, null, 2)],
-        { type: "application/json" }
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "MCQ-Paper-Configuration.json";
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    URL.revokeObjectURL(url);
-
-}
-
-
-/*
-====================================================
-14. INITIALIZE
-====================================================
-*/
-
-function initialize() {
-
-    const saved = previousSelection;
-
-    document.querySelectorAll(
-        '#classOptions input[type="checkbox"]'
-    ).forEach(input => {
-
-        input.checked = (saved.classes || []).includes(
-            Number(input.value)
-        );
-
-    });
-
-    document.querySelectorAll('input[name="level"]').forEach(input => {
-
-        input.checked = (saved.levels || []).includes(input.value);
-
-    });
-
-    renderSubjects();
-    renderChapters();
-
-}
-
-initialize();
+renderClasses();
 
 </script>
 
