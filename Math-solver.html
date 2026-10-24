@@ -3,21 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090e1c">
+<meta name="theme-color" content="#7719aa">
 
-<title>Echo Studio - Advanced Audio Recorder</title>
+<title>OneNote Pro — Smart Notes</title>
 
 <style>
 :root {
-    --bg: #090e1c;
-    --panel: #121a2c;
-    --panel2: #19243b;
-    --blue: #5b8cff;
-    --purple: #a17aff;
-    --green: #36dfae;
-    --text: #f4f7ff;
-    --muted: #96a4c1;
-    --border: rgba(255,255,255,.09);
+    --primary: #7719aa;
+    --primary-light: #f2e8fa;
+    --sidebar: #f7f6f9;
+    --surface: #ffffff;
+    --surface2: #f5f5f7;
+    --text: #25232b;
+    --muted: #777481;
+    --border: #e6e3eb;
+    --hover: #eeeaf3;
+    --shadow: 0 4px 18px rgba(0,0,0,.06);
+}
+
+body.dark {
+    --primary: #bd82e8;
+    --primary-light: #382447;
+    --sidebar: #1e1d23;
+    --surface: #29272f;
+    --surface2: #323039;
+    --text: #f2eff7;
+    --muted: #b4afbf;
+    --border: #45414d;
+    --hover: #3a3742;
+    --shadow: 0 4px 18px rgba(0,0,0,.2);
 }
 
 * {
@@ -26,16 +40,15 @@
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(ellipse at top left, #1b2750 0, transparent 40%),
-        radial-gradient(ellipse at bottom right, #29174d 0, transparent 40%),
-        var(--bg);
+    height: 100vh;
+    overflow: hidden;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--surface);
     color: var(--text);
-    min-height: 100vh;
+    font-size: 14px;
 }
 
-button, input, select {
+button, input, select, textarea {
     font: inherit;
 }
 
@@ -43,395 +56,790 @@ button {
     cursor: pointer;
 }
 
-.app {
-    max-width: 1100px;
-    margin: auto;
-    padding: 22px;
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
 }
 
-header {
+.app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOP HEADER */
+
+.topbar {
+    height: 58px;
+    min-height: 58px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
+    gap: 16px;
+    padding: 0 18px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 5;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 220px;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--primary);
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 15px;
+    background: var(--primary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
     display: grid;
     place-items: center;
-    font-size: 26px;
-    background: linear-gradient(135deg, var(--blue), var(--purple));
-    box-shadow: 0 8px 30px #5b8cff44;
+    font-weight: 800;
 }
 
-h1 {
-    font-size: 24px;
-    margin: 0;
+.searchbox {
+    flex: 1;
+    max-width: 540px;
+    position: relative;
 }
 
-.subtitle {
-    color: var(--muted);
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-.badge {
-    padding: 9px 14px;
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    color: var(--green);
-    background: #36dfae10;
-    font-size: 12px;
-}
-
-.panel {
-    background: rgba(18,26,44,.93);
-    border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 22px;
-    margin-bottom: 18px;
-    box-shadow: 0 15px 50px #00000020;
-}
-
-.panel-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 18px;
-}
-
-h2 {
-    font-size: 17px;
-    margin: 0;
-}
-
-.small {
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.recorder {
-    text-align: center;
-    padding: 28px 15px;
-}
-
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 15px;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background: #72809d;
-    border-radius: 50%;
-}
-
-.dot.active {
-    background: #ff526c;
-    box-shadow: 0 0 12px #ff526c;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    50% { opacity: .4; }
-}
-
-.timer {
-    font-size: clamp(38px, 8vw, 58px);
-    font-weight: 700;
-    letter-spacing: 3px;
-    font-variant-numeric: tabular-nums;
-    margin: 6px 0 22px;
-}
-
-.visualizer {
+.searchbox input {
     width: 100%;
-    height: 125px;
-    background: #080d19;
+    height: 36px;
+    padding: 0 14px 0 38px;
     border: 1px solid var(--border);
-    border-radius: 15px;
-    display: block;
-    margin-bottom: 25px;
-}
-
-.mic-button {
-    width: 88px;
-    height: 88px;
-    border-radius: 50%;
-    border: 4px solid #ffffff16;
-    background: linear-gradient(145deg, #ff5574, #d62e5b);
-    color: white;
-    font-size: 32px;
-    box-shadow: 0 0 0 10px #ff557410, 0 12px 35px #ff557433;
-    transition: .2s;
-}
-
-.mic-button:hover {
-    transform: scale(1.05);
-}
-
-.mic-button.recording {
-    background: linear-gradient(145deg, #ff7777, #fa3156);
-    border-radius: 23px;
-}
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 22px;
-}
-
-.btn {
-    border: 1px solid var(--border);
-    background: var(--panel2);
+    border-radius: 7px;
+    background: var(--surface2);
     color: var(--text);
-    border-radius: 12px;
-    padding: 12px 17px;
-    font-weight: 600;
-    transition: .2s;
-}
-
-.btn:hover {
-    border-color: var(--blue);
-    transform: translateY(-1px);
-}
-
-.btn.primary {
-    background: linear-gradient(135deg, #477eff, #8059e8);
-    border: 0;
-}
-
-.btn.success {
-    background: #36dfae18;
-    color: var(--green);
-    border-color: #36dfae44;
-}
-
-.btn.danger {
-    color: #ff8292;
-}
-
-.btn:disabled {
-    opacity: .4;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.effects-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-}
-
-.effect {
-    text-align: left;
-    padding: 17px 12px;
-    background: #0d1526;
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    min-width: 0;
-    transition: .2s;
-}
-
-.effect:hover {
-    border-color: #5b8cff99;
-}
-
-.effect.selected {
-    background: linear-gradient(135deg, #315bb733, #8159e833);
-    border-color: var(--blue);
-    box-shadow: inset 0 0 0 1px #5b8cff33;
-}
-
-.effect-icon {
-    font-size: 25px;
-    display: block;
-    margin-bottom: 12px;
-}
-
-.effect-name {
-    font-weight: 700;
-    font-size: 13px;
-}
-
-.effect-desc {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.5;
-    margin-top: 6px;
-}
-
-.range-row {
-    margin: 22px 0;
-}
-
-.range-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 13px;
-}
-
-output {
-    color: #9db9ff;
-}
-
-input[type="range"] {
-    width: 100%;
-    accent-color: var(--blue);
-}
-
-select, input[type="text"] {
-    width: 100%;
-    color: var(--text);
-    background: #0c1425;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px;
     outline: none;
 }
 
-select option {
-    background: #121a2c;
-}
-
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-.field label {
-    display: block;
-    font-size: 12px;
+.search-icon {
+    position: absolute;
+    left: 13px;
+    top: 9px;
     color: var(--muted);
-    margin-bottom: 9px;
 }
 
-.player {
-    width: 100%;
-    margin: 15px 0;
-    display: block;
-}
-
-.recording-item {
-    background: #0c1425;
-    padding: 16px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    margin-top: 12px;
-}
-
-.recording-top {
+.top-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 7px;
+    margin-left: auto;
 }
 
-.recording-name {
+.icon-btn {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    border-radius: 7px;
+    padding: 9px 11px;
+}
+
+.icon-btn:hover {
+    background: var(--hover);
+}
+
+.primary-btn {
+    border: none;
+    background: var(--primary);
+    color: white;
+    padding: 9px 13px;
+    border-radius: 7px;
+    font-weight: 600;
+}
+
+.primary-btn:hover {
+    filter: brightness(1.1);
+}
+
+/* MAIN LAYOUT */
+
+.workspace {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.sidebar {
+    width: 250px;
+    min-width: 210px;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-heading {
+    padding: 20px 16px 10px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 10px;
+    border-radius: 6px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    color: var(--text);
+    min-width: 0;
+}
+
+.nav-item:hover {
+    background: var(--hover);
+}
+
+.nav-item.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.nav-item .label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nav-item .more {
+    opacity: 0;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+}
+
+.nav-item:hover .more {
+    opacity: 1;
+}
+
+.sidebar-footer {
+    padding: 13px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* SECTION PANEL */
+
+.section-panel {
+    width: 235px;
+    min-width: 195px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+}
+
+.panel-title {
+    padding: 20px 14px 12px;
+    font-size: 13px;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.section-list {
+    overflow-y: auto;
+    padding: 4px 9px;
+    flex: 1;
+}
+
+.section-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 4px;
+}
+
+.section-item:hover {
+    background: var(--hover);
+}
+
+.section-item.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.section-color {
+    height: 9px;
+    width: 9px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.section-name {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* PAGE PANEL */
+
+.page-panel {
+    width: 260px;
+    min-width: 220px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+}
+
+.page-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 5px 10px;
+}
+
+.page-card {
+    padding: 13px 12px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    margin-bottom: 7px;
+    cursor: pointer;
+}
+
+.page-card:hover {
+    background: var(--hover);
+}
+
+.page-card.active {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.page-card-title {
+    font-weight: 650;
+    font-size: 14px;
+    margin-bottom: 6px;
     overflow-wrap: anywhere;
 }
 
-.recording-meta {
+.page-preview {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+    max-height: 35px;
+    overflow: hidden;
+}
+
+.page-date {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+/* EDITOR */
+
+.editor-area {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    overflow: hidden;
+}
+
+.editor-top {
+    height: 51px;
+    min-height: 51px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+}
+
+.breadcrumb {
+    color: var(--muted);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.save-status {
     font-size: 12px;
     color: var(--muted);
-    margin-top: 6px;
+    white-space: nowrap;
 }
 
-.recording-actions {
+.editor-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px 60px;
+}
+
+.editor-container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.page-title-input {
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    font-size: 32px;
+    line-height: 1.3;
+    font-weight: 750;
+    background: transparent;
+    color: var(--text);
+    padding: 5px 0 13px;
+}
+
+.page-meta {
+    color: var(--muted);
+    font-size: 12px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.toolbar {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 22px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 
-.recording-actions .btn {
-    padding: 9px 12px;
-    font-size: 12px;
+.tool-btn {
+    min-width: 31px;
+    height: 31px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--text);
 }
 
-.notice {
-    background: #5b8cff12;
-    border: 1px solid #5b8cff35;
-    color: #c7d6ff;
-    padding: 14px;
-    border-radius: 12px;
+.tool-btn:hover {
+    background: var(--hover);
+}
+
+.toolbar select {
+    height: 30px;
+    max-width: 125px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.toolbar input[type="color"] {
+    height: 29px;
+    width: 34px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.toolbar .separator {
+    width: 1px;
+    height: 23px;
+    background: var(--border);
+    margin: 0 4px;
+}
+
+.editor {
+    min-height: 420px;
+    outline: none;
+    font-size: 16px;
+    line-height: 1.85;
+    overflow-wrap: anywhere;
+}
+
+.editor:empty::before {
+    content: "Start writing your notes here...";
+    color: var(--muted);
+    pointer-events: none;
+}
+
+.editor h1, .editor h2, .editor h3 {
+    line-height: 1.4;
+}
+
+.editor blockquote {
+    border-left: 4px solid var(--primary);
+    padding: 8px 15px;
+    margin-left: 0;
+    background: var(--surface2);
+}
+
+.editor table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.editor td, .editor th {
+    border: 1px solid var(--border);
+    padding: 8px;
+}
+
+.editor img {
+    max-width: 100%;
+    height: auto;
+}
+
+.editor a {
+    color: var(--primary);
+}
+
+.empty-state {
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--muted);
+    padding: 25px;
+}
+
+.empty-state .big-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.empty-state h2 {
+    color: var(--text);
+    font-size: 22px;
+}
+
+.empty-state p {
+    max-width: 360px;
     line-height: 1.7;
-    font-size: 12px;
+}
+
+.statusbar {
+    height: 28px;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    background: var(--sidebar);
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--muted);
+}
+
+/* SEARCH RESULTS */
+
+.search-results {
+    position: absolute;
+    top: 43px;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    border-radius: 8px;
+    max-height: 350px;
+    overflow-y: auto;
+    z-index: 20;
+    display: none;
+}
+
+.search-result {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+}
+
+.search-result:hover {
+    background: var(--hover);
+}
+
+.search-result strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.search-result small {
+    color: var(--muted);
+}
+
+/* DIALOGS */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-backdrop.show {
+    display: flex;
+}
+
+.modal {
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 23px;
+    box-shadow: var(--shadow);
+}
+
+.modal h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    padding: 11px;
+    margin: 8px 0 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+}
+
+.secondary-btn {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 9px 14px;
+    border-radius: 6px;
+}
+
+.menu-popup {
+    position: fixed;
+    z-index: 50;
+    display: none;
+    min-width: 180px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 5px;
+}
+
+.menu-popup button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--text);
+}
+
+.menu-popup button:hover {
+    background: var(--hover);
 }
 
 .toast {
     position: fixed;
-    bottom: 20px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    background: #202c44;
-    border: 1px solid var(--border);
-    padding: 13px 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 35px #0007;
+    background: #26232d;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 7px;
+    box-shadow: var(--shadow);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+/* MOBILE */
+
+.mobile-menu {
     display: none;
-    z-index: 20;
-    max-width: 90%;
-    font-size: 13px;
 }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    color: var(--muted);
-    font-size: 12px;
+@media (max-width: 1000px) {
+    .sidebar {
+        width: 205px;
+        min-width: 185px;
+    }
+
+    .section-panel {
+        width: 195px;
+        min-width: 175px;
+    }
+
+    .page-panel {
+        width: 225px;
+        min-width: 195px;
+    }
+
+    .editor-scroll {
+        padding: 25px;
+    }
 }
 
-@media (max-width: 700px) {
-    .app {
-        padding: 12px;
+@media (max-width: 760px) {
+    body {
+        overflow: hidden;
     }
 
-    .panel {
-        padding: 16px;
-        border-radius: 17px;
+    .topbar {
+        padding: 0 10px;
+        gap: 7px;
+        height: 55px;
+        min-height: 55px;
     }
 
-    .effects-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .brand {
+        min-width: auto;
+        font-size: 16px;
+        gap: 7px;
     }
 
-    .grid-2 {
-        grid-template-columns: 1fr;
+    .brand .brand-text {
+        display: none;
     }
 
-    .logo-icon {
-        width: 42px;
-        height: 42px;
+    .logo {
+        width: 30px;
+        height: 30px;
     }
 
-    h1 {
-        font-size: 21px;
+    .searchbox {
+        max-width: none;
+    }
+
+    .top-actions {
+        gap: 0;
+    }
+
+    .top-actions .desktop-only {
+        display: none;
+    }
+
+    .workspace {
+        position: relative;
+    }
+
+    .sidebar,
+    .section-panel,
+    .page-panel {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        min-width: 0;
+        border-right: none;
+        z-index: 10;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .section-panel {
+        display: none;
+    }
+
+    .page-panel {
+        display: none;
+    }
+
+    .workspace.show-notebooks .sidebar {
+        display: flex;
+    }
+
+    .workspace.show-sections .section-panel {
+        display: flex;
+    }
+
+    .workspace.show-pages .page-panel {
+        display: flex;
+    }
+
+    .editor-area {
+        width: 100%;
+    }
+
+    .editor-scroll {
+        padding: 20px 17px 45px;
+    }
+
+    .page-title-input {
+        font-size: 27px;
+    }
+
+    .editor {
+        font-size: 15px;
+    }
+
+    .toolbar {
+        gap: 2px;
+    }
+
+    .editor-top {
+        padding: 0 12px;
+    }
+
+    .mobile-menu {
+        display: inline-block;
+    }
+
+    .statusbar {
+        font-size: 10px;
     }
 }
 </style>
@@ -441,1412 +849,2063 @@ footer {
 
 <div class="app">
 
-<header>
-    <div class="logo">
-        <div class="logo-icon">🎙️</div>
-        <div>
-            <h1>Echo Studio</h1>
-            <div class="subtitle">Advanced Voice Recording & Effects</div>
-        </div>
-    </div>
-    <div class="badge">● AUDIO STUDIO</div>
-</header>
+    <!-- HEADER -->
 
-<section class="panel recorder">
+    <header class="topbar">
 
-    <div class="status">
-        <span class="dot" id="statusDot"></span>
-        <span id="statusText">Ready to record</span>
-    </div>
+        <button class="icon-btn mobile-menu"
+                onclick="showMobileNotebooks()"
+                title="Open notebooks">☰</button>
 
-    <div class="timer" id="timer">00:00:00</div>
-
-    <canvas id="visualizer" class="visualizer"></canvas>
-
-    <button class="mic-button" id="recordBtn"
-            aria-label="Start recording" title="Start recording">🎙️</button>
-
-    <div class="small" style="margin-top:16px" id="micHint">
-        Tap the microphone to begin
-    </div>
-
-    <div class="controls">
-        <button class="btn" id="pauseBtn" disabled>⏸ Pause</button>
-        <button class="btn" id="resumeBtn" disabled>▶ Resume</button>
-        <button class="btn danger" id="stopBtn" disabled>⏹ Stop</button>
-        <button class="btn" id="monitorBtn">🔊 Live Monitor: OFF</button>
-    </div>
-
-</section>
-
-<section class="panel">
-
-    <div class="panel-title">
-        <h2>🎚️ Choose Your Sound Environment</h2>
-        <span class="small">8 audio presets</span>
-    </div>
-
-    <div class="effects-grid" id="effectsGrid">
-
-        <button class="effect selected" data-effect="auditorium">
-            <span class="effect-icon">🏛️</span>
-            <div class="effect-name">Auditorium</div>
-            <div class="effect-desc">Large hall, warm and spacious echo.</div>
-        </button>
-
-        <button class="effect" data-effect="concert">
-            <span class="effect-icon">🎤</span>
-            <div class="effect-name">Concert Hall</div>
-            <div class="effect-desc">Stage performance ambience.</div>
-        </button>
-
-        <button class="effect" data-effect="studio">
-            <span class="effect-icon">🎧</span>
-            <div class="effect-name">Studio</div>
-            <div class="effect-desc">Controlled, professional room sound.</div>
-        </button>
-
-        <button class="effect" data-effect="cathedral">
-            <span class="effect-icon">⛪</span>
-            <div class="effect-name">Cathedral</div>
-            <div class="effect-desc">Long, spacious, dramatic reverb.</div>
-        </button>
-
-        <button class="effect" data-effect="echo">
-            <span class="effect-icon">🔁</span>
-            <div class="effect-name">Echo Chamber</div>
-            <div class="effect-desc">Distinct repeated voice echoes.</div>
-        </button>
-
-        <button class="effect" data-effect="room">
-            <span class="effect-icon">🏠</span>
-            <div class="effect-name">Small Room</div>
-            <div class="effect-desc">Subtle indoor reflections.</div>
-        </button>
-
-        <button class="effect" data-effect="cave">
-            <span class="effect-icon">🪨</span>
-            <div class="effect-name">Cave</div>
-            <div class="effect-desc">Deep, dark, cinematic resonance.</div>
-        </button>
-
-        <button class="effect" data-effect="clean">
-            <span class="effect-icon">✨</span>
-            <div class="effect-name">Clean Voice</div>
-            <div class="effect-desc">Natural voice with light processing.</div>
-        </button>
-
-    </div>
-
-    <div class="range-row">
-        <div class="range-heading">
-            <label for="intensity">Effect Intensity</label>
-            <output id="intensityValue">55%</output>
-        </div>
-        <input type="range" id="intensity" min="0" max="100" value="55">
-    </div>
-
-    <div class="range-row">
-        <div class="range-heading">
-            <label for="volume">Output Volume</label>
-            <output id="volumeValue">100%</output>
-        </div>
-        <input type="range" id="volume" min="0" max="150" value="100">
-    </div>
-
-    <div class="range-row">
-        <div class="range-heading">
-            <label for="delay">Echo Delay</label>
-            <output id="delayValue">300 ms</output>
-        </div>
-        <input type="range" id="delay" min="100" max="900" value="300">
-    </div>
-
-    <div class="range-row">
-        <div class="range-heading">
-            <label for="tone">Voice Tone</label>
-            <output id="toneValue">Neutral</output>
-        </div>
-        <input type="range" id="tone" min="-10" max="10" value="0">
-    </div>
-
-</section>
-
-<section class="panel">
-
-    <div class="panel-title">
-        <h2>⚙️ Recording Settings</h2>
-    </div>
-
-    <div class="grid-2">
-
-        <div class="field">
-            <label for="quality">Recording Quality</label>
-            <select id="quality">
-                <option value="high">High Quality</option>
-                <option value="standard" selected>Standard</option>
-                <option value="compact">Compact File</option>
-            </select>
+        <div class="brand">
+            <div class="logo">N</div>
+            <span class="brand-text">OneNote Pro</span>
         </div>
 
-        <div class="field">
-            <label for="filename">Recording Name</label>
-            <input type="text" id="filename" value="My Voice Recording"
-                   maxlength="80">
+        <div class="searchbox">
+            <span class="search-icon">⌕</span>
+
+            <input type="search"
+                   id="searchInput"
+                   placeholder="Search all your notes..."
+                   autocomplete="off">
+
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <div class="top-actions">
+
+            <button class="icon-btn desktop-only"
+                    onclick="exportBackup()"
+                    title="Export all notebooks">⬇</button>
+
+            <button class="icon-btn desktop-only"
+                    onclick="document.getElementById('importFile').click()"
+                    title="Import backup">⬆</button>
+
+            <button class="icon-btn"
+                    onclick="toggleTheme()"
+                    title="Toggle dark mode">◐</button>
+
+            <button class="primary-btn"
+                    onclick="newNotebook()">+ Notebook</button>
+
+        </div>
+
+    </header>
+
+    <!-- WORKSPACE -->
+
+    <main class="workspace show-notebooks"
+          id="workspace">
+
+        <!-- NOTEBOOKS -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-heading">
+                NOTEBOOKS
+
+                <button class="icon-btn"
+                        onclick="newNotebook()"
+                        title="New notebook">＋</button>
+            </div>
+
+            <div class="sidebar-scroll" id="notebookList"></div>
+
+            <div class="sidebar-footer">
+                <div>OneNote Pro</div>
+                <div style="margin-top:5px">
+                    Your personal knowledge space
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- SECTIONS -->
+
+        <aside class="section-panel">
+
+            <div class="panel-title">
+                <span id="sectionPanelTitle">Sections</span>
+
+                <button class="icon-btn"
+                        onclick="newSection()"
+                        title="New section">＋</button>
+            </div>
+
+            <div class="section-list" id="sectionList"></div>
+
+        </aside>
+
+        <!-- PAGES -->
+
+        <aside class="page-panel">
+
+            <div class="panel-title">
+                <span id="pagePanelTitle">Pages</span>
+
+                <button class="icon-btn"
+                        onclick="newPage()"
+                        title="New page">＋</button>
+            </div>
+
+            <div class="page-list" id="pageList"></div>
+
+        </aside>
+
+        <!-- EDITOR -->
+
+        <section class="editor-area" id="editorArea">
+
+            <div class="editor-top">
+
+                <div class="breadcrumb" id="breadcrumb">
+                    My Notebook
+                </div>
+
+                <div class="save-status" id="saveStatus">
+                    All changes saved
+                </div>
+
+            </div>
+
+            <div class="editor-scroll">
+
+                <div class="editor-container" id="editorContainer">
+
+                    <textarea class="page-title-input"
+                              id="pageTitle"
+                              rows="1"
+                              placeholder="Page title"
+                              aria-label="Page title"></textarea>
+
+                    <div class="page-meta" id="pageMeta"></div>
+
+                    <!-- RICH TEXT TOOLBAR -->
+
+                    <div class="toolbar" id="toolbar">
+
+                        <button class="tool-btn"
+                                title="Undo"
+                                onclick="runCommand('undo')">↶</button>
+
+                        <button class="tool-btn"
+                                title="Redo"
+                                onclick="runCommand('redo')">↷</button>
+
+                        <span class="separator"></span>
+
+                        <select id="formatBlock"
+                                aria-label="Text style"
+                                onchange="formatBlock(this.value)">
+                            <option value="P">Paragraph</option>
+                            <option value="H1">Heading 1</option>
+                            <option value="H2">Heading 2</option>
+                            <option value="H3">Heading 3</option>
+                            <option value="BLOCKQUOTE">Quote</option>
+                        </select>
+
+                        <select id="fontSize"
+                                aria-label="Font size"
+                                onchange="setFontSize(this.value)">
+                            <option value="">Size</option>
+                            <option value="2">Small</option>
+                            <option value="3">Normal</option>
+                            <option value="4">Large</option>
+                            <option value="5">Extra large</option>
+                            <option value="6">Huge</option>
+                        </select>
+
+                        <span class="separator"></span>
+
+                        <button class="tool-btn"
+                                title="Bold"
+                                onclick="runCommand('bold')"><b>B</b></button>
+
+                        <button class="tool-btn"
+                                title="Italic"
+                                onclick="runCommand('italic')"><i>I</i></button>
+
+                        <button class="tool-btn"
+                                title="Underline"
+                                onclick="runCommand('underline')"><u>U</u></button>
+
+                        <button class="tool-btn"
+                                title="Strikethrough"
+                                onclick="runCommand('strikeThrough')"><s>S</s></button>
+
+                        <input type="color"
+                               id="textColor"
+                               title="Text color"
+                               value="#7719aa"
+                               onchange="runCommand('foreColor', this.value)">
+
+                        <input type="color"
+                               id="highlightColor"
+                               title="Highlight color"
+                               value="#fff176"
+                               onchange="runCommand('hiliteColor', this.value)">
+
+                        <span class="separator"></span>
+
+                        <button class="tool-btn"
+                                title="Bullet list"
+                                onclick="runCommand('insertUnorderedList')">• List</button>
+
+                        <button class="tool-btn"
+                                title="Numbered list"
+                                onclick="runCommand('insertOrderedList')">1. List</button>
+
+                        <button class="tool-btn"
+                                title="Align left"
+                                onclick="runCommand('justifyLeft')">☰</button>
+
+                        <button class="tool-btn"
+                                title="Align center"
+                                onclick="runCommand('justifyCenter')">≡</button>
+
+                        <button class="tool-btn"
+                                title="Align right"
+                                onclick="runCommand('justifyRight')">☷</button>
+
+                        <span class="separator"></span>
+
+                        <button class="tool-btn"
+                                title="Insert link"
+                                onclick="insertLink()">🔗</button>
+
+                        <button class="tool-btn"
+                                title="Insert table"
+                                onclick="insertTable()">▦</button>
+
+                        <button class="tool-btn"
+                                title="Insert horizontal line"
+                                onclick="runCommand('insertHorizontalRule')">―</button>
+
+                        <button class="tool-btn"
+                                title="Insert image from device"
+                                onclick="document.getElementById('imageFile').click()">🖼</button>
+
+                        <button class="tool-btn"
+                                title="Insert date"
+                                onclick="insertDate()">📅</button>
+
+                    </div>
+
+                    <div class="editor"
+                         id="editor"
+                         contenteditable="true"
+                         spellcheck="true"
+                         role="textbox"
+                         aria-label="Write your notes here"></div>
+
+                </div>
+
+            </div>
+
+            <footer class="statusbar">
+                <span id="wordCount">0 words</span>
+                <span id="storageStatus">Local storage</span>
+            </footer>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- IMPORT FILE INPUTS -->
+
+<input type="file"
+       id="importFile"
+       accept=".json,application/json"
+       hidden>
+
+<input type="file"
+       id="imageFile"
+       accept="image/*"
+       hidden>
+
+<!-- CONTEXT MENU -->
+
+<div class="menu-popup" id="contextMenu"></div>
+
+<!-- MODAL -->
+
+<div class="modal-backdrop" id="modalBackdrop">
+
+    <div class="modal">
+
+        <h2 id="modalTitle">Create item</h2>
+
+        <label id="modalLabel" for="modalInput">Name</label>
+
+        <input type="text"
+               id="modalInput"
+               maxlength="150"
+               placeholder="Enter name">
+
+        <div class="modal-actions">
+
+            <button class="secondary-btn"
+                    onclick="closeModal()">Cancel</button>
+
+            <button class="primary-btn"
+                    id="modalConfirm">Create</button>
+
         </div>
 
     </div>
-
-    <div class="notice" style="margin-top:18px">
-        <strong>Important:</strong> Select an effect before recording.
-        The live monitor lets you hear the processed sound while recording.
-        Enable it only when needed, preferably with headphones, to avoid
-        microphone feedback. You can also change effects after recording
-        and export a processed audio file.
-    </div>
-
-</section>
-
-<section class="panel">
-
-    <div class="panel-title">
-        <h2>🎵 Current Recording</h2>
-        <span class="small" id="recordingInfo">No recording yet</span>
-    </div>
-
-    <audio id="player" class="player" controls></audio>
-
-    <div class="controls">
-        <button class="btn primary" id="exportBtn" disabled>
-            ⬇ Export With Effects
-        </button>
-
-        <button class="btn success" id="downloadRawBtn" disabled>
-            ⬇ Download Original
-        </button>
-
-        <button class="btn" id="reprocessBtn" disabled>
-            🔄 Apply Current Effect
-        </button>
-    </div>
-
-    <div class="small" style="margin-top:12px;line-height:1.7">
-        Export With Effects creates a new audio file using the selected
-        effect and intensity. Download Original saves the untouched
-        microphone recording.
-    </div>
-
-</section>
-
-<section class="panel">
-
-    <div class="panel-title">
-        <h2>📁 My Recordings</h2>
-        <button class="btn danger" id="clearBtn">Clear List</button>
-    </div>
-
-    <div id="recordingsList">
-        <div class="small">Your saved session recordings will appear here.</div>
-    </div>
-
-</section>
-
-<footer>
-    Echo Studio · Browser-based Audio Recorder<br>
-    Microphone access requires permission. Use HTTPS or localhost.
-</footer>
 
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-(() => {
 "use strict";
 
-/* -------------------------------------------
-   APPLICATION STATE
-------------------------------------------- */
+/* ==========================================
+   ONENOTE PRO
+   Local notebook, section and page manager
+========================================== */
 
-const $ = id => document.getElementById(id);
+const STORAGE_KEY = "onenote_pro_data_v1";
+const THEME_KEY = "onenote_pro_theme_v1";
 
-let audioContext = null;
-let mediaStream = null;
-let sourceNode = null;
-let analyser = null;
-let micGain = null;
-let masterGain = null;
-let dryGain = null;
-let wetGain = null;
-let convolver = null;
-let delayNode = null;
-let feedbackGain = null;
-let echoWet = null;
-let filterNode = null;
-let compressor = null;
-let monitorGain = null;
-let recorder = null;
-let chunks = [];
-let rawBlob = null;
-let processedBlob = null;
-let rawURL = null;
-let processedURL = null;
-let isRecording = false;
-let isPaused = false;
-let recordingStart = 0;
-let elapsedBeforePause = 0;
-let timerInterval = null;
-let visualizerFrame = null;
-let monitorEnabled = false;
-let selectedEffect = "auditorium";
-let recordings = [];
-let activeExport = false;
+const SECTION_COLORS = [
+    "#7b61ff",
+    "#e34d75",
+    "#16a085",
+    "#f39c12",
+    "#3498db",
+    "#8e44ad",
+    "#d35400"
+];
 
-const presets = {
-    auditorium: {
-        decay: 2.5,
-        wet: 0.60,
-        delay: 0.28,
-        echo: 0.12,
-        low: 120,
-        high: 10000,
-        tone: 0
-    },
-    concert: {
-        decay: 3.5,
-        wet: 0.68,
-        delay: 0.34,
-        echo: 0.17,
-        low: 100,
-        high: 12000,
-        tone: 0
-    },
-    studio: {
-        decay: 0.45,
-        wet: 0.12,
-        delay: 0.12,
-        echo: 0.00,
-        low: 90,
-        high: 15000,
-        tone: 0
-    },
-    cathedral: {
-        decay: 6.0,
-        wet: 0.75,
-        delay: 0.42,
-        echo: 0.22,
-        low: 100,
-        high: 8500,
-        tone: -1
-    },
-    echo: {
-        decay: 1.8,
-        wet: 0.22,
-        delay: 0.38,
-        echo: 0.72,
-        low: 120,
-        high: 9000,
-        tone: 0
-    },
-    room: {
-        decay: 0.85,
-        wet: 0.28,
-        delay: 0.16,
-        echo: 0.04,
-        low: 100,
-        high: 12000,
-        tone: 0
-    },
-    cave: {
-        decay: 4.5,
-        wet: 0.72,
-        delay: 0.48,
-        echo: 0.30,
-        low: 70,
-        high: 4500,
-        tone: -3
-    },
-    clean: {
-        decay: 0.5,
-        wet: 0.03,
-        delay: 0.15,
-        echo: 0,
-        low: 80,
-        high: 16000,
-        tone: 1
+let data;
+let activeNotebookId = null;
+let activeSectionId = null;
+let activePageId = null;
+
+let saveTimer = null;
+let modalCallback = null;
+let menuTarget = null;
+let toastTimer = null;
+let editorSelection = null;
+
+/* ==========================================
+   HELPERS
+========================================== */
+
+function uid() {
+    return "id_" +
+        Date.now().toString(36) +
+        "_" +
+        Math.random().toString(36).slice(2, 9);
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[ch]);
+}
+
+function plainText(html) {
+    const div = document.createElement("div");
+    div.innerHTML = html || "";
+    return (div.textContent || div.innerText || "").trim();
+}
+
+function now() {
+    return new Date().toISOString();
+}
+
+function formatDate(dateString) {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) return "";
+
+    return date.toLocaleString(undefined, {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+function createPage(title = "Untitled page") {
+    return {
+        id: uid(),
+        title,
+        content: "",
+        createdAt: now(),
+        updatedAt: now()
+    };
+}
+
+function createSection(name = "New Section", color = "#7b61ff") {
+    const page = createPage("Welcome");
+
+    page.content =
+        "<h2>Welcome to your new section!</h2>" +
+        "<p>Start writing your ideas, notes and important information here.</p>";
+
+    return {
+        id: uid(),
+        name,
+        color,
+        pages: [page]
+    };
+}
+
+function createNotebook(name = "My Notebook") {
+    const section = createSection("General", SECTION_COLORS[0]);
+
+    return {
+        id: uid(),
+        name,
+        sections: [section]
+    };
+}
+
+/* ==========================================
+   DEFAULT DATA
+========================================== */
+
+function defaultData() {
+    const notebook = createNotebook("My Notebook");
+
+    notebook.sections[0].pages[0].title = "Welcome to OneNote Pro";
+
+    notebook.sections[0].pages[0].content = `
+        <h1>Welcome to OneNote Pro!</h1>
+        <p>This is your personal digital notebook.</p>
+        <h2>What can you do here?</h2>
+        <ul>
+            <li>Create multiple notebooks.</li>
+            <li>Organize notes into sections.</li>
+            <li>Create unlimited pages within your notebooks.</li>
+            <li>Format text, add lists and insert tables.</li>
+            <li>Search for notes across your notebooks.</li>
+            <li>Export your notes for backup.</li>
+        </ul>
+        <blockquote>
+            Knowledge becomes powerful when it is organized,
+            revised and applied.
+        </blockquote>
+        <h2>Suggested notebooks</h2>
+        <p>📘 NCERT Study Notes</p>
+        <p>📗 BPSC Preparation</p>
+        <p>📙 Classroom Notes</p>
+        <p>📕 Personal Ideas</p>
+        <p><b>Tip:</b> Your changes are saved automatically in this browser.</p>
+    `;
+
+    return {
+        version: 1,
+        notebooks: [notebook]
+    };
+}
+
+/* ==========================================
+   DATA VALIDATION
+========================================== */
+
+function validateData(input) {
+    if (!input || !Array.isArray(input.notebooks)) {
+        throw new Error("Invalid notebook backup.");
     }
-};
 
-/* -------------------------------------------
-   UI UTILITIES
-------------------------------------------- */
+    const clean = {
+        version: 1,
+        notebooks: []
+    };
 
-function toast(message) {
-    const el = $("toast");
-    el.textContent = message;
-    el.style.display = "block";
-    clearTimeout(toast.timeout);
-    toast.timeout = setTimeout(() => {
-        el.style.display = "none";
-    }, 3500);
+    for (const notebook of input.notebooks) {
+        if (!notebook || typeof notebook.name !== "string") continue;
+
+        const safeNotebook = {
+            id: typeof notebook.id === "string" ? notebook.id : uid(),
+            name: notebook.name.slice(0, 150),
+            sections: []
+        };
+
+        for (const section of (Array.isArray(notebook.sections)
+            ? notebook.sections : [])) {
+
+            if (!section || typeof section.name !== "string") continue;
+
+            const safeSection = {
+                id: typeof section.id === "string" ? section.id : uid(),
+                name: section.name.slice(0, 150),
+                color: SECTION_COLORS.includes(section.color)
+                    ? section.color
+                    : "#7b61ff",
+                pages: []
+            };
+
+            for (const page of (Array.isArray(section.pages)
+                ? section.pages : [])) {
+
+                if (!page || typeof page.title !== "string") continue;
+
+                safeSection.pages.push({
+                    id: typeof page.id === "string" ? page.id : uid(),
+                    title: page.title.slice(0, 300),
+                    content: typeof page.content === "string"
+                        ? page.content
+                        : "",
+                    createdAt: page.createdAt || now(),
+                    updatedAt: page.updatedAt || now()
+                });
+            }
+
+            safeNotebook.sections.push(safeSection);
+        }
+
+        clean.notebooks.push(safeNotebook);
+    }
+
+    return clean;
 }
 
-function formatTime(seconds) {
-    seconds = Math.max(0, Math.floor(seconds));
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = seconds % 60;
+/* ==========================================
+   LOAD AND SAVE
+========================================== */
 
-    return [h, m, s]
-        .map(n => String(n).padStart(2, "0"))
-        .join(":");
+function loadData() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (saved) {
+            data = validateData(JSON.parse(saved));
+        } else {
+            data = defaultData();
+        }
+
+    } catch (error) {
+        console.error("Loading notebook data failed:", error);
+
+        data = defaultData();
+
+        showToast(
+            "Could not load saved data. A fresh notebook was opened."
+        );
+    }
+
+    if (!data.notebooks.length) {
+        data = defaultData();
+    }
+
+    activeNotebookId = data.notebooks[0].id;
+    activeSectionId = data.notebooks[0].sections[0]?.id || null;
+    activePageId =
+        data.notebooks[0].sections[0]?.pages[0]?.id || null;
+
+    try {
+        if (localStorage.getItem(THEME_KEY) === "dark") {
+            document.body.classList.add("dark");
+        }
+    } catch (error) {
+        console.warn("Theme preference unavailable.", error);
+    }
+
+    renderAll();
+    updateEditor();
 }
 
-function getElapsed() {
-    if (!recordingStart) return elapsedBeforePause;
+function saveData(showStatus = true) {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
-    if (isPaused) return elapsedBeforePause;
+        if (showStatus) {
+            document.getElementById("saveStatus").textContent =
+                "All changes saved";
+        }
 
-    return elapsedBeforePause +
-        (performance.now() - recordingStart) / 1000;
+        document.getElementById("storageStatus").textContent =
+            "Saved on this device";
+
+        return true;
+
+    } catch (error) {
+        console.error("Saving failed:", error);
+
+        document.getElementById("saveStatus").textContent =
+            "Save failed";
+
+        document.getElementById("storageStatus").textContent =
+            "Storage full or unavailable";
+
+        showToast(
+            "Saving failed. Export a backup or reduce image sizes."
+        );
+
+        return false;
+    }
 }
 
-function updateTimer() {
-    $("timer").textContent = formatTime(getElapsed());
+function scheduleSave() {
+    document.getElementById("saveStatus").textContent = "Saving...";
+
+    clearTimeout(saveTimer);
+
+    saveTimer = setTimeout(() => {
+        saveData();
+        renderPages();
+    }, 350);
+}
+
+/* ==========================================
+   ACTIVE ITEM HELPERS
+========================================== */
+
+function getNotebook() {
+    return data.notebooks.find(n => n.id === activeNotebookId) || null;
+}
+
+function getSection() {
+    const notebook = getNotebook();
+
+    return notebook
+        ? notebook.sections.find(s => s.id === activeSectionId) || null
+        : null;
+}
+
+function getPage() {
+    const section = getSection();
+
+    return section
+        ? section.pages.find(p => p.id === activePageId) || null
+        : null;
+}
+
+function ensureSelection() {
+    if (!data.notebooks.length) {
+        data.notebooks.push(createNotebook());
+    }
+
+    let notebook = getNotebook();
+
+    if (!notebook) {
+        notebook = data.notebooks[0];
+        activeNotebookId = notebook.id;
+    }
+
+    if (!notebook.sections.length) {
+        notebook.sections.push(createSection());
+    }
+
+    let section = notebook.sections.find(
+        s => s.id === activeSectionId
+    );
+
+    if (!section) {
+        section = notebook.sections[0];
+        activeSectionId = section.id;
+    }
+
+    if (!section.pages.length) {
+        section.pages.push(createPage());
+    }
+
+    let page = section.pages.find(
+        p => p.id === activePageId
+    );
+
+    if (!page) {
+        page = section.pages[0];
+        activePageId = page.id;
+    }
+}
+
+/* ==========================================
+   RENDER NOTEBOOKS
+========================================== */
+
+function renderNotebooks() {
+    const list = document.getElementById("notebookList");
+
+    list.innerHTML = data.notebooks.map(notebook => `
+        <div class="nav-item ${
+            notebook.id === activeNotebookId ? "active" : ""
+        }"
+        data-notebook-id="${escapeHTML(notebook.id)}"
+        onclick="selectNotebook('${notebook.id}')">
+
+            <span>📘</span>
+
+            <span class="label">
+                ${escapeHTML(notebook.name)}
+            </span>
+
+            <button class="more"
+                    title="Notebook options"
+                    onclick="openMenu(event,'notebook','${notebook.id}')">
+                ⋮
+            </button>
+
+        </div>
+    `).join("");
+
+    if (!data.notebooks.length) {
+        list.innerHTML =
+            '<p style="padding:12px;color:var(--muted)">No notebooks</p>';
+    }
+}
+
+/* ==========================================
+   RENDER SECTIONS
+========================================== */
+
+function renderSections() {
+    const notebook = getNotebook();
+    const list = document.getElementById("sectionList");
+
+    document.getElementById("sectionPanelTitle").textContent =
+        notebook ? notebook.name : "Sections";
+
+    if (!notebook) {
+        list.innerHTML = "";
+        return;
+    }
+
+    list.innerHTML = notebook.sections.map(section => `
+        <div class="section-item ${
+            section.id === activeSectionId ? "active" : ""
+        }"
+        onclick="selectSection('${section.id}')">
+
+            <span class="section-color"
+                  style="background:${escapeHTML(section.color)}"></span>
+
+            <span class="section-name">
+                ${escapeHTML(section.name)}
+            </span>
+
+            <button class="icon-btn"
+                    style="padding:2px"
+                    title="Section options"
+                    onclick="openMenu(event,'section','${section.id}')">
+                ⋮
+            </button>
+
+        </div>
+    `).join("");
+
+    if (!notebook.sections.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <div class="big-icon">📂</div>
+                <p>Create a section to organize your notes.</p>
+                <button class="primary-btn" onclick="newSection()">
+                    + Create Section
+                </button>
+            </div>
+        `;
+    }
+}
+
+/* ==========================================
+   RENDER PAGES
+========================================== */
+
+function renderPages() {
+    const section = getSection();
+    const list = document.getElementById("pageList");
+
+    document.getElementById("pagePanelTitle").textContent =
+        section ? section.name : "Pages";
+
+    if (!section) {
+        list.innerHTML = "";
+        return;
+    }
+
+    list.innerHTML = section.pages.map(page => {
+        const preview = plainText(page.content);
+
+        return `
+            <div class="page-card ${
+                page.id === activePageId ? "active" : ""
+            }"
+            onclick="selectPage('${page.id}')">
+
+                <div class="page-card-title">
+                    ${escapeHTML(page.title || "Untitled page")}
+                </div>
+
+                <div class="page-preview">
+                    ${escapeHTML(preview || "Empty page")}
+                </div>
+
+                <div class="page-date">
+                    ${escapeHTML(formatDate(page.updatedAt))}
+                </div>
+
+                <button class="icon-btn"
+                        style="padding:3px;margin-top:4px"
+                        title="Page options"
+                        onclick="openMenu(event,'page','${page.id}')">
+                    ⋮ Options
+                </button>
+
+            </div>
+        `;
+    }).join("");
+
+    if (!section.pages.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <div class="big-icon">📝</div>
+                <p>Create your first page in this section.</p>
+                <button class="primary-btn" onclick="newPage()">
+                    + Create Page
+                </button>
+            </div>
+        `;
+    }
+}
+
+function renderAll() {
+    ensureSelection();
+
+    renderNotebooks();
+    renderSections();
+    renderPages();
+
+    updateBreadcrumb();
+}
+
+function updateBreadcrumb() {
+    const notebook = getNotebook();
+    const section = getSection();
+    const page = getPage();
+
+    document.getElementById("breadcrumb").textContent = [
+        notebook?.name,
+        section?.name,
+        page?.title
+    ].filter(Boolean).join("  ›  ");
+}
+
+/* ==========================================
+   SELECT ITEMS
+========================================== */
+
+function selectNotebook(id) {
+    const notebook = data.notebooks.find(n => n.id === id);
+
+    if (!notebook) return;
+
+    activeNotebookId = id;
+    activeSectionId = notebook.sections[0]?.id || null;
+    activePageId = notebook.sections[0]?.pages[0]?.id || null;
+
+    renderAll();
+    updateEditor();
+
+    closeMenu();
+    hideMobilePanels();
+}
+
+function selectSection(id) {
+    const notebook = getNotebook();
+
+    if (!notebook) return;
+
+    const section = notebook.sections.find(s => s.id === id);
+
+    if (!section) return;
+
+    activeSectionId = id;
+    activePageId = section.pages[0]?.id || null;
+
+    renderAll();
+    updateEditor();
+
+    closeMenu();
+
+    if (window.innerWidth <= 760) {
+        showMobilePages();
+    }
+}
+
+function selectPage(id) {
+    const section = getSection();
+
+    if (!section) return;
+
+    const page = section.pages.find(p => p.id === id);
+
+    if (!page) return;
+
+    activePageId = id;
+
+    renderPages();
+    updateEditor();
+
+    closeMenu();
+
+    if (window.innerWidth <= 760) {
+        hideMobilePanels();
+    }
+}
+
+/* ==========================================
+   NOTEBOOK CRUD
+========================================== */
+
+function newNotebook() {
+    showModal(
+        "Create Notebook",
+        "Notebook name",
+        "My New Notebook",
+        name => {
+            if (!name) return;
+
+            const notebook = createNotebook(name);
+
+            data.notebooks.push(notebook);
+
+            activeNotebookId = notebook.id;
+            activeSectionId = notebook.sections[0].id;
+            activePageId = notebook.sections[0].pages[0].id;
+
+            saveData();
+            renderAll();
+            updateEditor();
+
+            showToast("Notebook created");
+        }
+    );
+}
+
+function renameNotebook(id) {
+    const notebook = data.notebooks.find(n => n.id === id);
+
+    if (!notebook) return;
+
+    showModal(
+        "Rename Notebook",
+        "Notebook name",
+        notebook.name,
+        name => {
+            if (!name) return;
+
+            notebook.name = name;
+
+            saveData();
+            renderAll();
+
+            showToast("Notebook renamed");
+        }
+    );
+}
+
+function deleteNotebook(id) {
+    const notebook = data.notebooks.find(n => n.id === id);
+
+    if (!notebook) return;
+
+    if (!confirm(
+        `Delete notebook "${notebook.name}" and all its sections and pages?`
+    )) return;
+
+    data.notebooks = data.notebooks.filter(n => n.id !== id);
+
+    if (activeNotebookId === id) {
+        activeNotebookId = data.notebooks[0]?.id || null;
+        activeSectionId = null;
+        activePageId = null;
+    }
+
+    ensureSelection();
+    saveData();
+    renderAll();
+    updateEditor();
+
+    showToast("Notebook deleted");
+}
+
+/* ==========================================
+   SECTION CRUD
+========================================== */
+
+function newSection() {
+    const notebook = getNotebook();
+
+    if (!notebook) {
+        showToast("Create a notebook first");
+        return;
+    }
+
+    showModal(
+        "Create Section",
+        "Section name",
+        "New Section",
+        name => {
+            if (!name) return;
+
+            const color =
+                SECTION_COLORS[
+                    notebook.sections.length % SECTION_COLORS.length
+                ];
+
+            const section = createSection(name, color);
+
+            notebook.sections.push(section);
+
+            activeSectionId = section.id;
+            activePageId = section.pages[0].id;
+
+            saveData();
+            renderAll();
+            updateEditor();
+
+            showToast("Section created");
+        }
+    );
+}
+
+function renameSection(id) {
+    const notebook = getNotebook();
+
+    if (!notebook) return;
+
+    const section = notebook.sections.find(s => s.id === id);
+
+    if (!section) return;
+
+    showModal(
+        "Rename Section",
+        "Section name",
+        section.name,
+        name => {
+            if (!name) return;
+
+            section.name = name;
+
+            saveData();
+            renderAll();
+
+            showToast("Section renamed");
+        }
+    );
+}
+
+function deleteSection(id) {
+    const notebook = getNotebook();
+
+    if (!notebook) return;
+
+    const section = notebook.sections.find(s => s.id === id);
+
+    if (!section) return;
+
+    if (!confirm(
+        `Delete section "${section.name}" and all its pages?`
+    )) return;
+
+    notebook.sections = notebook.sections.filter(s => s.id !== id);
+
+    if (activeSectionId === id) {
+        activeSectionId = notebook.sections[0]?.id || null;
+        activePageId =
+            notebook.sections[0]?.pages[0]?.id || null;
+    }
+
+    ensureSelection();
+    saveData();
+    renderAll();
+    updateEditor();
+
+    showToast("Section deleted");
+}
+
+/* ==========================================
+   PAGE CRUD
+========================================== */
+
+function newPage() {
+    const section = getSection();
+
+    if (!section) {
+        showToast("Create a section first");
+        return;
+    }
+
+    const page = createPage("Untitled page");
+
+    section.pages.push(page);
+
+    activePageId = page.id;
+
+    saveData();
+    renderAll();
+    updateEditor();
+
+    document.getElementById("pageTitle").focus();
+
+    if (window.innerWidth <= 760) {
+        hideMobilePanels();
+    }
+
+    showToast("Page created");
+}
+
+function renamePage(id) {
+    const section = getSection();
+
+    if (!section) return;
+
+    const page = section.pages.find(p => p.id === id);
+
+    if (!page) return;
+
+    showModal(
+        "Rename Page",
+        "Page title",
+        page.title,
+        title => {
+            if (!title) return;
+
+            page.title = title;
+            page.updatedAt = now();
+
+            saveData();
+            renderAll();
+            updateEditor();
+
+            showToast("Page renamed");
+        }
+    );
+}
+
+function deletePage(id) {
+    const section = getSection();
+
+    if (!section) return;
+
+    const page = section.pages.find(p => p.id === id);
+
+    if (!page) return;
+
+    if (!confirm(`Delete page "${page.title}"?`)) return;
+
+    section.pages = section.pages.filter(p => p.id !== id);
+
+    if (activePageId === id) {
+        activePageId = section.pages[0]?.id || null;
+    }
+
+    ensureSelection();
+
+    saveData();
+    renderAll();
+    updateEditor();
+
+    showToast("Page deleted");
+}
+
+function duplicatePage(id) {
+    const section = getSection();
+
+    if (!section) return;
+
+    const page = section.pages.find(p => p.id === id);
+
+    if (!page) return;
+
+    const copy = {
+        ...page,
+        id: uid(),
+        title: page.title + " (Copy)",
+        createdAt: now(),
+        updatedAt: now()
+    };
+
+    section.pages.push(copy);
+
+    activePageId = copy.id;
+
+    saveData();
+    renderAll();
+    updateEditor();
+
+    showToast("Page duplicated");
+}
+
+/* ==========================================
+   EDITOR
+========================================== */
+
+function updateEditor() {
+    ensureSelection();
+
+    const page = getPage();
+
+    const titleInput = document.getElementById("pageTitle");
+    const editor = document.getElementById("editor");
+
+    if (!page) {
+        titleInput.value = "";
+        editor.innerHTML = "";
+
+        document.getElementById("pageMeta").textContent = "";
+        document.getElementById("saveStatus").textContent =
+            "No page selected";
+
+        updateBreadcrumb();
+        updateWordCount();
+
+        return;
+    }
+
+    titleInput.value = page.title;
+    editor.innerHTML = page.content || "";
+
+    document.getElementById("pageMeta").textContent =
+        "Created " + formatDate(page.createdAt) +
+        "  •  Updated " + formatDate(page.updatedAt);
+
+    document.getElementById("saveStatus").textContent =
+        "All changes saved";
+
+    updateBreadcrumb();
+    updateWordCount();
+}
+
+function saveCurrentEditor() {
+    const page = getPage();
+
+    if (!page) return;
+
+    page.title =
+        document.getElementById("pageTitle").value.trim() ||
+        "Untitled page";
+
+    page.content = document.getElementById("editor").innerHTML;
+    page.updatedAt = now();
+
+    document.getElementById("pageMeta").textContent =
+        "Created " + formatDate(page.createdAt) +
+        "  •  Updated " + formatDate(page.updatedAt);
+
+    updateBreadcrumb();
+    scheduleSave();
+    updateWordCount();
+}
+
+document.getElementById("pageTitle").addEventListener(
+    "input",
+    function() {
+        this.style.height = "auto";
+        this.style.height = this.scrollHeight + "px";
+
+        saveCurrentEditor();
+    }
+);
+
+document.getElementById("editor").addEventListener(
+    "input",
+    function() {
+        saveCurrentEditor();
+    }
+);
+
+function updateWordCount() {
+    const editor = document.getElementById("editor");
+    const text = plainText(editor.innerHTML);
+
+    const words = text
+        ? text.split(/\s+/).filter(Boolean).length
+        : 0;
+
+    document.getElementById("wordCount").textContent =
+        words + (words === 1 ? " word" : " words");
+}
+
+/* ==========================================
+   RICH TEXT COMMANDS
+========================================== */
+
+function focusEditor() {
+    document.getElementById("editor").focus();
+}
+
+function runCommand(command, value = null) {
+    focusEditor();
+
+    try {
+        document.execCommand(command, false, value);
+    } catch (error) {
+        console.error("Formatting command failed:", error);
+    }
+
+    saveCurrentEditor();
+}
+
+function formatBlock(tag) {
+    focusEditor();
+
+    document.execCommand(
+        "formatBlock",
+        false,
+        "<" + tag.toLowerCase() + ">"
+    );
+
+    saveCurrentEditor();
+}
+
+function setFontSize(size) {
+    if (!size) return;
+
+    focusEditor();
+
+    document.execCommand("fontSize", false, size);
+
+    saveCurrentEditor();
+
+    document.getElementById("fontSize").value = "";
+}
+
+function insertLink() {
+    const url = prompt("Enter a link URL:");
+
+    if (!url) return;
+
+    try {
+        const parsed = new URL(url);
+
+        if (!["http:", "https:", "mailto:"].includes(parsed.protocol)) {
+            showToast("Use a valid HTTP, HTTPS or email link");
+            return;
+        }
+
+        focusEditor();
+
+        document.execCommand("createLink", false, parsed.href);
+
+        saveCurrentEditor();
+
+    } catch (error) {
+        showToast("Please enter a valid URL");
+    }
+}
+
+function insertTable() {
+    const rows = Number(prompt("Number of rows (1–15):", "3"));
+    const cols = Number(prompt("Number of columns (1–10):", "3"));
+
+    if (
+        !Number.isInteger(rows) ||
+        !Number.isInteger(cols) ||
+        rows < 1 ||
+        rows > 15 ||
+        cols < 1 ||
+        cols > 10
+    ) {
+        showToast("Enter valid table dimensions");
+        return;
+    }
+
+    let html = "<table><tbody>";
+
+    for (let r = 0; r < rows; r++) {
+        html += "<tr>";
+
+        for (let c = 0; c < cols; c++) {
+            html += r === 0
+                ? "<th>Heading</th>"
+                : "<td>Write here</td>";
+        }
+
+        html += "</tr>";
+    }
+
+    html += "</tbody></table><p><br></p>";
+
+    focusEditor();
+
+    document.execCommand("insertHTML", false, html);
+
+    saveCurrentEditor();
+}
+
+function insertDate() {
+    focusEditor();
+
+    const date = new Date().toLocaleDateString(undefined, {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    document.execCommand("insertText", false, date);
+
+    saveCurrentEditor();
+}
+
+/* ==========================================
+   IMAGE INSERTION
+========================================== */
+
+document.getElementById("imageFile").addEventListener(
+    "change",
+    function(event) {
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            showToast("Please select an image");
+            event.target.value = "";
+            return;
+        }
+
+        // Large images can quickly fill browser storage.
+        if (file.size > 2 * 1024 * 1024) {
+            showToast("Please choose an image smaller than 2 MB");
+            event.target.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            focusEditor();
+
+            const image = document.createElement("img");
+
+            image.src = e.target.result;
+            image.alt = file.name;
+            image.style.maxWidth = "100%";
+
+            const selection = window.getSelection();
+
+            if (selection && selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+
+                if (document.getElementById("editor").contains(
+                    range.commonAncestorContainer
+                )) {
+                    range.deleteContents();
+                    range.insertNode(image);
+
+                    const paragraph = document.createElement("p");
+                    paragraph.innerHTML = "<br>";
+
+                    image.after(paragraph);
+                } else {
+                    document.getElementById("editor").appendChild(image);
+                }
+            } else {
+                document.getElementById("editor").appendChild(image);
+            }
+
+            saveCurrentEditor();
+            showToast("Image inserted");
+        };
+
+        reader.readAsDataURL(file);
+
+        event.target.value = "";
+    }
+);
+
+/* ==========================================
+   CONTEXT MENU
+========================================== */
+
+function openMenu(event, type, id) {
+    event.stopPropagation();
+
+    const menu = document.getElementById("contextMenu");
+
+    menuTarget = { type, id };
+
+    let options = [];
+
+    if (type === "notebook") {
+        options = [
+            ["Rename notebook", "rename"],
+            ["Delete notebook", "delete"]
+        ];
+    }
+
+    if (type === "section") {
+        options = [
+            ["Rename section", "rename"],
+            ["Delete section", "delete"]
+        ];
+    }
+
+    if (type === "page") {
+        options = [
+            ["Rename page", "rename"],
+            ["Duplicate page", "duplicate"],
+            ["Download as HTML", "downloadHTML"],
+            ["Download as TXT", "downloadTXT"],
+            ["Delete page", "delete"]
+        ];
+    }
+
+    menu.innerHTML = options.map(option => `
+        <button onclick="menuAction('${option[1]}')">
+            ${escapeHTML(option[0])}
+        </button>
+    `).join("");
+
+    menu.style.display = "block";
+
+    const rect = event.currentTarget.getBoundingClientRect();
+
+    const width = 190;
+    const height = options.length * 42 + 10;
+
+    let left = rect.right - width;
+    let top = rect.bottom + 4;
+
+    left = Math.max(5, Math.min(left, window.innerWidth - width - 5));
+
+    if (top + height > window.innerHeight) {
+        top = rect.top - height;
+    }
+
+    top = Math.max(5, top);
+
+    menu.style.left = left + "px";
+    menu.style.top = top + "px";
+}
+
+function closeMenu() {
+    document.getElementById("contextMenu").style.display = "none";
+    menuTarget = null;
+}
+
+function menuAction(action) {
+    if (!menuTarget) return;
+
+    const { type, id } = menuTarget;
+
+    closeMenu();
+
+    if (type === "notebook") {
+        if (action === "rename") renameNotebook(id);
+        if (action === "delete") deleteNotebook(id);
+    }
+
+    if (type === "section") {
+        if (action === "rename") renameSection(id);
+        if (action === "delete") deleteSection(id);
+    }
+
+    if (type === "page") {
+        if (action === "rename") renamePage(id);
+        if (action === "duplicate") duplicatePage(id);
+
+        if (action === "downloadHTML") {
+            downloadPage(id, "html");
+        }
+
+        if (action === "downloadTXT") {
+            downloadPage(id, "txt");
+        }
+
+        if (action === "delete") deletePage(id);
+    }
+}
+
+document.addEventListener("click", function(event) {
+    const menu = document.getElementById("contextMenu");
+
+    if (
+        menu.style.display === "block" &&
+        !menu.contains(event.target)
+    ) {
+        closeMenu();
+    }
+
+    if (!event.target.closest(".searchbox")) {
+        document.getElementById("searchResults").style.display = "none";
+    }
+});
+
+/* ==========================================
+   MODAL
+========================================== */
+
+function showModal(title, label, initialValue, callback) {
+    modalCallback = callback;
+
+    document.getElementById("modalTitle").textContent = title;
+    document.getElementById("modalLabel").textContent = label;
+
+    const input = document.getElementById("modalInput");
+
+    input.value = initialValue || "";
+    input.placeholder = label;
+
+    document.getElementById("modalBackdrop").classList.add("show");
+
+    setTimeout(() => {
+        input.focus();
+        input.select();
+    }, 50);
+}
+
+function closeModal() {
+    document.getElementById("modalBackdrop").classList.remove("show");
+    modalCallback = null;
+}
+
+document.getElementById("modalConfirm").addEventListener(
+    "click",
+    function() {
+        const value = document.getElementById("modalInput").value.trim();
+
+        if (!value) {
+            showToast("Please enter a name");
+            return;
+        }
+
+        const callback = modalCallback;
+
+        closeModal();
+
+        if (callback) callback(value);
+    }
+);
+
+document.getElementById("modalInput").addEventListener(
+    "keydown",
+    function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("modalConfirm").click();
+        }
+
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    }
+);
+
+document.getElementById("modalBackdrop").addEventListener(
+    "click",
+    function(event) {
+        if (event.target === this) closeModal();
+    }
+);
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+
+searchInput.addEventListener("input", function() {
+    const query = this.value.trim().toLowerCase();
+
+    if (!query) {
+        searchResults.style.display = "none";
+        searchResults.innerHTML = "";
+        return;
+    }
+
+    const matches = [];
+
+    for (const notebook of data.notebooks) {
+        for (const section of notebook.sections) {
+            for (const page of section.pages) {
+                const text = plainText(page.content);
+
+                const searchable = [
+                    notebook.name,
+                    section.name,
+                    page.title,
+                    text
+                ].join(" ").toLowerCase();
+
+                if (searchable.includes(query)) {
+                    matches.push({
+                        notebook,
+                        section,
+                        page,
+                        text
+                    });
+                }
+            }
+        }
+    }
+
+    if (!matches.length) {
+        searchResults.innerHTML = `
+            <div class="search-result">
+                No matching notes found.
+            </div>
+        `;
+
+    } else {
+        searchResults.innerHTML = matches.slice(0, 50).map(
+            (match, index) => `
+                <div class="search-result"
+                     onclick="openSearchResult(${index})">
+
+                    <strong>
+                        ${escapeHTML(match.page.title)}
+                    </strong>
+
+                    <small>
+                        ${escapeHTML(match.notebook.name)}
+                        › ${escapeHTML(match.section.name)}
+                    </small>
+
+                    <div class="page-preview">
+                        ${escapeHTML(match.text.slice(0, 140))}
+                    </div>
+
+                </div>
+            `
+        ).join("");
+    }
+
+    searchResults.style.display = "block";
+
+    window.currentSearchMatches = matches;
+});
+
+function openSearchResult(index) {
+    const match = window.currentSearchMatches?.[index];
+
+    if (!match) return;
+
+    activeNotebookId = match.notebook.id;
+    activeSectionId = match.section.id;
+    activePageId = match.page.id;
+
+    renderAll();
+    updateEditor();
+
+    searchInput.value = "";
+    searchResults.style.display = "none";
+
+    hideMobilePanels();
+}
+
+/* ==========================================
+   EXPORT INDIVIDUAL PAGE
+========================================== */
+
+function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+
+    anchor.href = url;
+    anchor.download = filename;
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function safeFilename(name) {
-    return (name || "voice-recording")
+    return String(name || "notes")
         .replace(/[<>:"/\\|?*\x00-\x1F]/g, "_")
         .trim()
-        .slice(0, 80) || "voice-recording";
+        .slice(0, 100) || "notes";
 }
 
-function currentIntensity() {
-    return Number($("intensity").value) / 100;
-}
+function downloadPage(id, format) {
+    const section = getSection();
 
-function currentVolume() {
-    return Number($("volume").value) / 100;
-}
+    if (!section) return;
 
-/* -------------------------------------------
-   AUDIO CONTEXT AND GRAPH
-------------------------------------------- */
+    const page = section.pages.find(p => p.id === id);
 
-async function ensureAudio() {
-    if (!navigator.mediaDevices ||
-        !navigator.mediaDevices.getUserMedia) {
-        throw new Error(
-            "Microphone access is unavailable. Open this app on HTTPS or localhost."
-        );
-    }
+    if (!page) return;
 
-    if (!audioContext) {
-        audioContext = new (
-            window.AudioContext || window.webkitAudioContext
-        )();
+    if (format === "txt") {
+        const text = plainText(page.content);
 
-        analyser = audioContext.createAnalyser();
-        analyser.fftSize = 2048;
-        analyser.smoothingTimeConstant = 0.82;
-
-        micGain = audioContext.createGain();
-        masterGain = audioContext.createGain();
-        dryGain = audioContext.createGain();
-        wetGain = audioContext.createGain();
-        convolver = audioContext.createConvolver();
-        delayNode = audioContext.createDelay(2);
-        feedbackGain = audioContext.createGain();
-        echoWet = audioContext.createGain();
-        filterNode = audioContext.createBiquadFilter();
-        compressor = audioContext.createDynamicsCompressor();
-        monitorGain = audioContext.createGain();
-
-        filterNode.type = "lowpass";
-        filterNode.frequency.value = 12000;
-
-        compressor.threshold.value = -18;
-        compressor.knee.value = 18;
-        compressor.ratio.value = 3;
-        compressor.attack.value = 0.006;
-        compressor.release.value = 0.22;
-
-        masterGain.gain.value = currentVolume();
-        monitorGain.gain.value = 0;
-
-        /*
-          Parallel audio paths:
-          Dry path = original voice
-          Wet path = convolution reverb
-          Echo path = feedback delay
-        */
-
-        micGain.connect(filterNode);
-
-        filterNode.connect(dryGain);
-        dryGain.connect(compressor);
-
-        filterNode.connect(convolver);
-        convolver.connect(wetGain);
-        wetGain.connect(compressor);
-
-        filterNode.connect(delayNode);
-        delayNode.connect(feedbackGain);
-        feedbackGain.connect(delayNode);
-
-        delayNode.connect(echoWet);
-        echoWet.connect(compressor);
-
-        compressor.connect(masterGain);
-
-        // Output for headphones / speakers.
-        masterGain.connect(monitorGain);
-        monitorGain.connect(audioContext.destination);
-
-        // Visualizer uses processed signal.
-        masterGain.connect(analyser);
-
-        await updateImpulseResponse();
-        applyEffect();
-    }
-
-    if (audioContext.state === "suspended") {
-        await audioContext.resume();
-    }
-}
-
-/* -------------------------------------------
-   PROCEDURAL REVERB GENERATION
-------------------------------------------- */
-
-async function updateImpulseResponse() {
-    if (!audioContext || !convolver) return;
-
-    const p = presets[selectedEffect];
-    const intensity = currentIntensity();
-
-    const duration = Math.max(
-        0.15,
-        p.decay * (0.25 + intensity * 0.9)
-    );
-
-    const rate = audioContext.sampleRate;
-    const length = Math.floor(rate * duration);
-    const impulse = audioContext.createBuffer(2, length, rate);
-
-    for (let channel = 0; channel < 2; channel++) {
-        const data = impulse.getChannelData(channel);
-
-        for (let i = 0; i < length; i++) {
-            const t = i / length;
-
-            // Exponential decay approximates room reflections.
-            const envelope = Math.pow(1 - t, 2.7);
-            const randomNoise = Math.random() * 2 - 1;
-
-            // Add slight diffusion to avoid a harsh noise-like tail.
-            data[i] = randomNoise * envelope;
-        }
-    }
-
-    convolver.buffer = impulse;
-}
-
-/* -------------------------------------------
-   EFFECT PARAMETERS
-------------------------------------------- */
-
-function applyEffect() {
-    if (!audioContext) return;
-
-    const p = presets[selectedEffect];
-    const intensity = currentIntensity();
-    const volume = currentVolume();
-    const now = audioContext.currentTime;
-
-    /*
-      Clean voice keeps mostly dry sound.
-      Larger rooms add progressively more reverb.
-    */
-
-    const wet = p.wet * intensity;
-    const dry = selectedEffect === "clean"
-        ? 1
-        : Math.max(0.35, 1 - wet * 0.45);
-
-    dryGain.gain.setTargetAtTime(dry, now, 0.04);
-    wetGain.gain.setTargetAtTime(wet, now, 0.06);
-
-    delayNode.delayTime.setTargetAtTime(
-        Number($("delay").value) / 1000,
-        now,
-        0.04
-    );
-
-    feedbackGain.gain.setTargetAtTime(
-        Math.min(0.65, p.echo * intensity),
-        now,
-        0.04
-    );
-
-    echoWet.gain.setTargetAtTime(
-        p.echo * intensity,
-        now,
-        0.04
-    );
-
-    masterGain.gain.setTargetAtTime(volume, now, 0.04);
-
-    filterNode.frequency.setTargetAtTime(
-        p.high,
-        now,
-        0.05
-    );
-
-    // Voice tone: moderate low/high frequency adjustment.
-    filterNode.Q.value = 0.35;
-
-    $("intensityValue").textContent =
-        $("intensity").value + "%";
-
-    $("volumeValue").textContent =
-        $("volume").value + "%";
-
-    $("delayValue").textContent =
-        $("delay").value + " ms";
-
-    const tone = Number($("tone").value);
-
-    $("toneValue").textContent =
-        tone === 0
-            ? "Neutral"
-            : tone > 0
-                ? "Brighter +" + tone
-                : "Deeper " + tone;
-
-    if (audioContext && filterNode) {
-        // Slightly alter the output's spectral balance.
-        filterNode.frequency.setTargetAtTime(
-            Math.min(
-                18000,
-                Math.max(2500, p.high + tone * 400)
-            ),
-            now,
-            0.05
-        );
-    }
-}
-
-function selectEffect(effect) {
-    if (!presets[effect]) return;
-
-    selectedEffect = effect;
-
-    document.querySelectorAll(".effect").forEach(button => {
-        button.classList.toggle(
-            "selected",
-            button.dataset.effect === effect
-        );
-    });
-
-    if (audioContext) {
-        updateImpulseResponse();
-        applyEffect();
-    }
-
-    toast("Effect selected: " + effect.toUpperCase());
-}
-
-/* -------------------------------------------
-   MICROPHONE
-------------------------------------------- */
-
-async function startRecording() {
-    if (isRecording) return;
-
-    try {
-        await ensureAudio();
-
-        if (!mediaStream) {
-            mediaStream = await navigator.mediaDevices.getUserMedia({
-                audio: {
-                    echoCancellation: false,
-                    noiseSuppression: false,
-                    autoGainControl: false
-                }
-            });
-        }
-
-        if (sourceNode) {
-            try {
-                sourceNode.disconnect();
-            } catch (_) {}
-        }
-
-        sourceNode = audioContext.createMediaStreamSource(mediaStream);
-        sourceNode.connect(micGain);
-
-        chunks = [];
-        rawBlob = null;
-        processedBlob = null;
-
-        if (rawURL) URL.revokeObjectURL(rawURL);
-        if (processedURL) URL.revokeObjectURL(processedURL);
-
-        rawURL = null;
-        processedURL = null;
-
-        $("player").removeAttribute("src");
-        $("player").load();
-
-        $("exportBtn").disabled = true;
-        $("downloadRawBtn").disabled = true;
-        $("reprocessBtn").disabled = true;
-
-        const quality = $("quality").value;
-
-        const options = {};
-
-        if (quality === "high") {
-            options.audioBitsPerSecond = 192000;
-        } else if (quality === "compact") {
-            options.audioBitsPerSecond = 64000;
-        } else {
-            options.audioBitsPerSecond = 128000;
-        }
-
-        const mimeType = [
-            "audio/webm;codecs=opus",
-            "audio/webm",
-            "audio/mp4",
-            "audio/ogg;codecs=opus"
-        ].find(type => {
-            return window.MediaRecorder &&
-                MediaRecorder.isTypeSupported(type);
-        });
-
-        if (!window.MediaRecorder) {
-            throw new Error(
-                "MediaRecorder is not supported in this browser."
-            );
-        }
-
-        if (mimeType) options.mimeType = mimeType;
-
-        recorder = new MediaRecorder(mediaStream, options);
-
-        recorder.ondataavailable = event => {
-            if (event.data && event.data.size > 0) {
-                chunks.push(event.data);
-            }
-        };
-
-        recorder.onstop = () => {
-            rawBlob = new Blob(chunks, {
-                type: recorder.mimeType || "audio/webm"
-            });
-
-            rawURL = URL.createObjectURL(rawBlob);
-
-            $("player").src = rawURL;
-            $("player").load();
-
-            $("exportBtn").disabled = false;
-            $("downloadRawBtn").disabled = false;
-            $("reprocessBtn").disabled = false;
-
-            $("recordingInfo").textContent =
-                "Original recording ready · " +
-                (rawBlob.size / 1024).toFixed(1) + " KB";
-
-            addRecording(rawBlob);
-
-            $("statusText").textContent = "Recording complete";
-            $("micHint").textContent = "Your voice has been recorded";
-
-            toast("Recording saved in this session.");
-        };
-
-        elapsedBeforePause = 0;
-        recordingStart = performance.now();
-        isPaused = false;
-        isRecording = true;
-
-        recorder.start(250);
-
-        $("recordBtn").classList.add("recording");
-        $("recordBtn").textContent = "⏺";
-        $("recordBtn").disabled = true;
-
-        $("pauseBtn").disabled = false;
-        $("resumeBtn").disabled = true;
-        $("stopBtn").disabled = false;
-
-        $("statusDot").classList.add("active");
-        $("statusText").textContent = "Recording in progress";
-        $("micHint").textContent = "Speak clearly into your microphone";
-
-        timerInterval = setInterval(updateTimer, 250);
-
-        drawVisualizer();
-
-        toast("Recording started.");
-
-    } catch (error) {
-        console.error(error);
-        toast(error.message || "Could not start recording.");
-
-        $("statusText").textContent = "Microphone unavailable";
-    }
-}
-
-function pauseRecording() {
-    if (!recorder || recorder.state !== "recording") return;
-
-    recorder.pause();
-
-    elapsedBeforePause +=
-        (performance.now() - recordingStart) / 1000;
-
-    isPaused = true;
-    recordingStart = 0;
-
-    $("pauseBtn").disabled = true;
-    $("resumeBtn").disabled = false;
-
-    $("statusDot").classList.remove("active");
-    $("statusText").textContent = "Recording paused";
-
-    updateTimer();
-}
-
-function resumeRecording() {
-    if (!recorder || recorder.state !== "paused") return;
-
-    recorder.resume();
-
-    recordingStart = performance.now();
-    isPaused = false;
-
-    $("pauseBtn").disabled = false;
-    $("resumeBtn").disabled = true;
-
-    $("statusDot").classList.add("active");
-    $("statusText").textContent = "Recording in progress";
-}
-
-function stopRecording() {
-    if (!recorder || recorder.state === "inactive") return;
-
-    if (!isPaused && recordingStart) {
-        elapsedBeforePause +=
-            (performance.now() - recordingStart) / 1000;
-    }
-
-    recordingStart = 0;
-    isPaused = false;
-    isRecording = false;
-
-    clearInterval(timerInterval);
-
-    recorder.stop();
-
-    $("recordBtn").classList.remove("recording");
-    $("recordBtn").textContent = "🎙️";
-    $("recordBtn").disabled = false;
-
-    $("pauseBtn").disabled = true;
-    $("resumeBtn").disabled = true;
-    $("stopBtn").disabled = true;
-
-    $("statusDot").classList.remove("active");
-    $("statusText").textContent = "Processing recording";
-
-    // Detach input while retaining the stream for the next recording.
-    if (sourceNode) {
-        try {
-            sourceNode.disconnect();
-        } catch (_) {}
-    }
-
-    updateTimer();
-}
-
-/* -------------------------------------------
-   LIVE MONITOR
-------------------------------------------- */
-
-function toggleMonitor() {
-    monitorEnabled = !monitorEnabled;
-
-    if (!audioContext) {
-        toast("Start recording first to enable live monitoring.");
-        monitorEnabled = false;
-        return;
-    }
-
-    monitorGain.gain.setTargetAtTime(
-        monitorEnabled ? 1 : 0,
-        audioContext.currentTime,
-        0.03
-    );
-
-    $("monitorBtn").textContent =
-        monitorEnabled
-            ? "🔊 Live Monitor: ON"
-            : "🔊 Live Monitor: OFF";
-
-    $("monitorBtn").classList.toggle(
-        "success",
-        monitorEnabled
-    );
-
-    if (monitorEnabled) {
-        toast("Live monitor enabled. Use headphones to avoid feedback.");
-    }
-}
-
-/* -------------------------------------------
-   WAVEFORM VISUALIZER
-------------------------------------------- */
-
-const canvas = $("visualizer");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas() {
-    const rect = canvas.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-
-    canvas.width = Math.floor(rect.width * dpr);
-    canvas.height = Math.floor(rect.height * dpr);
-
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-function drawVisualizer() {
-    if (visualizerFrame) {
-        cancelAnimationFrame(visualizerFrame);
-    }
-
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-
-    if (!width || !height) return;
-
-    ctx.clearRect(0, 0, width, height);
-
-    ctx.fillStyle = "#080d19";
-    ctx.fillRect(0, 0, width, height);
-
-    const bars = 100;
-    const gap = 3;
-    const barWidth = (width - gap * (bars - 1)) / bars;
-    const data = new Uint8Array(analyser.frequencyBinCount);
-
-    function render() {
-        if (!canvas.isConnected) return;
-
-        const w = canvas.clientWidth;
-        const h = canvas.clientHeight;
-
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "#080d19";
-        ctx.fillRect(0, 0, w, h);
-
-        analyser.getByteFrequencyData(data);
-
-        const barW = (w - gap * (bars - 1)) / bars;
-
-        for (let i = 0; i < bars; i++) {
-            const index = Math.floor(
-                i * data.length / bars
-            );
-
-            const value = data[index] / 255;
-            const barHeight = Math.max(3, value * h * 0.85);
-
-            const gradient = ctx.createLinearGradient(
-                0, h / 2 - barHeight / 2,
-                0, h / 2 + barHeight / 2
-            );
-
-            gradient.addColorStop(0, "#a17aff");
-            gradient.addColorStop(0.5, "#5b8cff");
-            gradient.addColorStop(1, "#36dfae");
-
-            ctx.fillStyle = gradient;
-
-            const x = i * (barW + gap);
-            const y = (h - barHeight) / 2;
-
-            ctx.beginPath();
-            ctx.roundRect(
-                x,
-                y,
-                Math.max(1, barW),
-                barHeight,
-                4
-            );
-            ctx.fill();
-        }
-
-        visualizerFrame = requestAnimationFrame(render);
-    }
-
-    render();
-}
-
-/* -------------------------------------------
-   RECORDINGS LIST
-------------------------------------------- */
-
-function addRecording(blob) {
-    const item = {
-        id: Date.now() + Math.random(),
-        name: safeFilename($("filename").value),
-        blob: blob,
-        url: URL.createObjectURL(blob),
-        duration: getElapsed(),
-        date: new Date().toLocaleString()
-    };
-
-    recordings.unshift(item);
-    renderRecordings();
-}
-
-function renderRecordings() {
-    const container = $("recordingsList");
-    container.innerHTML = "";
-
-    if (!recordings.length) {
-        container.innerHTML =
-            '<div class="small">No recordings in this session yet.</div>';
-        return;
-    }
-
-    recordings.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "recording-item";
-
-        const top = document.createElement("div");
-        top.className = "recording-top";
-
-        const info = document.createElement("div");
-
-        const name = document.createElement("div");
-        name.className = "recording-name";
-        name.textContent = item.name;
-
-        const meta = document.createElement("div");
-        meta.className = "recording-meta";
-        meta.textContent =
-            item.date + " · " +
-            formatTime(item.duration) + " · " +
-            (item.blob.size / 1024).toFixed(1) + " KB";
-
-        info.append(name, meta);
-
-        const actions = document.createElement("div");
-        actions.className = "recording-actions";
-
-        const play = document.createElement("button");
-        play.className = "btn";
-        play.textContent = "▶ Play";
-
-        play.addEventListener("click", () => {
-            $("player").src = item.url;
-            $("player").load();
-            $("player").play().catch(() => {});
-            $("recordingInfo").textContent = item.name;
-        });
-
-        const download = document.createElement("button");
-        download.className = "btn success";
-        download.textContent = "⬇ Download";
-
-        download.addEventListener("click", () => {
-            downloadBlob(item.blob, item.name + ".webm");
-        });
-
-        const remove = document.createElement("button");
-        remove.className = "btn danger";
-        remove.textContent = "✕";
-
-        remove.addEventListener("click", () => {
-            URL.revokeObjectURL(item.url);
-            recordings = recordings.filter(r => r.id !== item.id);
-            renderRecordings();
-        });
-
-        actions.append(play, download, remove);
-        top.append(info, actions);
-        card.append(top);
-
-        container.append(card);
-    });
-}
-
-/* -------------------------------------------
-   DOWNLOAD HELPERS
-------------------------------------------- */
-
-function downloadBlob(blob, filename) {
-    if (!blob) {
-        toast("No audio file available.");
-        return;
-    }
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = filename;
-
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 30000);
-}
-
-function downloadOriginal() {
-    if (!rawBlob) return;
-
-    const name = safeFilename($("filename").value);
-
-    downloadBlob(
-        rawBlob,
-        name + "-original." + extensionForMime(rawBlob.type)
-    );
-}
-
-function extensionForMime(type) {
-    if (type.includes("mp4")) return "m4a";
-    if (type.includes("ogg")) return "ogg";
-    return "webm";
-}
-
-/* -------------------------------------------
-   OFFLINE EFFECT EXPORT
-------------------------------------------- */
-
-async function exportWithEffects() {
-    if (!rawBlob || activeExport) {
-        if (!rawBlob) toast("Record some audio first.");
-        return;
-    }
-
-    activeExport = true;
-    $("exportBtn").disabled = true;
-    $("exportBtn").textContent = "⏳ Rendering audio...";
-
-    try {
-        const arrayBuffer = await rawBlob.arrayBuffer();
-
-        const decodeContext = new (
-            window.AudioContext || window.webkitAudioContext
-        )();
-
-        const decoded = await decodeContext.decodeAudioData(
-            arrayBuffer.slice(0)
-        );
-
-        const sampleRate = decoded.sampleRate;
-        const p = presets[selectedEffect];
-        const intensity = currentIntensity();
-
-        const tail = Math.max(
-            0.2,
-            p.decay * (0.25 + intensity * 0.9),
-            Number($("delay").value) / 1000 * 3
-        );
-
-        const duration = decoded.duration + tail;
-
-        const offline = new OfflineAudioContext(
-            2,
-            Math.ceil(sampleRate * duration),
-            sampleRate
-        );
-
-        const source = offline.createBufferSource();
-        source.buffer = decoded;
-
-        const filter = offline.createBiquadFilter();
-        filter.type = "lowpass";
-        filter.frequency.value = Math.min(
-            18000,
-            Math.max(2500, p.high + Number($("tone").value) * 400)
-        );
-        filter.Q.value = 0.35;
-
-        const dry = offline.createGain();
-        const wet = offline.createGain();
-        const convolverOffline = offline.createConvolver();
-        const delay = offline.createDelay(2);
-        const feedback = offline.createGain();
-        const echo = offline.createGain();
-        const master = offline.createGain();
-        const comp = offline.createDynamicsCompressor();
-
-        const wetLevel = p.wet * intensity;
-        const dryLevel = selectedEffect === "clean"
-            ? 1
-            : Math.max(0.35, 1 - wetLevel * 0.45);
-
-        dry.gain.value = dryLevel;
-        wet.gain.value = wetLevel;
-
-        delay.delayTime.value =
-            Number($("delay").value) / 1000;
-
-        feedback.gain.value =
-            Math.min(0.65, p.echo * intensity);
-
-        echo.gain.value = p.echo * intensity;
-
-        master.gain.value = currentVolume();
-
-        comp.threshold.value = -18;
-        comp.knee.value = 18;
-        comp.ratio.value = 3;
-        comp.attack.value = 0.006;
-        comp.release.value = 0.22;
-
-        /*
-          Create a stereo procedural impulse response
-          so that reverb is embedded in the exported file.
-        */
-
-        const irLength = Math.max(
-            1,
-            Math.floor(sampleRate * p.decay *
-                (0.25 + intensity * 0.9))
-        );
-
-        const impulse = offline.createBuffer(
-            2,
-            irLength,
-            sampleRate
-        );
-
-        for (let ch = 0; ch < 2; ch++) {
-            const data = impulse.getChannelData(ch);
-
-            for (let i = 0; i < irLength; i++) {
-                const t = i / irLength;
-                const envelope = Math.pow(1 - t, 2.7);
-
-                data[i] = (Math.random() * 2 - 1) * envelope;
-            }
-        }
-
-        convolverOffline.buffer = impulse;
-
-        source.connect(filter);
-
-        filter.connect(dry);
-        dry.connect(comp);
-
-        filter.connect(convolverOffline);
-        convolverOffline.connect(wet);
-        wet.connect(comp);
-
-        filter.connect(delay);
-        delay.connect(feedback);
-        feedback.connect(delay);
-
-        delay.connect(echo);
-        echo.connect(comp);
-
-        comp.connect(master);
-        master.connect(offline.destination);
-
-        source.start(0);
-
-        const renderedBuffer = await offline.startRendering();
-
-        processedBlob = audioBufferToWav(renderedBuffer);
-
-        if (processedURL) {
-            URL.revokeObjectURL(processedURL);
-        }
-
-        processedURL = URL.createObjectURL(processedBlob);
-
-        $("player").src = processedURL;
-        $("player").load();
-
-        $("recordingInfo").textContent =
-            "Processed WAV · " +
-            (processedBlob.size / 1024).toFixed(1) + " KB";
-
-        const name = safeFilename($("filename").value);
+        const output =
+            page.title + "\n" +
+            "=".repeat(Math.min(page.title.length, 80)) +
+            "\n\n" + text;
 
         downloadBlob(
-            processedBlob,
-            name + "-" + selectedEffect + ".wav"
+            new Blob([output], { type: "text/plain;charset=utf-8" }),
+            safeFilename(page.title) + ".txt"
         );
 
-        toast("Processed WAV file exported successfully.");
+        showToast("Text file downloaded");
+        return;
+    }
 
-        await decodeContext.close();
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${escapeHTML(page.title)}</title>
+<style>
+body {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.8;
+}
+img { max-width: 100%; height: auto; }
+table { border-collapse: collapse; width: 100%; }
+td, th { border: 1px solid #ddd; padding: 8px; }
+</style>
+</head>
+<body>
+<h1>${escapeHTML(page.title)}</h1>
+${page.content}
+</body>
+</html>`;
 
+    downloadBlob(
+        new Blob([html], { type: "text/html;charset=utf-8" }),
+        safeFilename(page.title) + ".html"
+    );
+
+    showToast("HTML file downloaded");
+}
+
+/* ==========================================
+   BACKUP AND RESTORE
+========================================== */
+
+function exportBackup() {
+    saveData(false);
+
+    const backup = JSON.stringify(data, null, 2);
+
+    downloadBlob(
+        new Blob([backup], {
+            type: "application/json;charset=utf-8"
+        }),
+        "onenote-pro-backup-" +
+        new Date().toISOString().slice(0, 10) +
+        ".json"
+    );
+
+    showToast("Backup downloaded");
+}
+
+document.getElementById("importFile").addEventListener(
+    "change",
+    async function(event) {
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        try {
+            if (file.size > 25 * 1024 * 1024) {
+                throw new Error("Backup file is too large.");
+            }
+
+            const text = await file.text();
+            const imported = validateData(JSON.parse(text));
+
+            if (!confirm(
+                "Importing this backup will replace your current notebooks. " +
+                "Export a backup of your existing notes first if needed. Continue?"
+            )) {
+                return;
+            }
+
+            data = imported;
+
+            if (!data.notebooks.length) {
+                data = defaultData();
+            }
+
+            activeNotebookId = data.notebooks[0].id;
+            activeSectionId =
+                data.notebooks[0].sections[0]?.id || null;
+            activePageId =
+                data.notebooks[0].sections[0]?.pages[0]?.id || null;
+
+            if (!saveData()) {
+                showToast("Import could not be saved");
+                return;
+            }
+
+            renderAll();
+            updateEditor();
+
+            showToast("Backup imported successfully");
+
+        } catch (error) {
+            console.error(error);
+            showToast("Invalid or unreadable backup file");
+
+        } finally {
+            event.target.value = "";
+        }
+    }
+);
+
+/* ==========================================
+   THEME
+========================================== */
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+
+    try {
+        localStorage.setItem(
+            THEME_KEY,
+            document.body.classList.contains("dark") ? "dark" : "light"
+        );
     } catch (error) {
-        console.error(error);
-
-        toast(
-            "Export failed. Try another browser or shorter recording."
-        );
-
-    } finally {
-        activeExport = false;
-        $("exportBtn").disabled = !rawBlob;
-        $("exportBtn").textContent = "⬇ Export With Effects";
+        console.warn("Theme preference could not be saved.");
     }
 }
 
-/* -------------------------------------------
-   WAV ENCODER
-------------------------------------------- */
+/* ==========================================
+   MOBILE NAVIGATION
+========================================== */
 
-function audioBufferToWav(buffer) {
-    const channels = buffer.numberOfChannels;
-    const sampleRate = buffer.sampleRate;
-    const frames = buffer.length;
+const workspace = document.getElementById("workspace");
 
-    const bytesPerSample = 2;
-    const dataLength = frames * channels * bytesPerSample;
-
-    const output = new ArrayBuffer(44 + dataLength);
-    const view = new DataView(output);
-
-    function writeString(offset, str) {
-        for (let i = 0; i < str.length; i++) {
-            view.setUint8(offset + i, str.charCodeAt(i));
-        }
-    }
-
-    writeString(0, "RIFF");
-    view.setUint32(4, 36 + dataLength, true);
-    writeString(8, "WAVE");
-    writeString(12, "fmt ");
-
-    view.setUint32(16, 16, true);
-    view.setUint16(20, 1, true);
-    view.setUint16(22, channels, true);
-    view.setUint32(24, sampleRate, true);
-
-    view.setUint32(
-        28,
-        sampleRate * channels * bytesPerSample,
-        true
-    );
-
-    view.setUint16(
-        32,
-        channels * bytesPerSample,
-        true
-    );
-
-    view.setUint16(34, 16, true);
-    writeString(36, "data");
-    view.setUint32(40, dataLength, true);
-
-    let offset = 44;
-
-    const channelData = [];
-
-    for (let ch = 0; ch < channels; ch++) {
-        channelData.push(buffer.getChannelData(ch));
-    }
-
-    for (let i = 0; i < frames; i++) {
-        for (let ch = 0; ch < channels; ch++) {
-            let sample = channelData[ch][i];
-
-            sample = Math.max(-1, Math.min(1, sample));
-
-            const intSample = sample < 0
-                ? sample * 32768
-                : sample * 32767;
-
-            view.setInt16(
-                offset,
-                Math.round(intSample),
-                true
-            );
-
-            offset += 2;
-        }
-    }
-
-    return new Blob([output], { type: "audio/wav" });
+function showMobileNotebooks() {
+    workspace.classList.remove("show-sections", "show-pages");
+    workspace.classList.add("show-notebooks");
 }
 
-/* -------------------------------------------
-   UI EVENTS
-------------------------------------------- */
+function showMobileSections() {
+    workspace.classList.remove("show-notebooks", "show-pages");
+    workspace.classList.add("show-sections");
+}
 
-$("recordBtn").addEventListener("click", startRecording);
-$("pauseBtn").addEventListener("click", pauseRecording);
-$("resumeBtn").addEventListener("click", resumeRecording);
-$("stopBtn").addEventListener("click", stopRecording);
-$("monitorBtn").addEventListener("click", toggleMonitor);
+function showMobilePages() {
+    workspace.classList.remove("show-notebooks", "show-sections");
+    workspace.classList.add("show-pages");
+}
 
-$("effectsGrid").addEventListener("click", event => {
-    const button = event.target.closest(".effect");
-    if (!button) return;
+function hideMobilePanels() {
+    workspace.classList.remove(
+        "show-notebooks",
+        "show-sections",
+        "show-pages"
+    );
+}
 
-    selectEffect(button.dataset.effect);
-});
+/* ==========================================
+   TOAST NOTIFICATIONS
+========================================== */
 
-["intensity", "volume", "delay", "tone"].forEach(id => {
-    $(id).addEventListener("input", () => {
-        if (id === "intensity" && audioContext) {
-            updateImpulseResponse();
-        }
+function showToast(message) {
+    const toast = document.getElementById("toast");
 
-        applyEffect();
-    });
-});
+    toast.textContent = message;
+    toast.classList.add("show");
 
-$("exportBtn").addEventListener("click", exportWithEffects);
-$("downloadRawBtn").addEventListener("click", downloadOriginal);
+    clearTimeout(toastTimer);
 
-$("reprocessBtn").addEventListener("click", () => {
-    if (!rawBlob) return;
-    exportWithEffects();
-});
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2500);
+}
 
-$("clearBtn").addEventListener("click", () => {
-    recordings.forEach(item => URL.revokeObjectURL(item.url));
+/* ==========================================
+   KEYBOARD SHORTCUTS
+========================================== */
 
-    recordings = [];
-    renderRecordings();
+document.addEventListener("keydown", function(event) {
+    const isMac = navigator.platform.toUpperCase().includes("MAC");
+    const modifier = isMac ? event.metaKey : event.ctrlKey;
 
-    toast("Recording list cleared.");
-});
+    if (!modifier) return;
 
-window.addEventListener("beforeunload", () => {
-    if (mediaStream) {
-        mediaStream.getTracks().forEach(track => track.stop());
+    const key = event.key.toLowerCase();
+
+    if (key === "s") {
+        event.preventDefault();
+
+        saveCurrentEditor();
+
+        clearTimeout(saveTimer);
+
+        saveData();
+
+        showToast("Notes saved");
     }
 
-    if (rawURL) URL.revokeObjectURL(rawURL);
-    if (processedURL) URL.revokeObjectURL(processedURL);
+    if (key === "n" && !event.shiftKey) {
+        event.preventDefault();
+        newPage();
+    }
 
-    recordings.forEach(item => URL.revokeObjectURL(item.url));
+    if (key === "b") {
+        event.preventDefault();
+        runCommand("bold");
+    }
+
+    if (key === "i") {
+        event.preventDefault();
+        runCommand("italic");
+    }
+
+    if (key === "u") {
+        event.preventDefault();
+        runCommand("underline");
+    }
+
+    if (key === "f") {
+        event.preventDefault();
+        searchInput.focus();
+    }
 });
 
-renderRecordings();
-updateTimer();
+/* ==========================================
+   BEFORE PAGE EXIT
+========================================== */
 
-})();
+window.addEventListener("beforeunload", function() {
+    clearTimeout(saveTimer);
+
+    const page = getPage();
+
+    if (page) {
+        page.title =
+            document.getElementById("pageTitle").value.trim() ||
+            "Untitled page";
+
+        page.content = document.getElementById("editor").innerHTML;
+        page.updatedAt = now();
+    }
+
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (error) {
+        console.warn("Final save failed.");
+    }
+});
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+loadData();
+
 </script>
 
 </body>
