@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d19">
+
+<title>Video Editor Pro Studio</title>
+
+<style>
+:root {
+    --bg: #080d19;
+    --panel: #111a2c;
+    --panel2: #17243a;
+    --border: #293952;
+    --primary: #7757ff;
+    --cyan: #00d5ff;
+    --green: #00d68f;
+    --text: #f3f6ff;
+    --muted: #9baac2;
+    --danger: #ff496c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #10182a;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.logo span {
+    color: var(--cyan);
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background: var(--panel2);
+    color: white;
+    padding: 10px 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn:hover {
+    filter: brightness(1.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #7757ff, #5134d2);
+    border: none;
+}
+
+.btn-success {
+    background: #087c5b;
+    border: none;
+}
+
+.btn-danger {
+    background: #8b2440;
+}
+
+.app {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    min-height: calc(100vh - 65px);
+}
+
+.sidebar {
+    background: #0c1322;
+    border-right: 1px solid var(--border);
+    padding: 15px;
+}
+
+.section-title {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 17px 0 10px;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.tool {
+    padding: 13px 5px;
+    color: white;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 12px;
+}
+
+.tool.active {
+    border-color: var(--cyan);
+    background: #103044;
+}
+
+.tool span {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 7px;
+}
+
+.main {
+    padding: 16px;
+    min-width: 0;
+}
+
+.editor-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 290px;
+    gap: 14px;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    min-width: 0;
+}
+
+.panel-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+
+.preview {
+    background: #03060d;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+#video {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+#textOverlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    width: 90%;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+}
+
+.placeholder {
+    color: var(--muted);
+    text-align: center;
+    padding: 20px;
+}
+
+.placeholder .icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.playback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.circle-btn {
+    background: var(--panel2);
+    color: white;
+    border: 1px solid var(--border);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 16px;
+}
+
+.time {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.seek {
+    width: 100%;
+    margin-top: 14px;
+    accent-color: var(--cyan);
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 12px;
+    color: #cbd6e8;
+    margin-bottom: 8px;
+}
+
+.field input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary);
+}
+
+.field input[type="text"],
+.field input[type="number"],
+.field input[type="file"],
+.field select {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    background: #09101d;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+}
+
+.field input[type="color"] {
+    width: 100%;
+    height: 36px;
+    background: transparent;
+    border: 1px solid var(--border);
+}
+
+.field small {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.timeline-panel {
+    margin-top: 15px;
+}
+
+.timeline-info {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.clip-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 6px 0 12px;
+}
+
+.clip {
+    min-width: 145px;
+    max-width: 200px;
+    background: #19263e;
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.clip.selected {
+    border: 2px solid var(--cyan);
+}
+
+.clip-name {
+    font-size: 12px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+    margin-bottom: 8px;
+}
+
+.clip-duration {
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 9px;
+}
+
+.clip-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.clip-actions button {
+    font-size: 11px;
+    padding: 6px;
+    color: white;
+    background: #273954;
+    border-radius: 5px;
+}
+
+.track {
+    background: #080e1b;
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.track-title {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.track-bar {
+    min-height: 27px;
+    border-radius: 5px;
+    background: repeating-linear-gradient(
+        90deg,
+        #31496e,
+        #31496e 28px,
+        #1a2a43 28px,
+        #1a2a43 33px
+    );
+}
+
+.status {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 12px;
+    overflow-wrap: anywhere;
+}
+
+.status.error {
+    color: #ff8098;
+}
+
+.status.success {
+    color: var(--green);
+}
+
+progress {
+    width: 100%;
+    height: 10px;
+    margin-top: 12px;
+    accent-color: var(--green);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media(max-width: 1050px) {
+    .editor-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .settings {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .settings .panel-title {
+        grid-column: 1 / -1;
+    }
+}
+
+@media(max-width: 650px) {
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .tool-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tool {
+        font-size: 10px;
+        padding: 10px 2px;
+    }
+
+    .tool span {
+        font-size: 20px;
+    }
+
+    .settings {
+        display: block;
+    }
+
+    .main {
+        padding: 9px;
+    }
+
+    .header {
+        padding: 11px;
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">🎬 VIDEO EDITOR <span>PRO STUDIO</span></div>
+
+    <div class="header-actions">
+        <button class="btn" id="undoBtn">↶ Undo</button>
+        <button class="btn" id="redoBtn">↷ Redo</button>
+        <button class="btn" id="saveBtn">💾 Save Project</button>
+        <button class="btn btn-primary" id="exportBtn">⬇ Export MP4</button>
+    </div>
+</header>
+
+<div class="app">
+
+<aside class="sidebar">
+
+    <div class="section-title">Media Import</div>
+
+    <button class="btn btn-primary" id="importVideo"
+            style="width:100%">
+        ＋ Import Videos
+    </button>
+
+    <input type="file" id="videoFiles"
+           accept="video/*" multiple hidden>
+
+    <div class="field" style="margin-top:12px">
+        <label>Background Music</label>
+        <input type="file" id="audioFile" accept="audio/*">
+    </div>
+
+    <div class="section-title">Editing Tools</div>
+
+    <div class="tool-grid">
+        <button class="tool active" data-target="brightness">
+            <span>🎨</span>Filters
+        </button>
+
+        <button class="tool" data-target="titleText">
+            <span>🔤</span>Text
+        </button>
+
+        <button class="tool" data-target="trimStart">
+            <span>✂️</span>Trim
+        </button>
+
+        <button class="tool" data-target="speed">
+            <span>⏩</span>Speed
+        </button>
+
+        <button class="tool" data-target="aspect">
+            <span>📐</span>Canvas
+        </button>
+
+        <button class="tool" data-target="musicVolume">
+            <span>🎵</span>Audio
+        </button>
+    </div>
+
+    <div class="section-title">Project Actions</div>
+
+    <button class="btn" id="screenshotBtn"
+            style="width:100%">
+        📸 Capture Frame
+    </button>
+
+    <button class="btn" id="loadBtn"
+            style="width:100%;margin-top:8px">
+        📂 Load Project
+    </button>
+
+    <input type="file" id="projectFile"
+           accept=".json,application/json" hidden>
+
+    <div id="status" class="status">
+        Ready. Import one or more videos to begin.
+    </div>
+
+</aside>
+
+<main class="main">
+
+<div class="editor-grid">
+
+<section class="panel">
+
+    <div class="panel-title">
+        <strong>Video Preview</strong>
+        <span id="resolution">16:9</span>
+    </div>
+
+    <div class="preview" id="preview">
+
+        <video id="video" playsinline preload="metadata"></video>
+
+        <div class="placeholder" id="placeholder">
+            <div class="icon">🎥</div>
+            <h3>Start Your Project</h3>
+            <p style="font-size:12px;margin-top:8px">
+                Import a video to start editing.
+            </p>
+        </div>
+
+        <div id="textOverlay"></div>
+
+    </div>
+
+    <div class="playback">
+        <button class="circle-btn" id="backBtn">⏪</button>
+        <button class="circle-btn" id="playBtn">▶</button>
+        <button class="circle-btn" id="nextBtn">⏩</button>
+
+        <div class="time">
+            <span id="current">00:00</span>
+            /
+            <span id="duration">00:00</span>
+        </div>
+    </div>
+
+    <input class="seek" type="range" id="seek"
+           min="0" max="100" value="0">
+
+    <div class="timeline-info" style="margin-top:12px">
+        Selected Clip: <strong id="selectedName">None</strong>
+    </div>
+
+</section>
+
+<section class="panel settings">
+
+    <div class="panel-title">
+        <strong>Editing Controls</strong>
+        <button class="btn" id="resetBtn">Reset</button>
+    </div>
+
+    <div class="field">
+        <label>Brightness <span id="brightnessLabel">100%</span></label>
+        <input type="range" id="brightness"
+               min="0" max="200" value="100">
+    </div>
+
+    <div class="field">
+        <label>Contrast <span id="contrastLabel">100%</span></label>
+        <input type="range" id="contrast"
+               min="0" max="200" value="100">
+    </div>
+
+    <div class="field">
+        <label>Saturation <span id="saturationLabel">100%</span></label>
+        <input type="range" id="saturation"
+               min="0" max="200" value="100">
+    </div>
+
+    <div class="field">
+        <label>Blur <span id="blurLabel">0px</span></label>
+        <input type="range" id="blur"
+               min="0" max="10" step=".5" value="0">
+    </div>
+
+    <div class="field">
+        <label>Color Preset</label>
+        <select id="preset">
+            <option value="none">Original</option>
+            <option value="cinema">Cinema</option>
+            <option value="vintage">Vintage</option>
+            <option value="bw">Black & White</option>
+            <option value="warm">Warm</option>
+            <option value="cool">Cool</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Text / Title</label>
+        <input type="text" id="titleText"
+               placeholder="Enter video title">
+    </div>
+
+    <div class="field">
+        <label>Text Color</label>
+        <input type="color" id="titleColor" value="#ffffff">
+    </div>
+
+    <div class="field">
+        <label>Text Size</label>
+        <input type="range" id="titleSize"
+               min="12" max="70" value="28">
+    </div>
+
+    <div class="field">
+        <label>Playback / Export Speed</label>
+        <select id="speed">
+            <option value=".5">0.5x Slow</option>
+            <option value=".75">0.75x</option>
+            <option value="1" selected>1x Normal</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x Fast</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Canvas Format</label>
+        <select id="aspect">
+            <option value="16:9">Landscape 16:9</option>
+            <option value="9:16">Portrait 9:16</option>
+            <option value="1:1">Square 1:1</option>
+            <option value="4:5">Social 4:5</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Trim Start (seconds)</label>
+        <input type="number" id="trimStart"
+               min="0" step=".1" value="0">
+    </div>
+
+    <div class="field">
+        <label>Trim End (seconds)</label>
+        <input type="number" id="trimEnd"
+               min="0" step=".1" value="0">
+    </div>
+
+    <div class="field">
+        <label>Original Audio Volume</label>
+        <input type="range" id="originalVolume"
+               min="0" max="1" step=".05" value="1">
+    </div>
+
+    <div class="field">
+        <label>Music Volume</label>
+        <input type="range" id="musicVolume"
+               min="0" max="1" step=".05" value=".3">
+    </div>
+
+    <div class="field">
+        <label>Music Status</label>
+        <div id="musicStatus" class="status">No music imported.</div>
+    </div>
+
+    <div class="two-col">
+        <button class="btn" id="markStart">Mark Start</button>
+        <button class="btn" id="markEnd">Mark End</button>
+    </div>
+
+    <button class="btn btn-success" id="applyBtn"
+            style="width:100%;margin-top:10px">
+        ✓ Apply Preview Settings
+    </button>
+
+</section>
+
+</div>
+
+<section class="panel timeline-panel">
+
+    <div class="panel-title">
+        <strong>🎞️ Multi-Clip Timeline</strong>
+        <button class="btn btn-danger" id="removeSelected">
+            Remove Selected
+        </button>
+    </div>
+
+    <div class="timeline-info">
+        Add several clips and select a clip to preview it.
+        Clips will be exported in the order shown below.
+    </div>
+
+    <div id="clipList" class="clip-list">
+        <div class="timeline-info">No clips added.</div>
+    </div>
+
+    <div class="track">
+        <div class="track-title">VIDEO TRACK</div>
+        <div id="videoTrack" class="track-bar"></div>
+    </div>
+
+    <div class="track">
+        <div class="track-title">AUDIO TRACK</div>
+        <div id="audioTrack" class="track-bar"></div>
+    </div>
+
+    <div class="two-col" style="margin-top:12px">
+        <button class="btn" id="moveLeft">← Move Left</button>
+        <button class="btn" id="moveRight">Move Right →</button>
+    </div>
+
+    <progress id="progress" class="hidden"
+              max="100" value="0"></progress>
+
+    <div id="exportStatus" class="status"></div>
+
+</section>
+
+</main>
+</div>
+
+<div class="footer">
+    VIDEO EDITOR PRO STUDIO · Browser-Based Video Editing
+</div>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const video = $("video");
+const overlay = $("textOverlay");
+
+let clips = [];
+let selectedIndex = -1;
+let musicFile = null;
+let musicURL = null;
+let music = null;
+
+let ffmpeg = null;
+let exportBusy = false;
+
+let history = [];
+let historyIndex = -1;
+
+const settingIds = [
+    "brightness",
+    "contrast",
+    "saturation",
+    "blur",
+    "preset",
+    "titleText",
+    "titleColor",
+    "titleSize",
+    "speed",
+    "aspect",
+    "trimStart",
+    "trimEnd",
+    "originalVolume",
+    "musicVolume"
+];
+
+function getSettings() {
+    const settings = {};
+
+    for (const id of settingIds) {
+        settings[id] = $(id).value;
+    }
+
+    return settings;
+}
+
+function applySettings(settings) {
+    for (const id of settingIds) {
+        if (settings[id] !== undefined) {
+            $(id).value = settings[id];
+        }
+    }
+
+    updatePreview();
+}
+
+function saveHistory() {
+    history = history.slice(0, historyIndex + 1);
+    history.push(getSettings());
+
+    if (history.length > 40) history.shift();
+
+    historyIndex = history.length - 1;
+}
+
+function undo() {
+    if (historyIndex <= 0) return;
+
+    historyIndex--;
+    applySettings(history[historyIndex]);
+    setStatus("Undo complete.");
+}
+
+function redo() {
+    if (historyIndex >= history.length - 1) return;
+
+    historyIndex++;
+    applySettings(history[historyIndex]);
+    setStatus("Redo complete.");
+}
+
+$("undoBtn").onclick = undo;
+$("redoBtn").onclick = redo;
+
+function setStatus(message, type = "") {
+    $("status").textContent = message;
+    $("status").className = "status " + type;
+}
+
+function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) return "00:00";
+
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+
+    return String(m).padStart(2, "0") +
+           ":" + String(s).padStart(2, "0");
+}
+
+function selectedClip() {
+    return clips[selectedIndex] || null;
+}
+
+function updateClipName() {
+    $("selectedName").textContent =
+        selectedClip()?.file.name || "None";
+}
+
+/* ---------------------------------
+   IMPORT MULTIPLE VIDEOS
+--------------------------------- */
+
+$("importVideo").onclick = () => $("videoFiles").click();
+
+$("videoFiles").addEventListener("change", async event => {
+    const files = Array.from(event.target.files || []);
+
+    if (!files.length) return;
+
+    for (const file of files) {
+        if (!file.type.startsWith("video/")) continue;
+
+        const item = {
+            file,
+            url: URL.createObjectURL(file),
+            duration: 0,
+            width: 0,
+            height: 0
+        };
+
+        try {
+            const metadataVideo = document.createElement("video");
+            metadataVideo.preload = "metadata";
+            metadataVideo.src = item.url;
+
+            await new Promise((resolve, reject) => {
+                metadataVideo.onloadedmetadata = resolve;
+                metadataVideo.onerror = reject;
+            });
+
+            item.duration = metadataVideo.duration;
+            item.width = metadataVideo.videoWidth;
+            item.height = metadataVideo.videoHeight;
+        } catch (error) {
+            item.duration = 0;
+        }
+
+        clips.push(item);
+    }
+
+    if (selectedIndex < 0 && clips.length) {
+        selectedIndex = 0;
+        loadSelectedClip();
+    }
+
+    renderClips();
+    setStatus(files.length + " file(s) imported.", "success");
+
+    event.target.value = "";
+});
+
+function loadSelectedClip() {
+    const item = selectedClip();
+
+    if (!item) {
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+
+        video.style.display = "none";
+        $("placeholder").style.display = "block";
+        $("duration").textContent = "00:00";
+        $("current").textContent = "00:00";
+        $("seek").value = 0;
+
+        updateClipName();
+        return;
+    }
+
+    video.pause();
+    video.src = item.url;
+    video.load();
+
+    video.style.display = "block";
+    $("placeholder").style.display = "none";
+
+    updateClipName();
+}
+
+video.addEventListener("loadedmetadata", () => {
+    $("duration").textContent = formatTime(video.duration);
+
+    $("trimStart").value = 0;
+    $("trimEnd").value = video.duration;
+
+    $("trimStart").max = video.duration;
+    $("trimEnd").max = video.duration;
+
+    $("seek").max = video.duration;
+
+    $("resolution").textContent =
+        video.videoWidth + " × " + video.videoHeight;
+
+    updatePreview();
+});
+
+function renderClips() {
+    const list = $("clipList");
+    list.innerHTML = "";
+
+    if (!clips.length) {
+        list.textContent = "No clips added.";
+        return;
+    }
+
+    clips.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "clip" +
+            (index === selectedIndex ? " selected" : "");
+
+        const name = document.createElement("div");
+        name.className = "clip-name";
+        name.textContent = (index + 1) + ". " + item.file.name;
+
+        const duration = document.createElement("div");
+        duration.className = "clip-duration";
+        duration.textContent = formatTime(item.duration);
+
+        const actions = document.createElement("div");
+        actions.className = "clip-actions";
+
+        const select = document.createElement("button");
+        select.textContent = "Select";
+
+        select.onclick = () => {
+            selectedIndex = index;
+            loadSelectedClip();
+            renderClips();
+        };
+
+        const remove = document.createElement("button");
+        remove.textContent = "Delete";
+
+        remove.onclick = () => {
+            removeClip(index);
+        };
+
+        actions.append(select, remove);
+        card.append(name, duration, actions);
+        list.appendChild(card);
+    });
+
+    $("videoTrack").innerHTML = "";
+
+    clips.forEach((item, index) => {
+        const block = document.createElement("span");
+
+        block.textContent = " " + (index + 1) + " ";
+        block.title = item.file.name;
+
+        block.style.cssText =
+            "display:inline-block;padding:7px 12px;margin:2px;" +
+            "border-radius:4px;background:" +
+            (index === selectedIndex ? "#00a9d1" : "#465a85");
+
+        $("videoTrack").appendChild(block);
+    });
+}
+
+function removeClip(index) {
+    const item = clips[index];
+
+    if (!item) return;
+
+    URL.revokeObjectURL(item.url);
+    clips.splice(index, 1);
+
+    if (!clips.length) {
+        selectedIndex = -1;
+    } else if (selectedIndex >= clips.length) {
+        selectedIndex = clips.length - 1;
+    } else if (index < selectedIndex) {
+        selectedIndex--;
+    } else if (index === selectedIndex) {
+        selectedIndex = Math.min(index, clips.length - 1);
+    }
+
+    loadSelectedClip();
+    renderClips();
+}
+
+$("removeSelected").onclick = () => {
+    if (selectedIndex >= 0) removeClip(selectedIndex);
+};
+
+function moveSelected(direction) {
+    if (selectedIndex < 0) return;
+
+    const newIndex = selectedIndex + direction;
+
+    if (newIndex < 0 || newIndex >= clips.length) return;
+
+    [clips[selectedIndex], clips[newIndex]] =
+        [clips[newIndex], clips[selectedIndex]];
+
+    selectedIndex = newIndex;
+
+    renderClips();
+    loadSelectedClip();
+}
+
+$("moveLeft").onclick = () => moveSelected(-1);
+$("moveRight").onclick = () => moveSelected(1);
+
+/* ---------------------------------
+   VIDEO PREVIEW AND FILTERS
+--------------------------------- */
+
+function presetFilter() {
+    switch ($("preset").value) {
+        case "cinema":
+            return "contrast(115%) saturate(115%) brightness(95%)";
+        case "vintage":
+            return "sepia(40%) contrast(110%)";
+        case "bw":
+            return "grayscale(100%)";
+        case "warm":
+            return "sepia(20%) saturate(120%)";
+        case "cool":
+            return "hue-rotate(10deg) saturate(110%)";
+        default:
+            return "";
+    }
+}
+
+function updatePreview() {
+    const b = $("brightness").value;
+    const c = $("contrast").value;
+    const s = $("saturation").value;
+    const blur = $("blur").value;
+
+    video.style.filter =
+        `brightness(${b}%) contrast(${c}%) ` +
+        `saturate(${s}%) blur(${blur}px) ` +
+        presetFilter();
+
+    overlay.textContent = $("titleText").value;
+    overlay.style.color = $("titleColor").value;
+    overlay.style.fontSize = $("titleSize").value + "px";
+
+    video.playbackRate = Number($("speed").value);
+    video.volume = Number($("originalVolume").value);
+
+    if (music) music.volume = Number($("musicVolume").value);
+
+    const ratios = {
+        "16:9": "16 / 9",
+        "9:16": "9 / 16",
+        "1:1": "1 / 1",
+        "4:5": "4 / 5"
+    };
+
+    $("preview").style.aspectRatio = ratios[$("aspect").value];
+    $("resolution").textContent = $("aspect").value;
+
+    $("brightnessLabel").textContent = b + "%";
+    $("contrastLabel").textContent = c + "%";
+    $("saturationLabel").textContent = s + "%";
+    $("blurLabel").textContent = blur + "px";
+}
+
+settingIds.forEach(id => {
+    $(id).addEventListener("input", updatePreview);
+
+    $(id).addEventListener("change", saveHistory);
+});
+
+$("applyBtn").onclick = () => {
+    updatePreview();
+    saveHistory();
+    setStatus("Preview settings applied.", "success");
+};
+
+/* ---------------------------------
+   PLAYBACK
+--------------------------------- */
+
+$("playBtn").onclick = async () => {
+    if (!video.src) {
+        setStatus("Import a video first.", "error");
+        return;
+    }
+
+    if (video.paused) {
+        try {
+            await video.play();
+
+            if (music) {
+                music.currentTime = 0;
+                music.play().catch(() => {});
+            }
+
+            $("playBtn").textContent = "⏸";
+        } catch (error) {
+            setStatus("Could not play video.", "error");
+        }
+    } else {
+        video.pause();
+
+        if (music) music.pause();
+
+        $("playBtn").textContent = "▶";
+    }
+};
+
+video.addEventListener("pause", () => {
+    $("playBtn").textContent = "▶";
+});
+
+$("backBtn").onclick = () => {
+    video.currentTime = Math.max(0, video.currentTime - 5);
+};
+
+$("nextBtn").onclick = () => {
+    video.currentTime = Math.min(
+        video.duration || 0,
+        video.currentTime + 5
+    );
+};
+
+$("seek").addEventListener("input", () => {
+    video.currentTime = Number($("seek").value);
+});
+
+video.addEventListener("timeupdate", () => {
+    $("current").textContent = formatTime(video.currentTime);
+    $("seek").value = video.currentTime;
+});
+
+/* ---------------------------------
+   TRIM MARKERS
+--------------------------------- */
+
+$("markStart").onclick = () => {
+    $("trimStart").value = video.currentTime.toFixed(2);
+    saveHistory();
+};
+
+$("markEnd").onclick = () => {
+    $("trimEnd").value = video.currentTime.toFixed(2);
+    saveHistory();
+};
+
+/* ---------------------------------
+   AUDIO IMPORT
+--------------------------------- */
+
+$("audioFile").addEventListener("change", event => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("audio/")) {
+        setStatus("Choose an audio file.", "error");
+        return;
+    }
+
+    if (musicURL) URL.revokeObjectURL(musicURL);
+
+    musicFile = file;
+    musicURL = URL.createObjectURL(file);
+
+    if (music) music.pause();
+
+    music = new Audio(musicURL);
+    music.loop = true;
+    music.volume = Number($("musicVolume").value);
+
+    $("musicStatus").textContent = file.name;
+    $("audioTrack").style.background = "#087c5b";
+
+    setStatus("Background music imported.", "success");
+});
+
+/* ---------------------------------
+   SCREENSHOT
+--------------------------------- */
+
+$("screenshotBtn").onclick = () => {
+    if (!video.videoWidth) {
+        setStatus("Import a video first.", "error");
+        return;
+    }
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.filter = video.style.filter || "none";
+
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const title = $("titleText").value;
+
+    if (title) {
+        ctx.filter = "none";
+        ctx.fillStyle = $("titleColor").value;
+        ctx.font = "bold " + $("titleSize").value + "px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 5;
+
+        ctx.fillText(
+            title,
+            canvas.width / 2,
+            canvas.height / 2,
+            canvas.width * .9
+        );
+    }
+
+    canvas.toBlob(blob => {
+        if (!blob) return;
+
+        downloadBlob(blob, "video-frame.png");
+    }, "image/png");
+};
+
+/* ---------------------------------
+   PROJECT SAVE AND LOAD
+--------------------------------- */
+
+$("saveBtn").onclick = () => {
+    const project = {
+        name: "Video Editor Pro Project",
+        version: 1,
+        settings: getSettings(),
+        clipNames: clips.map(item => item.file.name)
+    };
+
+    downloadBlob(
+        new Blob([JSON.stringify(project, null, 2)], {
+            type: "application/json"
+        }),
+        "video-project.json"
+    );
+
+    setStatus(
+        "Project settings saved. Media files are not included.",
+        "success"
+    );
+};
+
+$("loadBtn").onclick = () => $("projectFile").click();
+
+$("projectFile").addEventListener("change", async event => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    try {
+        const project = JSON.parse(await file.text());
+
+        if (!project.settings) throw new Error("Invalid project");
+
+        applySettings(project.settings);
+        saveHistory();
+
+        setStatus(
+            "Settings loaded. Re-import your original videos and audio.",
+            "success"
+        );
+    } catch (error) {
+        setStatus("Invalid project file.", "error");
+    }
+
+    event.target.value = "";
+});
+
+function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = filename;
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+/* ---------------------------------
+   RESET
+--------------------------------- */
+
+$("resetBtn").onclick = () => {
+    $("brightness").value = 100;
+    $("contrast").value = 100;
+    $("saturation").value = 100;
+    $("blur").value = 0;
+    $("preset").value = "none";
+    $("titleText").value = "";
+    $("titleColor").value = "#ffffff";
+    $("titleSize").value = 28;
+    $("speed").value = 1;
+    $("aspect").value = "16:9";
+    $("originalVolume").value = 1;
+    $("musicVolume").value = .3;
+
+    $("trimStart").value = 0;
+    $("trimEnd").value = video.duration || 0;
+
+    updatePreview();
+    saveHistory();
+};
+
+/* ---------------------------------
+   TOOL NAVIGATION
+--------------------------------- */
+
+document.querySelectorAll(".tool").forEach(button => {
+    button.onclick = () => {
+        document.querySelectorAll(".tool").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        const target = $(button.dataset.target);
+
+        target.focus({ preventScroll: true });
+
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    };
+});
+
+/* ---------------------------------
+   FFMPEG WEBASSEMBLY
+--------------------------------- */
+
+async function getFFmpeg() {
+    if (ffmpeg) return ffmpeg;
+
+    if (!window.FFmpegWASM) {
+        throw new Error(
+            "FFmpeg did not load. Open this app with an internet connection."
+        );
+    }
+
+    const { FFmpeg } = window.FFmpegWASM;
+
+    ffmpeg = new FFmpeg();
+
+    ffmpeg.on("progress", ({ progress }) => {
+        $("progress").value =
+            Math.min(100, Math.max(0, progress * 100));
+    });
+
+    await ffmpeg.load();
+
+    return ffmpeg;
+}
+
+function escapeDrawText(text) {
+    return text
+        .replace(/\\/g, "\\\\")
+        .replace(/:/g, "\\:")
+        .replace(/'/g, "\\'")
+        .replace(/%/g, "\\%")
+        .replace(/\[/g, "\\[")
+        .replace(/\]/g, "\\]")
+        .replace(/,/g, "\\,");
+}
+
+function makeVideoFilters() {
+    const brightness = (Number($("brightness").value) - 100) / 100;
+    const contrast = Number($("contrast").value) / 100;
+    const saturation = Number($("saturation").value) / 100;
+    const speed = Number($("speed").value);
+
+    const filters = [
+        `eq=brightness=${brightness}:contrast=${contrast}:saturation=${saturation}`
+    ];
+
+    const blur = Number($("blur").value);
+
+    if (blur > 0) {
+        filters.push(`boxblur=${blur}`);
+    }
+
+    switch ($("preset").value) {
+        case "bw":
+            filters.push("hue=s=0");
+            break;
+
+        case "vintage":
+            filters.push("colorchannelmixer=.393:.769:.189:.349:.686:.168:.272:.534:.131");
+            break;
+
+        case "warm":
+            filters.push("colorbalance=rs=.08:bs=-.06");
+            break;
+
+        case "cool":
+            filters.push("colorbalance=rs=-.05:bs=.08");
+            break;
+
+        case "cinema":
+            filters.push("eq=contrast=1.1:saturation=1.1");
+            break;
+    }
+
+    /*
+      Scale and pad clips to a consistent landscape output.
+      This prevents concat errors from mismatched resolutions.
+    */
+    filters.push(
+        "scale=1280:720:force_original_aspect_ratio=decrease"
+    );
+
+    filters.push("pad=1280:720:(ow-iw)/2:(oh-ih)/2");
+
+    filters.push("setsar=1");
+
+    filters.push(`setpts=${1 / speed}*PTS`);
+
+    const title = $("titleText").value.trim();
+
+    /*
+      Text export requires a usable font file in the
+      FFmpeg runtime. We do not assume one is installed.
+      The preview overlay is not automatically burned in.
+    */
+    return filters.join(",");
+}
+
+async function exportVideo() {
+    if (exportBusy) return;
+
+    if (!clips.length) {
+        setStatus("Import at least one video.", "error");
+        return;
+    }
+
+    const item = selectedClip();
+
+    const start = Number($("trimStart").value);
+    const end = Number($("trimEnd").value);
+
+    if (
+        !item ||
+        !Number.isFinite(start) ||
+        !Number.isFinite(end) ||
+        start < 0 ||
+        end <= start ||
+        end > item.duration + .1
+    ) {
+        setStatus("Please set a valid trim range.", "error");
+        return;
+    }
+
+    exportBusy = true;
+
+    $("exportBtn").disabled = true;
+    $("progress").classList.remove("hidden");
+    $("progress").value = 0;
+    $("exportStatus").textContent = "Starting FFmpeg...";
+
+    const ff = await getFFmpeg().catch(error => {
+        throw error;
+    });
+
+    const outputName = "final_video.mp4";
+    const inputNames = [];
+
+    try {
+        /*
+          Write all source files into FFmpeg's virtual
+          filesystem and normalize each clip.
+        */
+        for (let i = 0; i < clips.length; i++) {
+            const clip = clips[i];
+            const inputName = `input_${i}.mp4`;
+            const outputClip = `clip_${i}.mp4`;
+
+            inputNames.push(inputName, outputClip);
+
+            $("exportStatus").textContent =
+                `Preparing clip ${i + 1} of ${clips.length}...`;
+
+            await ff.writeFile(
+                inputName,
+                new Uint8Array(await clip.file.arrayBuffer())
+            );
+
+            const args = [
+                "-i", inputName,
+                "-vf", makeVideoFilters(),
+                "-an",
+                "-c:v", "libx264",
+                "-preset", "ultrafast",
+                "-crf", "23",
+                "-pix_fmt", "yuv420p",
+                "-r", "30",
+                "-movflags", "+faststart",
+                outputClip
+            ];
+
+            /*
+              Apply trimming to the selected clip only.
+              The current implementation uses a common
+              timeline and exports every clip sequentially.
+            */
+            if (i === selectedIndex) {
+                const filterIndex = args.indexOf("-vf");
+
+                args.splice(
+                    filterIndex,
+                    0,
+                    "-ss", String(start)
+                );
+
+                args.splice(
+                    args.indexOf("-an"),
+                    0,
+                    "-t", String(end - start)
+                );
+            }
+
+            await ff.exec(args);
+        }
+
+        /*
+          Create an FFmpeg concat manifest.
+          Every clip has already been normalized to
+          1280x720, 30 fps and H.264.
+        */
+        const manifest = clips
+            .map((_, i) => `file 'clip_${i}.mp4'`)
+            .join("\n");
+
+        await ff.writeFile(
+            "concat.txt",
+            new TextEncoder().encode(manifest)
+        );
+
+        $("exportStatus").textContent = "Merging clips...";
+
+        const mergeArgs = [
+            "-f", "concat",
+            "-safe", "0",
+            "-i", "concat.txt"
+        ];
+
+        if (musicFile) {
+            await ff.writeFile(
+                "background_audio",
+                new Uint8Array(await musicFile.arrayBuffer())
+            );
+
+            mergeArgs.push(
+                "-i", "background_audio",
+                "-filter_complex",
+                `[1:a]volume=${Number($("musicVolume").value)}[bg]`,
+                "-map", "0:v:0",
+                "-map", "[bg]",
+                "-c:v", "copy",
+                "-c:a", "aac",
+                "-shortest"
+            );
+        } else {
+            mergeArgs.push(
+                "-map", "0:v:0",
+                "-c:v", "copy",
+                "-an"
+            );
+        }
+
+        mergeArgs.push(
+            "-movflags", "+faststart",
+            outputName
+        );
+
+        await ff.exec(mergeArgs);
+
+        $("exportStatus").textContent = "Preparing MP4 download...";
+
+        const output = await ff.readFile(outputName);
+
+        const blob = new Blob([output], {
+            type: "video/mp4"
+        });
+
+        downloadBlob(blob, "video-editor-export.mp4");
+
+        $("progress").value = 100;
+
+        $("exportStatus").textContent =
+            "Export finished. Your download should begin.";
+
+        setStatus("MP4 export completed.", "success");
+
+    } catch (error) {
+        console.error(error);
+
+        $("exportStatus").textContent =
+            "Export failed: " + (error.message || "Unknown error");
+
+        setStatus(
+            "Export failed. Try a smaller video and check the browser console.",
+            "error"
+        );
+
+    } finally {
+        exportBusy = false;
+        $("exportBtn").disabled = false;
+    }
+}
+
+$("exportBtn").onclick = () => {
+    exportVideo().catch(error => {
+        console.error(error);
+        setStatus(error.message || "Export failed.", "error");
+        $("exportBtn").disabled = false;
+        exportBusy = false;
+    });
+};
+
+/* ---------------------------------
+   KEYBOARD SHORTCUTS
+--------------------------------- */
+
+document.addEventListener("keydown", event => {
+    const tag = document.activeElement.tagName;
+
+    if (["INPUT", "SELECT", "TEXTAREA"].includes(tag)) return;
+
+    if (event.code === "Space") {
+        event.preventDefault();
+        $("playBtn").click();
+    }
+
+    if ((event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "z") {
+        event.preventDefault();
+        undo();
+    }
+
+    if ((event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "y") {
+        event.preventDefault();
+        redo();
+    }
+});
+
+updatePreview();
+saveHistory();
+</script>
+
+</body>
+</html>
