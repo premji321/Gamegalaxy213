@@ -1,264 +1,440 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d1c">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10152f">
 
-<title>Code Execution Center | GameGalaxy213</title>
+<title>3D Cartoon Studio Pro</title>
 
 <style>
 :root {
-    --bg: #080d1c;
-    --panel: #111a30;
-    --card: #15213c;
-    --primary: #5378ff;
-    --cyan: #00d4ff;
+    --bg: #0d1227;
+    --panel: #171e3b;
+    --panel2: #222c50;
+    --accent: #7167ff;
+    --cyan: #00d9ff;
     --text: #f5f7ff;
-    --muted: #aab5d0;
-    --border: rgba(255,255,255,.10);
+    --muted: #aab5d6;
+    --border: #343e65;
+    --green: #13ae79;
+    --red: #ed4766;
 }
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background:
-        radial-gradient(circle at top left, #182957, transparent 40%),
-        var(--bg);
+    margin: 0;
     color: var(--text);
-    min-height: 100vh;
+    background: var(--bg);
+    font-family: Arial, sans-serif;
 }
 
-.header {
-    text-align: center;
-    padding: 40px 15px 30px;
+button, input, select, textarea {
+    font: inherit;
+}
+
+button {
+    border: 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(1.15);
+}
+
+button:disabled {
+    opacity: .5;
+}
+
+input, select, textarea {
+    width: 100%;
+    color: white;
+    background: #0d1430;
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 7px;
+    outline: none;
+}
+
+input[type="color"] {
+    height: 42px;
+    padding: 3px;
+}
+
+input[type="range"] {
+    padding: 0;
+    accent-color: var(--cyan);
+}
+
+label {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin: 12px 0 6px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 14px;
+    background: #121832;
     border-bottom: 1px solid var(--border);
 }
 
-.logo {
-    color: var(--cyan);
-    font-size: 12px;
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
     font-weight: bold;
-    letter-spacing: 3px;
-    margin-bottom: 15px;
 }
 
-.header h1 {
-    font-size: clamp(25px, 5vw, 42px);
-    line-height: 1.4;
-    margin-bottom: 12px;
-}
-
-.header h1 span {
-    color: var(--cyan);
-}
-
-.header p {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-.container {
-    max-width: 1400px;
-    margin: auto;
-    padding: 25px 18px 40px;
-}
-
-.stats {
+.brand-icon {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #7167ff, #00d9ff);
+    font-size: 24px;
+}
+
+.header-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.secondary {
+    background: var(--panel2);
+}
+
+.green {
+    background: var(--green);
+}
+
+.red {
+    background: var(--red);
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr) 245px;
     gap: 12px;
+    padding: 12px;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.panel-heading {
+    padding: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border);
+}
+
+.panel-body {
+    padding: 13px;
+}
+
+.section {
     margin-bottom: 25px;
 }
 
-.stat {
+.section h3 {
+    font-size: 12px;
+    color: #c0c8ff;
+    margin: 0 0 12px;
+}
+
+.grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+}
+
+.grid2 button {
+    font-size: 12px;
+}
+
+.middle {
+    min-width: 0;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--panel);
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.toolbar-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.small {
+    font-size: 11px;
+    padding: 8px 10px;
+}
+
+#stage {
+    height: min(62vh, 600px);
+    min-height: 350px;
+    background: #9bd4ff;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+#viewport {
+    position: absolute;
+    inset: 0;
+}
+
+#viewport canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.stage-top {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.badge {
+    padding: 7px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    background: #10182ddd;
+    border: 1px solid #ffffff22;
+}
+
+.stage-bottom {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 8px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.stage-bottom > * {
+    pointer-events: auto;
+}
+
+.caption {
+    padding: 10px;
+    background: #10182ddd;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+#dialogueBubble {
+    position: absolute;
+    display: none;
+    left: 50%;
+    bottom: 70px;
+    transform: translateX(-50%);
+    max-width: 85%;
+    background: white;
+    color: #15203d;
+    padding: 12px 16px;
+    border-radius: 14px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 8;
+}
+
+#loadingMessage {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    text-align: center;
+    color: #14203c;
+    background: linear-gradient(#9bd4ff, #b7e3ff);
+}
+
+.loading-card {
+    max-width: 350px;
+    padding: 20px;
+    background: #ffffffdf;
+    border-radius: 14px;
+}
+
+.loading-card h2 {
+    margin: 0 0 10px;
+}
+
+.loading-card p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.timeline-panel {
+    margin-top: 10px;
+    padding: 13px;
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px 8px;
+    border-radius: 10px;
+}
+
+.timeline-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.timeline-track {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    overflow-x: auto;
+    padding: 4px;
+}
+
+.clip {
+    min-width: 80px;
+    padding: 12px 8px;
+    border-radius: 7px;
     text-align: center;
+    background: linear-gradient(120deg, #7167ff, #347ef6);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.clip.selected {
+    outline: 2px solid white;
+}
+
+.status {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+}
+
+.stat {
+    background: #0e1530;
+    padding: 12px;
+    border-radius: 7px;
 }
 
 .stat strong {
     display: block;
-    color: var(--cyan);
-    font-size: 25px;
-    margin-bottom: 7px;
+    font-size: 18px;
 }
 
 .stat span {
+    color: var(--muted);
     font-size: 11px;
-    color: var(--muted);
 }
 
-.search-box {
-    margin-bottom: 25px;
+.toast {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: none;
+    background: #263355;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 13px 17px;
+    width: max-content;
+    max-width: 90%;
+    font-size: 13px;
 }
 
-.search-box label {
-    display: block;
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-#searchInput {
-    width: 100%;
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: #000b;
     padding: 15px;
+}
+
+.modal-box {
+    width: min(450px, 100%);
+    padding: 20px;
     border-radius: 12px;
     background: var(--panel);
-    color: white;
-    border: 1px solid var(--border);
-    font-size: 15px;
-    outline: none;
 }
 
-#searchInput:focus {
-    border-color: var(--cyan);
-}
+@media(max-width: 1050px) {
+    .layout {
+        grid-template-columns: 220px minmax(0, 1fr);
+    }
 
-.section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 18px;
-}
-
-.section-heading h2 {
-    font-size: 21px;
-}
-
-.section-heading span {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.app-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 15px;
-}
-
-.app-card {
-    min-width: 0;
-    background: linear-gradient(145deg, #192747, #111a30);
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    padding: 18px 10px;
-    text-align: center;
-    transition: .25s;
-}
-
-.app-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--cyan);
-}
-
-.app-icon {
-    width: 46px;
-    height: 46px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 12px;
-    border-radius: 13px;
-    background: linear-gradient(135deg, var(--primary), #824cff);
-    font-weight: bold;
-}
-
-.app-card h3 {
-    font-size: 13px;
-    margin-bottom: 8px;
-    overflow-wrap: anywhere;
-}
-
-.app-card p {
-    font-size: 11px;
-    color: var(--muted);
-    overflow-wrap: anywhere;
-    margin-bottom: 14px;
-}
-
-.open-btn {
-    display: block;
-    width: 100%;
-    padding: 11px 5px;
-    background: var(--primary);
-    color: white;
-    text-decoration: none;
-    border-radius: 9px;
-    font-size: 12px;
-    font-weight: bold;
-    transition: .2s;
-}
-
-.open-btn:hover {
-    background: var(--cyan);
-    color: #080d1c;
-}
-
-.no-results {
-    display: none;
-    padding: 30px 10px;
-    text-align: center;
-    color: var(--muted);
-}
-
-.footer {
-    margin-top: 40px;
-    padding: 25px 10px;
-    text-align: center;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.9;
-}
-
-@media(max-width: 1000px) {
-    .app-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    .right-panel {
+        grid-column: 1 / -1;
     }
 }
 
-@media(max-width: 700px) {
-    .container {
-        padding: 20px 12px 35px;
+@media(max-width: 650px) {
+    .layout {
+        grid-template-columns: 1fr;
     }
 
-    .app-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 10px;
+    .right-panel {
+        grid-column: auto;
     }
 
-    .app-card {
-        padding: 15px 7px;
+    #stage {
+        height: 50vh;
+        min-height: 330px;
     }
 
-    .stats {
-        gap: 7px;
-    }
-
-    .stat strong {
-        font-size: 21px;
-    }
-
-    .stat span {
-        font-size: 10px;
-    }
-}
-
-@media(max-width: 360px) {
-    .app-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    header {
+        align-items: flex-start;
     }
 }
 </style>
@@ -266,325 +442,1998 @@ body {
 
 <body>
 
-<header class="header">
+<header>
+    <div class="brand">
+        <div class="brand-icon">🎬</div>
+        <div>
+            3D CARTOON STUDIO
+            <div style="font-size:10px;color:#aab5d6;margin-top:4px">
+                Animation Creator Pro
+            </div>
+        </div>
+    </div>
 
-    <div class="logo">GAMEGALAXY213 • PERSONAL DASHBOARD</div>
-
-    <h1>
-        Welcome to
-        <span>Code Execution Section</span>
-    </h1>
-
-    <p>
-        Your Personal Application Center<br>
-        All Your HTML Applications in One Place
-    </p>
-
+    <div class="header-buttons">
+        <button id="newBtn" class="secondary">＋ New</button>
+        <button id="saveBtn" class="secondary">💾 Save</button>
+        <button id="openBtn" class="secondary">📂 Open</button>
+        <button id="recordBtn" class="green">🎥 Record</button>
+    </div>
 </header>
 
-<main class="container">
+<div class="layout">
 
-    <section class="stats">
+<!-- LEFT TOOLS -->
 
-        <div class="stat">
-            <strong id="totalApps">0</strong>
-            <span>Total Applications</span>
+<aside class="panel">
+    <div class="panel-heading">🧰 Creation Tools</div>
+
+    <div class="panel-body">
+
+        <section class="section">
+            <h3>CHARACTER CREATOR</h3>
+
+            <label>Character Name</label>
+            <input id="charName" value="My Cartoon Hero">
+
+            <label>Character Type</label>
+            <select id="charType">
+                <option value="boy">Cartoon Boy</option>
+                <option value="girl">Cartoon Girl</option>
+                <option value="robot">Robot</option>
+                <option value="alien">Alien</option>
+                <option value="bear">Cute Bear</option>
+            </select>
+
+            <label>Body Color</label>
+            <input type="color" id="bodyColor" value="#4b8dff">
+
+            <label>Head Color</label>
+            <input type="color" id="headColor" value="#ffcc9d">
+
+            <label>Character Size</label>
+            <input type="range" id="charSize"
+                   min="0.7" max="1.7" step="0.1" value="1">
+
+            <button id="createChar" style="width:100%;margin-top:12px">
+                ✨ Create Character
+            </button>
+        </section>
+
+        <section class="section">
+            <h3>ANIMATION LIBRARY</h3>
+
+            <div class="grid2">
+                <button data-anim="idle">🧍 Idle</button>
+                <button data-anim="walk">🚶 Walk</button>
+                <button data-anim="run">🏃 Run</button>
+                <button data-anim="jump">🦘 Jump</button>
+                <button data-anim="dance">💃 Dance</button>
+                <button data-anim="wave">👋 Wave</button>
+            </div>
+
+            <label>Animation Speed</label>
+            <input id="animSpeed" type="range"
+                   min="0.3" max="3" step="0.1" value="1">
+
+            <div class="grid2" style="margin-top:10px">
+                <button id="playBtn" class="green">▶ Play</button>
+                <button id="stopBtn" class="red">⏹ Stop</button>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>ENVIRONMENT</h3>
+
+            <label>Scene Type</label>
+            <select id="environment">
+                <option value="village">Indian Village</option>
+                <option value="forest">Green Forest</option>
+                <option value="school">School Campus</option>
+                <option value="city">Modern City</option>
+                <option value="island">Tropical Island</option>
+                <option value="night">Night Scene</option>
+            </select>
+
+            <label>Ground Color</label>
+            <input type="color" id="groundColor" value="#66aa66">
+
+            <label>Sky Color</label>
+            <input type="color" id="skyColor" value="#8ac7ff">
+
+            <button id="buildScene" style="width:100%;margin-top:10px">
+                🌎 Build Scene
+            </button>
+        </section>
+
+        <section class="section">
+            <h3>DIALOGUE</h3>
+
+            <label>Write Dialogue</label>
+            <textarea id="dialogueText" rows="4"
+                placeholder="नमस्ते दोस्तों! हमारे गाँव में आपका स्वागत है।"></textarea>
+
+            <button id="showDialogue" style="width:100%;margin-top:8px">
+                💬 Show Dialogue
+            </button>
+
+            <button id="speakBtn" class="secondary"
+                    style="width:100%;margin-top:7px">
+                🔊 Speak Dialogue
+            </button>
+        </section>
+
+    </div>
+</aside>
+
+
+<!-- MAIN VIEWPORT -->
+
+<main class="middle">
+
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <button id="frontBtn" class="small secondary">Front</button>
+            <button id="sideBtn" class="small secondary">Side</button>
+            <button id="topBtn" class="small secondary">Top</button>
+            <button id="resetCamera" class="small secondary">Reset</button>
         </div>
 
-        <div class="stat">
-            <strong id="visibleApps">0</strong>
-            <span>Applications Displayed</span>
+        <div class="toolbar-group">
+            <button id="gridBtn" class="small secondary">Grid</button>
+            <button id="fullBtn" class="small secondary">⛶ Fullscreen</button>
+        </div>
+    </div>
+
+    <div id="stage">
+
+        <div id="viewport"></div>
+
+        <div id="loadingMessage">
+            <div class="loading-card">
+                <h2>🎬 3D Cartoon Studio</h2>
+                <p id="loadingText">
+                    आपका स्टूडियो तैयार हो रहा है...
+                </p>
+                <button id="retryBtn">Try Again</button>
+            </div>
         </div>
 
-        <div class="stat">
-            <strong>HTML</strong>
-            <span>Application Format</span>
+        <div class="stage-top">
+            <div class="badge">● 3D VIEWPORT</div>
+            <div class="badge" id="rendererStatus">Starting...</div>
         </div>
 
-    </section>
+        <div class="stage-bottom">
+            <div class="caption" id="sceneLabel">Indian Village</div>
 
-    <section class="search-box">
-
-        <label for="searchInput">
-            🔎 Search Your Applications
-        </label>
-
-        <input
-            type="search"
-            id="searchInput"
-            placeholder="Search application by name..."
-            autocomplete="off"
-        >
-
-    </section>
-
-    <section>
-
-        <div class="section-heading">
-            <h2>🚀 My Applications</h2>
-            <span>Click any button to launch</span>
+            <div class="toolbar-group">
+                <button class="small secondary" id="zoomIn">＋</button>
+                <button class="small secondary" id="zoomOut">−</button>
+            </div>
         </div>
 
-        <div class="app-grid" id="appGrid"></div>
+        <div id="dialogueBubble"></div>
+    </div>
 
-        <div class="no-results" id="noResults">
-            No application found.
+    <div class="timeline-panel">
+        <div class="timeline-title">
+            <strong>🎞️ Scene Timeline</strong>
+            <div class="toolbar-group">
+                <button class="small secondary" id="addScene">＋ Scene</button>
+                <button class="small secondary" id="deleteScene">🗑 Delete</button>
+            </div>
         </div>
 
-    </section>
+        <div class="timeline-track" id="sceneTrack">
+            <div class="clip selected">Scene 01</div>
+        </div>
 
-    <footer class="footer">
-
-        <p><strong>CODE EXECUTION CENTER</strong></p>
-
-        <p>One Dashboard. All Applications. Easy Access.</p>
-
-        <p>Powered by GitHub Pages</p>
-
-    </footer>
+        <div class="status" id="timelineStatus">
+            Ready · Project not yet saved
+        </div>
+    </div>
 
 </main>
 
+
+<!-- RIGHT PANEL -->
+
+<aside class="panel right-panel">
+    <div class="panel-heading">⚙️ Properties</div>
+
+    <div class="panel-body">
+
+        <section class="section">
+            <h3>PROJECT SETTINGS</h3>
+
+            <label>Project Name</label>
+            <input id="projectName" value="My Cartoon Film">
+
+            <label>Video Duration</label>
+            <select id="duration">
+                <option value="5">5 Seconds</option>
+                <option value="10">10 Seconds</option>
+                <option value="15" selected>15 Seconds</option>
+                <option value="30">30 Seconds</option>
+                <option value="60">60 Seconds</option>
+            </select>
+
+            <label>Frame Rate</label>
+            <select id="fps">
+                <option value="24">24 FPS</option>
+                <option value="30" selected>30 FPS</option>
+            </select>
+
+            <label>Camera Distance</label>
+            <input type="range" id="camDistance"
+                   min="5" max="20" value="10">
+
+            <label>Camera Height</label>
+            <input type="range" id="camHeight"
+                   min="1" max="12" value="4">
+
+            <label>Field of View</label>
+            <input type="range" id="camFov"
+                   min="30" max="100" value="55">
+
+            <button id="applyCamera" style="width:100%;margin-top:10px">
+                🎥 Apply Camera
+            </button>
+        </section>
+
+        <section class="section">
+            <h3>STATISTICS</h3>
+
+            <div class="stat-grid">
+                <div class="stat">
+                    <strong id="charCount">1</strong>
+                    <span>Characters</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="sceneCount">1</strong>
+                    <span>Scenes</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="objectCount">0</strong>
+                    <span>3D Objects</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="animLabel">Idle</strong>
+                    <span>Animation</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>EXPORT</h3>
+
+            <button id="screenshotBtn" style="width:100%">
+                📸 Screenshot
+            </button>
+
+            <button id="exportJsonBtn" class="secondary"
+                    style="width:100%;margin-top:8px">
+                📦 Export Project
+            </button>
+
+            <button id="helpBtn" class="secondary"
+                    style="width:100%;margin-top:8px">
+                ❓ Help
+            </button>
+        </section>
+
+    </div>
+</aside>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="helpModal">
+    <div class="modal-box">
+        <button id="closeHelp" class="secondary" style="float:right">
+            ✕
+        </button>
+
+        <h2>Studio Help</h2>
+
+        <p>• कैरेक्टर बनाने के लिए Create Character दबाएँ।</p>
+        <p>• Walk, Run, Jump या Dance चुनकर Play दबाएँ।</p>
+        <p>• गाँव, जंगल या स्कूल चुनकर Build Scene दबाएँ।</p>
+        <p>• 3D दृश्य को उँगली से घुमाया जा सकता है।</p>
+        <p>• Record से viewport का WebM वीडियो रिकॉर्ड करें।</p>
+        <p>• Save से प्रोजेक्ट की सेटिंग्स ब्राउज़र में सेव होंगी।</p>
+
+        <p style="color:#aab5d6;font-size:12px">
+            यदि Three.js डाउनलोड नहीं हो पाता, तो इंटरनेट कनेक्शन और
+            ब्राउज़र की जाँच करें।
+        </p>
+    </div>
+</div>
+
+<input id="fileInput" type="file" accept=".json" hidden>
+
 <script>
+/*
+  This script is intentionally independent of Three.js.
+  The interface and diagnostics will still work if the 3D library
+  fails to load. A fallback 2D preview is displayed in that case.
+*/
 
-/* =====================================================
-   1. GITHUB SETTINGS
-   ===================================================== */
+const $ = id => document.getElementById(id);
 
-const GITHUB_USERNAME = "premji321";
-const REPOSITORY_NAME = "Gamegalaxy213";
+const app = {
+    threeReady: false,
+    animation: 'idle',
+    playing: false,
+    time: 0,
+    scenes: ['Indian Village'],
+    sceneTypes: ['village'],
+    sceneIndex: 0,
+    showGrid: true,
+    recording: false
+};
 
-const BASE_URL =
-    `https://${GITHUB_USERNAME}.github.io/${REPOSITORY_NAME}/`;
-
-
-/* =====================================================
-   2. EDITABLE APPLICATION LIST
-
-   IMPORTANT:
-   Apni HTML files ke naam sirf isi list mein likhein.
-
-   filename = GitHub par maujood asli HTML file ka naam
-   title    = Dashboard button par dikhne wala naam
-
-   File names case-sensitive ho sakte hain.
-   ===================================================== */
-
-const APPLICATIONS = [
-
-    {
-        filename: "Quiz.html",
-        title: "Application 1"
-    },
-
-    {
-        filename: "1857-revolution.html",
-        title: "1857 Revolution Game"
-    },
-
-    {
-        filename: "alien-shooter.html",
-        title: "Alien Shooter Game"
-    },
-
-    {
-        filename: "train-information.html",
-        title: "Train Information"
-    },
-
-    {
-        filename: "pdf-editor.html",
-        title: "PDF Editor"
-    },
-
-    {
-        filename: "mock-test.html",
-        title: "Mock Test Application"
-    },
-
-    {
-        filename: "Text-to-Speech.html",
-        title: "Text-to-Speech"
-    },
-
-    {
-        filename:  "Image-to-Movie.html",
-        title: "Movie Maker"
-    },
+let THREE_LIB = null;
+let renderer = null;
+let scene3D = null;
+let camera = null;
+let controls = null;
+let character = null;
+let characterParts = {};
+let environmentGroup = null;
+let gridHelper = null;
+let recorder = null;
+let recordingChunks = [];
+let recordTimer = null;
+let fallbackCanvas = null;
+let fallbackContext = null;
+let toastTimer = null;
 
 
-    {
-        filename:  "calculator.html",
-        title: "Advance Calculator"
-    },
+function notify(message) {
+    const el = $('toast');
+    el.textContent = message;
+    el.style.display = 'block';
 
-    {
-        filename:  "Math-solver.html",
-        title: "Math-solver"
-    },
-    {
-        filename:  "AI-Assistant.html",
-        title: "AI Assistant"
-    },
+    clearTimeout(toastTimer);
 
-    {
-        filename:  "Voice-recorder.html",
-        title: "Voice Recorder"
-    },
-
-
-    {
-        filename:  "image-editor.html",
-        title: "Image editor"
-    },
-
-
-    {
-        filename:  "video-editor.html",
-        title: "Video editor"
-    },
-
-
-    {
-        filename:  "youtube-downloader.html",
-        title: "Youtube Downloader"
-    },
-
-    {
-        filename:  "Animation-Maker.html",
-        title: "Animation Maker"
-    },
-
-
-
-    /*
-      NEW APPLICATION ADD KARNE KA TARIKA:
-
-      {
-          filename: "your-file-name.html",
-          title: "Your Application Name"
-      },
-      
-
-      Comma ka dhyan rakhein.
-      File ka naam GitHub wale naam se bilkul match hona chahiye.
-    */
-
-
-
-
-
-
-
-];
-
-
-/* =====================================================
-   3. DASHBOARD ELEMENTS
-   ===================================================== */
-
-const appGrid = document.getElementById("appGrid");
-const searchInput = document.getElementById("searchInput");
-const noResults = document.getElementById("noResults");
-
-
-/* =====================================================
-   4. CREATE APPLICATION BUTTONS
-   ===================================================== */
-
-function createApplications() {
-
-    appGrid.innerHTML = "";
-
-    APPLICATIONS.forEach((app, index) => {
-
-        const card = document.createElement("article");
-        card.className = "app-card";
-
-        card.dataset.search =
-            `${app.title} ${app.filename}`.toLowerCase();
-
-        const icon = document.createElement("div");
-        icon.className = "app-icon";
-        icon.textContent = String(index + 1).padStart(2, "0");
-
-        const title = document.createElement("h3");
-        title.textContent = app.title;
-
-        const file = document.createElement("p");
-        file.textContent = app.filename;
-
-        const button = document.createElement("a");
-        button.className = "open-btn";
-        button.textContent = "OPEN APP";
-
-        /*
-          URL automatically uses the filename
-          provided in the APPLICATIONS list.
-        */
-
-        button.href =
-            BASE_URL + encodeURIComponent(app.filename);
-
-        button.target = "_blank";
-        button.rel = "noopener noreferrer";
-
-        card.append(icon, title, file, button);
-
-        appGrid.appendChild(card);
-
-    });
-
-    document.getElementById("totalApps").textContent =
-        APPLICATIONS.length;
-
-    document.getElementById("visibleApps").textContent =
-        APPLICATIONS.length;
-
-    noResults.style.display =
-        APPLICATIONS.length === 0 ? "block" : "none";
+    toastTimer = setTimeout(() => {
+        el.style.display = 'none';
+    }, 3000);
 }
 
 
-/* =====================================================
-   5. SEARCH APPLICATIONS
-   ===================================================== */
+function setLoading(message) {
+    $('loadingMessage').style.display = 'grid';
+    $('loadingText').textContent = message;
+}
 
-searchInput.addEventListener("input", function() {
 
-    const query = this.value.trim().toLowerCase();
+function hideLoading() {
+    $('loadingMessage').style.display = 'none';
+}
 
-    const cards = document.querySelectorAll(".app-card");
 
-    let visibleCount = 0;
+/* =========================================
+   FALLBACK PREVIEW
+   It works without Three.js.
+========================================= */
 
-    cards.forEach(card => {
+function startFallbackPreview(message) {
+    $('rendererStatus').textContent = '2D Preview Mode';
 
-        const matches =
-            card.dataset.search.includes(query);
+    $('loadingText').textContent =
+        message +
+        ' अभी 2D Preview दिखाया जा रहा है। 3D के लिए इंटरनेट और Three.js जरूरी है।';
 
-        card.style.display = matches ? "" : "none";
+    $('loadingMessage').style.display = 'grid';
 
-        if (matches) {
-            visibleCount++;
+    if (fallbackCanvas) return;
+
+    fallbackCanvas = document.createElement('canvas');
+    fallbackCanvas.width = 900;
+    fallbackCanvas.height = 560;
+
+    fallbackCanvas.style.width = '100%';
+    fallbackCanvas.style.height = '100%';
+    fallbackCanvas.style.display = 'block';
+
+    $('viewport').appendChild(fallbackCanvas);
+
+    fallbackContext = fallbackCanvas.getContext('2d');
+
+    drawFallback();
+}
+
+
+function drawFallback() {
+    if (!fallbackContext) return;
+
+    const ctx = fallbackContext;
+    const w = fallbackCanvas.width;
+    const h = fallbackCanvas.height;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, $('skyColor').value);
+    sky.addColorStop(1, '#d6efff');
+
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    const env = $('environment').value;
+
+    ctx.fillStyle =
+        env === 'night' ? '#222a4b' : $('groundColor').value;
+
+    ctx.fillRect(0, h * 0.68, w, h * 0.32);
+
+    // Sun
+    ctx.beginPath();
+    ctx.arc(750, 95, 45, 0, Math.PI * 2);
+    ctx.fillStyle = env === 'night' ? '#e5eaff' : '#ffdc73';
+    ctx.fill();
+
+    // Hills
+    ctx.fillStyle = '#5d9b78';
+    ctx.beginPath();
+    ctx.moveTo(0, 330);
+    ctx.quadraticCurveTo(200, 210, 400, 340);
+    ctx.quadraticCurveTo(650, 190, 900, 320);
+    ctx.lineTo(900, 450);
+    ctx.lineTo(0, 450);
+    ctx.fill();
+
+    // Environment props
+    if (env === 'village' || env === 'school') {
+        drawHouse(ctx, 90, 270, 180, 130);
+        drawHouse(ctx, 620, 290, 160, 115);
+    }
+
+    if (env === 'forest' || env === 'island') {
+        for (let i = 0; i < 8; i++) {
+            drawTree(ctx, 60 + i * 105, 330, 0.7 + (i % 3) * 0.15);
+        }
+    }
+
+    if (env === 'city') {
+        for (let i = 0; i < 8; i++) {
+            const x = 40 + i * 110;
+            const bh = 90 + (i % 3) * 50;
+
+            ctx.fillStyle = ['#7c8cba', '#a68dc2', '#9babbc'][i % 3];
+            ctx.fillRect(x, 340 - bh, 75, bh);
+
+            ctx.fillStyle = '#b9edff';
+
+            for (let yy = 350 - bh; yy < 335; yy += 25) {
+                ctx.fillRect(x + 12, yy, 15, 12);
+                ctx.fillRect(x + 42, yy, 15, 12);
+            }
+        }
+    }
+
+    // Character shadow
+    ctx.fillStyle = '#0002';
+    ctx.beginPath();
+    ctx.ellipse(450, 430, 80, 18, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    drawCartoonCharacter(ctx, 450, 425);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 18px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText('CARTOON STUDIO PREVIEW', 22, 35);
+
+    $('objectCount').textContent = env === 'forest' ? '15' : '8';
+}
+
+
+function drawHouse(ctx, x, y, w, h) {
+    ctx.fillStyle = '#f0c58b';
+    ctx.fillRect(x, y, w, h);
+
+    ctx.fillStyle = '#a74e45';
+    ctx.beginPath();
+    ctx.moveTo(x - 12, y);
+    ctx.lineTo(x + w / 2, y - 75);
+    ctx.lineTo(x + w + 12, y);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = '#714a34';
+    ctx.fillRect(x + w * 0.38, y + h * 0.48, w * 0.25, h * 0.52);
+
+    ctx.fillStyle = '#8ce0ff';
+    ctx.fillRect(x + 18, y + 25, 34, 30);
+    ctx.fillRect(x + w - 52, y + 25, 34, 30);
+}
+
+
+function drawTree(ctx, x, y, scale = 1) {
+    ctx.fillStyle = '#76502f';
+    ctx.fillRect(x - 10 * scale, y - 75 * scale, 20 * scale, 75 * scale);
+
+    ctx.fillStyle = '#238b50';
+
+    ctx.beginPath();
+    ctx.arc(x, y - 90 * scale, 38 * scale, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(x - 22 * scale, y - 75 * scale, 25 * scale, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(x + 22 * scale, y - 75 * scale, 25 * scale, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+
+function drawCartoonCharacter(ctx, x, y) {
+    const t = app.time;
+    const swing = app.playing ? Math.sin(t * 6) * 12 : 0;
+
+    const bodyColor = $('bodyColor').value;
+    const headColor = $('headColor').value;
+
+    ctx.save();
+    ctx.translate(x, y);
+
+    if (app.animation === 'dance' && app.playing) {
+        ctx.rotate(Math.sin(t * 3) * 0.12);
+    }
+
+    // Legs
+    ctx.lineWidth = 20;
+    ctx.lineCap = 'round';
+
+    ctx.strokeStyle = '#33415c';
+
+    ctx.beginPath();
+    ctx.moveTo(-20, -85);
+    ctx.lineTo(-22 + swing, -20);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(20, -85);
+    ctx.lineTo(22 - swing, -20);
+    ctx.stroke();
+
+    // Shoes
+    ctx.strokeStyle = '#222a40';
+    ctx.lineWidth = 17;
+
+    ctx.beginPath();
+    ctx.moveTo(-22 + swing, -20);
+    ctx.lineTo(-40 + swing, -14);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(22 - swing, -20);
+    ctx.lineTo(40 - swing, -14);
+    ctx.stroke();
+
+    // Arms
+    let armSwing = swing;
+
+    if (app.animation === 'wave' && app.playing) {
+        armSwing = Math.sin(t * 8) * 30;
+    }
+
+    if (app.animation === 'jump' && app.playing) {
+        armSwing = -35;
+    }
+
+    ctx.strokeStyle = headColor;
+    ctx.lineWidth = 17;
+
+    ctx.beginPath();
+    ctx.moveTo(-30, -145);
+    ctx.lineTo(-58 + armSwing, -90);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(30, -145);
+    ctx.lineTo(58 - armSwing, -90);
+    ctx.stroke();
+
+    // Body
+    ctx.fillStyle = bodyColor;
+
+    ctx.beginPath();
+    ctx.roundRect(-35, -165, 70, 85, 20);
+    ctx.fill();
+
+    // Head
+    let headY = -195;
+
+    if (app.animation === 'jump' && app.playing) {
+        headY -= Math.abs(Math.sin(t * 3)) * 40;
+    }
+
+    ctx.fillStyle = headColor;
+
+    ctx.beginPath();
+    ctx.ellipse(0, headY, 42, 46, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Hair
+    if ($('charType').value === 'boy') {
+        ctx.fillStyle = '#29213b';
+
+        ctx.beginPath();
+        ctx.arc(0, headY - 16, 40, Math.PI, Math.PI * 2);
+        ctx.fill();
+    }
+
+    if ($('charType').value === 'girl') {
+        ctx.fillStyle = '#542b22';
+
+        ctx.beginPath();
+        ctx.arc(0, headY - 18, 42, Math.PI, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(-40, headY + 15, 10, 30, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(40, headY + 15, 10, 30, 0, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    // Eyes
+    ctx.fillStyle = '#ffffff';
+
+    ctx.beginPath();
+    ctx.ellipse(-15, headY - 2, 10, 13, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.ellipse(15, headY - 2, 10, 13, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#17203a';
+
+    ctx.beginPath();
+    ctx.arc(-14, headY, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(16, headY, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Smile
+    ctx.strokeStyle = '#7b3342';
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+    ctx.arc(0, headY + 10, 12, 0.1, Math.PI - 0.1);
+    ctx.stroke();
+
+    ctx.restore();
+}
+
+
+/* =========================================
+   THREE.JS LOADING
+========================================= */
+
+async function loadThree() {
+    setLoading('3D ग्राफिक्स लाइब्रेरी लोड हो रही है...');
+
+    try {
+        const THREE = await Promise.race([
+            import('https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js'),
+
+            new Promise((_, reject) =>
+                setTimeout(
+                    () => reject(new Error('Three.js loading timeout')),
+                    12000
+                )
+            )
+        ]);
+
+        THREE_LIB = THREE;
+
+        let OrbitControls;
+
+        try {
+            const module = await import(
+                'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/controls/OrbitControls.js'
+            );
+
+            OrbitControls = module.OrbitControls;
+        } catch (error) {
+            console.warn('OrbitControls unavailable; continuing without it.', error);
         }
 
+        initThree(THREE, OrbitControls);
+
+    } catch (error) {
+        console.error('Three.js loading error:', error);
+
+        startFallbackPreview(
+            '3D लाइब्रेरी लोड नहीं हो सकी।'
+        );
+
+        notify('3D लोड नहीं हुआ। अभी Preview Mode चल रहा है।');
+    }
+}
+
+
+/* =========================================
+   THREE.JS INITIALIZATION
+========================================= */
+
+function initThree(THREE, OrbitControls) {
+    const viewport = $('viewport');
+
+    scene3D = new THREE.Scene();
+
+    scene3D.background = new THREE.Color($('skyColor').value);
+
+    camera = new THREE.PerspectiveCamera(
+        Number($('camFov').value),
+        viewport.clientWidth / viewport.clientHeight,
+        0.1,
+        300
+    );
+
+    camera.position.set(6, 4, 10);
+
+    renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        preserveDrawingBuffer: true
     });
 
-    document.getElementById("visibleApps").textContent =
-        visibleCount;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 
-    noResults.style.display =
-        visibleCount === 0 ? "block" : "none";
+    renderer.setSize(viewport.clientWidth, viewport.clientHeight);
 
+    renderer.shadowMap.enabled = true;
+
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    viewport.insertBefore(renderer.domElement, viewport.firstChild);
+
+    if (fallbackCanvas) {
+        fallbackCanvas.remove();
+        fallbackCanvas = null;
+        fallbackContext = null;
+    }
+
+    if (OrbitControls) {
+        controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 1.5, 0);
+        controls.enableDamping = true;
+    } else {
+        controls = {
+            target: new THREE.Vector3(0, 1.5, 0),
+            update() {}
+        };
+    }
+
+    scene3D.add(new THREE.HemisphereLight(0xffffff, 0x667090, 2));
+
+    const sun = new THREE.DirectionalLight(0xffffff, 3);
+
+    sun.position.set(8, 12, 8);
+    sun.castShadow = true;
+
+    scene3D.add(sun);
+
+    gridHelper = new THREE.GridHelper(30, 30, 0x5864a4, 0x343f70);
+
+    scene3D.add(gridHelper);
+
+    environmentGroup = new THREE.Group();
+
+    scene3D.add(environmentGroup);
+
+    createThreeEnvironment($('environment').value);
+    createThreeCharacter();
+
+    app.threeReady = true;
+
+    hideLoading();
+
+    $('rendererStatus').textContent = '3D Renderer Ready';
+
+    notify('3D Cartoon Studio Ready!');
+
+    renderThree();
+
+    window.addEventListener('resize', resizeThree);
+}
+
+
+/* =========================================
+   THREE.JS GEOMETRY HELPERS
+========================================= */
+
+function mat(color) {
+    return new THREE_LIB.MeshStandardMaterial({
+        color,
+        roughness: 0.8
+    });
+}
+
+
+function addBox(parent, x, y, z, sx, sy, sz, color) {
+    const mesh = new THREE_LIB.Mesh(
+        new THREE_LIB.BoxGeometry(sx, sy, sz),
+        mat(color)
+    );
+
+    mesh.position.set(x, y, z);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    parent.add(mesh);
+
+    return mesh;
+}
+
+
+function addSphere(parent, x, y, z, sx, sy, sz, color) {
+    const mesh = new THREE_LIB.Mesh(
+        new THREE_LIB.SphereGeometry(1, 20, 16),
+        mat(color)
+    );
+
+    mesh.position.set(x, y, z);
+    mesh.scale.set(sx, sy, sz);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    parent.add(mesh);
+
+    return mesh;
+}
+
+
+function addCylinder(parent, x, y, z, rt, rb, h, color) {
+    const mesh = new THREE_LIB.Mesh(
+        new THREE_LIB.CylinderGeometry(rt, rb, h, 12),
+        mat(color)
+    );
+
+    mesh.position.set(x, y, z);
+    mesh.castShadow = true;
+
+    parent.add(mesh);
+
+    return mesh;
+}
+
+
+/* =========================================
+   THREE.JS CHARACTER
+========================================= */
+
+function createThreeCharacter() {
+    if (!app.threeReady || !THREE_LIB) {
+        drawFallback();
+        return;
+    }
+
+    if (character) {
+        scene3D.remove(character);
+
+        character.traverse(obj => {
+            if (obj.geometry) obj.geometry.dispose();
+
+            if (obj.material) {
+                const materials = Array.isArray(obj.material)
+                    ? obj.material : [obj.material];
+
+                materials.forEach(m => m.dispose());
+            }
+        });
+    }
+
+    const THREE = THREE_LIB;
+
+    character = new THREE.Group();
+
+    character.name = $('charName').value || 'Hero';
+
+    const type = $('charType').value;
+
+    const bodyColor = $('bodyColor').value;
+    let skinColor = $('headColor').value;
+
+    if (type === 'robot') skinColor = '#bfc9d9';
+    if (type === 'alien') skinColor = '#78e79a';
+    if (type === 'bear') skinColor = '#a96c40';
+
+    const body = new THREE.Mesh(
+        new THREE.CapsuleGeometry(0.38, 0.7, 5, 12),
+        mat(bodyColor)
+    );
+
+    body.position.y = 1.35;
+    body.castShadow = true;
+
+    character.add(body);
+
+    const headGroup = new THREE.Group();
+    headGroup.position.set(0, 2.15, 0);
+
+    character.add(headGroup);
+
+    if (type === 'robot') {
+        addBox(headGroup, 0, 0.35, 0, 0.8, 0.7, 0.7, skinColor);
+    } else {
+        addSphere(headGroup, 0, 0.35, 0, 0.47, 0.48, 0.43, skinColor);
+    }
+
+    // Eyes
+    for (const x of [-0.16, 0.16]) {
+        addSphere(headGroup, x, 0.38, 0.38, 0.08, 0.1, 0.05, '#ffffff');
+        addSphere(headGroup, x, 0.38, 0.425, 0.035, 0.05, 0.025, '#17203a');
+    }
+
+    // Nose
+    addSphere(headGroup, 0, 0.26, 0.44, 0.05, 0.04, 0.06, '#e89570');
+
+    // Hair
+    if (type === 'boy' || type === 'girl') {
+        addSphere(
+            headGroup,
+            0,
+            0.66,
+            -0.01,
+            0.48,
+            0.22,
+            0.43,
+            type === 'girl' ? '#542b22' : '#29213b'
+        );
+    }
+
+    if (type === 'bear') {
+        addSphere(headGroup, -0.38, 0.7, 0, 0.17, 0.17, 0.17, skinColor);
+        addSphere(headGroup, 0.38, 0.7, 0, 0.17, 0.17, 0.17, skinColor);
+    }
+
+    const armMaterial = mat(bodyColor);
+    const legMaterial = mat('#33415c');
+
+    function makeLimb(x, y, material, name) {
+        const pivot = new THREE.Group();
+
+        pivot.position.set(x, y, 0);
+        pivot.name = name;
+
+        const limb = new THREE.Mesh(
+            new THREE.CapsuleGeometry(0.12, 0.48, 4, 8),
+            material
+        );
+
+        limb.position.y = -0.3;
+        limb.castShadow = true;
+
+        pivot.add(limb);
+        character.add(pivot);
+
+        return pivot;
+    }
+
+    const leftArm = makeLimb(-0.48, 1.7, armMaterial, 'LeftArm');
+    const rightArm = makeLimb(0.48, 1.7, armMaterial, 'RightArm');
+
+    const leftLeg = makeLimb(-0.21, 0.65, legMaterial, 'LeftLeg');
+    const rightLeg = makeLimb(0.21, 0.65, legMaterial, 'RightLeg');
+
+    characterParts = {
+        headGroup,
+        leftArm,
+        rightArm,
+        leftLeg,
+        rightLeg
+    };
+
+    character.scale.setScalar(Number($('charSize').value));
+
+    scene3D.add(character);
+
+    $('charCount').textContent = '1';
+
+    updateObjectCount();
+
+    if (fallbackCanvas) {
+        fallbackCanvas.remove();
+        fallbackCanvas = null;
+        fallbackContext = null;
+    }
+
+    notify('3D Character created.');
+}
+
+
+/* =========================================
+   THREE.JS ENVIRONMENT
+========================================= */
+
+function createThreeEnvironment(type) {
+    if (!app.threeReady || !THREE_LIB) {
+        drawFallback();
+        return;
+    }
+
+    const THREE = THREE_LIB;
+
+    while (environmentGroup.children.length) {
+        const obj = environmentGroup.children.pop();
+
+        if (obj.geometry) obj.geometry.dispose();
+
+        if (obj.material) {
+            if (Array.isArray(obj.material)) {
+                obj.material.forEach(m => m.dispose());
+            } else {
+                obj.material.dispose();
+            }
+        }
+    }
+
+    scene3D.background = new THREE.Color($('skyColor').value);
+
+    const ground = new THREE.Mesh(
+        new THREE.PlaneGeometry(100, 100),
+        mat(type === 'night' ? '#242a47' : $('groundColor').value)
+    );
+
+    ground.rotation.x = -Math.PI / 2;
+    ground.receiveShadow = true;
+
+    environmentGroup.add(ground);
+
+    // Sun
+    addSphere(
+        environmentGroup,
+        -8, 10, -15,
+        1.4, 1.4, 1.4,
+        type === 'night' ? '#e5eaff' : '#ffdb70'
+    );
+
+    function tree(x, z, size = 1) {
+        const g = new THREE.Group();
+
+        g.position.set(x, 0, z);
+        g.scale.setScalar(size);
+
+        addCylinder(g, 0, 0.8, 0, 0.18, 0.25, 1.6, '#76502f');
+        addSphere(g, 0, 1.9, 0, 0.9, 1.1, 0.9, '#25894f');
+
+        environmentGroup.add(g);
+    }
+
+    function house(x, z, color = '#e8bd88') {
+        const g = new THREE.Group();
+
+        g.position.set(x, 0, z);
+
+        addBox(g, 0, 1, 0, 3, 2, 2.5, color);
+        addBox(g, 0, 0.6, 1.28, 0.6, 1.2, 0.08, '#68422e');
+
+        addBox(g, -0.9, 1.3, 1.29, 0.5, 0.45, 0.06, '#8ce0ff');
+        addBox(g, 0.9, 1.3, 1.29, 0.5, 0.45, 0.06, '#8ce0ff');
+
+        const roof = new THREE.Mesh(
+            new THREE.ConeGeometry(2.3, 1.3, 4),
+            mat('#a94d45')
+        );
+
+        roof.position.y = 2.6;
+        roof.rotation.y = Math.PI / 4;
+
+        g.add(roof);
+
+        environmentGroup.add(g);
+    }
+
+    if (type === 'village') {
+        house(-7, -7);
+        house(7, -10, '#f1d2a0');
+        house(-11, 3, '#d6a17a');
+
+        for (let i = 0; i < 16; i++) {
+            tree(
+                (Math.random() - 0.5) * 32,
+                -15 + Math.random() * 25,
+                0.6 + Math.random() * 0.6
+            );
+        }
+
+        addBox(environmentGroup, 0, 0.01, 0, 2.5, 0.02, 35, '#c9ad84');
+    }
+
+    if (type === 'forest') {
+        for (let i = 0; i < 45; i++) {
+            tree(
+                (Math.random() - 0.5) * 35,
+                -5 - Math.random() * 35,
+                0.7 + Math.random()
+            );
+        }
+
+        addBox(environmentGroup, 0, 0.02, -15, 3, 0.02, 35, '#b9a078');
+    }
+
+    if (type === 'school') {
+        addBox(environmentGroup, 0, 2, -10, 13, 4, 3, '#f0d5a8');
+        addBox(environmentGroup, 0, 4.2, -10, 14, 0.5, 4, '#bd4b4b');
+        addBox(environmentGroup, 0, 1.1, -8.4, 1.4, 2.2, 0.1, '#60452e');
+
+        for (let x = -5; x <= 5; x += 2.5) {
+            addBox(environmentGroup, x, 2.6, -8.4, 1.1, 0.9, 0.1, '#8ce0ff');
+        }
+
+        for (let i = 0; i < 12; i++) {
+            tree(-14 + i * 2.5, 5, 0.7);
+        }
+    }
+
+    if (type === 'city') {
+        for (let i = 0; i < 14; i++) {
+            const x = -16 + i * 2.5;
+            const height = 3 + Math.random() * 7;
+
+            addBox(
+                environmentGroup,
+                x,
+                height / 2,
+                -15,
+                2,
+                height,
+                3,
+                ['#879bc1', '#a68dc2', '#d3a17b'][i % 3]
+            );
+        }
+
+        addBox(environmentGroup, 0, 0.02, 0, 6, 0.02, 40, '#454b5b');
+    }
+
+    if (type === 'island') {
+        addSphere(environmentGroup, 0, -1, -8, 13, 2, 13, '#b7a76d');
+
+        for (let i = 0; i < 15; i++) {
+            tree(
+                (Math.random() - 0.5) * 20,
+                -17 + Math.random() * 18,
+                0.7
+            );
+        }
+    }
+
+    if (type === 'night') {
+        for (let i = 0; i < 60; i++) {
+            addSphere(
+                environmentGroup,
+                (Math.random() - 0.5) * 45,
+                5 + Math.random() * 15,
+                -15 - Math.random() * 20,
+                0.06, 0.06, 0.06,
+                '#ffffff'
+            );
+        }
+
+        for (let i = 0; i < 6; i++) {
+            house(-12 + i * 5, -12, '#555b81');
+        }
+    }
+
+    $('sceneLabel').textContent =
+        $('environment').selectedOptions[0].text;
+
+    updateObjectCount();
+}
+
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+function chooseAnimation(name) {
+    app.animation = name;
+    app.time = 0;
+
+    $('animLabel').textContent =
+        name.charAt(0).toUpperCase() + name.slice(1);
+
+    $('timelineStatus').textContent =
+        'Selected Animation: ' + name;
+
+    notify('Animation: ' + name);
+}
+
+
+function updateAnimation(dt) {
+    if (!app.playing) return;
+
+    app.time += dt * Number($('animSpeed').value);
+
+    if (!app.threeReady) {
+        drawFallback();
+        return;
+    }
+
+    const t = app.time;
+    const p = characterParts;
+
+    if (!p.leftArm) return;
+
+    p.leftArm.rotation.set(0, 0, 0);
+    p.rightArm.rotation.set(0, 0, 0);
+    p.leftLeg.rotation.set(0, 0, 0);
+    p.rightLeg.rotation.set(0, 0, 0);
+    p.headGroup.rotation.set(0, 0, 0);
+
+    character.position.y = 0;
+    character.rotation.y = 0;
+
+    if (app.animation === 'idle') {
+        character.position.y = Math.abs(Math.sin(t * 2)) * 0.04;
+    }
+
+    if (app.animation === 'walk') {
+        const s = Math.sin(t * 6);
+
+        p.leftLeg.rotation.x = s * 0.65;
+        p.rightLeg.rotation.x = -s * 0.65;
+
+        p.leftArm.rotation.x = -s * 0.6;
+        p.rightArm.rotation.x = s * 0.6;
+
+        character.position.y = Math.abs(s) * 0.08;
+    }
+
+    if (app.animation === 'run') {
+        const s = Math.sin(t * 11);
+
+        p.leftLeg.rotation.x = s * 0.95;
+        p.rightLeg.rotation.x = -s * 0.95;
+
+        p.leftArm.rotation.x = -s * 0.9;
+        p.rightArm.rotation.x = s * 0.9;
+
+        character.position.y = Math.abs(s) * 0.15;
+    }
+
+    if (app.animation === 'jump') {
+        character.position.y = Math.abs(Math.sin(t * 3)) * 2;
+
+        p.leftArm.rotation.z = 0.9;
+        p.rightArm.rotation.z = -0.9;
+    }
+
+    if (app.animation === 'dance') {
+        character.rotation.y = Math.sin(t * 3) * 0.6;
+        character.position.y = Math.abs(Math.sin(t * 5)) * 0.3;
+
+        p.leftArm.rotation.z = Math.sin(t * 5) * 0.8;
+        p.rightArm.rotation.z = -Math.sin(t * 5) * 0.8;
+
+        p.leftLeg.rotation.x = Math.sin(t * 5) * 0.4;
+        p.rightLeg.rotation.x = -Math.sin(t * 5) * 0.4;
+    }
+
+    if (app.animation === 'wave') {
+        p.rightArm.rotation.z = -1 + Math.sin(t * 7) * 0.5;
+        p.headGroup.rotation.z = Math.sin(t * 2) * 0.08;
+    }
+
+    $('timelineStatus').textContent =
+        'Playing: ' + app.animation +
+        ' · ' + t.toFixed(1) + ' sec';
+
+    if (app.time > 60) app.time = 0;
+}
+
+
+/* =========================================
+   RENDER LOOP
+========================================= */
+
+let previousTime = 0;
+
+function renderThree(timestamp = 0) {
+    if (!app.threeReady) return;
+
+    requestAnimationFrame(renderThree);
+
+    const dt = Math.min((timestamp - previousTime) / 1000 || 0, 0.05);
+
+    previousTime = timestamp;
+
+    if (controls && controls.update) controls.update();
+
+    updateAnimation(dt);
+
+    renderer.render(scene3D, camera);
+}
+
+
+/* =========================================
+   CAMERA
+========================================= */
+
+function resizeThree() {
+    if (!renderer || !camera) return;
+
+    const w = $('viewport').clientWidth;
+    const h = $('viewport').clientHeight;
+
+    if (w <= 0 || h <= 0) return;
+
+    renderer.setSize(w, h);
+
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+}
+
+
+function setCamera(type) {
+    if (!app.threeReady) {
+        notify('Camera controls require the 3D renderer.');
+        return;
+    }
+
+    if (type === 'front') camera.position.set(0, 3, 11);
+    if (type === 'side') camera.position.set(11, 3, 0);
+    if (type === 'top') camera.position.set(0, 15, 0.01);
+    if (type === 'reset') camera.position.set(6, 4, 10);
+
+    if (controls && controls.target) {
+        controls.target.set(0, 1.5, 0);
+    }
+
+    if (controls && controls.update) controls.update();
+}
+
+
+function applyCamera() {
+    if (!app.threeReady) return;
+
+    camera.position.set(
+        0,
+        Number($('camHeight').value),
+        Number($('camDistance').value)
+    );
+
+    camera.fov = Number($('camFov').value);
+    camera.updateProjectionMatrix();
+
+    if (controls && controls.update) controls.update();
+}
+
+
+/* =========================================
+   STATISTICS
+========================================= */
+
+function updateObjectCount() {
+    if (!scene3D) return;
+
+    let count = 0;
+
+    scene3D.traverse(obj => {
+        if (obj.isMesh) count++;
+    });
+
+    $('objectCount').textContent = count;
+}
+
+
+/* =========================================
+   DIALOGUE
+========================================= */
+
+function showDialogue() {
+    const text = $('dialogueText').value.trim();
+
+    if (!text) {
+        notify('पहले संवाद लिखिए।');
+        return;
+    }
+
+    $('dialogueBubble').textContent = text;
+    $('dialogueBubble').style.display = 'block';
+}
+
+
+function speakDialogue() {
+    const text = $('dialogueText').value.trim();
+
+    if (!text) {
+        notify('पहले संवाद लिखिए।');
+        return;
+    }
+
+    if (!('speechSynthesis' in window)) {
+        notify('यह ब्राउज़र Voice Support नहीं करता।');
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang = 'hi-IN';
+    utterance.rate = 0.9;
+    utterance.pitch = 1.05;
+
+    speechSynthesis.speak(utterance);
+}
+
+
+/* =========================================
+   VIDEO RECORDING
+========================================= */
+
+function recordVideo() {
+    if (app.recording) {
+        stopRecording();
+        return;
+    }
+
+    let canvas;
+
+    if (app.threeReady && renderer) {
+        canvas = renderer.domElement;
+    } else if (fallbackCanvas) {
+        canvas = fallbackCanvas;
+    } else {
+        notify('अभी रिकॉर्ड करने के लिए दृश्य उपलब्ध नहीं है।');
+        return;
+    }
+
+    if (!canvas.captureStream || !window.MediaRecorder) {
+        notify('इस ब्राउज़र में वीडियो रिकॉर्डिंग उपलब्ध नहीं है।');
+        return;
+    }
+
+    const stream = canvas.captureStream(Number($('fps').value));
+
+    const mime = [
+        'video/webm;codecs=vp9',
+        'video/webm;codecs=vp8',
+        'video/webm'
+    ].find(type => MediaRecorder.isTypeSupported(type));
+
+    if (!mime) {
+        notify('WebM recording supported नहीं है।');
+        stream.getTracks().forEach(track => track.stop());
+        return;
+    }
+
+    recordingChunks = [];
+
+    try {
+        recorder = new MediaRecorder(stream, { mimeType: mime });
+    } catch (error) {
+        console.error(error);
+        notify('रिकॉर्डिंग शुरू नहीं हो सकी।');
+        stream.getTracks().forEach(track => track.stop());
+        return;
+    }
+
+    recorder.ondataavailable = event => {
+        if (event.data && event.data.size > 0) {
+            recordingChunks.push(event.data);
+        }
+    };
+
+    recorder.onstop = () => {
+        const blob = new Blob(recordingChunks, { type: mime });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+
+        a.href = url;
+        a.download = ($('projectName').value || 'cartoon') + '.webm';
+
+        a.click();
+
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+        stream.getTracks().forEach(track => track.stop());
+
+        $('recordBtn').textContent = '🎥 Record';
+
+        notify('वीडियो डाउनलोड हो गया।');
+    };
+
+    recorder.start();
+
+    app.recording = true;
+
+    $('recordBtn').textContent = '⏹ Stop Recording';
+
+    notify('रिकॉर्डिंग शुरू हो गई है।');
+
+    recordTimer = setTimeout(
+        stopRecording,
+        Number($('duration').value) * 1000
+    );
+}
+
+
+function stopRecording() {
+    clearTimeout(recordTimer);
+
+    if (!app.recording) return;
+
+    app.recording = false;
+
+    if (recorder && recorder.state !== 'inactive') {
+        recorder.stop();
+    }
+}
+
+
+/* =========================================
+   SCREENSHOT
+========================================= */
+
+function screenshot() {
+    const canvas = app.threeReady
+        ? renderer.domElement
+        : fallbackCanvas;
+
+    if (!canvas) {
+        notify('स्क्रीनशॉट उपलब्ध नहीं है।');
+        return;
+    }
+
+    try {
+        const a = document.createElement('a');
+
+        a.href = canvas.toDataURL('image/png');
+        a.download = 'cartoon-scene.png';
+
+        a.click();
+
+        notify('Screenshot डाउनलोड हो गया।');
+    } catch (error) {
+        console.error(error);
+        notify('Screenshot नहीं बन सका।');
+    }
+}
+
+
+/* =========================================
+   PROJECT SAVE AND LOAD
+========================================= */
+
+function projectData() {
+    return {
+        app: '3D Cartoon Studio Pro',
+        projectName: $('projectName').value,
+        charName: $('charName').value,
+        charType: $('charType').value,
+        bodyColor: $('bodyColor').value,
+        headColor: $('headColor').value,
+        charSize: $('charSize').value,
+        environment: $('environment').value,
+        groundColor: $('groundColor').value,
+        skyColor: $('skyColor').value,
+        animation: app.animation,
+        animSpeed: $('animSpeed').value,
+        dialogue: $('dialogueText').value,
+        duration: $('duration').value,
+        fps: $('fps').value,
+        scenes: app.scenes,
+        sceneTypes: app.sceneTypes
+    };
+}
+
+
+function saveProject() {
+    try {
+        localStorage.setItem(
+            'cartoonStudioProject',
+            JSON.stringify(projectData())
+        );
+
+        $('timelineStatus').textContent =
+            'Project saved in this browser.';
+
+        notify('प्रोजेक्ट सेव हो गया।');
+    } catch (error) {
+        notify('प्रोजेक्ट सेव नहीं हो सका।');
+    }
+}
+
+
+function exportProject() {
+    const blob = new Blob(
+        [JSON.stringify(projectData(), null, 2)],
+        { type: 'application/json' }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = 'cartoon-project.json';
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    notify('Project JSON डाउनलोड हो गया।');
+}
+
+
+function applyProject(data) {
+    $('projectName').value = data.projectName || 'My Cartoon Film';
+
+    $('charName').value = data.charName || 'My Cartoon Hero';
+    $('charType').value = data.charType || 'boy';
+
+    $('bodyColor').value = data.bodyColor || '#4b8dff';
+    $('headColor').value = data.headColor || '#ffcc9d';
+
+    $('charSize').value = data.charSize || 1;
+
+    $('environment').value = data.environment || 'village';
+    $('groundColor').value = data.groundColor || '#66aa66';
+    $('skyColor').value = data.skyColor || '#8ac7ff';
+
+    $('animSpeed').value = data.animSpeed || 1;
+    $('dialogueText').value = data.dialogue || '';
+
+    $('duration').value = data.duration || '15';
+    $('fps').value = data.fps || '30';
+
+    app.scenes = Array.isArray(data.scenes)
+        ? data.scenes : ['Indian Village'];
+
+    app.sceneTypes = Array.isArray(data.sceneTypes)
+        ? data.sceneTypes : ['village'];
+
+    app.sceneIndex = 0;
+
+    if (app.threeReady) {
+        createThreeEnvironment($('environment').value);
+        createThreeCharacter();
+    } else {
+        drawFallback();
+    }
+
+    chooseAnimation(data.animation || 'idle');
+
+    renderScenes();
+
+    notify('प्रोजेक्ट खुल गया।');
+}
+
+
+function openProjectFile(file) {
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        try {
+            const data = JSON.parse(reader.result);
+
+            if (data.app !== '3D Cartoon Studio Pro') {
+                throw new Error('Invalid project');
+            }
+
+            applyProject(data);
+        } catch (error) {
+            console.error(error);
+            notify('यह Project File सही नहीं है।');
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+
+/* =========================================
+   SCENE TIMELINE
+========================================= */
+
+function renderScenes() {
+    const track = $('sceneTrack');
+
+    track.replaceChildren();
+
+    app.scenes.forEach((name, index) => {
+        const clip = document.createElement('button');
+
+        clip.className = 'clip' +
+            (index === app.sceneIndex ? ' selected' : '');
+
+        clip.textContent =
+            'Scene ' + String(index + 1).padStart(2, '0');
+
+        clip.title = name;
+
+        clip.addEventListener('click', () => {
+            app.sceneIndex = index;
+
+            $('environment').value =
+                app.sceneTypes[index] || 'village';
+
+            if (app.threeReady) {
+                createThreeEnvironment($('environment').value);
+            } else {
+                drawFallback();
+            }
+
+            renderScenes();
+        });
+
+        track.appendChild(clip);
+    });
+
+    $('sceneCount').textContent = app.scenes.length;
+}
+
+
+/* =========================================
+   EVENT LISTENERS
+========================================= */
+
+$('createChar').addEventListener('click', () => {
+    if (app.threeReady) {
+        createThreeCharacter();
+    } else {
+        drawFallback();
+        notify('Preview में कैरेक्टर अपडेट हो गया।');
+    }
+});
+
+$('buildScene').addEventListener('click', () => {
+    if (app.threeReady) {
+        createThreeEnvironment($('environment').value);
+    } else {
+        drawFallback();
+    }
+});
+
+$('environment').addEventListener('change', () => {
+    if (app.threeReady) {
+        createThreeEnvironment($('environment').value);
+    } else {
+        drawFallback();
+    }
+});
+
+document.querySelectorAll('[data-anim]').forEach(button => {
+    button.addEventListener('click', () => {
+        chooseAnimation(button.dataset.anim);
+    });
+});
+
+$('playBtn').addEventListener('click', () => {
+    app.playing = true;
+
+    notify('Animation चालू है।');
+});
+
+$('stopBtn').addEventListener('click', () => {
+    app.playing = false;
+    app.time = 0;
+
+    if (app.threeReady && character) {
+        character.position.set(0, 0, 0);
+        character.rotation.set(0, 0, 0);
+
+        Object.values(characterParts).forEach(part => {
+            part.rotation.set(0, 0, 0);
+        });
+    }
+
+    drawFallback();
+
+    notify('Animation रोक दिया गया।');
+});
+
+$('showDialogue').addEventListener('click', showDialogue);
+$('speakBtn').addEventListener('click', speakDialogue);
+
+$('frontBtn').addEventListener('click', () => setCamera('front'));
+$('sideBtn').addEventListener('click', () => setCamera('side'));
+$('topBtn').addEventListener('click', () => setCamera('top'));
+$('resetCamera').addEventListener('click', () => setCamera('reset'));
+
+$('applyCamera').addEventListener('click', applyCamera);
+
+$('camFov').addEventListener('input', () => {
+    if (!app.threeReady) return;
+
+    camera.fov = Number($('camFov').value);
+    camera.updateProjectionMatrix();
+});
+
+$('gridBtn').addEventListener('click', () => {
+    app.showGrid = !app.showGrid;
+
+    if (gridHelper) gridHelper.visible = app.showGrid;
+});
+
+$('zoomIn').addEventListener('click', () => {
+    if (app.threeReady) {
+        camera.position.multiplyScalar(0.9);
+    }
+});
+
+$('zoomOut').addEventListener('click', () => {
+    if (app.threeReady) {
+        camera.position.multiplyScalar(1.1);
+    }
+});
+
+$('fullBtn').addEventListener('click', async () => {
+    try {
+        if (!document.fullscreenElement) {
+            await $('stage').requestFullscreen();
+        } else {
+            await document.exitFullscreen();
+        }
+
+        setTimeout(resizeThree, 200);
+    } catch (error) {
+        notify('Fullscreen उपलब्ध नहीं है।');
+    }
+});
+
+$('recordBtn').addEventListener('click', recordVideo);
+$('screenshotBtn').addEventListener('click', screenshot);
+
+$('saveBtn').addEventListener('click', saveProject);
+$('exportJsonBtn').addEventListener('click', exportProject);
+
+$('openBtn').addEventListener('click', () => {
+    $('fileInput').click();
+});
+
+$('fileInput').addEventListener('change', event => {
+    openProjectFile(event.target.files[0]);
+    event.target.value = '';
+});
+
+$('addScene').addEventListener('click', () => {
+    if (app.scenes.length >= 30) {
+        notify('अधिकतम 30 Scenes की अनुमति है।');
+        return;
+    }
+
+    const name = prompt(
+        'Scene का नाम लिखिए:',
+        'New Scene ' + (app.scenes.length + 1)
+    );
+
+    if (!name) return;
+
+    app.scenes.push(name);
+    app.sceneTypes.push($('environment').value);
+
+    app.sceneIndex = app.scenes.length - 1;
+
+    renderScenes();
+
+    notify('Scene जोड़ दिया गया।');
+});
+
+$('deleteScene').addEventListener('click', () => {
+    if (app.scenes.length <= 1) {
+        notify('कम से कम एक Scene जरूरी है।');
+        return;
+    }
+
+    app.scenes.splice(app.sceneIndex, 1);
+    app.sceneTypes.splice(app.sceneIndex, 1);
+
+    app.sceneIndex = Math.max(0, app.sceneIndex - 1);
+
+    $('environment').value =
+        app.sceneTypes[app.sceneIndex] || 'village';
+
+    if (app.threeReady) {
+        createThreeEnvironment($('environment').value);
+    } else {
+        drawFallback();
+    }
+
+    renderScenes();
+
+    notify('Scene हटा दिया गया।');
+});
+
+$('newBtn').addEventListener('click', () => {
+    if (!confirm('नया प्रोजेक्ट बनाएँ?')) return;
+
+    app.animation = 'idle';
+    app.playing = false;
+    app.time = 0;
+
+    app.scenes = ['Indian Village'];
+    app.sceneTypes = ['village'];
+    app.sceneIndex = 0;
+
+    $('projectName').value = 'My Cartoon Film';
+    $('charName').value = 'My Cartoon Hero';
+    $('charType').value = 'boy';
+
+    $('bodyColor').value = '#4b8dff';
+    $('headColor').value = '#ffcc9d';
+
+    $('environment').value = 'village';
+
+    if (app.threeReady) {
+        createThreeEnvironment('village');
+        createThreeCharacter();
+    } else {
+        drawFallback();
+    }
+
+    renderScenes();
+
+    notify('नया प्रोजेक्ट तैयार है।');
+});
+
+$('helpBtn').addEventListener('click', () => {
+    $('helpModal').style.display = 'flex';
+});
+
+$('closeHelp').addEventListener('click', () => {
+    $('helpModal').style.display = 'none';
+});
+
+$('helpModal').addEventListener('click', event => {
+    if (event.target === $('helpModal')) {
+        $('helpModal').style.display = 'none';
+    }
+});
+
+$('retryBtn').addEventListener('click', () => {
+    $('loadingText').textContent = '3D लाइब्रेरी फिर से लोड हो रही है...';
+
+    if (fallbackCanvas) {
+        fallbackCanvas.remove();
+        fallbackCanvas = null;
+        fallbackContext = null;
+    }
+
+    loadThree();
 });
 
 
-/* =====================================================
-   6. START DASHBOARD
-   ===================================================== */
+/* =========================================
+   STARTUP
+========================================= */
 
-createApplications();
+function startup() {
+    renderScenes();
+
+    // Always show a preview first, even if Three.js fails.
+    startFallbackPreview(
+        'पहले Preview तैयार किया जा रहा है।'
+    );
+
+    loadThree();
+}
+
+startup();
 
 </script>
 
