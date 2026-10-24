@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10172a">
+
+<title>Video Utility Pro</title>
+
+<style>
+:root {
+    --bg: #0b1020;
+    --panel: #151d32;
+    --panel2: #1d2942;
+    --primary: #ff334f;
+    --blue: #477bff;
+    --text: #f4f7ff;
+    --muted: #aab5cc;
+    --border: #303c56;
+    --green: #20c997;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+header {
+    padding: 22px 16px;
+    text-align: center;
+    background: linear-gradient(135deg, #171e35, #10172a);
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+header p {
+    color: var(--muted);
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 850px;
+    padding: 20px 14px 40px;
+    margin: auto;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 30px #0002;
+}
+
+h2 {
+    font-size: 19px;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin: 14px 0 8px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    background: #0b1224;
+    border: 1px solid var(--border);
+    color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: var(--blue);
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 13px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: .2s;
+}
+
+button:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+}
+
+.primary {
+    background: var(--primary);
+    color: white;
+}
+
+.secondary {
+    background: var(--blue);
+    color: white;
+}
+
+.success {
+    background: var(--green);
+    color: #071b16;
+}
+
+.dark {
+    background: var(--panel2);
+    color: white;
+    border: 1px solid var(--border);
+}
+
+.full {
+    width: 100%;
+    margin-top: 14px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.preview {
+    display: none;
+    margin-top: 18px;
+}
+
+.preview iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 12px;
+    background: #000;
+}
+
+.video-info {
+    padding: 14px 0 2px;
+}
+
+.video-info h3 {
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.video-info p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.status {
+    margin-top: 14px;
+    padding: 12px;
+    background: #0b1224;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.feature {
+    background: var(--panel2);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.feature b {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.feature p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.notice {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 25px 10px;
+    font-size: 12px;
+}
+
+@media(max-width: 480px) {
+    .card {
+        padding: 15px;
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+    }
+
+    .logo {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">▶ Video <span>Utility Pro</span></div>
+    <p>Smart YouTube Link Analyzer & Video Preview</p>
+</header>
+
+<main class="container">
+
+    <section class="card">
+        <h2>🔗 Enter YouTube Video URL</h2>
+
+        <label for="videoURL">YouTube Video Link</label>
+
+        <input
+            type="url"
+            id="videoURL"
+            placeholder="Paste YouTube video URL here..."
+            autocomplete="url"
+        >
+
+        <div class="row">
+            <button class="primary" onclick="analyzeVideo()">
+                Analyze Video
+            </button>
+
+            <button class="dark" onclick="clearAll()">
+                Clear
+            </button>
+        </div>
+
+        <div id="status" class="status" aria-live="polite">
+            Paste a YouTube link to get started.
+        </div>
+
+        <div class="preview" id="preview">
+            <iframe
+                id="player"
+                title="YouTube video preview"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                referrerpolicy="strict-origin-when-cross-origin">
+            </iframe>
+
+            <div class="video-info">
+                <h3 id="videoTitle">YouTube Video Preview</h3>
+                <p id="videoID"></p>
+            </div>
+
+            <div class="row">
+                <button class="secondary" onclick="openYouTube()">
+                    ▶ Open on YouTube
+                </button>
+
+                <button class="success" onclick="copyLink()">
+                    📋 Copy Video Link
+                </button>
+            </div>
+
+            <button class="dark full" onclick="openOfficialHelp()">
+                Download Options & Official Help
+            </button>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>⚙️ Video Preferences</h2>
+
+        <label for="quality">Preferred Video Quality</label>
+        <select id="quality">
+            <option value="2160p">4K Ultra HD — 2160p</option>
+            <option value="1440p">2K Quad HD — 1440p</option>
+            <option value="1080p" selected>Full HD — 1080p</option>
+            <option value="720p">HD — 720p</option>
+            <option value="480p">SD — 480p</option>
+            <option value="360p">Low — 360p</option>
+        </select>
+
+        <label for="format">Preferred Format</label>
+        <select id="format">
+            <option value="mp4">MP4 Video</option>
+            <option value="webm">WebM Video</option>
+            <option value="audio">Audio Only</option>
+        </select>
+
+        <div class="status">
+            These are preference settings only. This HTML page does not
+            retrieve video files, determine available resolutions, or
+            download YouTube media.
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>🚀 Features</h2>
+
+        <div class="feature-grid">
+            <div class="feature">
+                <b>🔍 URL Analyzer</b>
+                <p>Recognizes supported YouTube video URL formats.</p>
+            </div>
+
+            <div class="feature">
+                <b>▶ Video Preview</b>
+                <p>Plays an embeddable video using YouTube's player.</p>
+            </div>
+
+            <div class="feature">
+                <b>📋 Quick Copy</b>
+                <p>Copies the original video link to your clipboard.</p>
+            </div>
+
+            <div class="feature">
+                <b>📱 Mobile Friendly</b>
+                <p>Responsive interface for phones, tablets and desktops.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>📌 Important Information</h2>
+
+        <p class="notice">
+            This application is a front-end utility, not a media downloader.
+            Actual download capability requires an authorized source or
+            download API and a compatible backend where permitted.
+            YouTube Premium may offer offline viewing for eligible videos
+            through supported devices and locations.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    Video Utility Pro · HTML, CSS & JavaScript
+</footer>
+
+<script>
+"use strict";
+
+let currentVideoID = "";
+let currentVideoURL = "";
+
+function extractVideoID(rawURL) {
+    let parsed;
+
+    try {
+        parsed = new URL(rawURL);
+    } catch {
+        return null;
+    }
+
+    const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+    let id = "";
+
+    if (host === "youtu.be") {
+        id = parsed.pathname.split("/").filter(Boolean)[0] || "";
+    } else if (
+        host === "youtube.com" ||
+        host === "m.youtube.com" ||
+        host === "music.youtube.com" ||
+        host === "youtube-nocookie.com"
+    ) {
+        if (parsed.pathname === "/watch") {
+            id = parsed.searchParams.get("v") || "";
+        } else {
+            const match = parsed.pathname.match(
+                /^\/(?:embed|shorts|live)\/([A-Za-z0-9_-]{11})(?:\/|$)/
+            );
+
+            if (match) id = match[1];
+        }
+    }
+
+    return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
+}
+
+function analyzeVideo() {
+    const input = document.getElementById("videoURL").value.trim();
+    const status = document.getElementById("status");
+
+    if (!input) {
+        status.textContent = "Please paste a YouTube video URL first.";
+        return;
+    }
+
+    const id = extractVideoID(input);
+
+    if (!id) {
+        status.textContent =
+            "Invalid or unsupported YouTube link. Please check the URL.";
+        document.getElementById("preview").style.display = "none";
+        return;
+    }
+
+    currentVideoID = id;
+    currentVideoURL = "https://www.youtube.com/watch?v=" + id;
+
+    document.getElementById("player").src =
+        "https://www.youtube-nocookie.com/embed/" +
+        encodeURIComponent(id);
+
+    document.getElementById("videoTitle").textContent =
+        "YouTube Video Preview";
+
+    document.getElementById("videoID").textContent =
+        "Video ID: " + id;
+
+    document.getElementById("preview").style.display = "block";
+
+    status.textContent =
+        "Valid video URL recognized. Preview loaded. " +
+        "Actual title, available quality and download status " +
+        "cannot be determined by this standalone HTML page.";
+}
+
+function openYouTube() {
+    if (!currentVideoID) return;
+
+    window.open(
+        currentVideoURL,
+        "_blank",
+        "noopener,noreferrer"
+    );
+}
+
+async function copyLink() {
+    if (!currentVideoURL) return;
+
+    try {
+        await navigator.clipboard.writeText(currentVideoURL);
+        document.getElementById("status").textContent =
+            "Video link copied successfully.";
+    } catch {
+        const input = document.getElementById("videoURL");
+        input.value = currentVideoURL;
+        input.select();
+
+        document.getElementById("status").textContent =
+            "Select and copy the link from the input field.";
+    }
+}
+
+function openOfficialHelp() {
+    window.open(
+        "https://support.google.com/youtube/answer/11977233",
+        "_blank",
+        "noopener,noreferrer"
+    );
+}
+
+function clearAll() {
+    currentVideoID = "";
+    currentVideoURL = "";
+
+    document.getElementById("videoURL").value = "";
+    document.getElementById("player").src = "";
+    document.getElementById("preview").style.display = "none";
+
+    document.getElementById("status").textContent =
+        "Paste a YouTube link to get started.";
+}
+</script>
+
+</body>
+</html>
