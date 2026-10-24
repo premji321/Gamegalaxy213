@@ -1,51 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101828">
+<meta name="theme-color" content="#a61032">
+<meta name="description" content="ExamPortal Pro - Latest Government Jobs, Results, Admit Cards, Answer Keys and Syllabus">
 
-<meta name="description"
-content="Advanced Search Engine Pro - Search the web, images, videos, news and more.">
-
-<title>Search Engine Pro | Smart Web Search</title>
+<title>ExamPortal Pro | Government Exam Information</title>
 
 <style>
 :root {
-    --bg: #f4f7fb;
-    --card: #ffffff;
-    --text: #172033;
-    --muted: #667085;
-    --primary: #3867f5;
-    --border: #e3e8f0;
-    --shadow: 0 10px 35px rgba(20,35,70,.08);
+    --primary: #a61032;
+    --primary-dark: #780b24;
+    --secondary: #173d85;
+    --background: #f4f6fa;
+    --surface: #ffffff;
+    --text: #202635;
+    --muted: #687386;
+    --border: #dfe4ed;
+    --success: #16834a;
+    --shadow: 0 5px 20px rgba(0,0,0,.07);
 }
 
 body.dark {
-    --bg: #0b1220;
-    --card: #131e30;
-    --text: #edf2ff;
-    --muted: #a0aec0;
-    --primary: #7898ff;
-    --border: #28354a;
-    --shadow: 0 10px 35px rgba(0,0,0,.2);
+    --background: #101522;
+    --surface: #1b2333;
+    --text: #f1f4fa;
+    --muted: #aab4c6;
+    --border: #343d50;
+    --shadow: 0 5px 20px rgba(0,0,0,.2);
 }
 
 * {
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition: background .25s, color .25s;
+html {
+    scroll-behavior: smooth;
 }
 
-button,
-input,
-select {
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+button, input, select, textarea {
     font: inherit;
 }
 
@@ -53,321 +55,495 @@ button {
     cursor: pointer;
 }
 
-button:focus-visible,
-input:focus-visible,
-a:focus-visible {
-    outline: 3px solid var(--primary);
-    outline-offset: 3px;
-}
-
 a {
     color: inherit;
 }
 
-header {
-    height: 68px;
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+    outline: 3px solid #4389ff;
+    outline-offset: 2px;
+}
+
+/* HEADER */
+
+.topbar {
+    background: #151515;
+    color: #fff;
+    padding: 7px 4%;
+    font-size: 12px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 0 22px;
-    border-bottom: 1px solid var(--border);
-    background: var(--card);
+    gap: 12px;
 }
 
-.logo {
+.header {
+    background: var(--primary);
+    color: #fff;
+    padding: 22px 4%;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 21px;
-    font-weight: 800;
-}
-
-.logo-icon {
-    background: linear-gradient(135deg,#4776ff,#8c4dff);
-    color: white;
-    padding: 9px;
-    border-radius: 12px;
-}
-
-.header-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.icon-btn {
-    width: 42px;
-    height: 42px;
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-    border-radius: 12px;
-    font-size: 18px;
-}
-
-main {
-    width: min(1050px, 94%);
-    margin: auto;
-    padding: 32px 0 55px;
-}
-
-.hero {
+    justify-content: center;
+    gap: 17px;
     text-align: center;
-    padding: 38px 0 25px;
 }
 
-.hero h1 {
-    font-size: clamp(32px, 6vw, 54px);
-    margin: 0 0 12px;
-    letter-spacing: -1.5px;
+.brand-logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--primary);
+    display: grid;
+    place-items: center;
+    font-size: 31px;
+    font-weight: bold;
+    border: 4px solid #f1cc77;
 }
 
-.gradient-text {
-    background: linear-gradient(90deg,#3867f5,#a14dff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+.brand h1 {
+    font-size: clamp(24px,4vw,37px);
+    margin: 0;
 }
 
-.hero p {
-    color: var(--muted);
-    line-height: 1.7;
+.brand p {
+    margin: 3px 0 0;
+    font-size: 12px;
+    letter-spacing: 1px;
 }
 
-.search-card {
-    background: var(--card);
+/* NAVIGATION */
+
+.nav {
+    background: #111;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    padding: 0 2%;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.nav button {
+    color: #fff;
+    background: transparent;
+    border: none;
+    border-right: 1px solid #383838;
+    padding: 16px 15px;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.nav button:hover,
+.nav button.active {
+    background: var(--primary);
+}
+
+/* MAIN */
+
+.container {
+    width: min(1400px,96%);
+    margin: 0 auto;
+}
+
+.intro {
+    text-align: center;
+    padding: 19px 5px 10px;
+}
+
+.intro h2 {
+    color: var(--secondary);
+    font-family: Georgia, serif;
+    font-size: clamp(20px,3vw,29px);
+    margin: 0 0 8px;
+}
+
+body.dark .intro h2 {
+    color: #a9beff;
+}
+
+.intro p {
+    margin: 5px;
+    font-size: 13px;
+}
+
+.notice {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* SEARCH */
+
+.search-box {
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 12px;
     box-shadow: var(--shadow);
-    max-width: 850px;
-    margin: 25px auto;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
 }
 
 .search-row {
     display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search-symbol {
-    font-size: 22px;
-    padding-left: 8px;
-}
-
-#searchInput {
-    width: 100%;
-    min-width: 0;
-    padding: 15px 5px;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: var(--text);
-    font-size: 17px;
-}
-
-#searchInput::placeholder {
-    color: var(--muted);
-}
-
-.search-action {
-    border: none;
-    color: white;
-    background: var(--primary);
-    border-radius: 12px;
-    padding: 14px 20px;
-    font-weight: 700;
-}
-
-.search-tools {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    border-top: 1px solid var(--border);
-    margin-top: 8px;
-    padding-top: 12px;
-}
-
-.tool-select {
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    padding: 8px;
-    background: var(--card);
-    color: var(--text);
-}
-
-.small-btn {
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    border-radius: 9px;
-    padding: 8px 11px;
-}
-
-.tabs {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 8px 0 15px;
-    scrollbar-width: thin;
-}
-
-.tab {
-    border: 1px solid var(--border);
-    color: var(--muted);
-    background: var(--card);
-    border-radius: 11px;
-    padding: 11px 16px;
-    white-space: nowrap;
-}
-
-.tab.active {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-.section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 20px;
-    margin-top: 20px;
-}
-
-.section h2 {
-    margin-top: 0;
-    font-size: 19px;
-}
-
-.section-description {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-.quick-grid {
-    display: grid;
-    grid-template-columns: repeat(4,minmax(0,1fr));
-    gap: 12px;
-}
-
-.quick-item {
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    padding: 16px 8px;
-    border-radius: 14px;
-    text-align: center;
-    transition: transform .15s, border-color .15s;
-}
-
-.quick-item:hover {
-    transform: translateY(-3px);
-    border-color: var(--primary);
-}
-
-.quick-item span {
-    display: block;
-    font-size: 27px;
-    margin-bottom: 8px;
-}
-
-.quick-item strong {
-    font-size: 13px;
-}
-
-.quick-item small {
-    display: block;
-    color: var(--muted);
-    margin-top: 5px;
-}
-
-.chips {
-    display: flex;
-    flex-wrap: wrap;
     gap: 9px;
 }
 
-.chip {
+.search-row input {
+    min-width: 0;
+    flex: 1;
+    padding: 13px;
+    background: var(--background);
     border: 1px solid var(--border);
-    background: var(--bg);
     color: var(--text);
-    border-radius: 30px;
-    padding: 9px 13px;
+    border-radius: 7px;
 }
 
-.chip:hover {
-    border-color: var(--primary);
+.primary-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 7px;
+    font-weight: bold;
 }
 
-.list {
+.secondary-btn {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 13px;
+    border-radius: 7px;
+}
+
+.search-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.search-filters select {
+    padding: 8px;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+/* QUICK LINKS */
+
+.quick-links {
     display: grid;
-    gap: 10px;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 8px;
+    margin: 18px 0;
 }
 
-.list-row {
+.quick-links a {
+    padding: 12px 6px;
+    text-align: center;
+    color: white;
+    background: var(--secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.quick-links a:nth-child(4n+1) {
+    background: #748700;
+}
+
+.quick-links a:nth-child(4n+2) {
+    background: #1e47ad;
+}
+
+.quick-links a:nth-child(4n+3) {
+    background: #e65d00;
+}
+
+.quick-links a:nth-child(4n) {
+    background: #a61032;
+}
+
+/* ANNOUNCEMENT */
+
+.announcement {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin: 16px 0;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.announcement strong {
+    color: var(--primary);
+}
+
+.announcement-track {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-top: 5px;
+}
+
+.announcement-track a {
+    color: var(--secondary);
+    font-weight: bold;
+    margin-right: 25px;
+}
+
+body.dark .announcement-track a {
+    color: #a9beff;
+}
+
+/* THREE-COLUMN CONTENT */
+
+.sections-grid {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 12px;
+    align-items: stretch;
+    margin: 20px 0;
+}
+
+.exam-section {
+    background: var(--surface);
+    border: 1px solid #d6b96b;
+    box-shadow: var(--shadow);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-title {
+    background: var(--primary);
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+    padding: 8px 5px;
+}
+
+.section-content {
+    padding: 10px 10px 4px;
+    flex: 1;
+}
+
+.exam-list {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.exam-list li {
+    margin-bottom: 13px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.exam-list a {
+    color: #123f9a;
+}
+
+body.dark .exam-list a {
+    color: #a9beff;
+}
+
+.exam-list a:hover {
+    color: var(--primary);
+}
+
+.item-meta {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+.view-more {
+    text-align: right;
+    padding: 10px;
+}
+
+.view-more button {
+    border: none;
+    color: var(--secondary);
+    background: transparent;
+    font-weight: bold;
+}
+
+body.dark .view-more button {
+    color: #a9beff;
+}
+
+/* CATEGORY CARDS */
+
+.category-heading {
+    text-align: center;
+    margin: 30px 0 15px;
+}
+
+.category-heading h2 {
+    margin-bottom: 5px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.category-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 17px 10px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.category-card button {
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font-weight: bold;
+    width: 100%;
+}
+
+.category-card span {
+    font-size: 29px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* FOOTER */
+
+.footer {
+    background: #151515;
+    color: #fff;
+    margin-top: 30px;
+    padding: 30px 4%;
+    text-align: center;
+}
+
+.footer p {
+    font-size: 13px;
+    color: #d3d3d3;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 15px 0;
+}
+
+.footer a {
+    color: white;
+}
+
+/* ADMIN PANEL */
+
+.admin-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    z-index: 50;
+    display: none;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.admin-box {
+    background: var(--surface);
+    color: var(--text);
+    max-width: 800px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.admin-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
 }
 
-.list-row .query {
-    overflow-wrap: anywhere;
-    cursor: pointer;
+.admin-form {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 12px;
+    margin: 20px 0;
 }
 
-.row-actions {
+.form-field {
     display: flex;
-    gap: 6px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-field.full {
+    grid-column: 1/-1;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    padding: 11px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--text);
+    border-radius: 6px;
+    width: 100%;
+}
+
+.admin-items {
+    display: grid;
+    gap: 8px;
+}
+
+.admin-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.admin-item-title {
+    overflow-wrap: anywhere;
+}
+
+.admin-item-actions {
+    display: flex;
+    gap: 5px;
     flex-shrink: 0;
 }
 
-.row-actions button {
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    border-radius: 8px;
+.admin-item-actions button {
     padding: 7px;
-}
-
-.empty-state {
-    color: var(--muted);
-    text-align: center;
-    padding: 22px 5px;
-}
-
-.suggestion-box {
-    display: none;
-    border-top: 1px solid var(--border);
-    margin-top: 6px;
-    padding-top: 5px;
-}
-
-.suggestion {
-    display: block;
-    width: 100%;
-    text-align: left;
-    border: 0;
-    padding: 11px;
-    background: transparent;
+    border: 1px solid var(--border);
+    background: var(--background);
     color: var(--text);
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
-.suggestion:hover {
-    background: var(--bg);
+.danger {
+    background: #a61032 !important;
+    color: white !important;
 }
 
-footer {
-    text-align: center;
-    padding: 25px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.8;
+.hidden {
+    display: none !important;
 }
 
 .toast {
@@ -375,65 +551,88 @@ footer {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: #172033;
+    background: #171717;
     color: white;
     padding: 12px 18px;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
+    border-radius: 9px;
     z-index: 100;
     display: none;
     max-width: 90%;
 }
 
-.hidden {
-    display: none !important;
+.empty {
+    padding: 15px 5px;
+    color: var(--muted);
+    text-align: center;
 }
 
-@media(max-width:650px) {
-    header {
-        padding: 0 12px;
-    }
-
-    .logo {
-        font-size: 17px;
-    }
-
-    main {
-        width: 94%;
-        padding-top: 15px;
-    }
-
-    .hero {
-        padding-top: 25px;
-    }
-
-    .search-card {
-        padding: 9px;
-    }
-
-    .search-action {
-        padding: 13px;
-    }
-
-    .search-tools {
-        gap: 6px;
-    }
-
-    .tool-select,
-    .small-btn {
-        font-size: 12px;
-    }
-
-    .quick-grid {
+@media(max-width:800px) {
+    .sections-grid {
         grid-template-columns: repeat(2,minmax(0,1fr));
     }
 
-    .section {
-        padding: 15px;
+    .category-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:520px) {
+    .topbar {
+        padding: 6px 3%;
+        font-size: 10px;
     }
 
-    .row-actions button {
-        padding: 6px;
+    .header {
+        padding: 18px 8px;
+        gap: 10px;
+    }
+
+    .brand-logo {
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+    }
+
+    .brand p {
+        font-size: 9px;
+    }
+
+    .nav button {
+        padding: 14px 11px;
+        font-size: 12px;
+    }
+
+    .container {
+        width: 97%;
+    }
+
+    .sections-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .quick-links {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    .exam-list li {
+        font-size: 13px;
+    }
+
+    .admin-form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-field.full {
+        grid-column: auto;
+    }
+
+    .admin-overlay {
+        padding: 8px;
+    }
+
+    .admin-box {
+        padding: 14px;
     }
 }
 </style>
@@ -441,303 +640,553 @@ footer {
 
 <body>
 
-<header>
-    <div class="logo">
-        <span class="logo-icon">🔎</span>
-        <span>Search<span class="gradient-text">Pro</span></span>
-    </div>
+<div class="topbar">
+    <span id="currentDate">Exam Information Portal</span>
+    <span>Education • Exams • Results</span>
+</div>
 
-    <div class="header-actions">
-        <button class="icon-btn" id="themeBtn"
-                aria-label="Toggle dark mode"
-                title="Change theme">🌙</button>
-
-        <button class="icon-btn" id="settingsBtn"
-                aria-label="Settings"
-                title="Settings">⚙️</button>
+<header class="header">
+    <div class="brand-logo">EP</div>
+    <div class="brand">
+        <h1>EXAMPORTAL PRO</h1>
+        <p>GOVERNMENT JOBS • RESULTS • ADMISSIONS</p>
     </div>
 </header>
 
-<main>
+<nav class="nav" aria-label="Main navigation">
+    <button class="active" data-nav="home">Home</button>
+    <button data-nav="latest-job">Latest Job</button>
+    <button data-nav="admit-card">Admit Card</button>
+    <button data-nav="result">Results</button>
+    <button data-nav="answer-key">Answer Key</button>
+    <button data-nav="syllabus">Syllabus</button>
+    <button data-nav="admission">Admission</button>
+    <button data-nav="scholarship">Scholarship</button>
+    <button data-nav="admin">⚙ Admin</button>
+    <button id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+</nav>
 
-    <section class="hero">
-        <h1>Search <span class="gradient-text">Everything.</span></h1>
+<main class="container" id="home">
+
+    <section class="intro">
+        <h2>Government Jobs, Results & Exam Updates</h2>
         <p>
-            One place to explore the web, images, videos,
-            news, knowledge and more.
+            सरकारी नौकरी, परीक्षा परिणाम, एडमिट कार्ड और सिलेबस की जानकारी
+            एक ही जगह।
+        </p>
+        <p class="notice">
+            कृपया आवेदन करने से पहले संबंधित विभाग की आधिकारिक अधिसूचना अवश्य जाँचें।
         </p>
     </section>
 
-    <section class="search-card">
+    <section class="search-box">
         <div class="search-row">
-            <span class="search-symbol">⌕</span>
-
             <input
                 id="searchInput"
                 type="search"
-                placeholder="What are you looking for?"
-                autocomplete="off"
-                aria-label="Search the web">
-
-            <button class="icon-btn" id="voiceBtn"
-                    title="Voice search"
-                    aria-label="Voice search">🎙️</button>
-
-            <button class="search-action" id="searchBtn">
-                Search
-            </button>
+                placeholder="Search job, result, admit card, syllabus..."
+                aria-label="Search exam information">
+            <button class="primary-btn" id="searchButton">🔍 Search</button>
         </div>
 
-        <div id="suggestionBox" class="suggestion-box"></div>
-
-        <div class="search-tools">
-            <select id="engineSelect" class="tool-select"
-                    aria-label="Search engine">
-                <option value="google">Google</option>
-                <option value="bing">Bing</option>
-                <option value="duckduckgo">DuckDuckGo</option>
-                <option value="yahoo">Yahoo</option>
-                <option value="brave">Brave Search</option>
+        <div class="search-filters">
+            <select id="categoryFilter" aria-label="Filter category">
+                <option value="all">All Categories</option>
+                <option value="latest-job">Latest Jobs</option>
+                <option value="result">Results</option>
+                <option value="admit-card">Admit Cards</option>
+                <option value="answer-key">Answer Keys</option>
+                <option value="syllabus">Syllabus</option>
+                <option value="admission">Admission</option>
+                <option value="scholarship">Scholarships</option>
             </select>
 
-            <select id="languageSelect" class="tool-select"
-                    aria-label="Search language">
-                <option value="en">English</option>
-                <option value="hi">Hindi</option>
+            <select id="stateFilter" aria-label="Filter state">
+                <option value="all">All States</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="National">National</option>
             </select>
 
-            <button class="small-btn" id="luckyBtn">
-                🎲 I'm Feeling Lucky
-            </button>
+            <button class="secondary-btn" id="clearSearch">Clear</button>
+            <button class="secondary-btn" id="bookmarkFilter">⭐ Bookmarks</button>
+        </div>
+    </section>
 
-            <button class="small-btn" id="copyBtn">
-                📋 Copy
-            </button>
+    <section class="announcement">
+        <strong>📢 Important Updates:</strong>
+        <div class="announcement-track" id="announcementTrack">
+            नवीनतम जानकारी देखने के लिए नीचे दिए गए सेक्शन देखें।
+        </div>
+    </section>
 
-            <button class="small-btn" id="shareBtn">
-                🔗 Share
+    <section class="quick-links" aria-label="Popular examinations">
+        <a href="#latest-job" data-quick="latest-job">Latest Government Jobs</a>
+        <a href="#result" data-quick="result">Latest Results</a>
+        <a href="#admit-card" data-quick="admit-card">Admit Cards</a>
+        <a href="#answer-key" data-quick="answer-key">Answer Keys</a>
+        <a href="#syllabus" data-quick="syllabus">Exam Syllabus</a>
+        <a href="#admission" data-quick="admission">Admissions</a>
+        <a href="#scholarship" data-quick="scholarship">Scholarships</a>
+        <a href="#latest-job" data-quick="latest-job">Teaching Jobs</a>
+    </section>
+
+    <div id="resultsMessage" aria-live="polite"></div>
+
+    <section class="sections-grid" id="sectionsGrid">
+
+        <article class="exam-section" id="result">
+            <div class="section-title">📊 Result</div>
+            <div class="section-content">
+                <ul class="exam-list" id="list-result"></ul>
+            </div>
+            <div class="view-more">
+                <button data-view="result">View More →</button>
+            </div>
+        </article>
+
+        <article class="exam-section" id="admit-card">
+            <div class="section-title">🎫 Admit Card</div>
+            <div class="section-content">
+                <ul class="exam-list" id="list-admit-card"></ul>
+            </div>
+            <div class="view-more">
+                <button data-view="admit-card">View More →</button>
+            </div>
+        </article>
+
+        <article class="exam-section" id="latest-job">
+            <div class="section-title">💼 Latest Job</div>
+            <div class="section-content">
+                <ul class="exam-list" id="list-latest-job"></ul>
+            </div>
+            <div class="view-more">
+                <button data-view="latest-job">View More →</button>
+            </div>
+        </article>
+
+        <article class="exam-section" id="answer-key">
+            <div class="section-title">📝 Answer Key</div>
+            <div class="section-content">
+                <ul class="exam-list" id="list-answer-key"></ul>
+            </div>
+            <div class="view-more">
+                <button data-view="answer-key">View More →</button>
+            </div>
+        </article>
+
+        <article class="exam-section" id="syllabus">
+            <div class="section-title">📚 Syllabus</div>
+            <div class="section-content">
+                <ul class="exam-list" id="list-syllabus"></ul>
+            </div>
+            <div class="view-more">
+                <button data-view="syllabus">View More →</button>
+            </div>
+        </article>
+
+        <article class="exam-section" id="admission">
+            <div class="section-title">🎓 Admission</div>
+            <div class="section-content">
+                <ul class="exam-list" id="list-admission"></ul>
+            </div>
+            <div class="view-more">
+                <button data-view="admission">View More →</button>
+            </div>
+        </article>
+
+        <article class="exam-section" id="scholarship">
+            <div class="section-title">🎒 Scholarship</div>
+            <div class="section-content">
+                <ul class="exam-list" id="list-scholarship"></ul>
+            </div>
+            <div class="view-more">
+                <button data-view="scholarship">View More →</button>
+            </div>
+        </article>
+
+    </section>
+
+    <section class="category-heading">
+        <h2>Explore Examination Categories</h2>
+        <p>अपनी परीक्षा और विभाग के अनुसार जानकारी खोजें।</p>
+    </section>
+
+    <section class="category-grid">
+        <div class="category-card">
+            <button data-topic="SSC">
+                <span>🏢</span>SSC Exams
+            </button>
+        </div>
+
+        <div class="category-card">
+            <button data-topic="UPSC">
+                <span>🇮🇳</span>UPSC Exams
+            </button>
+        </div>
+
+        <div class="category-card">
+            <button data-topic="BPSC">
+                <span>📘</span>BPSC Exams
+            </button>
+        </div>
+
+        <div class="category-card">
+            <button data-topic="Railway">
+                <span>🚆</span>Railway Jobs
+            </button>
+        </div>
+
+        <div class="category-card">
+            <button data-topic="Banking">
+                <span>🏦</span>Banking Exams
+            </button>
+        </div>
+
+        <div class="category-card">
+            <button data-topic="Teaching">
+                <span>👨‍🏫</span>Teaching Jobs
+            </button>
+        </div>
+
+        <div class="category-card">
+            <button data-topic="Police">
+                <span>👮</span>Police Recruitment
+            </button>
+        </div>
+
+        <div class="category-card">
+            <button data-topic="Defence">
+                <span>🪖</span>Defence Exams
             </button>
         </div>
     </section>
 
-    <nav class="tabs" aria-label="Search categories">
-        <button class="tab active" data-type="web">🌐 Web</button>
-        <button class="tab" data-type="images">🖼️ Images</button>
-        <button class="tab" data-type="videos">▶️ Videos</button>
-        <button class="tab" data-type="news">📰 News</button>
-        <button class="tab" data-type="shopping">🛍️ Shopping</button>
-        <button class="tab" data-type="maps">📍 Maps</button>
-        <button class="tab" data-type="books">📚 Books</button>
-        <button class="tab" data-type="academic">🎓 Academic</button>
-    </nav>
-
-    <section class="section">
-        <h2>⚡ Quick Search</h2>
-        <p class="section-description">
-            Search directly on your favorite platforms.
-        </p>
-
-        <div class="quick-grid">
-            <button class="quick-item" data-site="google">
-                <span>🌐</span>
-                <strong>Google</strong>
-                <small>Web search</small>
-            </button>
-
-            <button class="quick-item" data-site="youtube">
-                <span>▶️</span>
-                <strong>YouTube</strong>
-                <small>Videos</small>
-            </button>
-
-            <button class="quick-item" data-site="wikipedia">
-                <span>📖</span>
-                <strong>Wikipedia</strong>
-                <small>Knowledge</small>
-            </button>
-
-            <button class="quick-item" data-site="images">
-                <span>🖼️</span>
-                <strong>Images</strong>
-                <small>Visual search</small>
-            </button>
-
-            <button class="quick-item" data-site="duckduckgo">
-                <span>🦆</span>
-                <strong>DuckDuckGo</strong>
-                <small>Web search</small>
-            </button>
-
-            <button class="quick-item" data-site="github">
-                <span>💻</span>
-                <strong>GitHub</strong>
-                <small>Code search</small>
-            </button>
-
-            <button class="quick-item" data-site="reddit">
-                <span>💬</span>
-                <strong>Reddit</strong>
-                <small>Discussions</small>
-            </button>
-
-            <button class="quick-item" data-site="maps">
-                <span>🗺️</span>
-                <strong>Maps</strong>
-                <small>Places</small>
-            </button>
-        </div>
-    </section>
-
-    <section class="section">
-        <h2>🔥 Explore Popular Topics</h2>
-        <p class="section-description">
-            These are example topic shortcuts, not live trend data.
-        </p>
-
-        <div class="chips" id="trendingChips">
-            <button class="chip">Artificial Intelligence</button>
-            <button class="chip">Science</button>
-            <button class="chip">Technology</button>
-            <button class="chip">World History</button>
-            <button class="chip">Education</button>
-            <button class="chip">Space Exploration</button>
-            <button class="chip">Climate Change</button>
-            <button class="chip">Computer Programming</button>
-            <button class="chip">Indian Geography</button>
-            <button class="chip">Current Affairs</button>
-        </div>
-    </section>
-
-    <section class="section">
-        <h2>🕘 Recent Searches</h2>
-
-        <div class="list" id="historyList">
-            <div class="empty-state">No searches yet.</div>
-        </div>
-
-        <div style="margin-top:12px">
-            <button class="small-btn" id="clearHistoryBtn">
-                🗑️ Clear History
-            </button>
-        </div>
-    </section>
-
-    <section class="section">
-        <h2>⭐ Bookmarks</h2>
-
-        <p class="section-description">
-            Save search queries for quick access later.
-        </p>
-
-        <div class="list" id="bookmarkList">
-            <div class="empty-state">No bookmarks saved yet.</div>
-        </div>
-    </section>
-
-    <section class="section hidden" id="settingsPanel">
-        <h2>⚙️ Search Settings</h2>
-
-        <p class="section-description">
-            Customize how this search interface works.
-        </p>
-
-        <label style="display:block;margin:15px 0">
-            <input type="checkbox" id="newTabCheck" checked>
-            Open search results in a new tab
-        </label>
-
-        <label style="display:block;margin:15px 0">
-            <input type="checkbox" id="historyCheck" checked>
-            Save search history on this device
-        </label>
-
-        <label style="display:block;margin:15px 0">
-            <input type="checkbox" id="suggestionsCheck" checked>
-            Show suggestions from local search history
-        </label>
-
-        <button class="small-btn" id="exportBtn">
-            📥 Export History & Bookmarks
-        </button>
-
-        <button class="small-btn" id="importBtn">
-            📤 Import Backup
-        </button>
-
-        <input type="file" id="importFile"
-               accept=".json,application/json"
-               class="hidden">
-
-        <button class="small-btn" id="resetBtn">
-            Reset Settings
-        </button>
+    <section class="search-box">
+        <h3>⭐ My Bookmarks</h3>
+        <p>अपने पसंदीदा अपडेट यहाँ सेव करें।</p>
+        <div id="bookmarksList"></div>
     </section>
 
 </main>
 
-<footer>
-    <strong>SearchPro</strong> — Your smart search dashboard.<br>
-    Search results are provided by external websites.
-    This application does not maintain its own web index.<br>
-    History and bookmarks are stored locally in this browser.
+<footer class="footer">
+    <h2>EXAMPORTAL PRO</h2>
+    <p>Independent educational information portal.</p>
+
+    <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#latest-job">Latest Jobs</a>
+        <a href="#result">Results</a>
+        <a href="#admit-card">Admit Cards</a>
+        <a href="#syllabus">Syllabus</a>
+        <a href="#home" id="footerAdmin">Admin Panel</a>
+    </div>
+
+    <p>
+        यह एक स्वतंत्र डेमो वेबसाइट है, किसी सरकारी विभाग की आधिकारिक वेबसाइट नहीं।
+        उदाहरण के तौर पर डाले गए डेटा को वास्तविक सरकारी सूचना न मानें।
+    </p>
+
+    <p>© <span id="year"></span> ExamPortal Pro</p>
 </footer>
 
-<div class="toast" id="toast" role="status"
-     aria-live="polite"></div>
+<!-- ADMIN PANEL -->
+
+<div class="admin-overlay" id="adminOverlay">
+    <section class="admin-box">
+        <div class="admin-header">
+            <div>
+                <h2>⚙️ Admin Dashboard</h2>
+                <p>Manage job, result and examination updates.</p>
+            </div>
+
+            <button class="secondary-btn" id="closeAdmin">✕ Close</button>
+        </div>
+
+        <div id="adminLogin">
+            <p>
+                इस डेमो में एडमिन पैनल स्थानीय ब्राउज़र में चलता है।
+                यह सुरक्षित सर्वर-आधारित लॉगिन नहीं है।
+            </p>
+
+            <button class="primary-btn" id="enterDemoAdmin">
+                Open Local Demo Admin
+            </button>
+        </div>
+
+        <div id="adminDashboard" class="hidden">
+
+            <div class="admin-header">
+                <h3>Add / Edit Update</h3>
+                <button class="secondary-btn" id="exportData">
+                    📥 Export JSON
+                </button>
+            </div>
+
+            <form class="admin-form" id="postForm">
+
+                <input type="hidden" id="editId">
+
+                <div class="form-field full">
+                    <label for="postTitle">Post Title *</label>
+                    <input id="postTitle" required maxlength="180"
+                           placeholder="Example: Recruitment Notification">
+                </div>
+
+                <div class="form-field">
+                    <label for="postCategory">Category *</label>
+                    <select id="postCategory" required>
+                        <option value="latest-job">Latest Job</option>
+                        <option value="result">Result</option>
+                        <option value="admit-card">Admit Card</option>
+                        <option value="answer-key">Answer Key</option>
+                        <option value="syllabus">Syllabus</option>
+                        <option value="admission">Admission</option>
+                        <option value="scholarship">Scholarship</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="postState">State / Scope</label>
+                    <select id="postState">
+                        <option value="National">National</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="postDate">Notification Date</label>
+                    <input id="postDate" type="date">
+                </div>
+
+                <div class="form-field">
+                    <label for="postLastDate">Last Date (optional)</label>
+                    <input id="postLastDate" type="date">
+                </div>
+
+                <div class="form-field full">
+                    <label for="postURL">Official Notification URL</label>
+                    <input id="postURL" type="url"
+                           placeholder="https://official-website.gov.in/notification">
+                </div>
+
+                <div class="form-field full">
+                    <label for="postDescription">Short Description</label>
+                    <textarea id="postDescription" rows="3" maxlength="600"
+                              placeholder="Important details about this update"></textarea>
+                </div>
+
+                <div class="form-field full">
+                    <label>
+                        <input type="checkbox" id="postFeatured">
+                        Mark as featured
+                    </label>
+                </div>
+
+                <div class="form-field full">
+                    <button class="primary-btn" type="submit" id="savePost">
+                        💾 Save Update
+                    </button>
+                    <button class="secondary-btn" type="button" id="cancelEdit">
+                        Cancel Edit
+                    </button>
+                </div>
+            </form>
+
+            <hr>
+
+            <h3>Manage Published Items</h3>
+            <div id="adminItems" class="admin-items"></div>
+
+            <hr>
+
+            <button class="secondary-btn" id="importData">
+                📤 Import JSON Backup
+            </button>
+
+            <input type="file" id="importFile"
+                   accept=".json,application/json" class="hidden">
+
+            <button class="secondary-btn danger" id="resetDemo">
+                Reset Demo Data
+            </button>
+
+        </div>
+    </section>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 "use strict";
 
 /* ==========================================
-   SEARCH ENGINE PRO
-   Main JavaScript Application
+   EXAMPORTAL PRO
+   Frontend demonstration application
 ========================================== */
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 
-const STORAGE = {
-    history: "searchpro_history_v1",
-    bookmarks: "searchpro_bookmarks_v1",
-    theme: "searchpro_theme_v1",
-    settings: "searchpro_settings_v1",
-    category: "searchpro_category_v1",
-    engine: "searchpro_engine_v1"
+const DB_KEY = "examportal_posts_v1";
+const BOOKMARK_KEY = "examportal_bookmarks_v1";
+const THEME_KEY = "examportal_theme_v1";
+
+const CATEGORIES = [
+    "latest-job",
+    "result",
+    "admit-card",
+    "answer-key",
+    "syllabus",
+    "admission",
+    "scholarship"
+];
+
+const CATEGORY_NAMES = {
+    "latest-job": "Latest Job",
+    "result": "Result",
+    "admit-card": "Admit Card",
+    "answer-key": "Answer Key",
+    "syllabus": "Syllabus",
+    "admission": "Admission",
+    "scholarship": "Scholarship"
 };
 
-const DEFAULT_SETTINGS = {
-    newTab: true,
-    saveHistory: true,
-    suggestions: true
-};
+const DEMO_POSTS = [
+    {
+        id: "demo-1",
+        title: "Demo: Government Recruitment Notification",
+        category: "latest-job",
+        state: "National",
+        date: "2026-10-24",
+        lastDate: "",
+        url: "",
+        description: "यह केवल डेमो पोस्ट है। वास्तविक भर्ती की जानकारी आधिकारिक वेबसाइट पर जाँचें।",
+        featured: true,
+        demo: true
+    },
+    {
+        id: "demo-2",
+        title: "Demo: Examination Result Update",
+        category: "result",
+        state: "National",
+        date: "2026-10-24",
+        lastDate: "",
+        url: "",
+        description: "यह एक उदाहरण है, वास्तविक परीक्षा परिणाम नहीं।",
+        featured: true,
+        demo: true
+    },
+    {
+        id: "demo-3",
+        title: "Demo: Admit Card Information",
+        category: "admit-card",
+        state: "Bihar",
+        date: "2026-10-24",
+        lastDate: "",
+        url: "",
+        description: "यह स्थानीय डेमो डेटा है।",
+        featured: false,
+        demo: true
+    },
+    {
+        id: "demo-4",
+        title: "Demo: Answer Key Notification",
+        category: "answer-key",
+        state: "National",
+        date: "2026-10-24",
+        lastDate: "",
+        url: "",
+        description: "संबंधित परीक्षा की आधिकारिक Answer Key देखें।",
+        featured: false,
+        demo: true
+    },
+    {
+        id: "demo-5",
+        title: "Demo: Examination Syllabus",
+        category: "syllabus",
+        state: "Uttar Pradesh",
+        date: "2026-10-24",
+        lastDate: "",
+        url: "",
+        description: "परीक्षा की तैयारी से पहले आधिकारिक पाठ्यक्रम की पुष्टि करें।",
+        featured: false,
+        demo: true
+    },
+    {
+        id: "demo-6",
+        title: "Demo: College Admission Information",
+        category: "admission",
+        state: "Bihar",
+        date: "2026-10-24",
+        lastDate: "",
+        url: "",
+        description: "यह डेमो एडमिशन पोस्ट है।",
+        featured: false,
+        demo: true
+    },
+    {
+        id: "demo-7",
+        title: "Demo: Scholarship Information",
+        category: "scholarship",
+        state: "National",
+        date: "2026-10-24",
+        lastDate: "",
+        url: "",
+        description: "स्कॉलरशिप के लिए आधिकारिक पात्रता और अंतिम तिथि जाँचें।",
+        featured: false,
+        demo: true
+    }
+];
 
-let currentCategory = "web";
-let historyData = [];
-let bookmarksData = [];
-let settings = {...DEFAULT_SETTINGS};
-let toastTimer;
+let posts = loadArray(DB_KEY, DEMO_POSTS);
+let bookmarks = loadArray(BOOKMARK_KEY, []);
+let bookmarkOnly = false;
+let activeSearch = "";
 
-function readStorage(key, fallback) {
+function loadArray(key, fallback) {
     try {
         const value = localStorage.getItem(key);
-        return value === null ? fallback : JSON.parse(value);
+
+        if (value === null) return structuredCloneSafe(fallback);
+
+        const parsed = JSON.parse(value);
+
+        return Array.isArray(parsed) ? parsed : structuredCloneSafe(fallback);
     } catch (error) {
-        console.warn("Could not read storage:", error);
-        return fallback;
+        return structuredCloneSafe(fallback);
     }
 }
 
-function writeStorage(key, value) {
+function structuredCloneSafe(value) {
+    return JSON.parse(JSON.stringify(value));
+}
+
+function savePosts() {
     try {
-        localStorage.setItem(key, JSON.stringify(value));
+        localStorage.setItem(DB_KEY, JSON.stringify(posts));
         return true;
     } catch (error) {
-        showToast("Storage unavailable. Check browser settings.");
+        notify("Data could not be saved. Browser storage may be full.");
         return false;
     }
 }
 
-function showToast(message) {
+function saveBookmarks() {
+    try {
+        localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bookmarks));
+    } catch (error) {
+        notify("Bookmarks could not be saved.");
+    }
+}
+
+let toastTimer;
+
+function notify(message) {
     const toast = $("#toast");
     toast.textContent = message;
     toast.style.display = "block";
@@ -746,668 +1195,610 @@ function showToast(message) {
 
     toastTimer = setTimeout(() => {
         toast.style.display = "none";
-    }, 2600);
+    }, 2800);
 }
 
-function safeText(value) {
-    return String(value ?? "");
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
 }
 
-function normalizeQuery(value) {
-    return safeText(value).trim().replace(/\s+/g, " ");
+function validExternalURL(value) {
+    if (!value) return "";
+
+    try {
+        const url = new URL(value);
+
+        if (url.protocol !== "https:" && url.protocol !== "http:") {
+            return "";
+        }
+
+        return url.href;
+    } catch (error) {
+        return "";
+    }
 }
 
-function getQuery() {
-    return normalizeQuery($("#searchInput").value);
+function safeLinkHTML(url, label) {
+    const safeURL = validExternalURL(url);
+
+    if (!safeURL) {
+        return escapeHTML(label);
+    }
+
+    return '<a href="' + escapeHTML(safeURL) +
+        '" target="_blank" rel="noopener noreferrer">' +
+        escapeHTML(label) + '</a>';
 }
 
 /* ==========================================
-   SEARCH ENGINE URLS
+   HEADER DATE
 ========================================== */
 
-function makeSearchURL(query, category, engine) {
-    const q = encodeURIComponent(query);
-    const lang = $("#languageSelect").value;
-
-    if (category === "images") {
-        if (engine === "bing")
-            return "https://www.bing.com/images/search?q=" + q;
-
-        if (engine === "duckduckgo")
-            return "https://duckduckgo.com/?q=" + q + "&iax=images&ia=images";
-
-        return "https://www.google.com/search?tbm=isch&q=" + q;
-    }
-
-    if (category === "videos") {
-        if (engine === "bing")
-            return "https://www.bing.com/videos/search?q=" + q;
-
-        return "https://www.youtube.com/results?search_query=" + q;
-    }
-
-    if (category === "news") {
-        if (engine === "bing")
-            return "https://www.bing.com/news/search?q=" + q;
-
-        return "https://news.google.com/search?q=" + q;
-    }
-
-    if (category === "shopping") {
-        if (engine === "bing")
-            return "https://www.bing.com/shop?q=" + q;
-
-        return "https://www.google.com/search?tbm=shop&q=" + q;
-    }
-
-    if (category === "maps") {
-        return "https://www.google.com/maps/search/" + q;
-    }
-
-    if (category === "books") {
-        return "https://books.google.com/books?q=" + q;
-    }
-
-    if (category === "academic") {
-        return "https://scholar.google.com/scholar?q=" + q;
-    }
-
-    switch (engine) {
-        case "bing":
-            return "https://www.bing.com/search?q=" + q;
-
-        case "duckduckgo":
-            return "https://duckduckgo.com/?q=" + q;
-
-        case "yahoo":
-            return "https://search.yahoo.com/search?p=" + q;
-
-        case "brave":
-            return "https://search.brave.com/search?q=" + q;
-
-        default:
-            return "https://www.google.com/search?q=" + q
-                + "&hl=" + encodeURIComponent(lang);
-    }
+function updateDate() {
+    $("#currentDate").textContent =
+        new Date().toLocaleDateString("en-IN", {
+            weekday: "short",
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
 }
 
-function openURL(url) {
-    if ($("#newTabCheck").checked) {
-        const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+$("#year").textContent = new Date().getFullYear();
+updateDate();
 
-        if (!newWindow) {
-            showToast("Popup blocked. Allow popups or open the link manually.");
+/* ==========================================
+   DATA FILTERING
+========================================== */
+
+function getFilteredPosts(category = "all") {
+    const query = activeSearch.toLowerCase().trim();
+    const state = $("#stateFilter").value;
+
+    return posts.filter(post => {
+        const matchesCategory =
+            category === "all" || post.category === category;
+
+        const searchableText = [
+            post.title,
+            post.description,
+            post.category,
+            post.state
+        ].join(" ").toLowerCase();
+
+        const matchesQuery =
+            !query || searchableText.includes(query);
+
+        const matchesState =
+            state === "all" || post.state === state;
+
+        const matchesBookmark =
+            !bookmarkOnly || bookmarks.includes(post.id);
+
+        return matchesCategory &&
+            matchesQuery &&
+            matchesState &&
+            matchesBookmark;
+    }).sort((a, b) => {
+        if (Boolean(a.featured) !== Boolean(b.featured)) {
+            return a.featured ? -1 : 1;
         }
-    } else {
-        window.location.href = url;
+
+        return String(b.date || "").localeCompare(String(a.date || ""));
+    });
+}
+
+/* ==========================================
+   RENDER POSTS
+========================================== */
+
+function renderSection(category) {
+    const list = $("#list-" + category);
+    if (!list) return;
+
+    list.replaceChildren();
+
+    const filtered = getFilteredPosts(category);
+    const displayed = filtered.slice(0, 10);
+
+    if (!displayed.length) {
+        const li = document.createElement("li");
+        li.className = "empty";
+        li.textContent = "No matching updates found.";
+        list.appendChild(li);
+        return;
     }
+
+    displayed.forEach(post => {
+        const li = document.createElement("li");
+
+        const title = document.createElement("div");
+        title.innerHTML = safeLinkHTML(post.url, post.title);
+
+        const meta = document.createElement("span");
+        meta.className = "item-meta";
+
+        let metaText = post.state || "National";
+
+        if (post.date) metaText += " • " + post.date;
+        if (post.demo) metaText += " • DEMO";
+
+        meta.textContent = metaText;
+
+        const description = document.createElement("div");
+        description.className = "item-meta";
+        description.textContent = post.description || "";
+
+        const actions = document.createElement("div");
+        actions.style.marginTop = "4px";
+
+        const bookmarkButton = document.createElement("button");
+        bookmarkButton.className = "secondary-btn";
+        bookmarkButton.style.padding = "4px 7px";
+        bookmarkButton.style.fontSize = "11px";
+        bookmarkButton.textContent =
+            bookmarks.includes(post.id) ? "★ Saved" : "☆ Save";
+
+        bookmarkButton.addEventListener("click", () => {
+            toggleBookmark(post.id);
+        });
+
+        actions.appendChild(bookmarkButton);
+
+        li.append(title, meta, description, actions);
+        list.appendChild(li);
+    });
+}
+
+function renderAll() {
+    CATEGORIES.forEach(renderSection);
+    renderBookmarks();
+    renderAnnouncements();
+    renderResultsMessage();
+}
+
+function renderResultsMessage() {
+    const count = getFilteredPosts("all").length;
+
+    $("#resultsMessage").textContent =
+        activeSearch || bookmarkOnly
+            ? count + " matching item(s) found."
+            : "";
+}
+
+/* ==========================================
+   ANNOUNCEMENT BAR
+========================================== */
+
+function renderAnnouncements() {
+    const featured = posts
+        .filter(post => post.featured)
+        .slice(0, 8);
+
+    const track = $("#announcementTrack");
+    track.replaceChildren();
+
+    if (!featured.length) {
+        track.textContent = "No featured updates.";
+        return;
+    }
+
+    featured.forEach((post, index) => {
+        const span = document.createElement("span");
+        span.style.marginRight = "24px";
+
+        const link = document.createElement("a");
+        link.href = validExternalURL(post.url) || "#home";
+        link.textContent = post.title;
+
+        if (validExternalURL(post.url)) {
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+        }
+
+        span.append(link);
+
+        if (index !== featured.length - 1) {
+            span.append("  |  ");
+        }
+
+        track.append(span);
+    });
 }
 
 /* ==========================================
    SEARCH
 ========================================== */
 
-function addHistory(query) {
-    if (!settings.saveHistory) return;
+function performSearch() {
+    activeSearch = $("#searchInput").value.trim();
+    renderAll();
 
-    historyData = historyData.filter(
-        item => item.query.toLowerCase() !== query.toLowerCase()
-    );
+    if (activeSearch) {
+        notify("Search completed.");
+    }
 
-    historyData.unshift({
-        query,
-        category: currentCategory,
-        engine: $("#engineSelect").value,
-        date: new Date().toISOString()
+    $("#sectionsGrid").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
     });
-
-    historyData = historyData.slice(0, 100);
-
-    writeStorage(STORAGE.history, historyData);
-    renderHistory();
 }
 
-function performSearch(customQuery = null, overrideCategory = null) {
-    const query = normalizeQuery(
-        customQuery !== null ? customQuery : getQuery()
-    );
-
-    if (!query) {
-        showToast("Please enter something to search.");
-        $("#searchInput").focus();
-        return;
-    }
-
-    if (overrideCategory) {
-        currentCategory = overrideCategory;
-        updateTabs();
-    }
-
-    $("#searchInput").value = query;
-
-    const engine = $("#engineSelect").value;
-    const url = makeSearchURL(query, currentCategory, engine);
-
-    addHistory(query);
-    hideSuggestions();
-    openURL(url);
-}
-
-$("#searchBtn").addEventListener("click", () => performSearch());
+$("#searchButton").addEventListener("click", performSearch);
 
 $("#searchInput").addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        performSearch();
-    }
+    if (event.key === "Enter") performSearch();
+});
 
-    if (event.key === "Escape") {
-        hideSuggestions();
-    }
+$("#categoryFilter").addEventListener("change", () => {
+    renderAll();
+});
+
+$("#stateFilter").addEventListener("change", () => {
+    renderAll();
+});
+
+$("#clearSearch").addEventListener("click", () => {
+    $("#searchInput").value = "";
+    $("#categoryFilter").value = "all";
+    $("#stateFilter").value = "all";
+
+    activeSearch = "";
+    bookmarkOnly = false;
+
+    renderAll();
+    notify("Filters cleared.");
+});
+
+$("#bookmarkFilter").addEventListener("click", () => {
+    bookmarkOnly = !bookmarkOnly;
+
+    $("#bookmarkFilter").textContent =
+        bookmarkOnly ? "⭐ Show All" : "⭐ Bookmarks";
+
+    renderAll();
 });
 
 /* ==========================================
-   SEARCH CATEGORIES
+   CATEGORY NAVIGATION
 ========================================== */
 
-function updateTabs() {
-    $$(".tab").forEach(tab => {
-        const active = tab.dataset.type === currentCategory;
-
-        tab.classList.toggle("active", active);
-        tab.setAttribute("aria-pressed", String(active));
-    });
-
-    writeStorage(STORAGE.category, currentCategory);
-}
-
-$$(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-        currentCategory = tab.dataset.type;
-        updateTabs();
-
-        const query = getQuery();
-
-        if (query) {
-            performSearch(query);
-        } else {
-            showToast("Selected category: " + tab.textContent.trim());
-        }
-    });
-});
-
-/* ==========================================
-   QUICK SEARCH PLATFORMS
-========================================== */
-
-const QUICK_URLS = {
-    google: q => "https://www.google.com/search?q=" + encodeURIComponent(q),
-    youtube: q => "https://www.youtube.com/results?search_query=" + encodeURIComponent(q),
-    wikipedia: q => "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent(q),
-    images: q => "https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(q),
-    duckduckgo: q => "https://duckduckgo.com/?q=" + encodeURIComponent(q),
-    github: q => "https://github.com/search?q=" + encodeURIComponent(q),
-    reddit: q => "https://www.reddit.com/search/?q=" + encodeURIComponent(q),
-    maps: q => "https://www.google.com/maps/search/" + encodeURIComponent(q)
-};
-
-$$(".quick-item").forEach(button => {
+$$("[data-nav]").forEach(button => {
     button.addEventListener("click", () => {
-        const query = getQuery();
+        const section = button.dataset.nav;
 
-        if (!query) {
-            $("#searchInput").focus();
-            showToast("Enter a search term first.");
+        $$(".nav button").forEach(item => {
+            item.classList.toggle("active", item === button);
+        });
+
+        if (section === "admin") {
+            openAdmin();
             return;
         }
 
-        const builder = QUICK_URLS[button.dataset.site];
+        if (section === "home") {
+            $("#home").scrollIntoView({behavior: "smooth"});
+            return;
+        }
 
-        if (builder) {
-            addHistory(query);
-            openURL(builder(query));
+        const element = $("#" + section);
+
+        if (element) {
+            element.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
         }
     });
 });
 
-/* ==========================================
-   TOPIC SHORTCUTS
-========================================== */
+$$("[data-quick]").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
 
-$("#trendingChips").addEventListener("click", event => {
-    const button = event.target.closest(".chip");
-    if (!button) return;
+        const category = link.dataset.quick;
 
-    $("#searchInput").value = button.textContent.trim();
-    performSearch();
+        $("#categoryFilter").value = category;
+        activeSearch = "";
+        bookmarkOnly = false;
+
+        renderAll();
+
+        const section = $("#" + category);
+
+        if (section) {
+            section.scrollIntoView({behavior: "smooth"});
+        }
+    });
 });
 
-/* ==========================================
-   HISTORY RENDERING
-========================================== */
+$$("[data-view]").forEach(button => {
+    button.addEventListener("click", () => {
+        $("#categoryFilter").value = button.dataset.view;
+        activeSearch = "";
+        bookmarkOnly = false;
+        renderAll();
 
-function renderHistory() {
-    const container = $("#historyList");
-    container.replaceChildren();
-
-    if (!historyData.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty-state";
-        empty.textContent = "No searches yet.";
-        container.appendChild(empty);
-        return;
-    }
-
-    historyData.forEach((item, index) => {
-        const row = document.createElement("div");
-        row.className = "list-row";
-
-        const query = document.createElement("div");
-        query.className = "query";
-        query.textContent = "🔎 " + item.query;
-        query.title = "Search again";
-
-        query.addEventListener("click", () => {
-            currentCategory = item.category || "web";
-            $("#engineSelect").value = item.engine || "google";
-            updateTabs();
-            performSearch(item.query);
-        });
-
-        const actions = document.createElement("div");
-        actions.className = "row-actions";
-
-        const saveButton = document.createElement("button");
-        saveButton.textContent = "⭐";
-        saveButton.title = "Bookmark this search";
-        saveButton.setAttribute("aria-label", "Bookmark search");
-
-        saveButton.addEventListener("click", () => {
-            addBookmark(item.query);
-        });
-
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "✕";
-        deleteButton.title = "Remove from history";
-        deleteButton.setAttribute("aria-label", "Delete search history item");
-
-        deleteButton.addEventListener("click", () => {
-            historyData.splice(index, 1);
-            writeStorage(STORAGE.history, historyData);
-            renderHistory();
-            showToast("Search removed.");
-        });
-
-        actions.append(saveButton, deleteButton);
-        row.append(query, actions);
-        container.appendChild(row);
+        $("#searchInput").focus();
+        notify("Use search to filter this category.");
     });
-}
+});
 
-$("#clearHistoryBtn").addEventListener("click", () => {
-    if (!historyData.length) {
-        showToast("History is already empty.");
-        return;
-    }
+$$("[data-topic]").forEach(button => {
+    button.addEventListener("click", () => {
+        $("#searchInput").value = button.dataset.topic;
+        $("#categoryFilter").value = "all";
+        activeSearch = button.dataset.topic;
+        bookmarkOnly = false;
+        renderAll();
 
-    if (confirm("Delete all search history?")) {
-        historyData = [];
-        writeStorage(STORAGE.history, historyData);
-        renderHistory();
-        showToast("Search history cleared.");
-    }
+        $("#sectionsGrid").scrollIntoView({behavior: "smooth"});
+    });
 });
 
 /* ==========================================
    BOOKMARKS
 ========================================== */
 
-function addBookmark(query) {
-    query = normalizeQuery(query);
-
-    if (!query) return;
-
-    const exists = bookmarksData.some(
-        item => item.query.toLowerCase() === query.toLowerCase()
-    );
-
-    if (exists) {
-        showToast("This search is already bookmarked.");
-        return;
+function toggleBookmark(id) {
+    if (bookmarks.includes(id)) {
+        bookmarks = bookmarks.filter(item => item !== id);
+        notify("Bookmark removed.");
+    } else {
+        bookmarks.push(id);
+        notify("Bookmark saved.");
     }
 
-    bookmarksData.unshift({
-        query,
-        category: currentCategory,
-        engine: $("#engineSelect").value,
-        date: new Date().toISOString()
-    });
-
-    bookmarksData = bookmarksData.slice(0, 200);
-
-    writeStorage(STORAGE.bookmarks, bookmarksData);
-    renderBookmarks();
-    showToast("Bookmark saved.");
+    saveBookmarks();
+    renderAll();
 }
 
 function renderBookmarks() {
-    const container = $("#bookmarkList");
+    const container = $("#bookmarksList");
     container.replaceChildren();
 
-    if (!bookmarksData.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty-state";
-        empty.textContent = "No bookmarks saved yet.";
-        container.appendChild(empty);
+    const saved = posts.filter(post => bookmarks.includes(post.id));
+
+    if (!saved.length) {
+        const message = document.createElement("p");
+        message.className = "empty";
+        message.textContent = "No bookmarks saved yet.";
+        container.appendChild(message);
         return;
     }
 
-    bookmarksData.forEach((item, index) => {
+    saved.forEach(post => {
         const row = document.createElement("div");
-        row.className = "list-row";
+        row.className = "admin-item";
 
-        const query = document.createElement("div");
-        query.className = "query";
-        query.textContent = "⭐ " + item.query;
-        query.title = "Search again";
+        const title = document.createElement("span");
+        title.className = "admin-item-title";
+        title.textContent = post.title;
 
-        query.addEventListener("click", () => {
-            currentCategory = item.category || "web";
-            $("#engineSelect").value = item.engine || "google";
-            updateTabs();
-            performSearch(item.query);
+        const remove = document.createElement("button");
+        remove.className = "secondary-btn";
+        remove.textContent = "Remove";
+
+        remove.addEventListener("click", () => {
+            toggleBookmark(post.id);
         });
 
-        const actions = document.createElement("div");
-        actions.className = "row-actions";
-
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "🗑️";
-        deleteButton.title = "Delete bookmark";
-
-        deleteButton.addEventListener("click", () => {
-            bookmarksData.splice(index, 1);
-            writeStorage(STORAGE.bookmarks, bookmarksData);
-            renderBookmarks();
-            showToast("Bookmark removed.");
-        });
-
-        actions.appendChild(deleteButton);
-        row.append(query, actions);
+        row.append(title, remove);
         container.appendChild(row);
     });
 }
 
 /* ==========================================
-   SEARCH SUGGESTIONS
+   DARK MODE
 ========================================== */
 
-function hideSuggestions() {
-    $("#suggestionBox").style.display = "none";
-    $("#suggestionBox").replaceChildren();
+function setTheme(theme) {
+    document.body.classList.toggle("dark", theme === "dark");
+
+    $("#themeToggle").textContent =
+        theme === "dark" ? "☀️" : "🌙";
+
+    localStorage.setItem(THEME_KEY, theme);
 }
 
-function renderSuggestions() {
-    const input = getQuery();
-    const box = $("#suggestionBox");
+$("#themeToggle").addEventListener("click", () => {
+    setTheme(document.body.classList.contains("dark") ? "light" : "dark");
+});
 
-    box.replaceChildren();
-
-    if (!settings.suggestions || input.length < 2) {
-        hideSuggestions();
-        return;
-    }
-
-    const matches = historyData
-        .map(item => item.query)
-        .filter(query => query.toLowerCase().includes(input.toLowerCase()))
-        .filter((query, index, arr) => arr.indexOf(query) === index)
-        .slice(0, 5);
-
-    if (!matches.length) {
-        hideSuggestions();
-        return;
-    }
-
-    matches.forEach(query => {
-        const button = document.createElement("button");
-        button.className = "suggestion";
-        button.textContent = "🔎 " + query;
-
-        button.addEventListener("click", () => {
-            $("#searchInput").value = query;
-            hideSuggestions();
-            performSearch();
-        });
-
-        box.appendChild(button);
-    });
-
-    box.style.display = "block";
+try {
+    setTheme(localStorage.getItem(THEME_KEY) || "light");
+} catch (error) {
+    setTheme("light");
 }
 
-$("#searchInput").addEventListener("input", renderSuggestions);
-
-document.addEventListener("click", event => {
-    if (!event.target.closest(".search-card")) {
-        hideSuggestions();
-    }
-});
-
 /* ==========================================
-   VOICE SEARCH
+   ADMIN PANEL
 ========================================== */
 
-$("#voiceBtn").addEventListener("click", () => {
-    const SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
+function openAdmin() {
+    $("#adminOverlay").style.display = "block";
+    document.body.style.overflow = "hidden";
+}
 
-    if (!SpeechRecognition) {
-        showToast("Voice search is not supported in this browser.");
+function closeAdmin() {
+    $("#adminOverlay").style.display = "none";
+    document.body.style.overflow = "";
+}
+
+$("#closeAdmin").addEventListener("click", closeAdmin);
+
+$("#footerAdmin").addEventListener("click", event => {
+    event.preventDefault();
+    openAdmin();
+});
+
+$("#enterDemoAdmin").addEventListener("click", () => {
+    $("#adminLogin").classList.add("hidden");
+    $("#adminDashboard").classList.remove("hidden");
+
+    renderAdminItems();
+});
+
+function resetForm() {
+    $("#postForm").reset();
+    $("#editId").value = "";
+    $("#savePost").textContent = "💾 Save Update";
+}
+
+$("#cancelEdit").addEventListener("click", resetForm);
+
+$("#postForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const title = $("#postTitle").value.trim();
+
+    if (!title) {
+        notify("Please enter a title.");
         return;
     }
 
-    const recognition = new SpeechRecognition();
+    const rawURL = $("#postURL").value.trim();
+    const safeURL = validExternalURL(rawURL);
 
-    recognition.lang =
-        $("#languageSelect").value === "hi" ? "hi-IN" : "en-US";
-
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    $("#voiceBtn").textContent = "🔴";
-
-    recognition.onresult = event => {
-        const transcript = event.results[0][0].transcript;
-
-        $("#searchInput").value = transcript;
-        renderSuggestions();
-    };
-
-    recognition.onerror = () => {
-        showToast("Voice recognition failed. Try again.");
-    };
-
-    recognition.onend = () => {
-        $("#voiceBtn").textContent = "🎙️";
-    };
-
-    try {
-        recognition.start();
-        showToast("Listening... Speak now.");
-    } catch (error) {
-        showToast("Could not start voice recognition.");
-    }
-});
-
-/* ==========================================
-   COPY SEARCH
-========================================== */
-
-$("#copyBtn").addEventListener("click", async () => {
-    const query = getQuery();
-
-    if (!query) {
-        showToast("Enter something to copy.");
+    if (rawURL && !safeURL) {
+        notify("Enter a valid HTTP or HTTPS URL.");
         return;
     }
 
-    try {
-        await navigator.clipboard.writeText(query);
-        showToast("Search copied to clipboard.");
-    } catch (error) {
-        const input = $("#searchInput");
-        input.focus();
-        input.select();
-
-        const success = document.execCommand("copy");
-
-        showToast(success ? "Search copied." : "Please copy the text manually.");
-    }
-});
-
-/* ==========================================
-   SHARE SEARCH
-========================================== */
-
-$("#shareBtn").addEventListener("click", async () => {
-    const query = getQuery();
-
-    if (!query) {
-        showToast("Enter something to share.");
-        return;
-    }
-
-    const shareURL = makeSearchURL(
-        query,
-        currentCategory,
-        $("#engineSelect").value
+    const id = $("#editId").value || (
+        "post-" + Date.now() + "-" +
+        Math.random().toString(36).slice(2, 7)
     );
 
-    if (navigator.share) {
-        try {
-            await navigator.share({
-                title: "SearchPro Search",
-                text: query,
-                url: shareURL
-            });
-        } catch (error) {
-            if (error.name !== "AbortError") {
-                showToast("Unable to open the share menu.");
-            }
-        }
+    const existing = posts.find(post => post.id === id);
+
+    const post = {
+        id,
+        title,
+        category: $("#postCategory").value,
+        state: $("#postState").value,
+        date: $("#postDate").value,
+        lastDate: $("#postLastDate").value,
+        url: safeURL,
+        description: $("#postDescription").value.trim(),
+        featured: $("#postFeatured").checked,
+        demo: false
+    };
+
+    if (existing) {
+        posts = posts.map(item => item.id === id ? post : item);
     } else {
-        try {
-            await navigator.clipboard.writeText(shareURL);
-            showToast("Search link copied.");
-        } catch (error) {
-            showToast("Sharing is not available in this browser.");
-        }
+        posts.unshift(post);
     }
+
+    if (!savePosts()) return;
+
+    resetForm();
+    renderAll();
+    renderAdminItems();
+
+    notify(existing ? "Update edited successfully." : "New update added.");
 });
 
-/* ==========================================
-   I'M FEELING LUCKY
-========================================== */
+function renderAdminItems() {
+    const container = $("#adminItems");
+    container.replaceChildren();
 
-$("#luckyBtn").addEventListener("click", () => {
-    const query = getQuery();
-
-    if (!query) {
-        showToast("Enter a search term first.");
+    if (!posts.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent = "No items available.";
+        container.appendChild(empty);
         return;
     }
 
-    const url = "https://www.google.com/search?btnI=1&q="
-        + encodeURIComponent(query);
+    posts.forEach(post => {
+        const row = document.createElement("div");
+        row.className = "admin-item";
 
-    addHistory(query);
-    openURL(url);
-});
+        const title = document.createElement("div");
+        title.className = "admin-item-title";
 
-/* ==========================================
-   DARK / LIGHT MODE
-========================================== */
+        const strong = document.createElement("strong");
+        strong.textContent = post.title;
 
-function applyTheme(theme) {
-    document.body.classList.toggle("dark", theme === "dark");
-    $("#themeBtn").textContent = theme === "dark" ? "☀️" : "🌙";
-    writeStorage(STORAGE.theme, theme);
+        const meta = document.createElement("div");
+        meta.className = "item-meta";
+        meta.textContent =
+            (CATEGORY_NAMES[post.category] || post.category) +
+            " • " + (post.state || "National");
+
+        title.append(strong, meta);
+
+        const actions = document.createElement("div");
+        actions.className = "admin-item-actions";
+
+        const edit = document.createElement("button");
+        edit.textContent = "✏️";
+        edit.title = "Edit";
+
+        edit.addEventListener("click", () => editPost(post.id));
+
+        const remove = document.createElement("button");
+        remove.textContent = "🗑️";
+        remove.title = "Delete";
+
+        remove.addEventListener("click", () => deletePost(post.id));
+
+        actions.append(edit, remove);
+        row.append(title, actions);
+        container.appendChild(row);
+    });
 }
 
-$("#themeBtn").addEventListener("click", () => {
-    const dark = document.body.classList.contains("dark");
-    applyTheme(dark ? "light" : "dark");
-});
+function editPost(id) {
+    const post = posts.find(item => item.id === id);
+    if (!post) return;
 
-/* ==========================================
-   SETTINGS
-========================================== */
+    $("#editId").value = post.id;
+    $("#postTitle").value = post.title;
+    $("#postCategory").value = post.category;
+    $("#postState").value = post.state || "National";
+    $("#postDate").value = post.date || "";
+    $("#postLastDate").value = post.lastDate || "";
+    $("#postURL").value = post.url || "";
+    $("#postDescription").value = post.description || "";
+    $("#postFeatured").checked = Boolean(post.featured);
 
-function syncSettingsUI() {
-    $("#newTabCheck").checked = settings.newTab;
-    $("#historyCheck").checked = settings.saveHistory;
-    $("#suggestionsCheck").checked = settings.suggestions;
+    $("#savePost").textContent = "💾 Update Post";
+
+    $("#postForm").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 }
 
-function saveSettingsFromUI() {
-    settings = {
-        newTab: $("#newTabCheck").checked,
-        saveHistory: $("#historyCheck").checked,
-        suggestions: $("#suggestionsCheck").checked
-    };
+function deletePost(id) {
+    const post = posts.find(item => item.id === id);
+    if (!post) return;
 
-    writeStorage(STORAGE.settings, settings);
+    if (!confirm("Delete this item: " + post.title + "?")) return;
 
-    if (!settings.saveHistory) {
-        historyData = [];
-        writeStorage(STORAGE.history, historyData);
-        renderHistory();
-    }
+    posts = posts.filter(item => item.id !== id);
+    bookmarks = bookmarks.filter(item => item !== id);
 
-    if (!settings.suggestions) {
-        hideSuggestions();
-    }
+    savePosts();
+    saveBookmarks();
 
-    showToast("Settings saved.");
+    renderAll();
+    renderAdminItems();
+
+    notify("Item deleted.");
 }
 
-$("#settingsBtn").addEventListener("click", () => {
-    $("#settingsPanel").classList.toggle("hidden");
-
-    if (!$("#settingsPanel").classList.contains("hidden")) {
-        $("#settingsPanel").scrollIntoView({
-            behavior: "smooth",
-            block: "nearest"
-        });
-    }
-});
-
-$("#newTabCheck").addEventListener("change", saveSettingsFromUI);
-$("#historyCheck").addEventListener("change", saveSettingsFromUI);
-$("#suggestionsCheck").addEventListener("change", saveSettingsFromUI);
-
-$("#engineSelect").addEventListener("change", () => {
-    writeStorage(STORAGE.engine, $("#engineSelect").value);
-});
-
-$("#resetBtn").addEventListener("click", () => {
-    if (!confirm("Reset settings to default?")) return;
-
-    settings = {...DEFAULT_SETTINGS};
-    writeStorage(STORAGE.settings, settings);
-
-    $("#engineSelect").value = "google";
-    $("#languageSelect").value = "en";
-
-    applyTheme("light");
-    syncSettingsUI();
-
-    showToast("Settings reset.");
-});
-
 /* ==========================================
-   EXPORT BACKUP
+   EXPORT JSON BACKUP
 ========================================== */
 
 function downloadJSON(filename, data) {
@@ -1429,23 +1820,22 @@ function downloadJSON(filename, data) {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-$("#exportBtn").addEventListener("click", () => {
-    downloadJSON("searchpro-backup.json", {
+$("#exportData").addEventListener("click", () => {
+    downloadJSON("examportal-backup.json", {
         version: 1,
         exportedAt: new Date().toISOString(),
-        history: historyData,
-        bookmarks: bookmarksData,
-        settings
+        posts,
+        bookmarks
     });
 
-    showToast("Backup exported.");
+    notify("Backup exported.");
 });
 
 /* ==========================================
-   IMPORT BACKUP
+   IMPORT JSON BACKUP
 ========================================== */
 
-$("#importBtn").addEventListener("click", () => {
+$("#importData").addEventListener("click", () => {
     $("#importFile").click();
 });
 
@@ -1455,110 +1845,94 @@ $("#importFile").addEventListener("change", async event => {
     if (!file) return;
 
     try {
-        if (file.size > 2 * 1024 * 1024) {
+        if (file.size > 3 * 1024 * 1024) {
             throw new Error("Backup file is too large.");
         }
 
         const data = JSON.parse(await file.text());
 
-        if (!data || typeof data !== "object") {
-            throw new Error("Invalid backup.");
+        if (!data || !Array.isArray(data.posts)) {
+            throw new Error("Invalid backup file.");
         }
 
-        const validHistory = Array.isArray(data.history)
-            ? data.history
-                .filter(item =>
-                    item &&
-                    typeof item.query === "string" &&
-                    item.query.trim()
-                )
-                .slice(0, 100)
-            : [];
+        const imported = data.posts.filter(post =>
+            post &&
+            typeof post.id === "string" &&
+            typeof post.title === "string" &&
+            CATEGORIES.includes(post.category)
+        ).slice(0, 5000);
 
-        const validBookmarks = Array.isArray(data.bookmarks)
-            ? data.bookmarks
-                .filter(item =>
-                    item &&
-                    typeof item.query === "string" &&
-                    item.query.trim()
-                )
-                .slice(0, 200)
-            : [];
-
-        if (!confirm("Replace current history and bookmarks with this backup?")) {
+        if (!confirm("Replace existing posts with imported data?")) {
             return;
         }
 
-        historyData = validHistory;
-        bookmarksData = validBookmarks;
+        posts = imported.map(post => ({
+            id: post.id,
+            title: post.title.slice(0, 180),
+            category: post.category,
+            state: typeof post.state === "string" ? post.state : "National",
+            date: typeof post.date === "string" ? post.date : "",
+            lastDate: typeof post.lastDate === "string" ? post.lastDate : "",
+            url: validExternalURL(post.url),
+            description: typeof post.description === "string"
+                ? post.description.slice(0, 600) : "",
+            featured: Boolean(post.featured),
+            demo: false
+        }));
 
-        writeStorage(STORAGE.history, historyData);
-        writeStorage(STORAGE.bookmarks, bookmarksData);
+        bookmarks = Array.isArray(data.bookmarks)
+            ? data.bookmarks.filter(id =>
+                posts.some(post => post.id === id)
+            )
+            : [];
 
-        if (data.settings && typeof data.settings === "object") {
-            settings = {
-                newTab: data.settings.newTab !== false,
-                saveHistory: data.settings.saveHistory !== false,
-                suggestions: data.settings.suggestions !== false
-            };
+        savePosts();
+        saveBookmarks();
 
-            writeStorage(STORAGE.settings, settings);
-            syncSettingsUI();
-        }
+        renderAll();
+        renderAdminItems();
 
-        renderHistory();
-        renderBookmarks();
-
-        showToast("Backup imported successfully.");
+        notify("Backup imported successfully.");
     } catch (error) {
-        showToast(error.message || "Could not import backup.");
+        notify(error.message || "Import failed.");
     } finally {
         event.target.value = "";
     }
 });
 
 /* ==========================================
-   INITIALIZE APP
+   RESET DEMO DATA
 ========================================== */
 
-function initializeApp() {
-    historyData = readStorage(STORAGE.history, []);
-    bookmarksData = readStorage(STORAGE.bookmarks, []);
-    settings = {
-        ...DEFAULT_SETTINGS,
-        ...readStorage(STORAGE.settings, {})
-    };
+$("#resetDemo").addEventListener("click", () => {
+    if (!confirm(
+        "This will delete all locally stored posts and restore demo data. Continue?"
+    )) return;
 
-    if (!Array.isArray(historyData)) historyData = [];
-    if (!Array.isArray(bookmarksData)) bookmarksData = [];
+    posts = structuredCloneSafe(DEMO_POSTS);
+    bookmarks = [];
+    activeSearch = "";
+    bookmarkOnly = false;
 
-    const savedTheme = readStorage(STORAGE.theme, "light");
-    applyTheme(savedTheme);
+    $("#searchInput").value = "";
+    $("#categoryFilter").value = "all";
+    $("#stateFilter").value = "all";
 
-    const savedEngine = readStorage(STORAGE.engine, "google");
+    savePosts();
+    saveBookmarks();
 
-    if (["google", "bing", "duckduckgo", "yahoo", "brave"].includes(savedEngine)) {
-        $("#engineSelect").value = savedEngine;
-    }
+    renderAll();
+    renderAdminItems();
+    resetForm();
 
-    const savedCategory = readStorage(STORAGE.category, "web");
+    notify("Demo data restored.");
+});
 
-    const validCategories = [
-        "web", "images", "videos", "news",
-        "shopping", "maps", "books", "academic"
-    ];
+/* ==========================================
+   START APPLICATION
+========================================== */
 
-    currentCategory = validCategories.includes(savedCategory)
-        ? savedCategory
-        : "web";
-
-    updateTabs();
-    syncSettingsUI();
-    renderHistory();
-    renderBookmarks();
-}
-
-initializeApp();
+renderAll();
 
 </script>
 </body>
