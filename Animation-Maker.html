@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10152f">
+<meta name="theme-color" content="#111827">
 
-<title>3D Cartoon Animation Studio Pro</title>
+<title>Advanced Harmonium Pro</title>
 
 <style>
 :root {
-    --bg: #10152f;
-    --panel: #191f3d;
-    --panel2: #222a4d;
-    --accent: #6c63ff;
-    --accent2: #00d4ff;
-    --text: #f3f5ff;
-    --muted: #a7b0d0;
-    --border: rgba(255,255,255,.1);
-    --success: #36d399;
-    --danger: #ff5575;
+    --bg: #101827;
+    --panel: #1b2639;
+    --panel2: #263449;
+    --text: #f8fafc;
+    --muted: #aab8cc;
+    --accent: #f5b942;
+    --border: #39475d;
+    --key-white: #fffdf5;
+    --key-black: #182033;
+    --success: #20c997;
 }
 
 * {
@@ -27,2651 +27,1680 @@
 
 body {
     margin: 0;
+    font-family: system-ui, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
-    overflow-x: hidden;
+    min-height: 100vh;
 }
 
-button, input, select, textarea {
-    font: inherit;
+header {
+    background: linear-gradient(135deg, #172033, #533414);
+    padding: 20px 14px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent);
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(23px, 5vw, 36px);
+}
+
+header p {
+    color: #ffe6b0;
+    margin: 8px 0 0;
+}
+
+.app {
+    max-width: 1400px;
+    margin: auto;
+    padding: 14px;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 15px;
+    box-shadow: 0 6px 20px #0002;
+}
+
+h2 {
+    font-size: 19px;
+    margin: 0 0 14px;
+}
+
+h3 {
+    font-size: 15px;
+    margin: 0 0 10px;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: 12px;
+}
+
+.control label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+select, input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: #111c2e;
+    color: white;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
 }
 
 button {
     border: 0;
-    border-radius: 8px;
-    background: var(--accent);
-    color: white;
-    padding: 10px 13px;
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    transition: .2s;
+    transition: transform .1s, opacity .2s;
 }
 
-button:hover {
-    filter: brightness(1.15);
-    transform: translateY(-1px);
+button:active {
+    transform: scale(.97);
 }
 
 button:disabled {
     opacity: .45;
     cursor: not-allowed;
-    transform: none;
 }
 
-input, select, textarea {
-    width: 100%;
-    background: #10152f;
+.btn-primary {
+    background: var(--accent);
+    color: #241600;
+}
+
+.btn-secondary {
+    background: #33445e;
     color: white;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    padding: 10px;
-    outline: none;
 }
 
-input[type="range"] {
-    padding: 0;
-    accent-color: var(--accent2);
+.btn-success {
+    background: var(--success);
+    color: #06281e;
 }
 
-input[type="color"] {
-    height: 42px;
-    padding: 3px;
+.btn-danger {
+    background: #ef5350;
+    color: white;
 }
 
-label {
-    display: block;
-    color: var(--muted);
-    font-size: 12px;
-    margin: 12px 0 6px;
-}
-
-.header {
-    min-height: 65px;
-    padding: 12px 18px;
+.button-row {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
     flex-wrap: wrap;
-    border-bottom: 1px solid var(--border);
-    background: #121832;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 18px;
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #6c63ff, #00d4ff);
-    font-size: 23px;
-}
-
-.header-actions {
-    display: flex;
     gap: 8px;
-    flex-wrap: wrap;
-}
-
-.secondary {
-    background: var(--panel2);
-}
-
-.green {
-    background: #159e72;
-}
-
-.red {
-    background: #b92f52;
-}
-
-.layout {
-    display: grid;
-    grid-template-columns: 245px minmax(0, 1fr) 260px;
-    gap: 12px;
-    padding: 12px;
-    min-height: calc(100vh - 65px);
-}
-
-.panel {
-    min-width: 0;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.panel-title {
-    padding: 15px;
-    font-weight: bold;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.panel-content {
-    padding: 13px;
-}
-
-.section {
-    margin-bottom: 22px;
-}
-
-.section h3 {
-    font-size: 13px;
-    color: #bfc7ff;
-    margin: 0 0 10px;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-}
-
-.field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-}
-
-.button-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 7px;
-}
-
-.button-grid button {
-    font-size: 12px;
-}
-
-.stage-column {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-}
-
-.stage-toolbar {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-}
-
-.toolbar-group {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.small-button {
-    padding: 8px 10px;
-    font-size: 12px;
-}
-
-.stage {
-    position: relative;
-    height: min(64vh, 620px);
-    min-height: 330px;
-    background: #8ac7ff;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-}
-
-#renderArea {
-    position: absolute;
-    inset: 0;
-}
-
-#renderArea canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.stage-overlay {
-    position: absolute;
-    z-index: 2;
-    left: 12px;
-    top: 12px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    pointer-events: none;
-}
-
-.badge {
-    background: rgba(12,18,40,.8);
-    border: 1px solid rgba(255,255,255,.15);
-    border-radius: 6px;
-    padding: 7px 9px;
-    font-size: 11px;
-}
-
-.stage-bottom {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 8px;
-    pointer-events: none;
-}
-
-.stage-bottom > * {
-    pointer-events: auto;
-}
-
-.scene-caption {
-    max-width: 70%;
-    background: rgba(12,18,40,.8);
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 12px;
-    overflow-wrap: anywhere;
-}
-
-.timeline-panel {
-    padding: 13px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-}
-
-.timeline-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-}
-
-.timeline {
-    position: relative;
-    overflow-x: auto;
-    padding-bottom: 8px;
-}
-
-.timeline-ruler {
-    display: flex;
-    min-width: 500px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 7px;
-    color: var(--muted);
-    font-size: 10px;
-}
-
-.timeline-ruler span {
-    width: 60px;
-    flex-shrink: 0;
-}
-
-.track {
-    display: flex;
-    gap: 5px;
-    min-width: 500px;
-    margin-top: 8px;
-    align-items: center;
-}
-
-.track-label {
-    width: 75px;
-    flex-shrink: 0;
-    font-size: 11px;
-    color: var(--muted);
-}
-
-.clip {
-    min-width: 65px;
-    height: 34px;
-    border-radius: 5px;
-    background: linear-gradient(90deg, #6c63ff, #3989ff);
-    font-size: 10px;
-    display: grid;
-    place-items: center;
-    padding: 4px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.clip.selected {
-    outline: 2px solid white;
-}
-
-.progress {
-    height: 5px;
-    background: #0d1126;
-    border-radius: 10px;
-    overflow: hidden;
     margin-top: 12px;
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0%;
-    background: var(--accent2);
-    transition: width .1s linear;
 }
 
 .status {
     color: var(--muted);
-    font-size: 11px;
+    font-size: 13px;
     margin-top: 10px;
-    overflow-wrap: anywhere;
 }
 
-.stat-grid {
+.instrument {
+    background: linear-gradient(135deg, #7c391c, #c17b37, #633016);
+    border: 5px solid #5c2b13;
+    border-radius: 18px;
+    padding: 14px;
+    overflow: hidden;
+}
+
+.instrument-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.brand {
+    font-size: 17px;
+    font-weight: 900;
+    color: #fff1cb;
+    letter-spacing: 2px;
+}
+
+.bellows {
+    height: 45px;
+    flex: 1;
+    min-width: 100px;
+    max-width: 280px;
+    background: repeating-linear-gradient(
+        90deg,
+        #2d1c19 0px,
+        #2d1c19 7px,
+        #a75b31 8px,
+        #a75b31 13px
+    );
+    border: 3px solid #e0a35b;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bellows.active {
+    animation: breathe .4s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+    from { transform: scaleX(.94); }
+    to { transform: scaleX(1); }
+}
+
+.keyboard-scroll {
+    overflow-x: auto;
+    padding: 10px 4px 15px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.keyboard {
+    position: relative;
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    height: 245px;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.key {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+.key.white {
+    width: clamp(44px, 6vw, 66px);
+    height: 235px;
+    flex-shrink: 0;
+    background: linear-gradient(90deg, #dedbd2, #fffdf5 25%, #fffdf5 80%, #d6d2c8);
+    border: 1px solid #777;
+    border-radius: 0 0 6px 6px;
+    color: #1c2430;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 10px;
+    z-index: 1;
+}
+
+.key.black {
+    width: clamp(29px, 4vw, 42px);
+    height: 145px;
+    margin-left: calc(clamp(44px, 6vw, 66px) / -2);
+    margin-right: calc(clamp(44px, 6vw, 66px) / -2);
+    flex-shrink: 0;
+    background: linear-gradient(90deg, #070b12, #283144 45%, #080b11);
+    color: white;
+    border-radius: 0 0 5px 5px;
+    z-index: 3;
+    box-shadow: 0 5px 6px #0007;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 9px;
+}
+
+.key.white.active {
+    background: #ffdb7d;
+    transform: translateY(2px);
+}
+
+.key.black.active {
+    background: #d79a27;
+    color: #17120a;
+}
+
+.note {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.western {
+    font-size: 10px;
+    margin-top: 4px;
+    opacity: .8;
+}
+
+.shortcut {
+    font-size: 10px;
+    margin-top: 4px;
+    opacity: .65;
+}
+
+.key.black .note {
+    font-size: 11px;
+}
+
+.readout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.readout-card {
+    background: #111c2e;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+}
+
+.readout-card strong {
+    display: block;
+    color: var(--accent);
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.readout-card span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+}
+
+.feature-card {
+    background: #111c2e;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px;
+}
+
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 11px 0;
+    font-size: 14px;
+}
+
+.check-row input {
+    accent-color: var(--accent);
+    width: 17px;
+    height: 17px;
+}
+
+.chord-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
     gap: 8px;
 }
 
-.stat {
+.sargam-display {
+    min-height: 55px;
+    background: #101827;
+    border: 1px solid var(--border);
+    border-radius: 10px;
     padding: 12px;
-    background: #111730;
-    border-radius: 8px;
+    line-height: 1.9;
+    word-break: break-word;
 }
 
-.stat strong {
-    display: block;
-    font-size: 18px;
-    margin-bottom: 5px;
+.sargam-note {
+    display: inline-block;
+    background: #31415a;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin: 3px;
 }
 
-.stat span {
-    color: var(--muted);
-    font-size: 11px;
+.sargam-note.current {
+    background: var(--accent);
+    color: #241600;
 }
 
-.dialogue {
-    position: absolute;
-    z-index: 5;
-    bottom: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: max-content;
-    max-width: 85%;
-    background: rgba(255,255,255,.96);
-    color: #18203a;
-    padding: 12px 18px;
-    border-radius: 16px;
-    font-weight: bold;
-    text-align: center;
-    display: none;
-    box-shadow: 0 5px 25px #0003;
-}
-
-.toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #242d50;
-    color: white;
-    border: 1px solid var(--border);
-    padding: 12px 18px;
-    border-radius: 9px;
-    z-index: 100;
-    display: none;
-    max-width: 90vw;
-    font-size: 13px;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 50;
-    inset: 0;
-    background: #0009;
-    padding: 15px;
+.recorder {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     align-items: center;
-    justify-content: center;
 }
 
-.modal-card {
-    width: min(500px, 100%);
-    max-height: 90vh;
-    overflow: auto;
-    background: var(--panel);
-    padding: 20px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 25px 10px;
+    font-size: 12px;
 }
 
-.modal-card h2 {
-    margin-top: 0;
+body.light {
+    --bg: #edf1f7;
+    --panel: #ffffff;
+    --panel2: #edf1f7;
+    --text: #182235;
+    --muted: #56647a;
+    --border: #ccd4df;
 }
 
-.close-modal {
-    float: right;
-    background: var(--panel2);
+body.light select,
+body.light input[type="number"],
+body.light input[type="text"] {
+    background: #f5f7fa;
+    color: #172033;
 }
 
-@media(max-width: 1050px) {
-    .layout {
-        grid-template-columns: 220px minmax(0, 1fr);
-    }
-
-    .right-panel {
-        grid-column: 1 / -1;
-    }
-
-    .right-panel .panel-content {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-    }
+body.light .readout-card,
+body.light .feature-card,
+body.light .sargam-display {
+    background: #f5f7fa;
 }
 
-@media(max-width: 700px) {
-    .layout {
-        grid-template-columns: 1fr;
-    }
-
-    .left-panel,
-    .right-panel {
-        grid-column: auto;
-    }
-
-    .right-panel .panel-content {
-        display: block;
-    }
-
-    .stage {
-        min-height: 340px;
-        height: 50vh;
-    }
-
-    .header {
-        align-items: flex-start;
-    }
-
-    .logo {
-        font-size: 15px;
-    }
+@media (max-width: 600px) {
+    .app { padding: 8px; }
+    .panel { padding: 12px; }
+    .keyboard { height: 210px; }
+    .key.white { height: 200px; }
+    .key.black { height: 120px; }
+    .instrument { padding: 8px; }
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
-    <div class="logo">
-        <div class="logo-icon">🎬</div>
-        <div>
-            3D CARTOON STUDIO
-            <div style="font-size:10px;color:#a7b0d0;margin-top:3px">
-                Animation Workspace Pro
-            </div>
-        </div>
-    </div>
-
-    <div class="header-actions">
-        <button class="secondary" id="newProjectBtn">＋ New</button>
-        <button class="secondary" id="saveProjectBtn">💾 Save</button>
-        <button class="secondary" id="loadProjectBtn">📂 Open</button>
-        <button class="green" id="exportBtn">🎥 Record Video</button>
-    </div>
+<header>
+    <h1>🎹 Advanced Harmonium Pro</h1>
+    <p>अपना डिजिटल हारमोनियम बजाएँ • सीखें • अभ्यास करें • रिकॉर्ड करें</p>
 </header>
 
-<div class="layout">
+<main class="app">
 
-    <!-- LEFT PANEL -->
-    <aside class="panel left-panel">
-        <div class="panel-title">
-            <span>🧰 Creation Tools</span>
+<section class="panel">
+    <h2>🎛️ Instrument Settings</h2>
+
+    <div class="controls">
+
+        <div class="control">
+            <label for="octave">सप्तक चुनें</label>
+            <select id="octave">
+                <option value="-1">मंद्र सप्तक</option>
+                <option value="0" selected>मध्य सप्तक</option>
+                <option value="1">तार सप्तक</option>
+            </select>
         </div>
 
-        <div class="panel-content">
-
-            <section class="section">
-                <h3>Character Creator</h3>
-
-                <label>Character Name</label>
-                <input id="characterName" value="Hero Character">
-
-                <label>Character Style</label>
-                <select id="characterStyle">
-                    <option value="boy">Cartoon Boy</option>
-                    <option value="girl">Cartoon Girl</option>
-                    <option value="robot">Robot</option>
-                    <option value="alien">Alien</option>
-                    <option value="bear">Cute Bear</option>
-                </select>
-
-                <label>Body Color</label>
-                <input type="color" id="bodyColor" value="#4c8dff">
-
-                <label>Head Color</label>
-                <input type="color" id="headColor" value="#ffcc9d">
-
-                <label>Character Height</label>
-                <input type="range" id="characterHeight"
-                       min="0.7" max="1.7" step="0.05" value="1">
-
-                <label>Head Size</label>
-                <input type="range" id="headSize"
-                       min="0.7" max="1.5" step="0.05" value="1">
-
-                <button id="createCharacterBtn" style="width:100%;margin-top:12px">
-                    ✨ Create / Update Character
-                </button>
-            </section>
-
-            <section class="section">
-                <h3>Animation Library</h3>
-
-                <div class="button-grid">
-                    <button data-animation="idle">🧍 Idle</button>
-                    <button data-animation="walk">🚶 Walk</button>
-                    <button data-animation="run">🏃 Run</button>
-                    <button data-animation="jump">🦘 Jump</button>
-                    <button data-animation="dance">💃 Dance</button>
-                    <button data-animation="wave">👋 Wave</button>
-                </div>
-
-                <label>Animation Speed</label>
-                <input type="range" id="animationSpeed"
-                       min="0.2" max="3" step="0.1" value="1">
-
-                <label>Movement Distance</label>
-                <input type="range" id="movementDistance"
-                       min="0" max="8" step="0.5" value="3">
-
-                <button id="playAnimationBtn"
-                        style="width:100%;margin-top:10px" class="green">
-                    ▶ Play Animation
-                </button>
-
-                <button id="stopAnimationBtn"
-                        style="width:100%;margin-top:7px" class="secondary">
-                    ⏹ Stop Animation
-                </button>
-            </section>
-
-            <section class="section">
-                <h3>Scene Creator</h3>
-
-                <label>Environment</label>
-                <select id="environment">
-                    <option value="village">Indian Village</option>
-                    <option value="forest">Green Forest</option>
-                    <option value="school">School Campus</option>
-                    <option value="city">Modern City</option>
-                    <option value="island">Tropical Island</option>
-                    <option value="night">Night Scene</option>
-                </select>
-
-                <label>Ground Color</label>
-                <input type="color" id="groundColor" value="#66aa66">
-
-                <label>Sky Color</label>
-                <input type="color" id="skyColor" value="#8ac7ff">
-
-                <button id="buildSceneBtn"
-                        style="width:100%;margin-top:10px">
-                    🌎 Build Environment
-                </button>
-            </section>
-
-            <section class="section">
-                <h3>Dialogue & Story</h3>
-
-                <label>Character Dialogue</label>
-                <textarea id="dialogueText" rows="3"
-                    placeholder="Hello friends! Welcome to my village."></textarea>
-
-                <button id="showDialogueBtn"
-                        style="width:100%;margin-top:8px">
-                    💬 Show Dialogue
-                </button>
-
-                <button id="speakDialogueBtn"
-                        style="width:100%;margin-top:7px"
-                        class="secondary">
-                    🔊 Speak Dialogue
-                </button>
-            </section>
-
-        </div>
-    </aside>
-
-
-    <!-- CENTER STAGE -->
-    <main class="stage-column">
-
-        <div class="stage-toolbar">
-            <div class="toolbar-group">
-                <button class="small-button secondary" id="viewFront">Front</button>
-                <button class="small-button secondary" id="viewSide">Side</button>
-                <button class="small-button secondary" id="viewTop">Top</button>
-                <button class="small-button secondary" id="viewReset">Reset View</button>
-            </div>
-
-            <div class="toolbar-group">
-                <button class="small-button secondary" id="toggleGrid">Grid</button>
-                <button class="small-button secondary" id="toggleAxes">Axes</button>
-                <button class="small-button secondary" id="fullscreenBtn">⛶ Fullscreen</button>
-            </div>
+        <div class="control">
+            <label for="scale">सा / Root Note</label>
+            <select id="scale">
+                <option value="C">C / सा</option>
+                <option value="C#">C#</option>
+                <option value="D">D</option>
+                <option value="D#">D#</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="F#">F#</option>
+                <option value="G">G</option>
+                <option value="G#">G#</option>
+                <option value="A">A</option>
+                <option value="A#">A#</option>
+                <option value="B">B</option>
+            </select>
         </div>
 
-        <div class="stage" id="stage">
-            <div id="renderArea"></div>
-
-            <div class="stage-overlay">
-                <div class="badge">● LIVE VIEWPORT</div>
-                <div class="badge" id="renderStatus">3D Renderer Loading...</div>
-            </div>
-
-            <div class="stage-bottom">
-                <div class="scene-caption" id="sceneCaption">
-                    Scene 01 — Indian Village
-                </div>
-
-                <div class="toolbar-group">
-                    <button class="small-button secondary" id="zoomIn">＋</button>
-                    <button class="small-button secondary" id="zoomOut">−</button>
-                </div>
-            </div>
-
-            <div class="dialogue" id="dialogueBubble"></div>
+        <div class="control">
+            <label for="voice">आवाज का प्रकार</label>
+            <select id="voice">
+                <option value="reed">Harmonium Reed</option>
+                <option value="soft">Soft Reed</option>
+                <option value="bright">Bright Reed</option>
+                <option value="organ">Organ</option>
+                <option value="flute">Flute-like</option>
+            </select>
         </div>
 
-        <div class="timeline-panel">
-            <div class="timeline-head">
-                <strong>🎞️ Animation Timeline</strong>
-
-                <div class="toolbar-group">
-                    <button class="small-button secondary" id="addSceneBtn">
-                        ＋ Scene
-                    </button>
-
-                    <button class="small-button secondary" id="deleteSceneBtn">
-                        🗑 Delete
-                    </button>
-                </div>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-ruler" id="timelineRuler">
-                    <span>00:00</span>
-                    <span>00:05</span>
-                    <span>00:10</span>
-                    <span>00:15</span>
-                    <span>00:20</span>
-                    <span>00:25</span>
-                    <span>00:30</span>
-                    <span>00:35</span>
-                </div>
-
-                <div class="track">
-                    <div class="track-label">Scene Track</div>
-                    <div class="clip selected" id="sceneClip">Scene 01</div>
-                </div>
-
-                <div class="track">
-                    <div class="track-label">Character</div>
-                    <div class="clip" id="animationClip">Idle</div>
-                </div>
-
-                <div class="track">
-                    <div class="track-label">Dialogue</div>
-                    <div class="clip" id="dialogueClip">Dialogue</div>
-                </div>
-            </div>
-
-            <div class="progress">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-
-            <div class="status" id="timelineStatus">
-                Ready · 00:00 / 00:30
-            </div>
+        <div class="control">
+            <label for="volume">Volume</label>
+            <input id="volume" type="range" min="0" max="100" value="65">
         </div>
 
-    </main>
-
-
-    <!-- RIGHT PANEL -->
-    <aside class="panel right-panel">
-        <div class="panel-title">
-            <span>⚙️ Properties</span>
+        <div class="control">
+            <label for="fineTune">Fine Tune</label>
+            <input id="fineTune" type="range" min="-50" max="50" value="0">
         </div>
 
-        <div class="panel-content">
-
-            <section class="section">
-                <h3>Project Settings</h3>
-
-                <label>Project Name</label>
-                <input id="projectName" value="My Cartoon Film">
-
-                <label>Video Resolution</label>
-                <select id="resolution">
-                    <option value="720">HD 1280 × 720</option>
-                    <option value="1080">Full HD 1920 × 1080</option>
-                    <option value="480">SD 854 × 480</option>
-                </select>
-
-                <label>Frame Rate</label>
-                <select id="frameRate">
-                    <option value="24">24 FPS</option>
-                    <option value="30" selected>30 FPS</option>
-                    <option value="60">60 FPS</option>
-                </select>
-
-                <label>Video Duration (seconds)</label>
-                <input type="number" id="duration"
-                       min="3" max="60" value="15">
-
-                <label>Camera Field of View</label>
-                <input type="range" id="cameraFov"
-                       min="30" max="100" value="55">
-
-                <label>Lighting Intensity</label>
-                <input type="range" id="lightIntensity"
-                       min="0.2" max="2" step="0.1" value="1">
-
-                <label>Animation Quality</label>
-                <select id="quality">
-                    <option value="low">Performance</option>
-                    <option value="medium" selected>Balanced</option>
-                    <option value="high">High Detail</option>
-                </select>
-            </section>
-
-            <section class="section">
-                <h3>Camera Controls</h3>
-
-                <label>Camera Height</label>
-                <input type="range" id="cameraHeight"
-                       min="1" max="12" step="0.5" value="4">
-
-                <label>Camera Distance</label>
-                <input type="range" id="cameraDistance"
-                       min="4" max="20" step="0.5" value="9">
-
-                <label>Camera Angle</label>
-                <input type="range" id="cameraAngle"
-                       min="-60" max="60" value="15">
-
-                <button id="applyCameraBtn"
-                        style="width:100%;margin-top:10px">
-                    🎥 Apply Camera
-                </button>
-            </section>
-
-            <section class="section">
-                <h3>Scene Statistics</h3>
-
-                <div class="stat-grid">
-                    <div class="stat">
-                        <strong id="characterCount">1</strong>
-                        <span>Characters</span>
-                    </div>
-
-                    <div class="stat">
-                        <strong id="sceneCount">1</strong>
-                        <span>Scenes</span>
-                    </div>
-
-                    <div class="stat">
-                        <strong id="objectCount">0</strong>
-                        <span>3D Objects</span>
-                    </div>
-
-                    <div class="stat">
-                        <strong id="currentAnimation">Idle</strong>
-                        <span>Animation</span>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section">
-                <h3>Project Actions</h3>
-
-                <button id="screenshotBtn"
-                        style="width:100%">
-                    📸 Screenshot
-                </button>
-
-                <button id="exportProjectBtn"
-                        style="width:100%;margin-top:8px"
-                        class="secondary">
-                    📦 Export Project JSON
-                </button>
-
-                <button id="helpBtn"
-                        style="width:100%;margin-top:8px"
-                        class="secondary">
-                    ❓ Help & Controls
-                </button>
-            </section>
-
+        <div class="control">
+            <label for="reverb">Reverb</label>
+            <input id="reverb" type="range" min="0" max="60" value="12">
         </div>
-    </aside>
 
-</div>
-
-<div class="toast" id="toast"></div>
-
-<div class="modal" id="helpModal">
-    <div class="modal-card">
-        <button class="close-modal" id="closeHelp">✕</button>
-        <h2>Studio Help</h2>
-
-        <p><b>Rotate camera:</b> Drag the mouse or finger over the 3D viewport.</p>
-        <p><b>Zoom:</b> Use the mouse wheel or the + / − buttons.</p>
-        <p><b>Move character:</b> Select Walk or Run and press Play Animation.</p>
-        <p><b>Change character:</b> Update the character settings and press Create / Update.</p>
-        <p><b>Change scene:</b> Choose an environment and press Build Environment.</p>
-        <p><b>Video recording:</b> Press Record Video, allow the recording to finish, and download the resulting WebM file.</p>
-        <p><b>Project saving:</b> Save or export a JSON project file. This is not a rendered video.</p>
-
-        <p style="color:#a7b0d0;font-size:12px">
-            This studio uses procedural 3D geometry. It does not contain a full skeletal animation rig or an AI text-to-video model.
-        </p>
     </div>
-</div>
 
-<input type="file" id="projectFileInput"
-       accept=".json,application/json" hidden>
+    <div class="button-row">
+        <button class="btn-primary" id="startAudio">🔊 Start Harmonium</button>
+        <button class="btn-secondary" id="bellowsBtn">🌬️ Bellows ON/OFF</button>
+        <button class="btn-secondary" id="themeBtn">🌙 Theme</button>
+        <button class="btn-secondary" id="panicBtn">⏹ Stop All</button>
+    </div>
 
-<script type="module">
-import * as THREE from
-'https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js';
-
-import { OrbitControls } from
-'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/controls/OrbitControls.js';
+    <p class="status" id="audioStatus">
+        ध्वनि शुरू करने के लिए Start Harmonium दबाएँ।
+    </p>
+</section>
 
 
-/* =========================================
-   1. GLOBAL STATE
-========================================= */
+<section class="panel">
+    <h2>🎹 Virtual Harmonium Keyboard</h2>
+
+    <div class="instrument">
+        <div class="instrument-top">
+            <div class="brand">SUR SANGAM</div>
+            <div class="bellows" id="bellows"></div>
+            <div style="color:#fff1cb;font-weight:800">DIGITAL REED</div>
+        </div>
+
+        <div class="keyboard-scroll">
+            <div class="keyboard" id="keyboard"></div>
+        </div>
+    </div>
+
+    <div class="readout">
+        <div class="readout-card">
+            <span>Current Note</span>
+            <strong id="currentNote">—</strong>
+        </div>
+
+        <div class="readout-card">
+            <span>Frequency</span>
+            <strong id="frequency">—</strong>
+        </div>
+
+        <div class="readout-card">
+            <span>Notes Played</span>
+            <strong id="notesPlayed">0</strong>
+        </div>
+
+        <div class="readout-card">
+            <span>Recording Time</span>
+            <strong id="recordTime">00:00</strong>
+        </div>
+    </div>
+
+    <p class="status">
+        मोबाइल पर स्वर दबाएँ। कंप्यूटर पर A–K कीबोर्ड शॉर्टकट भी काम करते हैं।
+        एक साथ कई स्वर बजाने के लिए अलग-अलग कुंजियाँ दबाएँ।
+    </p>
+</section>
+
+
+<section class="panel">
+    <h2>🎼 Sargam Practice</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <h3>सरगम चुनें</h3>
+
+            <div class="control">
+                <label for="practiceType">अभ्यास का प्रकार</label>
+                <select id="practiceType">
+                    <option value="ascending">आरोह: सा रे ग म प ध नि सां</option>
+                    <option value="descending">अवरोह: सां नि ध प म ग रे सा</option>
+                    <option value="both">आरोह और अवरोह</option>
+                    <option value="alankar">अलंकार अभ्यास</option>
+                    <option value="random">Random Sargam</option>
+                </select>
+            </div>
+
+            <div class="control" style="margin-top:12px">
+                <label for="practiceSpeed">अभ्यास की गति</label>
+                <input id="practiceSpeed" type="range"
+                       min="100" max="1200" step="50" value="450">
+                <div class="status" id="speedLabel">450 ms प्रति स्वर</div>
+            </div>
+
+            <div class="button-row">
+                <button class="btn-success" id="playPractice">▶ Play Sargam</button>
+                <button class="btn-danger" id="stopPractice">⏹ Stop Practice</button>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3>स्वर क्रम</h3>
+            <div class="sargam-display" id="sargamDisplay">
+                अभ्यास शुरू करने के लिए Play Sargam दबाएँ।
+            </div>
+
+            <p class="status">
+                अभ्यास की ध्वनि चुने गए स्केल और सप्तक के अनुसार बजेगी।
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="panel">
+    <h2>🎶 Chord & Harmony Pad</h2>
+
+    <p class="status">
+        ये Western-style chords हैं। भारतीय रागों के अभ्यास में हर chord उपयुक्त नहीं होता।
+    </p>
+
+    <div class="chord-buttons">
+        <button class="btn-primary" data-chord="C">C Major</button>
+        <button class="btn-primary" data-chord="Dm">D Minor</button>
+        <button class="btn-primary" data-chord="Em">E Minor</button>
+        <button class="btn-primary" data-chord="F">F Major</button>
+        <button class="btn-primary" data-chord="G">G Major</button>
+        <button class="btn-primary" data-chord="Am">A Minor</button>
+        <button class="btn-primary" data-chord="Bdim">B Diminished</button>
+    </div>
+</section>
+
+
+<section class="panel">
+    <h2>🎚️ Performance Controls</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <h3>🎵 Metronome</h3>
+
+            <div class="control">
+                <label for="bpm">Tempo: BPM</label>
+                <input type="number" id="bpm" min="30" max="240" value="80">
+            </div>
+
+            <div class="button-row">
+                <button class="btn-success" id="metroStart">▶ Start</button>
+                <button class="btn-danger" id="metroStop">⏹ Stop</button>
+            </div>
+
+            <p class="status" id="metroStatus">Metronome बंद है।</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🎙️ Recording Studio</h3>
+
+            <p class="status">
+                अपने बजाए गए स्वरों को रिकॉर्ड करें और WAV फाइल डाउनलोड करें।
+            </p>
+
+            <div class="recorder">
+                <button class="btn-success" id="recordStart">⏺ Record</button>
+                <button class="btn-danger" id="recordStop" disabled>⏹ Stop</button>
+                <button class="btn-primary" id="downloadWav" disabled>
+                    ⬇ Download WAV
+                </button>
+            </div>
+
+            <p class="status" id="recordStatus">Recording तैयार है।</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🎹 Keyboard Options</h3>
+
+            <label class="check-row">
+                <input type="checkbox" id="showLabels" checked>
+                स्वर के नाम दिखाएँ
+            </label>
+
+            <label class="check-row">
+                <input type="checkbox" id="showShortcuts" checked>
+                Keyboard shortcuts दिखाएँ
+            </label>
+
+            <label class="check-row">
+                <input type="checkbox" id="sustain">
+                Sustain mode
+            </label>
+
+            <label class="check-row">
+                <input type="checkbox" id="drone">
+                Sa drone / स्थिर सा
+            </label>
+
+            <div class="button-row">
+                <button class="btn-secondary" id="clearStats">Reset Counter</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="panel">
+    <h2>📖 Keyboard Shortcut Guide</h2>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>White Keys</h3>
+            <p>
+                A = C<br>
+                S = D<br>
+                D = E<br>
+                F = F<br>
+                G = G<br>
+                H = A<br>
+                J = B<br>
+                K = C (Upper)
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Black Keys</h3>
+            <p>
+                W = C#<br>
+                E = D#<br>
+                T = F#<br>
+                Y = G#<br>
+                U = A#
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>कैसे बजाएँ?</h3>
+            <p>
+                1. Start Harmonium दबाएँ।<br>
+                2. कोई स्वर दबाएँ।<br>
+                3. अलग-अलग स्वर मिलाकर धुन बनाएँ।<br>
+                4. Record से अपनी धुन सेव करें।
+            </p>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    Advanced Harmonium Pro · Web Audio Edition<br>
+    Practice • Create • Record • Enjoy Music
+</footer>
+
+
+<script>
+"use strict";
+
+/* ======================================
+   ADVANCED HARMONIUM PRO AUDIO ENGINE
+====================================== */
 
 const $ = id => document.getElementById(id);
 
-const state = {
-    animation: 'idle',
-    playing: false,
-    elapsed: 0,
-    speed: 1,
-    distance: 3,
-    scenes: ['Indian Village'],
-    sceneIndex: 0,
-    showGrid: true,
-    showAxes: false,
-    recording: false,
-    projectName: 'My Cartoon Film'
+let audioCtx = null;
+let masterGain = null;
+let dryGain = null;
+let wetGain = null;
+let convolver = null;
+let compressor = null;
+
+let activeNotes = new Map();
+let heldKeys = new Set();
+let noteCounter = 0;
+
+let practiceTimer = null;
+let metroTimer = null;
+let metroBeat = 0;
+let bellowsOn = true;
+
+let recorder = {
+    active: false,
+    startTime: 0,
+    events: [],
+    samples: [],
+    sampleRate: 44100,
+    lastDownload: null
 };
 
-let scene;
-let camera;
-let renderer;
-let controls;
-let clock;
+const NOTES = [
+    {name:"C", indian:"सा", semitone:0, black:false, key:"A"},
+    {name:"C#", indian:"कोमल रे", semitone:1, black:true, key:"W"},
+    {name:"D", indian:"रे", semitone:2, black:false, key:"S"},
+    {name:"D#", indian:"कोमल ग", semitone:3, black:true, key:"E"},
+    {name:"E", indian:"ग", semitone:4, black:false, key:"D"},
+    {name:"F", indian:"म", semitone:5, black:false, key:"F"},
+    {name:"F#", indian:"तीव्र म", semitone:6, black:true, key:"T"},
+    {name:"G", indian:"प", semitone:7, black:false, key:"G"},
+    {name:"G#", indian:"कोमल ध", semitone:8, black:true, key:"Y"},
+    {name:"A", indian:"ध", semitone:9, black:false, key:"H"},
+    {name:"A#", indian:"कोमल नि", semitone:10, black:true, key:"U"},
+    {name:"B", indian:"नि", semitone:11, black:false, key:"J"}
+];
 
-let character;
-let environmentGroup;
-let gridHelper;
-let axesHelper;
+const KEY_MAP = {
+    "A":0, "W":1, "S":2, "E":3, "D":4,
+    "F":5, "T":6, "G":7, "Y":8, "H":9,
+    "U":10, "J":11, "K":12
+};
 
-let characterRoot;
-let headGroup;
-let leftArm;
-let rightArm;
-let leftLeg;
-let rightLeg;
-let bodyMesh;
-let headMesh;
+const SCALE_NAMES = NOTES.map(n => n.name);
 
-let characterStart = new THREE.Vector3();
-let recorder;
-let recordedChunks = [];
-let recordingTimer = null;
-
-const renderArea = $('renderArea');
-
-
-/* =========================================
-   2. TOAST NOTIFICATIONS
-========================================= */
-
-function toast(message) {
-    const el = $('toast');
-    el.textContent = message;
-    el.style.display = 'block';
-
-    clearTimeout(toast.timer);
-
-    toast.timer = setTimeout(() => {
-        el.style.display = 'none';
-    }, 2800);
+function midiToFrequency(midi) {
+    return 440 * Math.pow(2, (midi - 69) / 12);
 }
 
-
-/* =========================================
-   3. INITIALIZE THREE.JS
-========================================= */
-
-function initThree() {
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color($('skyColor').value);
-
-    scene.fog = new THREE.Fog($('skyColor').value, 20, 70);
-
-    camera = new THREE.PerspectiveCamera(
-        Number($('cameraFov').value),
-        renderArea.clientWidth / renderArea.clientHeight,
-        0.1,
-        500
-    );
-
-    camera.position.set(6, 4, 9);
-
-    renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        preserveDrawingBuffer: true
-    });
-
-    renderer.setPixelRatio(
-        Math.min(window.devicePixelRatio || 1, 2)
-    );
-
-    renderer.setSize(
-        renderArea.clientWidth,
-        renderArea.clientHeight
-    );
-
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1;
-
-    renderArea.appendChild(renderer.domElement);
-
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 1.5, 0);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.06;
-
-    clock = new THREE.Clock();
-
-    const ambient = new THREE.HemisphereLight(
-        0xffffff,
-        0x657090,
-        2
-    );
-
-    scene.add(ambient);
-
-    const sunlight = new THREE.DirectionalLight(
-        0xffffff,
-        3
-    );
-
-    sunlight.position.set(8, 14, 8);
-    sunlight.castShadow = true;
-    sunlight.shadow.mapSize.set(1024, 1024);
-
-    scene.add(sunlight);
-
-    gridHelper = new THREE.GridHelper(30, 30, 0x5b68aa, 0x39436d);
-    scene.add(gridHelper);
-
-    axesHelper = new THREE.AxesHelper(3);
-    axesHelper.visible = false;
-    scene.add(axesHelper);
-
-    environmentGroup = new THREE.Group();
-    scene.add(environmentGroup);
-
-    createEnvironment('village');
-    createCharacter();
-
-    $('renderStatus').textContent = '3D Renderer Ready';
-
-    animate();
+function getRootMidi() {
+    const root = $("scale").value;
+    const index = SCALE_NAMES.indexOf(root);
+    return 60 + Math.max(0, index);
 }
 
+function noteFrequency(semitone, octaveShift = 0) {
+    const rootName = $("scale").value;
+    const rootIndex = SCALE_NAMES.indexOf(rootName);
+    const midi = 60 + rootIndex + semitone + octaveShift * 12
+        + Number($("octave").value) * 12;
 
-/* =========================================
-   4. MATERIAL HELPERS
-========================================= */
-
-function standardMaterial(color, roughness = 0.8) {
-    return new THREE.MeshStandardMaterial({
-        color,
-        roughness,
-        metalness: 0
-    });
+    const tuning = Number($("fineTune").value);
+    return midiToFrequency(midi) * Math.pow(2, tuning / 1200);
 }
 
-function createBox(parent, name, x, y, z,
-                   sx, sy, sz, color, material = null) {
-
-    const mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(sx, sy, sz),
-        material || standardMaterial(color)
-    );
-
-    mesh.name = name;
-    mesh.position.set(x, y, z);
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-
-    parent.add(mesh);
-    return mesh;
-}
-
-function createSphere(parent, name, x, y, z,
-                      sx, sy, sz, color) {
-
-    const mesh = new THREE.Mesh(
-        new THREE.SphereGeometry(1, 24, 16),
-        standardMaterial(color)
-    );
-
-    mesh.name = name;
-    mesh.position.set(x, y, z);
-    mesh.scale.set(sx, sy, sz);
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-
-    parent.add(mesh);
-    return mesh;
-}
-
-function createCylinder(parent, name, x, y, z,
-                        radiusTop, radiusBottom,
-                        height, color) {
-
-    const mesh = new THREE.Mesh(
-        new THREE.CylinderGeometry(
-            radiusTop,
-            radiusBottom,
-            height,
-            16
-        ),
-        standardMaterial(color)
-    );
-
-    mesh.name = name;
-    mesh.position.set(x, y, z);
-    mesh.castShadow = true;
-    parent.add(mesh);
-
-    return mesh;
-}
-
-
-/* =========================================
-   5. CHARACTER CREATOR
-========================================= */
-
-function createCharacter() {
-    if (character) {
-        scene.remove(character);
-        disposeGroup(character);
-    }
-
-    character = new THREE.Group();
-    character.name = $('characterName').value || 'Hero Character';
-
-    characterRoot = new THREE.Group();
-    character.add(characterRoot);
-
-    const style = $('characterStyle').value;
-
-    const bodyColor = $('bodyColor').value;
-    let headColor = $('headColor').value;
-
-    const height = Number($('characterHeight').value);
-    const headSize = Number($('headSize').value);
-
-    if (style === 'robot') headColor = '#bfc9d9';
-    if (style === 'alien') headColor = '#7ee787';
-    if (style === 'bear') headColor = '#b77b48';
-
-    const skin = standardMaterial(headColor);
-    const bodyMat = standardMaterial(bodyColor);
-
-    // Body
-    bodyMesh = new THREE.Mesh(
-        new THREE.CapsuleGeometry(0.43, 0.8, 6, 12),
-        bodyMat
-    );
-
-    bodyMesh.name = 'CharacterBody';
-    bodyMesh.position.y = 1.35;
-    bodyMesh.castShadow = true;
-    characterRoot.add(bodyMesh);
-
-    // Head group, allowing head movement
-    headGroup = new THREE.Group();
-    headGroup.position.set(0, 2.35, 0);
-    characterRoot.add(headGroup);
-
-    if (style === 'robot') {
-        headMesh = createBox(
-            headGroup,
-            'RobotHead',
-            0, 0.35, 0,
-            0.8 * headSize,
-            0.7 * headSize,
-            0.7 * headSize,
-            headColor
-        );
-    } else if (style === 'bear') {
-        headMesh = createSphere(
-            headGroup,
-            'BearHead',
-            0, 0.35, 0,
-            0.55 * headSize,
-            0.5 * headSize,
-            0.48 * headSize,
-            headColor
-        );
-
-        createSphere(
-            headGroup,
-            'BearEarL',
-            -0.38, 0.7, 0,
-            0.18, 0.18, 0.16,
-            headColor
-        );
-
-        createSphere(
-            headGroup,
-            'BearEarR',
-            0.38, 0.7, 0,
-            0.18, 0.18, 0.16,
-            headColor
-        );
-    } else {
-        headMesh = createSphere(
-            headGroup,
-            'CharacterHead',
-            0, 0.35, 0,
-            0.47 * headSize,
-            0.5 * headSize,
-            0.43 * headSize,
-            headColor
-        );
-    }
-
-    // Eyes
-    const eyeColor = style === 'robot' ? '#00eaff' : '#ffffff';
-
-    for (const x of [-0.17, 0.17]) {
-        createSphere(
-            headGroup,
-            'EyeWhite',
-            x * headSize,
-            0.39,
-            0.395 * headSize,
-            0.085,
-            0.105,
-            0.055,
-            eyeColor
-        );
-
-        createSphere(
-            headGroup,
-            'Pupil',
-            x * headSize,
-            0.39,
-            0.445 * headSize,
-            0.038,
-            0.055,
-            0.025,
-            '#17203a'
-        );
-    }
-
-    // Nose
-    createSphere(
-        headGroup,
-        'Nose',
-        0,
-        0.27,
-        0.46 * headSize,
-        0.055,
-        0.045,
-        0.06,
-        style === 'robot' ? '#00d4ff' : '#e89570'
-    );
-
-    // Mouth
-    const mouth = createBox(
-        headGroup,
-        'Smile',
-        0,
-        0.17,
-        0.425 * headSize,
-        0.17,
-        0.025,
-        0.025,
-        '#6b2638'
-    );
-
-    // Hair
-    if (style === 'boy' || style === 'girl') {
-        createSphere(
-            headGroup,
-            'Hair',
-            0,
-            0.65,
-            -0.015,
-            0.48 * headSize,
-            0.23 * headSize,
-            0.44 * headSize,
-            style === 'girl' ? '#542b22' : '#29213b'
-        );
-    }
-
-    // Girl hair strands
-    if (style === 'girl') {
-        createSphere(
-            headGroup,
-            'HairSideL',
-            -0.42, 0.35, -0.04,
-            0.12, 0.42, 0.15,
-            '#542b22'
-        );
-
-        createSphere(
-            headGroup,
-            'HairSideR',
-            0.42, 0.35, -0.04,
-            0.12, 0.42, 0.15,
-            '#542b22'
-        );
-    }
-
-    // Robot antenna
-    if (style === 'robot') {
-        createCylinder(
-            headGroup,
-            'Antenna',
-            0, 0.85, 0,
-            0.025, 0.025, 0.35,
-            '#c4d2e8'
-        );
-
-        createSphere(
-            headGroup,
-            'AntennaBall',
-            0, 1.05, 0,
-            0.1, 0.1, 0.1,
-            '#ff5370'
-        );
-    }
-
-    // Arms with pivot groups
-    leftArm = createLimb(-0.5, 1.72, 'LeftArm', bodyColor);
-    rightArm = createLimb(0.5, 1.72, 'RightArm', bodyColor);
-
-    // Legs
-    leftLeg = createLimb(-0.22, 0.65, 'LeftLeg', '#33415c');
-    rightLeg = createLimb(0.22, 0.65, 'RightLeg', '#33415c');
-
-    // Hands
-    createSphere(
-        leftArm,
-        'LeftHand',
-        0, -0.48, 0,
-        0.14, 0.14, 0.14,
-        headColor
-    );
-
-    createSphere(
-        rightArm,
-        'RightHand',
-        0, -0.48, 0,
-        0.14, 0.14, 0.14,
-        headColor
-    );
-
-    // Shoes
-    createSphere(
-        leftLeg,
-        'LeftShoe',
-        0, -0.45, 0.1,
-        0.2, 0.12, 0.28,
-        '#252d42'
-    );
-
-    createSphere(
-        rightLeg,
-        'RightShoe',
-        0, -0.45, 0.1,
-        0.2, 0.12, 0.28,
-        '#252d42'
-    );
-
-    character.scale.setScalar(height);
-
-    character.position.set(0, 0, 0);
-    characterStart.copy(character.position);
-
-    scene.add(character);
-
-    updateStats();
-
-    $('sceneCaption').textContent =
-        'Character: ' + character.name;
-
-    updateAnimationClip();
-
-    toast('3D Character created successfully!');
-}
-
-
-function createLimb(x, y, name, color) {
-    const pivot = new THREE.Group();
-
-    pivot.name = name + 'Pivot';
-    pivot.position.set(x, y, 0);
-
-    const limb = new THREE.Mesh(
-        new THREE.CapsuleGeometry(0.12, 0.55, 4, 8),
-        standardMaterial(color)
-    );
-
-    limb.name = name;
-    limb.position.y = -0.3;
-    limb.castShadow = true;
-
-    pivot.add(limb);
-    characterRoot.add(pivot);
-
-    return pivot;
-}
-
-
-/* =========================================
-   6. DISPOSE OBJECTS
-========================================= */
-
-function disposeGroup(group) {
-    group.traverse(obj => {
-        if (obj.geometry) {
-            obj.geometry.dispose();
+async function initAudio() {
+    if (audioCtx) {
+        if (audioCtx.state === "suspended") {
+            await audioCtx.resume();
         }
+        return;
+    }
 
-        if (obj.material) {
-            const materials = Array.isArray(obj.material)
-                ? obj.material
-                : [obj.material];
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
 
-            materials.forEach(mat => {
-                if (mat.map) mat.map.dispose();
-                mat.dispose();
+    if (!AudioContextClass) {
+        alert("आपके ब्राउज़र में Web Audio API उपलब्ध नहीं है।");
+        return;
+    }
+
+    audioCtx = new AudioContextClass();
+
+    masterGain = audioCtx.createGain();
+    dryGain = audioCtx.createGain();
+    wetGain = audioCtx.createGain();
+
+    compressor = audioCtx.createDynamicsCompressor();
+
+    convolver = audioCtx.createConvolver();
+    convolver.buffer = createImpulseResponse(audioCtx, 1.4, 2.2);
+
+    dryGain.connect(masterGain);
+    wetGain.connect(masterGain);
+    convolver.connect(wetGain);
+    masterGain.connect(compressor);
+    compressor.connect(audioCtx.destination);
+
+    updateVolume();
+    updateReverb();
+
+    $("audioStatus").textContent =
+        "Harmonium तैयार है। अब स्वर बजाएँ।";
+}
+
+function createImpulseResponse(ctx, duration, decay) {
+    const length = Math.floor(ctx.sampleRate * duration);
+    const buffer = ctx.createBuffer(2, length, ctx.sampleRate);
+
+    for (let channel = 0; channel < 2; channel++) {
+        const data = buffer.getChannelData(channel);
+
+        for (let i = 0; i < length; i++) {
+            const fade = Math.pow(1 - i / length, decay);
+            data[i] = (Math.random() * 2 - 1) * fade;
+        }
+    }
+
+    return buffer;
+}
+
+function updateVolume() {
+    if (!masterGain) return;
+
+    const volume = Number($("volume").value) / 100;
+    masterGain.gain.setTargetAtTime(
+        volume * 0.8,
+        audioCtx.currentTime,
+        0.02
+    );
+}
+
+function updateReverb() {
+    if (!wetGain || !dryGain) return;
+
+    const amount = Number($("reverb").value) / 100;
+
+    wetGain.gain.setTargetAtTime(amount * 0.7, audioCtx.currentTime, 0.03);
+    dryGain.gain.setTargetAtTime(1 - amount * 0.35, audioCtx.currentTime, 0.03);
+}
+
+function createVoice(freq) {
+    const voice = $("voice").value;
+    const nodes = [];
+
+    const noteGain = audioCtx.createGain();
+    noteGain.gain.value = 0.0001;
+
+    noteGain.connect(dryGain);
+    noteGain.connect(convolver);
+
+    let partials;
+
+    switch (voice) {
+        case "soft":
+            partials = [
+                [1, 1],
+                [2, 0.18],
+                [3, 0.06]
+            ];
+            break;
+
+        case "bright":
+            partials = [
+                [1, 0.8],
+                [2, 0.6],
+                [3, 0.35],
+                [4, 0.15]
+            ];
+            break;
+
+        case "organ":
+            partials = [
+                [1, 0.8],
+                [2, 0.5],
+                [3, 0.25],
+                [4, 0.1]
+            ];
+            break;
+
+        case "flute":
+            partials = [
+                [1, 1],
+                [2, 0.06],
+                [3, 0.015]
+            ];
+            break;
+
+        default:
+            partials = [
+                [1, 0.9],
+                [2, 0.42],
+                [3, 0.22],
+                [4, 0.12],
+                [5, 0.06]
+            ];
+    }
+
+    partials.forEach(([harmonic, level]) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "sawtooth";
+        osc.frequency.value = freq * harmonic;
+        gain.gain.value = level / partials.length;
+
+        osc.connect(gain);
+        gain.connect(noteGain);
+        osc.start();
+
+        nodes.push(osc);
+    });
+
+    const now = audioCtx.currentTime;
+
+    noteGain.gain.cancelScheduledValues(now);
+    noteGain.gain.setValueAtTime(0.0001, now);
+    noteGain.gain.linearRampToValueAtTime(
+        bellowsOn ? 0.23 : 0.12,
+        now + 0.035
+    );
+
+    return {nodes, gain:noteGain};
+}
+
+function playNote(noteId, semitone, octaveShift = 0, source = "keyboard") {
+    if (!audioCtx) return;
+    if (activeNotes.has(noteId)) return;
+
+    const freq = noteFrequency(semitone, octaveShift);
+    const voice = createVoice(freq);
+
+    activeNotes.set(noteId, {
+        ...voice,
+        freq,
+        semitone,
+        octaveShift,
+        source
+    });
+
+    updateReadout(freq, semitone);
+
+    if (source === "keyboard") {
+        noteCounter++;
+        $("notesPlayed").textContent = noteCounter;
+    }
+
+    if (recorder.active) {
+        recorder.events.push({
+            type: "on",
+            time: performance.now() - recorder.startTime,
+            freq,
+            semitone,
+            octaveShift,
+            voice: $("voice").value
+        });
+    }
+
+    const el = document.querySelector('[data-note-id="' + noteId + '"]');
+    if (el) el.classList.add("active");
+}
+
+function stopNote(noteId) {
+    const item = activeNotes.get(noteId);
+    if (!item || !audioCtx) return;
+
+    const now = audioCtx.currentTime;
+
+    item.gain.gain.cancelScheduledValues(now);
+    item.gain.gain.setTargetAtTime(0.0001, now, 0.04);
+
+    setTimeout(() => {
+        item.nodes.forEach(osc => {
+            try { osc.stop(); } catch (e) {}
+        });
+        item.gain.disconnect();
+    }, 250);
+
+    activeNotes.delete(noteId);
+
+    const el = document.querySelector('[data-note-id="' + noteId + '"]');
+    if (el) el.classList.remove("active");
+
+    if (recorder.active) {
+        recorder.events.push({
+            type:"off",
+            time:performance.now() - recorder.startTime,
+            freq:item.freq
+        });
+    }
+}
+
+function stopAllNotes() {
+    for (const id of [...activeNotes.keys()]) {
+        stopNote(id);
+    }
+    heldKeys.clear();
+}
+
+function updateReadout(freq, semitone) {
+    const note = NOTES[((semitone % 12) + 12) % 12];
+
+    $("currentNote").textContent = note.indian;
+    $("frequency").textContent = freq.toFixed(2) + " Hz";
+}
+
+function buildKeyboard() {
+    const keyboard = $("keyboard");
+    keyboard.innerHTML = "";
+
+    const octaveShift = Number($("octave").value);
+
+    /*
+       Three octaves are displayed simultaneously.
+       The selected octave shifts the played pitch.
+    */
+
+    for (let octave = -1; octave <= 1; octave++) {
+        NOTES.forEach((note, index) => {
+            const absoluteSemitone = octave * 12 + index;
+
+            const key = document.createElement("div");
+            key.className = "key " + (note.black ? "black" : "white");
+
+            const noteId = "k_" + octave + "_" + index;
+
+            key.dataset.noteId = noteId;
+            key.dataset.semitone = index;
+            key.dataset.octave = octave;
+
+            const showLabels = $("showLabels").checked;
+            const showShortcuts = $("showShortcuts").checked;
+
+            key.innerHTML = `
+                <span class="note">${showLabels ? note.indian : ""}</span>
+                <span class="western">${showLabels ? note.name : ""}</span>
+                <span class="shortcut">
+                    ${showShortcuts && octave === 0 ? note.key : ""}
+                </span>
+            `;
+
+            const start = ev => {
+                ev.preventDefault();
+
+                if (key.dataset.pressed === "1") return;
+                key.dataset.pressed = "1";
+
+                initAudio().then(() => {
+                    playNote(noteId, index, octave, "keyboard");
+                });
+            };
+
+            const end = ev => {
+                if (ev) ev.preventDefault();
+
+                key.dataset.pressed = "0";
+
+                if (!$("sustain").checked) {
+                    stopNote(noteId);
+                }
+            };
+
+            key.addEventListener("pointerdown", start);
+            key.addEventListener("pointerup", end);
+            key.addEventListener("pointercancel", end);
+            key.addEventListener("pointerleave", ev => {
+                if (ev.buttons === 0) end(ev);
             });
-        }
+
+            keyboard.appendChild(key);
+        });
+    }
+}
+
+function stopAll() {
+    stopAllNotes();
+    stopPractice();
+    stopMetronome();
+}
+
+$("startAudio").addEventListener("click", initAudio);
+
+$("volume").addEventListener("input", updateVolume);
+$("reverb").addEventListener("input", updateReverb);
+
+$("octave").addEventListener("change", () => {
+    stopAllNotes();
+    buildKeyboard();
+});
+
+$("scale").addEventListener("change", () => {
+    stopAllNotes();
+    buildKeyboard();
+});
+
+$("voice").addEventListener("change", stopAllNotes);
+
+$("fineTune").addEventListener("input", () => {
+    stopAllNotes();
+});
+
+$("showLabels").addEventListener("change", buildKeyboard);
+$("showShortcuts").addEventListener("change", buildKeyboard);
+
+$("bellowsBtn").addEventListener("click", () => {
+    bellowsOn = !bellowsOn;
+
+    $("bellows").classList.toggle("active", bellowsOn);
+
+    $("bellowsBtn").textContent =
+        bellowsOn ? "🌬️ Bellows ON" : "🌬️ Bellows OFF";
+});
+
+$("themeBtn").addEventListener("click", () => {
+    document.body.classList.toggle("light");
+});
+
+$("panicBtn").addEventListener("click", stopAll);
+
+$("clearStats").addEventListener("click", () => {
+    noteCounter = 0;
+    $("notesPlayed").textContent = "0";
+});
+
+document.addEventListener("keydown", ev => {
+    if (ev.repeat) return;
+
+    if (
+        ev.target.matches("input") ||
+        ev.target.matches("select") ||
+        ev.target.matches("textarea")
+    ) return;
+
+    const key = ev.key.toUpperCase();
+
+    if (!(key in KEY_MAP)) return;
+
+    ev.preventDefault();
+
+    if (heldKeys.has(key)) return;
+    heldKeys.add(key);
+
+    const semitone = KEY_MAP[key];
+    const octaveShift = key === "K" ? 1 : 0;
+    const id = "computer_" + key;
+
+    initAudio().then(() => {
+        playNote(id, semitone, octaveShift, "keyboard");
+    });
+});
+
+document.addEventListener("keyup", ev => {
+    const key = ev.key.toUpperCase();
+
+    if (!heldKeys.has(key)) return;
+
+    heldKeys.delete(key);
+
+    if (!$("sustain").checked) {
+        stopNote("computer_" + key);
+    }
+});
+
+window.addEventListener("blur", () => {
+    if (!$("sustain").checked) {
+        stopAllNotes();
+    }
+});
+
+
+/* ======================================
+   SARGAM PRACTICE
+====================================== */
+
+const ascending = [0,2,4,5,7,9,11,12];
+const descending = [12,11,9,7,5,4,2,0];
+
+function getPracticeSequence() {
+    const type = $("practiceType").value;
+
+    if (type === "ascending") return ascending;
+    if (type === "descending") return descending;
+
+    if (type === "both") {
+        return ascending.concat(descending);
+    }
+
+    if (type === "alankar") {
+        return [0,2,4,2,4,5,4,5,7,5,7,9,7,9,11,9,11,12];
+    }
+
+    return Array.from({length:16}, () => Math.floor(Math.random() * 12));
+}
+
+function getSargamName(semitone) {
+    if (semitone === 12) return "सां";
+
+    return NOTES[((semitone % 12) + 12) % 12].indian;
+}
+
+function stopPractice() {
+    if (practiceTimer) {
+        clearTimeout(practiceTimer);
+        practiceTimer = null;
+    }
+
+    document.querySelectorAll(".sargam-note").forEach(el => {
+        el.classList.remove("current");
     });
 }
 
+async function playPractice() {
+    stopPractice();
+    await initAudio();
 
-/* =========================================
-   7. ENVIRONMENT CREATOR
-========================================= */
+    const sequence = getPracticeSequence();
+    const display = $("sargamDisplay");
 
-function createEnvironment(type) {
-    disposeGroup(environmentGroup);
+    display.innerHTML = sequence.map((n, i) =>
+        `<span class="sargam-note" data-index="${i}">${getSargamName(n)}</span>`
+    ).join("");
 
-    environmentGroup.clear();
+    const speed = Number($("practiceSpeed").value);
+    let index = 0;
 
-    const groundColor = $('groundColor').value;
-    const skyColor = $('skyColor').value;
-
-    scene.background = new THREE.Color(skyColor);
-    scene.fog.color.set(skyColor);
-
-    // Ground
-    const ground = new THREE.Mesh(
-        new THREE.PlaneGeometry(200, 200),
-        standardMaterial(
-            type === 'night' ? '#20243c' : groundColor
-        )
-    );
-
-    ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.03;
-    ground.receiveShadow = true;
-
-    environmentGroup.add(ground);
-
-    // Sun
-    const sun = createSphere(
-        environmentGroup,
-        'Sun',
-        -8, 11, -15,
-        1.5, 1.5, 1.5,
-        type === 'night' ? '#e8eaff' : '#ffd45e'
-    );
-
-    sun.material.emissive = new THREE.Color(
-        type === 'night' ? '#252d6c' : '#ff9e32'
-    );
-
-    // Background hills
-    for (let i = 0; i < 7; i++) {
-        const hill = createSphere(
-            environmentGroup,
-            'Hill',
-            -18 + i * 6,
-            1.1,
-            -22,
-            5,
-            2.5 + (i % 3),
-            3,
-            type === 'night' ? '#263354' : '#47885e'
-        );
-
-        hill.castShadow = false;
-    }
-
-    if (type === 'village') {
-        createVillage();
-    }
-
-    if (type === 'forest') {
-        createForest();
-    }
-
-    if (type === 'school') {
-        createSchool();
-    }
-
-    if (type === 'city') {
-        createCity();
-    }
-
-    if (type === 'island') {
-        createIsland();
-    }
-
-    if (type === 'night') {
-        createNightScene();
-    }
-
-    gridHelper.visible = state.showGrid;
-    axesHelper.visible = state.showAxes;
-
-    $('sceneCaption').textContent =
-        'Environment: ' +
-        $('environment').selectedOptions[0].text;
-
-    updateStats();
-
-    toast('Environment updated!');
-}
-
-
-function createTree(x, z, size = 1) {
-    const tree = new THREE.Group();
-
-    tree.position.set(x, 0, z);
-    tree.scale.setScalar(size);
-
-    createCylinder(
-        tree,
-        'TreeTrunk',
-        0, 0.9, 0,
-        0.2, 0.3, 1.8,
-        '#76502f'
-    );
-
-    createSphere(
-        tree,
-        'TreeLeaves',
-        0, 2.2, 0,
-        1.0, 1.15, 1.0,
-        '#278c54'
-    );
-
-    createSphere(
-        tree,
-        'TreeLeaves2',
-        0.55, 2.05, 0.05,
-        0.65, 0.8, 0.7,
-        '#37a85e'
-    );
-
-    environmentGroup.add(tree);
-}
-
-
-function createHouse(x, z, color = '#e9b36f') {
-    const house = new THREE.Group();
-
-    house.position.set(x, 0, z);
-
-    createBox(
-        house,
-        'HouseBody',
-        0, 1, 0,
-        3, 2, 2.5,
-        color
-    );
-
-    // Roof
-    const roof = new THREE.Mesh(
-        new THREE.ConeGeometry(2.2, 1.4, 4),
-        standardMaterial('#9d443d')
-    );
-
-    roof.rotation.y = Math.PI / 4;
-    roof.position.set(0, 2.65, 0);
-    roof.castShadow = true;
-
-    house.add(roof);
-
-    // Door
-    createBox(
-        house,
-        'Door',
-        0, 0.65, 1.27,
-        0.65, 1.3, 0.08,
-        '#623b28'
-    );
-
-    // Windows
-    for (const xw of [-0.9, 0.9]) {
-        createBox(
-            house,
-            'Window',
-            xw, 1.3, 1.29,
-            0.5, 0.45, 0.06,
-            '#8fe0ff'
-        );
-    }
-
-    environmentGroup.add(house);
-}
-
-
-function createVillage() {
-    createHouse(-8, -7, '#e8b982');
-    createHouse(7, -10, '#f3d3a0');
-    createHouse(-11, 3, '#d6a17a');
-
-    for (let i = 0; i < 12; i++) {
-        createTree(
-            -15 + Math.random() * 30,
-            -18 + Math.random() * 30,
-            0.7 + Math.random() * 0.6
-        );
-    }
-
-    // Village path
-    createBox(
-        environmentGroup,
-        'VillagePath',
-        0, 0.005, 0,
-        2.5, 0.01, 35,
-        '#c9ad84'
-    );
-}
-
-
-function createForest() {
-    for (let i = 0; i < 40; i++) {
-        const x = (Math.random() - 0.5) * 35;
-        const z = -5 - Math.random() * 35;
-
-        createTree(
-            x,
-            z,
-            0.8 + Math.random() * 1.2
-        );
-    }
-
-    createBox(
-        environmentGroup,
-        'ForestPath',
-        0, 0.01, -15,
-        3, 0.02, 35,
-        '#c3a77d'
-    );
-}
-
-
-function createSchool() {
-    createBox(
-        environmentGroup,
-        'SchoolBuilding',
-        0, 2, -10,
-        13, 4, 3,
-        '#f0d5a8'
-    );
-
-    createBox(
-        environmentGroup,
-        'SchoolRoof',
-        0, 4.2, -10,
-        14, 0.5, 4,
-        '#bd4b4b'
-    );
-
-    createBox(
-        environmentGroup,
-        'SchoolDoor',
-        0, 1.1, -8.45,
-        1.4, 2.2, 0.1,
-        '#60452e'
-    );
-
-    for (let x = -5; x <= 5; x += 2.5) {
-        createBox(
-            environmentGroup,
-            'SchoolWindow',
-            x, 2.6, -8.4,
-            1.2, 0.9, 0.1,
-            '#8ad8ff'
-        );
-    }
-
-    for (let i = 0; i < 10; i++) {
-        createTree(
-            -12 + i * 2.7,
-            5 + Math.random() * 4,
-            0.65
-        );
-    }
-}
-
-
-function createCity() {
-    for (let i = 0; i < 12; i++) {
-        const x = -15 + i * 2.7;
-        const height = 3 + Math.random() * 8;
-
-        createBox(
-            environmentGroup,
-            'CityBuilding',
-            x, height / 2, -15,
-            2.1, height, 3,
-            ['#879bc1', '#9c89bd', '#d3a17b'][i % 3]
-        );
-
-        for (let y = 1; y < height; y += 1.4) {
-            createBox(
-                environmentGroup,
-                'BuildingWindow',
-                x, y, -13.45,
-                0.4, 0.5, 0.05,
-                '#9ce8ff'
-            );
+    function step() {
+        if (index >= sequence.length) {
+            practiceTimer = null;
+            return;
         }
-    }
 
-    createBox(
-        environmentGroup,
-        'Road',
-        0, 0.01, 0,
-        6, 0.02, 40,
-        '#454b5b'
-    );
-
-    for (let z = -18; z <= 18; z += 3) {
-        createBox(
-            environmentGroup,
-            'RoadMarking',
-            0, 0.025, z,
-            0.15, 0.02, 1.5,
-            '#ffffff'
-        );
-    }
-}
-
-
-function createIsland() {
-    createSphere(
-        environmentGroup,
-        'Island',
-        0, -1.1, -8,
-        14, 2, 14,
-        '#b4a56e'
-    );
-
-    for (let i = 0; i < 15; i++) {
-        createTree(
-            -10 + Math.random() * 20,
-            -17 + Math.random() * 18,
-            0.7 + Math.random() * 0.5
-        );
-    }
-
-    createBox(
-        environmentGroup,
-        'Beach',
-        0, 0, 0,
-        30, 0.03, 30,
-        '#d6c17e'
-    );
-}
-
-
-function createNightScene() {
-    for (let i = 0; i < 35; i++) {
-        const star = createSphere(
-            environmentGroup,
-            'Star',
-            (Math.random() - 0.5) * 45,
-            5 + Math.random() * 15,
-            -15 - Math.random() * 20,
-            0.04, 0.04, 0.04,
-            '#ffffff'
-        );
-
-        star.material.emissive = new THREE.Color('#ffffff');
-    }
-
-    for (let i = 0; i < 6; i++) {
-        createHouse(
-            -12 + i * 5,
-            -12,
-            '#555b81'
-        );
-    }
-}
-
-
-/* =========================================
-   8. ANIMATION ENGINE
-========================================= */
-
-function setAnimation(name) {
-    state.animation = name;
-    state.elapsed = 0;
-
-    if (character) {
-        character.position.copy(characterStart);
-    }
-
-    if (leftArm) leftArm.rotation.set(0, 0, 0);
-    if (rightArm) rightArm.rotation.set(0, 0, 0);
-    if (leftLeg) leftLeg.rotation.set(0, 0, 0);
-    if (rightLeg) rightLeg.rotation.set(0, 0, 0);
-
-    updateAnimationClip();
-
-    $('currentAnimation').textContent =
-        name.charAt(0).toUpperCase() + name.slice(1);
-
-    toast('Animation selected: ' + name);
-}
-
-
-function updateAnimationClip() {
-    $('animationClip').textContent =
-        state.animation.toUpperCase();
-}
-
-
-function updateCharacterAnimation(dt) {
-    if (!character || !state.playing) return;
-
-    state.elapsed += dt * state.speed;
-
-    const t = state.elapsed;
-
-    if (state.animation === 'idle') {
-        character.position.y = Math.abs(Math.sin(t * 2)) * 0.04;
-
-        leftArm.rotation.x = Math.sin(t * 1.5) * 0.05;
-        rightArm.rotation.x = -Math.sin(t * 1.5) * 0.05;
-    }
-
-    else if (state.animation === 'walk') {
-        const swing = Math.sin(t * 6);
-
-        leftLeg.rotation.x = swing * 0.65;
-        rightLeg.rotation.x = -swing * 0.65;
-
-        leftArm.rotation.x = -swing * 0.6;
-        rightArm.rotation.x = swing * 0.6;
-
-        character.position.z =
-            characterStart.z -
-            Math.sin(t * 1.2) * state.distance * 0.5;
-
-        character.position.y =
-            Math.abs(Math.sin(t * 6)) * 0.08;
-    }
-
-    else if (state.animation === 'run') {
-        const swing = Math.sin(t * 11);
-
-        leftLeg.rotation.x = swing * 0.95;
-        rightLeg.rotation.x = -swing * 0.95;
-
-        leftArm.rotation.x = -swing * 0.9;
-        rightArm.rotation.x = swing * 0.9;
-
-        character.position.z =
-            characterStart.z -
-            Math.sin(t * 2) * state.distance;
-
-        character.position.y =
-            Math.abs(Math.sin(t * 11)) * 0.17;
-    }
-
-    else if (state.animation === 'jump') {
-        character.position.y =
-            Math.abs(Math.sin(t * 3)) * 2;
-
-        leftArm.rotation.z = 0.9;
-        rightArm.rotation.z = -0.9;
-    }
-
-    else if (state.animation === 'dance') {
-        character.rotation.y = Math.sin(t * 3) * 0.65;
-
-        character.position.y =
-            Math.abs(Math.sin(t * 5)) * 0.35;
-
-        leftArm.rotation.z = Math.sin(t * 5) * 0.9;
-        rightArm.rotation.z = -Math.sin(t * 5) * 0.9;
-
-        leftLeg.rotation.x = Math.sin(t * 5) * 0.4;
-        rightLeg.rotation.x = -Math.sin(t * 5) * 0.4;
-    }
-
-    else if (state.animation === 'wave') {
-        rightArm.rotation.z =
-            -0.9 + Math.sin(t * 7) * 0.55;
-
-        leftArm.rotation.z = 0.05;
-
-        headGroup.rotation.z =
-            Math.sin(t * 2) * 0.08;
-    }
-
-    if (t > 15) {
-        state.elapsed = 0;
-    }
-
-    updateTimelineProgress();
-}
-
-
-/* =========================================
-   9. RENDER LOOP
-========================================= */
-
-function animate() {
-    requestAnimationFrame(animate);
-
-    const dt = Math.min(clock.getDelta(), 0.05);
-
-    controls.update();
-
-    updateCharacterAnimation(dt);
-
-    renderer.render(scene, camera);
-}
-
-
-function updateStats() {
-    $('characterCount').textContent = character ? 1 : 0;
-    $('sceneCount').textContent = state.scenes.length;
-
-    let count = 0;
-
-    scene.traverse(obj => {
-        if (obj.isMesh) count++;
-    });
-
-    $('objectCount').textContent = count;
-}
-
-
-/* =========================================
-   10. CAMERA CONTROLS
-========================================= */
-
-function applyCamera() {
-    const height = Number($('cameraHeight').value);
-    const distance = Number($('cameraDistance').value);
-    const angle = Number($('cameraAngle').value);
-
-    const radians = angle * Math.PI / 180;
-
-    camera.position.set(
-        Math.sin(radians) * distance,
-        height,
-        Math.cos(radians) * distance
-    );
-
-    controls.target.set(0, 1.5, 0);
-
-    camera.fov = Number($('cameraFov').value);
-    camera.updateProjectionMatrix();
-
-    controls.update();
-}
-
-
-function setCameraView(type) {
-    if (type === 'front') {
-        camera.position.set(0, 3, 11);
-    }
-
-    if (type === 'side') {
-        camera.position.set(11, 3, 0);
-    }
-
-    if (type === 'top') {
-        camera.position.set(0, 15, 0.01);
-    }
-
-    if (type === 'reset') {
-        camera.position.set(6, 4, 9);
-    }
-
-    controls.target.set(0, 1.5, 0);
-    controls.update();
-}
-
-
-/* =========================================
-   11. TIMELINE & SCENES
-========================================= */
-
-function updateTimelineProgress() {
-    const duration = Math.max(1, Number($('duration').value));
-
-    const progress = (state.elapsed % duration) / duration * 100;
-
-    $('progressBar').style.width = progress + '%';
-
-    $('timelineStatus').textContent =
-        'Playback: ' + state.elapsed.toFixed(1) +
-        ' sec · Duration: ' + duration + ' sec';
-}
-
-
-function renderSceneClips() {
-    const track = document.querySelector('.track');
-
-    const sceneTrack = document.querySelectorAll('.track')[0];
-
-    sceneTrack.querySelectorAll('.clip').forEach(el => el.remove());
-
-    state.scenes.forEach((name, index) => {
-        const clip = document.createElement('button');
-
-        clip.className = 'clip' +
-            (index === state.sceneIndex ? ' selected' : '');
-
-        clip.textContent = 'Scene ' + String(index + 1).padStart(2, '0');
-
-        clip.title = name;
-
-        clip.addEventListener('click', () => {
-            state.sceneIndex = index;
-
-            $('environment').value =
-                state.sceneTypes[index] || 'village';
-
-            createEnvironment($('environment').value);
-
-            renderSceneClips();
+        display.querySelectorAll(".sargam-note").forEach(el => {
+            el.classList.remove("current");
         });
 
-        sceneTrack.appendChild(clip);
+        const el = display.querySelector('[data-index="' + index + '"]');
+
+        if (el) el.classList.add("current");
+
+        const semitone = sequence[index];
+        const id = "practice_" + index;
+
+        playNote(id, semitone, 0, "practice");
+
+        setTimeout(() => stopNote(id), speed * 0.75);
+
+        index++;
+
+        practiceTimer = setTimeout(step, speed);
+    }
+
+    step();
+}
+
+$("playPractice").addEventListener("click", playPractice);
+$("stopPractice").addEventListener("click", stopPractice);
+
+$("practiceSpeed").addEventListener("input", () => {
+    $("speedLabel").textContent =
+        $("practiceSpeed").value + " ms प्रति स्वर";
+});
+
+
+/* ======================================
+   CHORD ENGINE
+====================================== */
+
+const CHORDS = {
+    C:    [0,4,7],
+    Dm:   [2,5,9],
+    Em:   [4,7,11],
+    F:    [5,9,0],
+    G:    [7,11,2],
+    Am:   [9,0,4],
+    Bdim: [11,2,5]
+};
+
+document.querySelectorAll("[data-chord]").forEach(button => {
+    button.addEventListener("click", async () => {
+        await initAudio();
+
+        const chord = button.dataset.chord;
+        const notes = CHORDS[chord];
+
+        stopAllNotes();
+
+        notes.forEach((semitone, i) => {
+            const id = "chord_" + chord + "_" + i;
+            playNote(id, semitone, 0, "chord");
+        });
+
+        $("currentNote").textContent = chord;
+    });
+});
+
+
+/* ======================================
+   METRONOME
+====================================== */
+
+function stopMetronome() {
+    if (metroTimer) {
+        clearInterval(metroTimer);
+        metroTimer = null;
+    }
+
+    metroBeat = 0;
+    $("metroStatus").textContent = "Metronome बंद है।";
+}
+
+async function startMetronome() {
+    await initAudio();
+    stopMetronome();
+
+    const bpm = Math.max(30, Math.min(240, Number($("bpm").value) || 80));
+    const interval = 60000 / bpm;
+
+    $("metroStatus").textContent = "Metronome चल रहा है: " + bpm + " BPM";
+
+    metroTimer = setInterval(() => {
+        if (!audioCtx) return;
+
+        metroBeat++;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "sine";
+        osc.frequency.value = metroBeat % 4 === 1 ? 1200 : 800;
+
+        gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(
+            0.25,
+            audioCtx.currentTime + 0.005
+        );
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioCtx.currentTime + 0.07
+        );
+
+        osc.connect(gain);
+        gain.connect(masterGain);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+
+    }, interval);
+}
+
+$("metroStart").addEventListener("click", startMetronome);
+$("metroStop").addEventListener("click", stopMetronome);
+
+
+/* ======================================
+   DRONE
+====================================== */
+
+let droneTimer = null;
+
+$("drone").addEventListener("change", async () => {
+    if ($("drone").checked) {
+        await initAudio();
+
+        if (droneTimer) clearInterval(droneTimer);
+
+        function droneNote() {
+            if (!audioCtx || !$("drone").checked) return;
+
+            const id = "drone_sa";
+            if (!activeNotes.has(id)) {
+                playNote(id, 0, 0, "drone");
+            }
+        }
+
+        droneNote();
+
+        droneTimer = setInterval(droneNote, 1000);
+
+    } else {
+        if (droneTimer) clearInterval(droneTimer);
+        droneTimer = null;
+        stopNote("drone_sa");
+    }
+});
+
+
+/* ======================================
+   RECORDING / WAV EXPORT
+====================================== */
+
+/*
+   This recorder captures the instrument's generated notes
+   and reconstructs a WAV recording from the recorded note events.
+
+   WAV export uses offline synthesis, so it works without
+   capturing the microphone or system output.
+*/
+
+$("recordStart").addEventListener("click", () => {
+    recorder.active = true;
+    recorder.startTime = performance.now();
+    recorder.events = [];
+
+    $("recordStart").disabled = true;
+    $("recordStop").disabled = false;
+    $("downloadWav").disabled = true;
+
+    $("recordStatus").textContent = "Recording शुरू हो गई है।";
+
+    updateRecordingClock();
+});
+
+$("recordStop").addEventListener("click", () => {
+    recorder.active = false;
+
+    $("recordStart").disabled = false;
+    $("recordStop").disabled = true;
+
+    $("recordStatus").textContent =
+        "Recording बंद। WAV तैयार करने के लिए Download WAV दबाएँ।";
+
+    if (window.recordClock) {
+        clearInterval(window.recordClock);
+    }
+
+    $("downloadWav").disabled = recorder.events.length === 0;
+});
+
+function updateRecordingClock() {
+    if (window.recordClock) clearInterval(window.recordClock);
+
+    window.recordClock = setInterval(() => {
+        const seconds = recorder.active
+            ? Math.floor((performance.now() - recorder.startTime) / 1000)
+            : 0;
+
+        $("recordTime").textContent =
+            String(Math.floor(seconds / 60)).padStart(2, "0") + ":" +
+            String(seconds % 60).padStart(2, "0");
+
+        if (!recorder.active) {
+            clearInterval(window.recordClock);
+        }
+    }, 250);
+}
+
+function writeString(view, offset, string) {
+    for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
+    }
+}
+
+function floatTo16BitPCM(output, input, offset) {
+    for (let i = 0; i < input.length; i++, offset += 2) {
+        const s = Math.max(-1, Math.min(1, input[i]));
+        output.setInt16(
+            offset,
+            s < 0 ? s * 32768 : s * 32767,
+            true
+        );
+    }
+}
+
+function audioBufferToWav(buffer) {
+    const channels = buffer.numberOfChannels;
+    const sampleRate = buffer.sampleRate;
+    const length = buffer.length * channels * 2;
+
+    const arrayBuffer = new ArrayBuffer(44 + length);
+    const view = new DataView(arrayBuffer);
+
+    writeString(view, 0, "RIFF");
+    view.setUint32(4, 36 + length, true);
+    writeString(view, 8, "WAVE");
+    writeString(view, 12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, channels, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * channels * 2, true);
+    view.setUint16(32, channels * 2, true);
+    view.setUint16(34, 16, true);
+    writeString(view, 36, "data");
+    view.setUint32(40, length, true);
+
+    const left = buffer.getChannelData(0);
+    const right = channels > 1 ? buffer.getChannelData(1) : left;
+
+    const interleaved = new Float32Array(buffer.length * channels);
+
+    for (let i = 0; i < buffer.length; i++) {
+        interleaved[i * channels] = left[i];
+
+        if (channels > 1) {
+            interleaved[i * channels + 1] = right[i];
+        }
+    }
+
+    floatTo16BitPCM(view, interleaved, 44);
+
+    return new Blob([arrayBuffer], {type:"audio/wav"});
+}
+
+async function renderRecording() {
+    const events = recorder.events.slice();
+
+    if (!events.length) {
+        throw new Error("कोई स्वर रिकॉर्ड नहीं हुआ।");
+    }
+
+    const lastTime = Math.max(...events.map(e => e.time));
+    const duration = Math.max(2, lastTime / 1000 + 2);
+
+    const sampleRate = 44100;
+    const offline = new OfflineAudioContext(
+        2,
+        Math.ceil(duration * sampleRate),
+        sampleRate
+    );
+
+    const master = offline.createGain();
+    master.gain.value = 0.6;
+    master.connect(offline.destination);
+
+    const active = new Map();
+
+    events.forEach(event => {
+        const time = event.time / 1000;
+
+        if (event.type === "on") {
+            const noteGain = offline.createGain();
+
+            noteGain.gain.setValueAtTime(0.0001, time);
+            noteGain.gain.linearRampToValueAtTime(0.18, time + 0.04);
+
+            noteGain.connect(master);
+
+            const partials = event.voice === "soft"
+                ? [[1,1],[2,.15]]
+                : [[1,1],[2,.4],[3,.2],[4,.1]];
+
+            const nodes = [];
+
+            partials.forEach(([harmonic, level]) => {
+                const osc = offline.createOscillator();
+                const g = offline.createGain();
+
+                osc.type = "sawtooth";
+                osc.frequency.value = event.freq * harmonic;
+                g.gain.value = level / partials.length;
+
+                osc.connect(g);
+                g.connect(noteGain);
+                osc.start(time);
+
+                nodes.push(osc);
+            });
+
+            const list = active.get(event.freq) || [];
+            list.push({nodes, gain:noteGain});
+            active.set(event.freq, list);
+
+        } else if (event.type === "off") {
+            const list = active.get(event.freq);
+
+            if (list && list.length) {
+                const item = list.shift();
+                item.gain.gain.setTargetAtTime(0.0001, time, 0.04);
+
+                item.nodes.forEach(osc => {
+                    try {
+                        osc.stop(Math.min(duration, time + 0.25));
+                    } catch (e) {}
+                });
+            }
+        }
     });
 
-    updateStats();
+    // Stop notes that were still held when recording ended.
+    active.forEach(list => {
+        list.forEach(item => {
+            item.gain.gain.setTargetAtTime(
+                0.0001,
+                Math.max(0, duration - 0.25),
+                0.04
+            );
+
+            item.nodes.forEach(osc => {
+                try { osc.stop(duration); } catch (e) {}
+            });
+        });
+    });
+
+    return await offline.startRendering();
 }
 
+$("downloadWav").addEventListener("click", async () => {
+    const button = $("downloadWav");
 
-/* =========================================
-   12. DIALOGUE & SPEECH
-========================================= */
-
-function showDialogue() {
-    const text = $('dialogueText').value.trim();
-
-    if (!text) {
-        toast('Please write a dialogue first.');
-        return;
-    }
-
-    $('dialogueBubble').textContent = text;
-    $('dialogueBubble').style.display = 'block';
-
-    $('dialogueClip').textContent =
-        text.length > 18 ? text.slice(0, 18) + '…' : text;
-
-    toast('Dialogue added to preview.');
-}
-
-
-function speakDialogue() {
-    const text = $('dialogueText').value.trim();
-
-    if (!text) {
-        toast('Write a dialogue first.');
-        return;
-    }
-
-    if (!('speechSynthesis' in window)) {
-        toast('Speech synthesis is not supported in this browser.');
-        return;
-    }
-
-    speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    utterance.lang = 'hi-IN';
-    utterance.rate = 0.9;
-    utterance.pitch = 1.1;
-
-    const voices = speechSynthesis.getVoices();
-
-    const hindiVoice = voices.find(v =>
-        v.lang.toLowerCase().startsWith('hi')
-    );
-
-    if (hindiVoice) {
-        utterance.voice = hindiVoice;
-    }
-
-    speechSynthesis.speak(utterance);
-}
-
-
-/* =========================================
-   13. VIDEO RECORDING
-========================================= */
-
-async function recordVideo() {
-    if (state.recording) {
-        stopRecording();
-        return;
-    }
-
-    if (!renderer || !renderer.domElement.captureStream) {
-        toast('Canvas recording is not supported in this browser.');
-        return;
-    }
-
-    const stream = renderer.domElement.captureStream(
-        Number($('frameRate').value)
-    );
-
-    const mimeTypes = [
-        'video/webm;codecs=vp9',
-        'video/webm;codecs=vp8',
-        'video/webm'
-    ];
-
-    const supportedType = mimeTypes.find(type =>
-        MediaRecorder.isTypeSupported(type)
-    );
-
-    if (!supportedType) {
-        toast('WebM recording is not supported.');
-        return;
-    }
-
-    recordedChunks = [];
+    button.disabled = true;
+    $("recordStatus").textContent = "WAV तैयार हो रही है...";
 
     try {
-        recorder = new MediaRecorder(stream, {
-            mimeType: supportedType
-        });
-    } catch (error) {
-        toast('Unable to start recording.');
-        console.error(error);
-        return;
-    }
+        const buffer = await renderRecording();
+        const blob = audioBufferToWav(buffer);
 
-    recorder.ondataavailable = event => {
-        if (event.data && event.data.size > 0) {
-            recordedChunks.push(event.data);
+        if (recorder.lastDownload) {
+            URL.revokeObjectURL(recorder.lastDownload);
         }
-    };
 
-    recorder.onstop = () => {
-        const blob = new Blob(recordedChunks, {
-            type: supportedType
-        });
+        recorder.lastDownload = URL.createObjectURL(blob);
 
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-
-        a.href = url;
-        a.download =
-            ($('projectName').value || 'cartoon') + '.webm';
+        const a = document.createElement("a");
+        a.href = recorder.lastDownload;
+        a.download = "harmonium-recording.wav";
 
         document.body.appendChild(a);
         a.click();
         a.remove();
 
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        $("recordStatus").textContent =
+            "WAV डाउनलोड शुरू हो गया है।";
 
-        stream.getTracks().forEach(track => track.stop());
-
-        $('exportBtn').textContent = '🎥 Record Video';
-
-        toast('Video downloaded as WebM.');
-    };
-
-    recorder.start(500);
-
-    state.recording = true;
-
-    $('exportBtn').textContent = '⏹ Stop Recording';
-
-    toast('Recording started. Press Stop Recording when ready.');
-
-    const duration = Math.max(
-        3,
-        Math.min(60, Number($('duration').value) || 15)
-    );
-
-    recordingTimer = setTimeout(() => {
-        if (state.recording) stopRecording();
-    }, duration * 1000);
-}
-
-
-function stopRecording() {
-    if (!state.recording || !recorder) return;
-
-    clearTimeout(recordingTimer);
-
-    state.recording = false;
-
-    if (recorder.state !== 'inactive') {
-        recorder.stop();
-    }
-
-    $('exportBtn').textContent = '🎥 Record Video';
-}
-
-
-/* =========================================
-   14. SCREENSHOT
-========================================= */
-
-function takeScreenshot() {
-    try {
-        renderer.render(scene, camera);
-
-        const url = renderer.domElement.toDataURL('image/png');
-
-        const a = document.createElement('a');
-
-        a.href = url;
-        a.download = 'cartoon-screenshot.png';
-
-        a.click();
-
-        toast('Screenshot downloaded.');
     } catch (error) {
         console.error(error);
-        toast('Screenshot could not be created.');
-    }
-}
 
+        $("recordStatus").textContent =
+            "Recording तैयार नहीं हुई: " + error.message;
 
-/* =========================================
-   15. PROJECT SAVE / LOAD
-========================================= */
-
-function collectProject() {
-    return {
-        app: '3D Cartoon Animation Studio Pro',
-        version: 1,
-
-        projectName: $('projectName').value,
-
-        characterName: $('characterName').value,
-        characterStyle: $('characterStyle').value,
-        bodyColor: $('bodyColor').value,
-        headColor: $('headColor').value,
-        characterHeight: $('characterHeight').value,
-        headSize: $('headSize').value,
-
-        animation: state.animation,
-        speed: $('animationSpeed').value,
-        distance: $('movementDistance').value,
-
-        environment: $('environment').value,
-        groundColor: $('groundColor').value,
-        skyColor: $('skyColor').value,
-
-        dialogue: $('dialogueText').value,
-
-        resolution: $('resolution').value,
-        frameRate: $('frameRate').value,
-        duration: $('duration').value,
-
-        cameraFov: $('cameraFov').value,
-        cameraHeight: $('cameraHeight').value,
-        cameraDistance: $('cameraDistance').value,
-        cameraAngle: $('cameraAngle').value,
-
-        scenes: state.scenes,
-        sceneTypes: state.sceneTypes || ['village']
-    };
-}
-
-
-function saveProject() {
-    const project = collectProject();
-
-    try {
-        localStorage.setItem(
-            'cartoonStudioProject',
-            JSON.stringify(project)
-        );
-
-        toast('Project saved in this browser.');
-    } catch (error) {
-        toast('Browser storage is full or unavailable.');
-    }
-}
-
-
-function exportProject() {
-    const blob = new Blob(
-        [JSON.stringify(collectProject(), null, 2)],
-        { type: 'application/json' }
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download =
-        ($('projectName').value || 'cartoon-project') + '.json';
-
-    a.click();
-
-    URL.revokeObjectURL(url);
-
-    toast('Project JSON exported.');
-}
-
-
-function applyProject(project) {
-    $('projectName').value = project.projectName || 'My Cartoon Film';
-
-    $('characterName').value = project.characterName || 'Hero Character';
-    $('characterStyle').value = project.characterStyle || 'boy';
-
-    $('bodyColor').value = project.bodyColor || '#4c8dff';
-    $('headColor').value = project.headColor || '#ffcc9d';
-
-    $('characterHeight').value = project.characterHeight || 1;
-    $('headSize').value = project.headSize || 1;
-
-    $('animationSpeed').value = project.speed || 1;
-    $('movementDistance').value = project.distance || 3;
-
-    $('environment').value = project.environment || 'village';
-    $('groundColor').value = project.groundColor || '#66aa66';
-    $('skyColor').value = project.skyColor || '#8ac7ff';
-
-    $('dialogueText').value = project.dialogue || '';
-
-    $('resolution').value = project.resolution || '720';
-    $('frameRate').value = project.frameRate || '30';
-    $('duration').value = project.duration || 15;
-
-    $('cameraFov').value = project.cameraFov || 55;
-    $('cameraHeight').value = project.cameraHeight || 4;
-    $('cameraDistance').value = project.cameraDistance || 9;
-    $('cameraAngle').value = project.cameraAngle || 15;
-
-    state.scenes = Array.isArray(project.scenes)
-        ? project.scenes
-        : ['Indian Village'];
-
-    state.sceneTypes = Array.isArray(project.sceneTypes)
-        ? project.sceneTypes
-        : ['village'];
-
-    createEnvironment($('environment').value);
-    createCharacter();
-
-    setAnimation(project.animation || 'idle');
-    applyCamera();
-
-    renderSceneClips();
-
-    toast('Project loaded.');
-}
-
-
-function loadProjectFromFile(file) {
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-        try {
-            const project = JSON.parse(reader.result);
-
-            if (!project || project.app !==
-                '3D Cartoon Animation Studio Pro') {
-                throw new Error('Invalid project file.');
-            }
-
-            applyProject(project);
-
-        } catch (error) {
-            console.error(error);
-            toast('Could not open this project JSON.');
-        }
-    };
-
-    reader.readAsText(file);
-}
-
-
-/* =========================================
-   16. RESPONSIVE VIEWPORT
-========================================= */
-
-function resizeRenderer() {
-    if (!renderer || !camera) return;
-
-    const width = renderArea.clientWidth;
-    const height = renderArea.clientHeight;
-
-    if (width <= 0 || height <= 0) return;
-
-    renderer.setSize(width, height, false);
-
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-}
-
-
-/* =========================================
-   17. EVENT LISTENERS
-========================================= */
-
-$('createCharacterBtn').addEventListener(
-    'click',
-    createCharacter
-);
-
-$('buildSceneBtn').addEventListener('click', () => {
-    createEnvironment($('environment').value);
-});
-
-$('environment').addEventListener('change', () => {
-    createEnvironment($('environment').value);
-});
-
-document.querySelectorAll('[data-animation]').forEach(button => {
-    button.addEventListener('click', () => {
-        setAnimation(button.dataset.animation);
-    });
-});
-
-$('playAnimationBtn').addEventListener('click', () => {
-    state.playing = true;
-    state.speed = Number($('animationSpeed').value);
-    state.distance = Number($('movementDistance').value);
-
-    if (character) {
-        characterStart.copy(character.position);
-    }
-
-    toast('Animation playing.');
-});
-
-$('stopAnimationBtn').addEventListener('click', () => {
-    state.playing = false;
-
-    if (character) {
-        character.position.copy(characterStart);
-        character.position.y = 0;
-        character.rotation.set(0, 0, 0);
-    }
-
-    if (leftArm) leftArm.rotation.set(0, 0, 0);
-    if (rightArm) rightArm.rotation.set(0, 0, 0);
-    if (leftLeg) leftLeg.rotation.set(0, 0, 0);
-    if (rightLeg) rightLeg.rotation.set(0, 0, 0);
-    if (headGroup) headGroup.rotation.set(0, 0, 0);
-
-    toast('Animation stopped.');
-});
-
-$('animationSpeed').addEventListener('input', event => {
-    state.speed = Number(event.target.value);
-});
-
-$('movementDistance').addEventListener('input', event => {
-    state.distance = Number(event.target.value);
-});
-
-$('showDialogueBtn').addEventListener('click', showDialogue);
-$('speakDialogueBtn').addEventListener('click', speakDialogue);
-
-$('viewFront').addEventListener('click', () => setCameraView('front'));
-$('viewSide').addEventListener('click', () => setCameraView('side'));
-$('viewTop').addEventListener('click', () => setCameraView('top'));
-$('viewReset').addEventListener('click', () => setCameraView('reset'));
-
-$('toggleGrid').addEventListener('click', () => {
-    state.showGrid = !state.showGrid;
-    gridHelper.visible = state.showGrid;
-});
-
-$('toggleAxes').addEventListener('click', () => {
-    state.showAxes = !state.showAxes;
-    axesHelper.visible = state.showAxes;
-});
-
-$('zoomIn').addEventListener('click', () => {
-    camera.position.multiplyScalar(0.9);
-});
-
-$('zoomOut').addEventListener('click', () => {
-    camera.position.multiplyScalar(1.1);
-});
-
-$('applyCameraBtn').addEventListener('click', applyCamera);
-
-$('cameraFov').addEventListener('input', () => {
-    camera.fov = Number($('cameraFov').value);
-    camera.updateProjectionMatrix();
-});
-
-$('lightIntensity').addEventListener('input', event => {
-    const intensity = Number(event.target.value);
-
-    scene.traverse(obj => {
-        if (obj.isHemisphereLight) {
-            obj.intensity = intensity * 2;
-        }
-
-        if (obj.isDirectionalLight) {
-            obj.intensity = intensity * 3;
-        }
-    });
-});
-
-$('fullscreenBtn').addEventListener('click', async () => {
-    const stage = $('stage');
-
-    try {
-        if (!document.fullscreenElement) {
-            await stage.requestFullscreen();
-        } else {
-            await document.exitFullscreen();
-        }
-
-        setTimeout(resizeRenderer, 200);
-
-    } catch (error) {
-        toast('Fullscreen is unavailable.');
+    } finally {
+        button.disabled = false;
     }
 });
 
-$('exportBtn').addEventListener('click', recordVideo);
-$('screenshotBtn').addEventListener('click', takeScreenshot);
 
-$('saveProjectBtn').addEventListener('click', saveProject);
-$('exportProjectBtn').addEventListener('click', exportProject);
+/* ======================================
+   INITIALIZATION
+====================================== */
 
-$('loadProjectBtn').addEventListener('click', () => {
-    $('projectFileInput').click();
-});
+$("bellows").classList.add("active");
 
-$('projectFileInput').addEventListener('change', event => {
-    loadProjectFromFile(event.target.files[0]);
-    event.target.value = '';
-});
+$("speedLabel").textContent =
+    $("practiceSpeed").value + " ms प्रति स्वर";
 
-$('newProjectBtn').addEventListener('click', () => {
-    if (!confirm('Create a new project? Unsaved changes may be lost.')) {
-        return;
-    }
+buildKeyboard();
 
-    state.animation = 'idle';
-    state.playing = false;
-    state.elapsed = 0;
+window.addEventListener("beforeunload", () => {
+    stopAll();
 
-    state.scenes = ['Indian Village'];
-    state.sceneTypes = ['village'];
-    state.sceneIndex = 0;
-
-    $('projectName').value = 'My Cartoon Film';
-    $('characterName').value = 'Hero Character';
-    $('characterStyle').value = 'boy';
-    $('bodyColor').value = '#4c8dff';
-    $('headColor').value = '#ffcc9d';
-    $('environment').value = 'village';
-
-    createEnvironment('village');
-    createCharacter();
-
-    setCameraView('reset');
-    renderSceneClips();
-
-    toast('New project created.');
-});
-
-$('addSceneBtn').addEventListener('click', () => {
-    if (state.scenes.length >= 30) {
-        toast('Maximum 30 scenes in this demo.');
-        return;
-    }
-
-    const name = prompt(
-        'Enter scene name:',
-        'New Scene ' + (state.scenes.length + 1)
-    );
-
-    if (!name) return;
-
-    state.scenes.push(name);
-
-    state.sceneTypes = state.sceneTypes || [];
-    state.sceneTypes.push($('environment').value);
-
-    state.sceneIndex = state.scenes.length - 1;
-
-    renderSceneClips();
-
-    toast('Scene added.');
-});
-
-$('deleteSceneBtn').addEventListener('click', () => {
-    if (state.scenes.length <= 1) {
-        toast('At least one scene is required.');
-        return;
-    }
-
-    state.scenes.splice(state.sceneIndex, 1);
-
-    if (state.sceneTypes) {
-        state.sceneTypes.splice(state.sceneIndex, 1);
-    }
-
-    state.sceneIndex = Math.max(0, state.sceneIndex - 1);
-
-    $('environment').value =
-        (state.sceneTypes || ['village'])[state.sceneIndex] || 'village';
-
-    createEnvironment($('environment').value);
-
-    renderSceneClips();
-
-    toast('Scene deleted.');
-});
-
-$('helpBtn').addEventListener('click', () => {
-    $('helpModal').style.display = 'flex';
-});
-
-$('closeHelp').addEventListener('click', () => {
-    $('helpModal').style.display = 'none';
-});
-
-$('helpModal').addEventListener('click', event => {
-    if (event.target === $('helpModal')) {
-        $('helpModal').style.display = 'none';
+    if (recorder.lastDownload) {
+        URL.revokeObjectURL(recorder.lastDownload);
     }
 });
-
-window.addEventListener('resize', resizeRenderer);
-
-document.addEventListener('fullscreenchange', () => {
-    setTimeout(resizeRenderer, 100);
-});
-
-
-/* =========================================
-   18. START APPLICATION
-========================================= */
-
-try {
-    initThree();
-    renderSceneClips();
-
-} catch (error) {
-    console.error(error);
-
-    $('renderStatus').textContent = 'Renderer Error';
-
-    toast(
-        '3D initialization failed. Check internet and WebGL support.'
-    );
-}
 
 </script>
 
