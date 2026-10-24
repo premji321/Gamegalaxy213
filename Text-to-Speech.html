@@ -1,415 +1,389 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#070b18">
+<meta name="theme-color" content="#101426">
 
-<title>VOICE X — Advanced Text to Speech Studio</title>
+<title>Voice Studio AI Pro | Text to Speech</title>
 
 <style>
-:root{
-  --bg:#070b18;
-  --panel:#111a30;
-  --panel2:#182440;
-  --cyan:#00e5ff;
-  --purple:#9d4dff;
-  --pink:#ff3cac;
-  --green:#00ff9d;
-  --text:#f4f7ff;
-  --muted:#9aa9c9;
-  --border:rgba(255,255,255,.10);
+:root {
+    --bg: #0b1020;
+    --panel: #141b2f;
+    --panel2: #1b2540;
+    --primary: #8066ff;
+    --secondary: #00d4ff;
+    --text: #f5f7ff;
+    --muted: #a6b0cb;
+    --border: rgba(255,255,255,.10);
+    --success: #35d49a;
+    --danger: #ff647c;
 }
 
-*{
-  box-sizing:border-box;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-body{
-  margin:0;
-  font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  background:
-    radial-gradient(ellipse at top left,#15244b 0%,transparent 40%),
-    radial-gradient(ellipse at bottom right,#271047 0%,transparent 40%),
-    var(--bg);
-  color:var(--text);
-  min-height:100vh;
+body {
+    background:
+        radial-gradient(circle at top left, #222050, transparent 40%),
+        var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
 }
 
-button,input,textarea,select{
-  font:inherit;
+button, select, textarea, input {
+    font: inherit;
 }
 
-button{
-  cursor:pointer;
-  border:none;
+button {
+    cursor: pointer;
+    border: none;
 }
 
-header{
-  padding:22px 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:15px;
-  border-bottom:1px solid var(--border);
-  background:rgba(7,11,24,.8);
-  position:sticky;
-  top:0;
-  z-index:10;
-  backdrop-filter:blur(18px);
+header {
+    padding: 18px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,15,30,.85);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(15px);
 }
 
-.logo{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:2px;
-  color:var(--cyan);
-  text-shadow:0 0 20px rgba(0,229,255,.6);
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.5px;
 }
 
-.logo span{
-  color:white;
+.logo span {
+    color: var(--secondary);
 }
 
-.badge{
-  padding:9px 14px;
-  border:1px solid rgba(0,255,157,.3);
-  color:var(--green);
-  background:rgba(0,255,157,.07);
-  border-radius:30px;
-  font-size:12px;
-  letter-spacing:1px;
+.badge {
+    padding: 7px 11px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--success);
+    font-size: 12px;
 }
 
-.container{
-  width:min(1200px,94%);
-  margin:30px auto 60px;
+main {
+    width: min(1150px, 94%);
+    margin: 30px auto;
 }
 
-.hero{
-  text-align:center;
-  padding:25px 10px 35px;
+.hero {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.hero h1{
-  font-size:clamp(30px,5vw,55px);
-  margin:0 0 12px;
-  font-weight:900;
-  background:linear-gradient(90deg,#fff,var(--cyan),#c18cff);
-  color:transparent;
-  background-clip:text;
-  -webkit-background-clip:text;
+.hero h1 {
+    font-size: clamp(28px, 5vw, 46px);
+    margin-bottom: 12px;
 }
 
-.hero p{
-  color:var(--muted);
-  line-height:1.7;
-  max-width:700px;
-  margin:auto;
+.hero h1 span {
+    color: var(--primary);
 }
 
-.studio{
-  display:grid;
-  grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);
-  gap:22px;
+.hero p {
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 680px;
+    margin: auto;
 }
 
-.card{
-  background:linear-gradient(145deg,rgba(24,36,64,.95),rgba(12,19,37,.95));
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:24px;
-  box-shadow:0 15px 50px rgba(0,0,0,.2);
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(270px, .8fr);
+    gap: 22px;
 }
 
-.card h2{
-  font-size:18px;
-  margin:0 0 20px;
+.card {
+    background: rgba(20,27,47,.96);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.15);
 }
 
-.label{
-  display:block;
-  color:#c3cee8;
-  font-size:13px;
-  margin-bottom:10px;
+.card h2 {
+    font-size: 19px;
+    margin-bottom: 17px;
 }
 
-textarea{
-  width:100%;
-  min-height:220px;
-  padding:18px;
-  resize:vertical;
-  background:#080f20;
-  color:white;
-  border:1px solid #2c3b60;
-  border-radius:15px;
-  outline:none;
-  line-height:1.9;
-  font-size:17px;
+label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 16px 0 8px;
 }
 
-textarea:focus,
-select:focus{
-  border-color:var(--cyan);
-  box-shadow:0 0 0 3px rgba(0,229,255,.08);
+textarea, select, input[type="text"] {
+    width: 100%;
+    background: #0c1327;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 13px;
+    outline: none;
 }
 
-textarea::placeholder{
-  color:#68799d;
+textarea:focus, select:focus, input:focus {
+    border-color: var(--primary);
 }
 
-.text-info{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  color:var(--muted);
-  font-size:12px;
-  margin:10px 0 20px;
-  flex-wrap:wrap;
+textarea {
+    resize: vertical;
+    min-height: 230px;
+    line-height: 1.7;
 }
 
-.control{
-  margin:20px 0;
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
-select{
-  width:100%;
-  padding:13px;
-  background:#080f20;
-  border:1px solid #304064;
-  border-radius:10px;
-  color:white;
-  outline:none;
+.range-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.range-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  font-size:13px;
-  margin-bottom:12px;
+.range-row input {
+    flex: 1;
+    min-width: 0;
+    accent-color: var(--primary);
 }
 
-.range-head output{
-  color:var(--cyan);
-  font-weight:bold;
+.range-value {
+    min-width: 45px;
+    text-align: right;
+    color: var(--secondary);
+    font-weight: bold;
 }
 
-input[type=range]{
-  width:100%;
-  accent-color:var(--cyan);
+.btn {
+    padding: 13px 16px;
+    border-radius: 11px;
+    font-weight: bold;
+    transition: .2s;
 }
 
-.button-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:22px;
+.btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.12);
 }
 
-.btn{
-  padding:13px 18px;
-  border-radius:12px;
-  font-weight:800;
-  transition:.2s;
+.primary {
+    color: white;
+    background: linear-gradient(120deg, #7256ff, #a24cff);
 }
 
-.btn:hover{
-  transform:translateY(-2px);
-  filter:brightness(1.12);
+.secondary {
+    color: white;
+    background: #263452;
+    border: 1px solid var(--border);
 }
 
-.primary{
-  background:linear-gradient(100deg,var(--cyan),#70a5ff);
-  color:#06101e;
-  box-shadow:0 5px 25px rgba(0,229,255,.2);
+.success {
+    color: #071b15;
+    background: var(--success);
 }
 
-.secondary{
-  background:#263454;
-  color:white;
-  border:1px solid #405178;
+.danger {
+    color: white;
+    background: #b82d48;
 }
 
-.danger{
-  background:#411c35;
-  color:#ff9ccc;
-  border:1px solid #783358;
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 18px;
 }
 
-.purple{
-  background:linear-gradient(100deg,#803cff,#bc54ff);
-  color:white;
+.full {
+    grid-column: 1 / -1;
 }
 
-.full{
-  width:100%;
+.status {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #0b1326;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
 }
 
-.visualizer{
-  margin:20px 0;
-  height:155px;
-  position:relative;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  background:
-    radial-gradient(ellipse at center,rgba(0,229,255,.10),transparent 70%),
-    #080e1d;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.voice-list {
+    display: grid;
+    gap: 10px;
 }
 
-.visualizer canvas{
-  width:100%;
-  height:100%;
+.voice-option {
+    padding: 13px;
+    background: #0c1327;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 
-.visual-status{
-  position:absolute;
-  left:14px;
-  top:12px;
-  font-size:10px;
-  letter-spacing:2px;
-  color:var(--cyan);
+.voice-option.active {
+    border-color: var(--primary);
+    background: #211b48;
 }
 
-.live-dot{
-  display:inline-block;
-  width:7px;
-  height:7px;
-  background:#68799d;
-  border-radius:50%;
-  margin-right:5px;
+.voice-option small {
+    display: block;
+    color: var(--muted);
+    margin-top: 5px;
 }
 
-.live-dot.active{
-  background:var(--green);
-  box-shadow:0 0 12px var(--green);
-  animation:pulse 1s infinite;
+.voice-option button {
+    background: #273452;
+    color: white;
+    padding: 8px 11px;
+    border-radius: 8px;
+    flex-shrink: 0;
 }
 
-@keyframes pulse{
-  50%{opacity:.3;transform:scale(.7)}
+.voice-option button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
 }
 
-.progress-track{
-  width:100%;
-  height:5px;
-  border-radius:20px;
-  background:#263454;
-  margin:20px 0 10px;
-  overflow:hidden;
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 14px;
 }
 
-.progress-fill{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,var(--cyan),var(--purple));
-  transition:width .15s linear;
+.stat {
+    background: #0c1327;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    text-align: center;
+    padding: 13px 5px;
 }
 
-.status{
-  color:var(--muted);
-  font-size:13px;
-  min-height:20px;
-  line-height:1.6;
+.stat strong {
+    display: block;
+    font-size: 20px;
+    color: var(--secondary);
 }
 
-.status strong{
-  color:var(--green);
+.stat small {
+    color: var(--muted);
+    font-size: 11px;
 }
 
-.option-box{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  background:#0b1327;
-  border:1px solid var(--border);
-  padding:13px;
-  border-radius:12px;
-  margin:12px 0;
-  font-size:13px;
+.preset-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
 }
 
-.option-box input{
-  accent-color:var(--cyan);
-  width:17px;
-  height:17px;
+.preset {
+    padding: 12px 7px;
+    border-radius: 10px;
+    background: #263452;
+    color: white;
+    border: 1px solid var(--border);
 }
 
-.note{
-  color:#93a5c8;
-  font-size:12px;
-  line-height:1.8;
-  padding:14px;
-  background:rgba(0,229,255,.04);
-  border-left:3px solid var(--cyan);
-  border-radius:6px;
-  margin-top:18px;
+.preset:hover {
+    border-color: var(--primary);
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:20px;
+.history-item {
+    background: #0c1327;
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 10px;
+    overflow-wrap: anywhere;
 }
 
-.stat{
-  padding:15px 8px;
-  text-align:center;
-  border-radius:13px;
-  background:#0a1225;
-  border:1px solid var(--border);
+.history-item p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 8px 0;
+    line-height: 1.5;
 }
 
-.stat strong{
-  display:block;
-  font-size:19px;
-  color:var(--cyan);
-  margin-bottom:5px;
+.history-item button {
+    padding: 7px 10px;
+    margin: 4px 4px 0 0;
+    border-radius: 7px;
+    background: #273452;
+    color: white;
 }
 
-.stat small{
-  color:var(--muted);
-  font-size:11px;
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 25px 12px;
+    font-size: 12px;
+    line-height: 1.8;
 }
 
-footer{
-  text-align:center;
-  color:#7282a5;
-  font-size:12px;
-  padding:25px;
-  border-top:1px solid var(--border);
+.hidden {
+    display: none !important;
 }
 
-@media(max-width:850px){
-  .studio{
-    grid-template-columns:1fr;
-  }
+@media(max-width: 760px) {
+    header {
+        padding: 15px 4%;
+    }
 
-  header{
-    position:relative;
-  }
+    .logo {
+        font-size: 18px;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+    main {
+        margin-top: 22px;
+    }
 }
 
-@media(max-width:480px){
-  .card{
-    padding:17px;
-  }
+@media(max-width: 390px) {
+    .row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 
-  .button-row .btn{
-    flex:1 1 40%;
-  }
+    .badge {
+        font-size: 10px;
+    }
 
-  textarea{
-    min-height:190px;
-    font-size:16px;
-  }
+    .button-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 </style>
 </head>
@@ -417,1221 +391,1252 @@ footer{
 <body>
 
 <header>
-  <div class="logo">VOICE <span>X</span></div>
-  <div class="badge">● ADVANCED AUDIO STUDIO</div>
+    <div class="logo">🎙️ VOICE STUDIO <span>AI PRO</span></div>
+    <div class="badge">BROWSER TTS</div>
 </header>
 
-<main class="container">
+<main>
 
-  <section class="hero">
-    <h1>Text to Speech Studio</h1>
+<section class="hero">
+    <h1>Turn Your Text Into <span>Speech</span></h1>
     <p>
-      अपने टेक्स्ट को आवाज में बदलें। Cinematic Intro,
-      Powerful Drum Effects, Voice Controls और Animated
-      Audio Visualizer के साथ अपना वॉइस स्टूडियो इस्तेमाल करें।
+        Create spoken content for educational videos, stories,
+        motivational speeches, presentations and more.
     </p>
-  </section>
+</section>
 
-  <section class="studio">
+<div class="layout">
 
-    <!-- LEFT PANEL -->
+<!-- LEFT COLUMN -->
 
-    <div class="card">
+<div>
 
-      <h2>🎙️ Voice Creation Console</h2>
+<section class="card">
+    <h2>✍️ Text Editor</h2>
 
-      <label class="label" for="textInput">
-        अपना टेक्स्ट यहाँ लिखें
-      </label>
+    <label for="projectName">Project Name</label>
+    <input type="text" id="projectName"
+           placeholder="My Voice Project">
 
-      <textarea
-        id="textInput"
-        placeholder="नमस्कार दोस्तों! आपका स्वागत है। आज हम एक बहुत ही महत्वपूर्ण विषय के बारे में जानेंगे..."
-      ></textarea>
+    <label for="textInput">Enter your text</label>
+    <textarea id="textInput"
+        placeholder="Type or paste your text here...
 
-      <div class="text-info">
-        <span id="charCount">0 characters</span>
-        <span id="wordCount">0 words</span>
-      </div>
+Example:
+Welcome to our educational channel.
+Today, we will learn something interesting."
+        maxlength="20000"></textarea>
 
-      <div class="control">
-        <label class="label" for="voiceSelect">
-          🎤 Voice Selection
-        </label>
-        <select id="voiceSelect">
-          <option value="">आवाजें लोड हो रही हैं...</option>
-        </select>
-      </div>
-
-      <div class="control">
-        <div class="range-head">
-          <label for="speed">⚡ Speaking Speed</label>
-          <output id="speedValue">1.0x</output>
+    <div class="stats">
+        <div class="stat">
+            <strong id="charCount">0</strong>
+            <small>Characters</small>
         </div>
-        <input
-          id="speed"
-          type="range"
-          min="0.5"
-          max="2"
-          step="0.1"
-          value="1"
-        >
-      </div>
-
-      <div class="control">
-        <div class="range-head">
-          <label for="pitch">🎚️ Voice Pitch</label>
-          <output id="pitchValue">1.0</output>
+        <div class="stat">
+            <strong id="wordCount">0</strong>
+            <small>Words</small>
         </div>
-        <input
-          id="pitch"
-          type="range"
-          min="0.5"
-          max="2"
-          step="0.1"
-          value="1"
-        >
-      </div>
-
-      <div class="control">
-        <div class="range-head">
-          <label for="volume">🔊 Voice Volume</label>
-          <output id="volumeValue">100%</output>
+        <div class="stat">
+            <strong id="minuteCount">0</strong>
+            <small>Est. Minutes</small>
         </div>
-        <input
-          id="volume"
-          type="range"
-          min="0"
-          max="1"
-          step="0.05"
-          value="1"
-        >
-      </div>
+    </div>
 
-      <div class="visualizer">
-        <span class="visual-status">
-          <span class="live-dot" id="liveDot"></span>
-          AUDIO VISUALIZER
-        </span>
-        <canvas id="visualCanvas"></canvas>
-      </div>
+    <div class="button-grid">
+        <button class="btn secondary" id="clearBtn">
+            🗑️ Clear Text
+        </button>
 
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
+        <button class="btn secondary" id="pasteBtn">
+            📋 Paste Text
+        </button>
 
-      <div class="status" id="status">
-        <strong>READY:</strong> टेक्स्ट लिखें और Play दबाएँ।
-      </div>
+        <button class="btn secondary" id="saveTextBtn">
+            💾 Save Project
+        </button>
 
-      <div class="button-row">
-        <button class="btn primary" id="playBtn">
-          ▶ Play
+        <button class="btn secondary" id="loadTextBtn">
+            📂 Load Project
+        </button>
+    </div>
+
+    <input type="file" id="fileInput"
+           accept=".txt,.json"
+           class="hidden">
+</section>
+
+<section class="card">
+    <h2>🎛️ Voice Settings</h2>
+
+    <label for="languageSelect">Language Filter</label>
+    <select id="languageSelect">
+        <option value="all">All Available Languages</option>
+        <option value="hi">Hindi</option>
+        <option value="en">English</option>
+        <option value="en-IN">English (India)</option>
+        <option value="en-US">English (United States)</option>
+        <option value="en-GB">English (United Kingdom)</option>
+    </select>
+
+    <label for="voiceSelect">Available System Voice</label>
+    <select id="voiceSelect"></select>
+
+    <label>
+        Speaking Speed
+    </label>
+    <div class="range-row">
+        <input type="range" id="speed"
+               min="0.5" max="2" step="0.1" value="1">
+        <span class="range-value" id="speedValue">1.0x</span>
+    </div>
+
+    <label>
+        Voice Pitch
+    </label>
+    <div class="range-row">
+        <input type="range" id="pitch"
+               min="0" max="2" step="0.1" value="1">
+        <span class="range-value" id="pitchValue">1.0</span>
+    </div>
+
+    <label>
+        Volume
+    </label>
+    <div class="range-row">
+        <input type="range" id="volume"
+               min="0" max="1" step="0.1" value="1">
+        <span class="range-value" id="volumeValue">100%</span>
+    </div>
+
+    <label for="chunkSize">Text Processing</label>
+    <select id="chunkSize">
+        <option value="500">Short sections</option>
+        <option value="1500" selected>Medium sections</option>
+        <option value="3000">Long sections</option>
+    </select>
+
+    <div class="button-grid">
+        <button class="btn primary" id="speakBtn">
+            ▶ Generate Speech
         </button>
 
         <button class="btn secondary" id="pauseBtn">
-          ⏸ Pause
+            ⏸ Pause
         </button>
 
         <button class="btn secondary" id="resumeBtn">
-          ⏵ Resume
+            ▶ Resume
         </button>
 
         <button class="btn danger" id="stopBtn">
-          ■ Stop
+            ■ Stop
         </button>
-      </div>
-
     </div>
 
-    <!-- RIGHT PANEL -->
+    <div class="status" id="status" role="status"
+         aria-live="polite">
+        Ready. Enter text and select a voice.
+    </div>
+</section>
 
-    <aside class="card">
+<section class="card">
+    <h2>🎧 Audio Export</h2>
 
-      <h2>🎵 Cinematic Sound Effects</h2>
+    <p style="color:var(--muted);line-height:1.7;font-size:13px">
+        Audio export depends on browser support. Speech playback
+        does not automatically produce a downloadable audio file.
+    </p>
 
-      <div class="option-box">
-        <label for="introToggle">
-          🥁 Intro Drum Effect
-        </label>
-        <input type="checkbox" id="introToggle" checked>
-      </div>
+    <div class="button-grid">
+        <button class="btn success full" id="recordBtn">
+            ⏺ Start Audio Recording
+        </button>
 
-      <div class="option-box">
-        <label for="beepToggle">
-          ✨ Startup Sound
-        </label>
-        <input type="checkbox" id="beepToggle" checked>
-      </div>
+        <button class="btn secondary" id="stopRecordBtn">
+            ■ Stop Recording
+        </button>
 
-      <div class="option-box">
-        <label for="endToggle">
-          🔔 Ending Sound
-        </label>
-        <input type="checkbox" id="endToggle" checked>
-      </div>
+        <button class="btn secondary" id="downloadTextBtn">
+            ⬇ Download Text
+        </button>
+    </div>
 
-      <div class="option-box">
-        <label for="musicToggle">
-          🎼 Ambient Background Tone
-        </label>
-        <input type="checkbox" id="musicToggle">
-      </div>
+    <audio id="audioPreview" controls
+           class="hidden" style="width:100%;margin-top:15px"></audio>
 
-      <div class="control">
-        <div class="range-head">
-          <label for="effectVolume">🔉 Effect Intensity</label>
-          <output id="effectValue">70%</output>
-        </div>
-        <input
-          id="effectVolume"
-          type="range"
-          min="0"
-          max="1"
-          step="0.05"
-          value="0.7"
-        >
-      </div>
+    <a id="audioDownload" class="btn success hidden"
+       style="display:block;text-align:center;margin-top:12px">
+       Download Recorded Audio
+    </a>
 
-      <button class="btn purple full" id="testSoundBtn">
-        🥁 Test Cinematic Sound
-      </button>
+    <div class="status">
+        Note: Recording the browser's speech output may not work
+        on every device. For reliable MP3 generation, connect a
+        dedicated text-to-speech API.
+    </div>
+</section>
 
-      <div class="stats">
-        <div class="stat">
-          <strong id="statChars">0</strong>
-          <small>Characters</small>
-        </div>
-        <div class="stat">
-          <strong id="statWords">0</strong>
-          <small>Words</small>
-        </div>
-        <div class="stat">
-          <strong id="statTime">0s</strong>
-          <small>Est. Time</small>
-        </div>
-      </div>
+</div>
 
-      <div class="control" style="margin-top:25px">
-        <h2>💾 Audio Recording</h2>
-        <p class="status">
-          आवाज को रिकॉर्ड करके WebM फाइल के रूप में सेव करने का प्रयास करें।
+<!-- RIGHT COLUMN -->
+
+<div>
+
+<section class="card">
+    <h2>🎭 Voice Characters</h2>
+
+    <div class="voice-list" id="voiceList"></div>
+
+    <div class="status">
+        These are speaking presets, not ten guaranteed unique
+        AI voices. The final sound depends on the selected
+        browser voice and the device.
+    </div>
+</section>
+
+<section class="card">
+    <h2>⚡ Quick Styles</h2>
+
+    <div class="preset-grid">
+        <button class="preset" data-style="teacher">
+            👨‍🏫 Teacher
+        </button>
+
+        <button class="preset" data-style="news">
+            📰 News Reader
+        </button>
+
+        <button class="preset" data-style="story">
+            📖 Storytelling
+        </button>
+
+        <button class="preset" data-style="motivation">
+            🔥 Motivation
+        </button>
+
+        <button class="preset" data-style="calm">
+            🌿 Calm
+        </button>
+
+        <button class="preset" data-style="fast">
+            ⚡ Fast Speech
+        </button>
+    </div>
+</section>
+
+<section class="card">
+    <h2>🕘 Recent Projects</h2>
+
+    <div id="history">
+        <p style="color:var(--muted);font-size:13px">
+            Saved projects will appear here.
         </p>
+    </div>
 
-        <button class="btn primary full" id="recordBtn">
-          ● Start Audio Recording
-        </button>
+    <button class="btn danger full"
+            id="clearHistoryBtn"
+            style="margin-top:15px;width:100%">
+        Clear Project History
+    </button>
+</section>
 
-        <button
-          class="btn secondary full"
-          id="downloadBtn"
-          style="margin-top:10px"
-          disabled
-        >
-          ↓ Download Recording
-        </button>
-      </div>
+<section class="card">
+    <h2>ℹ️ About This App</h2>
 
-      <div class="note">
-        <strong>ध्यान दें:</strong><br>
-        रिकॉर्डिंग में आवाज तभी शामिल होगी जब ब्राउज़र से
-        Speech Synthesis की आवाज रिकॉर्डिंग ऑडियो स्ट्रीम में
-        उपलब्ध हो। कई ब्राउज़र में Speech Synthesis की आवाज
-        सीधे रिकॉर्ड नहीं होती। ऐसे में रिकॉर्डिंग फाइल में
-        केवल साउंड इफेक्ट आ सकते हैं। यह ब्राउज़र की सीमा है।
-      </div>
+    <p style="color:var(--muted);font-size:13px;line-height:1.8">
+        Voice Studio AI Pro uses the Web Speech API available
+        in supported browsers. Voice availability, language
+        quality and playback behavior vary by device.
+        This demo does not contain a proprietary AI voice model.
+    </p>
+</section>
 
-    </aside>
-
-  </section>
-
+</div>
+</div>
 </main>
 
 <footer>
-  VOICE X Studio • Built with HTML, CSS, JavaScript & Web Audio API
+    VOICE STUDIO AI PRO · Browser-Based Text to Speech<br>
+    Your projects are saved locally on this device.
 </footer>
 
 <script>
 "use strict";
 
-/* ===================================
-   ELEMENTS
-=================================== */
+/* =====================================
+   VOICE STUDIO AI PRO
+   Browser-based speech engine
+===================================== */
 
 const $ = id => document.getElementById(id);
 
-const textInput = $("textInput");
-const voiceSelect = $("voiceSelect");
-const speed = $("speed");
-const pitch = $("pitch");
-const volume = $("volume");
+const synth = window.speechSynthesis;
 
-const statusBox = $("status");
-const progressFill = $("progressFill");
-const liveDot = $("liveDot");
-
-const introToggle = $("introToggle");
-const beepToggle = $("beepToggle");
-const endToggle = $("endToggle");
-const musicToggle = $("musicToggle");
-
-const effectVolume = $("effectVolume");
-
-let voices = [];
-let currentUtterance = null;
-let currentChunks = [];
-let currentChunkIndex = 0;
+let availableVoices = [];
+let selectedVoice = null;
+let utteranceQueue = [];
 let isSpeaking = false;
-let isPaused = false;
-let sessionId = 0;
 
-let audioContext = null;
-let masterGain = null;
-let ambientNodes = [];
-let animationFrame = null;
-
-let recorder = null;
+let mediaRecorder = null;
 let recordedChunks = [];
-let recordingStream = null;
-let recordingDestination = null;
-let recordedBlob = null;
+let audioStream = null;
 
-/* ===================================
-   VOICE LOADING
-=================================== */
+const MAX_TEXT = 20000;
 
-function loadVoices() {
-  if (!("speechSynthesis" in window)) {
-    voiceSelect.innerHTML =
-      '<option>Speech Synthesis समर्थित नहीं है</option>';
-
-    setStatus(
-      "इस ब्राउज़र में Text-to-Speech उपलब्ध नहीं है।"
-    );
-
-    $("playBtn").disabled = true;
-    return;
-  }
-
-  voices = speechSynthesis.getVoices();
-
-  const previousValue = voiceSelect.value;
-
-  voiceSelect.innerHTML = "";
-
-  if (!voices.length) {
-    const option = document.createElement("option");
-    option.value = "";
-    option.textContent =
-      "आवाजें उपलब्ध होने की प्रतीक्षा करें...";
-    voiceSelect.appendChild(option);
-    return;
-  }
-
-  const groups = {};
-
-  voices.forEach((voice, index) => {
-    const language = voice.lang || "Unknown";
-
-    if (!groups[language]) {
-      groups[language] = [];
+const characters = [
+    {
+        id: "human",
+        name: "Natural Human",
+        description: "Balanced everyday speech",
+        speed: 1,
+        pitch: 1
+    },
+    {
+        id: "male",
+        name: "Male Voice",
+        description: "Lower-pitched voice preset",
+        speed: 0.95,
+        pitch: 0.75
+    },
+    {
+        id: "female",
+        name: "Female Voice",
+        description: "Higher-pitched voice preset",
+        speed: 1,
+        pitch: 1.2
+    },
+    {
+        id: "girl",
+        name: "Girl Voice",
+        description: "Bright, higher-pitched preset",
+        speed: 1.05,
+        pitch: 1.55
+    },
+    {
+        id: "boy",
+        name: "Boy Voice",
+        description: "Youthful speaking preset",
+        speed: 1.05,
+        pitch: 1.25
+    },
+    {
+        id: "narrator",
+        name: "Story Narrator",
+        description: "Measured storytelling pace",
+        speed: 0.85,
+        pitch: 0.95
+    },
+    {
+        id: "teacher",
+        name: "Teacher",
+        description: "Clear educational delivery",
+        speed: 0.9,
+        pitch: 1
+    },
+    {
+        id: "news",
+        name: "News Reader",
+        description: "Steady news-style delivery",
+        speed: 1,
+        pitch: 0.95
+    },
+    {
+        id: "energetic",
+        name: "Energetic Speaker",
+        description: "Faster, brighter delivery",
+        speed: 1.2,
+        pitch: 1.1
+    },
+    {
+        id: "calm",
+        name: "Calm Voice",
+        description: "Slow and gentle delivery",
+        speed: 0.8,
+        pitch: 0.9
     }
+];
 
-    groups[language].push({
-      voice,
-      index
-    });
-  });
-
-  Object.keys(groups).sort().forEach(language => {
-    const group = document.createElement("optgroup");
-    group.label = language;
-
-    groups[language].forEach(item => {
-      const option = document.createElement("option");
-
-      option.value = String(item.index);
-
-      option.textContent =
-        item.voice.name +
-        (item.voice.default ? " ★ Default" : "");
-
-      group.appendChild(option);
-    });
-
-    voiceSelect.appendChild(group);
-  });
-
-  let preferredIndex = voices.findIndex(v =>
-    /^hi(-|$)/i.test(v.lang)
-  );
-
-  if (preferredIndex < 0) {
-    preferredIndex = voices.findIndex(v =>
-      /^en(-|$)/i.test(v.lang)
-    );
-  }
-
-  if (
-    previousValue !== "" &&
-    voices[Number(previousValue)]
-  ) {
-    voiceSelect.value = previousValue;
-  } else if (preferredIndex >= 0) {
-    voiceSelect.value = String(preferredIndex);
-  }
-
-  setStatus("आवाजें तैयार हैं। अपना टेक्स्ट लिखें।");
-}
-
-if ("speechSynthesis" in window) {
-  loadVoices();
-
-  speechSynthesis.onvoiceschanged = loadVoices;
-}
-
-/* ===================================
-   AUDIO ENGINE
-=================================== */
-
-async function initAudio() {
-  if (!audioContext) {
-    const AudioContextClass =
-      window.AudioContext || window.webkitAudioContext;
-
-    if (!AudioContextClass) {
-      throw new Error("Web Audio API उपलब्ध नहीं है।");
+const STYLE_PRESETS = {
+    teacher: {
+        speed: 0.9,
+        pitch: 1,
+        volume: 1
+    },
+    news: {
+        speed: 1,
+        pitch: 0.95,
+        volume: 1
+    },
+    story: {
+        speed: 0.85,
+        pitch: 0.95,
+        volume: 1
+    },
+    motivation: {
+        speed: 1.12,
+        pitch: 1.08,
+        volume: 1
+    },
+    calm: {
+        speed: 0.8,
+        pitch: 0.9,
+        volume: 0.85
+    },
+    fast: {
+        speed: 1.5,
+        pitch: 1,
+        volume: 1
     }
-
-    audioContext = new AudioContextClass();
-
-    masterGain = audioContext.createGain();
-
-    masterGain.gain.value =
-      Number(effectVolume.value);
-
-    masterGain.connect(audioContext.destination);
-
-    recordingDestination =
-      audioContext.createMediaStreamDestination();
-
-    masterGain.connect(recordingDestination);
-  }
-
-  if (audioContext.state === "suspended") {
-    await audioContext.resume();
-  }
-
-  return audioContext;
-}
-
-function connectEffect(node) {
-  node.connect(masterGain);
-}
-
-function makeOscillator(
-  frequency,
-  startTime,
-  duration,
-  type = "sine",
-  peak = 0.4,
-  endFrequency = null
-) {
-  const osc = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-
-  osc.type = type;
-
-  osc.frequency.setValueAtTime(
-    Math.max(1, frequency),
-    startTime
-  );
-
-  if (endFrequency !== null) {
-    osc.frequency.exponentialRampToValueAtTime(
-      Math.max(1, endFrequency),
-      startTime + duration
-    );
-  }
-
-  gain.gain.setValueAtTime(0.0001, startTime);
-
-  gain.gain.exponentialRampToValueAtTime(
-    Math.max(0.0002, peak),
-    startTime + 0.015
-  );
-
-  gain.gain.exponentialRampToValueAtTime(
-    0.0001,
-    startTime + duration
-  );
-
-  osc.connect(gain);
-  connectEffect(gain);
-
-  osc.start(startTime);
-  osc.stop(startTime + duration + 0.03);
-}
-
-/* Cinematic synthetic drum */
-
-async function playDrum() {
-  await initAudio();
-
-  const now = audioContext.currentTime;
-  const strength = Number(effectVolume.value);
-
-  // Deep bass impact
-  makeOscillator(
-    105,
-    now,
-    0.65,
-    "sine",
-    0.75 * strength,
-    36
-  );
-
-  // Second impact
-  makeOscillator(
-    75,
-    now + 0.23,
-    0.55,
-    "sine",
-    0.60 * strength,
-    30
-  );
-
-  // Third impact
-  makeOscillator(
-    95,
-    now + 0.47,
-    0.55,
-    "triangle",
-    0.65 * strength,
-    34
-  );
-
-  // High cinematic accent
-  makeOscillator(
-    620,
-    now + 0.70,
-    0.35,
-    "triangle",
-    0.20 * strength,
-    210
-  );
-
-  // Final bass boom
-  makeOscillator(
-    120,
-    now + 0.95,
-    0.8,
-    "sine",
-    0.85 * strength,
-    28
-  );
-}
-
-async function playStartup() {
-  await initAudio();
-
-  const now = audioContext.currentTime;
-  const strength = Number(effectVolume.value);
-
-  [440, 660, 880].forEach((frequency, index) => {
-    makeOscillator(
-      frequency,
-      now + index * 0.10,
-      0.38,
-      "sine",
-      0.20 * strength
-    );
-  });
-}
-
-async function playEnding() {
-  await initAudio();
-
-  const now = audioContext.currentTime;
-  const strength = Number(effectVolume.value);
-
-  [784, 587, 440].forEach((frequency, index) => {
-    makeOscillator(
-      frequency,
-      now + index * 0.14,
-      0.48,
-      "triangle",
-      0.20 * strength
-    );
-  });
-}
-
-async function startAmbient() {
-  await initAudio();
-
-  stopAmbient();
-
-  if (!musicToggle.checked) {
-    return;
-  }
-
-  const osc1 = audioContext.createOscillator();
-  const osc2 = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-
-  osc1.type = "sine";
-  osc2.type = "triangle";
-
-  osc1.frequency.value = 110;
-  osc2.frequency.value = 165;
-
-  gain.gain.value =
-    0.025 * Number(effectVolume.value);
-
-  osc1.connect(gain);
-  osc2.connect(gain);
-
-  gain.connect(masterGain);
-
-  osc1.start();
-  osc2.start();
-
-  ambientNodes = [osc1, osc2, gain];
-}
-
-function stopAmbient() {
-  if (!ambientNodes.length) {
-    return;
-  }
-
-  const [osc1, osc2, gain] = ambientNodes;
-
-  try {
-    const now = audioContext.currentTime;
-
-    gain.gain.cancelScheduledValues(now);
-    gain.gain.setTargetAtTime(0, now, 0.03);
-
-    osc1.stop(now + 0.15);
-    osc2.stop(now + 0.15);
-  } catch (e) {}
-
-  ambientNodes = [];
-}
-
-/* ===================================
-   TEXT PROCESSING
-=================================== */
-
-function splitText(text, maxLength = 180) {
-  const normalized = text.trim();
-
-  if (!normalized) {
-    return [];
-  }
-
-  const sentences =
-    normalized.match(/[^.!?।\n]+[.!?।\n]*/gu) ||
-    [normalized];
-
-  const chunks = [];
-  let buffer = "";
-
-  sentences.forEach(sentence => {
-    sentence = sentence.trim();
-
-    if (!sentence) {
-      return;
-    }
-
-    if (
-      (buffer + " " + sentence).trim().length <= maxLength
-    ) {
-      buffer = (buffer + " " + sentence).trim();
-    } else {
-      if (buffer) {
-        chunks.push(buffer);
-      }
-
-      if (sentence.length <= maxLength) {
-        buffer = sentence;
-      } else {
-        const words = sentence.split(/\s+/);
-        buffer = "";
-
-        words.forEach(word => {
-          if (
-            (buffer + " " + word).trim().length <= maxLength
-          ) {
-            buffer = (buffer + " " + word).trim();
-          } else {
-            if (buffer) {
-              chunks.push(buffer);
-            }
-
-            buffer = word;
-          }
-        });
-      }
-    }
-  });
-
-  if (buffer) {
-    chunks.push(buffer);
-  }
-
-  return chunks;
-}
+};
 
 function setStatus(message) {
-  statusBox.textContent = message;
+    $("status").textContent = message;
 }
 
-function getSelectedVoice() {
-  const index = Number(voiceSelect.value);
-
-  return voices[index] || null;
+function getText() {
+    return $("textInput").value.trim();
 }
 
-/* ===================================
-   SPEECH ENGINE
-=================================== */
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function playText() {
-  if (!("speechSynthesis" in window)) {
-    setStatus("आपका ब्राउज़र Text-to-Speech सपोर्ट नहीं करता।");
-    return;
-  }
-
-  const text = textInput.value.trim();
-
-  if (!text) {
-    setStatus("पहले टेक्स्ट लिखें।");
-    textInput.focus();
-    return;
-  }
-
-  if (!voices.length) {
-    loadVoices();
-
-    if (!voices.length) {
-      setStatus("आवाजें अभी लोड नहीं हुई हैं। दोबारा प्रयास करें।");
-      return;
-    }
-  }
-
-  sessionId++;
-
-  const mySession = sessionId;
-
-  speechSynthesis.cancel();
-
-  isSpeaking = false;
-  isPaused = false;
-
-  currentChunks = splitText(text);
-  currentChunkIndex = 0;
-
-  setStatus("ऑडियो सिस्टम तैयार हो रहा है...");
-
-  try {
-    await initAudio();
-
-    if (mySession !== sessionId) {
-      return;
-    }
-
-    if (introToggle.checked) {
-      setStatus("🥁 Cinematic Intro बज रहा है...");
-
-      await playDrum();
-      await sleep(1450);
-    }
-
-    if (mySession !== sessionId) {
-      return;
-    }
-
-    if (beepToggle.checked) {
-      await playStartup();
-      await sleep(350);
-    }
-
-    if (mySession !== sessionId) {
-      return;
-    }
-
-    if (musicToggle.checked) {
-      await startAmbient();
-    }
-
-    isSpeaking = true;
-    isPaused = false;
-
-    liveDot.classList.add("active");
-
-    setStatus("🎙️ आवाज शुरू हो रही है...");
-
-    speakNextChunk(mySession);
-
-  } catch (error) {
-    setStatus(
-      "ऑडियो शुरू नहीं हो सका: " + error.message
-    );
-  }
-}
-
-function speakNextChunk(mySession) {
-  if (mySession !== sessionId) {
-    return;
-  }
-
-  if (currentChunkIndex >= currentChunks.length) {
-    finishSpeech(mySession);
-    return;
-  }
-
-  const chunk = currentChunks[currentChunkIndex];
-
-  currentUtterance = new SpeechSynthesisUtterance(chunk);
-
-  const selectedVoice = getSelectedVoice();
-
-  if (selectedVoice) {
-    currentUtterance.voice = selectedVoice;
-    currentUtterance.lang = selectedVoice.lang;
-  } else {
-    currentUtterance.lang = "hi-IN";
-  }
-
-  currentUtterance.rate = Number(speed.value);
-  currentUtterance.pitch = Number(pitch.value);
-  currentUtterance.volume = Number(volume.value);
-
-  currentUtterance.onstart = () => {
-    if (mySession !== sessionId) {
-      return;
-    }
-
-    const percent = Math.round(
-      (currentChunkIndex / currentChunks.length) * 100
-    );
-
-    progressFill.style.width = percent + "%";
-
-    setStatus(
-      `🎙️ बोल रहा है... भाग ${currentChunkIndex + 1} / ${currentChunks.length}`
-    );
-  };
-
-  currentUtterance.onend = () => {
-    if (mySession !== sessionId) {
-      return;
-    }
-
-    currentChunkIndex++;
-
-    const percent = Math.round(
-      (currentChunkIndex / currentChunks.length) * 100
-    );
-
-    progressFill.style.width = percent + "%";
-
-    speakNextChunk(mySession);
-  };
-
-  currentUtterance.onerror = event => {
-    if (mySession !== sessionId) {
-      return;
-    }
-
-    if (
-      event.error === "canceled" ||
-      event.error === "interrupted"
-    ) {
-      return;
-    }
-
-    setStatus("Voice Error: " + event.error);
-  };
-
-  speechSynthesis.speak(currentUtterance);
-}
-
-async function finishSpeech(mySession) {
-  if (mySession !== sessionId) {
-    return;
-  }
-
-  isSpeaking = false;
-  isPaused = false;
-
-  liveDot.classList.remove("active");
-
-  progressFill.style.width = "100%";
-
-  stopAmbient();
-
-  setStatus("✅ टेक्स्ट पढ़ना पूरा हुआ।");
-
-  if (endToggle.checked) {
-    try {
-      await playEnding();
-    } catch (e) {}
-  }
-}
-
-function pauseSpeech() {
-  if (speechSynthesis.speaking && !speechSynthesis.paused) {
-    speechSynthesis.pause();
-
-    isPaused = true;
-
-    setStatus("⏸️ आवाज रोकी गई है। Resume दबाएँ।");
-  }
-}
-
-function resumeSpeech() {
-  if (speechSynthesis.paused) {
-    speechSynthesis.resume();
-
-    isPaused = false;
-
-    setStatus("▶️ आवाज फिर से शुरू हो गई है।");
-  }
-}
-
-function stopSpeech() {
-  sessionId++;
-
-  speechSynthesis.cancel();
-
-  isSpeaking = false;
-  isPaused = false;
-
-  stopAmbient();
-
-  liveDot.classList.remove("active");
-
-  progressFill.style.width = "0%";
-
-  setStatus("⏹️ Playback बंद कर दिया गया है।");
-}
-
-/* ===================================
+/* =====================================
    TEXT STATISTICS
-=================================== */
+===================================== */
 
 function updateStats() {
-  const text = textInput.value;
+    const text = $("textInput").value;
 
-  const characters = text.length;
+    const words = text.trim()
+        ? text.trim().split(/\s+/).length
+        : 0;
 
-  const words = text.trim()
-    ? text.trim().split(/\s+/u).length
-    : 0;
+    $("charCount").textContent = text.length;
+    $("wordCount").textContent = words;
 
-  const estimatedSeconds = Math.ceil(
-    words / (150 * Number(speed.value) / 60)
-  );
-
-  $("charCount").textContent =
-    characters + " characters";
-
-  $("wordCount").textContent =
-    words + " words";
-
-  $("statChars").textContent = characters;
-
-  $("statWords").textContent = words;
-
-  $("statTime").textContent =
-    estimatedSeconds < 60
-      ? estimatedSeconds + "s"
-      : Math.ceil(estimatedSeconds / 60) + "m";
+    // Estimate based on approximately 130 words/minute.
+    $("minuteCount").textContent =
+        words ? Math.max(1, Math.ceil(words / 130)) : 0;
 }
 
-textInput.addEventListener("input", updateStats);
+$("textInput").addEventListener("input", updateStats);
 
-speed.addEventListener("input", () => {
-  $("speedValue").textContent =
-    Number(speed.value).toFixed(1) + "x";
+/* =====================================
+   VOICE DISCOVERY
+===================================== */
 
-  updateStats();
-});
-
-pitch.addEventListener("input", () => {
-  $("pitchValue").textContent =
-    Number(pitch.value).toFixed(1);
-});
-
-volume.addEventListener("input", () => {
-  $("volumeValue").textContent =
-    Math.round(Number(volume.value) * 100) + "%";
-});
-
-effectVolume.addEventListener("input", () => {
-  $("effectValue").textContent =
-    Math.round(Number(effectVolume.value) * 100) + "%";
-
-  if (masterGain && audioContext) {
-    masterGain.gain.setTargetAtTime(
-      Number(effectVolume.value),
-      audioContext.currentTime,
-      0.03
-    );
-  }
-});
-
-/* ===================================
-   AUDIO VISUALIZER
-=================================== */
-
-const canvas = $("visualCanvas");
-const ctx = canvas.getContext("2d");
-
-let visualTime = 0;
-
-function drawVisualizer() {
-  const rect = canvas.getBoundingClientRect();
-
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-  const width = Math.max(1, Math.floor(rect.width * dpr));
-  const height = Math.max(1, Math.floor(rect.height * dpr));
-
-  if (canvas.width !== width || canvas.height !== height) {
-    canvas.width = width;
-    canvas.height = height;
-  }
-
-  ctx.clearRect(0, 0, width, height);
-
-  const bars = 64;
-  const gap = 3 * dpr;
-  const barWidth = width / bars - gap;
-
-  visualTime += isSpeaking && !isPaused ? 0.13 : 0.035;
-
-  for (let i = 0; i < bars; i++) {
-    let wave = Math.sin(
-      visualTime + i * 0.31
-    );
-
-    let wave2 = Math.sin(
-      visualTime * 0.65 + i * 0.18
-    );
-
-    let strength = isSpeaking && !isPaused ? 1 : 0.20;
-
-    let barHeight =
-      (0.12 + Math.abs(wave * 0.42 + wave2 * 0.2))
-      * height * strength;
-
-    barHeight = Math.max(3 * dpr, barHeight);
-
-    const x = i * (width / bars);
-    const y = (height - barHeight) / 2;
-
-    const gradient = ctx.createLinearGradient(
-      0, y, 0, y + barHeight
-    );
-
-    gradient.addColorStop(0, "#00e5ff");
-    gradient.addColorStop(0.5, "#8c6bff");
-    gradient.addColorStop(1, "#ff3cac");
-
-    ctx.fillStyle = gradient;
-
-    ctx.fillRect(
-      x,
-      y,
-      Math.max(1, barWidth),
-      barHeight
-    );
-  }
-
-  animationFrame = requestAnimationFrame(drawVisualizer);
-}
-
-drawVisualizer();
-
-/* ===================================
-   RECORDING
-=================================== */
-
-async function startRecording() {
-  try {
-    await initAudio();
-
-    if (!window.MediaRecorder) {
-      setStatus(
-        "इस ब्राउज़र में MediaRecorder समर्थित नहीं है।"
-      );
-      return;
+function loadVoices() {
+    if (!synth) {
+        setStatus(
+            "Speech synthesis is not supported in this browser."
+        );
+        return;
     }
 
-    if (!recordingDestination) {
-      setStatus("Recording audio stream उपलब्ध नहीं है।");
-      return;
+    const oldVoice = $("voiceSelect").value;
+
+    availableVoices = synth.getVoices();
+
+    const language = $("languageSelect").value;
+
+    const filtered = availableVoices.filter(voice => {
+        if (language === "all") return true;
+
+        if (language === "hi") {
+            return voice.lang.toLowerCase().startsWith("hi");
+        }
+
+        if (language === "en") {
+            return voice.lang.toLowerCase().startsWith("en");
+        }
+
+        return voice.lang.toLowerCase() === language.toLowerCase();
+    });
+
+    $("voiceSelect").innerHTML = "";
+
+    if (!filtered.length) {
+        const option = document.createElement("option");
+
+        option.value = "";
+        option.textContent = "No matching voices available";
+
+        $("voiceSelect").appendChild(option);
+        selectedVoice = null;
+        renderVoiceCards();
+
+        return;
     }
 
-    recordedChunks = [];
-    recordedBlob = null;
+    filtered.forEach((voice, index) => {
+        const option = document.createElement("option");
 
-    recordingStream = recordingDestination.stream;
+        option.value = String(index);
+        option.textContent =
+            `${voice.name} (${voice.lang})` +
+            (voice.default ? " — Default" : "");
 
-    let mimeType = "";
+        $("voiceSelect").appendChild(option);
+    });
 
-    if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
-      mimeType = "audio/webm;codecs=opus";
-    } else if (MediaRecorder.isTypeSupported("audio/webm")) {
-      mimeType = "audio/webm";
+    const oldIndex = filtered.findIndex(
+        voice => voice.name + voice.lang === oldVoice
+    );
+
+    if (oldIndex >= 0) {
+        $("voiceSelect").value = String(oldIndex);
     }
 
-    recorder = mimeType
-      ? new MediaRecorder(recordingStream, { mimeType })
-      : new MediaRecorder(recordingStream);
-
-    recorder.ondataavailable = event => {
-      if (event.data && event.data.size > 0) {
-        recordedChunks.push(event.data);
-      }
-    };
-
-    recorder.onstop = () => {
-      recordedBlob = new Blob(recordedChunks, {
-        type: recorder.mimeType || "audio/webm"
-      });
-
-      $("downloadBtn").disabled = !recordedBlob.size;
-
-      $("recordBtn").textContent =
-        "● Start Audio Recording";
-
-      setStatus(
-        "Recording तैयार है। Download Recording दबाएँ।"
-      );
-    };
-
-    recorder.start(250);
-
-    $("recordBtn").textContent =
-      "■ Stop Recording";
-
-    setStatus(
-      "Recording चालू है। अब Play दबाकर टेक्स्ट चलाएँ।"
-    );
-
-  } catch (error) {
-    setStatus(
-      "Recording शुरू नहीं हो सकी: " + error.message
-    );
-  }
+    updateSelectedVoice();
+    renderVoiceCards();
 }
 
-function stopRecording() {
-  if (recorder && recorder.state !== "inactive") {
-    recorder.stop();
-  }
+function updateSelectedVoice() {
+    const index = Number($("voiceSelect").value);
+
+    const language = $("languageSelect").value;
+
+    const filtered = availableVoices.filter(voice => {
+        if (language === "all") return true;
+
+        if (language === "hi") {
+            return voice.lang.toLowerCase().startsWith("hi");
+        }
+
+        if (language === "en") {
+            return voice.lang.toLowerCase().startsWith("en");
+        }
+
+        return voice.lang.toLowerCase() === language.toLowerCase();
+    });
+
+    selectedVoice = filtered[index] || null;
 }
 
-function downloadRecording() {
-  if (!recordedBlob || !recordedBlob.size) {
-    setStatus("पहले रिकॉर्डिंग तैयार करें।");
-    return;
-  }
-
-  const url = URL.createObjectURL(recordedBlob);
-
-  const link = document.createElement("a");
-
-  link.href = url;
-  link.download = "voice-x-recording.webm";
-
-  document.body.appendChild(link);
-
-  link.click();
-  link.remove();
-
-  setTimeout(() => URL.revokeObjectURL(url), 30000);
-}
-
-/* ===================================
-   BUTTON EVENTS
-=================================== */
-
-$("playBtn").addEventListener("click", playText);
-
-$("pauseBtn").addEventListener("click", pauseSpeech);
-
-$("resumeBtn").addEventListener("click", resumeSpeech);
-
-$("stopBtn").addEventListener("click", stopSpeech);
-
-$("testSoundBtn").addEventListener("click", async () => {
-  try {
-    await playDrum();
-    await sleep(1000);
-    await playStartup();
-  } catch (error) {
-    setStatus("Sound Error: " + error.message);
-  }
-});
-
-$("recordBtn").addEventListener("click", async () => {
-  if (recorder && recorder.state === "recording") {
-    stopRecording();
-  } else {
-    await startRecording();
-  }
-});
-
-$("downloadBtn").addEventListener(
-  "click",
-  downloadRecording
+$("voiceSelect").addEventListener(
+    "change",
+    updateSelectedVoice
 );
 
-musicToggle.addEventListener("change", async () => {
-  if (musicToggle.checked && isSpeaking) {
-    await startAmbient();
-  } else {
-    stopAmbient();
-  }
+$("languageSelect").addEventListener(
+    "change",
+    loadVoices
+);
+
+if (synth) {
+    loadVoices();
+
+    if ("onvoiceschanged" in synth) {
+        synth.addEventListener("voiceschanged", loadVoices);
+    }
+}
+
+/* =====================================
+   TEN VOICE PRESETS
+===================================== */
+
+function renderVoiceCards() {
+    const container = $("voiceList");
+
+    container.innerHTML = "";
+
+    characters.forEach(character => {
+        const card = document.createElement("div");
+
+        card.className = "voice-option";
+
+        card.innerHTML = `
+            <div>
+                <strong>${character.name}</strong>
+                <small>${character.description}</small>
+            </div>
+            <button type="button">Preview</button>
+        `;
+
+        const previewButton = card.querySelector("button");
+
+        previewButton.addEventListener("click", () => {
+            selectCharacter(character.id);
+
+            const text = $("languageSelect").value === "hi"
+                ? "नमस्ते! यह आपकी चुनी हुई आवाज़ का नमूना है।"
+                : "Hello! This is a preview of your selected voice.";
+
+            speakText(text);
+        });
+
+        card.addEventListener("click", event => {
+            if (event.target.tagName === "BUTTON") return;
+            selectCharacter(character.id);
+        });
+
+        container.appendChild(card);
+    });
+}
+
+function selectCharacter(id) {
+    const character = characters.find(item => item.id === id);
+
+    if (!character) return;
+
+    $("speed").value = character.speed;
+    $("pitch").value = character.pitch;
+
+    updateRangeLabels();
+
+    document.querySelectorAll(".voice-option")
+        .forEach((element, index) => {
+            element.classList.toggle(
+                "active",
+                characters[index].id === id
+            );
+        });
+
+    setStatus(
+        `${character.name} preset selected. ` +
+        `Choose an available system voice to change the actual voice.`
+    );
+}
+
+/* =====================================
+   RANGE CONTROLS
+===================================== */
+
+function updateRangeLabels() {
+    $("speedValue").textContent =
+        Number($("speed").value).toFixed(1) + "x";
+
+    $("pitchValue").textContent =
+        Number($("pitch").value).toFixed(1);
+
+    $("volumeValue").textContent =
+        Math.round(Number($("volume").value) * 100) + "%";
+}
+
+["speed", "pitch", "volume"].forEach(id => {
+    $(id).addEventListener("input", updateRangeLabels);
 });
 
-window.addEventListener("beforeunload", () => {
-  if ("speechSynthesis" in window) {
-    speechSynthesis.cancel();
-  }
+updateRangeLabels();
 
-  if (animationFrame) {
-    cancelAnimationFrame(animationFrame);
-  }
+/* =====================================
+   TEXT CHUNKING
+   Helps prevent long text from failing
+===================================== */
+
+function splitText(text, maxLength) {
+    const sentences = text.match(/[^.!?।]+[.!?।]?/g) || [text];
+
+    const chunks = [];
+    let current = "";
+
+    for (const sentence of sentences) {
+        const clean = sentence.trim();
+
+        if (!clean) continue;
+
+        if (clean.length > maxLength) {
+            if (current) {
+                chunks.push(current);
+                current = "";
+            }
+
+            for (let i = 0; i < clean.length; i += maxLength) {
+                chunks.push(clean.slice(i, i + maxLength));
+            }
+
+            continue;
+        }
+
+        if ((current + " " + clean).trim().length > maxLength) {
+            if (current) chunks.push(current);
+            current = clean;
+        } else {
+            current = (current + " " + clean).trim();
+        }
+    }
+
+    if (current) chunks.push(current);
+
+    return chunks;
+}
+
+/* =====================================
+   SPEECH ENGINE
+===================================== */
+
+function speakText(text) {
+    if (!synth) {
+        setStatus(
+            "Speech is unavailable. Try a supported browser."
+        );
+        return;
+    }
+
+    if (!text.trim()) {
+        setStatus("Please enter some text first.");
+        return;
+    }
+
+    if (text.length > MAX_TEXT) {
+        setStatus("Text is too long. Maximum 20,000 characters.");
+        return;
+    }
+
+    synth.cancel();
+
+    utteranceQueue = splitText(
+        text,
+        Number($("chunkSize").value)
+    );
+
+    isSpeaking = true;
+
+    speakNextChunk(0);
+}
+
+function speakNextChunk(index) {
+    if (!isSpeaking) return;
+
+    if (index >= utteranceQueue.length) {
+        isSpeaking = false;
+        setStatus("Speech completed.");
+        return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(
+        utteranceQueue[index]
+    );
+
+    updateSelectedVoice();
+
+    if (selectedVoice) {
+        utterance.voice = selectedVoice;
+        utterance.lang = selectedVoice.lang;
+    }
+
+    utterance.rate = Number($("speed").value);
+    utterance.pitch = Number($("pitch").value);
+    utterance.volume = Number($("volume").value);
+
+    utterance.onstart = () => {
+        setStatus(
+            `Speaking section ${index + 1} of ` +
+            `${utteranceQueue.length}...`
+        );
+    };
+
+    utterance.onend = () => {
+        if (isSpeaking) {
+            speakNextChunk(index + 1);
+        }
+    };
+
+    utterance.onerror = event => {
+        if (event.error === "canceled" ||
+            event.error === "interrupted") {
+            return;
+        }
+
+        isSpeaking = false;
+
+        setStatus(
+            "Speech error: " + event.error +
+            ". Try selecting another voice."
+        );
+    };
+
+    synth.speak(utterance);
+}
+
+$("speakBtn").addEventListener("click", () => {
+    speakText(getText());
 });
 
-/* ===================================
-   INITIALIZATION
-=================================== */
+$("pauseBtn").addEventListener("click", () => {
+    if (synth && synth.speaking) {
+        synth.pause();
+        setStatus("Speech paused.");
+    }
+});
 
+$("resumeBtn").addEventListener("click", () => {
+    if (synth && synth.paused) {
+        synth.resume();
+        setStatus("Speech resumed.");
+    }
+});
+
+$("stopBtn").addEventListener("click", () => {
+    isSpeaking = false;
+    utteranceQueue = [];
+
+    if (synth) synth.cancel();
+
+    setStatus("Speech stopped.");
+});
+
+/* =====================================
+   QUICK STYLE BUTTONS
+===================================== */
+
+document.querySelectorAll("[data-style]").forEach(button => {
+    button.addEventListener("click", () => {
+        const preset = STYLE_PRESETS[button.dataset.style];
+
+        if (!preset) return;
+
+        $("speed").value = preset.speed;
+        $("pitch").value = preset.pitch;
+        $("volume").value = preset.volume;
+
+        updateRangeLabels();
+
+        setStatus(
+            button.textContent.trim() +
+            " style applied. Press Generate Speech to listen."
+        );
+    });
+});
+
+/* =====================================
+   CLEAR AND PASTE
+===================================== */
+
+$("clearBtn").addEventListener("click", () => {
+    if (!confirm("Clear all text?")) return;
+
+    $("textInput").value = "";
+    updateStats();
+
+    setStatus("Text cleared.");
+});
+
+$("pasteBtn").addEventListener("click", async () => {
+    try {
+        if (!navigator.clipboard ||
+            !navigator.clipboard.readText) {
+            throw new Error("Clipboard access unavailable");
+        }
+
+        const clipboardText =
+            await navigator.clipboard.readText();
+
+        $("textInput").value =
+            clipboardText.slice(0, MAX_TEXT);
+
+        updateStats();
+
+        setStatus("Text pasted successfully.");
+    } catch {
+        setStatus(
+            "Clipboard access was blocked. Paste directly " +
+            "into the text box instead."
+        );
+    }
+});
+
+/* =====================================
+   LOCAL PROJECT STORAGE
+===================================== */
+
+const STORAGE_KEY = "voiceStudioProjectsV1";
+
+function readProjects() {
+    try {
+        const parsed = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "[]"
+        );
+
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveProjects(projects) {
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(projects)
+    );
+}
+
+function saveCurrentProject() {
+    const text = $("textInput").value;
+
+    if (!text.trim()) {
+        setStatus("Enter text before saving a project.");
+        return;
+    }
+
+    const project = {
+        id: Date.now(),
+        name: $("projectName").value.trim() ||
+              "Untitled Project",
+        text,
+        speed: $("speed").value,
+        pitch: $("pitch").value,
+        volume: $("volume").value,
+        createdAt: new Date().toLocaleString()
+    };
+
+    try {
+        const projects = readProjects();
+
+        projects.unshift(project);
+
+        saveProjects(projects.slice(0, 30));
+
+        renderHistory();
+
+        setStatus("Project saved on this device.");
+    } catch {
+        setStatus(
+            "Unable to save. Browser storage may be full."
+        );
+    }
+}
+
+$("saveTextBtn").addEventListener(
+    "click",
+    saveCurrentProject
+);
+
+function renderHistory() {
+    const projects = readProjects();
+    const container = $("history");
+
+    container.innerHTML = "";
+
+    if (!projects.length) {
+        container.textContent = "No saved projects yet.";
+        return;
+    }
+
+    projects.forEach(project => {
+        const item = document.createElement("div");
+
+        item.className = "history-item";
+
+        const title = document.createElement("strong");
+        title.textContent = project.name;
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent =
+            project.text.slice(0, 120) +
+            (project.text.length > 120 ? "..." : "");
+
+        const loadButton = document.createElement("button");
+        loadButton.textContent = "Load";
+
+        loadButton.addEventListener("click", () => {
+            $("projectName").value = project.name;
+            $("textInput").value = project.text;
+
+            $("speed").value = project.speed || 1;
+            $("pitch").value = project.pitch || 1;
+            $("volume").value = project.volume || 1;
+
+            updateStats();
+            updateRangeLabels();
+
+            setStatus("Project loaded.");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+
+        deleteButton.addEventListener("click", () => {
+            const updated = readProjects().filter(
+                entry => entry.id !== project.id
+            );
+
+            saveProjects(updated);
+            renderHistory();
+        });
+
+        item.append(title, paragraph, loadButton, deleteButton);
+
+        container.appendChild(item);
+    });
+}
+
+$("clearHistoryBtn").addEventListener("click", () => {
+    if (!confirm("Delete all saved projects?")) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    renderHistory();
+
+    setStatus("Project history cleared.");
+});
+
+/* =====================================
+   DOWNLOAD TEXT FILE
+===================================== */
+
+function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = filename;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+
+function safeFilename(name) {
+    return (name || "voice-project")
+        .replace(/[\\/:*?"<>|]+/g, "-")
+        .slice(0, 80);
+}
+
+$("downloadTextBtn").addEventListener("click", () => {
+    const text = getText();
+
+    if (!text) {
+        setStatus("There is no text to download.");
+        return;
+    }
+
+    const blob = new Blob(
+        [text],
+        { type: "text/plain;charset=utf-8" }
+    );
+
+    downloadBlob(
+        blob,
+        safeFilename($("projectName").value) + ".txt"
+    );
+
+    setStatus("Text file download started.");
+});
+
+/* =====================================
+   EXPORT / IMPORT PROJECT JSON
+===================================== */
+
+$("loadTextBtn").addEventListener("click", () => {
+    $("fileInput").click();
+});
+
+$("fileInput").addEventListener("change", async event => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    try {
+        if (file.size > 2 * 1024 * 1024) {
+            throw new Error("File is too large");
+        }
+
+        const content = await file.text();
+
+        if (file.name.toLowerCase().endsWith(".json")) {
+            const data = JSON.parse(content);
+
+            if (typeof data.text !== "string") {
+                throw new Error("Invalid project JSON");
+            }
+
+            $("projectName").value = data.name || "";
+            $("textInput").value =
+                data.text.slice(0, MAX_TEXT);
+
+            $("speed").value = data.speed || 1;
+            $("pitch").value = data.pitch || 1;
+            $("volume").value = data.volume || 1;
+        } else {
+            $("textInput").value =
+                content.slice(0, MAX_TEXT);
+        }
+
+        updateStats();
+        updateRangeLabels();
+
+        setStatus("File imported successfully.");
+    } catch (error) {
+        setStatus("Unable to import file: " + error.message);
+    }
+
+    event.target.value = "";
+});
+
+/* =====================================
+   AUDIO RECORDING
+===================================== */
+
+/*
+Important:
+SpeechSynthesis does not expose its output as a standard
+audio stream. Therefore, getDisplayMedia is used where
+supported to capture a selected tab/window's audio.
+
+This requires user permission and browser support.
+It is not guaranteed to work on mobile devices.
+*/
+
+$("recordBtn").addEventListener("click", async () => {
+    if (mediaRecorder &&
+        mediaRecorder.state === "recording") {
+        setStatus("Recording is already in progress.");
+        return;
+    }
+
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getDisplayMedia ||
+        typeof MediaRecorder === "undefined") {
+        setStatus(
+            "System audio recording is unsupported here. " +
+            "Use an audio API for reliable export."
+        );
+        return;
+    }
+
+    try {
+        audioStream =
+            await navigator.mediaDevices.getDisplayMedia({
+                video: true,
+                audio: true
+            });
+
+        const audioTracks =
+            audioStream.getAudioTracks();
+
+        if (!audioTracks.length) {
+            audioStream.getTracks().forEach(track => track.stop());
+
+            audioStream = null;
+
+            setStatus(
+                "No audio track was shared. Try again and " +
+                "enable the browser/tab audio option."
+            );
+
+            return;
+        }
+
+        const audioOnlyStream = new MediaStream(audioTracks);
+
+        recordedChunks = [];
+
+        const preferredType = MediaRecorder.isTypeSupported(
+            "audio/webm;codecs=opus"
+        ) ? "audio/webm;codecs=opus" : "";
+
+        mediaRecorder = new MediaRecorder(
+            audioOnlyStream,
+            preferredType ? { mimeType: preferredType } : {}
+        );
+
+        mediaRecorder.ondataavailable = event => {
+            if (event.data && event.data.size > 0) {
+                recordedChunks.push(event.data);
+            }
+        };
+
+        mediaRecorder.onstop = () => {
+            const type = mediaRecorder.mimeType || "audio/webm";
+
+            const blob = new Blob(
+                recordedChunks,
+                { type }
+            );
+
+            const url = URL.createObjectURL(blob);
+
+            $("audioPreview").src = url;
+            $("audioPreview").classList.remove("hidden");
+
+            $("audioDownload").href = url;
+            $("audioDownload").download =
+                safeFilename($("projectName").value) +
+                ".webm";
+
+            $("audioDownload").classList.remove("hidden");
+
+            if (audioStream) {
+                audioStream.getTracks().forEach(
+                    track => track.stop()
+                );
+
+                audioStream = null;
+            }
+
+            setStatus(
+                "Recording stopped. Preview the file or " +
+                "download it if the captured audio is valid."
+            );
+        };
+
+        mediaRecorder.start();
+
+        setStatus(
+            "Recording started. Now generate speech. " +
+            "Keep the shared tab or window active."
+        );
+
+    } catch (error) {
+        setStatus(
+            "Recording could not start: " + error.message
+        );
+    }
+});
+
+$("stopRecordBtn").addEventListener("click", () => {
+    if (mediaRecorder &&
+        mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+    } else {
+        setStatus("No active recording.");
+    }
+});
+
+/* =====================================
+   PROJECT STARTUP
+===================================== */
+
+renderHistory();
 updateStats();
 
-$("speedValue").textContent =
-  Number(speed.value).toFixed(1) + "x";
+if (!("speechSynthesis" in window)) {
+    setStatus(
+        "Your browser does not support the Web Speech API."
+    );
+}
 
-$("pitchValue").textContent =
-  Number(pitch.value).toFixed(1);
+/* Restore a draft without overwriting it on every keystroke. */
 
-$("volumeValue").textContent =
-  Math.round(Number(volume.value) * 100) + "%";
+try {
+    const draft = localStorage.getItem(
+        "voiceStudioDraftV1"
+    );
 
-$("effectValue").textContent =
-  Math.round(Number(effectVolume.value) * 100) + "%";
+    if (draft && !$("textInput").value) {
+        $("textInput").value = draft;
+        updateStats();
+    }
+} catch {}
 
+/* Save a draft periodically. */
+
+setInterval(() => {
+    try {
+        localStorage.setItem(
+            "voiceStudioDraftV1",
+            $("textInput").value
+        );
+    } catch {}
+}, 5000);
+
+window.addEventListener("beforeunload", () => {
+    if (synth && synth.speaking) {
+        synth.cancel();
+    }
+});
 </script>
 
 </body>
