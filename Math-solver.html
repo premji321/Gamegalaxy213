@@ -4,34 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#7719aa">
-
-<title>OneNote Pro — Smart Notes</title>
+<title>OneNote Pro — Infinite Workspace & Mind Maps</title>
 
 <style>
 :root {
     --primary: #7719aa;
-    --primary-light: #f2e8fa;
-    --sidebar: #f7f6f9;
+    --primary-light: #f1e6fa;
+    --bg: #ffffff;
+    --panel: #f7f6f9;
     --surface: #ffffff;
-    --surface2: #f5f5f7;
+    --surface2: #f0eef4;
     --text: #25232b;
     --muted: #777481;
-    --border: #e6e3eb;
-    --hover: #eeeaf3;
-    --shadow: 0 4px 18px rgba(0,0,0,.06);
+    --border: #e4e0e9;
+    --hover: #ece8f2;
+    --grid: #e9e4f0;
 }
 
 body.dark {
-    --primary: #bd82e8;
-    --primary-light: #382447;
-    --sidebar: #1e1d23;
-    --surface: #29272f;
-    --surface2: #323039;
-    --text: #f2eff7;
-    --muted: #b4afbf;
+    --primary: #c38aee;
+    --primary-light: #392647;
+    --bg: #201e24;
+    --panel: #29272f;
+    --surface: #242229;
+    --surface2: #34313b;
+    --text: #f4eff9;
+    --muted: #b6afc1;
     --border: #45414d;
-    --hover: #3a3742;
-    --shadow: 0 4px 18px rgba(0,0,0,.2);
+    --hover: #3a3642;
+    --grid: #413a49;
 }
 
 * {
@@ -43,9 +44,8 @@ body {
     height: 100vh;
     overflow: hidden;
     font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--surface);
     color: var(--text);
-    font-size: 14px;
+    background: var(--bg);
 }
 
 button, input, select, textarea {
@@ -63,103 +63,101 @@ select:focus-visible {
     outline-offset: 2px;
 }
 
-.app {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
 }
 
-/* TOP HEADER */
+/* HEADER */
 
 .topbar {
     height: 58px;
-    min-height: 58px;
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 0 18px;
-    background: var(--surface);
+    gap: 12px;
+    padding: 0 14px;
     border-bottom: 1px solid var(--border);
-    z-index: 5;
+    background: var(--surface);
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    min-width: 220px;
-    font-size: 19px;
-    font-weight: 700;
+    gap: 9px;
+    font-size: 18px;
+    font-weight: 800;
     color: var(--primary);
+    white-space: nowrap;
 }
 
 .logo {
-    background: var(--primary);
-    color: white;
     width: 32px;
     height: 32px;
-    border-radius: 7px;
     display: grid;
     place-items: center;
-    font-weight: 800;
+    background: var(--primary);
+    color: white;
+    border-radius: 7px;
 }
 
-.searchbox {
+.search {
     flex: 1;
-    max-width: 540px;
-    position: relative;
+    max-width: 420px;
+    min-width: 60px;
+    margin-left: 15px;
 }
 
-.searchbox input {
+.search input {
     width: 100%;
-    height: 36px;
-    padding: 0 14px 0 38px;
+    padding: 9px 12px;
     border: 1px solid var(--border);
     border-radius: 7px;
-    background: var(--surface2);
+    background: var(--panel);
     color: var(--text);
-    outline: none;
 }
 
-.search-icon {
-    position: absolute;
-    left: 13px;
-    top: 9px;
-    color: var(--muted);
-}
-
-.top-actions {
+.header-actions {
     display: flex;
-    gap: 7px;
+    gap: 5px;
     margin-left: auto;
 }
 
-.icon-btn {
-    border: none;
-    background: transparent;
-    color: var(--text);
+.btn {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
     border-radius: 7px;
-    padding: 9px 11px;
+    color: var(--text);
+    background: var(--surface);
+    white-space: nowrap;
 }
 
-.icon-btn:hover {
+.btn:hover {
     background: var(--hover);
 }
 
-.primary-btn {
-    border: none;
+.btn.primary {
     background: var(--primary);
     color: white;
-    padding: 9px 13px;
-    border-radius: 7px;
-    font-weight: 600;
+    border-color: var(--primary);
 }
 
-.primary-btn:hover {
+.btn.primary:hover {
     filter: brightness(1.1);
 }
 
-/* MAIN LAYOUT */
+.btn.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* APPLICATION LAYOUT */
+
+.app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
 .workspace {
     display: flex;
@@ -167,194 +165,121 @@ select:focus-visible {
     min-height: 0;
 }
 
+/* NOTEBOOK SIDEBAR */
+
 .sidebar {
-    width: 250px;
-    min-width: 210px;
-    background: var(--sidebar);
-    border-right: 1px solid var(--border);
+    width: 210px;
+    min-width: 180px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
 }
 
-.sidebar-heading {
-    padding: 20px 16px 10px;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: var(--muted);
+.panel-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 6px;
+    padding: 17px 12px 12px;
+    font-weight: 750;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--muted);
 }
 
-.sidebar-scroll {
+.list {
     flex: 1;
     overflow-y: auto;
     padding: 4px 8px;
 }
 
-.nav-item {
+.list-item {
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 10px 10px;
+    gap: 7px;
+    padding: 10px;
     border-radius: 6px;
     margin-bottom: 3px;
     cursor: pointer;
-    color: var(--text);
     min-width: 0;
 }
 
-.nav-item:hover {
+.list-item:hover {
     background: var(--hover);
 }
 
-.nav-item.active {
+.list-item.active {
     background: var(--primary-light);
     color: var(--primary);
-    font-weight: 600;
+    font-weight: 650;
 }
 
-.nav-item .label {
+.list-item .name {
     flex: 1;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.nav-item .more {
-    opacity: 0;
+.small-icon {
+    padding: 5px 7px;
     border: none;
     background: transparent;
-    color: var(--muted);
+    color: inherit;
+    border-radius: 5px;
 }
 
-.nav-item:hover .more {
-    opacity: 1;
+.small-icon:hover {
+    background: var(--hover);
 }
-
-.sidebar-footer {
-    padding: 13px;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 12px;
-}
-
-/* SECTION PANEL */
 
 .section-panel {
-    width: 235px;
-    min-width: 195px;
-    border-right: 1px solid var(--border);
+    width: 190px;
+    min-width: 160px;
     display: flex;
     flex-direction: column;
-    background: var(--surface);
+    border-right: 1px solid var(--border);
 }
-
-.panel-title {
-    padding: 20px 14px 12px;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.section-list {
-    overflow-y: auto;
-    padding: 4px 9px;
-    flex: 1;
-}
-
-.section-item {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 11px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-bottom: 4px;
-}
-
-.section-item:hover {
-    background: var(--hover);
-}
-
-.section-item.active {
-    background: var(--primary-light);
-    color: var(--primary);
-    font-weight: 600;
-}
-
-.section-color {
-    height: 9px;
-    width: 9px;
-    border-radius: 3px;
-    flex-shrink: 0;
-}
-
-.section-name {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-/* PAGE PANEL */
 
 .page-panel {
-    width: 260px;
-    min-width: 220px;
-    border-right: 1px solid var(--border);
+    width: 195px;
+    min-width: 160px;
     display: flex;
     flex-direction: column;
-    background: var(--surface);
+    border-right: 1px solid var(--border);
 }
 
-.page-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 5px 10px;
-}
-
-.page-card {
-    padding: 13px 12px;
-    border: 1px solid transparent;
-    border-radius: 7px;
-    margin-bottom: 7px;
+.page-item {
+    display: block;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 4px;
     cursor: pointer;
-}
-
-.page-card:hover {
-    background: var(--hover);
-}
-
-.page-card.active {
-    background: var(--primary-light);
-    border-color: var(--primary);
-}
-
-.page-card-title {
-    font-weight: 650;
-    font-size: 14px;
-    margin-bottom: 6px;
     overflow-wrap: anywhere;
 }
 
-.page-preview {
-    font-size: 12px;
-    line-height: 1.5;
-    color: var(--muted);
-    max-height: 35px;
-    overflow: hidden;
+.page-item:hover {
+    background: var(--hover);
 }
 
-.page-date {
-    font-size: 10px;
+.page-item.active {
+    background: var(--primary-light);
+    border-left: 3px solid var(--primary);
+}
+
+.page-item .name {
+    font-weight: 650;
+    font-size: 13px;
+}
+
+.page-item .preview {
+    font-size: 11px;
     color: var(--muted);
-    margin-top: 8px;
+    margin-top: 5px;
+    line-height: 1.4;
 }
 
 /* EDITOR */
@@ -365,87 +290,89 @@ select:focus-visible {
     display: flex;
     flex-direction: column;
     background: var(--surface);
-    overflow: hidden;
 }
 
-.editor-top {
-    height: 51px;
-    min-height: 51px;
+.editor-header {
+    min-height: 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
-    border-bottom: 1px solid var(--border);
     gap: 10px;
+    padding: 7px 14px;
+    border-bottom: 1px solid var(--border);
 }
 
 .breadcrumb {
+    font-size: 12px;
     color: var(--muted);
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .save-status {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--muted);
     white-space: nowrap;
 }
 
-.editor-scroll {
-    flex: 1;
-    overflow-y: auto;
-    padding: 32px 40px 60px;
+.tabs {
+    display: flex;
+    gap: 5px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow-x: auto;
 }
 
-.editor-container {
-    max-width: 850px;
-    margin: 0 auto;
-}
-
-.page-title-input {
-    display: block;
-    width: 100%;
-    border: none;
-    outline: none;
-    resize: none;
-    overflow: hidden;
-    font-size: 32px;
-    line-height: 1.3;
-    font-weight: 750;
+.tab {
+    padding: 8px 12px;
+    border: 1px solid transparent;
     background: transparent;
     color: var(--text);
-    padding: 5px 0 13px;
+    border-radius: 6px;
+    white-space: nowrap;
 }
 
-.page-meta {
-    color: var(--muted);
-    font-size: 12px;
-    padding-bottom: 22px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
+.tab.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+    font-weight: 700;
 }
 
-.toolbar {
+.toolstrip {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 4px;
-    padding: 8px;
-    background: var(--surface2);
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 8px 12px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+}
+
+.toolstrip select,
+.toolstrip input[type="color"] {
+    height: 31px;
     border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 22px;
-    position: sticky;
-    top: 0;
-    z-index: 2;
+    border-radius: 5px;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.toolstrip select {
+    max-width: 115px;
+}
+
+.toolstrip input[type="color"] {
+    width: 35px;
+    padding: 2px;
 }
 
 .tool-btn {
-    min-width: 31px;
-    height: 31px;
-    padding: 0 8px;
-    border: none;
+    min-height: 31px;
+    padding: 5px 9px;
+    border: 1px solid transparent;
     border-radius: 5px;
     background: transparent;
     color: var(--text);
@@ -455,187 +382,377 @@ select:focus-visible {
     background: var(--hover);
 }
 
-.toolbar select {
-    height: 30px;
-    max-width: 125px;
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    background: var(--surface);
-    color: var(--text);
+.tool-btn.active {
+    background: var(--primary-light);
+    color: var(--primary);
 }
 
-.toolbar input[type="color"] {
-    height: 29px;
-    width: 34px;
+/* NOTE EDITOR */
+
+.note-scroll {
+    flex: 1;
+    overflow: auto;
+    padding: 28px 35px 60px;
+}
+
+.note-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.page-title {
+    display: block;
+    width: 100%;
+    resize: none;
+    overflow: hidden;
     border: none;
+    outline: none;
+    font-size: 30px;
+    font-weight: 750;
+    line-height: 1.3;
+    padding: 4px 0 14px;
+    color: var(--text);
     background: transparent;
-    cursor: pointer;
 }
 
-.toolbar .separator {
-    width: 1px;
-    height: 23px;
-    background: var(--border);
-    margin: 0 4px;
+.page-meta {
+    color: var(--muted);
+    font-size: 11px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 18px;
 }
 
-.editor {
-    min-height: 420px;
+.note-editor {
+    min-height: 500px;
     outline: none;
     font-size: 16px;
     line-height: 1.85;
     overflow-wrap: anywhere;
 }
 
-.editor:empty::before {
-    content: "Start writing your notes here...";
+.note-editor:empty::before {
+    content: "Start writing your notes...";
     color: var(--muted);
-    pointer-events: none;
 }
 
-.editor h1, .editor h2, .editor h3 {
-    line-height: 1.4;
-}
-
-.editor blockquote {
-    border-left: 4px solid var(--primary);
-    padding: 8px 15px;
-    margin-left: 0;
-    background: var(--surface2);
-}
-
-.editor table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.editor td, .editor th {
-    border: 1px solid var(--border);
-    padding: 8px;
-}
-
-.editor img {
+.note-editor img {
     max-width: 100%;
     height: auto;
 }
 
-.editor a {
-    color: var(--primary);
+.note-editor table {
+    width: 100%;
+    border-collapse: collapse;
 }
+
+.note-editor th,
+.note-editor td {
+    border: 1px solid var(--border);
+    padding: 8px;
+}
+
+.note-editor blockquote {
+    margin-left: 0;
+    padding: 8px 15px;
+    border-left: 4px solid var(--primary);
+    background: var(--panel);
+}
+
+/* INFINITE CANVAS */
+
+.canvas-shell {
+    flex: 1;
+    min-height: 0;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.canvas-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    z-index: 2;
+}
+
+.canvas-help {
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: auto;
+}
+
+.canvas-viewport {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    position: relative;
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(var(--grid) 1px, transparent 1px);
+    background-size: 22px 22px;
+    overscroll-behavior: contain;
+}
+
+/*
+The canvas is large and expands in both directions.
+Its size is persisted with each page.
+*/
+
+.canvas-world {
+    position: relative;
+    width: 5000px;
+    height: 5000px;
+    transform-origin: top left;
+}
+
+.canvas-world.grid-off {
+    background-image: none;
+}
+
+/* NOTE CARDS ON CANVAS */
+
+.canvas-card {
+    position: absolute;
+    width: 300px;
+    min-height: 155px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    box-shadow: 0 3px 15px rgba(0,0,0,.08);
+    overflow: hidden;
+}
+
+.canvas-card.selected {
+    outline: 2px solid var(--primary);
+}
+
+.canvas-card-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+
+.canvas-card-title {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.canvas-card-body {
+    padding: 10px;
+    min-height: 100px;
+    outline: none;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.canvas-card-body:empty::before {
+    content: "Write here...";
+    color: var(--muted);
+}
+
+.canvas-card-body img {
+    max-width: 100%;
+}
+
+.card-action {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    padding: 3px 5px;
+    border-radius: 4px;
+}
+
+.card-action:hover {
+    background: var(--hover);
+}
+
+/* MIND MAP */
+
+.mindmap-shell {
+    flex: 1;
+    min-height: 0;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.mindmap-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.mindmap-viewport {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(var(--grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    position: relative;
+    touch-action: pan-x pan-y;
+}
+
+.mindmap-world {
+    position: relative;
+    width: 4000px;
+    height: 3000px;
+    transform-origin: top left;
+}
+
+.mindmap-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.mind-node {
+    position: absolute;
+    width: 170px;
+    min-height: 64px;
+    padding: 10px 12px;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: 0 3px 14px rgba(0,0,0,.09);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    z-index: 2;
+    touch-action: none;
+}
+
+.mind-node.root {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.mind-node.selected {
+    outline: 3px solid #f4b942;
+    outline-offset: 3px;
+}
+
+.node-text {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    cursor: text;
+    outline: none;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.node-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+}
+
+.root .node-dot {
+    background: white;
+}
+
+.mindmap-status {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 6px 10px;
+    border-top: 1px solid var(--border);
+}
+
+/* EMPTY STATE */
 
 .empty-state {
-    height: 100%;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--muted);
+    margin: auto;
     padding: 25px;
-}
-
-.empty-state .big-icon {
-    font-size: 50px;
-    margin-bottom: 15px;
+    text-align: center;
+    max-width: 400px;
+    color: var(--muted);
 }
 
 .empty-state h2 {
     color: var(--text);
-    font-size: 22px;
 }
 
-.empty-state p {
-    max-width: 360px;
-    line-height: 1.7;
-}
+/* FOOTER */
 
-.statusbar {
-    height: 28px;
-    min-height: 28px;
+.footer {
+    height: 26px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 14px;
-    background: var(--sidebar);
+    gap: 10px;
+    padding: 0 12px;
     border-top: 1px solid var(--border);
-    font-size: 11px;
+    background: var(--panel);
     color: var(--muted);
+    font-size: 10px;
 }
 
-/* SEARCH RESULTS */
+/* MODAL */
 
-.search-results {
-    position: absolute;
-    top: 43px;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    border-radius: 8px;
-    max-height: 350px;
-    overflow-y: auto;
-    z-index: 20;
+.modal-bg {
     display: none;
-}
-
-.search-result {
-    padding: 12px 15px;
-    cursor: pointer;
-    border-bottom: 1px solid var(--border);
-}
-
-.search-result:hover {
-    background: var(--hover);
-}
-
-.search-result strong {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.search-result small {
-    color: var(--muted);
-}
-
-/* DIALOGS */
-
-.modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.45);
     z-index: 100;
-    display: none;
+    background: rgba(0,0,0,.48);
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 18px;
 }
 
-.modal-backdrop.show {
+.modal-bg.show {
     display: flex;
 }
 
 .modal {
     width: 100%;
-    max-width: 440px;
+    max-width: 430px;
     background: var(--surface);
-    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 22px;
     border-radius: 12px;
-    padding: 23px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 12px 50px rgba(0,0,0,.2);
 }
 
 .modal h2 {
     margin-top: 0;
-    font-size: 20px;
 }
 
 .modal input,
+.modal textarea,
 .modal select {
+    display: block;
     width: 100%;
-    padding: 11px;
-    margin: 8px 0 16px;
+    padding: 10px;
+    margin: 10px 0 16px;
     border: 1px solid var(--border);
     border-radius: 6px;
     background: var(--surface);
@@ -645,58 +762,24 @@ select:focus-visible {
 .modal-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 9px;
-}
-
-.secondary-btn {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    padding: 9px 14px;
-    border-radius: 6px;
-}
-
-.menu-popup {
-    position: fixed;
-    z-index: 50;
-    display: none;
-    min-width: 180px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    padding: 5px;
-}
-
-.menu-popup button {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: transparent;
-    color: var(--text);
-}
-
-.menu-popup button:hover {
-    background: var(--hover);
+    gap: 8px;
 }
 
 .toast {
     position: fixed;
-    bottom: 40px;
     left: 50%;
+    bottom: 35px;
     transform: translateX(-50%);
-    background: #26232d;
+    background: #29242f;
     color: white;
-    padding: 11px 18px;
+    padding: 10px 16px;
     border-radius: 7px;
-    box-shadow: var(--shadow);
     z-index: 200;
     opacity: 0;
     pointer-events: none;
     transition: opacity .2s;
+    max-width: 90vw;
+    text-align: center;
 }
 
 .toast.show {
@@ -705,68 +788,56 @@ select:focus-visible {
 
 /* MOBILE */
 
-.mobile-menu {
+.mobile-only {
     display: none;
 }
 
-@media (max-width: 1000px) {
+@media(max-width: 950px) {
     .sidebar {
-        width: 205px;
-        min-width: 185px;
+        width: 170px;
+        min-width: 145px;
     }
 
-    .section-panel {
-        width: 195px;
-        min-width: 175px;
-    }
-
+    .section-panel,
     .page-panel {
-        width: 225px;
-        min-width: 195px;
+        width: 155px;
+        min-width: 135px;
     }
 
-    .editor-scroll {
-        padding: 25px;
+    .note-scroll {
+        padding: 22px 20px 40px;
     }
 }
 
-@media (max-width: 760px) {
-    body {
-        overflow: hidden;
-    }
-
+@media(max-width: 700px) {
     .topbar {
-        padding: 0 10px;
-        gap: 7px;
-        height: 55px;
-        min-height: 55px;
+        height: 53px;
+        padding: 0 7px;
+        gap: 6px;
     }
 
     .brand {
-        min-width: auto;
-        font-size: 16px;
-        gap: 7px;
+        font-size: 14px;
     }
 
     .brand .brand-text {
         display: none;
     }
 
-    .logo {
-        width: 30px;
-        height: 30px;
+    .search {
+        margin-left: 0;
     }
 
-    .searchbox {
-        max-width: none;
-    }
-
-    .top-actions {
-        gap: 0;
-    }
-
-    .top-actions .desktop-only {
+    .header-actions .desktop-only {
         display: none;
+    }
+
+    .header-actions .btn {
+        padding: 7px 8px;
+    }
+
+    .mobile-only {
+        display: inline-block;
     }
 
     .workspace {
@@ -776,26 +847,13 @@ select:focus-visible {
     .sidebar,
     .section-panel,
     .page-panel {
+        display: none;
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
+        inset: 0 auto 0 0;
         width: 100%;
         min-width: 0;
-        border-right: none;
-        z-index: 10;
-    }
-
-    .sidebar {
-        display: none;
-    }
-
-    .section-panel {
-        display: none;
-    }
-
-    .page-panel {
-        display: none;
+        z-index: 20;
+        background: var(--surface);
     }
 
     .workspace.show-notebooks .sidebar {
@@ -810,36 +868,26 @@ select:focus-visible {
         display: flex;
     }
 
-    .editor-area {
+    .editor-header {
+        padding: 6px 8px;
+    }
+
+    .note-scroll {
+        padding: 17px 14px 35px;
+    }
+
+    .page-title {
+        font-size: 25px;
+    }
+
+    .canvas-help {
+        margin-left: 0;
         width: 100%;
     }
 
-    .editor-scroll {
-        padding: 20px 17px 45px;
-    }
-
-    .page-title-input {
-        font-size: 27px;
-    }
-
-    .editor {
-        font-size: 15px;
-    }
-
-    .toolbar {
-        gap: 2px;
-    }
-
-    .editor-top {
-        padding: 0 12px;
-    }
-
-    .mobile-menu {
-        display: inline-block;
-    }
-
-    .statusbar {
-        font-size: 10px;
+    .toolstrip {
+        max-height: 125px;
+        overflow-y: auto;
     }
 }
 </style>
@@ -849,310 +897,297 @@ select:focus-visible {
 
 <div class="app">
 
-    <!-- HEADER -->
+<header class="topbar">
 
-    <header class="topbar">
+    <button class="btn mobile-only"
+            onclick="showPanel('notebooks')">☰</button>
 
-        <button class="icon-btn mobile-menu"
-                onclick="showMobileNotebooks()"
-                title="Open notebooks">☰</button>
+    <div class="brand">
+        <div class="logo">N</div>
+        <span class="brand-text">OneNote Pro</span>
+    </div>
 
-        <div class="brand">
-            <div class="logo">N</div>
-            <span class="brand-text">OneNote Pro</span>
+    <div class="search">
+        <input id="searchInput"
+               placeholder="Search notes, pages, mind maps..."
+               autocomplete="off">
+    </div>
+
+    <div class="header-actions">
+        <button class="btn desktop-only" onclick="exportBackup()">Export</button>
+        <button class="btn desktop-only"
+                onclick="document.getElementById('importInput').click()">
+            Import
+        </button>
+        <button class="btn" onclick="toggleTheme()">◐</button>
+        <button class="btn primary" onclick="newNotebook()">+ Notebook</button>
+    </div>
+
+</header>
+
+<main class="workspace show-notebooks" id="workspace">
+
+    <aside class="sidebar">
+
+        <div class="panel-heading">
+            Notebooks
+            <button class="small-icon" onclick="newNotebook()">＋</button>
         </div>
 
-        <div class="searchbox">
-            <span class="search-icon">⌕</span>
+        <div class="list" id="notebookList"></div>
 
-            <input type="search"
-                   id="searchInput"
-                   placeholder="Search all your notes..."
-                   autocomplete="off">
+    </aside>
 
-            <div class="search-results" id="searchResults"></div>
+    <aside class="section-panel">
+
+        <div class="panel-heading">
+            Sections
+            <button class="small-icon" onclick="newSection()">＋</button>
         </div>
 
-        <div class="top-actions">
+        <div class="list" id="sectionList"></div>
 
-            <button class="icon-btn desktop-only"
-                    onclick="exportBackup()"
-                    title="Export all notebooks">⬇</button>
+    </aside>
 
-            <button class="icon-btn desktop-only"
-                    onclick="document.getElementById('importFile').click()"
-                    title="Import backup">⬆</button>
+    <aside class="page-panel">
 
-            <button class="icon-btn"
-                    onclick="toggleTheme()"
-                    title="Toggle dark mode">◐</button>
+        <div class="panel-heading">
+            Pages
+            <button class="small-icon" onclick="newPage()">＋</button>
+        </div>
 
-            <button class="primary-btn"
-                    onclick="newNotebook()">+ Notebook</button>
+        <div class="list" id="pageList"></div>
+
+    </aside>
+
+    <section class="editor-area">
+
+        <div class="editor-header">
+            <div class="breadcrumb" id="breadcrumb">My Notebook</div>
+            <div class="save-status" id="saveStatus">Ready</div>
+        </div>
+
+        <!-- MODE TABS -->
+
+        <div class="tabs">
+
+            <button class="tab active"
+                    data-mode="note"
+                    onclick="switchMode('note')">
+                📝 Notes
+            </button>
+
+            <button class="tab"
+                    data-mode="canvas"
+                    onclick="switchMode('canvas')">
+                ▦ Infinite Workspace
+            </button>
+
+            <button class="tab"
+                    data-mode="mindmap"
+                    onclick="switchMode('mindmap')">
+                🧠 Mind Map
+            </button>
 
         </div>
 
-    </header>
+        <!-- RICH TEXT TOOLBAR -->
 
-    <!-- WORKSPACE -->
+        <div class="toolstrip" id="noteToolbar">
 
-    <main class="workspace show-notebooks"
-          id="workspace">
+            <button class="tool-btn" onclick="format('undo')">↶</button>
+            <button class="tool-btn" onclick="format('redo')">↷</button>
 
-        <!-- NOTEBOOKS -->
+            <select onchange="formatBlock(this.value)">
+                <option value="P">Paragraph</option>
+                <option value="H1">Heading 1</option>
+                <option value="H2">Heading 2</option>
+                <option value="H3">Heading 3</option>
+                <option value="BLOCKQUOTE">Quote</option>
+            </select>
 
-        <aside class="sidebar" id="sidebar">
+            <button class="tool-btn" onclick="format('bold')"><b>B</b></button>
+            <button class="tool-btn" onclick="format('italic')"><i>I</i></button>
+            <button class="tool-btn" onclick="format('underline')"><u>U</u></button>
 
-            <div class="sidebar-heading">
-                NOTEBOOKS
+            <button class="tool-btn"
+                    onclick="format('insertUnorderedList')">• List</button>
 
-                <button class="icon-btn"
-                        onclick="newNotebook()"
-                        title="New notebook">＋</button>
-            </div>
+            <button class="tool-btn"
+                    onclick="format('insertOrderedList')">1. List</button>
 
-            <div class="sidebar-scroll" id="notebookList"></div>
+            <input type="color"
+                   value="#7719aa"
+                   title="Text color"
+                   onchange="format('foreColor',this.value)">
 
-            <div class="sidebar-footer">
-                <div>OneNote Pro</div>
-                <div style="margin-top:5px">
-                    Your personal knowledge space
-                </div>
-            </div>
+            <input type="color"
+                   value="#fff176"
+                   title="Highlight"
+                   onchange="format('hiliteColor',this.value)">
 
-        </aside>
+            <button class="tool-btn" onclick="insertNoteTable()">▦ Table</button>
 
-        <!-- SECTIONS -->
+            <button class="tool-btn" onclick="insertNoteLink()">🔗 Link</button>
 
-        <aside class="section-panel">
+        </div>
 
-            <div class="panel-title">
-                <span id="sectionPanelTitle">Sections</span>
+        <!-- NOTES VIEW -->
 
-                <button class="icon-btn"
-                        onclick="newSection()"
-                        title="New section">＋</button>
-            </div>
+        <div class="note-scroll" id="noteView">
 
-            <div class="section-list" id="sectionList"></div>
+            <div class="note-container">
 
-        </aside>
+                <textarea id="pageTitle"
+                          class="page-title"
+                          rows="1"
+                          placeholder="Page name"></textarea>
 
-        <!-- PAGES -->
+                <div class="page-meta" id="pageMeta"></div>
 
-        <aside class="page-panel">
-
-            <div class="panel-title">
-                <span id="pagePanelTitle">Pages</span>
-
-                <button class="icon-btn"
-                        onclick="newPage()"
-                        title="New page">＋</button>
-            </div>
-
-            <div class="page-list" id="pageList"></div>
-
-        </aside>
-
-        <!-- EDITOR -->
-
-        <section class="editor-area" id="editorArea">
-
-            <div class="editor-top">
-
-                <div class="breadcrumb" id="breadcrumb">
-                    My Notebook
-                </div>
-
-                <div class="save-status" id="saveStatus">
-                    All changes saved
-                </div>
+                <div id="noteEditor"
+                     class="note-editor"
+                     contenteditable="true"
+                     spellcheck="true"></div>
 
             </div>
 
-            <div class="editor-scroll">
+        </div>
 
-                <div class="editor-container" id="editorContainer">
+        <!-- INFINITE WORKSPACE VIEW -->
 
-                    <textarea class="page-title-input"
-                              id="pageTitle"
-                              rows="1"
-                              placeholder="Page title"
-                              aria-label="Page title"></textarea>
+        <div class="canvas-shell" id="canvasView">
 
-                    <div class="page-meta" id="pageMeta"></div>
+            <div class="canvas-toolbar">
 
-                    <!-- RICH TEXT TOOLBAR -->
+                <button class="btn primary" onclick="addCanvasCard()">
+                    + Add Note
+                </button>
 
-                    <div class="toolbar" id="toolbar">
+                <button class="btn" onclick="expandCanvas()">
+                    Expand Workspace
+                </button>
 
-                        <button class="tool-btn"
-                                title="Undo"
-                                onclick="runCommand('undo')">↶</button>
+                <button class="btn" onclick="centerCanvas()">
+                    Go to Origin
+                </button>
 
-                        <button class="tool-btn"
-                                title="Redo"
-                                onclick="runCommand('redo')">↷</button>
+                <button class="btn" onclick="toggleGrid()">
+                    Toggle Grid
+                </button>
 
-                        <span class="separator"></span>
+                <button class="btn" onclick="clearCanvasSelection()">
+                    Deselect
+                </button>
 
-                        <select id="formatBlock"
-                                aria-label="Text style"
-                                onchange="formatBlock(this.value)">
-                            <option value="P">Paragraph</option>
-                            <option value="H1">Heading 1</option>
-                            <option value="H2">Heading 2</option>
-                            <option value="H3">Heading 3</option>
-                            <option value="BLOCKQUOTE">Quote</option>
-                        </select>
+                <span class="canvas-help">
+                    Drag card headers • Scroll horizontally and vertically
+                </span>
 
-                        <select id="fontSize"
-                                aria-label="Font size"
-                                onchange="setFontSize(this.value)">
-                            <option value="">Size</option>
-                            <option value="2">Small</option>
-                            <option value="3">Normal</option>
-                            <option value="4">Large</option>
-                            <option value="5">Extra large</option>
-                            <option value="6">Huge</option>
-                        </select>
+            </div>
 
-                        <span class="separator"></span>
+            <div class="canvas-viewport" id="canvasViewport">
 
-                        <button class="tool-btn"
-                                title="Bold"
-                                onclick="runCommand('bold')"><b>B</b></button>
+                <div class="canvas-world" id="canvasWorld"></div>
 
-                        <button class="tool-btn"
-                                title="Italic"
-                                onclick="runCommand('italic')"><i>I</i></button>
+            </div>
 
-                        <button class="tool-btn"
-                                title="Underline"
-                                onclick="runCommand('underline')"><u>U</u></button>
+        </div>
 
-                        <button class="tool-btn"
-                                title="Strikethrough"
-                                onclick="runCommand('strikeThrough')"><s>S</s></button>
+        <!-- MIND MAP VIEW -->
 
-                        <input type="color"
-                               id="textColor"
-                               title="Text color"
-                               value="#7719aa"
-                               onchange="runCommand('foreColor', this.value)">
+        <div class="mindmap-shell" id="mindmapView">
 
-                        <input type="color"
-                               id="highlightColor"
-                               title="Highlight color"
-                               value="#fff176"
-                               onchange="runCommand('hiliteColor', this.value)">
+            <div class="mindmap-toolbar">
 
-                        <span class="separator"></span>
+                <button class="btn primary" onclick="addMindNode()">
+                    + Add Node
+                </button>
 
-                        <button class="tool-btn"
-                                title="Bullet list"
-                                onclick="runCommand('insertUnorderedList')">• List</button>
+                <button class="btn" onclick="addChildNode()">
+                    + Child Node
+                </button>
 
-                        <button class="tool-btn"
-                                title="Numbered list"
-                                onclick="runCommand('insertOrderedList')">1. List</button>
+                <button class="btn" onclick="editMindNode()">
+                    Edit Node
+                </button>
 
-                        <button class="tool-btn"
-                                title="Align left"
-                                onclick="runCommand('justifyLeft')">☰</button>
+                <button class="btn" onclick="deleteMindNode()">
+                    Delete Node
+                </button>
 
-                        <button class="tool-btn"
-                                title="Align center"
-                                onclick="runCommand('justifyCenter')">≡</button>
+                <button class="btn" onclick="connectMindNodes()">
+                    Connect Nodes
+                </button>
 
-                        <button class="tool-btn"
-                                title="Align right"
-                                onclick="runCommand('justifyRight')">☷</button>
+                <button class="btn" onclick="disconnectMindNodes()">
+                    Disconnect
+                </button>
 
-                        <span class="separator"></span>
+                <button class="btn" onclick="centerMindMap()">
+                    Center
+                </button>
 
-                        <button class="tool-btn"
-                                title="Insert link"
-                                onclick="insertLink()">🔗</button>
+                <button class="btn" onclick="resetMindMap()">
+                    Reset Map
+                </button>
 
-                        <button class="tool-btn"
-                                title="Insert table"
-                                onclick="insertTable()">▦</button>
+            </div>
 
-                        <button class="tool-btn"
-                                title="Insert horizontal line"
-                                onclick="runCommand('insertHorizontalRule')">―</button>
+            <div class="mindmap-viewport" id="mindmapViewport">
 
-                        <button class="tool-btn"
-                                title="Insert image from device"
-                                onclick="document.getElementById('imageFile').click()">🖼</button>
+                <div class="mindmap-world" id="mindmapWorld">
 
-                        <button class="tool-btn"
-                                title="Insert date"
-                                onclick="insertDate()">📅</button>
+                    <svg class="mindmap-lines"
+                         id="mindmapLines"
+                         xmlns="http://www.w3.org/2000/svg"></svg>
 
-                    </div>
-
-                    <div class="editor"
-                         id="editor"
-                         contenteditable="true"
-                         spellcheck="true"
-                         role="textbox"
-                         aria-label="Write your notes here"></div>
+                    <div id="mindNodes"></div>
 
                 </div>
 
             </div>
 
-            <footer class="statusbar">
-                <span id="wordCount">0 words</span>
-                <span id="storageStatus">Local storage</span>
-            </footer>
+            <div class="mindmap-status" id="mindmapStatus">
+                Select a node to edit it.
+            </div>
 
-        </section>
+        </div>
 
-    </main>
+        <footer class="footer">
+            <span id="wordCount">0 words</span>
+            <span>Local browser storage • Offline capable</span>
+        </footer>
+
+    </section>
+
+</main>
 
 </div>
 
-<!-- IMPORT FILE INPUTS -->
-
 <input type="file"
-       id="importFile"
+       id="importInput"
        accept=".json,application/json"
        hidden>
 
-<input type="file"
-       id="imageFile"
-       accept="image/*"
-       hidden>
-
-<!-- CONTEXT MENU -->
-
-<div class="menu-popup" id="contextMenu"></div>
-
-<!-- MODAL -->
-
-<div class="modal-backdrop" id="modalBackdrop">
+<div class="modal-bg" id="modalBg">
 
     <div class="modal">
 
-        <h2 id="modalTitle">Create item</h2>
+        <h2 id="modalTitle">Create</h2>
 
-        <label id="modalLabel" for="modalInput">Name</label>
+        <label id="modalLabel">Name</label>
 
-        <input type="text"
-               id="modalInput"
-               maxlength="150"
+        <input id="modalInput"
+               maxlength="200"
                placeholder="Enter name">
 
         <div class="modal-actions">
 
-            <button class="secondary-btn"
-                    onclick="closeModal()">Cancel</button>
+            <button class="btn" onclick="closeModal()">Cancel</button>
 
-            <button class="primary-btn"
-                    id="modalConfirm">Create</button>
+            <button class="btn primary"
+                    id="modalSubmit">Continue</button>
 
         </div>
 
@@ -1165,15 +1200,31 @@ select:focus-visible {
 <script>
 "use strict";
 
-/* ==========================================
-   ONENOTE PRO
-   Local notebook, section and page manager
-========================================== */
+/* ============================================
+   STORAGE AND STATE
+============================================ */
 
-const STORAGE_KEY = "onenote_pro_data_v1";
-const THEME_KEY = "onenote_pro_theme_v1";
+const STORAGE_KEY = "onenote_pro_infinite_v2";
+const THEME_KEY = "onenote_pro_theme";
 
-const SECTION_COLORS = [
+let db;
+let notebookId = null;
+let sectionId = null;
+let pageId = null;
+let currentMode = "note";
+
+let saveTimer = null;
+let toastTimer = null;
+let modalCallback = null;
+
+let selectedCanvasCard = null;
+let selectedMindNode = null;
+let pendingConnection = null;
+
+let mindDrag = null;
+let cardDrag = null;
+
+const colors = [
     "#7b61ff",
     "#e34d75",
     "#16a085",
@@ -1183,30 +1234,13 @@ const SECTION_COLORS = [
     "#d35400"
 ];
 
-let data;
-let activeNotebookId = null;
-let activeSectionId = null;
-let activePageId = null;
-
-let saveTimer = null;
-let modalCallback = null;
-let menuTarget = null;
-let toastTimer = null;
-let editorSelection = null;
-
-/* ==========================================
-   HELPERS
-========================================== */
-
 function uid() {
-    return "id_" +
-        Date.now().toString(36) +
-        "_" +
-        Math.random().toString(36).slice(2, 9);
+    return "id_" + Date.now().toString(36) +
+        Math.random().toString(36).slice(2, 8);
 }
 
-function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, ch => ({
+function escapeHTML(s) {
+    return String(s ?? "").replace(/[&<>"']/g, ch => ({
         "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
@@ -1215,239 +1249,305 @@ function escapeHTML(value) {
     })[ch]);
 }
 
+function safeId(s) {
+    return /^[a-zA-Z0-9_-]+$/.test(s || "") ? s : "";
+}
+
 function plainText(html) {
     const div = document.createElement("div");
     div.innerHTML = html || "";
-    return (div.textContent || div.innerText || "").trim();
+    return (div.textContent || "").trim();
 }
 
-function now() {
+function timestamp() {
     return new Date().toISOString();
 }
 
-function formatDate(dateString) {
-    if (!dateString) return "";
-
-    const date = new Date(dateString);
-
-    if (Number.isNaN(date.getTime())) return "";
-
-    return date.toLocaleString(undefined, {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-}
-
-function createPage(title = "Untitled page") {
+function createPage(name = "New Page") {
     return {
         id: uid(),
-        title,
+        name,
         content: "",
-        createdAt: now(),
-        updatedAt: now()
+        createdAt: timestamp(),
+        updatedAt: timestamp(),
+
+        // Infinite workspace cards and dimensions
+        canvas: {
+            width: 5000,
+            height: 5000,
+            grid: true,
+            cards: []
+        },
+
+        // Mind map nodes and edges
+        mindmap: {
+            width: 4000,
+            height: 3000,
+            nodes: [],
+            edges: []
+        }
     };
 }
 
-function createSection(name = "New Section", color = "#7b61ff") {
-    const page = createPage("Welcome");
-
-    page.content =
-        "<h2>Welcome to your new section!</h2>" +
-        "<p>Start writing your ideas, notes and important information here.</p>";
+function createSection(name = "General") {
+    const p = createPage("Welcome");
 
     return {
         id: uid(),
         name,
-        color,
-        pages: [page]
+        color: colors[0],
+        pages: [p]
     };
 }
 
 function createNotebook(name = "My Notebook") {
-    const section = createSection("General", SECTION_COLORS[0]);
-
     return {
         id: uid(),
         name,
-        sections: [section]
+        sections: [createSection()]
     };
 }
 
-/* ==========================================
-   DEFAULT DATA
-========================================== */
+function initialData() {
+    const n = createNotebook("My Notebook");
+    const s = n.sections[0];
+    const p = s.pages[0];
 
-function defaultData() {
-    const notebook = createNotebook("My Notebook");
+    p.name = "Welcome to OneNote Pro";
 
-    notebook.sections[0].pages[0].title = "Welcome to OneNote Pro";
-
-    notebook.sections[0].pages[0].content = `
-        <h1>Welcome to OneNote Pro!</h1>
-        <p>This is your personal digital notebook.</p>
-        <h2>What can you do here?</h2>
+    p.content = `
+        <h1>Welcome to OneNote Pro</h1>
+        <p>Your notes, infinite workspace and mind maps are all in one place.</p>
+        <h2>Getting started</h2>
         <ul>
-            <li>Create multiple notebooks.</li>
-            <li>Organize notes into sections.</li>
-            <li>Create unlimited pages within your notebooks.</li>
-            <li>Format text, add lists and insert tables.</li>
-            <li>Search for notes across your notebooks.</li>
-            <li>Export your notes for backup.</li>
+            <li>Use Notes for traditional documents.</li>
+            <li>Use Infinite Workspace to arrange separate note cards.</li>
+            <li>Use Mind Map to connect ideas visually.</li>
         </ul>
-        <blockquote>
-            Knowledge becomes powerful when it is organized,
-            revised and applied.
-        </blockquote>
-        <h2>Suggested notebooks</h2>
-        <p>📘 NCERT Study Notes</p>
-        <p>📗 BPSC Preparation</p>
-        <p>📙 Classroom Notes</p>
-        <p>📕 Personal Ideas</p>
-        <p><b>Tip:</b> Your changes are saved automatically in this browser.</p>
+        <blockquote>Ideas become clearer when you organize them.</blockquote>
     `;
 
+    p.mindmap.nodes = [{
+        id: uid(),
+        text: "My Ideas",
+        x: 1750,
+        y: 1300,
+        root: true
+    }];
+
     return {
-        version: 1,
-        notebooks: [notebook]
+        version: 2,
+        notebooks: [n]
     };
 }
 
-/* ==========================================
-   DATA VALIDATION
-========================================== */
+/* ============================================
+   VALIDATE IMPORTED DATA
+============================================ */
 
 function validateData(input) {
     if (!input || !Array.isArray(input.notebooks)) {
-        throw new Error("Invalid notebook backup.");
+        throw new Error("Invalid backup");
     }
 
-    const clean = {
-        version: 1,
-        notebooks: []
-    };
+    const result = { version: 2, notebooks: [] };
 
-    for (const notebook of input.notebooks) {
-        if (!notebook || typeof notebook.name !== "string") continue;
+    for (const n of input.notebooks) {
+        if (!n || typeof n.name !== "string") continue;
 
-        const safeNotebook = {
-            id: typeof notebook.id === "string" ? notebook.id : uid(),
-            name: notebook.name.slice(0, 150),
+        const nn = {
+            id: safeId(n.id) || uid(),
+            name: n.name.slice(0, 200),
             sections: []
         };
 
-        for (const section of (Array.isArray(notebook.sections)
-            ? notebook.sections : [])) {
+        for (const s of (Array.isArray(n.sections) ? n.sections : [])) {
+            if (!s || typeof s.name !== "string") continue;
 
-            if (!section || typeof section.name !== "string") continue;
-
-            const safeSection = {
-                id: typeof section.id === "string" ? section.id : uid(),
-                name: section.name.slice(0, 150),
-                color: SECTION_COLORS.includes(section.color)
-                    ? section.color
-                    : "#7b61ff",
+            const ss = {
+                id: safeId(s.id) || uid(),
+                name: s.name.slice(0, 200),
+                color: colors.includes(s.color) ? s.color : colors[0],
                 pages: []
             };
 
-            for (const page of (Array.isArray(section.pages)
-                ? section.pages : [])) {
+            for (const p of (Array.isArray(s.pages) ? s.pages : [])) {
+                if (!p || typeof p.name !== "string") continue;
 
-                if (!page || typeof page.title !== "string") continue;
+                const pp = createPage(p.name.slice(0, 300));
 
-                safeSection.pages.push({
-                    id: typeof page.id === "string" ? page.id : uid(),
-                    title: page.title.slice(0, 300),
-                    content: typeof page.content === "string"
-                        ? page.content
-                        : "",
-                    createdAt: page.createdAt || now(),
-                    updatedAt: page.updatedAt || now()
-                });
+                pp.id = safeId(p.id) || uid();
+                pp.content = typeof p.content === "string" ? p.content : "";
+                pp.createdAt = p.createdAt || timestamp();
+                pp.updatedAt = p.updatedAt || timestamp();
+
+                if (p.canvas && typeof p.canvas === "object") {
+                    pp.canvas.width = Math.max(
+                        2000, Math.min(50000, Number(p.canvas.width) || 5000)
+                    );
+
+                    pp.canvas.height = Math.max(
+                        2000, Math.min(50000, Number(p.canvas.height) || 5000)
+                    );
+
+                    pp.canvas.grid = p.canvas.grid !== false;
+
+                    pp.canvas.cards = Array.isArray(p.canvas.cards)
+                        ? p.canvas.cards
+                            .filter(c => c && typeof c.content === "string")
+                            .map(c => ({
+                                id: safeId(c.id) || uid(),
+                                title: String(c.title || "Note").slice(0, 200),
+                                content: c.content.slice(0, 200000),
+                                x: Math.max(-100000, Math.min(100000, Number(c.x) || 0)),
+                                y: Math.max(-100000, Math.min(100000, Number(c.y) || 0))
+                            }))
+                        : [];
+                }
+
+                if (p.mindmap && typeof p.mindmap === "object") {
+                    pp.mindmap.width = Math.max(
+                        2000, Math.min(50000, Number(p.mindmap.width) || 4000)
+                    );
+
+                    pp.mindmap.height = Math.max(
+                        2000, Math.min(50000, Number(p.mindmap.height) || 3000)
+                    );
+
+                    pp.mindmap.nodes = Array.isArray(p.mindmap.nodes)
+                        ? p.mindmap.nodes
+                            .filter(node => node && typeof node.text === "string")
+                            .map(node => ({
+                                id: safeId(node.id) || uid(),
+                                text: node.text.slice(0, 2000),
+                                x: Math.max(-100000, Math.min(100000, Number(node.x) || 0)),
+                                y: Math.max(-100000, Math.min(100000, Number(node.y) || 0)),
+                                root: !!node.root
+                            }))
+                        : [];
+
+                    const validNodeIds = new Set(
+                        pp.mindmap.nodes.map(node => node.id)
+                    );
+
+                    pp.mindmap.edges = Array.isArray(p.mindmap.edges)
+                        ? p.mindmap.edges
+                            .filter(edge =>
+                                edge &&
+                                validNodeIds.has(edge.from) &&
+                                validNodeIds.has(edge.to) &&
+                                edge.from !== edge.to
+                            )
+                            .map(edge => ({
+                                from: edge.from,
+                                to: edge.to
+                            }))
+                        : [];
+                }
+
+                ss.pages.push(pp);
             }
 
-            safeNotebook.sections.push(safeSection);
+            nn.sections.push(ss);
         }
 
-        clean.notebooks.push(safeNotebook);
+        result.notebooks.push(nn);
     }
 
-    return clean;
+    return result;
 }
-
-/* ==========================================
-   LOAD AND SAVE
-========================================== */
 
 function loadData() {
     try {
         const saved = localStorage.getItem(STORAGE_KEY);
-
-        if (saved) {
-            data = validateData(JSON.parse(saved));
-        } else {
-            data = defaultData();
-        }
-
+        db = saved ? validateData(JSON.parse(saved)) : initialData();
     } catch (error) {
-        console.error("Loading notebook data failed:", error);
-
-        data = defaultData();
-
-        showToast(
-            "Could not load saved data. A fresh notebook was opened."
-        );
+        console.error(error);
+        db = initialData();
+        notify("Could not load old data. A new workspace was opened.");
     }
 
-    if (!data.notebooks.length) {
-        data = defaultData();
-    }
+    if (!db.notebooks.length) db = initialData();
 
-    activeNotebookId = data.notebooks[0].id;
-    activeSectionId = data.notebooks[0].sections[0]?.id || null;
-    activePageId =
-        data.notebooks[0].sections[0]?.pages[0]?.id || null;
+    notebookId = db.notebooks[0].id;
+    sectionId = db.notebooks[0].sections[0]?.id || null;
+    pageId = db.notebooks[0].sections[0]?.pages[0]?.id || null;
 
-    try {
-        if (localStorage.getItem(THEME_KEY) === "dark") {
-            document.body.classList.add("dark");
-        }
-    } catch (error) {
-        console.warn("Theme preference unavailable.", error);
+    if (localStorage.getItem(THEME_KEY) === "dark") {
+        document.body.classList.add("dark");
     }
 
     renderAll();
     updateEditor();
 }
 
-function saveData(showStatus = true) {
+/* ============================================
+   ACTIVE OBJECTS
+============================================ */
+
+function getNotebook() {
+    return db.notebooks.find(n => n.id === notebookId) || null;
+}
+
+function getSection() {
+    const n = getNotebook();
+    return n?.sections.find(s => s.id === sectionId) || null;
+}
+
+function getPage() {
+    const s = getSection();
+    return s?.pages.find(p => p.id === pageId) || null;
+}
+
+function ensureSelection() {
+    if (!db.notebooks.length) db.notebooks.push(createNotebook());
+
+    let n = getNotebook();
+
+    if (!n) {
+        n = db.notebooks[0];
+        notebookId = n.id;
+    }
+
+    if (!n.sections.length) n.sections.push(createSection());
+
+    let s = n.sections.find(x => x.id === sectionId);
+
+    if (!s) {
+        s = n.sections[0];
+        sectionId = s.id;
+    }
+
+    if (!s.pages.length) s.pages.push(createPage());
+
+    let p = s.pages.find(x => x.id === pageId);
+
+    if (!p) {
+        p = s.pages[0];
+        pageId = p.id;
+    }
+}
+
+/* ============================================
+   SAVE
+============================================ */
+
+function saveData() {
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
 
-        if (showStatus) {
-            document.getElementById("saveStatus").textContent =
-                "All changes saved";
-        }
-
-        document.getElementById("storageStatus").textContent =
-            "Saved on this device";
+        document.getElementById("saveStatus").textContent =
+            "Saved " + new Date().toLocaleTimeString();
 
         return true;
 
     } catch (error) {
-        console.error("Saving failed:", error);
+        console.error(error);
 
         document.getElementById("saveStatus").textContent =
-            "Save failed";
+            "Storage full";
 
-        document.getElementById("storageStatus").textContent =
-            "Storage full or unavailable";
-
-        showToast(
-            "Saving failed. Export a backup or reduce image sizes."
-        );
+        notify("Saving failed. Export your backup and reduce stored images.");
 
         return false;
     }
@@ -1464,215 +1564,74 @@ function scheduleSave() {
     }, 350);
 }
 
-/* ==========================================
-   ACTIVE ITEM HELPERS
-========================================== */
-
-function getNotebook() {
-    return data.notebooks.find(n => n.id === activeNotebookId) || null;
-}
-
-function getSection() {
-    const notebook = getNotebook();
-
-    return notebook
-        ? notebook.sections.find(s => s.id === activeSectionId) || null
-        : null;
-}
-
-function getPage() {
-    const section = getSection();
-
-    return section
-        ? section.pages.find(p => p.id === activePageId) || null
-        : null;
-}
-
-function ensureSelection() {
-    if (!data.notebooks.length) {
-        data.notebooks.push(createNotebook());
-    }
-
-    let notebook = getNotebook();
-
-    if (!notebook) {
-        notebook = data.notebooks[0];
-        activeNotebookId = notebook.id;
-    }
-
-    if (!notebook.sections.length) {
-        notebook.sections.push(createSection());
-    }
-
-    let section = notebook.sections.find(
-        s => s.id === activeSectionId
-    );
-
-    if (!section) {
-        section = notebook.sections[0];
-        activeSectionId = section.id;
-    }
-
-    if (!section.pages.length) {
-        section.pages.push(createPage());
-    }
-
-    let page = section.pages.find(
-        p => p.id === activePageId
-    );
-
-    if (!page) {
-        page = section.pages[0];
-        activePageId = page.id;
-    }
-}
-
-/* ==========================================
-   RENDER NOTEBOOKS
-========================================== */
+/* ============================================
+   RENDER LISTS
+============================================ */
 
 function renderNotebooks() {
-    const list = document.getElementById("notebookList");
+    document.getElementById("notebookList").innerHTML =
+        db.notebooks.map(n => `
+            <div class="list-item ${n.id === notebookId ? "active" : ""}"
+                 onclick="selectNotebook('${n.id}')">
 
-    list.innerHTML = data.notebooks.map(notebook => `
-        <div class="nav-item ${
-            notebook.id === activeNotebookId ? "active" : ""
-        }"
-        data-notebook-id="${escapeHTML(notebook.id)}"
-        onclick="selectNotebook('${notebook.id}')">
+                <span>📘</span>
 
-            <span>📘</span>
+                <span class="name">${escapeHTML(n.name)}</span>
 
-            <span class="label">
-                ${escapeHTML(notebook.name)}
-            </span>
+                <button class="small-icon"
+                        title="Rename notebook"
+                        onclick="event.stopPropagation();renameNotebook('${n.id}')">
+                    ⋮
+                </button>
 
-            <button class="more"
-                    title="Notebook options"
-                    onclick="openMenu(event,'notebook','${notebook.id}')">
-                ⋮
-            </button>
-
-        </div>
-    `).join("");
-
-    if (!data.notebooks.length) {
-        list.innerHTML =
-            '<p style="padding:12px;color:var(--muted)">No notebooks</p>';
-    }
+            </div>
+        `).join("");
 }
-
-/* ==========================================
-   RENDER SECTIONS
-========================================== */
 
 function renderSections() {
-    const notebook = getNotebook();
-    const list = document.getElementById("sectionList");
+    const n = getNotebook();
 
-    document.getElementById("sectionPanelTitle").textContent =
-        notebook ? notebook.name : "Sections";
+    document.getElementById("sectionList").innerHTML =
+        (n?.sections || []).map(s => `
+            <div class="list-item ${s.id === sectionId ? "active" : ""}"
+                 onclick="selectSection('${s.id}')">
 
-    if (!notebook) {
-        list.innerHTML = "";
-        return;
-    }
+                <span style="color:${escapeHTML(s.color)}">●</span>
 
-    list.innerHTML = notebook.sections.map(section => `
-        <div class="section-item ${
-            section.id === activeSectionId ? "active" : ""
-        }"
-        onclick="selectSection('${section.id}')">
+                <span class="name">${escapeHTML(s.name)}</span>
 
-            <span class="section-color"
-                  style="background:${escapeHTML(section.color)}"></span>
-
-            <span class="section-name">
-                ${escapeHTML(section.name)}
-            </span>
-
-            <button class="icon-btn"
-                    style="padding:2px"
-                    title="Section options"
-                    onclick="openMenu(event,'section','${section.id}')">
-                ⋮
-            </button>
-
-        </div>
-    `).join("");
-
-    if (!notebook.sections.length) {
-        list.innerHTML = `
-            <div class="empty-state">
-                <div class="big-icon">📂</div>
-                <p>Create a section to organize your notes.</p>
-                <button class="primary-btn" onclick="newSection()">
-                    + Create Section
+                <button class="small-icon"
+                        title="Rename section"
+                        onclick="event.stopPropagation();renameSection('${s.id}')">
+                    ⋮
                 </button>
+
             </div>
-        `;
-    }
+        `).join("");
 }
 
-/* ==========================================
-   RENDER PAGES
-========================================== */
-
 function renderPages() {
-    const section = getSection();
-    const list = document.getElementById("pageList");
+    const s = getSection();
 
-    document.getElementById("pagePanelTitle").textContent =
-        section ? section.name : "Pages";
+    document.getElementById("pageList").innerHTML =
+        (s?.pages || []).map(p => `
+            <div class="page-item ${p.id === pageId ? "active" : ""}"
+                 onclick="selectPage('${p.id}')">
 
-    if (!section) {
-        list.innerHTML = "";
-        return;
-    }
+                <div class="name">${escapeHTML(p.name)}</div>
 
-    list.innerHTML = section.pages.map(page => {
-        const preview = plainText(page.content);
-
-        return `
-            <div class="page-card ${
-                page.id === activePageId ? "active" : ""
-            }"
-            onclick="selectPage('${page.id}')">
-
-                <div class="page-card-title">
-                    ${escapeHTML(page.title || "Untitled page")}
+                <div class="preview">
+                    ${escapeHTML(plainText(p.content).slice(0, 65))}
                 </div>
 
-                <div class="page-preview">
-                    ${escapeHTML(preview || "Empty page")}
-                </div>
-
-                <div class="page-date">
-                    ${escapeHTML(formatDate(page.updatedAt))}
-                </div>
-
-                <button class="icon-btn"
-                        style="padding:3px;margin-top:4px"
-                        title="Page options"
-                        onclick="openMenu(event,'page','${page.id}')">
-                    ⋮ Options
+                <button class="small-icon"
+                        title="Rename page"
+                        onclick="event.stopPropagation();renamePage('${p.id}')">
+                    Rename
                 </button>
 
             </div>
-        `;
-    }).join("");
-
-    if (!section.pages.length) {
-        list.innerHTML = `
-            <div class="empty-state">
-                <div class="big-icon">📝</div>
-                <p>Create your first page in this section.</p>
-                <button class="primary-btn" onclick="newPage()">
-                    + Create Page
-                </button>
-            </div>
-        `;
-    }
+        `).join("");
 }
 
 function renderAll() {
@@ -1686,535 +1645,303 @@ function renderAll() {
 }
 
 function updateBreadcrumb() {
-    const notebook = getNotebook();
-    const section = getSection();
-    const page = getPage();
+    const n = getNotebook();
+    const s = getSection();
+    const p = getPage();
 
-    document.getElementById("breadcrumb").textContent = [
-        notebook?.name,
-        section?.name,
-        page?.title
-    ].filter(Boolean).join("  ›  ");
+    document.getElementById("breadcrumb").textContent =
+        [n?.name, s?.name, p?.name].filter(Boolean).join("  ›  ");
 }
 
-/* ==========================================
+/* ============================================
    SELECT ITEMS
-========================================== */
+============================================ */
 
 function selectNotebook(id) {
-    const notebook = data.notebooks.find(n => n.id === id);
+    notebookId = id;
 
-    if (!notebook) return;
+    const n = getNotebook();
 
-    activeNotebookId = id;
-    activeSectionId = notebook.sections[0]?.id || null;
-    activePageId = notebook.sections[0]?.pages[0]?.id || null;
+    sectionId = n?.sections[0]?.id || null;
+    pageId = n?.sections[0]?.pages[0]?.id || null;
 
     renderAll();
     updateEditor();
-
-    closeMenu();
-    hideMobilePanels();
+    showPanel("");
 }
 
 function selectSection(id) {
-    const notebook = getNotebook();
+    sectionId = id;
 
-    if (!notebook) return;
+    const s = getSection();
 
-    const section = notebook.sections.find(s => s.id === id);
-
-    if (!section) return;
-
-    activeSectionId = id;
-    activePageId = section.pages[0]?.id || null;
+    pageId = s?.pages[0]?.id || null;
 
     renderAll();
     updateEditor();
 
-    closeMenu();
-
-    if (window.innerWidth <= 760) {
-        showMobilePages();
-    }
+    if (innerWidth <= 700) showPanel("pages");
 }
 
 function selectPage(id) {
-    const section = getSection();
-
-    if (!section) return;
-
-    const page = section.pages.find(p => p.id === id);
-
-    if (!page) return;
-
-    activePageId = id;
+    pageId = id;
 
     renderPages();
     updateEditor();
 
-    closeMenu();
-
-    if (window.innerWidth <= 760) {
-        hideMobilePanels();
-    }
+    if (innerWidth <= 700) showPanel("");
 }
 
-/* ==========================================
-   NOTEBOOK CRUD
-========================================== */
+/* ============================================
+   CREATE, RENAME AND DELETE
+============================================ */
+
+function showModal(title, label, initial, callback) {
+    modalCallback = callback;
+
+    document.getElementById("modalTitle").textContent = title;
+    document.getElementById("modalLabel").textContent = label;
+    document.getElementById("modalInput").value = initial || "";
+
+    document.getElementById("modalBg").classList.add("show");
+
+    setTimeout(() => document.getElementById("modalInput").focus(), 50);
+}
+
+function closeModal() {
+    document.getElementById("modalBg").classList.remove("show");
+    modalCallback = null;
+}
+
+document.getElementById("modalSubmit").onclick = () => {
+    const value = document.getElementById("modalInput").value.trim();
+
+    if (!value) {
+        notify("Enter a name first");
+        return;
+    }
+
+    const callback = modalCallback;
+
+    closeModal();
+
+    if (callback) callback(value);
+};
+
+document.getElementById("modalInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") document.getElementById("modalSubmit").click();
+    if (e.key === "Escape") closeModal();
+});
 
 function newNotebook() {
-    showModal(
-        "Create Notebook",
-        "Notebook name",
-        "My New Notebook",
-        name => {
-            if (!name) return;
+    showModal("Create Notebook", "Notebook name", "My Notebook", name => {
+        const n = createNotebook(name);
 
-            const notebook = createNotebook(name);
+        db.notebooks.push(n);
 
-            data.notebooks.push(notebook);
+        notebookId = n.id;
+        sectionId = n.sections[0].id;
+        pageId = n.sections[0].pages[0].id;
 
-            activeNotebookId = notebook.id;
-            activeSectionId = notebook.sections[0].id;
-            activePageId = notebook.sections[0].pages[0].id;
-
-            saveData();
-            renderAll();
-            updateEditor();
-
-            showToast("Notebook created");
-        }
-    );
+        saveData();
+        renderAll();
+        updateEditor();
+    });
 }
 
 function renameNotebook(id) {
-    const notebook = data.notebooks.find(n => n.id === id);
+    const n = db.notebooks.find(x => x.id === id);
+    if (!n) return;
 
-    if (!notebook) return;
-
-    showModal(
-        "Rename Notebook",
-        "Notebook name",
-        notebook.name,
-        name => {
-            if (!name) return;
-
-            notebook.name = name;
-
-            saveData();
-            renderAll();
-
-            showToast("Notebook renamed");
-        }
-    );
+    showModal("Rename Notebook", "Notebook name", n.name, name => {
+        n.name = name;
+        saveData();
+        renderAll();
+    });
 }
 
 function deleteNotebook(id) {
-    const notebook = data.notebooks.find(n => n.id === id);
+    const n = db.notebooks.find(x => x.id === id);
+    if (!n) return;
 
-    if (!notebook) return;
+    if (!confirm("Delete notebook and all its contents?")) return;
 
-    if (!confirm(
-        `Delete notebook "${notebook.name}" and all its sections and pages?`
-    )) return;
+    db.notebooks = db.notebooks.filter(x => x.id !== id);
 
-    data.notebooks = data.notebooks.filter(n => n.id !== id);
-
-    if (activeNotebookId === id) {
-        activeNotebookId = data.notebooks[0]?.id || null;
-        activeSectionId = null;
-        activePageId = null;
-    }
+    notebookId = db.notebooks[0]?.id || null;
+    sectionId = null;
+    pageId = null;
 
     ensureSelection();
     saveData();
     renderAll();
     updateEditor();
-
-    showToast("Notebook deleted");
 }
 
-/* ==========================================
-   SECTION CRUD
-========================================== */
-
 function newSection() {
-    const notebook = getNotebook();
+    const n = getNotebook();
+    if (!n) return;
 
-    if (!notebook) {
-        showToast("Create a notebook first");
-        return;
-    }
+    showModal("Create Section", "Section name", "New Section", name => {
+        const s = createSection(name);
+        s.color = colors[n.sections.length % colors.length];
 
-    showModal(
-        "Create Section",
-        "Section name",
-        "New Section",
-        name => {
-            if (!name) return;
+        n.sections.push(s);
 
-            const color =
-                SECTION_COLORS[
-                    notebook.sections.length % SECTION_COLORS.length
-                ];
+        sectionId = s.id;
+        pageId = s.pages[0].id;
 
-            const section = createSection(name, color);
-
-            notebook.sections.push(section);
-
-            activeSectionId = section.id;
-            activePageId = section.pages[0].id;
-
-            saveData();
-            renderAll();
-            updateEditor();
-
-            showToast("Section created");
-        }
-    );
+        saveData();
+        renderAll();
+        updateEditor();
+    });
 }
 
 function renameSection(id) {
-    const notebook = getNotebook();
+    const n = getNotebook();
+    const s = n?.sections.find(x => x.id === id);
+    if (!s) return;
 
-    if (!notebook) return;
-
-    const section = notebook.sections.find(s => s.id === id);
-
-    if (!section) return;
-
-    showModal(
-        "Rename Section",
-        "Section name",
-        section.name,
-        name => {
-            if (!name) return;
-
-            section.name = name;
-
-            saveData();
-            renderAll();
-
-            showToast("Section renamed");
-        }
-    );
+    showModal("Rename Section", "Section name", s.name, name => {
+        s.name = name;
+        saveData();
+        renderAll();
+    });
 }
 
 function deleteSection(id) {
-    const notebook = getNotebook();
+    const n = getNotebook();
+    const s = n?.sections.find(x => x.id === id);
 
-    if (!notebook) return;
+    if (!n || !s) return;
 
-    const section = notebook.sections.find(s => s.id === id);
+    if (!confirm("Delete this section and all its pages?")) return;
 
-    if (!section) return;
+    n.sections = n.sections.filter(x => x.id !== id);
 
-    if (!confirm(
-        `Delete section "${section.name}" and all its pages?`
-    )) return;
-
-    notebook.sections = notebook.sections.filter(s => s.id !== id);
-
-    if (activeSectionId === id) {
-        activeSectionId = notebook.sections[0]?.id || null;
-        activePageId =
-            notebook.sections[0]?.pages[0]?.id || null;
-    }
+    sectionId = n.sections[0]?.id || null;
+    pageId = n.sections[0]?.pages[0]?.id || null;
 
     ensureSelection();
     saveData();
     renderAll();
     updateEditor();
-
-    showToast("Section deleted");
 }
 
-/* ==========================================
-   PAGE CRUD
-========================================== */
-
 function newPage() {
-    const section = getSection();
+    const s = getSection();
+    if (!s) return;
 
-    if (!section) {
-        showToast("Create a section first");
-        return;
-    }
+    const p = createPage("New Page");
 
-    const page = createPage("Untitled page");
-
-    section.pages.push(page);
-
-    activePageId = page.id;
+    s.pages.push(p);
+    pageId = p.id;
 
     saveData();
     renderAll();
     updateEditor();
-
-    document.getElementById("pageTitle").focus();
-
-    if (window.innerWidth <= 760) {
-        hideMobilePanels();
-    }
-
-    showToast("Page created");
 }
 
 function renamePage(id) {
-    const section = getSection();
+    const s = getSection();
+    const p = s?.pages.find(x => x.id === id);
 
-    if (!section) return;
+    if (!p) return;
 
-    const page = section.pages.find(p => p.id === id);
+    showModal("Rename Page", "Page name", p.name, name => {
+        p.name = name;
+        p.updatedAt = timestamp();
 
-    if (!page) return;
-
-    showModal(
-        "Rename Page",
-        "Page title",
-        page.title,
-        title => {
-            if (!title) return;
-
-            page.title = title;
-            page.updatedAt = now();
-
-            saveData();
-            renderAll();
-            updateEditor();
-
-            showToast("Page renamed");
-        }
-    );
+        saveData();
+        renderAll();
+        updateBreadcrumb();
+    });
 }
 
-function deletePage(id) {
-    const section = getSection();
-
-    if (!section) return;
-
-    const page = section.pages.find(p => p.id === id);
-
-    if (!page) return;
-
-    if (!confirm(`Delete page "${page.title}"?`)) return;
-
-    section.pages = section.pages.filter(p => p.id !== id);
-
-    if (activePageId === id) {
-        activePageId = section.pages[0]?.id || null;
-    }
-
-    ensureSelection();
-
-    saveData();
-    renderAll();
-    updateEditor();
-
-    showToast("Page deleted");
-}
-
-function duplicatePage(id) {
-    const section = getSection();
-
-    if (!section) return;
-
-    const page = section.pages.find(p => p.id === id);
-
-    if (!page) return;
-
-    const copy = {
-        ...page,
-        id: uid(),
-        title: page.title + " (Copy)",
-        createdAt: now(),
-        updatedAt: now()
-    };
-
-    section.pages.push(copy);
-
-    activePageId = copy.id;
-
-    saveData();
-    renderAll();
-    updateEditor();
-
-    showToast("Page duplicated");
-}
-
-/* ==========================================
-   EDITOR
-========================================== */
+/* ============================================
+   NOTES EDITOR
+============================================ */
 
 function updateEditor() {
     ensureSelection();
 
-    const page = getPage();
+    const p = getPage();
 
-    const titleInput = document.getElementById("pageTitle");
-    const editor = document.getElementById("editor");
+    if (!p) return;
 
-    if (!page) {
-        titleInput.value = "";
-        editor.innerHTML = "";
-
-        document.getElementById("pageMeta").textContent = "";
-        document.getElementById("saveStatus").textContent =
-            "No page selected";
-
-        updateBreadcrumb();
-        updateWordCount();
-
-        return;
-    }
-
-    titleInput.value = page.title;
-    editor.innerHTML = page.content || "";
+    document.getElementById("pageTitle").value = p.name;
+    document.getElementById("noteEditor").innerHTML = p.content || "";
 
     document.getElementById("pageMeta").textContent =
-        "Created " + formatDate(page.createdAt) +
-        "  •  Updated " + formatDate(page.updatedAt);
-
-    document.getElementById("saveStatus").textContent =
-        "All changes saved";
+        "Created: " + new Date(p.createdAt).toLocaleString() +
+        " | Updated: " + new Date(p.updatedAt).toLocaleString();
 
     updateBreadcrumb();
     updateWordCount();
+
+    renderCanvas();
+    renderMindMap();
 }
 
-function saveCurrentEditor() {
-    const page = getPage();
+function saveNote() {
+    const p = getPage();
+    if (!p) return;
 
-    if (!page) return;
+    p.name =
+        document.getElementById("pageTitle").value.trim() || "New Page";
 
-    page.title =
-        document.getElementById("pageTitle").value.trim() ||
-        "Untitled page";
+    p.content = document.getElementById("noteEditor").innerHTML;
+    p.updatedAt = timestamp();
 
-    page.content = document.getElementById("editor").innerHTML;
-    page.updatedAt = now();
+    document.getElementById("pageTitle").style.height = "auto";
+    document.getElementById("pageTitle").style.height =
+        document.getElementById("pageTitle").scrollHeight + "px";
 
     document.getElementById("pageMeta").textContent =
-        "Created " + formatDate(page.createdAt) +
-        "  •  Updated " + formatDate(page.updatedAt);
+        "Created: " + new Date(p.createdAt).toLocaleString() +
+        " | Updated: " + new Date(p.updatedAt).toLocaleString();
 
     updateBreadcrumb();
+    updateWordCount();
     scheduleSave();
-    updateWordCount();
 }
 
-document.getElementById("pageTitle").addEventListener(
-    "input",
-    function() {
-        this.style.height = "auto";
-        this.style.height = this.scrollHeight + "px";
-
-        saveCurrentEditor();
-    }
-);
-
-document.getElementById("editor").addEventListener(
-    "input",
-    function() {
-        saveCurrentEditor();
-    }
-);
+document.getElementById("pageTitle").addEventListener("input", saveNote);
+document.getElementById("noteEditor").addEventListener("input", saveNote);
 
 function updateWordCount() {
-    const editor = document.getElementById("editor");
-    const text = plainText(editor.innerHTML);
+    const text = plainText(document.getElementById("noteEditor").innerHTML);
 
-    const words = text
-        ? text.split(/\s+/).filter(Boolean).length
-        : 0;
+    const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
 
-    document.getElementById("wordCount").textContent =
-        words + (words === 1 ? " word" : " words");
+    document.getElementById("wordCount").textContent = words + " words";
 }
 
-/* ==========================================
-   RICH TEXT COMMANDS
-========================================== */
+function format(command, value = null) {
+    document.getElementById("noteEditor").focus();
 
-function focusEditor() {
-    document.getElementById("editor").focus();
-}
+    document.execCommand(command, false, value);
 
-function runCommand(command, value = null) {
-    focusEditor();
-
-    try {
-        document.execCommand(command, false, value);
-    } catch (error) {
-        console.error("Formatting command failed:", error);
-    }
-
-    saveCurrentEditor();
+    saveNote();
 }
 
 function formatBlock(tag) {
-    focusEditor();
+    document.getElementById("noteEditor").focus();
 
-    document.execCommand(
-        "formatBlock",
-        false,
-        "<" + tag.toLowerCase() + ">"
-    );
+    document.execCommand("formatBlock", false, "<" + tag.toLowerCase() + ">");
 
-    saveCurrentEditor();
+    saveNote();
 }
 
-function setFontSize(size) {
-    if (!size) return;
-
-    focusEditor();
-
-    document.execCommand("fontSize", false, size);
-
-    saveCurrentEditor();
-
-    document.getElementById("fontSize").value = "";
-}
-
-function insertLink() {
-    const url = prompt("Enter a link URL:");
-
-    if (!url) return;
-
-    try {
-        const parsed = new URL(url);
-
-        if (!["http:", "https:", "mailto:"].includes(parsed.protocol)) {
-            showToast("Use a valid HTTP, HTTPS or email link");
-            return;
-        }
-
-        focusEditor();
-
-        document.execCommand("createLink", false, parsed.href);
-
-        saveCurrentEditor();
-
-    } catch (error) {
-        showToast("Please enter a valid URL");
-    }
-}
-
-function insertTable() {
-    const rows = Number(prompt("Number of rows (1–15):", "3"));
-    const cols = Number(prompt("Number of columns (1–10):", "3"));
+function insertNoteTable() {
+    const rows = Number(prompt("Rows (1–15):", "3"));
+    const cols = Number(prompt("Columns (1–10):", "3"));
 
     if (
-        !Number.isInteger(rows) ||
-        !Number.isInteger(cols) ||
-        rows < 1 ||
-        rows > 15 ||
-        cols < 1 ||
-        cols > 10
+        !Number.isInteger(rows) || rows < 1 || rows > 15 ||
+        !Number.isInteger(cols) || cols < 1 || cols > 10
     ) {
-        showToast("Enter valid table dimensions");
+        notify("Invalid table size");
         return;
     }
 
@@ -2224,9 +1951,7 @@ function insertTable() {
         html += "<tr>";
 
         for (let c = 0; c < cols; c++) {
-            html += r === 0
-                ? "<th>Heading</th>"
-                : "<td>Write here</td>";
+            html += r === 0 ? "<th>Heading</th>" : "<td>Text</td>";
         }
 
         html += "</tr>";
@@ -2234,679 +1959,939 @@ function insertTable() {
 
     html += "</tbody></table><p><br></p>";
 
-    focusEditor();
-
+    document.getElementById("noteEditor").focus();
     document.execCommand("insertHTML", false, html);
 
-    saveCurrentEditor();
+    saveNote();
 }
 
-function insertDate() {
-    focusEditor();
+function insertNoteLink() {
+    const raw = prompt("Enter HTTP or HTTPS URL:");
+    if (!raw) return;
 
-    const date = new Date().toLocaleDateString(undefined, {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
+    try {
+        const url = new URL(raw);
+
+        if (!["http:", "https:"].includes(url.protocol)) {
+            throw new Error("Unsupported protocol");
+        }
+
+        format("createLink", url.href);
+
+    } catch {
+        notify("Enter a valid HTTP or HTTPS URL");
+    }
+}
+
+/* ============================================
+   VIEW SWITCHING
+============================================ */
+
+function switchMode(mode) {
+    currentMode = mode;
+
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.mode === mode);
     });
 
-    document.execCommand("insertText", false, date);
+    document.getElementById("noteToolbar").style.display =
+        mode === "note" ? "flex" : "none";
 
-    saveCurrentEditor();
+    document.getElementById("noteView").style.display =
+        mode === "note" ? "block" : "none";
+
+    document.getElementById("canvasView").style.display =
+        mode === "canvas" ? "flex" : "none";
+
+    document.getElementById("mindmapView").style.display =
+        mode === "mindmap" ? "flex" : "none";
+
+    if (mode === "canvas") renderCanvas();
+    if (mode === "mindmap") renderMindMap();
+
+    if (innerWidth <= 700) showPanel("");
 }
 
-/* ==========================================
-   IMAGE INSERTION
-========================================== */
+/* ============================================
+   INFINITE WORKSPACE
+============================================ */
 
-document.getElementById("imageFile").addEventListener(
-    "change",
-    function(event) {
-        const file = event.target.files[0];
+function getCanvas() {
+    const p = getPage();
 
-        if (!file) return;
+    if (!p.canvas) {
+        p.canvas = {
+            width: 5000,
+            height: 5000,
+            grid: true,
+            cards: []
+        };
+    }
 
-        if (!file.type.startsWith("image/")) {
-            showToast("Please select an image");
-            event.target.value = "";
-            return;
-        }
+    return p.canvas;
+}
 
-        // Large images can quickly fill browser storage.
-        if (file.size > 2 * 1024 * 1024) {
-            showToast("Please choose an image smaller than 2 MB");
-            event.target.value = "";
-            return;
-        }
+function expandCanvas() {
+    const c = getCanvas();
 
-        const reader = new FileReader();
+    c.width = Math.min(50000, c.width + 3000);
+    c.height = Math.min(50000, c.height + 3000);
 
-        reader.onload = function(e) {
-            focusEditor();
+    renderCanvas();
+    scheduleSave();
 
-            const image = document.createElement("img");
+    notify("Workspace expanded to " + c.width + " × " + c.height);
+}
 
-            image.src = e.target.result;
-            image.alt = file.name;
-            image.style.maxWidth = "100%";
+function toggleGrid() {
+    const c = getCanvas();
 
-            const selection = window.getSelection();
+    c.grid = !c.grid;
 
-            if (selection && selection.rangeCount > 0) {
-                const range = selection.getRangeAt(0);
+    renderCanvas();
+    scheduleSave();
+}
 
-                if (document.getElementById("editor").contains(
-                    range.commonAncestorContainer
-                )) {
-                    range.deleteContents();
-                    range.insertNode(image);
+function centerCanvas() {
+    const viewport = document.getElementById("canvasViewport");
 
-                    const paragraph = document.createElement("p");
-                    paragraph.innerHTML = "<br>";
+    viewport.scrollLeft = 0;
+    viewport.scrollTop = 0;
+}
 
-                    image.after(paragraph);
-                } else {
-                    document.getElementById("editor").appendChild(image);
-                }
-            } else {
-                document.getElementById("editor").appendChild(image);
-            }
+function addCanvasCard() {
+    const c = getCanvas();
 
-            saveCurrentEditor();
-            showToast("Image inserted");
+    const x = Math.max(20, document.getElementById("canvasViewport").scrollLeft + 80);
+    const y = Math.max(20, document.getElementById("canvasViewport").scrollTop + 80);
+
+    const card = {
+        id: uid(),
+        title: "New Note",
+        content: "",
+        x,
+        y
+    };
+
+    c.cards.push(card);
+
+    selectedCanvasCard = card.id;
+
+    renderCanvas();
+    scheduleSave();
+}
+
+function renderCanvas() {
+    const c = getCanvas();
+    const world = document.getElementById("canvasWorld");
+
+    world.style.width = c.width + "px";
+    world.style.height = c.height + "px";
+
+    world.style.backgroundImage = c.grid
+        ? "radial-gradient(var(--grid) 1px, transparent 1px)"
+        : "none";
+
+    world.style.backgroundSize = "22px 22px";
+
+    world.innerHTML = "";
+
+    c.cards.forEach(card => {
+        const element = document.createElement("div");
+
+        element.className =
+            "canvas-card" +
+            (card.id === selectedCanvasCard ? " selected" : "");
+
+        element.dataset.id = card.id;
+
+        element.style.left = card.x + "px";
+        element.style.top = card.y + "px";
+
+        const header = document.createElement("div");
+        header.className = "canvas-card-header";
+
+        const title = document.createElement("input");
+
+        title.className = "canvas-card-title";
+        title.value = card.title;
+        title.setAttribute("aria-label", "Note card title");
+
+        title.style.border = "none";
+        title.style.background = "transparent";
+        title.style.color = "var(--text)";
+        title.style.minWidth = "0";
+        title.style.outline = "none";
+
+        title.addEventListener("input", () => {
+            card.title = title.value;
+            scheduleSave();
+        });
+
+        const remove = document.createElement("button");
+        remove.className = "card-action";
+        remove.textContent = "×";
+        remove.title = "Delete note card";
+
+        remove.onclick = () => {
+            if (!confirm("Delete this workspace note?")) return;
+
+            c.cards = c.cards.filter(x => x.id !== card.id);
+
+            if (selectedCanvasCard === card.id) selectedCanvasCard = null;
+
+            renderCanvas();
+            scheduleSave();
         };
 
-        reader.readAsDataURL(file);
+        header.append(title, remove);
 
-        event.target.value = "";
-    }
-);
+        const body = document.createElement("div");
+        body.className = "canvas-card-body";
+        body.contentEditable = "true";
+        body.spellcheck = true;
+        body.innerHTML = card.content;
 
-/* ==========================================
-   CONTEXT MENU
-========================================== */
+        body.addEventListener("input", () => {
+            card.content = body.innerHTML;
+            scheduleSave();
+        });
 
-function openMenu(event, type, id) {
-    event.stopPropagation();
+        element.append(header, body);
 
-    const menu = document.getElementById("contextMenu");
+        element.addEventListener("pointerdown", () => {
+            selectedCanvasCard = card.id;
+        });
 
-    menuTarget = { type, id };
+        header.addEventListener("pointerdown", event => {
+            if (event.target.closest("button") ||
+                event.target.closest("input")) return;
 
-    let options = [];
-
-    if (type === "notebook") {
-        options = [
-            ["Rename notebook", "rename"],
-            ["Delete notebook", "delete"]
-        ];
-    }
-
-    if (type === "section") {
-        options = [
-            ["Rename section", "rename"],
-            ["Delete section", "delete"]
-        ];
-    }
-
-    if (type === "page") {
-        options = [
-            ["Rename page", "rename"],
-            ["Duplicate page", "duplicate"],
-            ["Download as HTML", "downloadHTML"],
-            ["Download as TXT", "downloadTXT"],
-            ["Delete page", "delete"]
-        ];
-    }
-
-    menu.innerHTML = options.map(option => `
-        <button onclick="menuAction('${option[1]}')">
-            ${escapeHTML(option[0])}
-        </button>
-    `).join("");
-
-    menu.style.display = "block";
-
-    const rect = event.currentTarget.getBoundingClientRect();
-
-    const width = 190;
-    const height = options.length * 42 + 10;
-
-    let left = rect.right - width;
-    let top = rect.bottom + 4;
-
-    left = Math.max(5, Math.min(left, window.innerWidth - width - 5));
-
-    if (top + height > window.innerHeight) {
-        top = rect.top - height;
-    }
-
-    top = Math.max(5, top);
-
-    menu.style.left = left + "px";
-    menu.style.top = top + "px";
-}
-
-function closeMenu() {
-    document.getElementById("contextMenu").style.display = "none";
-    menuTarget = null;
-}
-
-function menuAction(action) {
-    if (!menuTarget) return;
-
-    const { type, id } = menuTarget;
-
-    closeMenu();
-
-    if (type === "notebook") {
-        if (action === "rename") renameNotebook(id);
-        if (action === "delete") deleteNotebook(id);
-    }
-
-    if (type === "section") {
-        if (action === "rename") renameSection(id);
-        if (action === "delete") deleteSection(id);
-    }
-
-    if (type === "page") {
-        if (action === "rename") renamePage(id);
-        if (action === "duplicate") duplicatePage(id);
-
-        if (action === "downloadHTML") {
-            downloadPage(id, "html");
-        }
-
-        if (action === "downloadTXT") {
-            downloadPage(id, "txt");
-        }
-
-        if (action === "delete") deletePage(id);
-    }
-}
-
-document.addEventListener("click", function(event) {
-    const menu = document.getElementById("contextMenu");
-
-    if (
-        menu.style.display === "block" &&
-        !menu.contains(event.target)
-    ) {
-        closeMenu();
-    }
-
-    if (!event.target.closest(".searchbox")) {
-        document.getElementById("searchResults").style.display = "none";
-    }
-});
-
-/* ==========================================
-   MODAL
-========================================== */
-
-function showModal(title, label, initialValue, callback) {
-    modalCallback = callback;
-
-    document.getElementById("modalTitle").textContent = title;
-    document.getElementById("modalLabel").textContent = label;
-
-    const input = document.getElementById("modalInput");
-
-    input.value = initialValue || "";
-    input.placeholder = label;
-
-    document.getElementById("modalBackdrop").classList.add("show");
-
-    setTimeout(() => {
-        input.focus();
-        input.select();
-    }, 50);
-}
-
-function closeModal() {
-    document.getElementById("modalBackdrop").classList.remove("show");
-    modalCallback = null;
-}
-
-document.getElementById("modalConfirm").addEventListener(
-    "click",
-    function() {
-        const value = document.getElementById("modalInput").value.trim();
-
-        if (!value) {
-            showToast("Please enter a name");
-            return;
-        }
-
-        const callback = modalCallback;
-
-        closeModal();
-
-        if (callback) callback(value);
-    }
-);
-
-document.getElementById("modalInput").addEventListener(
-    "keydown",
-    function(event) {
-        if (event.key === "Enter") {
             event.preventDefault();
-            document.getElementById("modalConfirm").click();
-        }
 
-        if (event.key === "Escape") {
-            closeModal();
-        }
+            const startX = event.clientX;
+            const startY = event.clientY;
+            const originalX = card.x;
+            const originalY = card.y;
+
+            header.setPointerCapture(event.pointerId);
+
+            const move = e => {
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+
+                card.x = Math.max(-100000, Math.min(100000, originalX + dx));
+                card.y = Math.max(-100000, Math.min(100000, originalY + dy));
+
+                element.style.left = card.x + "px";
+                element.style.top = card.y + "px";
+            };
+
+            const stop = () => {
+                header.removeEventListener("pointermove", move);
+                header.removeEventListener("pointerup", stop);
+                header.removeEventListener("pointercancel", stop);
+
+                scheduleSave();
+            };
+
+            header.addEventListener("pointermove", move);
+            header.addEventListener("pointerup", stop);
+            header.addEventListener("pointercancel", stop);
+        });
+
+        world.appendChild(element);
+    });
+}
+
+function clearCanvasSelection() {
+    selectedCanvasCard = null;
+    renderCanvas();
+}
+
+/* ============================================
+   MIND MAP DATA
+============================================ */
+
+function getMindMap() {
+    const p = getPage();
+
+    if (!p.mindmap) {
+        p.mindmap = {
+            width: 4000,
+            height: 3000,
+            nodes: [],
+            edges: []
+        };
     }
-);
 
-document.getElementById("modalBackdrop").addEventListener(
-    "click",
-    function(event) {
-        if (event.target === this) closeModal();
+    if (!p.mindmap.nodes.length) {
+        p.mindmap.nodes.push({
+            id: uid(),
+            text: p.name || "Main Idea",
+            x: 1750,
+            y: 1300,
+            root: true
+        });
     }
-);
 
-/* ==========================================
+    return p.mindmap;
+}
+
+function getNode(id) {
+    return getMindMap().nodes.find(node => node.id === id) || null;
+}
+
+/* ============================================
+   MIND MAP NODE OPERATIONS
+============================================ */
+
+function addMindNode() {
+    const m = getMindMap();
+
+    const node = {
+        id: uid(),
+        text: "New Idea",
+        x: 1750 + Math.round(Math.random() * 500 - 250),
+        y: 1500 + Math.round(Math.random() * 500 - 250),
+        root: false
+    };
+
+    m.nodes.push(node);
+
+    selectedMindNode = node.id;
+
+    renderMindMap();
+    scheduleSave();
+
+    notify("Node created");
+}
+
+function addChildNode() {
+    const m = getMindMap();
+
+    let parent = getNode(selectedMindNode);
+
+    if (!parent) {
+        parent = m.nodes.find(node => node.root) || m.nodes[0];
+    }
+
+    if (!parent) {
+        addMindNode();
+        return;
+    }
+
+    const siblings = m.edges.filter(edge => edge.from === parent.id).length;
+
+    const node = {
+        id: uid(),
+        text: "Child Idea",
+        x: parent.x + 280,
+        y: parent.y + siblings * 115 - 35,
+        root: false
+    };
+
+    m.nodes.push(node);
+
+    m.edges.push({
+        from: parent.id,
+        to: node.id
+    });
+
+    selectedMindNode = node.id;
+
+    renderMindMap();
+    scheduleSave();
+
+    notify("Child node added");
+}
+
+function editMindNode() {
+    const node = getNode(selectedMindNode);
+
+    if (!node) {
+        notify("Select a node first");
+        return;
+    }
+
+    showModal("Edit Mind Map Node", "Node text", node.text, text => {
+        node.text = text;
+
+        renderMindMap();
+        scheduleSave();
+    });
+}
+
+function deleteMindNode() {
+    const m = getMindMap();
+
+    const node = getNode(selectedMindNode);
+
+    if (!node) {
+        notify("Select a node first");
+        return;
+    }
+
+    if (node.root) {
+        if (!confirm(
+            "Delete the central node? This will remove all connections to it."
+        )) return;
+    }
+
+    m.nodes = m.nodes.filter(x => x.id !== node.id);
+
+    m.edges = m.edges.filter(
+        edge => edge.from !== node.id && edge.to !== node.id
+    );
+
+    selectedMindNode = null;
+
+    renderMindMap();
+    scheduleSave();
+}
+
+function connectMindNodes() {
+    if (!selectedMindNode) {
+        notify("Select the first node");
+        return;
+    }
+
+    if (!pendingConnection) {
+        pendingConnection = selectedMindNode;
+
+        document.getElementById("mindmapStatus").textContent =
+            "Now select another node to connect it.";
+
+        notify("Select the second node");
+
+        return;
+    }
+
+    const first = pendingConnection;
+    const second = selectedMindNode;
+
+    pendingConnection = null;
+
+    if (first === second) {
+        notify("Choose two different nodes");
+        return;
+    }
+
+    const m = getMindMap();
+
+    const exists = m.edges.some(edge =>
+        (edge.from === first && edge.to === second) ||
+        (edge.from === second && edge.to === first)
+    );
+
+    if (!exists) {
+        m.edges.push({ from: first, to: second });
+    }
+
+    renderMindMap();
+    scheduleSave();
+
+    document.getElementById("mindmapStatus").textContent =
+        "Connection created.";
+}
+
+function disconnectMindNodes() {
+    const m = getMindMap();
+
+    if (!selectedMindNode) {
+        notify("Select a node first");
+        return;
+    }
+
+    const connected = m.edges.filter(edge =>
+        edge.from === selectedMindNode ||
+        edge.to === selectedMindNode
+    );
+
+    if (!connected.length) {
+        notify("This node has no connections");
+        return;
+    }
+
+    const otherIds = new Set();
+
+    connected.forEach(edge => {
+        otherIds.add(
+            edge.from === selectedMindNode ? edge.to : edge.from
+        );
+    });
+
+    const target = prompt(
+        "Enter the number of the connection to remove:\n" +
+        [...otherIds].map((id, i) => {
+            const node = getNode(id);
+            return `${i + 1}. ${node?.text || "Node"}`;
+        }).join("\n")
+    );
+
+    if (!target) return;
+
+    const index = Number(target) - 1;
+    const otherId = [...otherIds][index];
+
+    if (!otherId) {
+        notify("Invalid selection");
+        return;
+    }
+
+    m.edges = m.edges.filter(edge =>
+        !(
+            (edge.from === selectedMindNode && edge.to === otherId) ||
+            (edge.from === otherId && edge.to === selectedMindNode)
+        )
+    );
+
+    renderMindMap();
+    scheduleSave();
+
+    notify("Connection removed");
+}
+
+/* ============================================
+   MIND MAP RENDERING
+============================================ */
+
+function renderMindMap() {
+    const m = getMindMap();
+
+    const world = document.getElementById("mindmapWorld");
+    const nodeContainer = document.getElementById("mindNodes");
+    const svg = document.getElementById("mindmapLines");
+
+    world.style.width = m.width + "px";
+    world.style.height = m.height + "px";
+
+    svg.setAttribute("width", m.width);
+    svg.setAttribute("height", m.height);
+    svg.setAttribute("viewBox", `0 0 ${m.width} ${m.height}`);
+
+    nodeContainer.innerHTML = "";
+    svg.innerHTML = "";
+
+    /*
+    Each connection is drawn from the center of one node
+    to the center of the other node.
+    */
+
+    m.edges.forEach(edge => {
+        const a = getNode(edge.from);
+        const b = getNode(edge.to);
+
+        if (!a || !b) return;
+
+        const line = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+        );
+
+        line.setAttribute("x1", a.x + 85);
+        line.setAttribute("y1", a.y + 32);
+        line.setAttribute("x2", b.x + 85);
+        line.setAttribute("y2", b.y + 32);
+        line.setAttribute("stroke", "#a98bc5");
+        line.setAttribute("stroke-width", "3");
+        line.setAttribute("stroke-linecap", "round");
+
+        svg.appendChild(line);
+    });
+
+    m.nodes.forEach(node => {
+        const element = document.createElement("div");
+
+        element.className =
+            "mind-node" +
+            (node.root ? " root" : "") +
+            (node.id === selectedMindNode ? " selected" : "");
+
+        element.dataset.id = node.id;
+
+        element.style.left = node.x + "px";
+        element.style.top = node.y + "px";
+
+        const dot = document.createElement("span");
+        dot.className = "node-dot";
+
+        const text = document.createElement("div");
+        text.className = "node-text";
+        text.textContent = node.text;
+
+        const edit = document.createElement("button");
+        edit.className = "card-action";
+        edit.textContent = "✎";
+        edit.title = "Edit node";
+
+        edit.onclick = event => {
+            event.stopPropagation();
+            selectedMindNode = node.id;
+            editMindNode();
+        };
+
+        element.append(dot, text, edit);
+
+        element.addEventListener("pointerdown", event => {
+            if (event.target.closest("button")) return;
+
+            selectedMindNode = node.id;
+
+            if (pendingConnection && pendingConnection !== node.id) {
+                renderMindMap();
+                return;
+            }
+
+            renderMindMap();
+
+            if (event.target.closest(".node-text")) {
+                return;
+            }
+
+            event.preventDefault();
+
+            const startX = event.clientX;
+            const startY = event.clientY;
+            const originalX = node.x;
+            const originalY = node.y;
+
+            element.setPointerCapture(event.pointerId);
+
+            const move = e => {
+                node.x = Math.max(
+                    -100000,
+                    Math.min(100000, originalX + e.clientX - startX)
+                );
+
+                node.y = Math.max(
+                    -100000,
+                    Math.min(100000, originalY + e.clientY - startY)
+                );
+
+                element.style.left = node.x + "px";
+                element.style.top = node.y + "px";
+
+                redrawMindMapLines();
+            };
+
+            const stop = () => {
+                element.removeEventListener("pointermove", move);
+                element.removeEventListener("pointerup", stop);
+                element.removeEventListener("pointercancel", stop);
+
+                scheduleSave();
+                renderMindMap();
+            };
+
+            element.addEventListener("pointermove", move);
+            element.addEventListener("pointerup", stop);
+            element.addEventListener("pointercancel", stop);
+        });
+
+        text.addEventListener("dblclick", () => {
+            selectedMindNode = node.id;
+            editMindNode();
+        });
+
+        nodeContainer.appendChild(element);
+    });
+
+    document.getElementById("mindmapStatus").textContent =
+        `${m.nodes.length} nodes • ${m.edges.length} connections` +
+        (selectedMindNode ? " • Node selected" : "");
+}
+
+function redrawMindMapLines() {
+    const m = getMindMap();
+    const svg = document.getElementById("mindmapLines");
+
+    svg.innerHTML = "";
+
+    m.edges.forEach(edge => {
+        const a = getNode(edge.from);
+        const b = getNode(edge.to);
+
+        if (!a || !b) return;
+
+        const line = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+        );
+
+        line.setAttribute("x1", a.x + 85);
+        line.setAttribute("y1", a.y + 32);
+        line.setAttribute("x2", b.x + 85);
+        line.setAttribute("y2", b.y + 32);
+        line.setAttribute("stroke", "#a98bc5");
+        line.setAttribute("stroke-width", "3");
+
+        svg.appendChild(line);
+    });
+}
+
+function centerMindMap() {
+    const viewport = document.getElementById("mindmapViewport");
+    const m = getMindMap();
+
+    const root = m.nodes.find(node => node.root) || m.nodes[0];
+
+    if (root) {
+        viewport.scrollLeft = Math.max(0, root.x - viewport.clientWidth / 2);
+        viewport.scrollTop = Math.max(0, root.y - viewport.clientHeight / 2);
+    }
+}
+
+function resetMindMap() {
+    if (!confirm("Reset this page's mind map?")) return;
+
+    const p = getPage();
+
+    p.mindmap = {
+        width: 4000,
+        height: 3000,
+        nodes: [{
+            id: uid(),
+            text: p.name || "Main Idea",
+            x: 1750,
+            y: 1300,
+            root: true
+        }],
+        edges: []
+    };
+
+    selectedMindNode = null;
+    pendingConnection = null;
+
+    renderMindMap();
+    scheduleSave();
+}
+
+/* ============================================
    SEARCH
-========================================== */
+============================================ */
 
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
+document.getElementById("searchInput").addEventListener("input", function() {
+    const q = this.value.trim().toLowerCase();
 
-searchInput.addEventListener("input", function() {
-    const query = this.value.trim().toLowerCase();
-
-    if (!query) {
-        searchResults.style.display = "none";
-        searchResults.innerHTML = "";
+    if (!q) {
+        renderAll();
         return;
     }
 
     const matches = [];
 
-    for (const notebook of data.notebooks) {
-        for (const section of notebook.sections) {
-            for (const page of section.pages) {
-                const text = plainText(page.content);
+    for (const n of db.notebooks) {
+        for (const s of n.sections) {
+            for (const p of s.pages) {
+                const content = plainText(p.content);
 
-                const searchable = [
-                    notebook.name,
-                    section.name,
-                    page.title,
-                    text
+                const canvasText = (p.canvas?.cards || [])
+                    .map(c => c.title + " " + plainText(c.content))
+                    .join(" ");
+
+                const mapText = (p.mindmap?.nodes || [])
+                    .map(node => node.text)
+                    .join(" ");
+
+                const all = [
+                    n.name, s.name, p.name,
+                    content, canvasText, mapText
                 ].join(" ").toLowerCase();
 
-                if (searchable.includes(query)) {
-                    matches.push({
-                        notebook,
-                        section,
-                        page,
-                        text
-                    });
-                }
+                if (all.includes(q)) matches.push({ n, s, p });
             }
         }
     }
 
-    if (!matches.length) {
-        searchResults.innerHTML = `
-            <div class="search-result">
-                No matching notes found.
+    document.getElementById("notebookList").innerHTML =
+        matches.map(m => `
+            <div class="list-item"
+                 onclick="openSearchMatch('${m.n.id}','${m.s.id}','${m.p.id}')">
+                🔎 <span class="name">${escapeHTML(m.p.name)}</span>
             </div>
-        `;
-
-    } else {
-        searchResults.innerHTML = matches.slice(0, 50).map(
-            (match, index) => `
-                <div class="search-result"
-                     onclick="openSearchResult(${index})">
-
-                    <strong>
-                        ${escapeHTML(match.page.title)}
-                    </strong>
-
-                    <small>
-                        ${escapeHTML(match.notebook.name)}
-                        › ${escapeHTML(match.section.name)}
-                    </small>
-
-                    <div class="page-preview">
-                        ${escapeHTML(match.text.slice(0, 140))}
-                    </div>
-
-                </div>
-            `
-        ).join("");
-    }
-
-    searchResults.style.display = "block";
-
-    window.currentSearchMatches = matches;
+        `).join("") || '<p style="padding:10px;color:var(--muted)">No results</p>';
 });
 
-function openSearchResult(index) {
-    const match = window.currentSearchMatches?.[index];
-
-    if (!match) return;
-
-    activeNotebookId = match.notebook.id;
-    activeSectionId = match.section.id;
-    activePageId = match.page.id;
+function openSearchMatch(n, s, p) {
+    notebookId = n;
+    sectionId = s;
+    pageId = p;
 
     renderAll();
     updateEditor();
-
-    searchInput.value = "";
-    searchResults.style.display = "none";
-
-    hideMobilePanels();
+    document.getElementById("searchInput").value = "";
+    showPanel("");
 }
 
-/* ==========================================
-   EXPORT INDIVIDUAL PAGE
-========================================== */
+/* ============================================
+   IMPORT / EXPORT
+============================================ */
 
-function downloadBlob(blob, filename) {
+function downloadFile(content, filename, type) {
+    const blob = new Blob([content], { type });
     const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
+    const a = document.createElement("a");
 
-    anchor.href = url;
-    anchor.download = filename;
+    a.href = url;
+    a.download = filename;
 
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
 
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function safeFilename(name) {
-    return String(name || "notes")
-        .replace(/[<>:"/\\|?*\x00-\x1F]/g, "_")
-        .trim()
-        .slice(0, 100) || "notes";
-}
-
-function downloadPage(id, format) {
-    const section = getSection();
-
-    if (!section) return;
-
-    const page = section.pages.find(p => p.id === id);
-
-    if (!page) return;
-
-    if (format === "txt") {
-        const text = plainText(page.content);
-
-        const output =
-            page.title + "\n" +
-            "=".repeat(Math.min(page.title.length, 80)) +
-            "\n\n" + text;
-
-        downloadBlob(
-            new Blob([output], { type: "text/plain;charset=utf-8" }),
-            safeFilename(page.title) + ".txt"
-        );
-
-        showToast("Text file downloaded");
-        return;
-    }
-
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${escapeHTML(page.title)}</title>
-<style>
-body {
-    max-width: 850px;
-    margin: 40px auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    line-height: 1.8;
-}
-img { max-width: 100%; height: auto; }
-table { border-collapse: collapse; width: 100%; }
-td, th { border: 1px solid #ddd; padding: 8px; }
-</style>
-</head>
-<body>
-<h1>${escapeHTML(page.title)}</h1>
-${page.content}
-</body>
-</html>`;
-
-    downloadBlob(
-        new Blob([html], { type: "text/html;charset=utf-8" }),
-        safeFilename(page.title) + ".html"
-    );
-
-    showToast("HTML file downloaded");
-}
-
-/* ==========================================
-   BACKUP AND RESTORE
-========================================== */
-
 function exportBackup() {
-    saveData(false);
+    if (!saveData()) return;
 
-    const backup = JSON.stringify(data, null, 2);
-
-    downloadBlob(
-        new Blob([backup], {
-            type: "application/json;charset=utf-8"
-        }),
-        "onenote-pro-backup-" +
-        new Date().toISOString().slice(0, 10) +
-        ".json"
+    downloadFile(
+        JSON.stringify(db, null, 2),
+        "onenote-pro-backup.json",
+        "application/json"
     );
 
-    showToast("Backup downloaded");
+    notify("Backup exported");
 }
 
-document.getElementById("importFile").addEventListener(
-    "change",
-    async function(event) {
-        const file = event.target.files[0];
+document.getElementById("importInput").addEventListener("change", async e => {
+    const file = e.target.files[0];
 
-        if (!file) return;
+    if (!file) return;
 
-        try {
-            if (file.size > 25 * 1024 * 1024) {
-                throw new Error("Backup file is too large.");
-            }
-
-            const text = await file.text();
-            const imported = validateData(JSON.parse(text));
-
-            if (!confirm(
-                "Importing this backup will replace your current notebooks. " +
-                "Export a backup of your existing notes first if needed. Continue?"
-            )) {
-                return;
-            }
-
-            data = imported;
-
-            if (!data.notebooks.length) {
-                data = defaultData();
-            }
-
-            activeNotebookId = data.notebooks[0].id;
-            activeSectionId =
-                data.notebooks[0].sections[0]?.id || null;
-            activePageId =
-                data.notebooks[0].sections[0]?.pages[0]?.id || null;
-
-            if (!saveData()) {
-                showToast("Import could not be saved");
-                return;
-            }
-
-            renderAll();
-            updateEditor();
-
-            showToast("Backup imported successfully");
-
-        } catch (error) {
-            console.error(error);
-            showToast("Invalid or unreadable backup file");
-
-        } finally {
-            event.target.value = "";
+    try {
+        if (file.size > 25 * 1024 * 1024) {
+            throw new Error("File too large");
         }
-    }
-);
 
-/* ==========================================
-   THEME
-========================================== */
+        const imported = validateData(JSON.parse(await file.text()));
+
+        if (!confirm("Replace all current notebooks with this backup?")) return;
+
+        db = imported;
+
+        ensureSelection();
+
+        if (!saveData()) return;
+
+        notebookId = db.notebooks[0].id;
+        sectionId = db.notebooks[0].sections[0]?.id || null;
+        pageId = db.notebooks[0].sections[0]?.pages[0]?.id || null;
+
+        renderAll();
+        updateEditor();
+
+        notify("Backup imported");
+
+    } catch (error) {
+        console.error(error);
+        notify("Invalid backup file");
+    } finally {
+        e.target.value = "";
+    }
+});
+
+/* ============================================
+   THEME AND MOBILE PANELS
+============================================ */
 
 function toggleTheme() {
     document.body.classList.toggle("dark");
 
-    try {
-        localStorage.setItem(
-            THEME_KEY,
-            document.body.classList.contains("dark") ? "dark" : "light"
-        );
-    } catch (error) {
-        console.warn("Theme preference could not be saved.");
-    }
+    localStorage.setItem(
+        THEME_KEY,
+        document.body.classList.contains("dark") ? "dark" : "light"
+    );
 }
 
-/* ==========================================
-   MOBILE NAVIGATION
-========================================== */
+function showPanel(panel) {
+    const workspace = document.getElementById("workspace");
 
-const workspace = document.getElementById("workspace");
-
-function showMobileNotebooks() {
-    workspace.classList.remove("show-sections", "show-pages");
-    workspace.classList.add("show-notebooks");
-}
-
-function showMobileSections() {
-    workspace.classList.remove("show-notebooks", "show-pages");
-    workspace.classList.add("show-sections");
-}
-
-function showMobilePages() {
-    workspace.classList.remove("show-notebooks", "show-sections");
-    workspace.classList.add("show-pages");
-}
-
-function hideMobilePanels() {
     workspace.classList.remove(
         "show-notebooks",
         "show-sections",
         "show-pages"
     );
+
+    if (panel === "notebooks") workspace.classList.add("show-notebooks");
+    if (panel === "sections") workspace.classList.add("show-sections");
+    if (panel === "pages") workspace.classList.add("show-pages");
 }
 
-/* ==========================================
-   TOAST NOTIFICATIONS
-========================================== */
+/* ============================================
+   TOAST
+============================================ */
 
-function showToast(message) {
-    const toast = document.getElementById("toast");
+function notify(message) {
+    const el = document.getElementById("toast");
 
-    toast.textContent = message;
-    toast.classList.add("show");
+    el.textContent = message;
+    el.classList.add("show");
 
     clearTimeout(toastTimer);
 
-    toastTimer = setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2500);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 2500);
 }
 
-/* ==========================================
+/* ============================================
    KEYBOARD SHORTCUTS
-========================================== */
+============================================ */
 
-document.addEventListener("keydown", function(event) {
-    const isMac = navigator.platform.toUpperCase().includes("MAC");
-    const modifier = isMac ? event.metaKey : event.ctrlKey;
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closeModal();
+        pendingConnection = null;
+    }
 
-    if (!modifier) return;
-
-    const key = event.key.toLowerCase();
-
-    if (key === "s") {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
-
-        saveCurrentEditor();
-
-        clearTimeout(saveTimer);
 
         saveData();
 
-        showToast("Notes saved");
+        notify("Saved");
     }
 
-    if (key === "n" && !event.shiftKey) {
+    if ((event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "n") {
         event.preventDefault();
-        newPage();
-    }
 
-    if (key === "b") {
-        event.preventDefault();
-        runCommand("bold");
-    }
-
-    if (key === "i") {
-        event.preventDefault();
-        runCommand("italic");
-    }
-
-    if (key === "u") {
-        event.preventDefault();
-        runCommand("underline");
-    }
-
-    if (key === "f") {
-        event.preventDefault();
-        searchInput.focus();
+        if (currentMode === "canvas") addCanvasCard();
+        else if (currentMode === "mindmap") addMindNode();
+        else newPage();
     }
 });
 
-/* ==========================================
-   BEFORE PAGE EXIT
-========================================== */
+/* ============================================
+   BEFORE EXIT
+============================================ */
 
-window.addEventListener("beforeunload", function() {
+window.addEventListener("beforeunload", () => {
     clearTimeout(saveTimer);
 
-    const page = getPage();
+    const p = getPage();
 
-    if (page) {
-        page.title =
-            document.getElementById("pageTitle").value.trim() ||
-            "Untitled page";
+    if (p) {
+        p.name =
+            document.getElementById("pageTitle").value.trim() || "New Page";
 
-        page.content = document.getElementById("editor").innerHTML;
-        page.updatedAt = now();
+        p.content = document.getElementById("noteEditor").innerHTML;
+        p.updatedAt = timestamp();
     }
 
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
     } catch (error) {
-        console.warn("Final save failed.");
+        console.warn("Could not save final state", error);
     }
 });
 
-/* ==========================================
-   INITIALIZE
-========================================== */
+/* ============================================
+   INITIALIZATION
+============================================ */
 
 loadData();
 
 </script>
-
 </body>
 </html>
