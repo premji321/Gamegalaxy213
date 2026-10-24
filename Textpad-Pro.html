@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#185abd">
+
+<title>WordMaster Pro - Document Editor</title>
+
+<style>
+:root{
+  --blue:#185abd;
+  --blue-dark:#10468f;
+  --bg:#f4f6fa;
+  --surface:#ffffff;
+  --text:#202124;
+  --border:#d8dee8;
+  --toolbar:#f7f9fc;
+  --shadow:0 3px 15px rgba(0,0,0,.07);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+body.dark{
+  --bg:#151923;
+  --surface:#202633;
+  --text:#f1f5f9;
+  --border:#394354;
+  --toolbar:#252e3d;
+  --shadow:0 3px 15px rgba(0,0,0,.2);
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible{
+  outline:2px solid #3b82f6;
+  outline-offset:2px;
+}
+
+/* HEADER */
+
+.topbar{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:12px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.brand{
+  font-size:21px;
+  font-weight:800;
+  color:var(--blue);
+}
+
+.brand small{
+  display:block;
+  font-size:10px;
+  color:var(--text);
+  letter-spacing:2px;
+  margin-top:3px;
+}
+
+.top-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:9px 13px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:6px;
+  font-size:13px;
+}
+
+.btn:hover{
+  background:var(--toolbar);
+}
+
+.btn.primary{
+  background:var(--blue);
+  color:white;
+  border-color:var(--blue);
+}
+
+/* DOCUMENT TITLE */
+
+.titlebar{
+  padding:10px 18px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+#docTitle{
+  background:var(--surface);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:9px 12px;
+  min-width:180px;
+  max-width:100%;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.status{
+  font-size:12px;
+  color:#16834a;
+}
+
+/* TOOLBAR */
+
+.toolbar{
+  background:var(--toolbar);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:10px;
+  display:flex;
+  gap:7px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.tool-group{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding-right:8px;
+  margin-right:4px;
+  border-right:1px solid var(--border);
+}
+
+.tool{
+  min-width:32px;
+  height:32px;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--text);
+  border-radius:4px;
+  font-size:14px;
+}
+
+.tool:hover{
+  background:var(--surface);
+  border-color:var(--border);
+}
+
+.tool select,
+.toolbar select{
+  height:32px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:4px;
+  padding:0 7px;
+  max-width:150px;
+}
+
+.color-wrap{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  font-size:12px;
+}
+
+.color-wrap input{
+  width:26px;
+  height:28px;
+  padding:1px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+}
+
+/* APP LAYOUT */
+
+.app-layout{
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr);
+  min-height:calc(100vh - 190px);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  padding:15px;
+}
+
+.sidebar h3{
+  font-size:14px;
+  margin:5px 0 15px;
+}
+
+.sidebar .btn{
+  width:100%;
+  margin-bottom:8px;
+  text-align:left;
+}
+
+.doc-list{
+  margin-top:15px;
+}
+
+.doc-item{
+  padding:10px;
+  margin:5px 0;
+  border:1px solid var(--border);
+  border-radius:6px;
+  cursor:pointer;
+  overflow-wrap:anywhere;
+  font-size:13px;
+}
+
+.doc-item:hover,
+.doc-item.active{
+  background:#e9f1ff;
+  color:#123e83;
+}
+
+body.dark .doc-item:hover,
+body.dark .doc-item.active{
+  background:#303e56;
+  color:white;
+}
+
+/* WORKSPACE */
+
+.workspace{
+  padding:24px;
+  overflow:auto;
+}
+
+.workspace-heading{
+  text-align:center;
+  font-size:13px;
+  color:#777;
+  margin-bottom:15px;
+}
+
+.page{
+  width:100%;
+  max-width:850px;
+  min-height:1050px;
+  margin:0 auto;
+  padding:75px 70px;
+  background:white;
+  color:#202124;
+  box-shadow:var(--shadow);
+  border:1px solid #e0e0e0;
+  outline:none;
+  line-height:1.65;
+  font-family:Arial,sans-serif;
+  font-size:16px;
+  overflow-wrap:anywhere;
+}
+
+.page:focus{
+  border-color:#b8c9e8;
+}
+
+.page img{
+  max-width:100%;
+  height:auto;
+}
+
+.page table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.page td,
+.page th{
+  border:1px solid #777;
+  padding:8px;
+  min-width:40px;
+}
+
+.page blockquote{
+  border-left:4px solid #185abd;
+  margin-left:0;
+  padding-left:15px;
+  color:#555;
+}
+
+.page h1,
+.page h2,
+.page h3{
+  line-height:1.3;
+}
+
+/* STATUS BAR */
+
+.statusbar{
+  position:sticky;
+  bottom:0;
+  z-index:50;
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:9px 15px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  font-size:12px;
+}
+
+.statusbar span{
+  margin-right:12px;
+}
+
+/* DIALOG */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:500;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:var(--surface);
+  color:var(--text);
+  padding:22px;
+  border-radius:12px;
+  width:100%;
+  max-width:480px;
+  max-height:85vh;
+  overflow:auto;
+  box-shadow:var(--shadow);
+}
+
+.modal-box h2{
+  margin-top:0;
+}
+
+.modal-box input,
+.modal-box select{
+  width:100%;
+  padding:10px;
+  margin:7px 0 13px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--surface);
+  color:var(--text);
+}
+
+.modal-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+/* FIND BAR */
+
+.findbar{
+  display:none;
+  padding:10px 15px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.findbar.show{
+  display:flex;
+}
+
+.findbar input{
+  padding:8px;
+  border:1px solid var(--border);
+  border-radius:5px;
+  max-width:220px;
+  background:var(--surface);
+  color:var(--text);
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+  .app-layout{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    border-right:none;
+    border-bottom:1px solid var(--border);
+  }
+
+  .doc-list{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:5px;
+  }
+
+  .workspace{
+    padding:10px;
+  }
+
+  .page{
+    min-height:700px;
+    padding:35px 22px;
+    font-size:15px;
+  }
+
+  .topbar{
+    position:static;
+  }
+}
+
+@media(max-width:480px){
+  .brand{
+    font-size:18px;
+  }
+
+  .top-actions .btn{
+    padding:8px;
+  }
+
+  .doc-list{
+    grid-template-columns:1fr;
+  }
+
+  .tool-group{
+    border-right:none;
+  }
+
+  #docTitle{
+    width:100%;
+  }
+}
+
+/* PRINT */
+
+@media print{
+  body{
+    background:white !important;
+  }
+
+  .topbar,
+  .titlebar,
+  .toolbar,
+  .sidebar,
+  .statusbar,
+  .workspace-heading,
+  .findbar,
+  .no-print{
+    display:none !important;
+  }
+
+  .app-layout{
+    display:block;
+  }
+
+  .workspace{
+    padding:0;
+    overflow:visible;
+  }
+
+  .page{
+    width:100%;
+    max-width:none;
+    min-height:0;
+    margin:0;
+    padding:0;
+    border:0;
+    box-shadow:none;
+    overflow:visible;
+  }
+
+  @page{
+    size:A4;
+    margin:20mm;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="topbar">
+
+  <div class="brand">
+    📝 WordMaster Pro
+    <small>SMART DOCUMENT EDITOR</small>
+  </div>
+
+  <div class="top-actions">
+    <button class="btn" onclick="newDocument()">＋ New</button>
+    <button class="btn" onclick="document.getElementById('fileInput').click()">📂 Open</button>
+    <button class="btn" onclick="saveNow()">💾 Save</button>
+    <button class="btn primary" onclick="printDocument()">🖨 Print / PDF</button>
+    <button class="btn" onclick="toggleDark()">🌙 Theme</button>
+  </div>
+
+</header>
+
+<input
+  type="file"
+  id="fileInput"
+  accept=".txt,.html,.htm,.doc,.docx"
+  hidden
+>
+
+<!-- DOCUMENT TITLE -->
+
+<section class="titlebar">
+
+  <input
+    id="docTitle"
+    type="text"
+    value="Untitled Document"
+    aria-label="Document title"
+    maxlength="150"
+  >
+
+  <span id="saveStatus" class="status">Ready</span>
+
+</section>
+
+<!-- MAIN TOOLBAR -->
+
+<nav class="toolbar" aria-label="Formatting toolbar">
+
+  <!-- HISTORY -->
+
+  <div class="tool-group">
+    <button class="tool" title="Undo (Ctrl+Z)" onclick="runCommand('undo')">↶</button>
+    <button class="tool" title="Redo (Ctrl+Y)" onclick="runCommand('redo')">↷</button>
+  </div>
+
+  <!-- FONT -->
+
+  <div class="tool-group">
+
+    <select id="fontFamily" title="Font family" onchange="setFont(this.value)">
+      <option value="Arial">Arial</option>
+      <option value="Calibri">Calibri</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Tahoma">Tahoma</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Trebuchet MS">Trebuchet MS</option>
+    </select>
+
+    <select id="fontSize" title="Font size" onchange="setFontSize(this.value)">
+      <option value="1">8</option>
+      <option value="2">10</option>
+      <option value="3" selected>12</option>
+      <option value="4">14</option>
+      <option value="5">18</option>
+      <option value="6">24</option>
+      <option value="7">36</option>
+    </select>
+
+  </div>
+
+  <!-- TEXT STYLE -->
+
+  <div class="tool-group">
+
+    <button class="tool" title="Bold" onclick="runCommand('bold')"><b>B</b></button>
+    <button class="tool" title="Italic" onclick="runCommand('italic')"><i>I</i></button>
+    <button class="tool" title="Underline" onclick="runCommand('underline')"><u>U</u></button>
+    <button class="tool" title="Strikethrough" onclick="runCommand('strikeThrough')"><s>S</s></button>
+
+  </div>
+
+  <!-- COLORS -->
+
+  <div class="tool-group">
+
+    <label class="color-wrap" title="Text color">
+      A
+      <input type="color" id="textColor" value="#202124" onchange="setColor(this.value)">
+    </label>
+
+    <label class="color-wrap" title="Highlight color">
+      🖍
+      <input type="color" id="highlightColor" value="#ffff00">
+    </label>
+
+    <button class="tool" title="Apply highlight" onclick="applyHighlight()">Highlight</button>
+
+  </div>
+
+  <!-- ALIGNMENT -->
+
+  <div class="tool-group">
+
+    <button class="tool" title="Align left" onclick="runCommand('justifyLeft')">☰</button>
+    <button class="tool" title="Center" onclick="runCommand('justifyCenter')">≡</button>
+    <button class="tool" title="Align right" onclick="runCommand('justifyRight')">☷</button>
+    <button class="tool" title="Justify" onclick="runCommand('justifyFull')">▤</button>
+
+  </div>
+
+  <!-- LISTS -->
+
+  <div class="tool-group">
+
+    <button class="tool" title="Bullet list" onclick="runCommand('insertUnorderedList')">• List</button>
+    <button class="tool" title="Numbered list" onclick="runCommand('insertOrderedList')">1. List</button>
+    <button class="tool" title="Decrease indent" onclick="runCommand('outdent')">⇤</button>
+    <button class="tool" title="Increase indent" onclick="runCommand('indent')">⇥</button>
+
+  </div>
+
+  <!-- HEADINGS -->
+
+  <div class="tool-group">
+
+    <select onchange="applyBlock(this.value);this.selectedIndex=0" title="Paragraph style">
+      <option value="">Paragraph style</option>
+      <option value="p">Normal text</option>
+      <option value="h1">Heading 1</option>
+      <option value="h2">Heading 2</option>
+      <option value="h3">Heading 3</option>
+      <option value="blockquote">Quote</option>
+      <option value="pre">Code block</option>
+    </select>
+
+  </div>
+
+  <!-- INSERT -->
+
+  <div class="tool-group">
+
+    <button class="tool" title="Insert link" onclick="insertLink()">🔗</button>
+    <button class="tool" title="Insert image" onclick="document.getElementById('imageInput').click()">🖼</button>
+    <button class="tool" title="Insert table" onclick="insertTable()">▦ Table</button>
+    <button class="tool" title="Insert horizontal line" onclick="runCommand('insertHorizontalRule')">―</button>
+
+  </div>
+
+  <!-- UTILITIES -->
+
+  <div class="tool-group">
+
+    <button class="tool" onclick="toggleFind()">🔍 Find</button>
+    <button class="tool" onclick="insertDate()">📅 Date</button>
+    <button class="tool" onclick="insertPageBreak()">↵ Break</button>
+
+  </div>
+
+</nav>
+
+<input
+  type="file"
+  id="imageInput"
+  accept="image/*"
+  hidden
+>
+
+<!-- FIND AND REPLACE -->
+
+<section class="findbar" id="findBar">
+
+  <input id="findText" placeholder="Find text">
+
+  <input id="replaceText" placeholder="Replace with">
+
+  <button class="btn" onclick="findNext()">Find next</button>
+
+  <button class="btn" onclick="replaceOne()">Replace</button>
+
+  <button class="btn" onclick="replaceAll()">Replace all</button>
+
+  <button class="btn" onclick="toggleFind()">Close</button>
+
+</section>
+
+<!-- MAIN LAYOUT -->
+
+<main class="app-layout">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <h3>📁 My Documents</h3>
+
+    <button class="btn primary" onclick="newDocument()">＋ Create Document</button>
+
+    <button class="btn" onclick="renameDocument()">✏️ Rename Document</button>
+
+    <button class="btn" onclick="downloadHTML()">🌐 Download HTML</button>
+
+    <button class="btn" onclick="downloadTXT()">📄 Download TXT</button>
+
+    <button class="btn" onclick="exportJSON()">📦 Backup Documents</button>
+
+    <button class="btn" onclick="document.getElementById('backupInput').click()">📥 Restore Backup</button>
+
+    <input
+      type="file"
+      id="backupInput"
+      accept=".json,application/json"
+      hidden
+    >
+
+    <button class="btn" onclick="deleteDocument()">🗑 Delete Document</button>
+
+    <h3 style="margin-top:25px">Recent Documents</h3>
+
+    <div class="doc-list" id="docList"></div>
+
+  </aside>
+
+  <!-- EDITOR -->
+
+  <section class="workspace">
+
+    <div class="workspace-heading">
+      DOCUMENT WORKSPACE · YOUR CONTENT IS EDITABLE
+    </div>
+
+    <article
+      id="editor"
+      class="page"
+      contenteditable="true"
+      spellcheck="true"
+      role="textbox"
+      aria-label="Document editor"
+      aria-multiline="true"
+    >
+      <h1>Welcome to WordMaster Pro</h1>
+
+      <p>Start writing your document here.</p>
+
+      <p>You can format text, insert tables and images, create lists, and save your work.</p>
+
+      <h2>Getting Started</h2>
+
+      <ul>
+        <li>Use the toolbar to format your content.</li>
+        <li>Use the left panel to manage your documents.</li>
+        <li>Your documents are automatically saved in this browser.</li>
+      </ul>
+    </article>
+
+  </section>
+
+</main>
+
+<!-- STATUS BAR -->
+
+<footer class="statusbar">
+
+  <div>
+    <span id="wordCount">Words: 0</span>
+    <span id="charCount">Characters: 0</span>
+    <span id="paragraphCount">Paragraphs: 0</span>
+  </div>
+
+  <div>
+    <span id="storageStatus">Local storage enabled</span>
+    <span>WordMaster Pro</span>
+  </div>
+
+</footer>
+
+<!-- PAGE SETUP DIALOG -->
+
+<div class="modal" id="pageModal">
+
+  <div class="modal-box">
+
+    <h2>Page Setup</h2>
+
+    <label for="pageSize">Paper size</label>
+
+    <select id="pageSize">
+      <option value="A4">A4</option>
+      <option value="Letter">Letter</option>
+      <option value="Legal">Legal</option>
+    </select>
+
+    <label for="pageMargin">Page margin</label>
+
+    <select id="pageMargin">
+      <option value="25mm">Normal</option>
+      <option value="15mm">Narrow</option>
+      <option value="35mm">Wide</option>
+    </select>
+
+    <div class="modal-actions">
+
+      <button class="btn primary" onclick="applyPageSetup()">Apply</button>
+
+      <button class="btn" onclick="closePageSetup()">Cancel</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+"use strict";
+
+/* =====================================
+   WORDMASTER PRO
+   DOCUMENT STORAGE AND EDITOR ENGINE
+===================================== */
+
+const STORAGE_KEY = "wordmaster_pro_documents_v1";
+const ACTIVE_KEY = "wordmaster_pro_active_v1";
+
+const editor = document.getElementById("editor");
+const titleInput = document.getElementById("docTitle");
+const saveStatus = document.getElementById("saveStatus");
+
+let documents = {};
+let activeId = null;
+let saveTimer = null;
+let lastSearchIndex = 0;
+
+/* BASIC UTILITIES */
+
+function createId(){
+  return "doc_" + Date.now() + "_" +
+    Math.random().toString(36).slice(2,8);
+}
+
+function timestamp(){
+  return new Date().toISOString();
+}
+
+function defaultContent(){
+  return `
+    <h1>Welcome to WordMaster Pro</h1>
+    <p>Start writing your document here.</p>
+    <p>Use the toolbar to format text and create professional documents.</p>
+  `;
+}
+
+function setStatus(message, color){
+  saveStatus.textContent = message;
+
+  if(color){
+    saveStatus.style.color = color;
+  }
+}
+
+/* DOCUMENT MODEL */
+
+function makeDocument(title, content){
+  return {
+    id:createId(),
+    title:title || "Untitled Document",
+    content:content || defaultContent(),
+    createdAt:timestamp(),
+    updatedAt:timestamp()
+  };
+}
+
+function currentDocument(){
+  return documents[activeId] || null;
+}
+
+/* LOAD STORAGE */
+
+function loadDocuments(){
+
+  try{
+
+    const raw = localStorage.getItem(STORAGE_KEY);
+
+    if(raw){
+      const parsed = JSON.parse(raw);
+
+      if(parsed && typeof parsed === "object"){
+        documents = parsed;
+      }
+    }
+
+    activeId = localStorage.getItem(ACTIVE_KEY);
+
+    if(!documents[activeId]){
+      const doc = makeDocument("Untitled Document",defaultContent());
+
+      documents[doc.id] = doc;
+      activeId = doc.id;
+    }
+
+  }catch(error){
+
+    console.error("Storage loading failed:",error);
+
+    documents = {};
+
+    const doc = makeDocument("Untitled Document",defaultContent());
+
+    documents[doc.id] = doc;
+    activeId = doc.id;
+
+    setStatus("Storage error","red");
+  }
+
+  renderDocument();
+  renderDocumentList();
+}
+
+/* SAVE */
+
+function saveNow(){
+
+  const doc = currentDocument();
+
+  if(!doc) return;
+
+  doc.title = titleInput.value.trim() || "Untitled Document";
+  doc.content = editor.innerHTML;
+  doc.updatedAt = timestamp();
+
+  try{
+
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(documents));
+    localStorage.setItem(ACTIVE_KEY,activeId);
+
+    setStatus("✓ Saved at " + new Date().toLocaleTimeString(),"#16834a");
+
+    document.getElementById("storageStatus").textContent =
+      "Saved in this browser";
+
+    renderDocumentList();
+
+  }catch(error){
+
+    console.error("Saving failed:",error);
+
+    setStatus("Save failed — storage may be full","red");
+
+    document.getElementById("storageStatus").textContent =
+      "Storage full or unavailable";
+  }
+}
+
+function scheduleSave(){
+
+  setStatus("Saving...","#b7791f");
+
+  clearTimeout(saveTimer);
+
+  saveTimer = setTimeout(saveNow,500);
+
+  updateWordCount();
+}
+
+/* RENDER DOCUMENT */
+
+function renderDocument(){
+
+  const doc = currentDocument();
+
+  if(!doc) return;
+
+  titleInput.value = doc.title || "Untitled Document";
+  editor.innerHTML = doc.content || "";
+
+  updateWordCount();
+  renderDocumentList();
+}
+
+/* DOCUMENT LIST */
+
+function renderDocumentList(){
+
+  const container = document.getElementById("docList");
+
+  container.innerHTML = "";
+
+  const list = Object.values(documents).sort((a,b)=>
+    (b.updatedAt || "").localeCompare(a.updatedAt || "")
+  );
+
+  list.forEach(doc=>{
+
+    const item = document.createElement("div");
+
+    item.className = "doc-item" +
+      (doc.id === activeId ? " active" : "");
+
+    item.textContent = "📄 " + (doc.title || "Untitled Document");
+
+    item.title = doc.updatedAt
+      ? "Last updated: " + new Date(doc.updatedAt).toLocaleString()
+      : "";
+
+    item.onclick = ()=>switchDocument(doc.id);
+
+    container.appendChild(item);
+
+  });
+}
+
+/* SWITCH DOCUMENT */
+
+function switchDocument(id){
+
+  if(!documents[id]) return;
+
+  saveNow();
+
+  activeId = id;
+
+  localStorage.setItem(ACTIVE_KEY,activeId);
+
+  renderDocument();
+  setStatus("Document opened","#16834a");
+}
+
+/* CREATE DOCUMENT */
+
+function newDocument(){
+
+  saveNow();
+
+  const doc = makeDocument(
+    "Untitled Document",
+    defaultContent()
+  );
+
+  documents[doc.id] = doc;
+  activeId = doc.id;
+
+  renderDocument();
+
+  saveNow();
+
+  editor.focus();
+}
+
+/* RENAME DOCUMENT */
+
+function renameDocument(){
+
+  const doc = currentDocument();
+
+  if(!doc) return;
+
+  const name = prompt(
+    "Enter new document name:",
+    doc.title
+  );
+
+  if(name === null) return;
+
+  const cleanName = name.trim();
+
+  if(!cleanName){
+    alert("Document name cannot be empty.");
+    return;
+  }
+
+  doc.title = cleanName;
+
+  titleInput.value = cleanName;
+
+  saveNow();
+}
+
+/* DELETE DOCUMENT */
+
+function deleteDocument(){
+
+  const doc = currentDocument();
+
+  if(!doc) return;
+
+  if(!confirm(
+    'Delete "' + doc.title + '"? This cannot be undone.'
+  )){
+    return;
+  }
+
+  delete documents[activeId];
+
+  const remaining = Object.values(documents);
+
+  if(remaining.length === 0){
+
+    const replacement = makeDocument(
+      "Untitled Document",
+      defaultContent()
+    );
+
+    documents[replacement.id] = replacement;
+    activeId = replacement.id;
+
+  }else{
+
+    activeId = remaining[0].id;
+  }
+
+  renderDocument();
+  saveNow();
+}
+
+/* EDITOR COMMANDS */
+
+function focusEditor(){
+  editor.focus();
+}
+
+function runCommand(command,value=null){
+
+  focusEditor();
+
+  try{
+    document.execCommand(command,false,value);
+  }catch(error){
+    console.error(error);
+  }
+
+  scheduleSave();
+}
+
+function setFont(font){
+
+  if(!font) return;
+
+  runCommand("fontName",font);
+}
+
+function setFontSize(size){
+
+  runCommand("fontSize",size);
+}
+
+function setColor(color){
+
+  runCommand("foreColor",color);
+}
+
+function applyHighlight(){
+
+  const color = document.getElementById("highlightColor").value;
+
+  focusEditor();
+
+  let success = false;
+
+  try{
+    success = document.execCommand(
+      "hiliteColor",
+      false,
+      color
+    );
+  }catch(error){}
+
+  if(!success){
+    runCommand("backColor",color);
+  }else{
+    scheduleSave();
+  }
+}
+
+function applyBlock(tag){
+
+  if(!tag) return;
+
+  runCommand("formatBlock","<" + tag + ">");
+}
+
+/* INSERT LINK */
+
+function insertLink(){
+
+  const url = prompt(
+    "Enter a website URL:",
+    "https://"
+  );
+
+  if(!url) return;
+
+  try{
+
+    const parsed = new URL(url);
+
+    if(!["http:","https:","mailto:"].includes(parsed.protocol)){
+      alert("Only HTTP, HTTPS and mailto links are supported.");
+      return;
+    }
+
+    runCommand("createLink",parsed.href);
+
+  }catch(error){
+
+    alert("Please enter a valid URL.");
+  }
+}
+
+/* INSERT TABLE */
+
+function insertTable(){
+
+  const rows = parseInt(
+    prompt("Number of rows (1–20):","3"),
+    10
+  );
+
+  const cols = parseInt(
+    prompt("Number of columns (1–10):","3"),
+    10
+  );
+
+  if(
+    !Number.isInteger(rows) ||
+    !Number.isInteger(cols) ||
+    rows < 1 || rows > 20 ||
+    cols < 1 || cols > 10
+  ){
+    alert("Please enter valid row and column numbers.");
+    return;
+  }
+
+  const table = document.createElement("table");
+
+  for(let r=0;r<rows;r++){
+
+    const tr = document.createElement("tr");
+
+    for(let c=0;c<cols;c++){
+
+      const td = document.createElement(
+        r === 0 ? "th" : "td"
+      );
+
+      td.textContent = r === 0
+        ? "Heading " + (c+1)
+        : "Text";
+
+      tr.appendChild(td);
+    }
+
+    table.appendChild(tr);
+  }
+
+  focusEditor();
+
+  const selection = window.getSelection();
+
+  if(
+    selection &&
+    selection.rangeCount &&
+    editor.contains(selection.anchorNode)
+  ){
+
+    const range = selection.getRangeAt(0);
+
+    range.deleteContents();
+    range.insertNode(table);
+
+  }else{
+
+    editor.appendChild(table);
+  }
+
+  scheduleSave();
+}
+
+/* INSERT DATE */
+
+function insertDate(){
+
+  const date = new Date().toLocaleDateString();
+
+  focusEditor();
+
+  runCommand("insertText",date);
+}
+
+/* INSERT PAGE BREAK */
+
+function insertPageBreak(){
+
+  focusEditor();
+
+  const pageBreak = document.createElement("div");
+
+  pageBreak.className = "page-break";
+  pageBreak.contentEditable = "false";
+
+  pageBreak.style.cssText =
+    "border-top:2px dashed #aaa;" +
+    "margin:35px 0;" +
+    "height:1px;" +
+    "break-after:page;";
+
+  const selection = window.getSelection();
+
+  if(
+    selection &&
+    selection.rangeCount &&
+    editor.contains(selection.anchorNode)
+  ){
+
+    const range = selection.getRangeAt(0);
+
+    range.collapse(false);
+    range.insertNode(pageBreak);
+
+    const paragraph = document.createElement("p");
+
+    pageBreak.after(paragraph);
+
+    const newRange = document.createRange();
+
+    newRange.selectNodeContents(paragraph);
+    newRange.collapse(true);
+
+    selection.removeAllRanges();
+    selection.addRange(newRange);
+
+  }else{
+
+    editor.appendChild(pageBreak);
+    editor.appendChild(document.createElement("p"));
+  }
+
+  scheduleSave();
+}
+
+/* FIND AND REPLACE */
+
+function toggleFind(){
+
+  const bar = document.getElementById("findBar");
+
+  bar.classList.toggle("show");
+
+  if(bar.classList.contains("show")){
+    document.getElementById("findText").focus();
+  }
+}
+
+function findNext(){
+
+  const query = document.getElementById("findText").value;
+
+  if(!query){
+    alert("Enter a word to find.");
+    return;
+  }
+
+  focusEditor();
+
+  const selection = window.getSelection();
+
+  if(!selection) return;
+
+  const fullText = editor.textContent;
+
+  const start = Math.max(
+    lastSearchIndex,
+    selection.focusOffset || 0
+  );
+
+  let index = fullText.toLowerCase().indexOf(
+    query.toLowerCase(),
+    start
+  );
+
+  if(index === -1){
+    index = fullText.toLowerCase().indexOf(
+      query.toLowerCase(),
+      0
+    );
+  }
+
+  if(index === -1){
+    alert("Text not found.");
+    lastSearchIndex = 0;
+    return;
+  }
+
+  const walker = document.createTreeWalker(
+    editor,
+    NodeFilter.SHOW_TEXT
+  );
+
+  let node;
+  let position = 0;
+
+  while(node = walker.nextNode()){
+
+    const end = position + node.textContent.length;
+
+    if(index >= position && index < end){
+
+      const range = document.createRange();
+
+      range.setStart(node,index-position);
+
+      const length = Math.min(
+        query.length,
+        node.textContent.length-(index-position)
+      );
+
+      range.setEnd(node,index-position+length);
+
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      node.parentElement.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+      lastSearchIndex = index + query.length;
+
+      return;
+    }
+
+    position = end;
+  }
+}
+
+function replaceOne(){
+
+  const query = document.getElementById("findText").value;
+
+  const replacement = document.getElementById("replaceText").value;
+
+  if(!query){
+    alert("Enter a word to find.");
+    return;
+  }
+
+  const selection = window.getSelection();
+
+  if(
+    selection &&
+    selection.rangeCount &&
+    !selection.isCollapsed &&
+    editor.contains(selection.anchorNode) &&
+    selection.toString().toLowerCase() === query.toLowerCase()
+  ){
+
+    runCommand("insertText",replacement);
+
+  }else{
+
+    findNext();
+  }
+}
+
+function replaceAll(){
+
+  const query = document.getElementById("findText").value;
+
+  const replacement = document.getElementById("replaceText").value;
+
+  if(!query){
+    alert("Enter a word to find.");
+    return;
+  }
+
+  if(!confirm("Replace all occurrences of this text?")){
+    return;
+  }
+
+  /*
+    Traverse text nodes rather than replacing editor.innerHTML.
+    This preserves existing formatting and avoids treating
+    the search string as HTML.
+  */
+
+  const walker = document.createTreeWalker(
+    editor,
+    NodeFilter.SHOW_TEXT
+  );
+
+  const nodes = [];
+
+  let node;
+
+  while(node = walker.nextNode()){
+    nodes.push(node);
+  }
+
+  let count = 0;
+
+  nodes.forEach(textNode=>{
+
+    const original = textNode.nodeValue;
+
+    const regex = new RegExp(
+      escapeRegExp(query),
+      "gi"
+    );
+
+    const matches = original.match(regex);
+
+    if(matches){
+
+      count += matches.length;
+
+      textNode.nodeValue = original.replace(
+        regex,
+        ()=>replacement
+      );
+    }
+
+  });
+
+  scheduleSave();
+
+  alert("Replaced " + count + " occurrence(s).");
+}
+
+function escapeRegExp(text){
+
+  return text.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+}
+
+/* WORD COUNTER */
+
+function updateWordCount(){
+
+  const text = editor.innerText || "";
+
+  const words = text.trim()
+    ? text.trim().split(/\s+/).length
+    : 0;
+
+  const chars = text.length;
+
+  const paragraphs = editor.querySelectorAll(
+    "p,h1,h2,h3,h4,h5,h6,li,blockquote"
+  ).length;
+
+  document.getElementById("wordCount").textContent =
+    "Words: " + words;
+
+  document.getElementById("charCount").textContent =
+    "Characters: " + chars;
+
+  document.getElementById("paragraphCount").textContent =
+    "Paragraphs: " + paragraphs;
+}
+
+/* FILE DOWNLOAD */
+
+function downloadFile(filename,content,type){
+
+  const blob = new Blob(
+    [content],
+    {type:type}
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = filename;
+
+  document.body.appendChild(a);
+
+  a.click();
+  a.remove();
+
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function safeFilename(name){
+
+  return (name || "document")
+    .replace(/[\\/:*?"<>|]/g,"_")
+    .trim() || "document";
+}
+
+function downloadTXT(){
+
+  saveNow();
+
+  const doc = currentDocument();
+
+  if(!doc) return;
+
+  const temp = document.createElement("div");
+
+  temp.innerHTML = doc.content;
+
+  const text = temp.innerText;
+
+  downloadFile(
+    safeFilename(doc.title)+".txt",
+    text,
+    "text/plain;charset=utf-8"
+  );
+}
+
+function downloadHTML(){
+
+  saveNow();
+
+  const doc = currentDocument();
+
+  if(!doc) return;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escapeHTML(doc.title)}</title>
+<style>
+body{
+  max-width:850px;
+  margin:40px auto;
+  padding:30px;
+  font-family:Arial,sans-serif;
+  line-height:1.7;
+}
+img{max-width:100%;height:auto}
+table{border-collapse:collapse;width:100%}
+td,th{border:1px solid #777;padding:8px}
+.page-break{break-after:page}
+@media print{body{margin:0;padding:0}}
+</style>
+</head>
+<body>
+${doc.content}
+</body>
+</html>`;
+
+  downloadFile(
+    safeFilename(doc.title)+".html",
+    html,
+    "text/html;charset=utf-8"
+  );
+}
+
+function escapeHTML(text){
+
+  return String(text).replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+/* PRINT / PDF */
+
+function printDocument(){
+
+  saveNow();
+
+  window.print();
+}
+
+/* OPEN FILE */
+
+document.getElementById("fileInput").addEventListener(
+  "change",
+  async function(event){
+
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    try{
+
+      const text = await file.text();
+
+      const extension = file.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+      let content = "";
+
+      if(extension === "txt"){
+
+        content = "<p>" +
+          escapeHTML(text)
+            .replace(/\r\n|\r|\n/g,"</p><p>") +
+          "</p>";
+
+      }else if(
+        extension === "html" ||
+        extension === "htm"
+      ){
+
+        const parser = new DOMParser();
+
+        const parsed = parser.parseFromString(
+          text,
+          "text/html"
+        );
+
+        /*
+          Import the body content, not scripts or the
+          original document's full outer HTML.
+        */
+
+        content = parsed.body.innerHTML;
+
+      }else if(extension === "docx" || extension === "doc"){
+
+        alert(
+          "Direct DOC/DOCX importing is not included in this version. " +
+          "Open the document in Microsoft Word and save it as HTML or TXT, " +
+          "then import that file."
+        );
+
+        event.target.value = "";
+
+        return;
+
+      }else{
+
+        alert("Unsupported file type.");
+        return;
+      }
+
+      const doc = makeDocument(
+        file.name.replace(/\.[^.]+$/,""),
+        content
+      );
+
+      documents[doc.id] = doc;
+      activeId = doc.id;
+
+      renderDocument();
+
+      saveNow();
+
+    }catch(error){
+
+      console.error(error);
+
+      alert("Unable to open this file.");
+    }
+
+    event.target.value = "";
+  }
+);
+
+/* IMAGE INSERTION */
+
+document.getElementById("imageInput").addEventListener(
+  "change",
+  async function(event){
+
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    if(!file.type.startsWith("image/")){
+      alert("Please choose an image.");
+      return;
+    }
+
+    /*
+      Limit image size to help prevent local storage overflow.
+    */
+
+    if(file.size > 1024*1024){
+      alert(
+        "Please use an image under 1 MB. " +
+        "Large images may exceed browser storage limits."
+      );
+
+      event.target.value = "";
+
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(){
+
+      const img = document.createElement("img");
+
+      img.src = reader.result;
+      img.alt = file.name;
+
+      img.style.maxWidth = "100%";
+
+      focusEditor();
+
+      const selection = window.getSelection();
+
+      if(
+        selection &&
+        selection.rangeCount &&
+        editor.contains(selection.anchorNode)
+      ){
+
+        const range = selection.getRangeAt(0);
+
+        range.deleteContents();
+        range.insertNode(img);
+
+      }else{
+
+        editor.appendChild(img);
+      }
+
+      scheduleSave();
+    };
+
+    reader.onerror = function(){
+      alert("Unable to read the image.");
+    };
+
+    reader.readAsDataURL(file);
+
+    event.target.value = "";
+  }
+);
+
+/* JSON BACKUP */
+
+function exportJSON(){
+
+  saveNow();
+
+  downloadFile(
+    "WordMaster_Backup.json",
+    JSON.stringify({
+      version:1,
+      exportedAt:timestamp(),
+      documents:documents
+    },null,2),
+    "application/json"
+  );
+}
+
+/* RESTORE BACKUP */
+
+document.getElementById("backupInput").addEventListener(
+  "change",
+  async function(event){
+
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    try{
+
+      const data = JSON.parse(await file.text());
+
+      const incoming = data.documents;
+
+      if(
+        !incoming ||
+        typeof incoming !== "object" ||
+        Array.isArray(incoming)
+      ){
+        throw new Error("Invalid backup structure");
+      }
+
+      const valid = Object.values(incoming).every(doc=>
+        doc &&
+        typeof doc === "object" &&
+        typeof doc.title === "string" &&
+        typeof doc.content === "string"
+      );
+
+      if(!valid){
+        throw new Error("Invalid document data");
+      }
+
+      if(!confirm(
+        "Restore this backup? Documents with matching IDs will be replaced."
+      )){
+        return;
+      }
+
+      documents = {
+        ...documents,
+        ...incoming
+      };
+
+      const first = Object.values(incoming)[0];
+
+      if(first && documents[first.id]){
+        activeId = first.id;
+      }
+
+      renderDocument();
+
+      saveNow();
+
+      alert("Backup restored successfully.");
+
+    }catch(error){
+
+      console.error(error);
+
+      alert(
+        "Invalid or unreadable backup file. " +
+        "Please select a WordMaster JSON backup."
+      );
+    }
+
+    event.target.value = "";
+  }
+);
+
+/* DARK MODE */
+
+function toggleDark(){
+
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "wordmaster_dark_mode",
+    document.body.classList.contains("dark")
+      ? "1"
+      : "0"
+  );
+}
+
+if(localStorage.getItem("wordmaster_dark_mode") === "1"){
+  document.body.classList.add("dark");
+}
+
+/* PAGE SETUP */
+
+function openPageSetup(){
+
+  document.getElementById("pageModal").classList.add("show");
+}
+
+function closePageSetup(){
+
+  document.getElementById("pageModal").classList.remove("show");
+}
+
+function applyPageSetup(){
+
+  const size = document.getElementById("pageSize").value;
+
+  const margin = document.getElementById("pageMargin").value;
+
+  const style = document.getElementById("editor").style;
+
+  /*
+    Set paper width for on-screen layout.
+    Printing uses the same selected page size and margin.
+  */
+
+  const widths = {
+    A4:"210mm",
+    Letter:"216mm",
+    Legal:"216mm"
+  };
+
+  editor.style.maxWidth = widths[size];
+
+  let printStyle = document.getElementById("dynamicPrintStyle");
+
+  if(!printStyle){
+
+    printStyle = document.createElement("style");
+
+    printStyle.id = "dynamicPrintStyle";
+
+    document.head.appendChild(printStyle);
+  }
+
+  printStyle.textContent = `
+    @media print{
+      @page{
+        size:${size};
+        margin:${margin};
+      }
+    }
+  `;
+
+  closePageSetup();
+
+  scheduleSave();
+}
+
+/* TITLE CHANGES */
+
+titleInput.addEventListener("input",()=>{
+
+  const doc = currentDocument();
+
+  if(doc){
+    doc.title = titleInput.value;
+  }
+
+  scheduleSave();
+});
+
+/* EDITOR CHANGES */
+
+editor.addEventListener("input",scheduleSave);
+
+editor.addEventListener("keyup",updateWordCount);
+
+editor.addEventListener("mouseup",updateWordCount);
+
+/* KEYBOARD SHORTCUTS */
+
+document.addEventListener("keydown",function(event){
+
+  const ctrl = event.ctrlKey || event.metaKey;
+
+  if(!ctrl) return;
+
+  const key = event.key.toLowerCase();
+
+  if(key === "s"){
+
+    event.preventDefault();
+
+    saveNow();
+  }
+
+  if(key === "p"){
+
+    event.preventDefault();
+
+    printDocument();
+  }
+
+  if(key === "f"){
+
+    event.preventDefault();
+
+    document.getElementById("findBar").classList.add("show");
+
+    document.getElementById("findText").focus();
+  }
+
+  if(key === "b" && editor.contains(document.activeElement)){
+
+    event.preventDefault();
+
+    runCommand("bold");
+  }
+
+  if(key === "i" && editor.contains(document.activeElement)){
+
+    event.preventDefault();
+
+    runCommand("italic");
+  }
+
+  if(key === "u" && editor.contains(document.activeElement)){
+
+    event.preventDefault();
+
+    runCommand("underline");
+  }
+
+  if(key === "y"){
+
+    event.preventDefault();
+
+    runCommand("redo");
+  }
+});
+
+/* PAGE SETUP ACCESS */
+
+const pageSetupButton = document.createElement("button");
+
+pageSetupButton.className = "btn";
+
+pageSetupButton.textContent = "📐 Page Setup";
+
+pageSetupButton.onclick = openPageSetup;
+
+document.querySelector(".top-actions").appendChild(
+  pageSetupButton
+);
+
+/* STORAGE WARNING */
+
+window.addEventListener("storage",function(event){
+
+  if(event.key === STORAGE_KEY){
+
+    setStatus(
+      "Documents changed in another tab — reload to sync",
+      "#b7791f"
+    );
+  }
+});
+
+/* SAVE WHEN LEAVING */
+
+window.addEventListener("beforeunload",function(){
+
+  try{
+
+    const doc = currentDocument();
+
+    if(doc){
+
+      doc.title = titleInput.value.trim() || "Untitled Document";
+
+      doc.content = editor.innerHTML;
+
+      doc.updatedAt = timestamp();
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(documents)
+      );
+
+      localStorage.setItem(ACTIVE_KEY,activeId);
+    }
+
+  }catch(error){
+
+    console.error("Final save failed:",error);
+  }
+});
+
+/* INITIALIZE */
+
+loadDocuments();
+
+</script>
+
+</body>
+</html>
