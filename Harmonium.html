@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+
+<title>Advanced Harmonium Pro</title>
+
+<style>
+:root {
+    --bg: #101827;
+    --panel: #1b2639;
+    --panel2: #263449;
+    --text: #f8fafc;
+    --muted: #aab8cc;
+    --accent: #f5b942;
+    --border: #39475d;
+    --key-white: #fffdf5;
+    --key-black: #182033;
+    --success: #20c997;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, #172033, #533414);
+    padding: 20px 14px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent);
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(23px, 5vw, 36px);
+}
+
+header p {
+    color: #ffe6b0;
+    margin: 8px 0 0;
+}
+
+.app {
+    max-width: 1400px;
+    margin: auto;
+    padding: 14px;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 15px;
+    box-shadow: 0 6px 20px #0002;
+}
+
+h2 {
+    font-size: 19px;
+    margin: 0 0 14px;
+}
+
+h3 {
+    font-size: 15px;
+    margin: 0 0 10px;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: 12px;
+}
+
+.control label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+select, input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: #111c2e;
+    color: white;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+}
+
+button {
+    border: 0;
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .1s, opacity .2s;
+}
+
+button:active {
+    transform: scale(.97);
+}
+
+button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #241600;
+}
+
+.btn-secondary {
+    background: #33445e;
+    color: white;
+}
+
+.btn-success {
+    background: var(--success);
+    color: #06281e;
+}
+
+.btn-danger {
+    background: #ef5350;
+    color: white;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.status {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.instrument {
+    background: linear-gradient(135deg, #7c391c, #c17b37, #633016);
+    border: 5px solid #5c2b13;
+    border-radius: 18px;
+    padding: 14px;
+    overflow: hidden;
+}
+
+.instrument-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.brand {
+    font-size: 17px;
+    font-weight: 900;
+    color: #fff1cb;
+    letter-spacing: 2px;
+}
+
+.bellows {
+    height: 45px;
+    flex: 1;
+    min-width: 100px;
+    max-width: 280px;
+    background: repeating-linear-gradient(
+        90deg,
+        #2d1c19 0px,
+        #2d1c19 7px,
+        #a75b31 8px,
+        #a75b31 13px
+    );
+    border: 3px solid #e0a35b;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bellows.active {
+    animation: breathe .4s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+    from { transform: scaleX(.94); }
+    to { transform: scaleX(1); }
+}
+
+.keyboard-scroll {
+    overflow-x: auto;
+    padding: 10px 4px 15px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.keyboard {
+    position: relative;
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    height: 245px;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.key {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+.key.white {
+    width: clamp(44px, 6vw, 66px);
+    height: 235px;
+    flex-shrink: 0;
+    background: linear-gradient(90deg, #dedbd2, #fffdf5 25%, #fffdf5 80%, #d6d2c8);
+    border: 1px solid #777;
+    border-radius: 0 0 6px 6px;
+    color: #1c2430;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 10px;
+    z-index: 1;
+}
+
+.key.black {
+    width: clamp(29px, 4vw, 42px);
+    height: 145px;
+    margin-left: calc(clamp(44px, 6vw, 66px) / -2);
+    margin-right: calc(clamp(44px, 6vw, 66px) / -2);
+    flex-shrink: 0;
+    background: linear-gradient(90deg, #070b12, #283144 45%, #080b11);
+    color: white;
+    border-radius: 0 0 5px 5px;
+    z-index: 3;
+    box-shadow: 0 5px 6px #0007;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 9px;
+}
+
+.key.white.active {
+    background: #ffdb7d;
+    transform: translateY(2px);
+}
+
+.key.black.active {
+    background: #d79a27;
+    color: #17120a;
+}
+
+.note {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.western {
+    font-size: 10px;
+    margin-top: 4px;
+    opacity: .8;
+}
+
+.shortcut {
+    font-size: 10px;
+    margin-top: 4px;
+    opacity: .65;
+}
+
+.key.black .note {
+    font-size: 11px;
+}
+
+.readout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.readout-card {
+    background: #111c2e;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+}
+
+.readout-card strong {
+    display: block;
+    color: var(--accent);
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.readout-card span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+}
+
+.feature-card {
+    background: #111c2e;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px;
+}
+
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 11px 0;
+    font-size: 14px;
+}
+
+.check-row input {
+    accent-color: var(--accent);
+    width: 17px;
+    height: 17px;
+}
+
+.chord-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 8px;
+}
+
+.sargam-display {
+    min-height: 55px;
+    background: #101827;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    line-height: 1.9;
+    word-break: break-word;
+}
+
+.sargam-note {
+    display: inline-block;
+    background: #31415a;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin: 3px;
+}
+
+.sargam-note.current {
+    background: var(--accent);
+    color: #241600;
+}
+
+.recorder {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 25px 10px;
+    font-size: 12px;
+}
+
+body.light {
+    --bg: #edf1f7;
+    --panel: #ffffff;
+    --panel2: #edf1f7;
+    --text: #182235;
+    --muted: #56647a;
+    --border: #ccd4df;
+}
+
+body.light select,
+body.light input[type="number"],
+body.light input[type="text"] {
+    background: #f5f7fa;
+    color: #172033;
+}
+
+body.light .readout-card,
+body.light .feature-card,
+body.light .sargam-display {
+    background: #f5f7fa;
+}
+
+@media (max-width: 600px) {
+    .app { padding: 8px; }
+    .panel { padding: 12px; }
+    .keyboard { height: 210px; }
+    .key.white { height: 200px; }
+    .key.black { height: 120px; }
+    .instrument { padding: 8px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎹 Advanced Harmonium Pro</h1>
+    <p>अपना डिजिटल हारमोनियम बजाएँ • सीखें • अभ्यास करें • रिकॉर्ड करें</p>
+</header>
+
+<main class="app">
+
+<section class="panel">
+    <h2>🎛️ Instrument Settings</h2>
+
+    <div class="controls">
+
+        <div class="control">
+            <label for="octave">सप्तक चुनें</label>
+            <select id="octave">
+                <option value="-1">मंद्र सप्तक</option>
+                <option value="0" selected>मध्य सप्तक</option>
+                <option value="1">तार सप्तक</option>
+            </select>
+        </div>
+
+        <div class="control">
+            <label for="scale">सा / Root Note</label>
+            <select id="scale">
+                <option value="C">C / सा</option>
+                <option value="C#">C#</option>
+                <option value="D">D</option>
+                <option value="D#">D#</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="F#">F#</option>
+                <option value="G">G</option>
+                <option value="G#">G#</option>
+                <option value="A">A</option>
+                <option value="A#">A#</option>
+                <option value="B">B</option>
+            </select>
+        </div>
+
+        <div class="control">
+            <label for="voice">आवाज का प्रकार</label>
+            <select id="voice">
+                <option value="reed">Harmonium Reed</option>
+                <option value="soft">Soft Reed</option>
+                <option value="bright">Bright Reed</option>
+                <option value="organ">Organ</option>
+                <option value="flute">Flute-like</option>
+            </select>
+        </div>
+
+        <div class="control">
+            <label for="volume">Volume</label>
+            <input id="volume" type="range" min="0" max="100" value="65">
+        </div>
+
+        <div class="control">
+            <label for="fineTune">Fine Tune</label>
+            <input id="fineTune" type="range" min="-50" max="50" value="0">
+        </div>
+
+        <div class="control">
+            <label for="reverb">Reverb</label>
+            <input id="reverb" type="range" min="0" max="60" value="12">
+        </div>
+
+    </div>
+
+    <div class="button-row">
+        <button class="btn-primary" id="startAudio">🔊 Start Harmonium</button>
+        <button class="btn-secondary" id="bellowsBtn">🌬️ Bellows ON/OFF</button>
+        <button class="btn-secondary" id="themeBtn">🌙 Theme</button>
+        <button class="btn-secondary" id="panicBtn">⏹ Stop All</button>
+    </div>
+
+    <p class="status" id="audioStatus">
+        ध्वनि शुरू करने के लिए Start Harmonium दबाएँ।
+    </p>
+</section>
+
+
+<section class="panel">
+    <h2>🎹 Virtual Harmonium Keyboard</h2>
+
+    <div class="instrument">
+        <div class="instrument-top">
+            <div class="brand">SUR SANGAM</div>
+            <div class="bellows" id="bellows"></div>
+            <div style="color:#fff1cb;font-weight:800">DIGITAL REED</div>
+        </div>
+
+        <div class="keyboard-scroll">
+            <div class="keyboard" id="keyboard"></div>
+        </div>
+    </div>
+
+    <div class="readout">
+        <div class="readout-card">
+            <span>Current Note</span>
+            <strong id="currentNote">—</strong>
+        </div>
+
+        <div class="readout-card">
+            <span>Frequency</span>
+            <strong id="frequency">—</strong>
+        </div>
+
+        <div class="readout-card">
+            <span>Notes Played</span>
+            <strong id="notesPlayed">0</strong>
+        </div>
+
+        <div class="readout-card">
+            <span>Recording Time</span>
+            <strong id="recordTime">00:00</strong>
+        </div>
+    </div>
+
+    <p class="status">
+        मोबाइल पर स्वर दबाएँ। कंप्यूटर पर A–K कीबोर्ड शॉर्टकट भी काम करते हैं।
+        एक साथ कई स्वर बजाने के लिए अलग-अलग कुंजियाँ दबाएँ।
+    </p>
+</section>
+
+
+<section class="panel">
+    <h2>🎼 Sargam Practice</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <h3>सरगम चुनें</h3>
+
+            <div class="control">
+                <label for="practiceType">अभ्यास का प्रकार</label>
+                <select id="practiceType">
+                    <option value="ascending">आरोह: सा रे ग म प ध नि सां</option>
+                    <option value="descending">अवरोह: सां नि ध प म ग रे सा</option>
+                    <option value="both">आरोह और अवरोह</option>
+                    <option value="alankar">अलंकार अभ्यास</option>
+                    <option value="random">Random Sargam</option>
+                </select>
+            </div>
+
+            <div class="control" style="margin-top:12px">
+                <label for="practiceSpeed">अभ्यास की गति</label>
+                <input id="practiceSpeed" type="range"
+                       min="100" max="1200" step="50" value="450">
+                <div class="status" id="speedLabel">450 ms प्रति स्वर</div>
+            </div>
+
+            <div class="button-row">
+                <button class="btn-success" id="playPractice">▶ Play Sargam</button>
+                <button class="btn-danger" id="stopPractice">⏹ Stop Practice</button>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3>स्वर क्रम</h3>
+            <div class="sargam-display" id="sargamDisplay">
+                अभ्यास शुरू करने के लिए Play Sargam दबाएँ।
+            </div>
+
+            <p class="status">
+                अभ्यास की ध्वनि चुने गए स्केल और सप्तक के अनुसार बजेगी।
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="panel">
+    <h2>🎶 Chord & Harmony Pad</h2>
+
+    <p class="status">
+        ये Western-style chords हैं। भारतीय रागों के अभ्यास में हर chord उपयुक्त नहीं होता।
+    </p>
+
+    <div class="chord-buttons">
+        <button class="btn-primary" data-chord="C">C Major</button>
+        <button class="btn-primary" data-chord="Dm">D Minor</button>
+        <button class="btn-primary" data-chord="Em">E Minor</button>
+        <button class="btn-primary" data-chord="F">F Major</button>
+        <button class="btn-primary" data-chord="G">G Major</button>
+        <button class="btn-primary" data-chord="Am">A Minor</button>
+        <button class="btn-primary" data-chord="Bdim">B Diminished</button>
+    </div>
+</section>
+
+
+<section class="panel">
+    <h2>🎚️ Performance Controls</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <h3>🎵 Metronome</h3>
+
+            <div class="control">
+                <label for="bpm">Tempo: BPM</label>
+                <input type="number" id="bpm" min="30" max="240" value="80">
+            </div>
+
+            <div class="button-row">
+                <button class="btn-success" id="metroStart">▶ Start</button>
+                <button class="btn-danger" id="metroStop">⏹ Stop</button>
+            </div>
+
+            <p class="status" id="metroStatus">Metronome बंद है।</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🎙️ Recording Studio</h3>
+
+            <p class="status">
+                अपने बजाए गए स्वरों को रिकॉर्ड करें और WAV फाइल डाउनलोड करें।
+            </p>
+
+            <div class="recorder">
+                <button class="btn-success" id="recordStart">⏺ Record</button>
+                <button class="btn-danger" id="recordStop" disabled>⏹ Stop</button>
+                <button class="btn-primary" id="downloadWav" disabled>
+                    ⬇ Download WAV
+                </button>
+            </div>
+
+            <p class="status" id="recordStatus">Recording तैयार है।</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🎹 Keyboard Options</h3>
+
+            <label class="check-row">
+                <input type="checkbox" id="showLabels" checked>
+                स्वर के नाम दिखाएँ
+            </label>
+
+            <label class="check-row">
+                <input type="checkbox" id="showShortcuts" checked>
+                Keyboard shortcuts दिखाएँ
+            </label>
+
+            <label class="check-row">
+                <input type="checkbox" id="sustain">
+                Sustain mode
+            </label>
+
+            <label class="check-row">
+                <input type="checkbox" id="drone">
+                Sa drone / स्थिर सा
+            </label>
+
+            <div class="button-row">
+                <button class="btn-secondary" id="clearStats">Reset Counter</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="panel">
+    <h2>📖 Keyboard Shortcut Guide</h2>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>White Keys</h3>
+            <p>
+                A = C<br>
+                S = D<br>
+                D = E<br>
+                F = F<br>
+                G = G<br>
+                H = A<br>
+                J = B<br>
+                K = C (Upper)
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Black Keys</h3>
+            <p>
+                W = C#<br>
+                E = D#<br>
+                T = F#<br>
+                Y = G#<br>
+                U = A#
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>कैसे बजाएँ?</h3>
+            <p>
+                1. Start Harmonium दबाएँ।<br>
+                2. कोई स्वर दबाएँ।<br>
+                3. अलग-अलग स्वर मिलाकर धुन बनाएँ।<br>
+                4. Record से अपनी धुन सेव करें।
+            </p>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    Advanced Harmonium Pro · Web Audio Edition<br>
+    Practice • Create • Record • Enjoy Music
+</footer>
+
+
+<script>
+"use strict";
+
+/* ======================================
+   ADVANCED HARMONIUM PRO AUDIO ENGINE
+====================================== */
+
+const $ = id => document.getElementById(id);
+
+let audioCtx = null;
+let masterGain = null;
+let dryGain = null;
+let wetGain = null;
+let convolver = null;
+let compressor = null;
+
+let activeNotes = new Map();
+let heldKeys = new Set();
+let noteCounter = 0;
+
+let practiceTimer = null;
+let metroTimer = null;
+let metroBeat = 0;
+let bellowsOn = true;
+
+let recorder = {
+    active: false,
+    startTime: 0,
+    events: [],
+    samples: [],
+    sampleRate: 44100,
+    lastDownload: null
+};
+
+const NOTES = [
+    {name:"C", indian:"सा", semitone:0, black:false, key:"A"},
+    {name:"C#", indian:"कोमल रे", semitone:1, black:true, key:"W"},
+    {name:"D", indian:"रे", semitone:2, black:false, key:"S"},
+    {name:"D#", indian:"कोमल ग", semitone:3, black:true, key:"E"},
+    {name:"E", indian:"ग", semitone:4, black:false, key:"D"},
+    {name:"F", indian:"म", semitone:5, black:false, key:"F"},
+    {name:"F#", indian:"तीव्र म", semitone:6, black:true, key:"T"},
+    {name:"G", indian:"प", semitone:7, black:false, key:"G"},
+    {name:"G#", indian:"कोमल ध", semitone:8, black:true, key:"Y"},
+    {name:"A", indian:"ध", semitone:9, black:false, key:"H"},
+    {name:"A#", indian:"कोमल नि", semitone:10, black:true, key:"U"},
+    {name:"B", indian:"नि", semitone:11, black:false, key:"J"}
+];
+
+const KEY_MAP = {
+    "A":0, "W":1, "S":2, "E":3, "D":4,
+    "F":5, "T":6, "G":7, "Y":8, "H":9,
+    "U":10, "J":11, "K":12
+};
+
+const SCALE_NAMES = NOTES.map(n => n.name);
+
+function midiToFrequency(midi) {
+    return 440 * Math.pow(2, (midi - 69) / 12);
+}
+
+function getRootMidi() {
+    const root = $("scale").value;
+    const index = SCALE_NAMES.indexOf(root);
+    return 60 + Math.max(0, index);
+}
+
+function noteFrequency(semitone, octaveShift = 0) {
+    const rootName = $("scale").value;
+    const rootIndex = SCALE_NAMES.indexOf(rootName);
+    const midi = 60 + rootIndex + semitone + octaveShift * 12
+        + Number($("octave").value) * 12;
+
+    const tuning = Number($("fineTune").value);
+    return midiToFrequency(midi) * Math.pow(2, tuning / 1200);
+}
+
+async function initAudio() {
+    if (audioCtx) {
+        if (audioCtx.state === "suspended") {
+            await audioCtx.resume();
+        }
+        return;
+    }
+
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) {
+        alert("आपके ब्राउज़र में Web Audio API उपलब्ध नहीं है।");
+        return;
+    }
+
+    audioCtx = new AudioContextClass();
+
+    masterGain = audioCtx.createGain();
+    dryGain = audioCtx.createGain();
+    wetGain = audioCtx.createGain();
+
+    compressor = audioCtx.createDynamicsCompressor();
+
+    convolver = audioCtx.createConvolver();
+    convolver.buffer = createImpulseResponse(audioCtx, 1.4, 2.2);
+
+    dryGain.connect(masterGain);
+    wetGain.connect(masterGain);
+    convolver.connect(wetGain);
+    masterGain.connect(compressor);
+    compressor.connect(audioCtx.destination);
+
+    updateVolume();
+    updateReverb();
+
+    $("audioStatus").textContent =
+        "Harmonium तैयार है। अब स्वर बजाएँ।";
+}
+
+function createImpulseResponse(ctx, duration, decay) {
+    const length = Math.floor(ctx.sampleRate * duration);
+    const buffer = ctx.createBuffer(2, length, ctx.sampleRate);
+
+    for (let channel = 0; channel < 2; channel++) {
+        const data = buffer.getChannelData(channel);
+
+        for (let i = 0; i < length; i++) {
+            const fade = Math.pow(1 - i / length, decay);
+            data[i] = (Math.random() * 2 - 1) * fade;
+        }
+    }
+
+    return buffer;
+}
+
+function updateVolume() {
+    if (!masterGain) return;
+
+    const volume = Number($("volume").value) / 100;
+    masterGain.gain.setTargetAtTime(
+        volume * 0.8,
+        audioCtx.currentTime,
+        0.02
+    );
+}
+
+function updateReverb() {
+    if (!wetGain || !dryGain) return;
+
+    const amount = Number($("reverb").value) / 100;
+
+    wetGain.gain.setTargetAtTime(amount * 0.7, audioCtx.currentTime, 0.03);
+    dryGain.gain.setTargetAtTime(1 - amount * 0.35, audioCtx.currentTime, 0.03);
+}
+
+function createVoice(freq) {
+    const voice = $("voice").value;
+    const nodes = [];
+
+    const noteGain = audioCtx.createGain();
+    noteGain.gain.value = 0.0001;
+
+    noteGain.connect(dryGain);
+    noteGain.connect(convolver);
+
+    let partials;
+
+    switch (voice) {
+        case "soft":
+            partials = [
+                [1, 1],
+                [2, 0.18],
+                [3, 0.06]
+            ];
+            break;
+
+        case "bright":
+            partials = [
+                [1, 0.8],
+                [2, 0.6],
+                [3, 0.35],
+                [4, 0.15]
+            ];
+            break;
+
+        case "organ":
+            partials = [
+                [1, 0.8],
+                [2, 0.5],
+                [3, 0.25],
+                [4, 0.1]
+            ];
+            break;
+
+        case "flute":
+            partials = [
+                [1, 1],
+                [2, 0.06],
+                [3, 0.015]
+            ];
+            break;
+
+        default:
+            partials = [
+                [1, 0.9],
+                [2, 0.42],
+                [3, 0.22],
+                [4, 0.12],
+                [5, 0.06]
+            ];
+    }
+
+    partials.forEach(([harmonic, level]) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "sawtooth";
+        osc.frequency.value = freq * harmonic;
+        gain.gain.value = level / partials.length;
+
+        osc.connect(gain);
+        gain.connect(noteGain);
+        osc.start();
+
+        nodes.push(osc);
+    });
+
+    const now = audioCtx.currentTime;
+
+    noteGain.gain.cancelScheduledValues(now);
+    noteGain.gain.setValueAtTime(0.0001, now);
+    noteGain.gain.linearRampToValueAtTime(
+        bellowsOn ? 0.23 : 0.12,
+        now + 0.035
+    );
+
+    return {nodes, gain:noteGain};
+}
+
+function playNote(noteId, semitone, octaveShift = 0, source = "keyboard") {
+    if (!audioCtx) return;
+    if (activeNotes.has(noteId)) return;
+
+    const freq = noteFrequency(semitone, octaveShift);
+    const voice = createVoice(freq);
+
+    activeNotes.set(noteId, {
+        ...voice,
+        freq,
+        semitone,
+        octaveShift,
+        source
+    });
+
+    updateReadout(freq, semitone);
+
+    if (source === "keyboard") {
+        noteCounter++;
+        $("notesPlayed").textContent = noteCounter;
+    }
+
+    if (recorder.active) {
+        recorder.events.push({
+            type: "on",
+            time: performance.now() - recorder.startTime,
+            freq,
+            semitone,
+            octaveShift,
+            voice: $("voice").value
+        });
+    }
+
+    const el = document.querySelector('[data-note-id="' + noteId + '"]');
+    if (el) el.classList.add("active");
+}
+
+function stopNote(noteId) {
+    const item = activeNotes.get(noteId);
+    if (!item || !audioCtx) return;
+
+    const now = audioCtx.currentTime;
+
+    item.gain.gain.cancelScheduledValues(now);
+    item.gain.gain.setTargetAtTime(0.0001, now, 0.04);
+
+    setTimeout(() => {
+        item.nodes.forEach(osc => {
+            try { osc.stop(); } catch (e) {}
+        });
+        item.gain.disconnect();
+    }, 250);
+
+    activeNotes.delete(noteId);
+
+    const el = document.querySelector('[data-note-id="' + noteId + '"]');
+    if (el) el.classList.remove("active");
+
+    if (recorder.active) {
+        recorder.events.push({
+            type:"off",
+            time:performance.now() - recorder.startTime,
+            freq:item.freq
+        });
+    }
+}
+
+function stopAllNotes() {
+    for (const id of [...activeNotes.keys()]) {
+        stopNote(id);
+    }
+    heldKeys.clear();
+}
+
+function updateReadout(freq, semitone) {
+    const note = NOTES[((semitone % 12) + 12) % 12];
+
+    $("currentNote").textContent = note.indian;
+    $("frequency").textContent = freq.toFixed(2) + " Hz";
+}
+
+function buildKeyboard() {
+    const keyboard = $("keyboard");
+    keyboard.innerHTML = "";
+
+    const octaveShift = Number($("octave").value);
+
+    /*
+       Three octaves are displayed simultaneously.
+       The selected octave shifts the played pitch.
+    */
+
+    for (let octave = -1; octave <= 1; octave++) {
+        NOTES.forEach((note, index) => {
+            const absoluteSemitone = octave * 12 + index;
+
+            const key = document.createElement("div");
+            key.className = "key " + (note.black ? "black" : "white");
+
+            const noteId = "k_" + octave + "_" + index;
+
+            key.dataset.noteId = noteId;
+            key.dataset.semitone = index;
+            key.dataset.octave = octave;
+
+            const showLabels = $("showLabels").checked;
+            const showShortcuts = $("showShortcuts").checked;
+
+            key.innerHTML = `
+                <span class="note">${showLabels ? note.indian : ""}</span>
+                <span class="western">${showLabels ? note.name : ""}</span>
+                <span class="shortcut">
+                    ${showShortcuts && octave === 0 ? note.key : ""}
+                </span>
+            `;
+
+            const start = ev => {
+                ev.preventDefault();
+
+                if (key.dataset.pressed === "1") return;
+                key.dataset.pressed = "1";
+
+                initAudio().then(() => {
+                    playNote(noteId, index, octave, "keyboard");
+                });
+            };
+
+            const end = ev => {
+                if (ev) ev.preventDefault();
+
+                key.dataset.pressed = "0";
+
+                if (!$("sustain").checked) {
+                    stopNote(noteId);
+                }
+            };
+
+            key.addEventListener("pointerdown", start);
+            key.addEventListener("pointerup", end);
+            key.addEventListener("pointercancel", end);
+            key.addEventListener("pointerleave", ev => {
+                if (ev.buttons === 0) end(ev);
+            });
+
+            keyboard.appendChild(key);
+        });
+    }
+}
+
+function stopAll() {
+    stopAllNotes();
+    stopPractice();
+    stopMetronome();
+}
+
+$("startAudio").addEventListener("click", initAudio);
+
+$("volume").addEventListener("input", updateVolume);
+$("reverb").addEventListener("input", updateReverb);
+
+$("octave").addEventListener("change", () => {
+    stopAllNotes();
+    buildKeyboard();
+});
+
+$("scale").addEventListener("change", () => {
+    stopAllNotes();
+    buildKeyboard();
+});
+
+$("voice").addEventListener("change", stopAllNotes);
+
+$("fineTune").addEventListener("input", () => {
+    stopAllNotes();
+});
+
+$("showLabels").addEventListener("change", buildKeyboard);
+$("showShortcuts").addEventListener("change", buildKeyboard);
+
+$("bellowsBtn").addEventListener("click", () => {
+    bellowsOn = !bellowsOn;
+
+    $("bellows").classList.toggle("active", bellowsOn);
+
+    $("bellowsBtn").textContent =
+        bellowsOn ? "🌬️ Bellows ON" : "🌬️ Bellows OFF";
+});
+
+$("themeBtn").addEventListener("click", () => {
+    document.body.classList.toggle("light");
+});
+
+$("panicBtn").addEventListener("click", stopAll);
+
+$("clearStats").addEventListener("click", () => {
+    noteCounter = 0;
+    $("notesPlayed").textContent = "0";
+});
+
+document.addEventListener("keydown", ev => {
+    if (ev.repeat) return;
+
+    if (
+        ev.target.matches("input") ||
+        ev.target.matches("select") ||
+        ev.target.matches("textarea")
+    ) return;
+
+    const key = ev.key.toUpperCase();
+
+    if (!(key in KEY_MAP)) return;
+
+    ev.preventDefault();
+
+    if (heldKeys.has(key)) return;
+    heldKeys.add(key);
+
+    const semitone = KEY_MAP[key];
+    const octaveShift = key === "K" ? 1 : 0;
+    const id = "computer_" + key;
+
+    initAudio().then(() => {
+        playNote(id, semitone, octaveShift, "keyboard");
+    });
+});
+
+document.addEventListener("keyup", ev => {
+    const key = ev.key.toUpperCase();
+
+    if (!heldKeys.has(key)) return;
+
+    heldKeys.delete(key);
+
+    if (!$("sustain").checked) {
+        stopNote("computer_" + key);
+    }
+});
+
+window.addEventListener("blur", () => {
+    if (!$("sustain").checked) {
+        stopAllNotes();
+    }
+});
+
+
+/* ======================================
+   SARGAM PRACTICE
+====================================== */
+
+const ascending = [0,2,4,5,7,9,11,12];
+const descending = [12,11,9,7,5,4,2,0];
+
+function getPracticeSequence() {
+    const type = $("practiceType").value;
+
+    if (type === "ascending") return ascending;
+    if (type === "descending") return descending;
+
+    if (type === "both") {
+        return ascending.concat(descending);
+    }
+
+    if (type === "alankar") {
+        return [0,2,4,2,4,5,4,5,7,5,7,9,7,9,11,9,11,12];
+    }
+
+    return Array.from({length:16}, () => Math.floor(Math.random() * 12));
+}
+
+function getSargamName(semitone) {
+    if (semitone === 12) return "सां";
+
+    return NOTES[((semitone % 12) + 12) % 12].indian;
+}
+
+function stopPractice() {
+    if (practiceTimer) {
+        clearTimeout(practiceTimer);
+        practiceTimer = null;
+    }
+
+    document.querySelectorAll(".sargam-note").forEach(el => {
+        el.classList.remove("current");
+    });
+}
+
+async function playPractice() {
+    stopPractice();
+    await initAudio();
+
+    const sequence = getPracticeSequence();
+    const display = $("sargamDisplay");
+
+    display.innerHTML = sequence.map((n, i) =>
+        `<span class="sargam-note" data-index="${i}">${getSargamName(n)}</span>`
+    ).join("");
+
+    const speed = Number($("practiceSpeed").value);
+    let index = 0;
+
+    function step() {
+        if (index >= sequence.length) {
+            practiceTimer = null;
+            return;
+        }
+
+        display.querySelectorAll(".sargam-note").forEach(el => {
+            el.classList.remove("current");
+        });
+
+        const el = display.querySelector('[data-index="' + index + '"]');
+
+        if (el) el.classList.add("current");
+
+        const semitone = sequence[index];
+        const id = "practice_" + index;
+
+        playNote(id, semitone, 0, "practice");
+
+        setTimeout(() => stopNote(id), speed * 0.75);
+
+        index++;
+
+        practiceTimer = setTimeout(step, speed);
+    }
+
+    step();
+}
+
+$("playPractice").addEventListener("click", playPractice);
+$("stopPractice").addEventListener("click", stopPractice);
+
+$("practiceSpeed").addEventListener("input", () => {
+    $("speedLabel").textContent =
+        $("practiceSpeed").value + " ms प्रति स्वर";
+});
+
+
+/* ======================================
+   CHORD ENGINE
+====================================== */
+
+const CHORDS = {
+    C:    [0,4,7],
+    Dm:   [2,5,9],
+    Em:   [4,7,11],
+    F:    [5,9,0],
+    G:    [7,11,2],
+    Am:   [9,0,4],
+    Bdim: [11,2,5]
+};
+
+document.querySelectorAll("[data-chord]").forEach(button => {
+    button.addEventListener("click", async () => {
+        await initAudio();
+
+        const chord = button.dataset.chord;
+        const notes = CHORDS[chord];
+
+        stopAllNotes();
+
+        notes.forEach((semitone, i) => {
+            const id = "chord_" + chord + "_" + i;
+            playNote(id, semitone, 0, "chord");
+        });
+
+        $("currentNote").textContent = chord;
+    });
+});
+
+
+/* ======================================
+   METRONOME
+====================================== */
+
+function stopMetronome() {
+    if (metroTimer) {
+        clearInterval(metroTimer);
+        metroTimer = null;
+    }
+
+    metroBeat = 0;
+    $("metroStatus").textContent = "Metronome बंद है।";
+}
+
+async function startMetronome() {
+    await initAudio();
+    stopMetronome();
+
+    const bpm = Math.max(30, Math.min(240, Number($("bpm").value) || 80));
+    const interval = 60000 / bpm;
+
+    $("metroStatus").textContent = "Metronome चल रहा है: " + bpm + " BPM";
+
+    metroTimer = setInterval(() => {
+        if (!audioCtx) return;
+
+        metroBeat++;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "sine";
+        osc.frequency.value = metroBeat % 4 === 1 ? 1200 : 800;
+
+        gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(
+            0.25,
+            audioCtx.currentTime + 0.005
+        );
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioCtx.currentTime + 0.07
+        );
+
+        osc.connect(gain);
+        gain.connect(masterGain);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+
+    }, interval);
+}
+
+$("metroStart").addEventListener("click", startMetronome);
+$("metroStop").addEventListener("click", stopMetronome);
+
+
+/* ======================================
+   DRONE
+====================================== */
+
+let droneTimer = null;
+
+$("drone").addEventListener("change", async () => {
+    if ($("drone").checked) {
+        await initAudio();
+
+        if (droneTimer) clearInterval(droneTimer);
+
+        function droneNote() {
+            if (!audioCtx || !$("drone").checked) return;
+
+            const id = "drone_sa";
+            if (!activeNotes.has(id)) {
+                playNote(id, 0, 0, "drone");
+            }
+        }
+
+        droneNote();
+
+        droneTimer = setInterval(droneNote, 1000);
+
+    } else {
+        if (droneTimer) clearInterval(droneTimer);
+        droneTimer = null;
+        stopNote("drone_sa");
+    }
+});
+
+
+/* ======================================
+   RECORDING / WAV EXPORT
+====================================== */
+
+/*
+   This recorder captures the instrument's generated notes
+   and reconstructs a WAV recording from the recorded note events.
+
+   WAV export uses offline synthesis, so it works without
+   capturing the microphone or system output.
+*/
+
+$("recordStart").addEventListener("click", () => {
+    recorder.active = true;
+    recorder.startTime = performance.now();
+    recorder.events = [];
+
+    $("recordStart").disabled = true;
+    $("recordStop").disabled = false;
+    $("downloadWav").disabled = true;
+
+    $("recordStatus").textContent = "Recording शुरू हो गई है।";
+
+    updateRecordingClock();
+});
+
+$("recordStop").addEventListener("click", () => {
+    recorder.active = false;
+
+    $("recordStart").disabled = false;
+    $("recordStop").disabled = true;
+
+    $("recordStatus").textContent =
+        "Recording बंद। WAV तैयार करने के लिए Download WAV दबाएँ।";
+
+    if (window.recordClock) {
+        clearInterval(window.recordClock);
+    }
+
+    $("downloadWav").disabled = recorder.events.length === 0;
+});
+
+function updateRecordingClock() {
+    if (window.recordClock) clearInterval(window.recordClock);
+
+    window.recordClock = setInterval(() => {
+        const seconds = recorder.active
+            ? Math.floor((performance.now() - recorder.startTime) / 1000)
+            : 0;
+
+        $("recordTime").textContent =
+            String(Math.floor(seconds / 60)).padStart(2, "0") + ":" +
+            String(seconds % 60).padStart(2, "0");
+
+        if (!recorder.active) {
+            clearInterval(window.recordClock);
+        }
+    }, 250);
+}
+
+function writeString(view, offset, string) {
+    for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
+    }
+}
+
+function floatTo16BitPCM(output, input, offset) {
+    for (let i = 0; i < input.length; i++, offset += 2) {
+        const s = Math.max(-1, Math.min(1, input[i]));
+        output.setInt16(
+            offset,
+            s < 0 ? s * 32768 : s * 32767,
+            true
+        );
+    }
+}
+
+function audioBufferToWav(buffer) {
+    const channels = buffer.numberOfChannels;
+    const sampleRate = buffer.sampleRate;
+    const length = buffer.length * channels * 2;
+
+    const arrayBuffer = new ArrayBuffer(44 + length);
+    const view = new DataView(arrayBuffer);
+
+    writeString(view, 0, "RIFF");
+    view.setUint32(4, 36 + length, true);
+    writeString(view, 8, "WAVE");
+    writeString(view, 12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, channels, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * channels * 2, true);
+    view.setUint16(32, channels * 2, true);
+    view.setUint16(34, 16, true);
+    writeString(view, 36, "data");
+    view.setUint32(40, length, true);
+
+    const left = buffer.getChannelData(0);
+    const right = channels > 1 ? buffer.getChannelData(1) : left;
+
+    const interleaved = new Float32Array(buffer.length * channels);
+
+    for (let i = 0; i < buffer.length; i++) {
+        interleaved[i * channels] = left[i];
+
+        if (channels > 1) {
+            interleaved[i * channels + 1] = right[i];
+        }
+    }
+
+    floatTo16BitPCM(view, interleaved, 44);
+
+    return new Blob([arrayBuffer], {type:"audio/wav"});
+}
+
+async function renderRecording() {
+    const events = recorder.events.slice();
+
+    if (!events.length) {
+        throw new Error("कोई स्वर रिकॉर्ड नहीं हुआ।");
+    }
+
+    const lastTime = Math.max(...events.map(e => e.time));
+    const duration = Math.max(2, lastTime / 1000 + 2);
+
+    const sampleRate = 44100;
+    const offline = new OfflineAudioContext(
+        2,
+        Math.ceil(duration * sampleRate),
+        sampleRate
+    );
+
+    const master = offline.createGain();
+    master.gain.value = 0.6;
+    master.connect(offline.destination);
+
+    const active = new Map();
+
+    events.forEach(event => {
+        const time = event.time / 1000;
+
+        if (event.type === "on") {
+            const noteGain = offline.createGain();
+
+            noteGain.gain.setValueAtTime(0.0001, time);
+            noteGain.gain.linearRampToValueAtTime(0.18, time + 0.04);
+
+            noteGain.connect(master);
+
+            const partials = event.voice === "soft"
+                ? [[1,1],[2,.15]]
+                : [[1,1],[2,.4],[3,.2],[4,.1]];
+
+            const nodes = [];
+
+            partials.forEach(([harmonic, level]) => {
+                const osc = offline.createOscillator();
+                const g = offline.createGain();
+
+                osc.type = "sawtooth";
+                osc.frequency.value = event.freq * harmonic;
+                g.gain.value = level / partials.length;
+
+                osc.connect(g);
+                g.connect(noteGain);
+                osc.start(time);
+
+                nodes.push(osc);
+            });
+
+            const list = active.get(event.freq) || [];
+            list.push({nodes, gain:noteGain});
+            active.set(event.freq, list);
+
+        } else if (event.type === "off") {
+            const list = active.get(event.freq);
+
+            if (list && list.length) {
+                const item = list.shift();
+                item.gain.gain.setTargetAtTime(0.0001, time, 0.04);
+
+                item.nodes.forEach(osc => {
+                    try {
+                        osc.stop(Math.min(duration, time + 0.25));
+                    } catch (e) {}
+                });
+            }
+        }
+    });
+
+    // Stop notes that were still held when recording ended.
+    active.forEach(list => {
+        list.forEach(item => {
+            item.gain.gain.setTargetAtTime(
+                0.0001,
+                Math.max(0, duration - 0.25),
+                0.04
+            );
+
+            item.nodes.forEach(osc => {
+                try { osc.stop(duration); } catch (e) {}
+            });
+        });
+    });
+
+    return await offline.startRendering();
+}
+
+$("downloadWav").addEventListener("click", async () => {
+    const button = $("downloadWav");
+
+    button.disabled = true;
+    $("recordStatus").textContent = "WAV तैयार हो रही है...";
+
+    try {
+        const buffer = await renderRecording();
+        const blob = audioBufferToWav(buffer);
+
+        if (recorder.lastDownload) {
+            URL.revokeObjectURL(recorder.lastDownload);
+        }
+
+        recorder.lastDownload = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = recorder.lastDownload;
+        a.download = "harmonium-recording.wav";
+
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        $("recordStatus").textContent =
+            "WAV डाउनलोड शुरू हो गया है।";
+
+    } catch (error) {
+        console.error(error);
+
+        $("recordStatus").textContent =
+            "Recording तैयार नहीं हुई: " + error.message;
+
+    } finally {
+        button.disabled = false;
+    }
+});
+
+
+/* ======================================
+   INITIALIZATION
+====================================== */
+
+$("bellows").classList.add("active");
+
+$("speedLabel").textContent =
+    $("practiceSpeed").value + " ms प्रति स्वर";
+
+buildKeyboard();
+
+window.addEventListener("beforeunload", () => {
+    stopAll();
+
+    if (recorder.lastDownload) {
+        URL.revokeObjectURL(recorder.lastDownload);
+    }
+});
+
+</script>
+
+</body>
+</html>
