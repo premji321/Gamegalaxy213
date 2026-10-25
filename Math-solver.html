@@ -3,694 +3,523 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101827">
-
-<title>Personal Current Affairs Hub | Prem Vikash Sir</title>
+<title>Current Affairs Pro | Prem Vikash Sir</title>
 
 <style>
 :root {
-    --bg: #f4f7fb;
-    --card: #ffffff;
-    --text: #182238;
-    --muted: #69768b;
-    --primary: #4f46e5;
-    --border: #e1e7f0;
-    --sidebar: #101827;
-    --success: #15803d;
-    --danger: #b91c1c;
-    --radius: 13px;
+    --bg:#f3f6fb;
+    --panel:#ffffff;
+    --text:#182235;
+    --muted:#64748b;
+    --primary:#2457d6;
+    --border:#dfe6f0;
+    --green:#15803d;
+    --red:#dc2626;
+    --shadow:0 4px 18px rgba(25,45,80,.07);
 }
 
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
 
 body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
 }
 
-button, input, select, textarea {
-    font: inherit;
+button,input,select,textarea {
+    font:inherit;
 }
 
 button {
-    cursor: pointer;
-}
-
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-a:focus-visible {
-    outline: 3px solid #a5b4fc;
-    outline-offset: 2px;
+    cursor:pointer;
 }
 
 button:disabled {
-    opacity: .6;
-    cursor: wait;
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+header {
+    background:linear-gradient(120deg,#132c68,#2457d6);
+    color:white;
+    padding:22px;
+}
+
+.header-inner {
+    max-width:1450px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+header h1 {
+    margin:0 0 7px;
+    font-size:25px;
+}
+
+header p {
+    margin:0;
+    color:#dbeafe;
+    font-size:13px;
+}
+
+.header-actions {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.header-actions button {
+    border:1px solid #ffffff60;
+    color:white;
+    background:#ffffff18;
+    border-radius:8px;
+    padding:10px 13px;
 }
 
 .app {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 250px minmax(0, 1fr);
+    max-width:1450px;
+    margin:22px auto;
+    padding:0 15px;
+    display:grid;
+    grid-template-columns:255px minmax(0,1fr);
+    gap:20px;
 }
 
-/* SIDEBAR */
+.sidebar,.panel,.stat {
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:13px;
+    box-shadow:var(--shadow);
+}
 
 .sidebar {
-    background: var(--sidebar);
-    color: white;
-    padding: 20px 14px;
+    padding:17px;
+    align-self:start;
+    position:sticky;
+    top:12px;
 }
 
-.brand {
-    font-size: 21px;
-    font-weight: 800;
-    padding: 8px;
-}
-
-.brand span {
-    color: #a5b4fc;
-}
-
-.brand-sub {
-    color: #aeb9ca;
-    font-size: 11px;
-    padding: 0 8px 22px;
-}
-
-.nav-heading {
-    color: #8b9bb3;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    padding: 17px 9px 8px;
+.sidebar h3 {
+    margin:5px 0 12px;
+    font-size:14px;
 }
 
 .nav-btn {
-    width: 100%;
-    padding: 11px;
-    margin: 2px 0;
-    text-align: left;
-    border: 0;
-    border-radius: 8px;
-    background: transparent;
-    color: #dce4f0;
-    font-size: 13px;
+    display:block;
+    width:100%;
+    padding:11px;
+    margin:4px 0;
+    border:0;
+    background:transparent;
+    text-align:left;
+    border-radius:8px;
+    color:var(--text);
 }
 
-.nav-btn:hover,
-.nav-btn.active {
-    background: #29364d;
-    color: white;
+.nav-btn:hover,.nav-btn.active {
+    background:#eaf0ff;
+    color:var(--primary);
+    font-weight:bold;
 }
 
-.sidebar-footer {
-    margin: 25px 7px 0;
-    padding-top: 17px;
-    border-top: 1px solid #344052;
-    font-size: 11px;
-    color: #aeb9ca;
-    line-height: 1.7;
+.sidebar hr {
+    border:0;
+    border-top:1px solid var(--border);
+    margin:18px 0;
 }
-
-/* MAIN */
 
 .main {
-    min-width: 0;
+    min-width:0;
 }
-
-.topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 15px 23px;
-    background: white;
-    border-bottom: 1px solid var(--border);
-}
-
-.topbar h2 {
-    margin: 0;
-    font-size: 19px;
-}
-
-.topbar p {
-    color: var(--muted);
-    font-size: 11px;
-    margin: 5px 0 0;
-}
-
-.top-actions {
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
-}
-
-.content {
-    padding: 23px;
-    max-width: 1500px;
-    margin: auto;
-}
-
-.btn {
-    background: white;
-    border: 1px solid var(--border);
-    padding: 10px 13px;
-    border-radius: 9px;
-    color: var(--text);
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-.btn:hover {
-    filter: brightness(.97);
-}
-
-.mobile-menu {
-    display: none;
-}
-
-/* HERO */
-
-.hero {
-    padding: 29px;
-    border-radius: 17px;
-    color: white;
-    background: linear-gradient(120deg, #22215e, #4f46e5, #818cf8);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.hero h1 {
-    font-size: clamp(25px, 3vw, 38px);
-    margin: 13px 0;
-}
-
-.hero p {
-    max-width: 700px;
-    line-height: 1.8;
-    color: #e2e5ff;
-    font-size: 14px;
-}
-
-.hero-badge {
-    border: 1px solid #ffffff55;
-    background: #ffffff16;
-    padding: 7px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-}
-
-.hero-icon {
-    font-size: 78px;
-}
-
-/* STATS */
 
 .stats {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 13px;
-    margin: 20px 0;
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+    margin-bottom:17px;
 }
 
 .stat {
-    padding: 17px;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    padding:16px;
 }
 
-.stat-number {
-    font-size: 27px;
-    font-weight: bold;
-    margin: 10px 0 5px;
+.stat span {
+    color:var(--muted);
+    font-size:12px;
 }
 
-.stat-label {
-    color: var(--muted);
-    font-size: 11px;
+.stat strong {
+    display:block;
+    font-size:25px;
+    margin-top:8px;
 }
 
-/* SECTIONS */
-
-.section {
-    margin: 27px 0;
+.panel {
+    padding:18px;
+    margin-bottom:17px;
 }
 
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
+.panel h2 {
+    font-size:19px;
+    margin:0 0 15px;
 }
-
-.section-header h2 {
-    margin: 0;
-    font-size: 19px;
-}
-
-.section-header p {
-    margin: 5px 0 0;
-    color: var(--muted);
-    font-size: 12px;
-}
-
-/* CATEGORY GRID */
-
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
-}
-
-.category {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    text-align: left;
-}
-
-.category:hover {
-    border-color: var(--primary);
-    transform: translateY(-2px);
-}
-
-.category .icon {
-    font-size: 25px;
-}
-
-.category h3 {
-    font-size: 14px;
-    margin: 11px 0 5px;
-}
-
-.category p {
-    color: var(--muted);
-    font-size: 11px;
-    margin: 0;
-}
-
-/* FILTERS */
 
 .filters {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 9px;
-    margin: 17px 0;
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:10px;
 }
 
-.field {
-    width: 100%;
-    min-width: 0;
-    padding: 11px;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    background: white;
-    color: var(--text);
+.field label {
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:6px;
 }
 
-.field:focus {
-    border-color: var(--primary);
+.field input,.field select,.field textarea,
+.search-box,.modal input,.modal select,.modal textarea {
+    width:100%;
+    padding:10px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:white;
+    color:var(--text);
 }
 
-textarea {
-    resize: vertical;
+.field textarea,.modal textarea {
+    min-height:110px;
+    resize:vertical;
 }
 
-/* SOURCE DIRECTORY */
-
-.source-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+.btn {
+    padding:10px 13px;
+    border:0;
+    border-radius:8px;
+    background:var(--primary);
+    color:white;
 }
 
-.source-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 15px;
-    min-width: 0;
+.btn.secondary {
+    background:#e8eefb;
+    color:#2148a9;
 }
 
-.source-title {
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 7px;
+.btn.danger {
+    background:#fee2e2;
+    color:#b91c1c;
 }
 
-.source-card p {
-    color: var(--muted);
-    font-size: 11px;
-    line-height: 1.6;
+.btn.success {
+    background:#dcfce7;
+    color:#166534;
 }
 
-.source-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 12px;
+.btn.small {
+    padding:7px 9px;
+    font-size:12px;
 }
 
-.source-actions a,
-.source-actions button {
-    font-size: 11px;
-    text-decoration: none;
-    padding: 8px 10px;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    background: white;
-    color: var(--primary);
+.button-row {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
 }
 
-/* NEWS CARDS */
+.news-toolbar {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:15px;
+}
 
-.news-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
+.news-toolbar h2 {
+    margin:0;
+}
+
+.news-list {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:13px;
 }
 
 .news-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 17px;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px;
+    min-width:0;
+    transition:.15s;
 }
 
-.news-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.tag {
-    background: #eef2ff;
-    color: #4338ca;
-    padding: 5px 7px;
-    border-radius: 5px;
-    font-size: 10px;
-    font-weight: bold;
-}
-
-.news-date {
-    color: var(--muted);
-    font-size: 10px;
+.news-card:hover {
+    box-shadow:var(--shadow);
+    transform:translateY(-1px);
 }
 
 .news-card h3 {
-    font-size: 16px;
-    line-height: 1.55;
-    margin: 0 0 10px;
+    font-size:16px;
+    line-height:1.45;
+    margin:10px 0;
+    overflow-wrap:anywhere;
 }
 
-.news-summary {
-    font-size: 13px;
-    line-height: 1.7;
-    color: #596579;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    flex: 1;
+.news-card p {
+    font-size:13px;
+    line-height:1.65;
+    color:#475569;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
 }
 
-.news-footer {
-    border-top: 1px solid var(--border);
-    margin-top: 14px;
-    padding-top: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 8px;
+.badges {
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
 }
 
-.news-footer button {
-    border: 0;
-    background: transparent;
-    color: var(--primary);
-    font-size: 11px;
-    padding: 4px 0;
+.badge {
+    display:inline-block;
+    background:#edf2ff;
+    color:#2449a4;
+    border-radius:20px;
+    padding:5px 8px;
+    font-size:11px;
 }
 
-.news-footer .delete-btn {
-    color: var(--danger);
+.badge.green {
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge.orange {
+    background:#ffedd5;
+    color:#9a3412;
+}
+
+.card-footer {
+    border-top:1px solid var(--border);
+    padding-top:11px;
+    margin-top:12px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:7px;
+}
+
+.card-footer a {
+    color:var(--primary);
+    text-decoration:none;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.card-footer a:hover {
+    text-decoration:underline;
+}
+
+.card-date {
+    color:var(--muted);
+    font-size:11px;
+    margin-top:8px;
 }
 
 .empty {
-    grid-column: 1 / -1;
-    padding: 35px 20px;
-    border: 1px dashed #cbd5e1;
-    border-radius: var(--radius);
-    text-align: center;
-    background: white;
-    color: var(--muted);
-    line-height: 1.7;
+    grid-column:1/-1;
+    text-align:center;
+    padding:35px 15px;
+    border:1px dashed #b9c5d8;
+    border-radius:12px;
+    color:var(--muted);
+    background:white;
 }
 
-/* MONTH / REGION */
-
-.pill-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+.source-list {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
 }
 
-.pill {
-    background: white;
-    border: 1px solid var(--border);
-    padding: 9px 13px;
-    border-radius: 9px;
+.source-card {
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px;
+    background:white;
+    min-width:0;
 }
 
-.pill:hover {
-    border-color: var(--primary);
-    color: var(--primary);
+.source-card h3 {
+    font-size:15px;
+    margin:0 0 8px;
 }
 
-/* STATUS */
-
-.status {
-    padding: 12px;
-    border-radius: 9px;
-    font-size: 12px;
-    line-height: 1.7;
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    color: #1e40af;
-    margin: 12px 0;
-    overflow-wrap: anywhere;
+.source-card a {
+    color:var(--primary);
+    font-size:12px;
+    overflow-wrap:anywhere;
 }
 
-.status.error {
-    background: #fef2f2;
-    border-color: #fecaca;
-    color: #991b1b;
+.source-card p {
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
 }
 
-.status.success {
-    background: #f0fdf4;
-    border-color: #bbf7d0;
-    color: #166534;
+.source-status {
+    font-size:11px;
+    margin-top:8px;
+    color:var(--muted);
+    overflow-wrap:anywhere;
 }
-
-/* MODAL */
 
 .modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    padding: 16px;
-    background: #101827aa;
-    overflow-y: auto;
-    align-items: center;
-    justify-content: center;
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:#0f172acc;
+    padding:15px;
+    overflow-y:auto;
 }
 
-.modal.show {
-    display: flex;
+.modal.open {
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
 }
 
 .modal-box {
-    background: white;
-    padding: 22px;
-    border-radius: 15px;
-    width: 100%;
-    max-width: 680px;
-    margin: auto;
+    width:min(700px,100%);
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin:auto;
 }
 
-.modal-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 18px;
+.modal-box h2 {
+    margin-top:0;
 }
 
-.modal-head h2 {
-    margin: 0;
-    font-size: 20px;
+.modal-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
-.close-btn {
-    width: 34px;
-    height: 34px;
-    border: 0;
-    border-radius: 8px;
-    font-size: 20px;
+.modal .field.full {
+    grid-column:1/-1;
 }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+.status {
+    font-size:13px;
+    margin-top:10px;
+    color:var(--muted);
+    line-height:1.5;
+    white-space:pre-wrap;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    margin-bottom: 9px;
+.hidden {
+    display:none!important;
 }
 
-.form-group label {
-    font-size: 12px;
-    font-weight: bold;
+footer {
+    text-align:center;
+    color:var(--muted);
+    padding:20px;
+    font-size:12px;
 }
 
-.full {
-    grid-column: 1 / -1;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.notice {
-    background: #fff7ed;
-    border: 1px solid #fed7aa;
-    color: #9a3412;
-    border-radius: 9px;
-    padding: 12px;
-    font-size: 12px;
-    line-height: 1.7;
-    margin-bottom: 14px;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 1100px) {
-    .news-grid,
-    .source-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .category-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+@media(max-width:1000px) {
+    .app {
+        grid-template-columns:210px minmax(0,1fr);
     }
 
     .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 760px) {
-    .app {
-        grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-        display: none;
-    }
-
-    .sidebar.mobile-open {
-        display: block;
-    }
-
-    .mobile-menu {
-        display: inline-block;
-    }
-
-    .topbar {
-        padding: 13px;
-    }
-
-    .topbar h2 {
-        font-size: 15px;
-    }
-
-    .top-actions .btn {
-        padding: 8px;
-        font-size: 11px;
-    }
-
-    .content {
-        padding: 13px;
-    }
-
-    .hero {
-        padding: 22px;
-    }
-
-    .hero-icon {
-        display: none;
-    }
-
-    .category-grid,
-    .news-grid,
-    .source-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:repeat(2,minmax(0,1fr));
     }
 
     .filters {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .filters input {
-        grid-column: 1 / -1;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .full {
-        grid-column: auto;
+        grid-template-columns:repeat(2,minmax(0,1fr));
     }
 }
 
-@media (max-width: 480px) {
-    .category-grid,
-    .news-grid,
-    .source-grid {
-        grid-template-columns: 1fr;
+@media(max-width:700px) {
+    header {
+        padding:18px 14px;
     }
 
-    .hero h1 {
-        font-size: 27px;
+    header h1 {
+        font-size:21px;
+    }
+
+    .app {
+        display:flex;
+        flex-direction:column;
+        margin-top:13px;
+        padding:0 10px;
+        gap:13px;
+    }
+
+    .sidebar {
+        position:static;
+    }
+
+    .sidebar nav {
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:3px;
+    }
+
+    .sidebar hr {
+        margin:12px 0;
+    }
+
+    .panel {
+        padding:13px;
+    }
+
+    .news-list,.source-list {
+        grid-template-columns:1fr;
+    }
+
+    .filters {
+        grid-template-columns:1fr 1fr;
+    }
+
+    .modal-grid {
+        grid-template-columns:1fr;
+    }
+
+    .modal .field.full {
+        grid-column:auto;
+    }
+}
+
+@media(max-width:390px) {
+    .filters {
+        grid-template-columns:1fr;
+    }
+
+    .stats {
+        gap:8px;
+    }
+
+    .stat {
+        padding:12px;
+    }
+
+    .stat strong {
+        font-size:21px;
     }
 }
 </style>
@@ -698,485 +527,290 @@ textarea {
 
 <body>
 
-<div class="app">
-
-<!-- SIDEBAR -->
-
-<aside class="sidebar" id="sidebar">
-
-    <div class="brand">📰 Current<span>Affairs</span></div>
-
-    <div class="brand-sub">PERSONAL NEWS & EXAM READER</div>
-
-    <div class="nav-heading">DASHBOARD</div>
-
-    <button class="nav-btn active" data-page="dashboard">🏠 Dashboard</button>
-    <button class="nav-btn" data-page="all">📰 All News</button>
-    <button class="nav-btn" data-page="sources">🌐 News Sources</button>
-    <button class="nav-btn" data-page="bookmarks">🔖 Bookmarks</button>
-    <button class="nav-btn" data-page="manual">✍️ Add Notes</button>
-    <button class="nav-btn" data-page="backup">💾 Backup & Restore</button>
-
-    <div class="nav-heading">CATEGORIES</div>
-
-    <button class="nav-btn" data-category="National">🇮🇳 National</button>
-    <button class="nav-btn" data-category="International">🌍 International</button>
-    <button class="nav-btn" data-category="Political">🏛️ Political</button>
-    <button class="nav-btn" data-category="Economic">📈 Economic</button>
-    <button class="nav-btn" data-category="Sports">🏆 Sports</button>
-    <button class="nav-btn" data-category="Social Issue">🤝 Social Issues</button>
-    <button class="nav-btn" data-category="Scheme">📋 Government Schemes</button>
-
-    <div class="nav-heading">REGIONS</div>
-
-    <button class="nav-btn" data-region="India">🇮🇳 India</button>
-    <button class="nav-btn" data-region="Bihar">📍 Bihar</button>
-    <button class="nav-btn" data-region="Jharkhand">📍 Jharkhand</button>
-    <button class="nav-btn" data-region="Uttar Pradesh">📍 Uttar Pradesh</button>
-    <button class="nav-btn" data-region="West Bengal">📍 West Bengal</button>
-
-    <div class="sidebar-footer">
-        Personal Current Affairs Hub<br>
-        UPSC • BPSC • State Exams<br><br>
-        By Prem Vikash Sir
-    </div>
-
-</aside>
-
-<!-- MAIN -->
-
-<main class="main">
-
-<header class="topbar">
-
-    <div style="display:flex;align-items:center;gap:10px">
-
-        <button class="btn mobile-menu"
-                onclick="toggleSidebar()">☰</button>
-
+<header>
+    <div class="header-inner">
         <div>
-            <h2 id="pageTitle">Dashboard</h2>
-            <p id="todayDate"></p>
+            <h1>📰 Current Affairs Pro</h1>
+            <p>Daily News • UPSC • BPSC • State Current Affairs</p>
         </div>
 
+        <div class="header-actions">
+            <button onclick="openNewsModal()">＋ Add News</button>
+            <button onclick="refreshAllSources()">↻ Refresh RSS</button>
+            <button onclick="exportBackup()">⬇ Backup</button>
+        </div>
     </div>
-
-    <div class="top-actions">
-        <button class="btn" onclick="exportBackup()">⬇ Backup</button>
-        <button class="btn btn-primary" onclick="openNewsModal()">＋ Add News</button>
-    </div>
-
 </header>
 
-<div class="content">
+<div class="app">
 
-<!-- DASHBOARD -->
+    <aside class="sidebar">
 
-<section id="dashboardPage">
+        <h3>📚 Dashboard</h3>
 
-    <div class="hero">
+        <nav>
+            <button class="nav-btn active" data-view="dashboard"
+                onclick="changeView('dashboard',this)">🏠 All News</button>
 
-        <div>
-            <span class="hero-badge">YOUR PERSONAL EXAM READER</span>
+            <button class="nav-btn" data-view="bookmarks"
+                onclick="changeView('bookmarks',this)">⭐ Bookmarks</button>
 
-            <h1>Current Affairs<br>Made Simple.</h1>
+            <button class="nav-btn" data-view="mynews"
+                onclick="changeView('mynews',this)">📝 My Notes</button>
 
-            <p>
-                Collect news from supported sources, organize current
-                affairs by category, month and region, and keep your
-                saved reading material in this browser.
+            <button class="nav-btn" data-view="sources"
+                onclick="changeView('sources',this)">🌐 News Sources</button>
+        </nav>
+
+        <hr>
+
+        <h3>📂 Quick Categories</h3>
+
+        <nav id="categoryNav"></nav>
+
+        <hr>
+
+        <h3>🗺️ Quick Regions</h3>
+
+        <nav id="regionNav"></nav>
+
+        <hr>
+
+        <h3>💾 Data Management</h3>
+
+        <button class="nav-btn" onclick="exportBackup()">⬇ Export JSON Backup</button>
+
+        <button class="nav-btn" onclick="document.getElementById('restoreFile').click()">
+            ⬆ Restore JSON Backup
+        </button>
+
+        <input type="file" id="restoreFile" accept=".json,application/json"
+            hidden onchange="importBackup(event)">
+
+        <button class="nav-btn" onclick="clearFilters()">↺ Clear Filters</button>
+
+        <p style="font-size:11px;color:#64748b;line-height:1.5">
+            आपका डेटा इसी ब्राउज़र में सेव होता है।
+            नियमित रूप से JSON Backup बनाते रहें।
+        </p>
+
+    </aside>
+
+    <main class="main">
+
+        <section class="stats">
+            <div class="stat">
+                <span>Total Saved News</span>
+                <strong id="totalCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>Bookmarks</span>
+                <strong id="bookmarkCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>Today's News</span>
+                <strong id="todayCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>News Sources</span>
+                <strong id="sourceCount">15</strong>
+            </div>
+        </section>
+
+        <section class="panel" id="filterPanel">
+            <h2>🔎 Search & Filter</h2>
+
+            <div class="filters">
+
+                <div class="field">
+                    <label>Search News</label>
+                    <input id="searchInput" type="search"
+                        placeholder="Search title, topic, notes..."
+                        oninput="renderNews()">
+                </div>
+
+                <div class="field">
+                    <label>Category</label>
+                    <select id="categoryFilter" onchange="renderNews()"></select>
+                </div>
+
+                <div class="field">
+                    <label>Month</label>
+                    <select id="monthFilter" onchange="renderNews()"></select>
+                </div>
+
+                <div class="field">
+                    <label>Region</label>
+                    <select id="regionFilter" onchange="renderNews()"></select>
+                </div>
+
+                <div class="field">
+                    <label>Source</label>
+                    <select id="sourceFilter" onchange="renderNews()"></select>
+                </div>
+
+                <div class="field">
+                    <label>Year</label>
+                    <select id="yearFilter" onchange="renderNews()"></select>
+                </div>
+
+                <div class="field">
+                    <label>Sort By</label>
+                    <select id="sortFilter" onchange="renderNews()">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="title">Title A–Z</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Actions</label>
+                    <button class="btn secondary" style="width:100%"
+                        onclick="clearFilters()">Clear All Filters</button>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="panel" id="newsPanel">
+
+            <div class="news-toolbar">
+                <h2 id="listTitle">📰 Current Affairs</h2>
+
+                <button class="btn" onclick="openNewsModal()">＋ Add News</button>
+            </div>
+
+            <div id="newsList" class="news-list">
+                <div class="empty">Loading your local news...</div>
+            </div>
+
+        </section>
+
+        <section class="panel hidden" id="sourcesPanel">
+
+            <h2>🌐 Your 15 News Sources</h2>
+
+            <p style="font-size:13px;color:#64748b;line-height:1.6">
+                Insights IAS का RSS Feed पहले से जोड़ा गया है।
+                अन्य वेबसाइटों के लिए Configure Feed दबाकर उनका RSS/Atom URL जोड़ें।
+                कुछ वेबसाइटें browser requests को CORS के कारण रोक सकती हैं।
             </p>
 
-            <button class="btn"
-                    onclick="showPage('sources')">
-                🌐 Manage Sources
-            </button>
-
-            <button class="btn"
-                    onclick="refreshAllSources()">
-                🔄 Refresh News
-            </button>
-        </div>
-
-        <div class="hero-icon">📚</div>
-
-    </div>
-
-    <div id="globalStatus" class="status">
-        Ready. Open News Sources and try Refresh Feed.
-        News availability depends on each source and browser permissions.
-    </div>
-
-    <div class="stats">
-
-        <div class="stat">
-            <div>📰</div>
-            <div class="stat-number" id="totalNews">0</div>
-            <div class="stat-label">Saved Articles</div>
-        </div>
-
-        <div class="stat">
-            <div>🔖</div>
-            <div class="stat-number" id="totalBookmarks">0</div>
-            <div class="stat-label">Bookmarks</div>
-        </div>
-
-        <div class="stat">
-            <div>🌐</div>
-            <div class="stat-number" id="totalSources">15</div>
-            <div class="stat-label">News Sources</div>
-        </div>
-
-        <div class="stat">
-            <div>📅</div>
-            <div class="stat-number" id="todayArticles">0</div>
-            <div class="stat-label">Articles Dated Today</div>
-        </div>
-
-    </div>
-
-    <section class="section">
-
-        <div class="section-header">
-            <div>
-                <h2>Browse by Category</h2>
-                <p>Choose a topic.</p>
-            </div>
-        </div>
-
-        <div class="category-grid" id="categoryGrid"></div>
-
-    </section>
-
-    <section class="section">
-
-        <div class="section-header">
-            <div>
-                <h2>Browse by Month</h2>
-                <p>Filter your saved articles.</p>
-            </div>
-        </div>
-
-        <div class="pill-list" id="monthList"></div>
-
-    </section>
-
-    <section class="section">
-
-        <div class="section-header">
-            <div>
-                <h2>Browse by Region</h2>
-                <p>Choose a region.</p>
-            </div>
-        </div>
-
-        <div class="pill-list" id="regionList"></div>
-
-    </section>
-
-    <section class="section">
-
-        <div class="section-header">
-            <div>
-                <h2>Recently Saved</h2>
-                <p>Latest articles stored in your browser.</p>
+            <div class="button-row" style="margin-bottom:15px">
+                <button class="btn" onclick="refreshAllSources()">↻ Refresh Configured Feeds</button>
+                <button class="btn secondary" onclick="renderSources()">Update Source List</button>
             </div>
 
-            <button class="btn" onclick="showPage('all')">View All →</button>
-        </div>
+            <div id="sourceList" class="source-list"></div>
 
-        <div class="news-grid" id="latestGrid"></div>
+        </section>
 
-    </section>
-
-</section>
-
-<!-- ALL NEWS -->
-
-<section id="allPage" hidden>
-
-    <div class="section-header">
-        <div>
-            <h2 id="newsHeading">All Current Affairs</h2>
-            <p>Search and filter saved articles.</p>
-        </div>
-    </div>
-
-    <div class="filters">
-
-        <input id="searchInput"
-               class="field"
-               placeholder="🔍 Search title or keyword..."
-               oninput="renderNews()">
-
-        <select id="categoryFilter"
-                class="field"
-                onchange="renderNews()">
-            <option value="">All Categories</option>
-        </select>
-
-        <select id="monthFilter"
-                class="field"
-                onchange="renderNews()">
-            <option value="">All Months</option>
-        </select>
-
-        <select id="regionFilter"
-                class="field"
-                onchange="renderNews()">
-            <option value="">All Regions</option>
-        </select>
-
-    </div>
-
-    <div class="news-grid" id="newsGrid"></div>
-
-</section>
-
-<!-- SOURCES -->
-
-<section id="sourcesPage" hidden>
-
-    <div class="section-header">
-        <div>
-            <h2>🌐 Your 15 News Sources</h2>
-            <p>Open original websites or attempt to collect RSS articles.</p>
-        </div>
-
-        <button class="btn btn-primary"
-                onclick="refreshAllSources()">
-            🔄 Refresh All
-        </button>
-    </div>
-
-    <div class="notice">
-        RSS feeds are not guaranteed for every website. Some sites may
-        block browser requests or restrict automatic collection.
-        This app never bypasses paywalls or access controls.
-        Only successfully retrieved articles will be saved.
-    </div>
-
-    <div id="sourceStatus" class="status">
-        No refresh started yet.
-    </div>
-
-    <div class="source-grid" id="sourceGrid"></div>
-
-</section>
-
-<!-- BOOKMARKS -->
-
-<section id="bookmarksPage" hidden>
-
-    <div class="section-header">
-        <div>
-            <h2>🔖 Bookmarked Articles</h2>
-            <p>Your important saved news.</p>
-        </div>
-    </div>
-
-    <div class="news-grid" id="bookmarkGrid"></div>
-
-</section>
-
-<!-- MANUAL NOTES -->
-
-<section id="manualPage" hidden>
-
-    <div class="section-header">
-        <div>
-            <h2>✍️ Add Current Affairs Manually</h2>
-            <p>Add facts or news from a source you have read.</p>
-        </div>
-    </div>
-
-    <div class="notice">
-        Manual notes are saved locally. Always verify important facts
-        against an original or official source.
-    </div>
-
-    <button class="btn btn-primary" onclick="openNewsModal()">
-        ＋ Create News Note
-    </button>
-
-</section>
-
-<!-- BACKUP -->
-
-<section id="backupPage" hidden>
-
-    <div class="section-header">
-        <div>
-            <h2>💾 Local Data & Backup</h2>
-            <p>Protect your saved articles.</p>
-        </div>
-    </div>
-
-    <div class="notice">
-        Your articles are stored in this browser's IndexedDB database.
-        Clearing browser site data may delete them. Export regular backups.
-        Data does not automatically sync to another browser or device.
-    </div>
-
-    <div class="exam-panel">
-
-        <h3>Export Backup</h3>
-
-        <p>
-            Download your saved articles and bookmarks as a JSON file.
-        </p>
-
-        <button class="btn btn-primary" onclick="exportBackup()">
-            ⬇ Download JSON Backup
-        </button>
-
-        <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
-
-        <h3>Restore Backup</h3>
-
-        <p>
-            Choose a backup created by this application. Imported articles
-            are merged with existing articles by their unique IDs.
-        </p>
-
-        <input type="file"
-               id="restoreFile"
-               class="field"
-               accept=".json,application/json">
-
-        <br><br>
-
-        <button class="btn btn-primary" onclick="restoreBackup()">
-            Restore Backup
-        </button>
-
-        <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
-
-        <h3>Clear All Saved Articles</h3>
-
-        <p>
-            This permanently deletes the locally saved articles.
-            Download a backup first if you need to keep them.
-        </p>
-
-        <button class="btn"
-                style="color:#b91c1c"
-                onclick="clearAllNews()">
-            Delete All Articles
-        </button>
-
-    </div>
-
-</section>
+    </main>
 
 </div>
 
-</main>
-</div>
+<footer>
+    Personal Current Affairs Organizer • Local Browser Storage
+    <br>Educational use only. Always verify important news with the original publisher.
+</footer>
 
-<!-- NEWS MODAL -->
+<!-- ADD / EDIT NEWS MODAL -->
 
 <div class="modal" id="newsModal">
-
     <div class="modal-box">
 
-        <div class="modal-head">
-            <h2>Add Current Affairs</h2>
-            <button class="close-btn" onclick="closeNewsModal()">×</button>
-        </div>
+        <h2 id="modalTitle">Add Current Affairs</h2>
 
         <form id="newsForm">
 
-            <div class="form-grid">
+            <input type="hidden" id="newsId">
 
-                <div class="form-group full">
-                    <label>Headline *</label>
-                    <input class="field"
-                           name="title"
-                           maxlength="250"
-                           required>
+            <div class="modal-grid">
+
+                <div class="field full">
+                    <label>News Title *</label>
+                    <input id="newsTitle" required maxlength="500"
+                        placeholder="Enter news headline">
                 </div>
 
-                <div class="form-group">
-                    <label>Category *</label>
-                    <select class="field" name="category" required></select>
+                <div class="field">
+                    <label>Category</label>
+                    <select id="newsCategory"></select>
                 </div>
 
-                <div class="form-group">
-                    <label>Region *</label>
-                    <select class="field" name="region" required></select>
+                <div class="field">
+                    <label>Region</label>
+                    <select id="newsRegion"></select>
                 </div>
 
-                <div class="form-group">
-                    <label>Date *</label>
-                    <input class="field"
-                           name="date"
-                           type="date"
-                           required>
+                <div class="field">
+                    <label>News Date</label>
+                    <input id="newsDate" type="date">
                 </div>
 
-                <div class="form-group">
+                <div class="field">
                     <label>Source Website</label>
-                    <select class="field" name="sourceName"></select>
+                    <select id="newsSource"></select>
                 </div>
 
-                <div class="form-group full">
-                    <label>Summary / Important Facts *</label>
-                    <textarea class="field"
-                              name="summary"
-                              rows="5"
-                              maxlength="15000"
-                              required></textarea>
-                </div>
-
-                <div class="form-group full">
+                <div class="field full">
                     <label>Original Article URL</label>
-                    <input class="field"
-                           name="url"
-                           type="url"
-                           maxlength="2000"
-                           placeholder="https://example.com/article">
+                    <input id="newsUrl" type="url"
+                        placeholder="https://example.com/news">
                 </div>
 
-                <div class="form-group full">
-                    <label>Exam Notes</label>
-                    <textarea class="field"
-                              name="notes"
-                              rows="3"
-                              maxlength="5000"></textarea>
+                <div class="field full">
+                    <label>Summary / Your Notes</label>
+                    <textarea id="newsSummary"
+                        placeholder="Write important facts, exam points, data, schemes, etc."></textarea>
+                </div>
+
+                <div class="field full">
+                    <label>Tags (comma separated)</label>
+                    <input id="newsTags" placeholder="UPSC, BPSC, Economy, Bihar">
                 </div>
 
             </div>
 
-            <div class="modal-actions">
-                <button type="button"
-                        class="btn"
-                        onclick="closeNewsModal()">Cancel</button>
-
-                <button type="submit"
-                        class="btn btn-primary">Save Article</button>
+            <div class="button-row">
+                <button class="btn" type="submit">💾 Save News</button>
+                <button class="btn secondary" type="button"
+                    onclick="closeNewsModal()">Cancel</button>
             </div>
+
+            <div id="formStatus" class="status"></div>
 
         </form>
 
     </div>
-
 </div>
 
 <script>
+"use strict";
 
-/* =====================================
-   CONFIGURATION
-===================================== */
+/* =========================================================
+   1. APP CONFIGURATION
+========================================================= */
 
 const CATEGORIES = [
-    {name:"National", icon:"🇮🇳", desc:"India's national affairs"},
-    {name:"International", icon:"🌍", desc:"World news"},
-    {name:"Political", icon:"🏛️", desc:"Politics and governance"},
-    {name:"Economic", icon:"📈", desc:"Economy and finance"},
-    {name:"Sports", icon:"🏆", desc:"Sports and tournaments"},
-    {name:"Social Issue", icon:"🤝", desc:"Education, health and society"},
-    {name:"Scheme", icon:"📋", desc:"Government schemes"}
+    "National",
+    "International",
+    "Political",
+    "Economic",
+    "Sports",
+    "Social Issue",
+    "Scheme"
+];
+
+const REGIONS = [
+    "India",
+    "Bihar",
+    "Jharkhand",
+    "Uttar Pradesh",
+    "West Bengal"
 ];
 
 const MONTHS = [
@@ -1185,739 +819,886 @@ const MONTHS = [
     "September","October","November","December"
 ];
 
-const REGIONS = [
-    "India","Bihar","Jharkhand",
-    "Uttar Pradesh","West Bengal"
-];
-
 /*
-  RSS URL:
-  This is an optional feed URL, not the website homepage.
+  Insights IAS RSS is preconfigured below.
+  The app tries a direct browser request first.
+  If CORS blocks the request, it tries a public proxy.
 
-  Leave feed empty if no suitable feed is configured.
-  Use only official or otherwise authorized feed URLs.
-
-  A public RSS proxy may be tried as a fallback for a configured feed.
-  Proxy availability, privacy, CORS and usage terms can change.
+  Public proxies are third-party services. Do not use them
+  for private URLs or sensitive data.
 */
 
 const SOURCES = [
     {
+        id:"pib",
         name:"PIB India",
         url:"https://pib.gov.in/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"Government press releases and official announcements."
+        description:"Official Government of India press releases"
     },
     {
+        id:"hindu",
         name:"The Hindu",
         url:"https://www.thehindu.com/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"National, international and editorial coverage."
+        description:"National and international journalism"
     },
     {
+        id:"indian-express",
         name:"The Indian Express",
         url:"https://indianexpress.com/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"National affairs, politics and explainers."
+        description:"Politics, governance and current affairs"
     },
     {
+        id:"bbc",
         name:"BBC News",
         url:"https://www.bbc.com/news",
         feed:"",
-        category:"International",
-        region:"India",
-        description:"International and global news."
+        description:"International news"
     },
     {
+        id:"reuters",
         name:"Reuters",
         url:"https://www.reuters.com/",
         feed:"",
-        category:"International",
-        region:"India",
-        description:"Global events, markets and business."
+        description:"Global news and business"
     },
     {
+        id:"economic-times",
         name:"Economic Times",
         url:"https://economictimes.indiatimes.com/",
         feed:"",
-        category:"Economic",
-        region:"India",
-        description:"Economy, business, markets and policy."
+        description:"Economy, business and markets"
     },
     {
+        id:"business-standard",
         name:"Business Standard",
         url:"https://www.business-standard.com/",
         feed:"",
-        category:"Economic",
-        region:"India",
-        description:"Business, finance and economic developments."
+        description:"Business, finance and economic policy"
     },
     {
+        id:"drishti",
         name:"Drishti IAS",
         url:"https://www.drishtiias.com/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"Civil-services preparation and current affairs."
+        description:"UPSC and state PCS current affairs"
     },
     {
+        id:"affairscloud",
         name:"AffairsCloud",
         url:"https://affairscloud.com/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"Competitive-exam current affairs."
+        description:"Daily current affairs and exam preparation"
     },
     {
+        id:"sansad-tv",
         name:"Sansad TV",
         url:"https://sansadtv.nic.in/",
         feed:"",
-        category:"Political",
-        region:"India",
-        description:"Parliamentary proceedings and public affairs."
+        description:"Parliamentary proceedings and policy"
     },
     {
+        id:"vajiram",
         name:"Vajiram & Ravi",
         url:"https://vajiramandravi.com/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"UPSC-oriented news analysis and preparation."
+        description:"UPSC preparation and current affairs"
     },
     {
+        id:"vision-ias",
         name:"Vision IAS",
         url:"https://visionias.in/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"Exam-oriented current affairs and analysis."
+        description:"Current affairs and exam resources"
     },
     {
+        id:"insights-ias",
         name:"Insights IAS",
         url:"https://www.insightsonindia.com/",
-        feed:"",
-        category:"National",
-        region:"India",
-        description:"Daily current affairs and UPSC preparation."
+        feed:"https://www.insightsonindia.com/feed/",
+        description:"Daily current affairs, quizzes and UPSC analysis"
     },
     {
+        id:"forum-ias",
         name:"ForumIAS",
         url:"https://forumias.com/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"Civil-services exam preparation and analysis."
+        description:"Civil services preparation and current affairs"
     },
     {
+        id:"next-ias",
         name:"NEXT IAS",
         url:"https://www.nextias.com/",
         feed:"",
-        category:"National",
-        region:"India",
-        description:"Current affairs and civil-services preparation."
+        description:"UPSC and current affairs preparation"
     }
 ];
 
-const DB_NAME = "PremVikashCurrentAffairsDB";
+const DB_NAME = "CurrentAffairsProDB";
 const DB_VERSION = 1;
-const STORE_NAME = "articles";
+const STORE_NAME = "news";
 
-let db = null;
-let news = [];
-let bookmarks = new Set();
-let currentPage = "dashboard";
-let refreshInProgress = false;
+let db;
+let allNews = [];
+let currentView = "dashboard";
+
+let activeCategory = "";
+let activeRegion = "";
+
+let sourceStates = {};
+
+const DEFAULT_PROXY =
+    "https://api.allorigins.win/raw?url=";
 
 
-/* =====================================
-   INDEXEDDB
-===================================== */
+/* =========================================================
+   2. SAFE UTILITIES
+========================================================= */
+
+function uid() {
+    if (window.crypto && crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+
+    return "news-" + Date.now() + "-" +
+        Math.random().toString(36).slice(2);
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(ch) {
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#39;"
+        }[ch];
+    });
+}
+
+function validDate(value) {
+    if (!value) return new Date().toISOString().slice(0,10);
+
+    const d = new Date(value);
+
+    if (Number.isNaN(d.getTime())) {
+        return new Date().toISOString().slice(0,10);
+    }
+
+    return d.toISOString().slice(0,10);
+}
+
+function safeURL(value) {
+    try {
+        const u = new URL(value);
+
+        if (u.protocol === "https:" || u.protocol === "http:") {
+            return u.href;
+        }
+
+        return "";
+    } catch {
+        return "";
+    }
+}
+
+function sourceName(id) {
+    const source = SOURCES.find(s => s.id === id);
+    return source ? source.name : "Personal Note";
+}
+
+function getMonthName(date) {
+    const d = new Date(date + "T12:00:00");
+    return MONTHS[d.getMonth()];
+}
+
+function getYear(date) {
+    return String(new Date(date + "T12:00:00").getFullYear());
+}
+
+function setStatus(message, color) {
+    const status = document.getElementById("formStatus");
+
+    status.textContent = message;
+    status.style.color = color || "#64748b";
+}
+
+
+/* =========================================================
+   3. INDEXEDDB LOCAL DATABASE
+========================================================= */
 
 function openDatabase() {
-
-    return new Promise((resolve, reject) => {
-
+    return new Promise((resolve,reject) => {
         if (!("indexedDB" in window)) {
-            reject(new Error("IndexedDB is unavailable in this browser."));
+            reject(new Error("IndexedDB is not supported by this browser."));
             return;
         }
 
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        const request = indexedDB.open(DB_NAME,DB_VERSION);
 
-        request.onupgradeneeded = function() {
-
-            const database = request.result;
+        request.onupgradeneeded = function(event) {
+            const database = event.target.result;
 
             if (!database.objectStoreNames.contains(STORE_NAME)) {
-
                 const store = database.createObjectStore(
                     STORE_NAME,
                     {keyPath:"id"}
                 );
 
-                store.createIndex("date", "date", {unique:false});
-                store.createIndex("category", "category", {unique:false});
-                store.createIndex("region", "region", {unique:false});
+                store.createIndex("date","date",{unique:false});
+                store.createIndex("sourceId","sourceId",{unique:false});
             }
         };
 
-        request.onsuccess = () => {
-            db = request.result;
-            resolve(db);
+        request.onsuccess = function() {
+            resolve(request.result);
         };
 
-        request.onerror = () => {
-            reject(request.error || new Error("Could not open database."));
+        request.onerror = function() {
+            reject(request.error);
         };
     });
 }
 
-function dbRequest(mode, action) {
-
-    return new Promise((resolve, reject) => {
-
-        const tx = db.transaction(STORE_NAME, mode);
+function databaseTransaction(mode,action) {
+    return new Promise((resolve,reject) => {
+        const tx = db.transaction(STORE_NAME,mode);
         const store = tx.objectStore(STORE_NAME);
 
         let request;
 
         try {
             request = action(store);
-        } catch (error) {
+        } catch(error) {
             reject(error);
             return;
         }
 
-        request.onsuccess = () => resolve(request.result);
-
-        request.onerror = () => {
-            reject(request.error || new Error("Database operation failed."));
-        };
+        tx.oncomplete = () => resolve(request ? request.result : true);
+        tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(tx.error || new Error("Database transaction aborted"));
     });
 }
 
-async function getAllArticles() {
-    return dbRequest("readonly", store => store.getAll());
+async function getAllFromDB() {
+    return databaseTransaction("readonly",store => store.getAll());
 }
 
-async function putArticle(article) {
-    return dbRequest("readwrite", store => store.put(article));
+async function saveNewsToDB(item) {
+    return databaseTransaction("readwrite",store => store.put(item));
 }
 
-async function removeArticle(id) {
-    return dbRequest("readwrite", store => store.delete(id));
+async function deleteNewsFromDB(id) {
+    return databaseTransaction("readwrite",store => store.delete(id));
 }
 
-async function reloadNews() {
+async function replaceAllNews(items) {
+    return new Promise((resolve,reject) => {
+        const tx = db.transaction(STORE_NAME,"readwrite");
+        const store = tx.objectStore(STORE_NAME);
 
-    news = await getAllArticles();
+        store.clear();
 
-    news.sort((a,b) => {
-        return String(b.date || "").localeCompare(String(a.date || ""));
+        items.forEach(item => store.put(item));
+
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
     });
-
-    renderAll();
 }
 
 
-/* =====================================
-   INITIALIZATION
-===================================== */
+/* =========================================================
+   4. SETTINGS AND RSS FEED STORAGE
+========================================================= */
 
-async function initialize() {
-
-    document.getElementById("todayDate").textContent =
-        new Date().toLocaleDateString("en-IN", {
-            weekday:"long",
-            day:"numeric",
-            month:"long",
-            year:"numeric"
-        });
-
-    renderCategories();
-    renderMonths();
-    renderRegions();
-    renderSources();
-    populateFilters();
-    populateForm();
-
-    document.querySelectorAll("[data-page]").forEach(button => {
-
-        button.addEventListener("click", () => {
-            showPage(button.dataset.page);
-        });
-    });
-
-    document.querySelectorAll("[data-category]").forEach(button => {
-
-        button.addEventListener("click", () => {
-            openCategory(button.dataset.category);
-        });
-    });
-
-    document.querySelectorAll("[data-region]").forEach(button => {
-
-        button.addEventListener("click", () => {
-            openRegion(button.dataset.region);
-        });
-    });
-
-    document.getElementById("newsForm")
-        .addEventListener("submit", saveManualNews);
-
-    document.getElementById("newsModal")
-        .addEventListener("click", event => {
-            if (event.target.id === "newsModal") closeNewsModal();
-        });
-
-    document.addEventListener("keydown", event => {
-        if (event.key === "Escape") closeNewsModal();
-    });
-
-    document.querySelector('[name="date"]').value =
-        new Date().toISOString().slice(0,10);
-
+function loadSettings() {
     try {
-
-        await openDatabase();
-
-        await reloadNews();
-
-        setStatus(
-            "globalStatus",
-            "Local database ready. Your saved articles are stored in this browser.",
-            "success"
+        const saved = JSON.parse(
+            localStorage.getItem("cap_settings") || "{}"
         );
 
         /*
-          Check only if the app has not checked recently.
-          This is not a background scheduler.
+          Preserve Insights IAS as the default if the user
+          has not configured any feed settings previously.
         */
 
-        const last = Number(
-            localStorage.getItem("ca_last_refresh") || 0
-        );
-
-        if (Date.now() - last > 6 * 60 * 60 * 1000) {
-
-            setTimeout(() => {
-                refreshAllSources();
-            }, 1500);
+        if (saved.feeds) {
+            SOURCES.forEach(source => {
+                if (Object.prototype.hasOwnProperty.call(
+                    saved.feeds,source.id
+                )) {
+                    source.feed = saved.feeds[source.id];
+                }
+            });
         }
 
-    } catch (error) {
+        sourceStates = saved.states || {};
 
-        setStatus(
-            "globalStatus",
-            "Local database error: " + error.message +
-            ". Try opening the app from a local web server or supported browser context.",
-            "error"
-        );
+    } catch(error) {
+        console.warn("Could not load settings",error);
     }
 }
 
+function saveSettings() {
+    const feeds = {};
 
-/* =====================================
-   BASIC UI
-===================================== */
-
-function setStatus(id, message, type="") {
-
-    const element = document.getElementById(id);
-
-    element.className = "status" + (type ? " " + type : "");
-    element.textContent = message;
-}
-
-function toggleSidebar() {
-
-    document.getElementById("sidebar")
-        .classList.toggle("mobile-open");
-}
-
-function showPage(page) {
-
-    currentPage = page;
-
-    const pages = [
-        "dashboardPage",
-        "allPage",
-        "sourcesPage",
-        "bookmarksPage",
-        "manualPage",
-        "backupPage"
-    ];
-
-    pages.forEach(id => {
-        document.getElementById(id).hidden = true;
+    SOURCES.forEach(source => {
+        feeds[source.id] = source.feed || "";
     });
 
-    const map = {
-        dashboard:"dashboardPage",
-        all:"allPage",
-        sources:"sourcesPage",
-        bookmarks:"bookmarksPage",
-        manual:"manualPage",
-        backup:"backupPage"
-    };
-
-    document.getElementById(map[page]).hidden = false;
-
-    const titles = {
-        dashboard:"Dashboard",
-        all:"All Current Affairs",
-        sources:"News Sources",
-        bookmarks:"Bookmarks",
-        manual:"Add Notes",
-        backup:"Backup & Restore"
-    };
-
-    document.getElementById("pageTitle").textContent =
-        titles[page] || "Current Affairs";
-
-    document.querySelectorAll(".nav-btn").forEach(button => {
-        button.classList.toggle(
-            "active",
-            button.dataset.page === page
-        );
-    });
-
-    if (page === "all") renderNews();
-    if (page === "bookmarks") renderBookmarks();
-
-    if (window.innerWidth <= 760) {
-        document.getElementById("sidebar")
-            .classList.remove("mobile-open");
-    }
-
-    window.scrollTo({top:0,behavior:"smooth"});
+    localStorage.setItem("cap_settings",JSON.stringify({
+        feeds,
+        states:sourceStates
+    }));
 }
 
 
-/* =====================================
-   CATEGORY, MONTH, REGION
-===================================== */
+/* =========================================================
+   5. INITIALIZE FILTERS AND NAVIGATION
+========================================================= */
 
-function renderCategories() {
+function fillSelect(id,items,firstLabel) {
+    const select = document.getElementById(id);
 
-    const grid = document.getElementById("categoryGrid");
+    select.innerHTML = "";
 
-    CATEGORIES.forEach(category => {
-
-        const button = document.createElement("button");
-        button.className = "category";
-
-        const icon = document.createElement("div");
-        icon.className = "icon";
-        icon.textContent = category.icon;
-
-        const title = document.createElement("h3");
-        title.textContent = category.name;
-
-        const desc = document.createElement("p");
-        desc.textContent = category.desc;
-
-        button.append(icon,title,desc);
-
-        button.addEventListener("click", () => {
-            openCategory(category.name);
-        });
-
-        grid.appendChild(button);
-    });
-}
-
-function renderMonths() {
-
-    const list = document.getElementById("monthList");
-
-    MONTHS.forEach(month => {
-
-        const button = document.createElement("button");
-        button.className = "pill";
-        button.textContent = month;
-
-        button.addEventListener("click", () => {
-            showPage("all");
-            document.getElementById("monthFilter").value = month;
-            renderNews();
-        });
-
-        list.appendChild(button);
-    });
-}
-
-function renderRegions() {
-
-    const list = document.getElementById("regionList");
-
-    REGIONS.forEach(region => {
-
-        const button = document.createElement("button");
-        button.className = "pill";
-        button.textContent = region;
-
-        button.addEventListener("click", () => {
-            openRegion(region);
-        });
-
-        list.appendChild(button);
-    });
-}
-
-function populateSelect(select, values) {
-
-    values.forEach(value => {
-
+    if (firstLabel !== null) {
         const option = document.createElement("option");
-        option.value = value;
-        option.textContent = value;
+        option.value = "";
+        option.textContent = firstLabel;
+        select.appendChild(option);
+    }
 
+    items.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.value ?? item;
+        option.textContent = item.label ?? item;
         select.appendChild(option);
     });
 }
 
-function populateFilters() {
+function initializeFilters() {
+    fillSelect("categoryFilter",CATEGORIES,"All Categories");
+    fillSelect("monthFilter",MONTHS,"All Months");
+    fillSelect("regionFilter",REGIONS,"All Regions");
 
-    populateSelect(
-        document.getElementById("categoryFilter"),
-        CATEGORIES.map(c => c.name)
+    fillSelect(
+        "sourceFilter",
+        SOURCES.map(s => ({value:s.id,label:s.name})),
+        "All Sources"
     );
 
-    populateSelect(
-        document.getElementById("monthFilter"),
-        MONTHS
+    const years = [];
+
+    for(let y = new Date().getFullYear()+1; y >= 2020; y--) {
+        years.push(String(y));
+    }
+
+    fillSelect("yearFilter",years,"All Years");
+
+    fillSelect("newsCategory",CATEGORIES,null);
+    fillSelect("newsRegion",REGIONS,null);
+
+    fillSelect(
+        "newsSource",
+        [
+            {value:"",label:"Personal Note / Other"},
+            ...SOURCES.map(s => ({value:s.id,label:s.name}))
+        ],
+        null
     );
 
-    populateSelect(
-        document.getElementById("regionFilter"),
-        REGIONS
-    );
-}
+    const categoryNav = document.getElementById("categoryNav");
 
-function populateForm() {
+    categoryNav.innerHTML = CATEGORIES.map(cat => `
+        <button class="nav-btn"
+            onclick="quickCategory('${escapeHTML(cat)}')">
+            ${escapeHTML(cat)}
+        </button>
+    `).join("");
 
-    populateSelect(
-        document.querySelector('[name="category"]'),
-        CATEGORIES.map(c => c.name)
-    );
+    const regionNav = document.getElementById("regionNav");
 
-    populateSelect(
-        document.querySelector('[name="region"]'),
-        REGIONS
-    );
-
-    const sourceSelect = document.querySelector('[name="sourceName"]');
-
-    const blank = document.createElement("option");
-    blank.value = "";
-    blank.textContent = "Manual / Other";
-    sourceSelect.appendChild(blank);
-
-    populateSelect(
-        sourceSelect,
-        SOURCES.map(s => s.name)
-    );
-}
-
-function openCategory(category) {
-
-    showPage("all");
-
-    document.getElementById("categoryFilter").value = category;
-
-    document.getElementById("newsHeading").textContent =
-        category + " Current Affairs";
-
-    renderNews();
-}
-
-function openRegion(region) {
-
-    showPage("all");
-
-    document.getElementById("regionFilter").value = region;
-
-    document.getElementById("newsHeading").textContent =
-        region + " Current Affairs";
-
-    renderNews();
+    regionNav.innerHTML = REGIONS.map(region => `
+        <button class="nav-btn"
+            onclick="quickRegion('${escapeHTML(region)}')">
+            📍 ${escapeHTML(region)}
+        </button>
+    `).join("");
 }
 
 
-/* =====================================
-   SOURCE DIRECTORY
-===================================== */
+/* =========================================================
+   6. VIEW NAVIGATION
+========================================================= */
 
-function renderSources() {
+function changeView(view,button) {
+    currentView = view;
 
-    const grid = document.getElementById("sourceGrid");
+    document.querySelectorAll(".nav-btn[data-view]")
+        .forEach(btn => btn.classList.remove("active"));
 
-    SOURCES.forEach((source,index) => {
+    if (button) {
+        button.classList.add("active");
+    }
 
-        const card = document.createElement("article");
-        card.className = "source-card";
+    const sources = document.getElementById("sourcesPanel");
+    const filters = document.getElementById("filterPanel");
+    const newsPanel = document.getElementById("newsPanel");
 
-        const title = document.createElement("div");
-        title.className = "source-title";
-        title.textContent = (index+1) + ". " + source.name;
+    sources.classList.toggle("hidden",view !== "sources");
+    filters.classList.toggle("hidden",view === "sources");
+    newsPanel.classList.toggle("hidden",view === "sources");
 
-        const desc = document.createElement("p");
-        desc.textContent = source.description;
-
-        const actions = document.createElement("div");
-        actions.className = "source-actions";
-
-        const website = document.createElement("a");
-
-        website.href = source.url;
-        website.target = "_blank";
-        website.rel = "noopener noreferrer";
-        website.textContent = "Open Website ↗";
-
-        actions.appendChild(website);
-
-        const feedButton = document.createElement("button");
-
-        feedButton.textContent = source.feed
-            ? "Refresh Feed"
-            : "Configure Feed";
-
-        feedButton.addEventListener("click", () => {
-
-            if (source.feed) {
-                refreshSource(source);
-            } else {
-                configureFeed(index);
-            }
-        });
-
-        actions.appendChild(feedButton);
-
-        card.append(title,desc,actions);
-
-        grid.appendChild(card);
-    });
-}
-
-function configureFeed(index) {
-
-    const source = SOURCES[index];
-
-    const feed = prompt(
-        "Enter the RSS/Atom feed URL for " + source.name +
-        ".\n\nUse an official or authorized feed URL. " +
-        "Leave blank to cancel.",
-        source.feed || ""
-    );
-
-    if (feed === null || !feed.trim()) return;
-
-    let parsed;
-
-    try {
-        parsed = new URL(feed.trim());
-
-        if (!["http:","https:"].includes(parsed.protocol)) {
-            throw new Error("Invalid protocol");
-        }
-
-    } catch {
-        alert("Please enter a valid HTTP or HTTPS feed URL.");
+    if (view === "sources") {
+        renderSources();
         return;
     }
 
-    source.feed = parsed.href;
+    activeCategory = "";
+    activeRegion = "";
 
-    /*
-      This preference is local to this browser.
-      No server account is required.
-    */
+    renderNews();
+}
 
-    try {
-        localStorage.setItem(
-            "ca_custom_feeds",
-            JSON.stringify(SOURCES.map(s => ({
-                name:s.name,
-                feed:s.feed
-            })))
-        );
-    } catch(error) {
-        console.warn("Could not save feed configuration",error);
-    }
+function quickCategory(category) {
+    activeCategory = category;
+    currentView = "dashboard";
 
-    renderSources();
+    document.getElementById("categoryFilter").value = category;
 
-    refreshSource(source);
+    changeView("dashboard",document.querySelector('[data-view="dashboard"]'));
+    document.getElementById("categoryFilter").value = category;
+
+    renderNews();
+}
+
+function quickRegion(region) {
+    activeRegion = region;
+    currentView = "dashboard";
+
+    changeView("dashboard",document.querySelector('[data-view="dashboard"]'));
+    document.getElementById("regionFilter").value = region;
+
+    renderNews();
+}
+
+function clearFilters() {
+    [
+        "searchInput",
+        "categoryFilter",
+        "monthFilter",
+        "regionFilter",
+        "sourceFilter",
+        "yearFilter"
+    ].forEach(id => {
+        document.getElementById(id).value = "";
+    });
+
+    document.getElementById("sortFilter").value = "newest";
+
+    activeCategory = "";
+    activeRegion = "";
+
+    renderNews();
 }
 
 
-/* Restore locally configured feed URLs. */
+/* =========================================================
+   7. AUTO CATEGORY CLASSIFICATION
+========================================================= */
 
-function loadCustomFeeds() {
+function classifyNews(title,summary) {
+    const text = (title + " " + summary).toLowerCase();
 
-    try {
+    const rules = [
+        {
+            category:"Sports",
+            words:["cricket","football","hockey","olympic",
+                "medal","tournament","world cup","sport",
+                "badminton","tennis","athlete","fifa"]
+        },
+        {
+            category:"Economic",
+            words:["economy","economic","gdp","inflation",
+                "rbi","banking","budget","tax","trade",
+                "fiscal","monetary","investment","rupee",
+                "unemployment","exports","imports"]
+        },
+        {
+            category:"Scheme",
+            words:["scheme","yojana","mission","subsidy",
+                "beneficiary","welfare programme","pension",
+                "government programme","pm-kisan",
+                "ayushman bharat","implementation"]
+        },
+        {
+            category:"Political",
+            words:["election","parliament","political",
+                "minister","chief minister","president",
+                "cabinet","legislature","party","bill passed",
+                "opposition","governor"]
+        },
+        {
+            category:"International",
+            words:["united nations","un security council",
+                "world bank","imf","international",
+                "bilateral","foreign affairs","summit",
+                "global","nato","g20","brics","diplomacy"]
+        },
+        {
+            category:"Social Issue",
+            words:["poverty","education","healthcare",
+                "women","child labour","gender","caste",
+                "inequality","human rights","malnutrition",
+                "social justice","migration","unicef"]
+        }
+    ];
 
-        const feeds = JSON.parse(
-            localStorage.getItem("ca_custom_feeds") || "[]"
-        );
+    for (const rule of rules) {
+        if (rule.words.some(word => text.includes(word))) {
+            return rule.category;
+        }
+    }
 
-        feeds.forEach(saved => {
+    return "National";
+}
 
-            const source = SOURCES.find(s => s.name === saved.name);
 
-            if (source && saved.feed) {
-                source.feed = saved.feed;
+/* =========================================================
+   8. NEWS MODAL: ADD AND EDIT
+========================================================= */
+
+function openNewsModal(item) {
+    const form = document.getElementById("newsForm");
+
+    form.reset();
+
+    document.getElementById("newsId").value = "";
+    document.getElementById("newsDate").value =
+        new Date().toISOString().slice(0,10);
+
+    document.getElementById("modalTitle").textContent =
+        item ? "Edit Current Affairs" : "Add Current Affairs";
+
+    setStatus("");
+
+    if (item) {
+        document.getElementById("newsId").value = item.id;
+        document.getElementById("newsTitle").value = item.title || "";
+        document.getElementById("newsCategory").value =
+            item.category || "National";
+        document.getElementById("newsRegion").value =
+            item.region || "India";
+        document.getElementById("newsDate").value =
+            validDate(item.date);
+        document.getElementById("newsSource").value =
+            item.sourceId || "";
+        document.getElementById("newsUrl").value =
+            item.url || "";
+        document.getElementById("newsSummary").value =
+            item.summary || "";
+        document.getElementById("newsTags").value =
+            (item.tags || []).join(", ");
+    }
+
+    document.getElementById("newsModal").classList.add("open");
+}
+
+function closeNewsModal() {
+    document.getElementById("newsModal").classList.remove("open");
+}
+
+document.getElementById("newsForm").addEventListener(
+    "submit",
+    async function(event) {
+        event.preventDefault();
+
+        try {
+            const id = document.getElementById("newsId").value || uid();
+
+            const title = document.getElementById("newsTitle")
+                .value.trim();
+
+            const summary = document.getElementById("newsSummary")
+                .value.trim();
+
+            const urlRaw = document.getElementById("newsUrl")
+                .value.trim();
+
+            const url = urlRaw ? safeURL(urlRaw) : "";
+
+            if (urlRaw && !url) {
+                setStatus("Please enter a valid HTTP/HTTPS URL.","#dc2626");
+                return;
             }
-        });
 
-    } catch(error) {
-        console.warn("Feed configuration could not be loaded.",error);
+            const existing = allNews.find(n => n.id === id);
+
+            const item = {
+                id,
+                title,
+                summary,
+                date:validDate(
+                    document.getElementById("newsDate").value
+                ),
+                category:document.getElementById("newsCategory").value,
+                region:document.getElementById("newsRegion").value,
+                sourceId:document.getElementById("newsSource").value,
+                url,
+                tags:document.getElementById("newsTags").value
+                    .split(",")
+                    .map(x => x.trim())
+                    .filter(Boolean),
+                bookmarked:existing ? !!existing.bookmarked : false,
+                createdAt:existing ? existing.createdAt : new Date().toISOString(),
+                updatedAt:new Date().toISOString(),
+                type:"manual"
+            };
+
+            await saveNewsToDB(item);
+
+            await reloadNews();
+
+            closeNewsModal();
+
+        } catch(error) {
+            console.error(error);
+            setStatus("Could not save news: " + error.message,"#dc2626");
+        }
     }
+);
+
+
+/* =========================================================
+   9. FILTERING AND RENDERING NEWS
+========================================================= */
+
+function filteredNews() {
+    let list = [...allNews];
+
+    if (currentView === "bookmarks") {
+        list = list.filter(n => n.bookmarked);
+    }
+
+    if (currentView === "mynews") {
+        list = list.filter(n => n.type === "manual");
+    }
+
+    const search = document.getElementById("searchInput")
+        .value.trim().toLowerCase();
+
+    const category = document.getElementById("categoryFilter").value;
+    const month = document.getElementById("monthFilter").value;
+    const region = document.getElementById("regionFilter").value;
+    const source = document.getElementById("sourceFilter").value;
+    const year = document.getElementById("yearFilter").value;
+
+    if (search) {
+        list = list.filter(n => {
+            const text = [
+                n.title,
+                n.summary,
+                n.category,
+                n.region,
+                sourceName(n.sourceId),
+                ...(n.tags || [])
+            ].join(" ").toLowerCase();
+
+            return text.includes(search);
+        });
+    }
+
+    if (category) {
+        list = list.filter(n => n.category === category);
+    }
+
+    if (month) {
+        list = list.filter(n => getMonthName(n.date) === month);
+    }
+
+    if (region) {
+        list = list.filter(n => n.region === region);
+    }
+
+    if (source) {
+        list = list.filter(n => n.sourceId === source);
+    }
+
+    if (year) {
+        list = list.filter(n => getYear(n.date) === year);
+    }
+
+    const sort = document.getElementById("sortFilter").value;
+
+    if (sort === "oldest") {
+        list.sort((a,b) => a.date.localeCompare(b.date));
+    } else if (sort === "title") {
+        list.sort((a,b) => a.title.localeCompare(b.title));
+    } else {
+        list.sort((a,b) => {
+            const dateCompare = (b.date || "").localeCompare(a.date || "");
+
+            if (dateCompare !== 0) return dateCompare;
+
+            return (b.createdAt || "").localeCompare(a.createdAt || "");
+        });
+    }
+
+    return list;
+}
+
+function renderNews() {
+    const list = filteredNews();
+
+    const titles = {
+        dashboard:"📰 Current Affairs",
+        bookmarks:"⭐ Bookmarked News",
+        mynews:"📝 My News & Notes"
+    };
+
+    document.getElementById("listTitle").textContent =
+        titles[currentView] || "📰 Current Affairs";
+
+    const container = document.getElementById("newsList");
+
+    if (!list.length) {
+        container.innerHTML = `
+            <div class="empty">
+                <h3>No news found</h3>
+                <p>अपनी खबर जोड़ें या Search/Filters बदलें।</p>
+                <button class="btn" onclick="openNewsModal()">＋ Add News</button>
+            </div>
+        `;
+
+        updateStats();
+        return;
+    }
+
+    container.innerHTML = list.map(item => {
+        const url = safeURL(item.url);
+        const source = sourceName(item.sourceId);
+
+        const summary = item.summary
+            ? escapeHTML(item.summary.slice(0,650)) +
+                (item.summary.length > 650 ? "…" : "")
+            : "No summary added. Open the original article or add your own notes.";
+
+        const tags = (item.tags || []).slice(0,8).map(tag =>
+            `<span class="badge">${escapeHTML(tag)}</span>`
+        ).join("");
+
+        return `
+            <article class="news-card">
+
+                <div class="badges">
+                    <span class="badge">${escapeHTML(item.category || "National")}</span>
+                    <span class="badge green">${escapeHTML(item.region || "India")}</span>
+                    ${item.type === "rss"
+                        ? '<span class="badge orange">RSS</span>'
+                        : '<span class="badge">Personal</span>'}
+                </div>
+
+                <h3>${escapeHTML(item.title)}</h3>
+
+                <p>${summary}</p>
+
+                ${tags ? `<div class="badges">${tags}</div>` : ""}
+
+                <div class="card-date">
+                    📅 ${escapeHTML(item.date || "")}
+                    &nbsp;•&nbsp; ${escapeHTML(source)}
+                </div>
+
+                <div class="card-footer">
+
+                    ${url
+                        ? `<a href="${escapeHTML(url)}"
+                            target="_blank"
+                            rel="noopener noreferrer">Read Original ↗</a>`
+                        : ""}
+
+                    <button class="btn small secondary"
+                        onclick="toggleBookmark('${escapeHTML(item.id)}')">
+                        ${item.bookmarked ? "★ Saved" : "☆ Bookmark"}
+                    </button>
+
+                    <button class="btn small secondary"
+                        onclick="editNews('${escapeHTML(item.id)}')">
+                        Edit
+                    </button>
+
+                    <button class="btn small danger"
+                        onclick="deleteNews('${escapeHTML(item.id)}')">
+                        Delete
+                    </button>
+
+                </div>
+
+            </article>
+        `;
+    }).join("");
+
+    updateStats();
+}
+
+function editNews(id) {
+    const item = allNews.find(n => n.id === id);
+    if (item) openNewsModal(item);
+}
+
+async function toggleBookmark(id) {
+    const item = allNews.find(n => n.id === id);
+    if (!item) return;
+
+    item.bookmarked = !item.bookmarked;
+
+    await saveNewsToDB(item);
+    await reloadNews();
+}
+
+async function deleteNews(id) {
+    const item = allNews.find(n => n.id === id);
+    if (!item) return;
+
+    if (!confirm("Delete this saved news item?")) return;
+
+    await deleteNewsFromDB(id);
+    await reloadNews();
+}
+
+function updateStats() {
+    const today = new Date().toISOString().slice(0,10);
+
+    document.getElementById("totalCount").textContent = allNews.length;
+
+    document.getElementById("bookmarkCount").textContent =
+        allNews.filter(n => n.bookmarked).length;
+
+    document.getElementById("todayCount").textContent =
+        allNews.filter(n => n.date === today).length;
+
+    document.getElementById("sourceCount").textContent = SOURCES.length;
 }
 
 
-/* =====================================
-   RSS COLLECTION
-===================================== */
+/* =========================================================
+   10. RSS FETCHING
+========================================================= */
 
-/*
-  Important:
-  This is a browser-only RSS reader.
-  It can fetch only feeds reachable through CORS or an authorized proxy.
-
-  A proxy may see requested URLs and article metadata.
-  Do not submit private information through a public proxy.
-
-  The proxy is optional and can be removed from this list.
-*/
-
-const RSS_PROXIES = [
-    feed => feed,
-    feed => "https://api.allorigins.win/raw?url=" +
-            encodeURIComponent(feed)
-];
-
-async function fetchWithTimeout(url, timeout=12000) {
-
+async function fetchTextWithTimeout(url,timeoutMs=15000) {
     const controller = new AbortController();
 
-    const timer = setTimeout(() => controller.abort(),timeout);
+    const timeout = setTimeout(() => controller.abort(),timeoutMs);
 
     try {
-
-        const response = await fetch(url, {
+        const response = await fetch(url,{
+            method:"GET",
             signal:controller.signal,
-            headers: {
-                "Accept":
-                "application/rss+xml, application/atom+xml, application/xml, text/xml, */*"
-            }
+            cache:"no-store"
         });
 
         if (!response.ok) {
@@ -1927,885 +1708,551 @@ async function fetchWithTimeout(url, timeout=12000) {
         return await response.text();
 
     } finally {
-        clearTimeout(timer);
+        clearTimeout(timeout);
+    }
+}
+
+async function fetchFeedText(feedURL) {
+    let directError;
+
+    try {
+        return await fetchTextWithTimeout(feedURL);
+    } catch(error) {
+        directError = error;
+    }
+
+    /*
+      Fallback proxy is only an attempt.
+      Public proxies can be unavailable or rate-limited.
+    */
+
+    try {
+        const proxyURL = DEFAULT_PROXY + encodeURIComponent(feedURL);
+
+        return await fetchTextWithTimeout(proxyURL,20000);
+
+    } catch(proxyError) {
+        throw new Error(
+            "Direct request failed: " + directError.message +
+            " | Proxy request failed: " + proxyError.message +
+            ". CORS or feed access restrictions may be blocking this request."
+        );
     }
 }
 
 function parseFeed(xmlText,source) {
-
     const parser = new DOMParser();
 
-    const xml = parser.parseFromString(
-        xmlText,
-        "application/xml"
-    );
+    const doc = parser.parseFromString(xmlText,"text/xml");
 
-    if (xml.querySelector("parsererror")) {
-        throw new Error("Invalid RSS/Atom XML");
+    if (doc.querySelector("parsererror")) {
+        throw new Error("The response is not valid RSS/Atom XML.");
     }
 
-    const items = [
-        ...xml.querySelectorAll("item"),
-        ...xml.querySelectorAll("entry")
-    ];
+    const items = Array.from(doc.querySelectorAll("item, entry"));
 
-    return items.map(item => {
+    return items.map(node => {
+        const getText = selectors => {
+            for (const selector of selectors) {
+                const el = node.querySelector(selector);
 
-        const get = (...names) => {
+                if (el) {
+                    const text = el.textContent || "";
 
-            for (const name of names) {
-
-                const el = item.getElementsByTagName(name)[0];
-
-                if (el && el.textContent) {
-                    return el.textContent.trim();
+                    if (text.trim()) return text.trim();
                 }
             }
 
             return "";
         };
 
-        const title = get("title");
+        let link = "";
 
-        let url = get("link");
+        const linkEl = node.querySelector("link");
 
-        if (!url) {
+        if (linkEl) {
+            link = linkEl.textContent.trim();
 
-            const linkEl = item.getElementsByTagName("link")[0];
-
-            if (linkEl) {
-                url = linkEl.getAttribute("href") || "";
+            if (!link) {
+                link = linkEl.getAttribute("href") || "";
             }
         }
 
-        const summary = get(
+        let description = getText([
             "description",
             "summary",
             "content",
-            "content:encoded"
-        );
+            "content\\:encoded"
+        ]);
 
-        const dateRaw = get(
+        description = description
+            .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,"")
+            .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,"")
+            .replace(/<[^>]*>/g," ")
+            .replace(/&nbsp;/gi," ")
+            .replace(/&amp;/gi,"&")
+            .replace(/&quot;/gi,'"')
+            .replace(/&#39;/gi,"'")
+            .replace(/&lt;/gi,"<")
+            .replace(/&gt;/gi,">")
+            .replace(/\s+/g," ")
+            .trim();
+
+        const title = getText(["title"]);
+
+        const published = getText([
             "pubDate",
             "published",
             "updated",
-            "dc:date"
-        );
+            "dc\\:date"
+        ]);
 
-        let date = "";
+        const date = validDate(published);
 
-        if (dateRaw) {
+        const cleanURL = safeURL(link) || source.url;
 
-            const parsedDate = new Date(dateRaw);
-
-            if (!Number.isNaN(parsedDate.getTime())) {
-                date = parsedDate.toISOString().slice(0,10);
-            }
-        }
-
-        if (!date) {
-            date = new Date().toISOString().slice(0,10);
-        }
-
-        if (!title || !url) return null;
-
-        let safeURL;
-
-        try {
-
-            safeURL = new URL(url,source.url);
-
-            if (!["http:","https:"].includes(safeURL.protocol)) {
-                return null;
-            }
-
-        } catch {
-            return null;
-        }
+        const category = classifyNews(title,description);
 
         return {
-            id: makeArticleID(safeURL.href),
-            title: stripHTML(title).slice(0,500),
-            category: detectCategory(title + " " + summary,source.category),
-            region: detectRegion(title + " " + summary,source.region),
-            date: date,
-            summary: stripHTML(summary).slice(0,3000),
-            notes:"",
-            sourceName:source.name,
-            url:safeURL.href,
-            savedAt:new Date().toISOString()
+            id:"rss-" + source.id + "-" + simpleHash(cleanURL + title),
+            title:title || "Untitled article",
+            summary:description.slice(0,3000),
+            date,
+            category,
+            region:detectRegion(title + " " + description),
+            sourceId:source.id,
+            url:cleanURL,
+            tags:["RSS"],
+            bookmarked:false,
+            createdAt:new Date().toISOString(),
+            updatedAt:new Date().toISOString(),
+            type:"rss"
         };
-
-    }).filter(Boolean);
+    }).filter(item => item.title && item.url);
 }
 
-function stripHTML(value) {
+function simpleHash(text) {
+    let hash = 0;
 
-    const doc = new DOMParser().parseFromString(
-        String(value || ""),
-        "text/html"
-    );
-
-    return (doc.body.textContent || "")
-        .replace(/\s+/g," ")
-        .trim();
-}
-
-function makeArticleID(url) {
-
-    /*
-      Stable ID: normalized URL.
-      It is not cryptographic; it is only for duplicate detection.
-    */
-
-    return "url_" + url
-        .trim()
-        .replace(/#.*$/,"")
-        .replace(/\/+$/,"")
-        .toLowerCase();
-}
-
-async function fetchFeed(feedURL) {
-
-    let lastError = null;
-
-    for (const buildURL of RSS_PROXIES) {
-
-        try {
-
-            const requestURL = buildURL(feedURL);
-
-            const text = await fetchWithTimeout(requestURL);
-
-            if (!text || !text.trim()) {
-                throw new Error("Empty feed response");
-            }
-
-            return text;
-
-        } catch(error) {
-            lastError = error;
-        }
+    for (let i=0;i<text.length;i++) {
+        hash = ((hash << 5) - hash) + text.charCodeAt(i);
+        hash |= 0;
     }
 
-    throw lastError || new Error("Unable to fetch feed");
+    return Math.abs(hash).toString(36);
+}
+
+function detectRegion(text) {
+    const t = text.toLowerCase();
+
+    if (/\bbihar\b|\bpatna\b|\bgaya\b|\bmuzaffarpur\b/.test(t)) {
+        return "Bihar";
+    }
+
+    if (/\bjharkhand\b|\branchi\b|\bdhanbad\b|\bjamshedpur\b/.test(t)) {
+        return "Jharkhand";
+    }
+
+    if (/\buttar pradesh\b|\blucknow\b|\bvaranasi\b|\bprayagraj\b/.test(t)) {
+        return "Uttar Pradesh";
+    }
+
+    if (/\bwest bengal\b|\bkolkata\b|\bdarjeeling\b|\bhowrah\b/.test(t)) {
+        return "West Bengal";
+    }
+
+    return "India";
 }
 
 async function refreshSource(source) {
-
     if (!source.feed) {
-
-        return {
-            ok:false,
-            source:source.name,
-            message:"No RSS Feed configured"
+        sourceStates[source.id] = {
+            status:"Not configured",
+            message:"No RSS URL configured",
+            checkedAt:new Date().toISOString()
         };
+
+        saveSettings();
+        return {count:0,source:source.name,skipped:true};
     }
 
+    sourceStates[source.id] = {
+        status:"Loading",
+        message:"Fetching feed...",
+        checkedAt:new Date().toISOString()
+    };
+
+    saveSettings();
+    renderSources();
+
     try {
+        const feedText = await fetchFeedText(source.feed);
 
-        const xml = await fetchFeed(source.feed);
+        const parsed = parseFeed(feedText,source);
 
-        const articles = parseFeed(xml,source);
+        /*
+          Preserve bookmarks for articles already saved.
+          Deduplicate using a stable item ID.
+        */
 
-        let added = 0;
+        const existingById = new Map(allNews.map(item => [item.id,item]));
 
-        for (const article of articles) {
+        let count = 0;
 
-            const existing = await dbRequest(
-                "readonly",
-                store => store.get(article.id)
-            );
+        for (const item of parsed) {
+            const old = existingById.get(item.id);
 
-            if (existing) continue;
+            if (old) {
+                item.bookmarked = !!old.bookmarked;
+                item.createdAt = old.createdAt || item.createdAt;
 
-            await putArticle(article);
+                /*
+                  Do not overwrite personal notes if an article
+                  has been edited manually.
+                */
 
-            added++;
+                if (old.type === "manual") continue;
+            }
+
+            await saveNewsToDB(item);
+            count++;
         }
 
-        return {
-            ok:true,
-            source:source.name,
-            added:added,
-            message:articles.length + " articles found; " +
-                    added + " new articles saved."
+        sourceStates[source.id] = {
+            status:"Success",
+            message:count + " feed items processed",
+            checkedAt:new Date().toISOString()
         };
+
+        saveSettings();
+
+        return {count,source:source.name};
 
     } catch(error) {
+        sourceStates[source.id] = {
+            status:"Failed",
+            message:error.message,
+            checkedAt:new Date().toISOString()
+        };
+
+        saveSettings();
 
         return {
-            ok:false,
+            count:0,
             source:source.name,
-            message:error.name === "AbortError"
-                ? "Request timed out"
-                : error.message || "Feed unavailable"
+            error:error.message
         };
+
+    } finally {
+        renderSources();
     }
 }
 
 async function refreshAllSources() {
-
-    if (refreshInProgress) return;
-
-    if (!db) {
-
-        setStatus(
-            "globalStatus",
-            "Local database is not ready.",
-            "error"
-        );
-
-        return;
-    }
-
-    refreshInProgress = true;
-
-    const buttons = document.querySelectorAll(
-        'button[onclick="refreshAllSources()"]'
-    );
-
-    buttons.forEach(button => button.disabled = true);
-
-    setStatus(
-        "globalStatus",
-        "Checking configured RSS feeds. This may take some time..."
-    );
-
-    setStatus(
-        "sourceStatus",
-        "Starting feed checks..."
-    );
-
     const configured = SOURCES.filter(source => source.feed);
 
     if (!configured.length) {
-
-        setStatus(
-            "sourceStatus",
-            "No RSS feeds are configured yet. Click Configure Feed " +
-            "on a source card and enter a valid RSS/Atom feed URL.",
-            "error"
-        );
-
-        setStatus(
-            "globalStatus",
-            "No feeds configured. Your 15 websites are available " +
-            "in the source directory, but their homepages are not RSS feeds."
-        );
-
-        refreshInProgress = false;
-        buttons.forEach(button => button.disabled = false);
-
+        alert("No RSS feeds are configured yet.");
         return;
     }
 
-    let completed = 0;
-    let added = 0;
-    const results = [];
+    const button = document.querySelector(
+        '.header-actions button:nth-child(2)'
+    );
 
-    /*
-      Process feeds sequentially to avoid excessive requests.
-    */
-
-    for (const source of configured) {
-
-        const result = await refreshSource(source);
-
-        results.push(result);
-
-        completed++;
-
-        added += result.added || 0;
-
-        setStatus(
-            "sourceStatus",
-            "Checked " + completed + " of " + configured.length +
-            " feeds. Newly saved: " + added + "."
-        );
+    if (button) {
+        button.disabled = true;
+        button.textContent = "↻ Refreshing...";
     }
 
     try {
+        for (const source of configured) {
+            await refreshSource(source);
+        }
 
-        localStorage.setItem(
-            "ca_last_refresh",
-            String(Date.now())
+        await reloadNews();
+
+        const successes = configured.filter(source =>
+            sourceStates[source.id] &&
+            sourceStates[source.id].status === "Success"
+        ).length;
+
+        alert(
+            "RSS refresh finished.\n" +
+            "Configured feeds: " + configured.length + "\n" +
+            "Successful feeds: " + successes + "\n\n" +
+            "If a feed fails, check its URL or CORS restrictions."
         );
 
-    } catch(error) {
-        console.warn(error);
+    } finally {
+        if (button) {
+            button.disabled = false;
+            button.textContent = "↻ Refresh RSS";
+        }
+
+        renderSources();
     }
+}
 
-    await reloadNews();
 
-    const failures = results.filter(r => !r.ok);
+/* =========================================================
+   11. SOURCE DIRECTORY AND CONFIGURATION
+========================================================= */
 
-    let summary =
-        "Refresh complete. " + added + " new articles saved. " +
-        failures.length + " source(s) unavailable or not readable.";
+function renderSources() {
+    const container = document.getElementById("sourceList");
 
-    if (failures.length) {
+    if (!container) return;
 
-        summary += " Check individual feed URLs, CORS access and feed availability.";
-    }
+    container.innerHTML = SOURCES.map(source => {
+        const state = sourceStates[source.id] || {};
 
-    setStatus(
-        "globalStatus",
-        summary,
-        failures.length ? "" : "success"
+        let statusClass = "";
+
+        if (state.status === "Success") statusClass = "green";
+        if (state.status === "Failed") statusClass = "orange";
+
+        return `
+            <article class="source-card">
+
+                <h3>${escapeHTML(source.name)}</h3>
+
+                <a href="${escapeHTML(source.url)}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    Open Website ↗
+                </a>
+
+                <p>${escapeHTML(source.description)}</p>
+
+                <div class="badges">
+                    <span class="badge ${source.feed ? "green" : ""}">
+                        ${source.feed ? "RSS Configured" : "Website Only"}
+                    </span>
+                    ${source.id === "insights-ias"
+                        ? '<span class="badge green">Preconfigured</span>'
+                        : ""}
+                </div>
+
+                <div class="source-status ${statusClass}">
+                    <strong>Status:</strong>
+                    ${escapeHTML(state.status || "Not checked")}
+                    <br>
+                    ${escapeHTML(state.message || "")}
+                    ${state.checkedAt
+                        ? "<br>Last checked: " + escapeHTML(
+                            new Date(state.checkedAt).toLocaleString()
+                        )
+                        : ""}
+                </div>
+
+                <div class="button-row">
+                    <button class="btn small"
+                        onclick="configureFeed('${escapeHTML(source.id)}')">
+                        ${source.feed ? "Change Feed" : "Configure Feed"}
+                    </button>
+
+                    <button class="btn small secondary"
+                        onclick="testSource('${escapeHTML(source.id)}')">
+                        Test / Refresh
+                    </button>
+
+                    ${source.feed
+                        ? `<button class="btn small danger"
+                            onclick="removeFeed('${escapeHTML(source.id)}')">
+                            Remove Feed
+                           </button>`
+                        : ""}
+                </div>
+
+            </article>
+        `;
+    }).join("");
+}
+
+function configureFeed(id) {
+    const source = SOURCES.find(s => s.id === id);
+
+    if (!source) return;
+
+    const value = prompt(
+        "Enter the RSS/Atom feed URL for " + source.name +
+        ".\n\nPaste the full feed URL.\n\n" +
+        "Insights IAS is already configured by default.",
+        source.feed || ""
     );
 
-    const detail = results.map(r => {
-        return r.source + ": " + r.message;
-    }).join("\n");
+    if (value === null) return;
 
-    setStatus(
-        "sourceStatus",
-        detail || "No results."
-    );
+    const trimmed = value.trim();
 
-    refreshInProgress = false;
+    if (!trimmed) {
+        alert("No changes made. Use Remove Feed if you want to clear a feed.");
+        return;
+    }
 
-    buttons.forEach(button => button.disabled = false);
+    const valid = safeURL(trimmed);
 
+    if (!valid) {
+        alert("Please enter a valid HTTP/HTTPS feed URL.");
+        return;
+    }
+
+    source.feed = valid;
+
+    sourceStates[source.id] = {
+        status:"Configured",
+        message:"Feed URL saved. You can now test it.",
+        checkedAt:new Date().toISOString()
+    };
+
+    saveSettings();
+    renderSources();
+
+    alert("RSS Feed saved for " + source.name + ".");
+}
+
+function removeFeed(id) {
+    const source = SOURCES.find(s => s.id === id);
+
+    if (!source) return;
+
+    if (!confirm("Remove the RSS Feed configuration for " + source.name + "?")) {
+        return;
+    }
+
+    source.feed = "";
+
+    sourceStates[source.id] = {
+        status:"Not configured",
+        message:"Feed removed",
+        checkedAt:new Date().toISOString()
+    };
+
+    saveSettings();
     renderSources();
 }
 
+async function testSource(id) {
+    const source = SOURCES.find(s => s.id === id);
 
-/* =====================================
-   CLASSIFICATION
-===================================== */
+    if (!source) return;
 
-function detectCategory(text,fallback="National") {
+    if (!source.feed) {
+        configureFeed(id);
 
-    const value = String(text || "").toLowerCase();
-
-    const rules = [
-        {
-            category:"Sports",
-            words:[
-                "cricket","football","hockey","olympic",
-                "tournament","world cup","medal","athlete",
-                "खेल","क्रिकेट","फुटबॉल","हॉकी","पदक"
-            ]
-        },
-        {
-            category:"Economic",
-            words:[
-                "rbi","reserve bank","inflation","gdp",
-                "economy","economic","budget","banking",
-                "repo rate","stock market","finance",
-                "अर्थव्यवस्था","महंगाई","बजट","बैंकिंग"
-            ]
-        },
-        {
-            category:"Scheme",
-            words:[
-                "scheme","yojana","beneficiary",
-                "government programme","subsidy",
-                "प्रधानमंत्री योजना","योजना","लाभार्थी"
-            ]
-        },
-        {
-            category:"Political",
-            words:[
-                "parliament","election","minister",
-                "cabinet","political party","president",
-                "lok sabha","rajya sabha","चुनाव","संसद","मंत्री"
-            ]
-        },
-        {
-            category:"Social Issue",
-            words:[
-                "education","healthcare","poverty",
-                "gender equality","social justice",
-                "unemployment","शिक्षा","स्वास्थ्य","गरीबी"
-            ]
-        },
-        {
-            category:"International",
-            words:[
-                "united nations","un security council",
-                "world bank","imf","international",
-                "foreign policy","global summit",
-                "संयुक्त राष्ट्र","अंतरराष्ट्रीय"
-            ]
-        }
-    ];
-
-    for (const rule of rules) {
-
-        if (rule.words.some(word => value.includes(word))) {
-            return rule.category;
-        }
+        if (!source.feed) return;
     }
 
-    return fallback || "National";
-}
+    await refreshSource(source);
+    await reloadNews();
 
-function detectRegion(text,fallback="India") {
+    const state = sourceStates[source.id];
 
-    const value = String(text || "").toLowerCase();
-
-    if (/\bbihar\b|बिहार/.test(value)) return "Bihar";
-
-    if (/\bjharkhand\b|झारखंड/.test(value)) return "Jharkhand";
-
-    if (
-        /\buttar pradesh\b|\bup government\b|उत्तर प्रदेश/.test(value)
-    ) return "Uttar Pradesh";
-
-    if (
-        /\bwest bengal\b|\bkolkata\b|पश्चिम बंगाल|कोलकाता/.test(value)
-    ) return "West Bengal";
-
-    if (/\bindia\b|भारतीय|भारत/.test(value)) return "India";
-
-    return fallback || "India";
-}
-
-
-/* =====================================
-   NEWS CARDS
-===================================== */
-
-function makeNewsCard(item) {
-
-    const card = document.createElement("article");
-    card.className = "news-card";
-
-    const meta = document.createElement("div");
-    meta.className = "news-meta";
-
-    [
-        item.category || "National",
-        item.region || "India"
-    ].forEach(value => {
-
-        const tag = document.createElement("span");
-
-        tag.className = "tag";
-        tag.textContent = value;
-
-        meta.appendChild(tag);
-    });
-
-    const date = document.createElement("span");
-
-    date.className = "news-date";
-    date.textContent = item.date || "Date unavailable";
-
-    meta.appendChild(date);
-
-    const heading = document.createElement("h3");
-    heading.textContent = item.title || "Untitled Article";
-
-    const summary = document.createElement("div");
-
-    summary.className = "news-summary";
-    summary.textContent = item.summary || "No summary available.";
-
-    card.append(meta,heading,summary);
-
-    if (item.notes) {
-
-        const notes = document.createElement("p");
-
-        notes.style.fontSize = "12px";
-        notes.style.lineHeight = "1.6";
-
-        const label = document.createElement("strong");
-
-        label.textContent = "Exam Notes: ";
-
-        notes.append(label,document.createTextNode(item.notes));
-
-        card.appendChild(notes);
-    }
-
-    if (item.url) {
-
-        const link = document.createElement("a");
-
-        link.href = item.url;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.textContent = "Read Original Article ↗";
-
-        link.style.fontSize = "12px";
-        link.style.marginTop = "12px";
-
-        card.appendChild(link);
-    }
-
-    const footer = document.createElement("div");
-    footer.className = "news-footer";
-
-    const bookmark = document.createElement("button");
-
-    bookmark.textContent = bookmarks.has(item.id)
-        ? "★ Bookmarked"
-        : "☆ Bookmark";
-
-    bookmark.addEventListener("click", () => {
-        toggleBookmark(item.id);
-    });
-
-    const remove = document.createElement("button");
-
-    remove.className = "delete-btn";
-    remove.textContent = "Delete";
-
-    remove.addEventListener("click", () => {
-        deleteArticle(item.id);
-    });
-
-    footer.append(bookmark,remove);
-
-    card.appendChild(footer);
-
-    return card;
-}
-
-
-/* =====================================
-   RENDER NEWS
-===================================== */
-
-function renderAll() {
-
-    const today = new Date().toISOString().slice(0,10);
-
-    document.getElementById("totalNews").textContent = news.length;
-
-    document.getElementById("totalBookmarks").textContent =
-        news.filter(item => bookmarks.has(item.id)).length;
-
-    document.getElementById("totalSources").textContent = SOURCES.length;
-
-    document.getElementById("todayArticles").textContent =
-        news.filter(item => item.date === today).length;
-
-    renderLatest();
-    renderNews();
-    renderBookmarks();
-}
-
-function renderGrid(container,items,message) {
-
-    container.replaceChildren();
-
-    if (!items.length) {
-
-        const empty = document.createElement("div");
-
-        empty.className = "empty";
-        empty.textContent = message;
-
-        container.appendChild(empty);
-
-        return;
-    }
-
-    items.forEach(item => {
-        container.appendChild(makeNewsCard(item));
-    });
-}
-
-function renderLatest() {
-
-    renderGrid(
-        document.getElementById("latestGrid"),
-        news.slice(0,6),
-        "No articles saved yet. Configure an RSS feed or add a news note."
-    );
-}
-
-function renderNews() {
-
-    const search = document.getElementById("searchInput")
-        .value.trim().toLowerCase();
-
-    const category = document.getElementById("categoryFilter").value;
-    const month = document.getElementById("monthFilter").value;
-    const region = document.getElementById("regionFilter").value;
-
-    const filtered = news.filter(item => {
-
-        const searchText = [
-            item.title,
-            item.summary,
-            item.notes,
-            item.category,
-            item.region,
-            item.sourceName
-        ].join(" ").toLowerCase();
-
-        const itemMonth = item.date
-            ? MONTHS[Number(item.date.slice(5,7))-1]
-            : "";
-
-        return (
-            (!search || searchText.includes(search)) &&
-            (!category || item.category === category) &&
-            (!month || itemMonth === month) &&
-            (!region || item.region === region)
-        );
-    });
-
-    renderGrid(
-        document.getElementById("newsGrid"),
-        filtered,
-        "No matching articles found. Try another filter or add news."
-    );
-}
-
-function renderBookmarks() {
-
-    renderGrid(
-        document.getElementById("bookmarkGrid"),
-        news.filter(item => bookmarks.has(item.id)),
-        "No bookmarks yet. Save important articles using ☆ Bookmark."
-    );
-}
-
-
-/* =====================================
-   BOOKMARKS & DELETE
-===================================== */
-
-function loadBookmarks() {
-
-    try {
-
-        const value = JSON.parse(
-            localStorage.getItem("ca_bookmarks") || "[]"
-        );
-
-        bookmarks = new Set(value);
-
-    } catch {
-
-        bookmarks = new Set();
-    }
-}
-
-function saveBookmarks() {
-
-    try {
-
-        localStorage.setItem(
-            "ca_bookmarks",
-            JSON.stringify([...bookmarks])
-        );
-
-    } catch(error) {
-        alert("Could not save bookmarks. Please export a backup.");
-    }
-}
-
-function toggleBookmark(id) {
-
-    if (bookmarks.has(id)) {
-        bookmarks.delete(id);
+    if (state && state.status === "Success") {
+        alert(source.name + " feed refreshed successfully.\n" + state.message);
     } else {
-        bookmarks.add(id);
-    }
-
-    saveBookmarks();
-    renderAll();
-}
-
-async function deleteArticle(id) {
-
-    if (!confirm("Delete this saved article?")) return;
-
-    try {
-
-        await removeArticle(id);
-
-        bookmarks.delete(id);
-        saveBookmarks();
-
-        await reloadNews();
-
-    } catch(error) {
-
-        alert("Delete failed: " + error.message);
+        alert(
+            source.name + " feed failed.\n\n" +
+            (state ? state.message : "Unknown error") +
+            "\n\nThe website may block browser requests. " +
+            "You can still open its website and add news manually."
+        );
     }
 }
 
 
-/* =====================================
-   MANUAL NEWS
-===================================== */
+/* =========================================================
+   12. BACKUP AND RESTORE
+========================================================= */
 
-function openNewsModal() {
-
-    document.getElementById("newsModal")
-        .classList.add("show");
-}
-
-function closeNewsModal() {
-
-    document.getElementById("newsModal")
-        .classList.remove("show");
-}
-
-async function saveManualNews(event) {
-
-    event.preventDefault();
-
-    const form = new FormData(event.target);
-
-    const title = String(form.get("title") || "").trim();
-    const summary = String(form.get("summary") || "").trim();
-    const url = String(form.get("url") || "").trim();
-
-    if (!title || !summary) {
-        alert("Please enter the headline and summary.");
-        return;
-    }
-
-    if (url) {
-
-        try {
-
-            const parsed = new URL(url);
-
-            if (!["http:","https:"].includes(parsed.protocol)) {
-                throw new Error("Invalid URL");
-            }
-
-        } catch {
-
-            alert("Please enter a valid HTTP or HTTPS article URL.");
-            return;
+function exportBackup() {
+    const data = {
+        app:"Current Affairs Pro",
+        version:1,
+        exportedAt:new Date().toISOString(),
+        news:allNews,
+        settings:{
+            feeds:Object.fromEntries(
+                SOURCES.map(s => [s.id,s.feed || ""])
+            ),
+            states:sourceStates
         }
-    }
-
-    const date = String(form.get("date") || "");
-
-    const article = {
-        id:"manual_" + crypto.randomUUID(),
-
-        title:title,
-        category:String(form.get("category") || "National"),
-        region:String(form.get("region") || "India"),
-        date:date,
-        summary:summary,
-        notes:String(form.get("notes") || "").trim(),
-        sourceName:String(form.get("sourceName") || ""),
-        url:url,
-        savedAt:new Date().toISOString()
     };
 
-    try {
+    const blob = new Blob(
+        [JSON.stringify(data,null,2)],
+        {type:"application/json"}
+    );
 
-        await putArticle(article);
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
 
-        await reloadNews();
+    a.href = url;
+    a.download = "current-affairs-backup-" +
+        new Date().toISOString().slice(0,10) + ".json";
 
-        event.target.reset();
+    a.click();
 
-        document.querySelector('[name="date"]').value =
-            new Date().toISOString().slice(0,10);
-
-        closeNewsModal();
-
-        showPage("all");
-
-        alert("Article saved in your browser.");
-
-    } catch(error) {
-
-        alert("Could not save article: " + error.message);
-    }
+    URL.revokeObjectURL(url);
 }
 
+async function importBackup(event) {
+    const file = event.target.files[0];
 
-/* =====================================
-   BACKUP & RESTORE
-===================================== */
-
-async function exportBackup() {
+    if (!file) return;
 
     try {
-
-        const backup = {
-            application:"Personal Current Affairs Hub",
-            version:1,
-            exportedAt:new Date().toISOString(),
-            articles:await getAllArticles(),
-            bookmarks:[...bookmarks],
-            sources:SOURCES
-        };
-
-        const blob = new Blob(
-            [JSON.stringify(backup,null,2)],
-            {type:"application/json"}
-        );
-
-        const url = URL.createObjectURL(blob);
-
-        const link = document.createElement("a");
-
-        link.href = url;
-        link.download = "prem-vikash-current-affairs-backup.json";
-
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        setTimeout(() => URL.revokeObjectURL(url),1000);
-
-    } catch(error) {
-
-        alert("Backup failed: " + error.message);
-    }
-}
-
-async function restoreBackup() {
-
-    const file = document.getElementById("restoreFile").files[0];
-
-    if (!file) {
-        alert("Please choose a JSON backup file.");
-        return;
-    }
-
-    try {
-
         const text = await file.text();
-        const backup = JSON.parse(text);
+        const data = JSON.parse(text);
 
-        if (!backup || !Array.isArray(backup.articles)) {
-            throw new Error("This file is not a compatible backup.");
+        if (!Array.isArray(data.news)) {
+            throw new Error("Invalid backup file: news array missing.");
         }
+
+        const cleaned = data.news
+            .filter(n => n && n.id && n.title)
+            .map(n => ({
+                id:String(n.id),
+                title:String(n.title),
+                summary:String(n.summary || ""),
+                date:validDate(n.date),
+                category:CATEGORIES.includes(n.category)
+                    ? n.category : "National",
+                region:REGIONS.includes(n.region)
+                    ? n.region : "India",
+                sourceId:SOURCES.some(s => s.id === n.sourceId)
+                    ? n.sourceId : "",
+                url:safeURL(n.url || ""),
+                tags:Array.isArray(n.tags)
+                    ? n.tags.map(String) : [],
+                bookmarked:!!n.bookmarked,
+                createdAt:n.createdAt || new Date().toISOString(),
+                updatedAt:n.updatedAt || new Date().toISOString(),
+                type:n.type === "rss" ? "rss" : "manual"
+            }));
 
         if (!confirm(
-            "Restore " + backup.articles.length +
-            " articles? Existing articles will be kept."
-        )) return;
-
-        for (const article of backup.articles) {
-
-            if (
-                !article ||
-                typeof article.id !== "string" ||
-                typeof article.title !== "string"
-            ) continue;
-
-            await putArticle(article);
+            "Restore " + cleaned.length + " news items?\n\n" +
+            "This will replace all currently saved news."
+        )) {
+            event.target.value = "";
+            return;
         }
 
-        if (Array.isArray(backup.bookmarks)) {
+        await replaceAllNews(cleaned);
 
-            backup.bookmarks.forEach(id => {
-                if (typeof id === "string") bookmarks.add(id);
+        if (data.settings && data.settings.feeds) {
+            SOURCES.forEach(source => {
+                const value = data.settings.feeds[source.id];
+
+                if (typeof value === "string") {
+                    source.feed = safeURL(value) || "";
+                }
             });
 
-            saveBookmarks();
+            sourceStates = data.settings.states || {};
+            saveSettings();
         }
 
         await reloadNews();
@@ -2813,54 +2260,69 @@ async function restoreBackup() {
         alert("Backup restored successfully.");
 
     } catch(error) {
-
-        alert("Restore failed: " + error.message);
+        alert("Could not restore backup:\n" + error.message);
+    } finally {
+        event.target.value = "";
     }
 }
 
-async function clearAllNews() {
 
-    if (!confirm(
-        "Delete ALL saved articles from this browser? " +
-        "Export a backup first if needed."
-    )) return;
+/* =========================================================
+   13. LOAD DATA AND START APP
+========================================================= */
 
-    if (!confirm("Final confirmation: permanently delete all articles?")) {
-        return;
-    }
+async function reloadNews() {
+    allNews = await getAllFromDB();
+
+    allNews.sort((a,b) =>
+        (b.date || "").localeCompare(a.date || "")
+    );
+
+    renderNews();
+    updateStats();
+}
+
+async function initialize() {
+    loadSettings();
+    initializeFilters();
 
     try {
-
-        const tx = db.transaction(STORE_NAME,"readwrite");
-
-        tx.objectStore(STORE_NAME).clear();
-
-        await new Promise((resolve,reject) => {
-            tx.oncomplete = resolve;
-            tx.onerror = () => reject(tx.error);
-            tx.onabort = () => reject(tx.error);
-        });
-
-        bookmarks.clear();
-        saveBookmarks();
+        db = await openDatabase();
 
         await reloadNews();
 
-        alert("All local articles have been deleted.");
+        renderSources();
 
     } catch(error) {
+        console.error(error);
 
-        alert("Could not clear articles: " + error.message);
+        document.getElementById("newsList").innerHTML = `
+            <div class="empty">
+                <h3>Local database could not be opened</h3>
+                <p>${escapeHTML(error.message)}</p>
+                <p>Try opening this page in a modern browser such as Chrome.</p>
+            </div>
+        `;
     }
 }
 
 
-/* =====================================
-   START
-===================================== */
+/* =========================================================
+   14. CLICK OUTSIDE MODAL TO CLOSE
+========================================================= */
 
-loadCustomFeeds();
-loadBookmarks();
+document.getElementById("newsModal").addEventListener(
+    "click",
+    function(event) {
+        if (event.target === this) closeNewsModal();
+    }
+);
+
+
+/* =========================================================
+   15. RUN APP
+========================================================= */
+
 initialize();
 
 </script>
