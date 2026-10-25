@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101827">
 
-<title>Current Affairs Hub | Prem Vikash Sir</title>
+<title>Personal Current Affairs Hub | Prem Vikash Sir</title>
 
 <style>
 :root {
     --bg: #f4f7fb;
     --card: #ffffff;
-    --text: #172033;
-    --muted: #68758b;
+    --text: #182238;
+    --muted: #69768b;
     --primary: #4f46e5;
-    --border: #e4e9f2;
+    --border: #e1e7f0;
     --sidebar: #101827;
-    --green: #16a34a;
-    --shadow: 0 5px 20px rgba(25, 35, 60, .06);
+    --success: #15803d;
+    --danger: #b91c1c;
+    --radius: 13px;
 }
 
 * {
@@ -39,10 +40,24 @@ button {
     cursor: pointer;
 }
 
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+    outline: 3px solid #a5b4fc;
+    outline-offset: 2px;
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
 .app {
-    display: grid;
-    grid-template-columns: 245px minmax(0, 1fr);
     min-height: 100vh;
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
 }
 
 /* SIDEBAR */
@@ -50,13 +65,13 @@ button {
 .sidebar {
     background: var(--sidebar);
     color: white;
-    padding: 22px 15px;
+    padding: 20px 14px;
 }
 
 .brand {
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 800;
-    padding: 8px 10px 4px;
+    padding: 8px;
 }
 
 .brand span {
@@ -65,28 +80,28 @@ button {
 
 .brand-sub {
     color: #aeb9ca;
-    font-size: 12px;
-    padding: 0 10px 22px;
+    font-size: 11px;
+    padding: 0 8px 22px;
 }
 
 .nav-heading {
-    color: #8c9ab0;
-    font-size: 11px;
+    color: #8b9bb3;
+    font-size: 10px;
     font-weight: bold;
-    letter-spacing: 1.4px;
-    padding: 17px 10px 8px;
+    letter-spacing: 1.5px;
+    padding: 17px 9px 8px;
 }
 
 .nav-btn {
     width: 100%;
-    border: 0;
-    color: #d7deeb;
-    background: transparent;
-    text-align: left;
-    padding: 12px;
-    border-radius: 9px;
+    padding: 11px;
     margin: 2px 0;
-    font-size: 14px;
+    text-align: left;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #dce4f0;
+    font-size: 13px;
 }
 
 .nav-btn:hover,
@@ -96,11 +111,11 @@ button {
 }
 
 .sidebar-footer {
-    margin: 30px 8px 0;
-    padding-top: 20px;
+    margin: 25px 7px 0;
+    padding-top: 17px;
     border-top: 1px solid #344052;
+    font-size: 11px;
     color: #aeb9ca;
-    font-size: 12px;
     line-height: 1.7;
 }
 
@@ -111,88 +126,95 @@ button {
 }
 
 .topbar {
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-    padding: 17px 26px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 12px;
+    padding: 15px 23px;
+    background: white;
+    border-bottom: 1px solid var(--border);
 }
 
 .topbar h2 {
-    font-size: 19px;
     margin: 0;
+    font-size: 19px;
 }
 
 .topbar p {
     color: var(--muted);
-    font-size: 12px;
+    font-size: 11px;
     margin: 5px 0 0;
 }
 
 .top-actions {
     display: flex;
-    align-items: center;
-    gap: 9px;
-}
-
-.btn {
-    border: 1px solid var(--border);
-    background: white;
-    color: var(--text);
-    padding: 10px 13px;
-    border-radius: 9px;
-}
-
-.btn-primary {
-    color: white;
-    background: var(--primary);
-    border-color: var(--primary);
+    gap: 7px;
+    flex-wrap: wrap;
 }
 
 .content {
-    max-width: 1450px;
+    padding: 23px;
+    max-width: 1500px;
     margin: auto;
-    padding: 25px;
+}
+
+.btn {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 10px 13px;
+    border-radius: 9px;
+    color: var(--text);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn:hover {
+    filter: brightness(.97);
+}
+
+.mobile-menu {
+    display: none;
 }
 
 /* HERO */
 
 .hero {
-    background: linear-gradient(120deg, #25256b, #4f46e5 65%, #818cf8);
+    padding: 29px;
+    border-radius: 17px;
     color: white;
-    padding: 30px;
-    border-radius: 18px;
+    background: linear-gradient(120deg, #22215e, #4f46e5, #818cf8);
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     gap: 20px;
-    overflow: hidden;
 }
 
 .hero h1 {
-    font-size: clamp(25px, 3vw, 37px);
-    margin: 12px 0;
+    font-size: clamp(25px, 3vw, 38px);
+    margin: 13px 0;
 }
 
 .hero p {
-    line-height: 1.7;
+    max-width: 700px;
+    line-height: 1.8;
     color: #e2e5ff;
-    max-width: 650px;
+    font-size: 14px;
 }
 
 .hero-badge {
-    display: inline-block;
-    padding: 7px 11px;
     border: 1px solid #ffffff55;
     background: #ffffff16;
+    padding: 7px 10px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .hero-icon {
-    font-size: 85px;
+    font-size: 78px;
 }
 
 /* STATS */
@@ -200,34 +222,29 @@ button {
 .stats {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 15px;
-    margin: 22px 0;
+    gap: 13px;
+    margin: 20px 0;
 }
 
 .stat {
-    background: var(--card);
+    padding: 17px;
+    background: white;
     border: 1px solid var(--border);
-    border-radius: 13px;
-    padding: 18px;
-    box-shadow: var(--shadow);
-}
-
-.stat-icon {
-    font-size: 24px;
+    border-radius: var(--radius);
 }
 
 .stat-number {
     font-size: 27px;
-    font-weight: 800;
-    margin: 12px 0 5px;
+    font-weight: bold;
+    margin: 10px 0 5px;
 }
 
 .stat-label {
-    font-size: 12px;
     color: var(--muted);
+    font-size: 11px;
 }
 
-/* SECTION */
+/* SECTIONS */
 
 .section {
     margin: 27px 0;
@@ -235,21 +252,21 @@ button {
 
 .section-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 15px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
 .section-header h2 {
-    font-size: 19px;
     margin: 0;
+    font-size: 19px;
 }
 
 .section-header p {
-    font-size: 12px;
-    color: var(--muted);
     margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 12px;
 }
 
 /* CATEGORY GRID */
@@ -257,31 +274,29 @@ button {
 .category-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 13px;
+    gap: 12px;
 }
 
 .category {
     background: white;
     border: 1px solid var(--border);
-    border-radius: 13px;
-    padding: 17px;
+    border-radius: var(--radius);
+    padding: 16px;
     text-align: left;
-    transition: .2s;
 }
 
 .category:hover {
-    transform: translateY(-3px);
     border-color: var(--primary);
-    box-shadow: var(--shadow);
+    transform: translateY(-2px);
 }
 
 .category .icon {
-    font-size: 27px;
+    font-size: 25px;
 }
 
 .category h3 {
     font-size: 14px;
-    margin: 12px 0 5px;
+    margin: 11px 0 5px;
 }
 
 .category p {
@@ -295,156 +310,206 @@ button {
 .filters {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 10px;
-    margin: 20px 0;
+    gap: 9px;
+    margin: 17px 0;
 }
 
 .field {
     width: 100%;
+    min-width: 0;
+    padding: 11px;
     border: 1px solid var(--border);
-    background: white;
     border-radius: 9px;
-    padding: 12px;
+    background: white;
     color: var(--text);
-    outline: none;
 }
 
 .field:focus {
     border-color: var(--primary);
 }
 
-input, select, textarea {
-    min-width: 0;
-}
-
 textarea {
     resize: vertical;
 }
 
-/* NEWS */
+/* SOURCE DIRECTORY */
+
+.source-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.source-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 15px;
+    min-width: 0;
+}
+
+.source-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+.source-card p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.source-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+}
+
+.source-actions a,
+.source-actions button {
+    font-size: 11px;
+    text-decoration: none;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: white;
+    color: var(--primary);
+}
+
+/* NEWS CARDS */
 
 .news-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    gap: 14px;
 }
 
 .news-card {
     background: white;
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
+    border-radius: var(--radius);
+    padding: 17px;
     display: flex;
     flex-direction: column;
     min-width: 0;
-    box-shadow: var(--shadow);
 }
 
 .news-meta {
     display: flex;
     flex-wrap: wrap;
+    gap: 6px;
     align-items: center;
-    gap: 7px;
     margin-bottom: 12px;
 }
 
 .tag {
     background: #eef2ff;
     color: #4338ca;
-    padding: 5px 8px;
+    padding: 5px 7px;
     border-radius: 5px;
     font-size: 10px;
     font-weight: bold;
 }
 
-.date {
-    font-size: 11px;
+.news-date {
     color: var(--muted);
+    font-size: 10px;
 }
 
 .news-card h3 {
-    font-size: 17px;
-    line-height: 1.5;
+    font-size: 16px;
+    line-height: 1.55;
     margin: 0 0 10px;
 }
 
 .news-summary {
-    color: #596579;
     font-size: 13px;
     line-height: 1.7;
-    flex: 1;
+    color: #596579;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+    flex: 1;
 }
 
 .news-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 14px;
+    padding-top: 12px;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: 8px;
-    border-top: 1px solid var(--border);
-    margin-top: 15px;
-    padding-top: 12px;
 }
 
 .news-footer button {
     border: 0;
     background: transparent;
     color: var(--primary);
-    font-size: 12px;
-    padding: 5px 0;
+    font-size: 11px;
+    padding: 4px 0;
+}
+
+.news-footer .delete-btn {
+    color: var(--danger);
 }
 
 .empty {
-    background: white;
-    border: 1px dashed #cbd5e1;
-    border-radius: 14px;
-    padding: 45px 20px;
-    text-align: center;
-    color: var(--muted);
     grid-column: 1 / -1;
+    padding: 35px 20px;
+    border: 1px dashed #cbd5e1;
+    border-radius: var(--radius);
+    text-align: center;
+    background: white;
+    color: var(--muted);
+    line-height: 1.7;
 }
 
-/* MONTHS AND REGIONS */
+/* MONTH / REGION */
 
 .pill-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 9px;
+    gap: 8px;
 }
 
 .pill {
     background: white;
     border: 1px solid var(--border);
+    padding: 9px 13px;
     border-radius: 9px;
-    padding: 10px 15px;
-    color: var(--text);
 }
 
-.pill:hover,
-.pill.active {
-    color: white;
-    background: var(--primary);
+.pill:hover {
     border-color: var(--primary);
+    color: var(--primary);
 }
 
-/* EXAM PANEL */
+/* STATUS */
 
-.exam-panel {
-    background: white;
-    border: 1px solid var(--border);
-    padding: 20px;
-    border-radius: 14px;
-}
-
-.exam-panel h3 {
-    margin-top: 0;
-}
-
-.exam-panel p {
-    color: var(--muted);
-    font-size: 13px;
+.status {
+    padding: 12px;
+    border-radius: 9px;
+    font-size: 12px;
     line-height: 1.7;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+}
+
+.status.error {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.status.success {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #166534;
 }
 
 /* MODAL */
@@ -454,8 +519,8 @@ textarea {
     position: fixed;
     inset: 0;
     z-index: 100;
+    padding: 16px;
     background: #101827aa;
-    padding: 18px;
     overflow-y: auto;
     align-items: center;
     justify-content: center;
@@ -467,46 +532,45 @@ textarea {
 
 .modal-box {
     background: white;
+    padding: 22px;
+    border-radius: 15px;
     width: 100%;
-    max-width: 650px;
-    border-radius: 16px;
-    padding: 24px;
+    max-width: 680px;
     margin: auto;
 }
 
 .modal-head {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     gap: 12px;
     margin-bottom: 18px;
 }
 
 .modal-head h2 {
-    font-size: 20px;
     margin: 0;
+    font-size: 20px;
 }
 
 .close-btn {
+    width: 34px;
+    height: 34px;
     border: 0;
-    background: #f0f2f7;
     border-radius: 8px;
-    width: 35px;
-    height: 35px;
     font-size: 20px;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 13px;
+    gap: 12px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 7px;
-    margin-bottom: 13px;
+    margin-bottom: 9px;
 }
 
 .form-group label {
@@ -521,45 +585,26 @@ textarea {
 .modal-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.quiz-option {
-    display: block;
-    width: 100%;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    padding: 12px;
-    margin: 9px 0;
-    text-align: left;
-}
-
-.quiz-option:hover {
-    border-color: var(--primary);
-    background: #f5f5ff;
+    gap: 8px;
+    margin-top: 12px;
 }
 
 .notice {
     background: #fff7ed;
-    color: #9a3412;
     border: 1px solid #fed7aa;
-    padding: 12px;
+    color: #9a3412;
     border-radius: 9px;
+    padding: 12px;
     font-size: 12px;
-    line-height: 1.6;
-    margin-bottom: 15px;
+    line-height: 1.7;
+    margin-bottom: 14px;
 }
 
-/* MOBILE */
-
-.mobile-menu {
-    display: none;
-}
+/* RESPONSIVE */
 
 @media (max-width: 1100px) {
-    .news-grid {
+    .news-grid,
+    .source-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -590,20 +635,20 @@ textarea {
     }
 
     .topbar {
-        padding: 14px;
+        padding: 13px;
     }
 
     .topbar h2 {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .top-actions .btn {
-        padding: 9px;
-        font-size: 12px;
+        padding: 8px;
+        font-size: 11px;
     }
 
     .content {
-        padding: 14px;
+        padding: 13px;
     }
 
     .hero {
@@ -614,12 +659,10 @@ textarea {
         display: none;
     }
 
-    .category-grid {
+    .category-grid,
+    .news-grid,
+    .source-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .news-grid {
-        grid-template-columns: 1fr;
     }
 
     .filters {
@@ -639,17 +682,15 @@ textarea {
     }
 }
 
-@media (max-width: 380px) {
-    .stats {
-        gap: 8px;
+@media (max-width: 480px) {
+    .category-grid,
+    .news-grid,
+    .source-grid {
+        grid-template-columns: 1fr;
     }
 
-    .stat {
-        padding: 12px;
-    }
-
-    .stat-number {
-        font-size: 22px;
+    .hero h1 {
+        font-size: 27px;
     }
 }
 </style>
@@ -659,329 +700,389 @@ textarea {
 
 <div class="app">
 
-    <!-- SIDEBAR -->
+<!-- SIDEBAR -->
 
-    <aside class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar">
 
-        <div class="brand">📰 Current<span>Affairs</span></div>
+    <div class="brand">📰 Current<span>Affairs</span></div>
 
-        <div class="brand-sub">CURRENT AFFAIRS LEARNING HUB</div>
+    <div class="brand-sub">PERSONAL NEWS & EXAM READER</div>
 
-        <div class="nav-heading">MAIN MENU</div>
+    <div class="nav-heading">DASHBOARD</div>
 
-        <button class="nav-btn active" data-page="dashboard">
-            🏠 Dashboard
-        </button>
+    <button class="nav-btn active" data-page="dashboard">🏠 Dashboard</button>
+    <button class="nav-btn" data-page="all">📰 All News</button>
+    <button class="nav-btn" data-page="sources">🌐 News Sources</button>
+    <button class="nav-btn" data-page="bookmarks">🔖 Bookmarks</button>
+    <button class="nav-btn" data-page="manual">✍️ Add Notes</button>
+    <button class="nav-btn" data-page="backup">💾 Backup & Restore</button>
 
-        <button class="nav-btn" data-page="all">
-            📰 All News
-        </button>
+    <div class="nav-heading">CATEGORIES</div>
 
-        <button class="nav-btn" data-page="bookmarks">
-            🔖 Bookmarks
-        </button>
+    <button class="nav-btn" data-category="National">🇮🇳 National</button>
+    <button class="nav-btn" data-category="International">🌍 International</button>
+    <button class="nav-btn" data-category="Political">🏛️ Political</button>
+    <button class="nav-btn" data-category="Economic">📈 Economic</button>
+    <button class="nav-btn" data-category="Sports">🏆 Sports</button>
+    <button class="nav-btn" data-category="Social Issue">🤝 Social Issues</button>
+    <button class="nav-btn" data-category="Scheme">📋 Government Schemes</button>
 
-        <button class="nav-btn" data-page="quiz">
-            🧠 Practice Quiz
-        </button>
+    <div class="nav-heading">REGIONS</div>
 
-        <div class="nav-heading">CATEGORIES</div>
+    <button class="nav-btn" data-region="India">🇮🇳 India</button>
+    <button class="nav-btn" data-region="Bihar">📍 Bihar</button>
+    <button class="nav-btn" data-region="Jharkhand">📍 Jharkhand</button>
+    <button class="nav-btn" data-region="Uttar Pradesh">📍 Uttar Pradesh</button>
+    <button class="nav-btn" data-region="West Bengal">📍 West Bengal</button>
 
-        <button class="nav-btn" data-category="National">🇮🇳 National</button>
-        <button class="nav-btn" data-category="International">🌍 International</button>
-        <button class="nav-btn" data-category="Political">🏛️ Political</button>
-        <button class="nav-btn" data-category="Economic">📈 Economic</button>
-        <button class="nav-btn" data-category="Sports">🏆 Sports</button>
-        <button class="nav-btn" data-category="Social Issue">🤝 Social Issues</button>
-        <button class="nav-btn" data-category="Scheme">📋 Government Schemes</button>
+    <div class="sidebar-footer">
+        Personal Current Affairs Hub<br>
+        UPSC • BPSC • State Exams<br><br>
+        By Prem Vikash Sir
+    </div>
 
-        <div class="nav-heading">REGIONS</div>
+</aside>
 
-        <button class="nav-btn" data-region="India">🇮🇳 India</button>
-        <button class="nav-btn" data-region="Bihar">📍 Bihar</button>
-        <button class="nav-btn" data-region="Jharkhand">📍 Jharkhand</button>
-        <button class="nav-btn" data-region="Uttar Pradesh">📍 Uttar Pradesh</button>
-        <button class="nav-btn" data-region="West Bengal">📍 West Bengal</button>
+<!-- MAIN -->
 
-        <div class="sidebar-footer">
-            <strong>Current Affairs Hub</strong><br>
-            Designed for UPSC, BPSC & other exams.<br><br>
-            By Prem Vikash Sir
+<main class="main">
+
+<header class="topbar">
+
+    <div style="display:flex;align-items:center;gap:10px">
+
+        <button class="btn mobile-menu"
+                onclick="toggleSidebar()">☰</button>
+
+        <div>
+            <h2 id="pageTitle">Dashboard</h2>
+            <p id="todayDate"></p>
         </div>
 
-    </aside>
+    </div>
 
-    <!-- MAIN CONTENT -->
+    <div class="top-actions">
+        <button class="btn" onclick="exportBackup()">⬇ Backup</button>
+        <button class="btn btn-primary" onclick="openNewsModal()">＋ Add News</button>
+    </div>
 
-    <main class="main">
+</header>
 
-        <header class="topbar">
+<div class="content">
 
-            <div style="display:flex;align-items:center;gap:10px">
+<!-- DASHBOARD -->
 
-                <button class="btn mobile-menu"
-                        onclick="toggleSidebar()">☰</button>
+<section id="dashboardPage">
 
-                <div>
-                    <h2 id="pageTitle">Dashboard</h2>
-                    <p id="todayDate"></p>
-                </div>
+    <div class="hero">
 
-            </div>
+        <div>
+            <span class="hero-badge">YOUR PERSONAL EXAM READER</span>
 
-            <div class="top-actions">
+            <h1>Current Affairs<br>Made Simple.</h1>
 
-                <button class="btn"
-                        onclick="exportNews()">⬇ Export</button>
+            <p>
+                Collect news from supported sources, organize current
+                affairs by category, month and region, and keep your
+                saved reading material in this browser.
+            </p>
 
-                <button class="btn btn-primary"
-                        onclick="openAddModal()">＋ Add News</button>
+            <button class="btn"
+                    onclick="showPage('sources')">
+                🌐 Manage Sources
+            </button>
 
-            </div>
-
-        </header>
-
-        <div class="content">
-
-            <!-- DASHBOARD -->
-
-            <section id="dashboardPage">
-
-                <div class="hero">
-
-                    <div>
-                        <span class="hero-badge">
-                            YOUR DAILY EXAM PREPARATION
-                        </span>
-
-                        <h1>Stay Updated.<br>Stay Ahead.</h1>
-
-                        <p>
-                            Read, organize and revise current affairs
-                            category-wise, month-wise and region-wise.
-                            Prepare smarter for UPSC, BPSC and other
-                            competitive examinations.
-                        </p>
-
-                        <button class="btn"
-                                onclick="showPage('all')">
-                            Explore Current Affairs →
-                        </button>
-                    </div>
-
-                    <div class="hero-icon">📚</div>
-
-                </div>
-
-                <div class="stats">
-
-                    <div class="stat">
-                        <div class="stat-icon">📰</div>
-                        <div class="stat-number" id="totalNews">0</div>
-                        <div class="stat-label">Total News</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-icon">🔖</div>
-                        <div class="stat-number" id="totalBookmarks">0</div>
-                        <div class="stat-label">Bookmarked News</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-icon">🗂️</div>
-                        <div class="stat-number">7</div>
-                        <div class="stat-label">News Categories</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-icon">📍</div>
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Regions Covered</div>
-                    </div>
-
-                </div>
-
-                <!-- CATEGORY GRID -->
-
-                <section class="section">
-
-                    <div class="section-header">
-                        <div>
-                            <h2>Browse by Category</h2>
-                            <p>Select a category to explore relevant news.</p>
-                        </div>
-                    </div>
-
-                    <div class="category-grid" id="categoryGrid"></div>
-
-                </section>
-
-                <!-- MONTHS -->
-
-                <section class="section">
-
-                    <div class="section-header">
-                        <div>
-                            <h2>Browse Month-wise</h2>
-                            <p>Choose a month to revise current affairs.</p>
-                        </div>
-                    </div>
-
-                    <div class="pill-list" id="monthList"></div>
-
-                </section>
-
-                <!-- REGIONS -->
-
-                <section class="section">
-
-                    <div class="section-header">
-                        <div>
-                            <h2>Browse by Region</h2>
-                            <p>Focus on state-specific current affairs.</p>
-                        </div>
-                    </div>
-
-                    <div class="pill-list" id="regionList"></div>
-
-                </section>
-
-                <!-- LATEST NEWS -->
-
-                <section class="section">
-
-                    <div class="section-header">
-                        <div>
-                            <h2>Latest Added News</h2>
-                            <p>News entries saved in this application.</p>
-                        </div>
-
-                        <button class="btn"
-                                onclick="showPage('all')">
-                            View All →
-                        </button>
-                    </div>
-
-                    <div class="news-grid" id="latestNews"></div>
-
-                </section>
-
-                <section class="section">
-
-                    <div class="exam-panel">
-                        <h3>🎯 Exam Preparation Centre</h3>
-
-                        <p>
-                            Organize important facts, constitutional
-                            developments, economic indicators, government
-                            schemes, sports achievements and state-specific
-                            news for your examination.
-                        </p>
-
-                        <button class="btn btn-primary"
-                                onclick="showPage('quiz')">
-                            Start Practice Quiz
-                        </button>
-                    </div>
-
-                </section>
-
-            </section>
-
-            <!-- ALL NEWS -->
-
-            <section id="allPage" hidden>
-
-                <div class="section-header">
-                    <div>
-                        <h2 id="newsHeading">All Current Affairs</h2>
-                        <p>Search and filter your news database.</p>
-                    </div>
-                </div>
-
-                <div class="filters">
-
-                    <input class="field"
-                           id="searchInput"
-                           placeholder="🔍 Search news, topic or keyword..."
-                           oninput="renderNews()">
-
-                    <select class="field"
-                            id="categoryFilter"
-                            onchange="renderNews()">
-                        <option value="">All Categories</option>
-                    </select>
-
-                    <select class="field"
-                            id="monthFilter"
-                            onchange="renderNews()">
-                        <option value="">All Months</option>
-                    </select>
-
-                    <select class="field"
-                            id="regionFilter"
-                            onchange="renderNews()">
-                        <option value="">All Regions</option>
-                    </select>
-
-                </div>
-
-                <div class="news-grid" id="newsGrid"></div>
-
-            </section>
-
-            <!-- BOOKMARKS -->
-
-            <section id="bookmarksPage" hidden>
-
-                <div class="section-header">
-                    <div>
-                        <h2>🔖 Your Bookmarks</h2>
-                        <p>Important news saved for quick revision.</p>
-                    </div>
-                </div>
-
-                <div class="news-grid" id="bookmarkGrid"></div>
-
-            </section>
-
-            <!-- QUIZ -->
-
-            <section id="quizPage" hidden>
-
-                <div class="section-header">
-                    <div>
-                        <h2>🧠 Current Affairs Practice Quiz</h2>
-                        <p>Test your knowledge using your saved news.</p>
-                    </div>
-                </div>
-
-                <div class="exam-panel" id="quizPanel"></div>
-
-            </section>
-
+            <button class="btn"
+                    onclick="refreshAllSources()">
+                🔄 Refresh News
+            </button>
         </div>
 
-    </main>
+        <div class="hero-icon">📚</div>
+
+    </div>
+
+    <div id="globalStatus" class="status">
+        Ready. Open News Sources and try Refresh Feed.
+        News availability depends on each source and browser permissions.
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <div>📰</div>
+            <div class="stat-number" id="totalNews">0</div>
+            <div class="stat-label">Saved Articles</div>
+        </div>
+
+        <div class="stat">
+            <div>🔖</div>
+            <div class="stat-number" id="totalBookmarks">0</div>
+            <div class="stat-label">Bookmarks</div>
+        </div>
+
+        <div class="stat">
+            <div>🌐</div>
+            <div class="stat-number" id="totalSources">15</div>
+            <div class="stat-label">News Sources</div>
+        </div>
+
+        <div class="stat">
+            <div>📅</div>
+            <div class="stat-number" id="todayArticles">0</div>
+            <div class="stat-label">Articles Dated Today</div>
+        </div>
+
+    </div>
+
+    <section class="section">
+
+        <div class="section-header">
+            <div>
+                <h2>Browse by Category</h2>
+                <p>Choose a topic.</p>
+            </div>
+        </div>
+
+        <div class="category-grid" id="categoryGrid"></div>
+
+    </section>
+
+    <section class="section">
+
+        <div class="section-header">
+            <div>
+                <h2>Browse by Month</h2>
+                <p>Filter your saved articles.</p>
+            </div>
+        </div>
+
+        <div class="pill-list" id="monthList"></div>
+
+    </section>
+
+    <section class="section">
+
+        <div class="section-header">
+            <div>
+                <h2>Browse by Region</h2>
+                <p>Choose a region.</p>
+            </div>
+        </div>
+
+        <div class="pill-list" id="regionList"></div>
+
+    </section>
+
+    <section class="section">
+
+        <div class="section-header">
+            <div>
+                <h2>Recently Saved</h2>
+                <p>Latest articles stored in your browser.</p>
+            </div>
+
+            <button class="btn" onclick="showPage('all')">View All →</button>
+        </div>
+
+        <div class="news-grid" id="latestGrid"></div>
+
+    </section>
+
+</section>
+
+<!-- ALL NEWS -->
+
+<section id="allPage" hidden>
+
+    <div class="section-header">
+        <div>
+            <h2 id="newsHeading">All Current Affairs</h2>
+            <p>Search and filter saved articles.</p>
+        </div>
+    </div>
+
+    <div class="filters">
+
+        <input id="searchInput"
+               class="field"
+               placeholder="🔍 Search title or keyword..."
+               oninput="renderNews()">
+
+        <select id="categoryFilter"
+                class="field"
+                onchange="renderNews()">
+            <option value="">All Categories</option>
+        </select>
+
+        <select id="monthFilter"
+                class="field"
+                onchange="renderNews()">
+            <option value="">All Months</option>
+        </select>
+
+        <select id="regionFilter"
+                class="field"
+                onchange="renderNews()">
+            <option value="">All Regions</option>
+        </select>
+
+    </div>
+
+    <div class="news-grid" id="newsGrid"></div>
+
+</section>
+
+<!-- SOURCES -->
+
+<section id="sourcesPage" hidden>
+
+    <div class="section-header">
+        <div>
+            <h2>🌐 Your 15 News Sources</h2>
+            <p>Open original websites or attempt to collect RSS articles.</p>
+        </div>
+
+        <button class="btn btn-primary"
+                onclick="refreshAllSources()">
+            🔄 Refresh All
+        </button>
+    </div>
+
+    <div class="notice">
+        RSS feeds are not guaranteed for every website. Some sites may
+        block browser requests or restrict automatic collection.
+        This app never bypasses paywalls or access controls.
+        Only successfully retrieved articles will be saved.
+    </div>
+
+    <div id="sourceStatus" class="status">
+        No refresh started yet.
+    </div>
+
+    <div class="source-grid" id="sourceGrid"></div>
+
+</section>
+
+<!-- BOOKMARKS -->
+
+<section id="bookmarksPage" hidden>
+
+    <div class="section-header">
+        <div>
+            <h2>🔖 Bookmarked Articles</h2>
+            <p>Your important saved news.</p>
+        </div>
+    </div>
+
+    <div class="news-grid" id="bookmarkGrid"></div>
+
+</section>
+
+<!-- MANUAL NOTES -->
+
+<section id="manualPage" hidden>
+
+    <div class="section-header">
+        <div>
+            <h2>✍️ Add Current Affairs Manually</h2>
+            <p>Add facts or news from a source you have read.</p>
+        </div>
+    </div>
+
+    <div class="notice">
+        Manual notes are saved locally. Always verify important facts
+        against an original or official source.
+    </div>
+
+    <button class="btn btn-primary" onclick="openNewsModal()">
+        ＋ Create News Note
+    </button>
+
+</section>
+
+<!-- BACKUP -->
+
+<section id="backupPage" hidden>
+
+    <div class="section-header">
+        <div>
+            <h2>💾 Local Data & Backup</h2>
+            <p>Protect your saved articles.</p>
+        </div>
+    </div>
+
+    <div class="notice">
+        Your articles are stored in this browser's IndexedDB database.
+        Clearing browser site data may delete them. Export regular backups.
+        Data does not automatically sync to another browser or device.
+    </div>
+
+    <div class="exam-panel">
+
+        <h3>Export Backup</h3>
+
+        <p>
+            Download your saved articles and bookmarks as a JSON file.
+        </p>
+
+        <button class="btn btn-primary" onclick="exportBackup()">
+            ⬇ Download JSON Backup
+        </button>
+
+        <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+
+        <h3>Restore Backup</h3>
+
+        <p>
+            Choose a backup created by this application. Imported articles
+            are merged with existing articles by their unique IDs.
+        </p>
+
+        <input type="file"
+               id="restoreFile"
+               class="field"
+               accept=".json,application/json">
+
+        <br><br>
+
+        <button class="btn btn-primary" onclick="restoreBackup()">
+            Restore Backup
+        </button>
+
+        <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+
+        <h3>Clear All Saved Articles</h3>
+
+        <p>
+            This permanently deletes the locally saved articles.
+            Download a backup first if you need to keep them.
+        </p>
+
+        <button class="btn"
+                style="color:#b91c1c"
+                onclick="clearAllNews()">
+            Delete All Articles
+        </button>
+
+    </div>
+
+</section>
 
 </div>
 
-<!-- ADD NEWS MODAL -->
+</main>
+</div>
 
-<div class="modal" id="addModal">
+<!-- NEWS MODAL -->
+
+<div class="modal" id="newsModal">
 
     <div class="modal-box">
 
         <div class="modal-head">
             <h2>Add Current Affairs</h2>
-
-            <button class="close-btn"
-                    onclick="closeAddModal()">×</button>
-        </div>
-
-        <div class="notice">
-            Enter verified information from a reliable source.
-            This application does not automatically verify news.
+            <button class="close-btn" onclick="closeNewsModal()">×</button>
         </div>
 
         <form id="newsForm">
@@ -989,97 +1090,71 @@ textarea {
             <div class="form-grid">
 
                 <div class="form-group full">
-                    <label>News Headline *</label>
-
+                    <label>Headline *</label>
                     <input class="field"
                            name="title"
-                           required
                            maxlength="250"
-                           placeholder="Enter news headline">
+                           required>
                 </div>
 
                 <div class="form-group">
                     <label>Category *</label>
-
-                    <select class="field"
-                            name="category"
-                            required>
-                    </select>
+                    <select class="field" name="category" required></select>
                 </div>
 
                 <div class="form-group">
                     <label>Region *</label>
-
-                    <select class="field"
-                            name="region"
-                            required>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Month *</label>
-
-                    <select class="field"
-                            name="month"
-                            required>
-                    </select>
+                    <select class="field" name="region" required></select>
                 </div>
 
                 <div class="form-group">
                     <label>Date *</label>
-
                     <input class="field"
-                           type="date"
                            name="date"
+                           type="date"
                            required>
                 </div>
 
-                <div class="form-group full">
-                    <label>News Summary / Important Facts *</label>
+                <div class="form-group">
+                    <label>Source Website</label>
+                    <select class="field" name="sourceName"></select>
+                </div>
 
+                <div class="form-group full">
+                    <label>Summary / Important Facts *</label>
                     <textarea class="field"
                               name="summary"
                               rows="5"
-                              required
-                              maxlength="10000"
-                              placeholder="Write the key facts, background and exam relevance..."></textarea>
+                              maxlength="15000"
+                              required></textarea>
                 </div>
 
                 <div class="form-group full">
-                    <label>Source URL (optional)</label>
-
+                    <label>Original Article URL</label>
                     <input class="field"
-                           name="source"
+                           name="url"
                            type="url"
                            maxlength="2000"
-                           placeholder="https://official-source.gov.in">
+                           placeholder="https://example.com/article">
                 </div>
 
                 <div class="form-group full">
-                    <label>Exam Relevance / Notes (optional)</label>
-
+                    <label>Exam Notes</label>
                     <textarea class="field"
                               name="notes"
                               rows="3"
-                              maxlength="5000"
-                              placeholder="BPSC / UPSC facts, important dates, key terms..."></textarea>
+                              maxlength="5000"></textarea>
                 </div>
 
             </div>
 
             <div class="modal-actions">
-
                 <button type="button"
                         class="btn"
-                        onclick="closeAddModal()">
-                    Cancel
-                </button>
+                        onclick="closeNewsModal()">Cancel</button>
 
                 <button type="submit"
-                        class="btn btn-primary">
-                    Save News
-                </button>
-
+                        class="btn btn-primary">Save Article</button>
             </div>
 
         </form>
@@ -1090,227 +1165,375 @@ textarea {
 
 <script>
 
-/* ===================================
-   APPLICATION CONFIGURATION
-=================================== */
+/* =====================================
+   CONFIGURATION
+===================================== */
 
 const CATEGORIES = [
-    {name:"National", icon:"🇮🇳", desc:"National developments"},
-    {name:"International", icon:"🌍", desc:"World affairs"},
+    {name:"National", icon:"🇮🇳", desc:"India's national affairs"},
+    {name:"International", icon:"🌍", desc:"World news"},
     {name:"Political", icon:"🏛️", desc:"Politics and governance"},
     {name:"Economic", icon:"📈", desc:"Economy and finance"},
     {name:"Sports", icon:"🏆", desc:"Sports and tournaments"},
-    {name:"Social Issue", icon:"🤝", desc:"Society and social issues"},
+    {name:"Social Issue", icon:"🤝", desc:"Education, health and society"},
     {name:"Scheme", icon:"📋", desc:"Government schemes"}
 ];
 
 const MONTHS = [
-    "January", "February", "March", "April",
-    "May", "June", "July", "August",
-    "September", "October", "November", "December"
+    "January","February","March","April",
+    "May","June","July","August",
+    "September","October","November","December"
 ];
 
 const REGIONS = [
-    "India",
-    "Bihar",
-    "Jharkhand",
-    "Uttar Pradesh",
-    "West Bengal"
+    "India","Bihar","Jharkhand",
+    "Uttar Pradesh","West Bengal"
 ];
 
-const STORAGE_NEWS = "ca_hub_news_v1";
-const STORAGE_BOOKMARKS = "ca_hub_bookmarks_v1";
+/*
+  RSS URL:
+  This is an optional feed URL, not the website homepage.
 
-let news = readStorage(STORAGE_NEWS, []);
-let bookmarks = readStorage(STORAGE_BOOKMARKS, []);
+  Leave feed empty if no suitable feed is configured.
+  Use only official or otherwise authorized feed URLs.
+
+  A public RSS proxy may be tried as a fallback for a configured feed.
+  Proxy availability, privacy, CORS and usage terms can change.
+*/
+
+const SOURCES = [
+    {
+        name:"PIB India",
+        url:"https://pib.gov.in/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"Government press releases and official announcements."
+    },
+    {
+        name:"The Hindu",
+        url:"https://www.thehindu.com/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"National, international and editorial coverage."
+    },
+    {
+        name:"The Indian Express",
+        url:"https://indianexpress.com/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"National affairs, politics and explainers."
+    },
+    {
+        name:"BBC News",
+        url:"https://www.bbc.com/news",
+        feed:"",
+        category:"International",
+        region:"India",
+        description:"International and global news."
+    },
+    {
+        name:"Reuters",
+        url:"https://www.reuters.com/",
+        feed:"",
+        category:"International",
+        region:"India",
+        description:"Global events, markets and business."
+    },
+    {
+        name:"Economic Times",
+        url:"https://economictimes.indiatimes.com/",
+        feed:"",
+        category:"Economic",
+        region:"India",
+        description:"Economy, business, markets and policy."
+    },
+    {
+        name:"Business Standard",
+        url:"https://www.business-standard.com/",
+        feed:"",
+        category:"Economic",
+        region:"India",
+        description:"Business, finance and economic developments."
+    },
+    {
+        name:"Drishti IAS",
+        url:"https://www.drishtiias.com/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"Civil-services preparation and current affairs."
+    },
+    {
+        name:"AffairsCloud",
+        url:"https://affairscloud.com/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"Competitive-exam current affairs."
+    },
+    {
+        name:"Sansad TV",
+        url:"https://sansadtv.nic.in/",
+        feed:"",
+        category:"Political",
+        region:"India",
+        description:"Parliamentary proceedings and public affairs."
+    },
+    {
+        name:"Vajiram & Ravi",
+        url:"https://vajiramandravi.com/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"UPSC-oriented news analysis and preparation."
+    },
+    {
+        name:"Vision IAS",
+        url:"https://visionias.in/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"Exam-oriented current affairs and analysis."
+    },
+    {
+        name:"Insights IAS",
+        url:"https://www.insightsonindia.com/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"Daily current affairs and UPSC preparation."
+    },
+    {
+        name:"ForumIAS",
+        url:"https://forumias.com/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"Civil-services exam preparation and analysis."
+    },
+    {
+        name:"NEXT IAS",
+        url:"https://www.nextias.com/",
+        feed:"",
+        category:"National",
+        region:"India",
+        description:"Current affairs and civil-services preparation."
+    }
+];
+
+const DB_NAME = "PremVikashCurrentAffairsDB";
+const DB_VERSION = 1;
+const STORE_NAME = "articles";
+
+let db = null;
+let news = [];
+let bookmarks = new Set();
 let currentPage = "dashboard";
-
-let quizQuestions = [];
-let quizIndex = 0;
-let quizScore = 0;
-let quizAnswered = false;
+let refreshInProgress = false;
 
 
-/* ===================================
-   STORAGE
-=================================== */
+/* =====================================
+   INDEXEDDB
+===================================== */
 
-function readStorage(key, fallback) {
-    try {
-        const value = localStorage.getItem(key);
+function openDatabase() {
 
-        if (value === null) return fallback;
+    return new Promise((resolve, reject) => {
 
-        const parsed = JSON.parse(value);
+        if (!("indexedDB" in window)) {
+            reject(new Error("IndexedDB is unavailable in this browser."));
+            return;
+        }
 
-        return parsed;
-    } catch (error) {
-        console.error("Storage read error:", error);
-        return fallback;
-    }
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+        request.onupgradeneeded = function() {
+
+            const database = request.result;
+
+            if (!database.objectStoreNames.contains(STORE_NAME)) {
+
+                const store = database.createObjectStore(
+                    STORE_NAME,
+                    {keyPath:"id"}
+                );
+
+                store.createIndex("date", "date", {unique:false});
+                store.createIndex("category", "category", {unique:false});
+                store.createIndex("region", "region", {unique:false});
+            }
+        };
+
+        request.onsuccess = () => {
+            db = request.result;
+            resolve(db);
+        };
+
+        request.onerror = () => {
+            reject(request.error || new Error("Could not open database."));
+        };
+    });
 }
 
-function saveStorage() {
-    try {
-        localStorage.setItem(STORAGE_NEWS, JSON.stringify(news));
-        localStorage.setItem(STORAGE_BOOKMARKS, JSON.stringify(bookmarks));
+function dbRequest(mode, action) {
 
-        return true;
-    } catch (error) {
-        alert(
-            "Storage failed. Your browser may be out of storage space. " +
-            "Export your news as a backup."
-        );
+    return new Promise((resolve, reject) => {
 
-        return false;
-    }
+        const tx = db.transaction(STORE_NAME, mode);
+        const store = tx.objectStore(STORE_NAME);
+
+        let request;
+
+        try {
+            request = action(store);
+        } catch (error) {
+            reject(error);
+            return;
+        }
+
+        request.onsuccess = () => resolve(request.result);
+
+        request.onerror = () => {
+            reject(request.error || new Error("Database operation failed."));
+        };
+    });
 }
 
+async function getAllArticles() {
+    return dbRequest("readonly", store => store.getAll());
+}
 
-/* ===================================
-   INITIALIZE
-=================================== */
+async function putArticle(article) {
+    return dbRequest("readwrite", store => store.put(article));
+}
 
-function initialize() {
+async function removeArticle(id) {
+    return dbRequest("readwrite", store => store.delete(id));
+}
 
-    document.getElementById("todayDate").textContent =
-        new Date().toLocaleDateString("en-IN", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        });
+async function reloadNews() {
 
-    const categoryGrid = document.getElementById("categoryGrid");
+    news = await getAllArticles();
 
-    CATEGORIES.forEach(category => {
-
-        const button = document.createElement("button");
-
-        button.className = "category";
-
-        const icon = document.createElement("div");
-        icon.className = "icon";
-        icon.textContent = category.icon;
-
-        const title = document.createElement("h3");
-        title.textContent = category.name;
-
-        const description = document.createElement("p");
-        description.textContent = category.desc;
-
-        button.append(icon, title, description);
-
-        button.addEventListener("click", () => {
-            openCategory(category.name);
-        });
-
-        categoryGrid.appendChild(button);
+    news.sort((a,b) => {
+        return String(b.date || "").localeCompare(String(a.date || ""));
     });
-
-    const monthList = document.getElementById("monthList");
-
-    MONTHS.forEach(month => {
-
-        const button = document.createElement("button");
-
-        button.className = "pill";
-        button.textContent = month;
-
-        button.addEventListener("click", () => {
-            openMonth(month);
-        });
-
-        monthList.appendChild(button);
-    });
-
-    const regionList = document.getElementById("regionList");
-
-    REGIONS.forEach(region => {
-
-        const button = document.createElement("button");
-
-        button.className = "pill";
-        button.textContent = region;
-
-        button.addEventListener("click", () => {
-            openRegion(region);
-        });
-
-        regionList.appendChild(button);
-    });
-
-    populateSelect("categoryFilter", CATEGORIES.map(x => x.name));
-    populateSelect("monthFilter", MONTHS);
-    populateSelect("regionFilter", REGIONS);
-
-    populateFormSelect("category", CATEGORIES.map(x => x.name));
-    populateFormSelect("month", MONTHS);
-    populateFormSelect("region", REGIONS);
-
-    document.querySelectorAll(".nav-btn").forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            if (button.dataset.page) {
-                showPage(button.dataset.page);
-            }
-
-            if (button.dataset.category) {
-                openCategory(button.dataset.category);
-            }
-
-            if (button.dataset.region) {
-                openRegion(button.dataset.region);
-            }
-
-        });
-
-    });
-
-    // Default date for new entries.
-    document.querySelector('[name="date"]').value =
-        new Date().toISOString().slice(0, 10);
 
     renderAll();
 }
 
-function populateSelect(id, values) {
 
-    const select = document.getElementById(id);
+/* =====================================
+   INITIALIZATION
+===================================== */
 
-    values.forEach(value => {
+async function initialize() {
 
-        const option = document.createElement("option");
+    document.getElementById("todayDate").textContent =
+        new Date().toLocaleDateString("en-IN", {
+            weekday:"long",
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        });
 
-        option.value = value;
-        option.textContent = value;
+    renderCategories();
+    renderMonths();
+    renderRegions();
+    renderSources();
+    populateFilters();
+    populateForm();
 
-        select.appendChild(option);
+    document.querySelectorAll("[data-page]").forEach(button => {
+
+        button.addEventListener("click", () => {
+            showPage(button.dataset.page);
+        });
     });
+
+    document.querySelectorAll("[data-category]").forEach(button => {
+
+        button.addEventListener("click", () => {
+            openCategory(button.dataset.category);
+        });
+    });
+
+    document.querySelectorAll("[data-region]").forEach(button => {
+
+        button.addEventListener("click", () => {
+            openRegion(button.dataset.region);
+        });
+    });
+
+    document.getElementById("newsForm")
+        .addEventListener("submit", saveManualNews);
+
+    document.getElementById("newsModal")
+        .addEventListener("click", event => {
+            if (event.target.id === "newsModal") closeNewsModal();
+        });
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeNewsModal();
+    });
+
+    document.querySelector('[name="date"]').value =
+        new Date().toISOString().slice(0,10);
+
+    try {
+
+        await openDatabase();
+
+        await reloadNews();
+
+        setStatus(
+            "globalStatus",
+            "Local database ready. Your saved articles are stored in this browser.",
+            "success"
+        );
+
+        /*
+          Check only if the app has not checked recently.
+          This is not a background scheduler.
+        */
+
+        const last = Number(
+            localStorage.getItem("ca_last_refresh") || 0
+        );
+
+        if (Date.now() - last > 6 * 60 * 60 * 1000) {
+
+            setTimeout(() => {
+                refreshAllSources();
+            }, 1500);
+        }
+
+    } catch (error) {
+
+        setStatus(
+            "globalStatus",
+            "Local database error: " + error.message +
+            ". Try opening the app from a local web server or supported browser context.",
+            "error"
+        );
+    }
 }
 
-function populateFormSelect(name, values) {
 
-    const select = document.querySelector(
-        '#newsForm [name="' + name + '"]'
-    );
+/* =====================================
+   BASIC UI
+===================================== */
 
-    values.forEach(value => {
+function setStatus(id, message, type="") {
 
-        const option = document.createElement("option");
+    const element = document.getElementById(id);
 
-        option.value = value;
-        option.textContent = value;
-
-        select.appendChild(option);
-    });
+    element.className = "status" + (type ? " " + type : "");
+    element.textContent = message;
 }
-
-
-/* ===================================
-   NAVIGATION
-=================================== */
 
 function toggleSidebar() {
 
@@ -1325,55 +1548,182 @@ function showPage(page) {
     const pages = [
         "dashboardPage",
         "allPage",
+        "sourcesPage",
         "bookmarksPage",
-        "quizPage"
+        "manualPage",
+        "backupPage"
     ];
 
     pages.forEach(id => {
         document.getElementById(id).hidden = true;
     });
 
-    const pageMap = {
-        dashboard: "dashboardPage",
-        all: "allPage",
-        bookmarks: "bookmarksPage",
-        quiz: "quizPage"
+    const map = {
+        dashboard:"dashboardPage",
+        all:"allPage",
+        sources:"sourcesPage",
+        bookmarks:"bookmarksPage",
+        manual:"manualPage",
+        backup:"backupPage"
     };
 
-    document.getElementById(pageMap[page]).hidden = false;
+    document.getElementById(map[page]).hidden = false;
 
-    const titleMap = {
-        dashboard: "Dashboard",
-        all: "All Current Affairs",
-        bookmarks: "Bookmarked News",
-        quiz: "Practice Quiz"
+    const titles = {
+        dashboard:"Dashboard",
+        all:"All Current Affairs",
+        sources:"News Sources",
+        bookmarks:"Bookmarks",
+        manual:"Add Notes",
+        backup:"Backup & Restore"
     };
 
     document.getElementById("pageTitle").textContent =
-        titleMap[page] || "Current Affairs";
+        titles[page] || "Current Affairs";
 
     document.querySelectorAll(".nav-btn").forEach(button => {
-        button.classList.remove("active");
-    });
-
-    document.querySelectorAll(".nav-btn").forEach(button => {
-
-        if (button.dataset.page === page) {
-            button.classList.add("active");
-        }
-
+        button.classList.toggle(
+            "active",
+            button.dataset.page === page
+        );
     });
 
     if (page === "all") renderNews();
     if (page === "bookmarks") renderBookmarks();
-    if (page === "quiz") renderQuizStart();
 
     if (window.innerWidth <= 760) {
         document.getElementById("sidebar")
             .classList.remove("mobile-open");
     }
 
-    window.scrollTo({top: 0, behavior: "smooth"});
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+
+/* =====================================
+   CATEGORY, MONTH, REGION
+===================================== */
+
+function renderCategories() {
+
+    const grid = document.getElementById("categoryGrid");
+
+    CATEGORIES.forEach(category => {
+
+        const button = document.createElement("button");
+        button.className = "category";
+
+        const icon = document.createElement("div");
+        icon.className = "icon";
+        icon.textContent = category.icon;
+
+        const title = document.createElement("h3");
+        title.textContent = category.name;
+
+        const desc = document.createElement("p");
+        desc.textContent = category.desc;
+
+        button.append(icon,title,desc);
+
+        button.addEventListener("click", () => {
+            openCategory(category.name);
+        });
+
+        grid.appendChild(button);
+    });
+}
+
+function renderMonths() {
+
+    const list = document.getElementById("monthList");
+
+    MONTHS.forEach(month => {
+
+        const button = document.createElement("button");
+        button.className = "pill";
+        button.textContent = month;
+
+        button.addEventListener("click", () => {
+            showPage("all");
+            document.getElementById("monthFilter").value = month;
+            renderNews();
+        });
+
+        list.appendChild(button);
+    });
+}
+
+function renderRegions() {
+
+    const list = document.getElementById("regionList");
+
+    REGIONS.forEach(region => {
+
+        const button = document.createElement("button");
+        button.className = "pill";
+        button.textContent = region;
+
+        button.addEventListener("click", () => {
+            openRegion(region);
+        });
+
+        list.appendChild(button);
+    });
+}
+
+function populateSelect(select, values) {
+
+    values.forEach(value => {
+
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+
+        select.appendChild(option);
+    });
+}
+
+function populateFilters() {
+
+    populateSelect(
+        document.getElementById("categoryFilter"),
+        CATEGORIES.map(c => c.name)
+    );
+
+    populateSelect(
+        document.getElementById("monthFilter"),
+        MONTHS
+    );
+
+    populateSelect(
+        document.getElementById("regionFilter"),
+        REGIONS
+    );
+}
+
+function populateForm() {
+
+    populateSelect(
+        document.querySelector('[name="category"]'),
+        CATEGORIES.map(c => c.name)
+    );
+
+    populateSelect(
+        document.querySelector('[name="region"]'),
+        REGIONS
+    );
+
+    const sourceSelect = document.querySelector('[name="sourceName"]');
+
+    const blank = document.createElement("option");
+    blank.value = "";
+    blank.textContent = "Manual / Other";
+    sourceSelect.appendChild(blank);
+
+    populateSelect(
+        sourceSelect,
+        SOURCES.map(s => s.name)
+    );
 }
 
 function openCategory(category) {
@@ -1384,18 +1734,6 @@ function openCategory(category) {
 
     document.getElementById("newsHeading").textContent =
         category + " Current Affairs";
-
-    renderNews();
-}
-
-function openMonth(month) {
-
-    showPage("all");
-
-    document.getElementById("monthFilter").value = month;
-
-    document.getElementById("newsHeading").textContent =
-        month + " Current Affairs";
 
     renderNews();
 }
@@ -1413,141 +1751,661 @@ function openRegion(region) {
 }
 
 
-/* ===================================
-   NEWS MANAGEMENT
-=================================== */
+/* =====================================
+   SOURCE DIRECTORY
+===================================== */
 
-document.getElementById("newsForm")
-.addEventListener("submit", function(event) {
+function renderSources() {
 
-    event.preventDefault();
+    const grid = document.getElementById("sourceGrid");
 
-    const form = new FormData(this);
+    SOURCES.forEach((source,index) => {
 
-    const title = String(form.get("title") || "").trim();
-    const summary = String(form.get("summary") || "").trim();
-    const date = String(form.get("date") || "");
-    const source = String(form.get("source") || "").trim();
+        const card = document.createElement("article");
+        card.className = "source-card";
 
-    if (!title || !summary || !date) {
-        alert("Please complete all required fields.");
+        const title = document.createElement("div");
+        title.className = "source-title";
+        title.textContent = (index+1) + ". " + source.name;
+
+        const desc = document.createElement("p");
+        desc.textContent = source.description;
+
+        const actions = document.createElement("div");
+        actions.className = "source-actions";
+
+        const website = document.createElement("a");
+
+        website.href = source.url;
+        website.target = "_blank";
+        website.rel = "noopener noreferrer";
+        website.textContent = "Open Website ↗";
+
+        actions.appendChild(website);
+
+        const feedButton = document.createElement("button");
+
+        feedButton.textContent = source.feed
+            ? "Refresh Feed"
+            : "Configure Feed";
+
+        feedButton.addEventListener("click", () => {
+
+            if (source.feed) {
+                refreshSource(source);
+            } else {
+                configureFeed(index);
+            }
+        });
+
+        actions.appendChild(feedButton);
+
+        card.append(title,desc,actions);
+
+        grid.appendChild(card);
+    });
+}
+
+function configureFeed(index) {
+
+    const source = SOURCES[index];
+
+    const feed = prompt(
+        "Enter the RSS/Atom feed URL for " + source.name +
+        ".\n\nUse an official or authorized feed URL. " +
+        "Leave blank to cancel.",
+        source.feed || ""
+    );
+
+    if (feed === null || !feed.trim()) return;
+
+    let parsed;
+
+    try {
+        parsed = new URL(feed.trim());
+
+        if (!["http:","https:"].includes(parsed.protocol)) {
+            throw new Error("Invalid protocol");
+        }
+
+    } catch {
+        alert("Please enter a valid HTTP or HTTPS feed URL.");
         return;
     }
 
-    if (source) {
+    source.feed = parsed.href;
+
+    /*
+      This preference is local to this browser.
+      No server account is required.
+    */
+
+    try {
+        localStorage.setItem(
+            "ca_custom_feeds",
+            JSON.stringify(SOURCES.map(s => ({
+                name:s.name,
+                feed:s.feed
+            })))
+        );
+    } catch(error) {
+        console.warn("Could not save feed configuration",error);
+    }
+
+    renderSources();
+
+    refreshSource(source);
+}
+
+
+/* Restore locally configured feed URLs. */
+
+function loadCustomFeeds() {
+
+    try {
+
+        const feeds = JSON.parse(
+            localStorage.getItem("ca_custom_feeds") || "[]"
+        );
+
+        feeds.forEach(saved => {
+
+            const source = SOURCES.find(s => s.name === saved.name);
+
+            if (source && saved.feed) {
+                source.feed = saved.feed;
+            }
+        });
+
+    } catch(error) {
+        console.warn("Feed configuration could not be loaded.",error);
+    }
+}
+
+
+/* =====================================
+   RSS COLLECTION
+===================================== */
+
+/*
+  Important:
+  This is a browser-only RSS reader.
+  It can fetch only feeds reachable through CORS or an authorized proxy.
+
+  A proxy may see requested URLs and article metadata.
+  Do not submit private information through a public proxy.
+
+  The proxy is optional and can be removed from this list.
+*/
+
+const RSS_PROXIES = [
+    feed => feed,
+    feed => "https://api.allorigins.win/raw?url=" +
+            encodeURIComponent(feed)
+];
+
+async function fetchWithTimeout(url, timeout=12000) {
+
+    const controller = new AbortController();
+
+    const timer = setTimeout(() => controller.abort(),timeout);
+
+    try {
+
+        const response = await fetch(url, {
+            signal:controller.signal,
+            headers: {
+                "Accept":
+                "application/rss+xml, application/atom+xml, application/xml, text/xml, */*"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        return await response.text();
+
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+function parseFeed(xmlText,source) {
+
+    const parser = new DOMParser();
+
+    const xml = parser.parseFromString(
+        xmlText,
+        "application/xml"
+    );
+
+    if (xml.querySelector("parsererror")) {
+        throw new Error("Invalid RSS/Atom XML");
+    }
+
+    const items = [
+        ...xml.querySelectorAll("item"),
+        ...xml.querySelectorAll("entry")
+    ];
+
+    return items.map(item => {
+
+        const get = (...names) => {
+
+            for (const name of names) {
+
+                const el = item.getElementsByTagName(name)[0];
+
+                if (el && el.textContent) {
+                    return el.textContent.trim();
+                }
+            }
+
+            return "";
+        };
+
+        const title = get("title");
+
+        let url = get("link");
+
+        if (!url) {
+
+            const linkEl = item.getElementsByTagName("link")[0];
+
+            if (linkEl) {
+                url = linkEl.getAttribute("href") || "";
+            }
+        }
+
+        const summary = get(
+            "description",
+            "summary",
+            "content",
+            "content:encoded"
+        );
+
+        const dateRaw = get(
+            "pubDate",
+            "published",
+            "updated",
+            "dc:date"
+        );
+
+        let date = "";
+
+        if (dateRaw) {
+
+            const parsedDate = new Date(dateRaw);
+
+            if (!Number.isNaN(parsedDate.getTime())) {
+                date = parsedDate.toISOString().slice(0,10);
+            }
+        }
+
+        if (!date) {
+            date = new Date().toISOString().slice(0,10);
+        }
+
+        if (!title || !url) return null;
+
+        let safeURL;
 
         try {
 
-            const url = new URL(source);
+            safeURL = new URL(url,source.url);
 
-            if (!["http:", "https:"].includes(url.protocol)) {
-                alert("Source must use HTTP or HTTPS.");
-                return;
+            if (!["http:","https:"].includes(safeURL.protocol)) {
+                return null;
             }
 
         } catch {
-            alert("Please enter a valid source URL.");
-            return;
+            return null;
         }
 
+        return {
+            id: makeArticleID(safeURL.href),
+            title: stripHTML(title).slice(0,500),
+            category: detectCategory(title + " " + summary,source.category),
+            region: detectRegion(title + " " + summary,source.region),
+            date: date,
+            summary: stripHTML(summary).slice(0,3000),
+            notes:"",
+            sourceName:source.name,
+            url:safeURL.href,
+            savedAt:new Date().toISOString()
+        };
+
+    }).filter(Boolean);
+}
+
+function stripHTML(value) {
+
+    const doc = new DOMParser().parseFromString(
+        String(value || ""),
+        "text/html"
+    );
+
+    return (doc.body.textContent || "")
+        .replace(/\s+/g," ")
+        .trim();
+}
+
+function makeArticleID(url) {
+
+    /*
+      Stable ID: normalized URL.
+      It is not cryptographic; it is only for duplicate detection.
+    */
+
+    return "url_" + url
+        .trim()
+        .replace(/#.*$/,"")
+        .replace(/\/+$/,"")
+        .toLowerCase();
+}
+
+async function fetchFeed(feedURL) {
+
+    let lastError = null;
+
+    for (const buildURL of RSS_PROXIES) {
+
+        try {
+
+            const requestURL = buildURL(feedURL);
+
+            const text = await fetchWithTimeout(requestURL);
+
+            if (!text || !text.trim()) {
+                throw new Error("Empty feed response");
+            }
+
+            return text;
+
+        } catch(error) {
+            lastError = error;
+        }
     }
 
-    const entry = {
-        id: "news_" + Date.now() + "_" +
-            Math.random().toString(36).slice(2, 8),
+    throw lastError || new Error("Unable to fetch feed");
+}
 
-        title: title,
-        category: form.get("category"),
-        region: form.get("region"),
-        month: MONTHS[Number(date.slice(5, 7)) - 1],
-        date: date,
-        summary: summary,
-        source: source,
-        notes: String(form.get("notes") || "").trim(),
-        createdAt: new Date().toISOString()
-    };
+async function refreshSource(source) {
 
-    news.unshift(entry);
+    if (!source.feed) {
 
-    if (!saveStorage()) {
-        news.shift();
+        return {
+            ok:false,
+            source:source.name,
+            message:"No RSS Feed configured"
+        };
+    }
+
+    try {
+
+        const xml = await fetchFeed(source.feed);
+
+        const articles = parseFeed(xml,source);
+
+        let added = 0;
+
+        for (const article of articles) {
+
+            const existing = await dbRequest(
+                "readonly",
+                store => store.get(article.id)
+            );
+
+            if (existing) continue;
+
+            await putArticle(article);
+
+            added++;
+        }
+
+        return {
+            ok:true,
+            source:source.name,
+            added:added,
+            message:articles.length + " articles found; " +
+                    added + " new articles saved."
+        };
+
+    } catch(error) {
+
+        return {
+            ok:false,
+            source:source.name,
+            message:error.name === "AbortError"
+                ? "Request timed out"
+                : error.message || "Feed unavailable"
+        };
+    }
+}
+
+async function refreshAllSources() {
+
+    if (refreshInProgress) return;
+
+    if (!db) {
+
+        setStatus(
+            "globalStatus",
+            "Local database is not ready.",
+            "error"
+        );
+
         return;
     }
 
-    closeAddModal();
-    this.reset();
+    refreshInProgress = true;
 
-    document.querySelector('[name="date"]').value =
-        new Date().toISOString().slice(0, 10);
+    const buttons = document.querySelectorAll(
+        'button[onclick="refreshAllSources()"]'
+    );
 
-    renderAll();
+    buttons.forEach(button => button.disabled = true);
 
-    showPage("all");
+    setStatus(
+        "globalStatus",
+        "Checking configured RSS feeds. This may take some time..."
+    );
 
-    document.getElementById("searchInput").value = "";
-    document.getElementById("categoryFilter").value = "";
-    document.getElementById("monthFilter").value = "";
-    document.getElementById("regionFilter").value = "";
+    setStatus(
+        "sourceStatus",
+        "Starting feed checks..."
+    );
 
-    alert("Current affairs saved successfully!");
-});
+    const configured = SOURCES.filter(source => source.feed);
 
-function openAddModal() {
-    document.getElementById("addModal").classList.add("show");
+    if (!configured.length) {
+
+        setStatus(
+            "sourceStatus",
+            "No RSS feeds are configured yet. Click Configure Feed " +
+            "on a source card and enter a valid RSS/Atom feed URL.",
+            "error"
+        );
+
+        setStatus(
+            "globalStatus",
+            "No feeds configured. Your 15 websites are available " +
+            "in the source directory, but their homepages are not RSS feeds."
+        );
+
+        refreshInProgress = false;
+        buttons.forEach(button => button.disabled = false);
+
+        return;
+    }
+
+    let completed = 0;
+    let added = 0;
+    const results = [];
+
+    /*
+      Process feeds sequentially to avoid excessive requests.
+    */
+
+    for (const source of configured) {
+
+        const result = await refreshSource(source);
+
+        results.push(result);
+
+        completed++;
+
+        added += result.added || 0;
+
+        setStatus(
+            "sourceStatus",
+            "Checked " + completed + " of " + configured.length +
+            " feeds. Newly saved: " + added + "."
+        );
+    }
+
+    try {
+
+        localStorage.setItem(
+            "ca_last_refresh",
+            String(Date.now())
+        );
+
+    } catch(error) {
+        console.warn(error);
+    }
+
+    await reloadNews();
+
+    const failures = results.filter(r => !r.ok);
+
+    let summary =
+        "Refresh complete. " + added + " new articles saved. " +
+        failures.length + " source(s) unavailable or not readable.";
+
+    if (failures.length) {
+
+        summary += " Check individual feed URLs, CORS access and feed availability.";
+    }
+
+    setStatus(
+        "globalStatus",
+        summary,
+        failures.length ? "" : "success"
+    );
+
+    const detail = results.map(r => {
+        return r.source + ": " + r.message;
+    }).join("\n");
+
+    setStatus(
+        "sourceStatus",
+        detail || "No results."
+    );
+
+    refreshInProgress = false;
+
+    buttons.forEach(button => button.disabled = false);
+
+    renderSources();
 }
 
-function closeAddModal() {
-    document.getElementById("addModal").classList.remove("show");
+
+/* =====================================
+   CLASSIFICATION
+===================================== */
+
+function detectCategory(text,fallback="National") {
+
+    const value = String(text || "").toLowerCase();
+
+    const rules = [
+        {
+            category:"Sports",
+            words:[
+                "cricket","football","hockey","olympic",
+                "tournament","world cup","medal","athlete",
+                "खेल","क्रिकेट","फुटबॉल","हॉकी","पदक"
+            ]
+        },
+        {
+            category:"Economic",
+            words:[
+                "rbi","reserve bank","inflation","gdp",
+                "economy","economic","budget","banking",
+                "repo rate","stock market","finance",
+                "अर्थव्यवस्था","महंगाई","बजट","बैंकिंग"
+            ]
+        },
+        {
+            category:"Scheme",
+            words:[
+                "scheme","yojana","beneficiary",
+                "government programme","subsidy",
+                "प्रधानमंत्री योजना","योजना","लाभार्थी"
+            ]
+        },
+        {
+            category:"Political",
+            words:[
+                "parliament","election","minister",
+                "cabinet","political party","president",
+                "lok sabha","rajya sabha","चुनाव","संसद","मंत्री"
+            ]
+        },
+        {
+            category:"Social Issue",
+            words:[
+                "education","healthcare","poverty",
+                "gender equality","social justice",
+                "unemployment","शिक्षा","स्वास्थ्य","गरीबी"
+            ]
+        },
+        {
+            category:"International",
+            words:[
+                "united nations","un security council",
+                "world bank","imf","international",
+                "foreign policy","global summit",
+                "संयुक्त राष्ट्र","अंतरराष्ट्रीय"
+            ]
+        }
+    ];
+
+    for (const rule of rules) {
+
+        if (rule.words.some(word => value.includes(word))) {
+            return rule.category;
+        }
+    }
+
+    return fallback || "National";
+}
+
+function detectRegion(text,fallback="India") {
+
+    const value = String(text || "").toLowerCase();
+
+    if (/\bbihar\b|बिहार/.test(value)) return "Bihar";
+
+    if (/\bjharkhand\b|झारखंड/.test(value)) return "Jharkhand";
+
+    if (
+        /\buttar pradesh\b|\bup government\b|उत्तर प्रदेश/.test(value)
+    ) return "Uttar Pradesh";
+
+    if (
+        /\bwest bengal\b|\bkolkata\b|पश्चिम बंगाल|कोलकाता/.test(value)
+    ) return "West Bengal";
+
+    if (/\bindia\b|भारतीय|भारत/.test(value)) return "India";
+
+    return fallback || "India";
 }
 
 
-/* ===================================
-   NEWS RENDERING
-=================================== */
-
-function renderAll() {
-
-    document.getElementById("totalNews").textContent =
-        news.length;
-
-    document.getElementById("totalBookmarks").textContent =
-        bookmarks.length;
-
-    renderLatest();
-    renderNews();
-    renderBookmarks();
-}
+/* =====================================
+   NEWS CARDS
+===================================== */
 
 function makeNewsCard(item) {
 
-    const article = document.createElement("article");
-    article.className = "news-card";
+    const card = document.createElement("article");
+    card.className = "news-card";
 
     const meta = document.createElement("div");
     meta.className = "news-meta";
 
-    const categoryTag = document.createElement("span");
-    categoryTag.className = "tag";
-    categoryTag.textContent = item.category;
+    [
+        item.category || "National",
+        item.region || "India"
+    ].forEach(value => {
 
-    const regionTag = document.createElement("span");
-    regionTag.className = "tag";
-    regionTag.textContent = item.region;
+        const tag = document.createElement("span");
+
+        tag.className = "tag";
+        tag.textContent = value;
+
+        meta.appendChild(tag);
+    });
 
     const date = document.createElement("span");
-    date.className = "date";
-    date.textContent = item.date;
 
-    meta.append(categoryTag, regionTag, date);
+    date.className = "news-date";
+    date.textContent = item.date || "Date unavailable";
 
-    const title = document.createElement("h3");
-    title.textContent = item.title;
+    meta.appendChild(date);
+
+    const heading = document.createElement("h3");
+    heading.textContent = item.title || "Untitled Article";
 
     const summary = document.createElement("div");
-    summary.className = "news-summary";
-    summary.textContent = item.summary;
 
-    article.append(meta, title, summary);
+    summary.className = "news-summary";
+    summary.textContent = item.summary || "No summary available.";
+
+    card.append(meta,heading,summary);
 
     if (item.notes) {
 
@@ -1556,61 +2414,114 @@ function makeNewsCard(item) {
         notes.style.fontSize = "12px";
         notes.style.lineHeight = "1.6";
 
-        const strong = document.createElement("strong");
-        strong.textContent = "Exam Notes: ";
+        const label = document.createElement("strong");
 
-        notes.append(strong, document.createTextNode(item.notes));
+        label.textContent = "Exam Notes: ";
 
-        article.appendChild(notes);
+        notes.append(label,document.createTextNode(item.notes));
+
+        card.appendChild(notes);
     }
 
-    if (item.source) {
+    if (item.url) {
 
-        const sourceLink = document.createElement("a");
+        const link = document.createElement("a");
 
-        sourceLink.href = item.source;
-        sourceLink.target = "_blank";
-        sourceLink.rel = "noopener noreferrer";
-        sourceLink.textContent = "Open Original Source ↗";
+        link.href = item.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Read Original Article ↗";
 
-        sourceLink.style.fontSize = "12px";
-        sourceLink.style.marginTop = "12px";
+        link.style.fontSize = "12px";
+        link.style.marginTop = "12px";
 
-        article.appendChild(sourceLink);
+        card.appendChild(link);
     }
 
     const footer = document.createElement("div");
     footer.className = "news-footer";
 
-    const saveButton = document.createElement("button");
+    const bookmark = document.createElement("button");
 
-    saveButton.textContent = bookmarks.includes(item.id)
+    bookmark.textContent = bookmarks.has(item.id)
         ? "★ Bookmarked"
         : "☆ Bookmark";
 
-    saveButton.addEventListener("click", () => {
+    bookmark.addEventListener("click", () => {
         toggleBookmark(item.id);
     });
 
-    const deleteButton = document.createElement("button");
+    const remove = document.createElement("button");
 
-    deleteButton.textContent = "Delete";
+    remove.className = "delete-btn";
+    remove.textContent = "Delete";
 
-    deleteButton.addEventListener("click", () => {
-        deleteNews(item.id);
+    remove.addEventListener("click", () => {
+        deleteArticle(item.id);
     });
 
-    footer.append(saveButton, deleteButton);
-    article.appendChild(footer);
+    footer.append(bookmark,remove);
 
-    return article;
+    card.appendChild(footer);
+
+    return card;
+}
+
+
+/* =====================================
+   RENDER NEWS
+===================================== */
+
+function renderAll() {
+
+    const today = new Date().toISOString().slice(0,10);
+
+    document.getElementById("totalNews").textContent = news.length;
+
+    document.getElementById("totalBookmarks").textContent =
+        news.filter(item => bookmarks.has(item.id)).length;
+
+    document.getElementById("totalSources").textContent = SOURCES.length;
+
+    document.getElementById("todayArticles").textContent =
+        news.filter(item => item.date === today).length;
+
+    renderLatest();
+    renderNews();
+    renderBookmarks();
+}
+
+function renderGrid(container,items,message) {
+
+    container.replaceChildren();
+
+    if (!items.length) {
+
+        const empty = document.createElement("div");
+
+        empty.className = "empty";
+        empty.textContent = message;
+
+        container.appendChild(empty);
+
+        return;
+    }
+
+    items.forEach(item => {
+        container.appendChild(makeNewsCard(item));
+    });
+}
+
+function renderLatest() {
+
+    renderGrid(
+        document.getElementById("latestGrid"),
+        news.slice(0,6),
+        "No articles saved yet. Configure an RSS feed or add a news note."
+    );
 }
 
 function renderNews() {
-
-    const grid = document.getElementById("newsGrid");
-
-    grid.replaceChildren();
 
     const search = document.getElementById("searchInput")
         .value.trim().toLowerCase();
@@ -1621,361 +2532,335 @@ function renderNews() {
 
     const filtered = news.filter(item => {
 
-        const searchable = [
+        const searchText = [
             item.title,
             item.summary,
             item.notes,
             item.category,
-            item.region
+            item.region,
+            item.sourceName
         ].join(" ").toLowerCase();
 
+        const itemMonth = item.date
+            ? MONTHS[Number(item.date.slice(5,7))-1]
+            : "";
+
         return (
-            (!search || searchable.includes(search)) &&
+            (!search || searchText.includes(search)) &&
             (!category || item.category === category) &&
-            (!month || item.month === month) &&
+            (!month || itemMonth === month) &&
             (!region || item.region === region)
         );
-
     });
 
-    if (filtered.length === 0) {
-
-        const empty = document.createElement("div");
-
-        empty.className = "empty";
-        empty.textContent =
-            "No matching news found. Add news or change your filters.";
-
-        grid.appendChild(empty);
-
-        return;
-    }
-
-    filtered.forEach(item => {
-        grid.appendChild(makeNewsCard(item));
-    });
-}
-
-function renderLatest() {
-
-    const grid = document.getElementById("latestNews");
-
-    grid.replaceChildren();
-
-    const latest = [...news]
-        .sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
-        .slice(0, 3);
-
-    if (!latest.length) {
-
-        const empty = document.createElement("div");
-
-        empty.className = "empty";
-
-        empty.textContent =
-            "No news added yet. Click + Add News to create your first entry.";
-
-        grid.appendChild(empty);
-
-        return;
-    }
-
-    latest.forEach(item => {
-        grid.appendChild(makeNewsCard(item));
-    });
+    renderGrid(
+        document.getElementById("newsGrid"),
+        filtered,
+        "No matching articles found. Try another filter or add news."
+    );
 }
 
 function renderBookmarks() {
 
-    const grid = document.getElementById("bookmarkGrid");
+    renderGrid(
+        document.getElementById("bookmarkGrid"),
+        news.filter(item => bookmarks.has(item.id)),
+        "No bookmarks yet. Save important articles using ☆ Bookmark."
+    );
+}
 
-    grid.replaceChildren();
 
-    const saved = news.filter(item => bookmarks.includes(item.id));
+/* =====================================
+   BOOKMARKS & DELETE
+===================================== */
 
-    if (!saved.length) {
+function loadBookmarks() {
 
-        const empty = document.createElement("div");
+    try {
 
-        empty.className = "empty";
-        empty.textContent =
-            "No bookmarks yet. Open All News and save important articles.";
+        const value = JSON.parse(
+            localStorage.getItem("ca_bookmarks") || "[]"
+        );
 
-        grid.appendChild(empty);
+        bookmarks = new Set(value);
 
-        return;
+    } catch {
+
+        bookmarks = new Set();
     }
+}
 
-    saved.forEach(item => {
-        grid.appendChild(makeNewsCard(item));
-    });
+function saveBookmarks() {
+
+    try {
+
+        localStorage.setItem(
+            "ca_bookmarks",
+            JSON.stringify([...bookmarks])
+        );
+
+    } catch(error) {
+        alert("Could not save bookmarks. Please export a backup.");
+    }
 }
 
 function toggleBookmark(id) {
 
-    if (bookmarks.includes(id)) {
-
-        bookmarks = bookmarks.filter(item => item !== id);
-
+    if (bookmarks.has(id)) {
+        bookmarks.delete(id);
     } else {
-
-        bookmarks.push(id);
+        bookmarks.add(id);
     }
 
-    saveStorage();
+    saveBookmarks();
     renderAll();
 }
 
-function deleteNews(id) {
+async function deleteArticle(id) {
 
-    const item = news.find(n => n.id === id);
+    if (!confirm("Delete this saved article?")) return;
 
-    if (!item) return;
+    try {
 
-    if (!confirm("Delete this news entry?\n\n" + item.title)) {
-        return;
+        await removeArticle(id);
+
+        bookmarks.delete(id);
+        saveBookmarks();
+
+        await reloadNews();
+
+    } catch(error) {
+
+        alert("Delete failed: " + error.message);
     }
-
-    const oldNews = news;
-    const oldBookmarks = bookmarks;
-
-    news = news.filter(n => n.id !== id);
-    bookmarks = bookmarks.filter(b => b !== id);
-
-    if (!saveStorage()) {
-        news = oldNews;
-        bookmarks = oldBookmarks;
-        return;
-    }
-
-    renderAll();
 }
 
 
-/* ===================================
-   EXPORT BACKUP
-=================================== */
+/* =====================================
+   MANUAL NEWS
+===================================== */
 
-function exportNews() {
+function openNewsModal() {
 
-    const backup = {
-        application: "Current Affairs Hub",
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        news: news,
-        bookmarks: bookmarks
+    document.getElementById("newsModal")
+        .classList.add("show");
+}
+
+function closeNewsModal() {
+
+    document.getElementById("newsModal")
+        .classList.remove("show");
+}
+
+async function saveManualNews(event) {
+
+    event.preventDefault();
+
+    const form = new FormData(event.target);
+
+    const title = String(form.get("title") || "").trim();
+    const summary = String(form.get("summary") || "").trim();
+    const url = String(form.get("url") || "").trim();
+
+    if (!title || !summary) {
+        alert("Please enter the headline and summary.");
+        return;
+    }
+
+    if (url) {
+
+        try {
+
+            const parsed = new URL(url);
+
+            if (!["http:","https:"].includes(parsed.protocol)) {
+                throw new Error("Invalid URL");
+            }
+
+        } catch {
+
+            alert("Please enter a valid HTTP or HTTPS article URL.");
+            return;
+        }
+    }
+
+    const date = String(form.get("date") || "");
+
+    const article = {
+        id:"manual_" + crypto.randomUUID(),
+
+        title:title,
+        category:String(form.get("category") || "National"),
+        region:String(form.get("region") || "India"),
+        date:date,
+        summary:summary,
+        notes:String(form.get("notes") || "").trim(),
+        sourceName:String(form.get("sourceName") || ""),
+        url:url,
+        savedAt:new Date().toISOString()
     };
 
-    const blob = new Blob(
-        [JSON.stringify(backup, null, 2)],
-        {type: "application/json"}
-    );
+    try {
 
-    const url = URL.createObjectURL(blob);
+        await putArticle(article);
 
-    const a = document.createElement("a");
+        await reloadNews();
 
-    a.href = url;
-    a.download = "current-affairs-backup.json";
+        event.target.reset();
 
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+        document.querySelector('[name="date"]').value =
+            new Date().toISOString().slice(0,10);
 
-    URL.revokeObjectURL(url);
+        closeNewsModal();
+
+        showPage("all");
+
+        alert("Article saved in your browser.");
+
+    } catch(error) {
+
+        alert("Could not save article: " + error.message);
+    }
 }
 
 
-/* ===================================
-   QUIZ SYSTEM
-=================================== */
+/* =====================================
+   BACKUP & RESTORE
+===================================== */
 
-function renderQuizStart() {
+async function exportBackup() {
 
-    const panel = document.getElementById("quizPanel");
+    try {
 
-    panel.replaceChildren();
+        const backup = {
+            application:"Personal Current Affairs Hub",
+            version:1,
+            exportedAt:new Date().toISOString(),
+            articles:await getAllArticles(),
+            bookmarks:[...bookmarks],
+            sources:SOURCES
+        };
 
-    const heading = document.createElement("h3");
-    heading.textContent = "Practice from Your Current Affairs";
+        const blob = new Blob(
+            [JSON.stringify(backup,null,2)],
+            {type:"application/json"}
+        );
 
-    const description = document.createElement("p");
+        const url = URL.createObjectURL(blob);
 
-    description.textContent =
-        "Create a short quiz from your saved news entries. " +
-        "For reliable answers, write the correct fact in the Exam Notes " +
-        "field when adding each news item.";
+        const link = document.createElement("a");
 
-    const button = document.createElement("button");
+        link.href = url;
+        link.download = "prem-vikash-current-affairs-backup.json";
 
-    button.className = "btn btn-primary";
-    button.textContent = "Generate Quiz";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
 
-    button.addEventListener("click", startQuiz);
+        setTimeout(() => URL.revokeObjectURL(url),1000);
 
-    const note = document.createElement("div");
-    note.className = "notice";
-    note.textContent =
-        "The quiz uses the headline and category as options. " +
-        "It is a revision activity, not an independently verified MCQ test.";
+    } catch(error) {
 
-    panel.append(heading, description, note, button);
+        alert("Backup failed: " + error.message);
+    }
 }
 
-function startQuiz() {
+async function restoreBackup() {
 
-    if (news.length < 2) {
+    const file = document.getElementById("restoreFile").files[0];
 
-        alert("Please add at least two news entries before starting the quiz.");
-
+    if (!file) {
+        alert("Please choose a JSON backup file.");
         return;
     }
 
-    quizQuestions = [...news]
-        .sort(() => Math.random() - 0.5)
-        .slice(0, Math.min(10, news.length));
+    try {
 
-    quizIndex = 0;
-    quizScore = 0;
-    quizAnswered = false;
+        const text = await file.text();
+        const backup = JSON.parse(text);
 
-    renderQuestion();
-}
+        if (!backup || !Array.isArray(backup.articles)) {
+            throw new Error("This file is not a compatible backup.");
+        }
 
-function renderQuestion() {
+        if (!confirm(
+            "Restore " + backup.articles.length +
+            " articles? Existing articles will be kept."
+        )) return;
 
-    const panel = document.getElementById("quizPanel");
+        for (const article of backup.articles) {
 
-    panel.replaceChildren();
+            if (
+                !article ||
+                typeof article.id !== "string" ||
+                typeof article.title !== "string"
+            ) continue;
 
-    if (quizIndex >= quizQuestions.length) {
+            await putArticle(article);
+        }
 
-        const heading = document.createElement("h3");
+        if (Array.isArray(backup.bookmarks)) {
 
-        heading.textContent = "Quiz Completed!";
-
-        const result = document.createElement("p");
-
-        result.textContent =
-            "You completed " + quizQuestions.length +
-            " revision questions. Score: " + quizScore +
-            " / " + quizQuestions.length + ".";
-
-        const restart = document.createElement("button");
-
-        restart.className = "btn btn-primary";
-        restart.textContent = "Try Again";
-        restart.addEventListener("click", startQuiz);
-
-        panel.append(heading, result, restart);
-
-        return;
-    }
-
-    const item = quizQuestions[quizIndex];
-
-    const progress = document.createElement("p");
-
-    progress.textContent =
-        "Question " + (quizIndex + 1) +
-        " of " + quizQuestions.length;
-
-    const heading = document.createElement("h3");
-
-    heading.textContent = item.title;
-
-    const instruction = document.createElement("p");
-
-    instruction.textContent =
-        "Which category does this news belong to?";
-
-    panel.append(progress, heading, instruction);
-
-    const options = [...new Set([
-        item.category,
-        ...CATEGORIES
-            .map(c => c.name)
-            .filter(name => name !== item.category)
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 3)
-    ])].sort(() => Math.random() - 0.5);
-
-    options.forEach(option => {
-
-        const button = document.createElement("button");
-
-        button.className = "quiz-option";
-        button.textContent = option;
-
-        button.addEventListener("click", () => {
-
-            if (quizAnswered) return;
-
-            quizAnswered = true;
-
-            const correct = option === item.category;
-
-            if (correct) quizScore++;
-
-            const feedback = document.createElement("p");
-
-            feedback.textContent = correct
-                ? "Correct! Category: " + item.category
-                : "Correct answer: " + item.category;
-
-            feedback.style.fontWeight = "bold";
-            feedback.style.color = correct ? "#15803d" : "#b91c1c";
-
-            panel.appendChild(feedback);
-
-            const next = document.createElement("button");
-
-            next.className = "btn btn-primary";
-            next.textContent =
-                quizIndex === quizQuestions.length - 1
-                    ? "See Results"
-                    : "Next Question →";
-
-            next.style.marginTop = "12px";
-
-            next.addEventListener("click", () => {
-                quizIndex++;
-                quizAnswered = false;
-                renderQuestion();
+            backup.bookmarks.forEach(id => {
+                if (typeof id === "string") bookmarks.add(id);
             });
 
-            panel.appendChild(next);
+            saveBookmarks();
+        }
+
+        await reloadNews();
+
+        alert("Backup restored successfully.");
+
+    } catch(error) {
+
+        alert("Restore failed: " + error.message);
+    }
+}
+
+async function clearAllNews() {
+
+    if (!confirm(
+        "Delete ALL saved articles from this browser? " +
+        "Export a backup first if needed."
+    )) return;
+
+    if (!confirm("Final confirmation: permanently delete all articles?")) {
+        return;
+    }
+
+    try {
+
+        const tx = db.transaction(STORE_NAME,"readwrite");
+
+        tx.objectStore(STORE_NAME).clear();
+
+        await new Promise((resolve,reject) => {
+            tx.oncomplete = resolve;
+            tx.onerror = () => reject(tx.error);
+            tx.onabort = () => reject(tx.error);
         });
 
-        panel.appendChild(button);
-    });
+        bookmarks.clear();
+        saveBookmarks();
+
+        await reloadNews();
+
+        alert("All local articles have been deleted.");
+
+    } catch(error) {
+
+        alert("Could not clear articles: " + error.message);
+    }
 }
 
 
-/* ===================================
-   KEYBOARD AND MODAL
-=================================== */
+/* =====================================
+   START
+===================================== */
 
-document.getElementById("addModal")
-.addEventListener("click", function(event) {
-
-    if (event.target === this) {
-        closeAddModal();
-    }
-});
-
-document.addEventListener("keydown", function(event) {
-
-    if (event.key === "Escape") {
-        closeAddModal();
-    }
-});
-
-
-/* ===================================
-   START APPLICATION
-=================================== */
-
+loadCustomFeeds();
+loadBookmarks();
 initialize();
 
 </script>
