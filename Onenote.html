@@ -2,1868 +2,934 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#ffffff">
 <title>OneNote Infinity Pro</title>
 
 <style>
 :root {
-    --primary: #6750a4;
-    --primary-dark: #4f378b;
-    --bg: #f4f5f9;
-    --panel: #ffffff;
-    --text: #252535;
-    --border: #dedee8;
-    --selected: #dcd2ff;
+  --accent: #7654c9;
+  --border: #dedede;
+  --hover: #f1edfb;
+  --text: #252525;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, "Noto Sans Devanagari", sans-serif;
-    background: var(--bg);
-    color: var(--text);
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, "Noto Sans Devanagari", sans-serif;
+  color: var(--text);
+  background: white;
 }
 
-button,
-input,
-select {
-    font: inherit;
+button, input, select {
+  font: inherit;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-button:focus-visible,
-input:focus-visible,
-select:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
+.app {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-/* TOP HEADER */
-
-.app-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    min-height: 58px;
-    background: var(--primary);
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    box-shadow: 0 2px 8px #0002;
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 9px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
-.app-title {
-    font-size: 18px;
-    font-weight: bold;
-    flex: 1;
+.brand {
+  font-weight: bold;
+  font-size: 16px;
+  white-space: nowrap;
 }
 
-.header-btn {
-    background: #ffffff20;
-    color: white;
-    border: 1px solid #ffffff40;
-    border-radius: 7px;
-    padding: 8px 10px;
+.brand span {
+  color: var(--accent);
 }
 
-.header-btn:hover {
-    background: #ffffff35;
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
 }
 
-#saveStatus {
-    font-size: 12px;
-    white-space: nowrap;
+.btn {
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: white;
+  padding: 7px 9px;
+  font-size: 12px;
 }
 
-/* APPLICATION LAYOUT */
-
-.app-layout {
-    display: flex;
-    min-height: calc(100vh - 58px);
+.btn.primary {
+  background: var(--accent);
+  color: white;
 }
 
-/* SIDEBAR */
+.btn:hover,
+.tool:hover {
+  background: var(--hover);
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
 
 .sidebar {
-    width: 260px;
-    min-width: 220px;
-    background: var(--panel);
-    border-right: 1px solid var(--border);
-    padding: 12px;
-    overflow-y: auto;
+  width: 250px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--border);
+  transition: width .15s;
 }
 
-.sidebar-heading {
-    font-weight: bold;
-    margin: 8px 0 12px;
+.sidebar.collapsed {
+  width: 0;
+  overflow: hidden;
+  border: 0;
 }
 
-.sidebar button {
-    border: none;
-    background: transparent;
-    border-radius: 7px;
-    padding: 9px;
-    text-align: left;
-    width: 100%;
-    color: var(--text);
+.side-head {
+  padding: 9px;
+  border-bottom: 1px solid #eee;
 }
 
-.sidebar button:hover {
-    background: #f0ecfa;
+.side-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
-.sidebar .tree-item.active {
-    background: var(--selected);
-    font-weight: bold;
+.side-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
-.tree-item {
-    margin: 3px 0;
-    overflow-wrap: anywhere;
+.small-btn {
+  font-size: 11px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
 }
 
-.tree-page {
-    padding-left: 26px !important;
+.tree {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 5px;
 }
 
-.sidebar-actions {
-    display: flex;
-    gap: 6px;
-    margin: 8px 0;
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 30px;
+  padding: 2px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
-.sidebar-actions button {
-    text-align: center;
-    border: 1px solid var(--border);
+.tree-row:hover {
+  background: #f6f6f6;
 }
 
-/* MAIN CONTENT */
-
-.main-content {
-    flex: 1;
-    min-width: 0;
-    padding: 16px;
+.tree-row.active {
+  background: #eee8ff;
+  color: #51349b;
 }
 
-.page-heading {
-    margin: 0 0 12px;
+.tree-toggle,
+.tree-menu {
+  flex-shrink: 0;
+  width: 25px;
+  height: 27px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
 }
 
-.page-title-input {
-    width: 100%;
-    max-width: 900px;
-    font-size: 24px;
-    font-weight: bold;
-    border: none;
-    background: transparent;
-    padding: 8px 2px;
-    color: var(--text);
+.tree-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
-.page-title-input:focus {
-    outline: none;
-    border-bottom: 2px solid var(--primary);
+.tree-children {
+  margin-left: 10px;
+  padding-left: 5px;
+  border-left: 1px solid #eee;
 }
 
-/* TOOLBAR */
+.side-footer {
+  padding: 8px;
+  border-top: 1px solid #eee;
+  color: #777;
+  font-size: 10px;
+}
+
+.editor {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-head {
+  padding: 7px 12px 4px;
+  flex-shrink: 0;
+}
+
+#pageTitle {
+  width: 100%;
+  border: 0;
+  outline: none;
+  padding: 5px 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.status {
+  min-height: 13px;
+  font-size: 10px;
+  color: #777;
+}
 
 .toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 9px;
-    margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
 }
 
-.toolbar button,
-.toolbar select,
-.toolbar input[type="color"] {
-    min-height: 36px;
-    border: 1px solid var(--border);
-    background: white;
-    border-radius: 6px;
-    padding: 6px 9px;
+.group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding-right: 5px;
+  margin-right: 2px;
+  border-right: 1px solid #eee;
 }
 
-.toolbar button:hover {
-    background: #f0ecfa;
+.tool {
+  min-height: 30px;
+  min-width: 29px;
+  padding: 4px 7px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: white;
+  font-size: 12px;
 }
 
-.toolbar .active-tool {
-    background: var(--selected);
-    border-color: var(--primary);
+.tool-select {
+  height: 30px;
+  max-width: 130px;
+  padding: 3px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-size: 11px;
 }
 
-.toolbar .separator {
-    width: 1px;
-    background: var(--border);
-    margin: 2px 3px;
+.color-input {
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
-/* WRITING AREA */
+.workspace-scroll {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: white;
+  overscroll-behavior: contain;
+}
 
-.writing-area {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    min-height: 65vh;
-    padding: 24px;
-    overflow: auto;
-    box-shadow: 0 2px 8px #00000008;
+.workspace {
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+  width: 1400px;
+  height: 1000px;
+  background: white;
+}
+
+.main-writing {
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  width: 794px;
+  min-height: 500px;
+  border: 1px solid transparent;
+  background: white;
+}
+
+.main-writing.has-content {
+  border-color: #e3e3e3;
 }
 
 .writing-body {
-    min-height: 60vh;
-    outline: none;
-    font-size: 17px;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
+  min-height: 480px;
+  padding: 24px 28px;
+  outline: none;
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+  font-size: 15px;
 }
 
 .writing-body:empty::before {
-    content: "यहाँ लिखना शुरू करें...";
-    color: #999;
-    pointer-events: none;
+  content: "यहाँ क्लिक करके लिखें...";
+  color: #aaa;
+  pointer-events: none;
 }
 
-.writing-body h1,
-.writing-body h2,
-.writing-body h3 {
-    line-height: 1.4;
+.writing-body img,
+.text-body img {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* INLINE IMAGE */
-
-.writing-body img.inline-movable {
-    display: inline-block;
-    max-width: 100%;
-    height: auto;
-    cursor: grab;
-    vertical-align: middle;
-
-    /*
-       Touch-action none lets the user drag an image
-       without the browser stealing the gesture.
-    */
-    touch-action: none;
-    user-select: none;
-    -webkit-user-drag: none;
-
-    /*
-       left/top and transform are controlled by JavaScript.
-    */
-    position: relative;
-    box-sizing: border-box;
+.writing-body img.image-selected,
+.text-body img.image-selected {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #7654c933;
 }
 
-.writing-body img.inline-movable.image-selected {
-    outline: 2px solid #6750a4;
-    outline-offset: 2px;
+.writing-body table,
+.text-body table {
+  border-collapse: collapse;
+  max-width: 100%;
 }
 
-/* IMAGE SELECTION PANEL */
-
-.image-edit-panel {
-    display: none;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #f0ecfa;
-    border: 1px solid #c9b8ff;
-    border-radius: 8px;
+.writing-body td,
+.writing-body th,
+.text-body td,
+.text-body th {
+  border: 1px solid #aaa;
+  padding: 5px;
 }
 
-.image-edit-panel.visible {
-    display: flex;
+/* Floating panels */
+
+.object {
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  background: white;
+  border: 1px solid transparent;
 }
 
-.image-edit-panel button,
-.image-edit-panel input {
-    min-height: 35px;
-    padding: 6px 9px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: white;
+.object.has-content {
+  border-color: #d9d9d9;
 }
 
-.image-edit-panel label {
-    font-size: 13px;
+.object-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 27px;
+  padding: 3px 6px;
+  background: white;
+  border-bottom: 1px solid transparent;
+  cursor: move;
+  user-select: none;
+  touch-action: none;
 }
 
-/*
-   A selection frame is displayed around the active image.
-   Resize handles are real DOM elements, so they also work
-   on touch screens.
-*/
-
-.image-selection-frame {
-    display: none;
-    position: absolute;
-    z-index: 500;
-    border: 2px solid #6750a4;
-    pointer-events: none;
-    box-sizing: border-box;
+.object-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: #777;
 }
 
-.image-selection-frame.visible {
-    display: block;
+.object-close {
+  border: 0;
+  background: transparent;
+  font-size: 17px;
+  color: #666;
 }
 
-.resize-handle {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    border: 2px solid white;
-    background: #6750a4;
-    border-radius: 50%;
-    pointer-events: auto;
-    touch-action: none;
-    z-index: 510;
+.object-body {
+  background: white;
 }
 
-.resize-handle.nw {
-    top: -8px;
-    left: -8px;
-    cursor: nwse-resize;
+.text-object {
+  width: 240px;
+  min-width: 100px;
+  min-height: 32px;
+  resize: both;
+  overflow: hidden;
 }
 
-.resize-handle.ne {
-    top: -8px;
-    right: -8px;
-    cursor: nesw-resize;
+.text-body {
+  min-height: 24px;
+  padding: 4px 7px;
+  outline: none;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
 }
 
-.resize-handle.sw {
-    bottom: -8px;
-    left: -8px;
-    cursor: nesw-resize;
+.image-object {
+  width: 330px;
+  min-width: 120px;
+  resize: both;
+  overflow: hidden;
+  border: 1px solid #ddd;
 }
 
-.resize-handle.se {
-    bottom: -8px;
-    right: -8px;
-    cursor: nwse-resize;
+.image-object img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  cursor: default;
 }
 
-/* PDF */
-
-.pdf-card {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px;
-    margin: 12px 0;
-    background: #fff;
+.pdf-object {
+  width: 794px;
+  min-width: 260px;
+  border: 1px solid #ddd;
 }
 
-.pdf-card iframe {
-    width: 100%;
-    height: 600px;
-    border: 1px solid var(--border);
-    border-radius: 5px;
+.pdf-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.pdf-card a {
-    color: var(--primary-dark);
-    overflow-wrap: anywhere;
+.pdf-page {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #eee;
+  background: white;
+  line-height: normal;
 }
 
-/* FOOTER */
-
-.app-footer {
-    font-size: 12px;
-    color: #777;
-    margin-top: 12px;
+.pdf-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-/* MOBILE */
+.pdf-text-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  user-select: text;
+  -webkit-user-select: text;
+  line-height: 1;
+}
 
-@media (max-width: 760px) {
-    .app-header {
-        flex-wrap: wrap;
-    }
+.pdf-text-layer span {
+  position: absolute;
+  white-space: pre;
+  transform-origin: 0 0;
+  color: transparent;
+  cursor: text;
+}
 
-    .app-title {
-        min-width: 150px;
-    }
+.pdf-text-layer ::selection {
+  background: rgba(60,120,255,.35);
+}
 
-    #saveStatus {
-        display: none;
-    }
+.pdf-highlight-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  touch-action: none;
+}
 
-    .app-layout {
-        display: block;
-    }
+.pdf-page.highlight-mode .pdf-highlight-layer {
+  pointer-events: auto;
+  cursor: crosshair;
+}
 
-    .sidebar {
-        width: 100%;
-        min-width: 0;
-        max-height: 220px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-    }
+.pdf-placeholder {
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  color: #777;
+  padding: 10px;
+}
 
-    .main-content {
-        padding: 10px;
-    }
+.pdf-message {
+  padding: 12px;
+  font-size: 12px;
+  color: #666;
+}
 
-    .writing-area {
-        padding: 14px;
-        min-height: 55vh;
-    }
+.mindmap {
+  position: absolute;
+  left: 900px;
+  top: 30px;
+  width: 320px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: white;
+}
 
-    .writing-body {
-        font-size: 16px;
-    }
+.mindmap h3 {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
 
-    .page-title-input {
-        font-size: 21px;
-    }
+.mindmap input {
+  width: 100%;
+  padding: 7px;
+  border: 1px solid #ddd;
+}
 
-    .toolbar {
-        gap: 5px;
-    }
+.mind-node {
+  padding: 7px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  font-size: 12px;
+}
 
-    .toolbar button,
-    .toolbar select {
-        padding: 7px;
-        font-size: 13px;
-    }
+.backdrop {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  background: #0005;
+  padding: 15px;
+}
 
-    .pdf-card iframe {
-        height: 450px;
-    }
+.dialog {
+  width: min(420px,100%);
+  padding: 18px;
+  border-radius: 8px;
+  background: white;
+}
 
-    .resize-handle {
-        width: 19px;
-        height: 19px;
-    }
+.dialog input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+#pdfModeHint {
+  font-size: 11px;
+  color: var(--accent);
+}
+
+@media(max-width:700px) {
+  .topbar {gap:4px;padding:5px}
+  .brand {font-size:12px}
+  .top-actions {gap:3px}
+  .top-actions .btn {padding:6px;font-size:10px}
+  .sidebar {width:150px}
+  .side-head {padding:6px}
+  .small-btn {font-size:10px;padding:5px}
+  .tree-row {font-size:11px}
+  #pageTitle {font-size:19px}
+  .toolbar {gap:3px;padding:4px}
+  .group {padding-right:3px}
+  .tool {padding:3px 5px;min-width:26px}
+  .tool-select {max-width:105px}
+  .main-writing {width:794px;left:12px;top:12px}
+  .writing-body {padding:18px}
+}
+@media(max-width:420px) {
+  .sidebar {width:125px}
 }
 </style>
 </head>
-
 <body>
-
-<header class="app-header">
-    <div class="app-title">📒 OneNote Infinity Pro</div>
-
-    <button class="header-btn" id="newPageBtn">
-        ＋ New Page
-    </button>
-
-    <button class="header-btn" id="exportBtn">
-        Export
-    </button>
-
-    <button class="header-btn" id="importBtn">
-        Import
-    </button>
-
-    <button class="header-btn" id="clearBtn">
-        Clear
-    </button>
-
-    <span id="saveStatus">Saved</span>
+<div class="app">
+<header class="topbar">
+  <button class="btn" id="sidebarToggle">☰</button>
+  <div class="brand">OneNote <span>Infinity Pro</span></div>
+  <div class="top-actions">
+    <button class="btn" id="saveBtn">Save</button>
+    <button class="btn" id="backupBtn">Backup</button>
+    <button class="btn" id="restoreBtn">Restore</button>
+  </div>
 </header>
 
-<div class="app-layout">
+<div class="main">
+<aside class="sidebar" id="sidebar">
+  <div class="side-head">
+    <div class="side-head-row"><span>📚 Notebooks</span><button class="small-btn" id="sidebarMinBtn">−</button></div>
+    <div class="side-actions">
+      <button class="small-btn" id="newNotebook">＋ Notebook</button>
+      <button class="small-btn" id="newSection">＋ Section</button>
+      <button class="small-btn" id="newPage">＋ Page</button>
+    </div>
+  </div>
+  <div class="tree" id="tree"></div>
+  <div class="side-footer">Auto Save · Local Storage + IndexedDB</div>
+</aside>
 
-    <aside class="sidebar">
+<section class="editor">
+  <div class="page-head">
+    <input id="pageTitle" placeholder="Page title">
+    <div class="status" id="status">Ready</div>
+  </div>
 
-        <div class="sidebar-heading">📚 My Notebook</div>
+  <div class="toolbar">
+    <div class="group"><button class="tool" data-cmd="undo">↶</button><button class="tool" data-cmd="redo">↷</button></div>
+    <div class="group">
+      <select class="tool-select" id="blockFormat"><option value="P">Paragraph</option><option value="H1">Heading 1</option><option value="H2">Heading 2</option><option value="H3">Heading 3</option><option value="BLOCKQUOTE">Quote</option></select>
+      <select class="tool-select" id="fontFamily"><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Verdana">Verdana</option><option value="Tahoma">Tahoma</option><option value="Times New Roman">Times New Roman</option><option value="Courier New">Courier New</option><option value="Noto Sans Devanagari">Noto Sans Devanagari</option></select>
+      <select class="tool-select" id="fontSize"><option value="1">8</option><option value="2">10</option><option value="3" selected>12</option><option value="4">14</option><option value="5">18</option><option value="6">24</option><option value="7">36</option></select>
+    </div>
+    <div class="group"><button class="tool" data-cmd="bold"><b>B</b></button><button class="tool" data-cmd="italic"><i>I</i></button><button class="tool" data-cmd="underline"><u>U</u></button><button class="tool" data-cmd="strikeThrough"><s>S</s></button></div>
+    <div class="group"><label title="Font Color"><input class="color-input" type="color" id="fontColor" value="#222222"></label><label title="Highlight Color"><input class="color-input" type="color" id="highlightColor" value="#fff176"></label></div>
+    <div class="group"><button class="tool" data-cmd="justifyLeft">⇤</button><button class="tool" data-cmd="justifyCenter">≡</button><button class="tool" data-cmd="justifyRight">⇥</button><button class="tool" data-cmd="justifyFull">☷</button></div>
+    <div class="group"><button class="tool" data-cmd="insertUnorderedList">• List</button><button class="tool" data-cmd="insertOrderedList">1. List</button><button class="tool" data-cmd="indent">→</button><button class="tool" data-cmd="outdent">←</button></div>
+    <div class="group"><button class="tool" id="linkBtn">🔗 Link</button><button class="tool" id="tableBtn">▦ Table</button><button class="tool" id="clearFormat">Tx</button></div>
+    <div class="group"><button class="tool" id="addText">＋ Text</button><button class="tool" id="insertImage">🖼 Image</button><button class="tool" id="insertFile">📎 File</button><button class="tool" id="insertPDF">＋ PDF</button><button class="tool" id="addMindMap">Mind Map</button></div>
+    <div class="group"><button class="tool" id="pdfSelectMode">PDF: Select Text</button><button class="tool" id="pdfHighlightMode">🖍 PDF Highlighter</button><button class="tool" id="clearPDFHighlights">Clear PDF Highlights</button></div>
+    <span id="pdfModeHint">PDF mode: Select Text</span>
+  </div>
 
-        <div class="sidebar-actions">
-            <button id="addSectionBtn">＋ Section</button>
-            <button id="renameSectionBtn">Rename</button>
-        </div>
-
-        <div id="pageTree"></div>
-
-        <div class="app-footer">
-            आपकी नोटबुक इस ब्राउज़र में सेव होती है।
-        </div>
-
-    </aside>
-
-    <main class="main-content">
-
-        <div class="page-heading">
-            <input
-                type="text"
-                id="pageTitle"
-                class="page-title-input"
-                placeholder="Page Title">
-        </div>
-
-        <div class="toolbar">
-
-            <button data-command="bold" title="Bold">
-                <b>B</b>
-            </button>
-
-            <button data-command="italic" title="Italic">
-                <i>I</i>
-            </button>
-
-            <button data-command="underline" title="Underline">
-                <u>U</u>
-            </button>
-
-            <span class="separator"></span>
-
-            <select id="fontName" title="Font">
-                <option value="Arial">Arial</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Verdana">Verdana</option>
-                <option value="'Times New Roman'">Times New Roman</option>
-                <option value="'Noto Sans Devanagari'">
-                    Noto Sans Devanagari
-                </option>
-            </select>
-
-            <select id="fontSize" title="Font Size">
-                <option value="3">Normal</option>
-                <option value="1">Small</option>
-                <option value="2">Medium</option>
-                <option value="4">Large</option>
-                <option value="5">Extra Large</option>
-                <option value="6">Huge</option>
-                <option value="7">Very Huge</option>
-            </select>
-
-            <label title="Text Color">
-                Text
-                <input type="color" id="textColor" value="#252535">
-            </label>
-
-            <label title="Highlight Color">
-                Highlight
-                <input type="color" id="highlightColor" value="#fff176">
-            </label>
-
-            <span class="separator"></span>
-
-            <button data-command="insertUnorderedList">
-                • List
-            </button>
-
-            <button data-command="insertOrderedList">
-                1. List
-            </button>
-
-            <button data-command="justifyLeft">
-                ⇤
-            </button>
-
-            <button data-command="justifyCenter">
-                ↔
-            </button>
-
-            <button data-command="justifyRight">
-                ⇥
-            </button>
-
-            <span class="separator"></span>
-
-            <button id="insertImageBtn">
-                🖼️ Insert Image
-            </button>
-
-            <button id="insertPdfBtn">
-                📄 Insert PDF
-            </button>
-
-            <button id="removeImageBtn">
-                🗑️ Remove Selected Image
-            </button>
-
-            <input
-                type="file"
-                id="imageInput"
-                accept="image/*"
-                hidden>
-
-            <input
-                type="file"
-                id="pdfInput"
-                accept="application/pdf,.pdf"
-                hidden>
-
-        </div>
-
-        <!-- IMAGE EDITING PANEL -->
-
-        <div id="imageEditPanel" class="image-edit-panel">
-
-            <strong>Selected Image</strong>
-
-            <button id="moveModeBtn">
-                ↔ Move Image
-            </button>
-
-            <label>
-                Width:
-                <input
-                    type="number"
-                    id="imageWidth"
-                    min="20"
-                    max="3000"
-                    step="10"
-                    style="width:85px">
-                px
-            </label>
-
-            <button id="applyImageWidthBtn">
-                Apply Width
-            </button>
-
-            <button id="resetImageBtn">
-                Reset Position
-            </button>
-
-            <button id="deselectImageBtn">
-                Deselect
-            </button>
-
-        </div>
-
-        <!-- RESIZE FRAME -->
-
-        <div id="imageSelectionFrame" class="image-selection-frame">
-
-            <div class="resize-handle nw" data-corner="nw"></div>
-            <div class="resize-handle ne" data-corner="ne"></div>
-            <div class="resize-handle sw" data-corner="sw"></div>
-            <div class="resize-handle se" data-corner="se"></div>
-
-        </div>
-
-        <section class="writing-area" id="writingArea">
-
-            <div
-                id="writingBody"
-                class="writing-body"
-                contenteditable="true"
-                spellcheck="true"
-                aria-label="Writing Area">
-
-            </div>
-
-        </section>
-
-        <div class="app-footer">
-            Tip: फोटो को चुनने के बाद उसे खिसकाएँ।
-            कोनों पर बने बैंगनी हैंडल पकड़कर उसका आकार बदलें।
-        </div>
-
-    </main>
-
+  <div class="workspace-scroll" id="workspaceScroll">
+    <div class="workspace" id="workspace">
+      <div class="main-writing" id="mainWriting"><div class="writing-body" id="writingBody" contenteditable="true" spellcheck="true"></div></div>
+    </div>
+  </div>
+</section>
+</div>
 </div>
 
+<input type="file" id="imageInput" accept="image/*" multiple hidden>
+<input type="file" id="fileInput" multiple hidden>
+<input type="file" id="pdfInput" accept=".pdf,application/pdf" multiple hidden>
+<input type="file" id="restoreInput" accept=".json,application/json" hidden>
+
+<div class="backdrop" id="backdrop"><div class="dialog">
+  <h3 id="dialogTitle">Create</h3><input id="dialogInput" placeholder="Enter name">
+  <div class="dialog-actions"><button class="btn" id="cancelDialog">Cancel</button><button class="btn primary" id="confirmDialog">Create</button></div>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 "use strict";
 
-/* ==========================================================
-   ONE NOTE INFINITY PRO
-   Local notebook storage + inline image move/resize
-   ========================================================== */
+const KEY="onenoteInfinityV4", DBNAME="onenoteInfinityAssetsV4", STORE="assets";
+const $=id=>document.getElementById(id);
+let state, activePageId, assetDB, saveTimer, dialogAction=null;
+let lastEditor=$("writingBody"), lastRange=null, pendingEmptyPanel=null, menuElement=null;
+const objectUrls=new Set(), pdfTasks=new Map();
+let pdfMode="select";
 
-const STORAGE_KEY = "onenote_infinity_pro_v3";
-
-const pageTree = document.getElementById("pageTree");
-const pageTitle = document.getElementById("pageTitle");
-const writingArea = document.getElementById("writingArea");
-const writingBody = document.getElementById("writingBody");
-const saveStatus = document.getElementById("saveStatus");
-
-const imageInput = document.getElementById("imageInput");
-const pdfInput = document.getElementById("pdfInput");
-
-const imageEditPanel = document.getElementById("imageEditPanel");
-const imageSelectionFrame = document.getElementById("imageSelectionFrame");
-const imageWidthInput = document.getElementById("imageWidth");
-
-let activeImage = null;
-let activePageId = null;
-let activeSectionId = null;
-let saveTimer = null;
-
-let moveState = null;
-let resizeState = null;
-let selectionTimer = null;
-let pendingImage = null;
-
-let movingEnabled = true;
-
-/* ==========================================================
-   INITIAL DATA
-   ========================================================== */
-
-function makeId() {
-    return "id_" + Date.now().toString(36) +
-        "_" + Math.random().toString(36).slice(2, 9);
+if(window.pdfjsLib){
+  pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 }
 
-function createPage(title = "New Page") {
-    return {
-        id: makeId(),
-        title,
-        html: "",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-    };
+/* IndexedDB asset storage */
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    if(!("indexedDB" in window)) return reject(Error("IndexedDB उपलब्ध नहीं है"));
+    const req=indexedDB.open(DBNAME,1);
+    req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(STORE))req.result.createObjectStore(STORE,{keyPath:"id"})};
+    req.onsuccess=()=>{assetDB=req.result;resolve(assetDB)};
+    req.onerror=()=>reject(req.error);
+  });
 }
-
-function createSection(title = "New Section") {
-    const page = createPage("Welcome Page");
-
-    return {
-        id: makeId(),
-        title,
-        pages: [page]
-    };
+async function putAsset(id,blob,name,type){
+  if(!assetDB)await openDB();
+  return new Promise((resolve,reject)=>{
+    const tx=assetDB.transaction(STORE,"readwrite");
+    tx.objectStore(STORE).put({id,blob,name,type,updatedAt:Date.now()});
+    tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);
+  });
 }
-
-function initialData() {
-    const section = createSection("General");
-
-    section.pages[0].title = "Welcome to OneNote";
-
-    section.pages[0].html = `
-        <h2>Welcome to OneNote Infinity Pro</h2>
-        <p>यहाँ अपने नोट्स लिखें।</p>
-        <p>आप फोटो डाल सकते हैं, उन्हें खिसका सकते हैं और उनका आकार बदल सकते हैं।</p>
-        <p>फोटो चुनें और उसके कोनों पर बने हैंडल खींचकर छोटा-बड़ा करें।</p>
-    `;
-
-    return {
-        sections: [section],
-        activeSectionId: section.id,
-        activePageId: section.pages[0].id
-    };
+async function getAsset(id){
+  if(!assetDB)await openDB();
+  return new Promise((resolve,reject)=>{
+    const tx=assetDB.transaction(STORE,"readonly"),req=tx.objectStore(STORE).get(id);
+    req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error);
+  });
 }
+function makeObjectURL(blob){const u=URL.createObjectURL(blob);objectUrls.add(u);return u}
+function revokeObjectURL(u){if(u&&objectUrls.has(u)){URL.revokeObjectURL(u);objectUrls.delete(u)}}
 
-function loadData() {
-    try {
-        const saved = localStorage.getItem(STORAGE_KEY);
+/* Data model */
+function uid(){return "id_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,9)}
+function makePage(title="New Page"){return{id:uid(),type:"page",title,content:"",objects:[],mindmap:[],updatedAt:Date.now()}}
+function makeSection(title="New Section"){return{id:uid(),type:"section",title,expanded:true,children:[makePage("Page 1")]}}
+function makeNotebook(title="My Notebook"){return{id:uid(),type:"notebook",title,expanded:true,children:[makeSection("General")]}}
+function defaults(){const n=makeNotebook();return{version:4,notebooks:[n],lastPageId:n.children[0].children[0].id}}
+function walk(n,cb){cb(n);(n.children||[]).forEach(c=>walk(c,cb))}
+function allPages(){const a=[];(state.notebooks||[]).forEach(n=>walk(n,x=>{if(x.type==="page")a.push(x)}));return a}
+function findParent(id){let f=null;(state.notebooks||[]).forEach(n=>walk(n,x=>{if((x.children||[]).some(c=>c.id===id))f=x}));return f}
+function activePage(){return allPages().find(p=>p.id===activePageId)||null}
+function loadState(){
+  try{const raw=localStorage.getItem(KEY);if(raw){const x=JSON.parse(raw);if(x&&Array.isArray(x.notebooks))state=x}}catch(e){console.warn(e)}
+  if(!state||!state.notebooks.length||!allPages().length)state=defaults();
+  const pages=allPages();activePageId=pages.some(p=>p.id===state.lastPageId)?state.lastPageId:pages[0].id;
+}
+function setStatus(t){$("status").textContent=t}
+function saveCurrentPage(){
+  const p=activePage();if(!p)return;
+  p.title=$("pageTitle").value.trim()||"Untitled Page";p.content=$("writingBody").innerHTML;p.objects=p.objects||[];
+  $("workspace").querySelectorAll(".object").forEach(el=>{
+    const o=p.objects.find(x=>x.id===el.dataset.objectId);if(!o)return;
+    o.x=parseFloat(el.style.left)||0;o.y=parseFloat(el.style.top)||0;o.w=el.offsetWidth||o.w||240;o.h=el.offsetHeight||o.h||32;
+    if(o.type==="text"){const b=el.querySelector(".text-body");if(b)o.html=b.innerHTML;o.userWidth=el.dataset.userWidth==="1";o.userHeight=el.dataset.userHeight==="1"}
+  });
+}
+function saveNow(){
+  clearTimeout(saveTimer);saveCurrentPage();
+  try{state.lastPageId=activePageId;localStorage.setItem(KEY,JSON.stringify(state));setStatus("✓ Saved");return true}
+  catch(e){console.error(e);setStatus("Save error");alert("नोट्स सेव नहीं हो सके। Backup बनाएँ या जगह खाली करें।");return false}
+}
+function scheduleSave(){setStatus("Saving…");clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,600)}
+$("saveBtn").onclick=saveNow;
+window.addEventListener("beforeunload",()=>{try{saveCurrentPage();state.lastPageId=activePageId;localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}});
 
-        if (saved) {
-            const parsed = JSON.parse(saved);
+/* Dialog */
+function showDialog(title,placeholder,fn){$("dialogTitle").textContent=title;$("dialogInput").value="";$("dialogInput").placeholder=placeholder||"Name";dialogAction=fn;$("backdrop").style.display="flex";setTimeout(()=>$("dialogInput").focus(),50)}
+function closeDialog(){$("backdrop").style.display="none";dialogAction=null}
+$("cancelDialog").onclick=closeDialog;
+$("confirmDialog").onclick=()=>{const v=$("dialogInput").value.trim();if(!v)return alert("नाम लिखें।");const fn=dialogAction;closeDialog();if(fn)fn(v)};
+$("dialogInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("confirmDialog").click()});
+$("backdrop").addEventListener("click",e=>{if(e.target===$("backdrop"))closeDialog()});
 
-            if (
-                parsed &&
-                Array.isArray(parsed.sections) &&
-                parsed.sections.length
-            ) {
-                parsed.sections.forEach(section => {
-                    if (!Array.isArray(section.pages)) {
-                        section.pages = [];
-                    }
+/* Notebook tree */
+function renderTree(){$("tree").innerHTML="";state.notebooks.forEach(n=>$("tree").appendChild(renderNode(n)))}
+function renderNode(node){
+  const wrap=document.createElement("div"),row=document.createElement("div");row.className="tree-row";if(node.id===activePageId)row.classList.add("active");
+  const has=(node.children||[]).length>0,t=document.createElement("button");t.className="tree-toggle";t.textContent=has?(node.expanded===false?"▸":"▾"):"";
+  const label=document.createElement("span");label.className="tree-label";label.textContent=(node.type==="notebook"?"📚 ":node.type==="section"?"📁 ":"📄 ")+node.title;
+  const menu=document.createElement("button");menu.className="tree-menu";menu.textContent="⋮";row.append(t,label,menu);wrap.append(row);
+  t.onclick=e=>{e.stopPropagation();if(has){node.expanded=node.expanded===false;renderTree();scheduleSave()}};
+  label.onclick=()=>{if(node.type==="page")openPage(node.id);else{node.expanded=node.expanded===false;renderTree();scheduleSave()}};
+  menu.onclick=e=>{e.stopPropagation();showNodeDropdown(menu,node)};
+  if(has&&node.expanded!==false){const ch=document.createElement("div");ch.className="tree-children";node.children.forEach(c=>ch.appendChild(renderNode(c)));wrap.append(ch)}
+  return wrap;
+}
+function closeNodeDropdown(){if(menuElement){menuElement.remove();menuElement=null}}
+document.addEventListener("click",e=>{if(menuElement&&!menuElement.contains(e.target))closeNodeDropdown()});
+function showNodeDropdown(button,node){
+  closeNodeDropdown();const m=document.createElement("div");m.style.cssText="position:fixed;z-index:200;min-width:155px;background:white;border:1px solid #ddd;border-radius:6px;box-shadow:0 5px 20px #0002;padding:4px";
+  const acts=node.type==="notebook"?[["＋ Create Section",()=>createChild(node,"section")],["✎ Rename",()=>renameNode(node)],["🗑 Delete",()=>deleteNode(node)]]:node.type==="section"?[["＋ Create Subsection",()=>createChild(node,"section")],["＋ Create Page",()=>createChild(node,"page")],["✎ Rename",()=>renameNode(node)],["🗑 Delete",()=>deleteNode(node)]]:[["✎ Rename",()=>renameNode(node)],["🗑 Delete",()=>deleteNode(node)]];
+  acts.forEach(([txt,fn])=>{const b=document.createElement("button");b.textContent=txt;b.style.cssText="display:block;width:100%;text-align:left;border:0;background:white;padding:9px;font-size:12px";if(txt.includes("Delete"))b.style.color="#c62828";b.onclick=e=>{e.stopPropagation();closeNodeDropdown();fn()};m.append(b)});
+  document.body.append(m);menuElement=m;const r=button.getBoundingClientRect();m.style.left=Math.max(4,Math.min(r.left,innerWidth-170))+"px";m.style.top=Math.max(4,Math.min(r.bottom,innerHeight-220))+"px";
+}
+function createChild(parent,type){showDialog(type==="page"?"Create Page":"Create Section",type==="page"?"Page name":"Section name",name=>{const child=type==="page"?makePage(name):makeSection(name);parent.children=parent.children||[];parent.children.push(child);parent.expanded=true;renderTree();openPage(type==="page"?child.id:child.children[0].id);saveNow()})}
+function renameNode(n){showDialog("Rename","New name",name=>{n.title=name;if(n.id===activePageId)$("pageTitle").value=name;renderTree();saveNow()})}
+function deleteNode(n){if(!confirm('"'+n.title+'" को Delete करना चाहते हैं?'))return;if(n.type==="notebook")state.notebooks=state.notebooks.filter(x=>x.id!==n.id);else{const p=findParent(n.id);if(p)p.children=p.children.filter(x=>x.id!==n.id)}if(!state.notebooks.length||!allPages().length)state=defaults();if(!allPages().some(p=>p.id===activePageId))activePageId=allPages()[0].id;renderTree();openPage(activePageId);saveNow()}
+$("newNotebook").onclick=()=>showDialog("New Notebook","Notebook name",name=>{const n=makeNotebook(name);state.notebooks.push(n);renderTree();openPage(n.children[0].children[0].id);saveNow()});
+$("newSection").onclick=()=>{let p=activePage(),parent=p?findParent(p.id):null;while(parent&&parent.type!=="notebook")parent=findParent(parent.id);createChild(parent||state.notebooks[0],"section")};
+$("newPage").onclick=()=>{const p=activePage(),s=p?findParent(p.id):null;createChild(s&&s.type==="section"?s:state.notebooks[0],"page")};
+function toggleSidebar(){$("sidebar").classList.toggle("collapsed")}
+$("sidebarToggle").onclick=toggleSidebar;$("sidebarMinBtn").onclick=toggleSidebar;
 
-                    if (section.pages.length === 0) {
-                        section.pages.push(createPage());
-                    }
-                });
+/* Page switch */
+function openPage(id){
+  saveCurrentPage();const p=allPages().find(x=>x.id===id);if(!p)return;activePageId=id;state.lastPageId=id;
+  $("pageTitle").value=p.title||"";$("writingBody").innerHTML=p.content||"";updateMainBorder();renderObjects(p);renderTree();autoGrowMain();rehydrateAssets($("writingBody"));setStatus("Ready");
+}
+$("pageTitle").addEventListener("input",()=>{const p=activePage();if(p)p.title=$("pageTitle").value;renderTree();scheduleSave()});
+function updateMainBorder(){const b=$("writingBody");$("mainWriting").classList.toggle("has-content",b.textContent.trim().length>0||!!b.querySelector("img,table"))}
+function autoGrowMain(){const b=$("writingBody");b.style.height="auto";const h=Math.max(480,b.scrollHeight+15);b.style.height=h+"px";$("mainWriting").style.height=(h+2)+"px";updateWorkspaceSize()}
+$("writingBody").addEventListener("input",()=>{updateMainBorder();autoGrowMain();rememberEditor($("writingBody"));scheduleSave()});
+$("writingBody").addEventListener("paste",()=>setTimeout(()=>{updateMainBorder();autoGrowMain();scheduleSave()},150));
 
-                return parsed;
-            }
-        }
-    } catch (error) {
-        console.error("Unable to load notebook:", error);
+/* Formatting and remembered caret */
+function rememberEditor(ed){lastEditor=ed;const s=window.getSelection();if(s&&s.rangeCount)lastRange=s.getRangeAt(0).cloneRange()}
+function rememberCurrentSelection(){const s=window.getSelection();if(!s||!s.rangeCount)return;let n=s.getRangeAt(0).commonAncestorContainer;if(n.nodeType===3)n=n.parentElement;const ed=n.closest&&n.closest("#writingBody,.text-body");if(ed){lastEditor=ed;lastRange=s.getRangeAt(0).cloneRange()}}
+document.addEventListener("selectionchange",()=>{const s=window.getSelection();if(!s||!s.rangeCount)return;let n=s.anchorNode;if(n&&n.nodeType===3)n=n.parentElement;if(!n||!n.closest)return;const ed=n.closest("#writingBody,.text-body");if(ed)rememberEditor(ed)});
+function restoreEditorSelection(){if(!lastEditor||!document.contains(lastEditor))lastEditor=$("writingBody");lastEditor.focus();if(lastRange)try{const s=window.getSelection();s.removeAllRanges();s.addRange(lastRange)}catch(e){}}
+function exec(cmd,val=null){restoreEditorSelection();document.execCommand(cmd,false,val);if(lastEditor===$("writingBody")){updateMainBorder();autoGrowMain()}else{const box=lastEditor.closest(".text-object");if(box)autoGrowText(box)}scheduleSave()}
+document.querySelectorAll("[data-cmd]").forEach(b=>{b.addEventListener("mousedown",e=>e.preventDefault());b.addEventListener("click",()=>exec(b.dataset.cmd))});
+$("fontFamily").onchange=e=>exec("fontName",e.target.value);$("fontSize").onchange=e=>exec("fontSize",e.target.value);$("blockFormat").onchange=e=>exec("formatBlock","<"+e.target.value+">");$("fontColor").oninput=e=>exec("foreColor",e.target.value);$("highlightColor").oninput=e=>{restoreEditorSelection();document.execCommand("hiliteColor",false,e.target.value);scheduleSave()};$("clearFormat").onclick=()=>exec("removeFormat");
+$("linkBtn").onclick=()=>{const u=prompt("Link URL लिखें:");if(u)exec("createLink",u)};
+$("tableBtn").onclick=()=>{const rows=Math.min(20,Math.max(1,Number(prompt("Rows?","3"))||3)),cols=Math.min(12,Math.max(1,Number(prompt("Columns?","3"))||3));let h="<table><tbody>";for(let r=0;r<rows;r++){h+="<tr>";for(let c=0;c<cols;c++)h+="<td>&nbsp;</td>";h+="</tr>"}restoreEditorSelection();document.execCommand("insertHTML",false,h+"</tbody></table><p><br></p>");scheduleSave()};
+
+/* Workspace sizing and text panels */
+function updateWorkspaceSize(){const s=$("workspaceScroll");let right=s.clientWidth||1200,bottom=s.clientHeight||800;$("workspace").querySelectorAll(".object,.main-writing,.mindmap").forEach(el=>{right=Math.max(right,(parseFloat(el.style.left)||0)+el.offsetWidth+320);bottom=Math.max(bottom,(parseFloat(el.style.top)||0)+el.offsetHeight+150)});$("workspace").style.width=Math.max(right+300,s.clientWidth)+"px";$("workspace").style.height=Math.max(bottom,s.clientHeight)+"px"}
+function panelHasContent(el){const b=el.querySelector(".text-body");return !!b&&(b.textContent.trim().length>0||!!b.querySelector("img,table,video,iframe,a"))}
+function updateTextBorder(el){el.classList.toggle("has-content",panelHasContent(el))}
+function autoGrowText(el){const b=el.querySelector(".text-body");if(!b)return;if(panelHasContent(el)&&!el.dataset.userWidth)el.style.width="794px";if(!el.dataset.userHeight){b.style.height="auto";b.style.height=Math.max(24,b.scrollHeight+8)+"px";el.style.height="auto"}updateTextBorder(el);updateWorkspaceSize()}
+function removeIfEmpty(el){if(el&&el.isConnected&&el.classList.contains("text-object")&&!panelHasContent(el)){const p=activePage();if(p)p.objects=p.objects.filter(o=>o.id!==el.dataset.objectId);el.remove();if(pendingEmptyPanel===el)pendingEmptyPanel=null;scheduleSave();updateWorkspaceSize()}}
+function addTextPanel(x,y,focus=true){const p=activePage();if(!p)return null;const o={id:uid(),type:"text",title:"Text",x:Math.max(0,x),y:Math.max(0,y),w:240,h:32,html:""};p.objects.push(o);const el=createObject(o);$("workspace").append(el);pendingEmptyPanel=el;const b=el.querySelector(".text-body");if(focus&&b){b.focus();const r=document.createRange();r.selectNodeContents(b);r.collapse(false);const s=window.getSelection();s.removeAllRanges();s.addRange(r);rememberEditor(b)}scheduleSave();updateWorkspaceSize();return el}
+$("workspace").addEventListener("click",e=>{if(e.target.closest(".object,.main-writing,.mindmap,.pdf-page"))return;if(pendingEmptyPanel&&!panelHasContent(pendingEmptyPanel))removeIfEmpty(pendingEmptyPanel);const r=$("workspace").getBoundingClientRect();addTextPanel(e.clientX-r.left,e.clientY-r.top,true)});
+$("addText").onclick=()=>addTextPanel($("workspaceScroll").scrollLeft+80,$("workspaceScroll").scrollTop+80,true);
+
+/* Floating objects */
+function createObject(o){
+  const el=document.createElement("div");el.className="object "+o.type+"-object";el.dataset.objectId=o.id;el.style.left=(o.x||0)+"px";el.style.top=(o.y||0)+"px";if(o.w)el.style.width=o.w+"px";if(o.type==="image"&&o.h)el.style.height=o.h+"px";if(o.userWidth)el.dataset.userWidth="1";if(o.userHeight)el.dataset.userHeight="1";
+  const head=document.createElement("div");head.className="object-head";const title=document.createElement("span");title.className="object-title";title.textContent=o.type==="text"?"Text":o.name||(o.type==="pdf"?"PDF":"Image");const close=document.createElement("button");close.className="object-close";close.textContent="×";head.append(title,close);el.append(head);
+  const body=document.createElement("div");body.className="object-body";el.append(body);
+  if(o.type==="text"){const b=document.createElement("div");b.className="text-body";b.contentEditable="true";b.spellcheck=true;b.innerHTML=o.html||"";body.append(b);updateTextBorder(el);b.addEventListener("focus",()=>rememberEditor(b));b.addEventListener("input",()=>{updateTextBorder(el);autoGrowText(el);rememberEditor(b);scheduleSave()});b.addEventListener("blur",()=>setTimeout(()=>removeIfEmpty(el),180));requestAnimationFrame(()=>autoGrowText(el))}
+  else if(o.type==="image"){const img=document.createElement("img");img.alt=o.name||"Image";body.append(img);loadImage(o,img)}
+  else if(o.type==="pdf"){const pages=document.createElement("div");pages.className="pdf-pages";body.append(pages);loadPDF(o,el,pages)}
+  close.onclick=()=>{if(!confirm("इस पैनल को हटाएँ?"))return;if(o.type==="pdf")cancelPDFTask(o.id);const p=activePage();if(p)p.objects=p.objects.filter(x=>x.id!==o.id);el.remove();scheduleSave();updateWorkspaceSize()};
+  makeDraggable(el,head);if(o.type==="text"||o.type==="image")enableResize(el);if(o.type==="pdf")enablePDFResize(el,o);return el;
+}
+function makeDraggable(el,handle){let moving=false,sx=0,sy=0,ox=0,oy=0;handle.addEventListener("pointerdown",e=>{if(e.target.closest(".object-close"))return;const r=el.getBoundingClientRect();if(r.right-e.clientX<18||r.bottom-e.clientY<18)return;moving=true;sx=e.clientX;sy=e.clientY;ox=parseFloat(el.style.left)||0;oy=parseFloat(el.style.top)||0;try{handle.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});handle.addEventListener("pointermove",e=>{if(!moving)return;el.style.left=Math.max(0,ox+e.clientX-sx)+"px";el.style.top=Math.max(0,oy+e.clientY-sy)+"px";updateWorkspaceSize()});const stop=()=>{if(moving){moving=false;scheduleSave();updateWorkspaceSize()}};handle.addEventListener("pointerup",stop);handle.addEventListener("pointercancel",stop)}
+function enableResize(el){let ow=el.offsetWidth,oh=el.offsetHeight;if("ResizeObserver"in window)new ResizeObserver(()=>{const w=el.offsetWidth,h=el.offsetHeight;if(el.dataset.userResizing==="1"){if(w!==ow)el.dataset.userWidth="1";if(h!==oh)el.dataset.userHeight="1"}ow=w;oh=h}).observe(el);el.addEventListener("pointerdown",e=>{const r=el.getBoundingClientRect();if(r.right-e.clientX<22&&r.bottom-e.clientY<22)el.dataset.userResizing="1"});el.addEventListener("pointerup",()=>{if(el.dataset.userResizing){delete el.dataset.userResizing;scheduleSave()}})}
+
+/* Inline images: selection and drag-reorder within same editable area */
+$("insertImage").onclick=()=>{rememberCurrentSelection();$("imageInput").click()};
+function insertAtSavedRange(node){if(!lastEditor||!document.contains(lastEditor))lastEditor=$("writingBody");lastEditor.focus();const sel=window.getSelection();if(lastRange)try{sel.removeAllRanges();sel.addRange(lastRange)}catch(e){}let r=sel.rangeCount?sel.getRangeAt(0):document.createRange();if(!lastEditor.contains(r.commonAncestorContainer)){r=document.createRange();r.selectNodeContents(lastEditor);r.collapse(false)}r.deleteContents();r.insertNode(node);const sp=document.createTextNode(" ");node.parentNode.insertBefore(sp,node.nextSibling);r.setStartAfter(sp);r.collapse(true);sel.removeAllRanges();sel.addRange(r);lastRange=r.cloneRange();if(lastEditor===$("writingBody")){updateMainBorder();autoGrowMain()}else{const box=lastEditor.closest(".text-object");if(box)autoGrowText(box)}scheduleSave()}
+$("imageInput").addEventListener("change",async e=>{const fs=Array.from(e.target.files||[]);e.target.value="";for(const f of fs){if(!f.type.startsWith("image/"))continue;try{const id=uid();await putAsset(id,f,f.name,f.type);const img=document.createElement("img");img.alt=f.name;img.dataset.assetId=id;img.style.maxWidth="100%";img.src=makeObjectURL(f);insertAtSavedRange(img);activePage().objects.push({id:uid(),type:"inline-image",assetId:id,name:f.name})}catch(err){console.error(err);alert("इमेज सेव नहीं हो सकी")}}scheduleSave()});
+let selectedInlineImage=null;
+function isInlineEditableImage(img){return img&&img.tagName==="IMG"&&img.closest("#writingBody,.text-body")&&!img.closest(".image-object,.pdf-page")}
+function clearImageSelection(){document.querySelectorAll(".image-selected").forEach(x=>x.classList.remove("image-selected"));selectedInlineImage=null}
+document.addEventListener("pointerdown",e=>{
+  const img=e.target;if(!isInlineEditableImage(img)||e.button!==undefined&&e.button!==0)return;
+  clearImageSelection();selectedInlineImage=img;img.classList.add("image-selected");
+  const editor=img.closest("#writingBody,.text-body");let started=false,startX=e.clientX,startY=e.clientY,placeholder=null;
+  const move=ev=>{
+    if(!selectedInlineImage)return;
+    if(!started&&Math.hypot(ev.clientX-startX,ev.clientY-startY)<8)return;
+    if(!started){started=true;placeholder=document.createComment("image-position");img.parentNode.insertBefore(placeholder,img);img.style.position="fixed";img.style.left=img.getBoundingClientRect().left+"px";img.style.top=img.getBoundingClientRect().top+"px";img.style.width=img.getBoundingClientRect().width+"px";img.style.zIndex="9999";img.style.pointerEvents="none";img.style.margin="0";document.body.append(img)}
+    img.style.left=(ev.clientX-img.offsetWidth/2)+"px";img.style.top=(ev.clientY-img.offsetHeight/2)+"px";
+  };
+  const up=ev=>{
+    document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",up);
+    if(started&&placeholder){
+      const x=ev.clientX,y=ev.clientY;img.style.position="";img.style.left="";img.style.top="";img.style.width="";img.style.zIndex="";img.style.pointerEvents="";img.style.margin="";
+      const caret=document.caretRangeFromPoint?document.caretRangeFromPoint(x,y):null;
+      if(caret&&editor.contains(caret.startContainer)){placeholder.parentNode.insertBefore(img,placeholder);placeholder.remove();caret.insertNode(img)}
+      else{placeholder.parentNode.insertBefore(img,placeholder);placeholder.remove()}
+      autoGrowMain();scheduleSave();
     }
+  };
+  document.addEventListener("pointermove",move);document.addEventListener("pointerup",up);
+  e.stopPropagation();
+},{passive:true});
+document.addEventListener("click",e=>{if(!isInlineEditableImage(e.target))clearImageSelection()});
 
-    return initialData();
+/* Attachments */
+$("insertFile").onclick=()=>{rememberCurrentSelection();$("fileInput").click()};
+$("fileInput").addEventListener("change",async e=>{const fs=Array.from(e.target.files||[]);e.target.value="";for(const f of fs){try{const id=uid();await putAsset(id,f,f.name,f.type);const a=document.createElement("a");a.dataset.assetId=id;a.href=makeObjectURL(f);a.download=f.name;a.textContent="📎 "+f.name;a.target="_blank";a.style.cssText="display:inline-block;margin:4px;padding:4px;border:1px solid #ddd";insertAtSavedRange(a);activePage().objects.push({id:uid(),type:"attachment",assetId:id,name:f.name})}catch(err){alert("फ़ाइल अटैच नहीं हो सकी")}}scheduleSave()});
+async function rehydrateAssets(root){if(!root||!assetDB)return;for(const el of root.querySelectorAll("[data-asset-id]")){try{const rec=await getAsset(el.dataset.assetId);if(!rec||!rec.blob)continue;const u=makeObjectURL(rec.blob);if(el.tagName==="IMG")el.src=u;else if(el.tagName==="A"){el.href=u;el.download=rec.name||el.textContent}}catch(e){console.warn(e)}}}
+async function loadImage(o,img){try{const r=await getAsset(o.assetId);if(r&&r.blob){img.src=makeObjectURL(r.blob);img.onload=updateWorkspaceSize}}catch(e){console.warn(e)}}
+
+/* PDF import, selectable text layer and touch highlighter */
+$("insertPDF").onclick=()=>$("pdfInput").click();
+$("pdfInput").addEventListener("change",async e=>{const fs=Array.from(e.target.files||[]);e.target.value="";for(const f of fs){if(f.type!=="application/pdf"&&!f.name.toLowerCase().endsWith(".pdf")){alert("PDF फ़ाइल चुनें: "+f.name);continue}try{const p=activePage(),id=uid();await putAsset(id,f,f.name,"application/pdf");const o={id:uid(),type:"pdf",name:f.name,assetId:id,x:100,y:100,w:794,highlights:[]};p.objects.push(o);$("workspace").append(createObject(o));updateWorkspaceSize();saveNow()}catch(err){console.error(err);alert("PDF insert नहीं हो सकी")}}});
+function cancelPDFTask(id){const t=pdfTasks.get(id);if(!t)return;t.cancelled=true;if(t.observer)t.observer.disconnect();for(const x of t.rendering.values())try{x.cancel()}catch(e){};try{if(t.pdf)t.pdf.destroy()}catch(e){};try{if(t.loadingTask)t.loadingTask.destroy()}catch(e){};pdfTasks.delete(id)}
+async function loadPDF(o,el,container){
+  cancelPDFTask(o.id);container.innerHTML='<div class="pdf-message">PDF तैयार हो रही है...</div>';let ti=null;
+  try{
+    if(!window.pdfjsLib)throw Error("PDF.js लोड नहीं हुई");
+    const rec=await getAsset(o.assetId);if(!rec||!rec.blob)throw Error("सेव PDF नहीं मिली");
+    const loadingTask=pdfjsLib.getDocument({data:new Uint8Array(await rec.blob.arrayBuffer()),isEvalSupported:false});
+    ti={loadingTask,pdf:null,observer:null,cancelled:false,rendering:new Map(),items:[]};pdfTasks.set(o.id,ti);
+    const pdf=await loadingTask.promise;if(ti.cancelled||pdfTasks.get(o.id)!==ti)return;ti.pdf=pdf;container.innerHTML="";
+    for(let n=1;n<=pdf.numPages;n++){const box=document.createElement("div");box.className="pdf-page";box.dataset.pageNumber=n;const ph=document.createElement("div");ph.className="pdf-placeholder";ph.textContent="PDF पेज "+n+" — लोड हो रहा है";box.append(ph);container.append(box);ti.items.push({number:n,box,rendered:false,rendering:false})}
+    async function render(item){
+      if(ti.cancelled||item.rendered||item.rendering)return;item.rendering=true;
+      try{
+        const page=await pdf.getPage(item.number);if(ti.cancelled)return;
+        const base=page.getViewport({scale:1}),width=Math.max(260,Math.min(1100,el.clientWidth-2)),scale=width/base.width,dpr=Math.min(devicePixelRatio||1,1.25),viewport=page.getViewport({scale});
+        const canvas=document.createElement("canvas");canvas.className="pdf-canvas";canvas.width=Math.floor(viewport.width*dpr);canvas.height=Math.floor(viewport.height*dpr);canvas.style.width="100%";
+        const textLayer=document.createElement("div");textLayer.className="pdf-text-layer";
+        const hi=document.createElement("canvas");hi.className="pdf-highlight-layer";hi.width=canvas.width;hi.height=canvas.height;
+        item.box.replaceChildren(canvas,textLayer,hi);item.canvas=canvas;item.textLayer=textLayer;item.hi=hi;
+        const rt=page.render({canvasContext:canvas.getContext("2d",{alpha:false}),viewport,transform:dpr!==1?[dpr,0,0,dpr,0,0]:null});ti.rendering.set(item.number,rt);await rt.promise;ti.rendering.delete(item.number);
+        const tc=await page.getTextContent();textLayer.style.width=viewport.width+"px";textLayer.style.height=viewport.height+"px";
+        for(const it of tc.items){if(!it.str)continue;const sp=document.createElement("span");sp.textContent=it.str;const tx=pdfjsLib.Util.transform(viewport.transform,it.transform);const fh=Math.hypot(tx[2],tx[3]);sp.style.left=tx[4]+"px";sp.style.top=(tx[5]-fh)+"px";sp.style.fontSize=fh+"px";sp.style.height=fh+"px";sp.style.fontFamily="sans-serif";textLayer.append(sp)}
+        textLayer.style.transformOrigin="top left";textLayer.style.transform=`scale(${canvas.clientWidth/viewport.width})`;
+        hi.style.position="absolute";hi.style.left="0";hi.style.top="0";hi.style.width="100%";hi.style.height="100%";
+        item.rendered=true;setupPDFHighlight(o,item,viewport,dpr);drawSavedHighlights(o,item);page.cleanup();
+      }catch(err){ti.rendering.delete(item.number);if(!ti.cancelled){console.warn(err);const msg=document.createElement("div");msg.className="pdf-message";msg.textContent="पेज "+item.number+" रेंडर नहीं हुआ: "+err.message;item.box.replaceChildren(msg)}}
+      finally{item.rendering=false;updateWorkspaceSize()}
+    }
+    if("IntersectionObserver"in window){ti.observer=new IntersectionObserver(entries=>entries.forEach(en=>{const item=ti.items.find(x=>x.box===en.target);if(item&&en.isIntersecting)render(item)}),{root:$("workspaceScroll"),rootMargin:"700px 0px"});ti.items.forEach(x=>ti.observer.observe(x.box))}
+    else ti.items.forEach(render);
+    updateWorkspaceSize();updatePDFMode();
+  }catch(err){console.error(err);if(ti&&pdfTasks.get(o.id)===ti)cancelPDFTask(o.id);container.innerHTML="";const m=document.createElement("div");m.className="pdf-message";m.textContent="PDF लोड नहीं हुई: "+err.message;container.append(m)}
 }
-
-let appData = loadData();
-
-function getActiveSection() {
-    return appData.sections.find(
-        section => section.id === appData.activeSectionId
-    ) || appData.sections[0];
+function setupPDFHighlight(o,item,viewport,dpr){
+  const c=item.hi,ctx=c.getContext("2d");let drawing=false,last=null;
+  function pos(e){const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*c.width,y:(e.clientY-r.top)/r.height*c.height}}
+  c.addEventListener("pointerdown",e=>{if(pdfMode!=="highlight")return;drawing=true;last=pos(e);try{c.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault();e.stopPropagation()});
+  c.addEventListener("pointermove",e=>{if(!drawing||pdfMode!=="highlight")return;const p=pos(e),color=$("highlightColor").value;ctx.save();ctx.globalAlpha=.34;ctx.strokeStyle=color;ctx.lineWidth=Math.max(10,viewport.scale*13*dpr);ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();ctx.restore();o.highlights=o.highlights||[];o.highlights.push({x1:last.x/c.width,y1:last.y/c.height,x2:p.x/c.width,y2:p.y/c.height,color,width:ctx.lineWidth/c.width});last=p});
+  const up=()=>{if(drawing){drawing=false;last=null;scheduleSave()}};c.addEventListener("pointerup",up);c.addEventListener("pointercancel",up);
 }
-
-function getActivePage() {
-    const section = getActiveSection();
-
-    if (!section) {
-        return null;
-    }
-
-    return section.pages.find(
-        page => page.id === appData.activePageId
-    ) || section.pages[0];
-}
-
-/* ==========================================================
-   SAVE AND RESTORE
-   ========================================================== */
-
-function setSaveStatus(text) {
-    saveStatus.textContent = text;
-}
-
-function scheduleSave() {
-    setSaveStatus("Saving...");
-
-    clearTimeout(saveTimer);
-
-    saveTimer = setTimeout(() => {
-        saveCurrentPage();
-
-        try {
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(appData)
-            );
-
-            setSaveStatus("Saved ✓");
-        } catch (error) {
-            console.error(error);
-            setSaveStatus("Storage full");
-        }
-    }, 400);
-}
-
-function saveCurrentPage() {
-    const page = getActivePage();
-
-    if (!page) return;
-
-    page.title = pageTitle.value.trim() || "Untitled Page";
-    page.html = writingBody.innerHTML;
-    page.updatedAt = new Date().toISOString();
-}
-
-function saveImmediately() {
-    saveCurrentPage();
-
-    try {
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(appData)
-        );
-
-        setSaveStatus("Saved ✓");
-    } catch (error) {
-        console.error(error);
-        setSaveStatus("Storage full");
-    }
-}
-
-/* ==========================================================
-   NOTEBOOK TREE
-   ========================================================== */
-
-function renderTree() {
-    pageTree.innerHTML = "";
-
-    appData.sections.forEach(section => {
-        const sectionButton = document.createElement("button");
-
-        sectionButton.className =
-            "tree-item" +
-            (section.id === appData.activeSectionId ? " active" : "");
-
-        sectionButton.textContent = "📁 " + section.title;
-
-        sectionButton.addEventListener("click", () => {
-            saveImmediately();
-
-            appData.activeSectionId = section.id;
-
-            if (section.pages.length) {
-                appData.activePageId = section.pages[0].id;
-            }
-
-            renderTree();
-            loadActivePage();
-            scheduleSave();
-        });
-
-        pageTree.appendChild(sectionButton);
-
-        section.pages.forEach(page => {
-            const pageButton = document.createElement("button");
-
-            pageButton.className =
-                "tree-item tree-page" +
-                (page.id === appData.activePageId ? " active" : "");
-
-            pageButton.textContent = "📄 " + page.title;
-
-            pageButton.addEventListener("click", () => {
-                saveImmediately();
-
-                appData.activeSectionId = section.id;
-                appData.activePageId = page.id;
-
-                renderTree();
-                loadActivePage();
-                scheduleSave();
-            });
-
-            pageTree.appendChild(pageButton);
-        });
-    });
-}
-
-function loadActivePage() {
-    const page = getActivePage();
-
-    if (!page) return;
-
-    deselectImage();
-
-    pageTitle.value = page.title || "Untitled Page";
-    writingBody.innerHTML = page.html || "";
-
-    /*
-       Reconnect image behavior after HTML is restored.
-    */
-    prepareAllImages();
-
-    /*
-       Existing image transforms are retained in the saved HTML.
-    */
-}
-
-/* ==========================================================
-   PAGE AND SECTION CONTROLS
-   ========================================================== */
-
-document.getElementById("newPageBtn").addEventListener("click", () => {
-    saveImmediately();
-
-    const section = getActiveSection();
-
-    if (!section) return;
-
-    const page = createPage("New Page");
-
-    section.pages.push(page);
-
-    appData.activePageId = page.id;
-
-    renderTree();
-    loadActivePage();
-    pageTitle.focus();
-
-    scheduleSave();
-});
-
-document.getElementById("addSectionBtn").addEventListener("click", () => {
-    saveImmediately();
-
-    const name = prompt("Section का नाम लिखें:");
-
-    if (!name || !name.trim()) return;
-
-    const section = createSection(name.trim());
-
-    appData.sections.push(section);
-
-    appData.activeSectionId = section.id;
-    appData.activePageId = section.pages[0].id;
-
-    renderTree();
-    loadActivePage();
-    scheduleSave();
-});
-
-document.getElementById("renameSectionBtn").addEventListener("click", () => {
-    const section = getActiveSection();
-
-    if (!section) return;
-
-    const name = prompt("नया Section नाम:", section.title);
-
-    if (!name || !name.trim()) return;
-
-    section.title = name.trim();
-
-    renderTree();
-    scheduleSave();
-});
-
-pageTitle.addEventListener("input", () => {
-    const page = getActivePage();
-
-    if (page) {
-        page.title = pageTitle.value || "Untitled Page";
-    }
-
-    renderTree();
-    scheduleSave();
-});
-
-/* ==========================================================
-   TEXT FORMATTING
-   ========================================================== */
-
-document.querySelectorAll("[data-command]").forEach(button => {
-    button.addEventListener("mousedown", event => {
-        /*
-           Keep the editor selection when toolbar buttons are clicked.
-        */
-        event.preventDefault();
-    });
-
-    button.addEventListener("click", () => {
-        const command = button.dataset.command;
-
-        writingBody.focus();
-
-        document.execCommand(command, false, null);
-
-        scheduleSave();
-    });
-});
-
-document.getElementById("fontName").addEventListener("change", event => {
-    writingBody.focus();
-
-    document.execCommand(
-        "fontName",
-        false,
-        event.target.value
-    );
-
-    scheduleSave();
-});
-
-document.getElementById("fontSize").addEventListener("change", event => {
-    writingBody.focus();
-
-    document.execCommand(
-        "fontSize",
-        false,
-        event.target.value
-    );
-
-    scheduleSave();
-});
-
-document.getElementById("textColor").addEventListener("input", event => {
-    writingBody.focus();
-
-    document.execCommand(
-        "foreColor",
-        false,
-        event.target.value
-    );
-
-    scheduleSave();
-});
-
-document.getElementById("highlightColor").addEventListener("input", event => {
-    writingBody.focus();
-
-    document.execCommand(
-        "hiliteColor",
-        false,
-        event.target.value
-    );
-
-    scheduleSave();
-});
-
-writingBody.addEventListener("input", scheduleSave);
-
-/* ==========================================================
-   INSERT IMAGE
-   ========================================================== */
-
-document.getElementById("insertImageBtn").addEventListener("click", () => {
-    imageInput.click();
-});
-
-imageInput.addEventListener("change", async event => {
-    const file = event.target.files[0];
-
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-        alert("कृपया सही image file चुनें।");
-        imageInput.value = "";
-        return;
-    }
-
-    try {
-        const dataUrl = await readFileAsDataURL(file);
-
-        writingBody.focus();
-
-        const img = document.createElement("img");
-
-        img.src = dataUrl;
-        img.alt = file.name;
-        img.className = "inline-movable";
-
-        img.style.width = "300px";
-        img.style.maxWidth = "100%";
-        img.style.height = "auto";
-        img.style.transform = "translate(0px, 0px)";
-
-        img.dataset.dx = "0";
-        img.dataset.dy = "0";
-        img.dataset.originalWidth = "300";
-
-        img.draggable = false;
-
-        const selection = window.getSelection();
-
-        if (
-            selection &&
-            selection.rangeCount &&
-            writingBody.contains(selection.anchorNode)
-        ) {
-            const range = selection.getRangeAt(0);
-
-            range.deleteContents();
-            range.insertNode(img);
-
-            const after = document.createRange();
-
-            after.setStartAfter(img);
-            after.collapse(true);
-
-            selection.removeAllRanges();
-            selection.addRange(after);
-        } else {
-            writingBody.appendChild(document.createElement("br"));
-            writingBody.appendChild(img);
-            writingBody.appendChild(document.createElement("br"));
-        }
-
-        prepareImage(img);
-
-        selectImage(img);
-
-        scheduleSave();
-
-    } catch (error) {
-        console.error(error);
-        alert("फोटो insert नहीं हो सका।");
-    }
-
-    imageInput.value = "";
-});
-
-function readFileAsDataURL(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-
-        reader.readAsDataURL(file);
-    });
-}
-
-/* ==========================================================
-   IMAGE PREPARATION
-   ========================================================== */
-
-function prepareAllImages() {
-    writingBody.querySelectorAll("img").forEach(img => {
-        /*
-           Images inserted in earlier versions also become movable.
-        */
-        img.classList.add("inline-movable");
-        img.draggable = false;
-
-        if (img.dataset.dx === undefined) {
-            img.dataset.dx = "0";
-        }
-
-        if (img.dataset.dy === undefined) {
-            img.dataset.dy = "0";
-        }
-
-        if (!img.style.transform) {
-            applyImageTranslation(img);
-        }
-
-        prepareImage(img);
-    });
-}
-
-function prepareImage(img) {
-    if (img.dataset.moveResizeReady === "yes") return;
-
-    img.dataset.moveResizeReady = "yes";
-
-    img.classList.add("inline-movable");
-
-    img.addEventListener("contextmenu", event => {
-        event.preventDefault();
-    });
-
-    img.addEventListener("dragstart", event => {
-        event.preventDefault();
-    });
-
-    /*
-       Mouse: select and drag.
-       Touch: long press to activate movement.
-    */
-    img.addEventListener("pointerdown", event => {
-        if (event.button !== undefined && event.button !== 0) {
-            return;
-        }
-
-        if (event.target !== img) return;
-
-        if (event.pointerType === "touch") {
-            clearTimeout(selectionTimer);
-
-            pendingImage = {
-                img,
-                x: event.clientX,
-                y: event.clientY,
-                pointerId: event.pointerId
-            };
-
-            selectionTimer = setTimeout(() => {
-                if (!pendingImage || pendingImage.img !== img) {
-                    return;
-                }
-
-                selectImage(img);
-                beginImageMove(event, img, true);
-            }, 300);
-
-            return;
-        }
-
-        selectImage(img);
-
-        beginImageMove(event, img, false);
-    });
-
-    /*
-       Touch scrolling should cancel a pending long press.
-    */
-    img.addEventListener("pointermove", event => {
-        if (!pendingImage || pendingImage.img !== img) return;
-
-        const dx = event.clientX - pendingImage.x;
-        const dy = event.clientY - pendingImage.y;
-
-        if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
-            /*
-               Small movement is allowed while long press is pending.
-               Once the finger moves substantially, cancel the timer.
-            */
-            clearTimeout(selectionTimer);
-            pendingImage = null;
-        }
-    });
-
-    img.addEventListener("pointerup", () => {
-        clearTimeout(selectionTimer);
-        pendingImage = null;
-    });
-
-    img.addEventListener("pointercancel", () => {
-        clearTimeout(selectionTimer);
-        pendingImage = null;
-    });
-
-    img.addEventListener("load", () => {
-        if (activeImage === img) {
-            updateSelectionFrame();
-        }
-    });
-}
-
-/* ==========================================================
-   IMAGE SELECT / DESELECT
-   ========================================================== */
-
-function selectImage(img) {
-    if (!img || !writingBody.contains(img)) return;
-
-    if (activeImage && activeImage !== img) {
-        activeImage.classList.remove("image-selected");
-    }
-
-    activeImage = img;
-
-    activeImage.classList.add("image-selected");
-
-    imageEditPanel.classList.add("visible");
-
-    imageWidthInput.value = Math.round(
-        activeImage.getBoundingClientRect().width
-    );
-
-    updateSelectionFrame();
-}
-
-function deselectImage() {
-    if (activeImage) {
-        activeImage.classList.remove("image-selected");
-    }
-
-    activeImage = null;
-
-    imageEditPanel.classList.remove("visible");
-    imageSelectionFrame.classList.remove("visible");
-}
-
-function updateSelectionFrame() {
-    if (!activeImage || !writingBody.contains(activeImage)) {
-        imageSelectionFrame.classList.remove("visible");
-        return;
-    }
-
-    const imageRect = activeImage.getBoundingClientRect();
-
-    /*
-       The frame is fixed-positioned so it can accurately follow
-       an image inside a scrollable writing area.
-    */
-    imageSelectionFrame.style.position = "fixed";
-
-    imageSelectionFrame.style.left = imageRect.left + "px";
-    imageSelectionFrame.style.top = imageRect.top + "px";
-    imageSelectionFrame.style.width = imageRect.width + "px";
-    imageSelectionFrame.style.height = imageRect.height + "px";
-
-    imageSelectionFrame.classList.add("visible");
-}
-
-/* ==========================================================
-   MOVE IMAGE
-   ========================================================== */
-
-function beginImageMove(event, img, fromTouchLongPress) {
-    if (!img || !writingBody.contains(img)) return;
-
-    if (!movingEnabled) return;
-
-    event.preventDefault();
-
-    selectImage(img);
-
-    const dx = Number(img.dataset.dx || 0);
-    const dy = Number(img.dataset.dy || 0);
-
-    moveState = {
-        img,
-        pointerId: event.pointerId,
-        startX: event.clientX,
-        startY: event.clientY,
-        originalX: dx,
-        originalY: dy,
-        fromTouchLongPress
-    };
-
-    /*
-       Pointer capture makes dragging more reliable when the
-       pointer moves outside the image itself.
-    */
-    try {
-        img.setPointerCapture(event.pointerId);
-    } catch (_) {}
-
-    img.style.cursor = "grabbing";
-}
-
-document.addEventListener("pointermove", event => {
-    if (!moveState) return;
-
-    if (event.pointerId !== moveState.pointerId) return;
-
-    event.preventDefault();
-
-    const dx = event.clientX - moveState.startX;
-    const dy = event.clientY - moveState.startY;
-
-    const img = moveState.img;
-
-    img.dataset.dx = String(moveState.originalX + dx);
-    img.dataset.dy = String(moveState.originalY + dy);
-
-    applyImageTranslation(img);
-
-    updateSelectionFrame();
-}, { passive: false });
-
-document.addEventListener("pointerup", event => {
-    if (!moveState) return;
-
-    if (event.pointerId !== moveState.pointerId) return;
-
-    moveState.img.style.cursor = "grab";
-
-    moveState = null;
-
-    scheduleSave();
-});
-
-document.addEventListener("pointercancel", event => {
-    if (!moveState) return;
-
-    if (event.pointerId !== moveState.pointerId) return;
-
-    moveState.img.style.cursor = "grab";
-
-    moveState = null;
-});
-
-function applyImageTranslation(img) {
-    const dx = Number(img.dataset.dx || 0);
-    const dy = Number(img.dataset.dy || 0);
-
-    img.style.transform =
-        "translate(" + dx + "px, " + dy + "px)";
-}
-
-/* ==========================================================
-   RESIZE IMAGE USING CORNER HANDLES
-   ========================================================== */
-
-document.querySelectorAll(".resize-handle").forEach(handle => {
-    handle.addEventListener("pointerdown", event => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        if (!activeImage) return;
-
-        const rect = activeImage.getBoundingClientRect();
-
-        resizeState = {
-            pointerId: event.pointerId,
-            corner: handle.dataset.corner,
-            img: activeImage,
-            startX: event.clientX,
-            startY: event.clientY,
-            startWidth: rect.width,
-            startHeight: rect.height,
-            startLeft: rect.left,
-            startTop: rect.top,
-            aspect: rect.width / Math.max(rect.height, 1),
-            originalCssWidth: activeImage.style.width,
-            originalCssHeight: activeImage.style.height
-        };
-
-        try {
-            handle.setPointerCapture(event.pointerId);
-        } catch (_) {}
-    });
-});
-
-document.addEventListener("pointermove", event => {
-    if (!resizeState) return;
-
-    if (event.pointerId !== resizeState.pointerId) return;
-
-    event.preventDefault();
-
-    const state = resizeState;
-    const img = state.img;
-
-    let deltaX = event.clientX - state.startX;
-    let deltaY = event.clientY - state.startY;
-
-    /*
-       Each corner adjusts the dimensions from its own direction.
-       Width and height are changed together to preserve aspect ratio.
-    */
-    let delta;
-
-    if (state.corner === "se") {
-        delta = Math.abs(deltaX) >= Math.abs(deltaY)
-            ? deltaX
-            : deltaY * state.aspect;
-    } else if (state.corner === "nw") {
-        delta = Math.abs(deltaX) >= Math.abs(deltaY)
-            ? -deltaX
-            : -deltaY * state.aspect;
-    } else if (state.corner === "ne") {
-        delta = Math.abs(deltaX) >= Math.abs(deltaY)
-            ? deltaX
-            : -deltaY * state.aspect;
-    } else {
-        delta = Math.abs(deltaX) >= Math.abs(deltaY)
-            ? -deltaX
-            : deltaY * state.aspect;
-    }
-
-    const newWidth = Math.max(
-        40,
-        Math.min(2000, state.startWidth + delta)
-    );
-
-    img.style.width = newWidth + "px";
-    img.style.height = "auto";
-    img.style.maxWidth = "none";
-
-    /*
-       Keep the image inside the available writing area
-       when it is larger than the content width.
-    */
-    const areaWidth = writingBody.clientWidth;
-
-    if (newWidth > areaWidth) {
-        img.style.maxWidth = "100%";
-        img.style.width = newWidth + "px";
-    }
-
-    updateSelectionFrame();
-}, { passive: false });
-
-document.addEventListener("pointerup", event => {
-    if (!resizeState) return;
-
-    if (event.pointerId !== resizeState.pointerId) return;
-
-    resizeState = null;
-
-    if (activeImage) {
-        imageWidthInput.value = Math.round(
-            activeImage.getBoundingClientRect().width
-        );
-    }
-
-    scheduleSave();
-});
-
-document.addEventListener("pointercancel", event => {
-    if (!resizeState) return;
-
-    if (event.pointerId !== resizeState.pointerId) return;
-
-    resizeState = null;
-});
-
-/* ==========================================================
-   IMAGE TOOLBAR CONTROLS
-   ========================================================== */
-
-document.getElementById("removeImageBtn").addEventListener("click", () => {
-    if (!activeImage) {
-        alert("पहले किसी फोटो को select करें।");
-        return;
-    }
-
-    if (!confirm("क्या आप यह फोटो हटाना चाहते हैं?")) return;
-
-    activeImage.remove();
-
-    deselectImage();
-
-    scheduleSave();
-});
-
-document.getElementById("deselectImageBtn").addEventListener("click", () => {
-    deselectImage();
-});
-
-document.getElementById("moveModeBtn").addEventListener("click", () => {
-    movingEnabled = !movingEnabled;
-
-    const button = document.getElementById("moveModeBtn");
-
-    button.classList.toggle("active-tool", movingEnabled);
-
-    button.textContent = movingEnabled
-        ? "↔ Move Image: ON"
-        : "↔ Move Image: OFF";
-});
-
-document.getElementById("applyImageWidthBtn").addEventListener("click", () => {
-    if (!activeImage) {
-        alert("पहले फोटो select करें।");
-        return;
-    }
-
-    const width = Number(imageWidthInput.value);
-
-    if (!Number.isFinite(width) || width < 20) {
-        alert("कृपया 20 या उससे अधिक की width डालें।");
-        return;
-    }
-
-    activeImage.style.width = Math.min(width, 3000) + "px";
-    activeImage.style.height = "auto";
-    activeImage.style.maxWidth = "100%";
-
-    updateSelectionFrame();
-
-    scheduleSave();
-});
-
-document.getElementById("resetImageBtn").addEventListener("click", () => {
-    if (!activeImage) {
-        alert("पहले फोटो select करें।");
-        return;
-    }
-
-    activeImage.dataset.dx = "0";
-    activeImage.dataset.dy = "0";
-
-    applyImageTranslation(activeImage);
-
-    updateSelectionFrame();
-
-    scheduleSave();
-});
-
-/*
-   If the user scrolls the page, the selection frame follows the image.
-*/
-writingArea.addEventListener("scroll", updateSelectionFrame);
-window.addEventListener("resize", updateSelectionFrame);
-
-window.addEventListener("scroll", updateSelectionFrame, true);
-
-/*
-   Clicking elsewhere in the writing area deselects the active image.
-   Clicking on an image or resize handle keeps it selected.
-*/
-document.addEventListener("pointerdown", event => {
-    const clickedImage = event.target.closest &&
-        event.target.closest("img.inline-movable");
-
-    const clickedPanel = event.target.closest &&
-        event.target.closest("#imageEditPanel");
-
-    const clickedFrame = event.target.closest &&
-        event.target.closest("#imageSelectionFrame");
-
-    if (clickedImage || clickedPanel || clickedFrame) {
-        return;
-    }
-
-    deselectImage();
-});
-
-/* ==========================================================
-   INSERT PDF
-   ========================================================== */
-
-document.getElementById("insertPdfBtn").addEventListener("click", () => {
-    pdfInput.click();
-});
-
-pdfInput.addEventListener("change", async event => {
-    const file = event.target.files[0];
-
-    if (!file) return;
-
-    if (
-        file.type !== "application/pdf" &&
-        !file.name.toLowerCase().endsWith(".pdf")
-    ) {
-        alert("कृपया PDF फाइल चुनें।");
-        pdfInput.value = "";
-        return;
-    }
-
-    try {
-        const dataUrl = await readFileAsDataURL(file);
-
-        const card = document.createElement("div");
-        card.className = "pdf-card";
-
-        const title = document.createElement("strong");
-        title.textContent = "📄 " + file.name;
-
-        const info = document.createElement("p");
-        info.textContent =
-            "PDF preview. यदि PDF में selectable text है, " +
-            "तो browser PDF viewer में उसे select करने का प्रयास करें।";
-
-        const openLink = document.createElement("a");
-        openLink.href = dataUrl;
-        openLink.target = "_blank";
-        openLink.rel = "noopener";
-        openLink.textContent = "PDF को नए टैब में खोलें";
-
-        const frame = document.createElement("iframe");
-        frame.src = dataUrl;
-        frame.title = file.name;
-
-        card.appendChild(title);
-        card.appendChild(info);
-        card.appendChild(openLink);
-        card.appendChild(frame);
-
-        writingBody.appendChild(document.createElement("br"));
-        writingBody.appendChild(card);
-        writingBody.appendChild(document.createElement("br"));
-
-        scheduleSave();
-
-    } catch (error) {
-        console.error(error);
-        alert("PDF insert नहीं हो सकी।");
-    }
-
-    pdfInput.value = "";
-});
-
-/* ==========================================================
-   EXPORT NOTEBOOK
-   ========================================================== */
-
-document.getElementById("exportBtn").addEventListener("click", () => {
-    saveImmediately();
-
-    const blob = new Blob(
-        [JSON.stringify(appData, null, 2)],
-        { type: "application/json" }
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "onenote-infinity-backup.json";
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    URL.revokeObjectURL(url);
-});
-
-/* ==========================================================
-   IMPORT NOTEBOOK BACKUP
-   ========================================================== */
-
-document.getElementById("importBtn").addEventListener("click", () => {
-    const input = document.createElement("input");
-
-    input.type = "file";
-    input.accept = ".json,application/json";
-
-    input.addEventListener("change", async () => {
-        const file = input.files[0];
-
-        if (!file) return;
-
-        try {
-            const text = await file.text();
-            const imported = JSON.parse(text);
-
-            if (
-                !imported ||
-                !Array.isArray(imported.sections) ||
-                imported.sections.length === 0
-            ) {
-                throw new Error("Invalid notebook backup");
-            }
-
-            const confirmed = confirm(
-                "Import करने से वर्तमान नोटबुक बदल जाएगी। " +
-                "क्या आप जारी रखना चाहते हैं?"
-            );
-
-            if (!confirmed) return;
-
-            imported.sections.forEach(section => {
-                if (!Array.isArray(section.pages)) {
-                    section.pages = [];
-                }
-
-                if (section.pages.length === 0) {
-                    section.pages.push(createPage());
-                }
-            });
-
-            appData = imported;
-
-            if (!getActiveSection()) {
-                appData.activeSectionId = appData.sections[0].id;
-            }
-
-            const section = getActiveSection();
-
-            if (
-                !section.pages.some(
-                    page => page.id === appData.activePageId
-                )
-            ) {
-                appData.activePageId = section.pages[0].id;
-            }
-
-            renderTree();
-            loadActivePage();
-            saveImmediately();
-
-            alert("Backup सफलतापूर्वक import हो गया।");
-
-        } catch (error) {
-            console.error(error);
-            alert("Backup फाइल सही नहीं है या पढ़ी नहीं जा सकी।");
-        }
-    });
-
-    input.click();
-});
-
-/* ==========================================================
-   CLEAR CURRENT PAGE
-   ========================================================== */
-
-document.getElementById("clearBtn").addEventListener("click", () => {
-    if (!confirm("क्या आप इस पेज के सभी नोट्स हटाना चाहते हैं?")) {
-        return;
-    }
-
-    writingBody.innerHTML = "";
-
-    pageTitle.value = "New Page";
-
-    deselectImage();
-
-    scheduleSave();
-});
-
-/* ==========================================================
-   SAFETY: SAVE WHEN LEAVING
-   ========================================================== */
-
-window.addEventListener("beforeunload", () => {
-    saveImmediately();
-});
-
-/* ==========================================================
-   START APPLICATION
-   ========================================================== */
-
-renderTree();
-loadActivePage();
-prepareAllImages();
-
-setSaveStatus("Ready");
-
-/*
-   Reposition selection frame after images load and after layout changes.
-*/
-writingBody.addEventListener("load", updateSelectionFrame, true);
-
+function drawSavedHighlights(o,item){if(!item.hi)return;const c=item.hi,ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);ctx.save();ctx.globalAlpha=.34;for(const h of o.highlights||[]){ctx.strokeStyle=h.color||"#fff176";ctx.lineWidth=Math.max(10,(h.width||.015)*c.width);ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(h.x1*c.width,h.y1*c.height);ctx.lineTo(h.x2*c.width,h.y2*c.height);ctx.stroke()}ctx.restore()}
+$("pdfSelectMode").onclick=()=>{pdfMode="select";updatePDFMode()};
+$("pdfHighlightMode").onclick=()=>{pdfMode="highlight";updatePDFMode()};
+function updatePDFMode(){$("pdfModeHint").textContent="PDF mode: "+(pdfMode==="select"?"Select Text":"Highlighter — उंगली से ड्रैग करें");document.querySelectorAll(".pdf-page").forEach(p=>p.classList.toggle("highlight-mode",pdfMode==="highlight"))}
+$("clearPDFHighlights").onclick=()=>{const p=activePage();if(!p)return;p.objects.filter(o=>o.type==="pdf").forEach(o=>{o.highlights=[];const t=pdfTasks.get(o.id);if(t)t.items.forEach(i=>drawSavedHighlights(o,i))});scheduleSave();setStatus("PDF highlights cleared")};
+function enablePDFResize(el,o){if(!("ResizeObserver"in window))return;let last=el.clientWidth,timer;new ResizeObserver(()=>{const w=el.clientWidth;if(!w||Math.abs(w-last)<24)return;last=w;clearTimeout(timer);timer=setTimeout(()=>{const c=el.querySelector(".pdf-pages");if(c)loadPDF(o,el,c)},800)}).observe(el)}
+
+/* Render page objects */
+function renderObjects(p){$("workspace").querySelectorAll(".object,.mindmap").forEach(el=>{if(el.classList.contains("pdf-object"))cancelPDFTask(el.dataset.objectId);el.remove()});p.objects=p.objects||[];p.objects.filter(o=>["text","image","pdf"].includes(o.type)).forEach(o=>$("workspace").append(createObject(o)));renderMindMap(p);requestAnimationFrame(()=>{autoGrowMain();updateWorkspaceSize();updatePDFMode()})}
+function renderMindMap(p){const old=$("workspace").querySelector(".mindmap");if(old)old.remove();if(!p.mindmap||!p.mindmap.length)return;const box=document.createElement("div");box.className="mindmap";const h=document.createElement("h3");h.textContent="Mind Map";const input=document.createElement("input");input.placeholder="New idea — Enter दबाएँ";const list=document.createElement("div");function refresh(){list.innerHTML="";p.mindmap.forEach((v,i)=>{const n=document.createElement("div");n.className="mind-node";n.textContent=v;n.onclick=()=>{if(confirm("इस आइडिया को हटाएँ?")){p.mindmap.splice(i,1);refresh();scheduleSave()}};list.append(n)});updateWorkspaceSize()}input.onkeydown=e=>{if(e.key==="Enter"&&input.value.trim()){p.mindmap.push(input.value.trim());input.value="";refresh();scheduleSave()}};box.append(h,input,list);$("workspace").append(box);refresh()}
+$("addMindMap").onclick=()=>{const p=activePage();if(!p)return;p.mindmap=p.mindmap||[];if(!p.mindmap.length)p.mindmap.push("Main Idea");renderMindMap(p);scheduleSave()};
+
+/* Backup and restore */
+function blobToBase64(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=()=>rej(r.error);r.readAsDataURL(blob)})}
+function base64ToBlob(b,t){const x=atob(b),a=new Uint8Array(x.length);for(let i=0;i<x.length;i++)a[i]=x.charCodeAt(i);return new Blob([a],{type:t||"application/octet-stream"})}
+$("backupBtn").onclick=async()=>{saveNow();try{if(!assetDB)await openDB();const data={app:"OneNote Infinity Pro",version:4,state,assets:[]},ids=new Set();allPages().forEach(p=>{(p.objects||[]).forEach(o=>{if(o.assetId)ids.add(o.assetId)});const t=document.createElement("div");t.innerHTML=p.content||"";t.querySelectorAll("[data-asset-id]").forEach(x=>ids.add(x.dataset.assetId))});for(const id of ids){const r=await getAsset(id);if(r&&r.blob)data.assets.push({id:r.id,name:r.name,type:r.type,base64:await blobToBase64(r.blob)})}const u=makeObjectURL(new Blob([JSON.stringify(data)],{type:"application/json"})),a=document.createElement("a");a.href=u;a.download="onenote-infinity-backup.json";a.click();setTimeout(()=>revokeObjectURL(u),3000);setStatus("Backup downloaded")}catch(e){console.error(e);alert("Backup नहीं बन पाया")}};
+$("restoreBtn").onclick=()=>$("restoreInput").click();
+$("restoreInput").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f||!confirm("Restore से मौजूदा डेटा बदल सकता है। जारी रखें?"))return;try{if(!assetDB)await openDB();const d=JSON.parse(await f.text());if(!d.state||!Array.isArray(d.state.notebooks))throw Error("Invalid backup");for(const a of d.assets||[])await putAsset(a.id,base64ToBlob(a.base64,a.type),a.name,a.type);state=d.state;if(!allPages().length)state=defaults();activePageId=allPages().some(p=>p.id===state.lastPageId)?state.lastPageId:allPages()[0].id;saveNow();renderTree();openPage(activePageId);alert("Backup Restore हो गया")}catch(err){console.error(err);alert("Restore नहीं हो पाया। सही Backup JSON चुनें।")}});
+
+/* Start */
+async function start(){try{await openDB()}catch(e){console.warn(e);setStatus("फ़ाइल स्टोरेज उपलब्ध नहीं है")}loadState();renderTree();openPage(activePageId);setStatus("Ready")}
+window.addEventListener("resize",updateWorkspaceSize);
+start();
 </script>
-
 </body>
 </html>
