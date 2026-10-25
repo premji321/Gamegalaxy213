@@ -9,15 +9,12 @@
 
 <style>
 :root {
-    --bg: #ffffff;
-    --panel: #ffffff;
-    --text: #242424;
-    --muted: #666666;
+    --accent: #7654c9;
     --border: #dddddd;
-    --accent: #7252cc;
-    --hover: #f3f0fb;
+    --text: #242424;
+    --muted: #6b6b6b;
     --toolbar: #fafafa;
-    --shadow: 0 2px 10px rgba(0,0,0,.09);
+    --hover: #f2edff;
 }
 
 * {
@@ -26,11 +23,10 @@
 
 html, body {
     margin: 0;
-    width: 100%;
     height: 100%;
     font-family: Arial, "Noto Sans Devanagari", sans-serif;
-    color: var(--text);
     background: #fff;
+    color: var(--text);
 }
 
 button, input, select {
@@ -45,7 +41,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 2px;
+    outline-offset: 1px;
 }
 
 .app {
@@ -59,14 +55,13 @@ select:focus-visible {
 /* TOP BAR */
 
 .topbar {
-    min-height: 54px;
+    min-height: 52px;
+    padding: 6px 10px;
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 7px 12px;
     border-bottom: 1px solid var(--border);
     background: #fff;
-    flex-shrink: 0;
 }
 
 .brand {
@@ -81,97 +76,103 @@ select:focus-visible {
 
 .top-actions {
     display: flex;
-    gap: 6px;
-    margin-left: auto;
+    gap: 5px;
     align-items: center;
+    margin-left: auto;
 }
 
 .btn {
-    padding: 8px 11px;
+    padding: 7px 10px;
     border: 1px solid var(--border);
     background: #fff;
     color: #333;
     border-radius: 5px;
 }
 
-.btn:hover {
+.btn:hover,
+.icon-btn:hover {
     background: var(--hover);
 }
 
 .btn.primary {
+    color: white;
     background: var(--accent);
-    color: #fff;
     border-color: var(--accent);
 }
 
 .icon-btn {
-    min-width: 36px;
-    min-height: 35px;
     border: 0;
-    border-radius: 5px;
+    border-radius: 4px;
     background: transparent;
-    font-size: 19px;
-}
-
-.icon-btn:hover {
-    background: var(--hover);
+    min-width: 32px;
+    min-height: 30px;
+    font-size: 18px;
 }
 
 /* MAIN LAYOUT */
 
 .main-layout {
-    display: flex;
     flex: 1;
     min-height: 0;
+    display: flex;
     overflow: hidden;
 }
 
 /* SIDEBAR */
 
 .sidebar {
-    width: 255px;
+    width: 250px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    background: #fff;
     border-right: 1px solid var(--border);
+    background: #fff;
     min-height: 0;
+    transition: width .18s ease;
+}
+
+.sidebar.collapsed {
+    width: 0;
+    overflow: hidden;
+    border: 0;
 }
 
 .sidebar-head {
-    padding: 12px;
+    padding: 10px;
     border-bottom: 1px solid #eee;
 }
 
-.sidebar-title {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 10px;
+.sidebar-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 9px;
 }
 
-.sidebar-buttons {
+.sidebar-heading strong {
+    font-size: 14px;
+}
+
+.sidebar-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
 }
 
 .small-btn {
-    padding: 7px 8px;
+    font-size: 11px;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    font-size: 12px;
-}
-
-.small-btn:hover {
-    background: var(--hover);
 }
 
 .tree {
     flex: 1;
     min-height: 0;
     overflow: auto;
-    padding: 8px;
+    padding: 6px;
 }
 
 .tree-item {
@@ -181,56 +182,66 @@ select:focus-visible {
 .tree-row {
     display: flex;
     align-items: center;
-    gap: 5px;
-    border-radius: 5px;
-    padding: 7px 5px;
+    gap: 3px;
+    padding: 5px 3px;
+    border-radius: 4px;
+    font-size: 12px;
     cursor: pointer;
-    font-size: 13px;
 }
 
 .tree-row:hover {
-    background: #f5f5f5;
+    background: #f6f6f6;
 }
 
 .tree-row.active {
     background: #eee8ff;
-    color: #4d319c;
+    color: #4e3299;
     font-weight: 600;
 }
 
-.tree-toggle {
-    width: 18px;
+.tree-toggle,
+.tree-expand {
     flex-shrink: 0;
-    text-align: center;
-    color: #777;
+    width: 23px;
+    height: 25px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #555;
+}
+
+.tree-toggle:hover,
+.tree-expand:hover {
+    background: #eaeaea;
 }
 
 .tree-label {
+    flex: 1;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    flex: 1;
 }
 
 .tree-menu {
     border: 0;
     background: transparent;
     color: #777;
-    font-size: 18px;
-    padding: 0 5px;
+    font-size: 17px;
+    padding: 0 4px;
 }
 
 .tree-children {
-    margin-left: 15px;
-    border-left: 1px solid #eee;
+    margin-left: 12px;
     padding-left: 5px;
+    border-left: 1px solid #eee;
 }
 
 .sidebar-footer {
+    padding: 8px;
     border-top: 1px solid #eee;
-    padding: 9px;
+    font-size: 10px;
     color: #777;
-    font-size: 11px;
 }
 
 /* EDITOR */
@@ -243,43 +254,21 @@ select:focus-visible {
     background: #fff;
 }
 
-.editor-top {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 7px;
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--border);
-    background: #fff;
-}
-
-.editor-top button {
-    padding: 7px 10px;
-    border: 1px solid #e1e1e1;
-    background: #fff;
-    border-radius: 5px;
-    font-size: 13px;
-}
-
-.editor-top button:hover {
-    background: var(--hover);
-}
-
 .editor-title-wrap {
-    padding: 12px 18px 5px;
-    background: #fff;
+    padding: 8px 14px 5px;
     flex-shrink: 0;
+    background: #fff;
 }
 
 .page-title {
     width: 100%;
-    border: 0;
-    outline: none;
+    padding: 5px 0;
     font-size: 23px;
     font-weight: 700;
-    color: #252525;
-    padding: 5px 0;
+    border: 0;
+    outline: none;
     background: transparent;
+    color: #252525;
 }
 
 .page-title::placeholder {
@@ -287,12 +276,78 @@ select:focus-visible {
 }
 
 .save-status {
-    font-size: 11px;
+    font-size: 10px;
     color: #777;
-    margin-top: 3px;
+    min-height: 14px;
 }
 
-/* WORKSPACE: COMPLETELY BLANK */
+/* FORMATTING TOOLBAR */
+
+.format-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 7px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+    flex-shrink: 0;
+}
+
+.tool-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding-right: 5px;
+    margin-right: 2px;
+    border-right: 1px solid #e5e5e5;
+}
+
+.tool-btn {
+    min-width: 31px;
+    height: 30px;
+    padding: 4px 7px;
+    border: 1px solid transparent;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.tool-btn:hover {
+    background: var(--hover);
+    border-color: #e4dcff;
+}
+
+.tool-btn:active {
+    background: #e9e0ff;
+}
+
+.tool-select {
+    height: 30px;
+    max-width: 135px;
+    padding: 3px 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 12px;
+}
+
+.font-size-select {
+    width: 58px;
+}
+
+.color-control {
+    width: 31px;
+    height: 30px;
+    padding: 2px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+}
+
+/* BLANK WORKSPACE */
 
 .workspace-scroll {
     flex: 1;
@@ -310,8 +365,6 @@ select:focus-visible {
     min-height: 100%;
     width: 1400px;
     height: 1000px;
-
-    /* No dots, grid or repeating pattern */
     background: #fff !important;
     background-image: none !important;
 }
@@ -320,56 +373,58 @@ select:focus-visible {
 
 .main-writing {
     position: absolute;
-    left: 24px;
-    top: 20px;
+    left: 20px;
+    top: 15px;
     width: 794px;
     min-height: 500px;
-    height: auto;
     background: #fff !important;
     background-image: none !important;
-    border: 1px solid #f0f0f0;
-    border-radius: 0;
-    box-shadow: none;
+    border: 1px solid transparent;
+    transition: border-color .12s ease;
 }
 
-.main-writing .writing-body {
+.main-writing.has-content {
+    border-color: #e4e4e4;
+}
+
+.writing-body {
     min-height: 480px;
     padding: 24px 28px;
     outline: none;
     overflow-wrap: anywhere;
-    line-height: 1.65;
     font-size: 15px;
+    line-height: 1.65;
     background: #fff !important;
     background-image: none !important;
 }
 
 .writing-body:empty::before {
-    content: "यहाँ लिखना शुरू करें...";
+    content: "यहाँ क्लिक करके लिखें...";
     color: #aaa;
     pointer-events: none;
 }
 
-.writing-body img {
+.writing-body img,
+.text-body img {
     max-width: 100%;
     height: auto;
 }
 
-.writing-body table {
+.writing-body table,
+.text-body table {
     border-collapse: collapse;
     max-width: 100%;
 }
 
 .writing-body td,
-.writing-body th {
-    border: 1px solid #ccc;
+.writing-body th,
+.text-body td,
+.text-body th {
+    border: 1px solid #bbb;
     padding: 5px;
 }
 
-.writing-body pre {
-    white-space: pre-wrap;
-}
-
-/* FLOATING OBJECTS */
+/* FLOATING TEXT / IMAGE / PDF OBJECTS */
 
 .object {
     position: absolute;
@@ -377,90 +432,105 @@ select:focus-visible {
     top: 100px;
     background: #fff !important;
     background-image: none !important;
-    border: 1px solid #dedede;
-    box-shadow: var(--shadow);
-    border-radius: 4px;
+    border: 1px solid transparent;
     overflow: visible;
 }
 
+.object.has-content {
+    border-color: #dedede;
+}
+
 .object-header {
-    height: 34px;
+    height: 29px;
     display: flex;
     align-items: center;
-    gap: 7px;
-    padding: 5px 8px;
-    background: #fafafa;
-    border-bottom: 1px solid #eee;
+    gap: 5px;
+    padding: 3px 7px;
+    background: #fff;
+    border-bottom: 1px solid transparent;
     cursor: move;
     user-select: none;
     touch-action: none;
-    border-radius: 4px 4px 0 0;
+}
+
+.object.has-content .object-header {
+    border-bottom-color: #eee;
 }
 
 .object-title {
-    font-size: 12px;
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     flex: 1;
+    min-width: 0;
+    font-size: 11px;
+    color: #666;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .object-close {
     border: 0;
     background: transparent;
-    font-size: 18px;
     color: #666;
+    font-size: 18px;
     padding: 0 4px;
 }
 
 .object-body {
     background: #fff !important;
     background-image: none !important;
-    min-height: 60px;
-    overflow: visible;
 }
 
-/* TEXT OBJECT */
+/* TEXT PANEL */
 
 .text-object {
     width: 240px;
-    height: 140px;
-    min-width: 150px;
-    min-height: 80px;
+    min-width: 120px;
+    min-height: 50px;
+    height: auto;
     resize: both;
     overflow: hidden;
 }
 
-.text-object .object-body {
-    height: calc(100% - 34px);
-    min-height: 40px;
-}
-
 .text-body {
-    height: 100%;
-    min-height: 45px;
-    padding: 12px;
-    overflow: auto;
+    min-height: 24px;
+    padding: 5px 7px;
     outline: none;
     overflow-wrap: anywhere;
+    white-space: normal;
     line-height: 1.6;
     background: #fff !important;
     background-image: none !important;
 }
 
-.text-body img {
-    max-width: 100%;
-    height: auto;
+/*
+  Empty text panels have no visible frame.
+  A thin frame appears only after text is entered.
+*/
+
+.text-object:not(.has-content) {
+    border-color: transparent;
 }
 
-/* IMAGE OBJECT */
+.text-object:not(.has-content) .object-header {
+    border-bottom-color: transparent;
+}
+
+.text-object.has-content {
+    border: 1px solid #d7d7d7;
+}
+
+.text-object.has-content .object-header {
+    border-bottom: 1px solid #ededed;
+}
+
+/* IMAGE */
 
 .image-object {
     width: 340px;
     min-width: 150px;
     resize: both;
     overflow: hidden;
+    border: 1px solid #ddd;
 }
 
 .image-object .object-body {
@@ -469,25 +539,20 @@ select:focus-visible {
 
 .image-object img {
     display: block;
-    max-width: 100%;
     width: 100%;
+    max-width: 100%;
     height: auto;
-    object-fit: contain;
 }
 
-/* PDF OBJECT
-   All pages are visible in the workspace.
-   The PDF object itself grows to the height of all pages.
-   No internal vertical scroll box. */
+/* PDF: NO INTERNAL VERTICAL SCROLL */
 
 .pdf-object {
     width: 794px;
     min-width: 280px;
-    max-width: none;
-    height: auto;
-    min-height: 150px;
+    height: auto !important;
     resize: horizontal;
     overflow: visible !important;
+    border: 1px solid #ddd;
     background: #fff !important;
 }
 
@@ -496,49 +561,34 @@ select:focus-visible {
     max-height: none !important;
     overflow: visible !important;
     padding: 0;
-    background: #fff !important;
 }
 
 .pdf-pages {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    gap: 10px;
     width: 100%;
     height: auto !important;
     overflow: visible !important;
-    background: #fff !important;
-    gap: 12px;
 }
 
 .pdf-page {
     position: relative;
-    display: block;
-    flex: 0 0 auto;
     width: 100%;
-    height: auto;
-    overflow: visible;
     background: #fff;
-    border: 1px solid #e7e7e7;
+    border: 1px solid #eee;
 }
 
-.pdf-page canvas.pdf-canvas {
+.pdf-canvas {
     display: block;
     width: 100%;
     height: auto;
-    background: #fff;
-}
-
-.pdf-page canvas.mark-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
 }
 
 .pdf-message {
-    padding: 20px;
-    font-size: 13px;
+    padding: 15px;
+    font-size: 12px;
     color: #666;
 }
 
@@ -548,37 +598,30 @@ select:focus-visible {
     position: absolute;
     left: 900px;
     top: 30px;
-    width: 420px;
-    min-height: 300px;
+    width: 320px;
+    min-height: 100px;
+    padding: 10px;
     border: 1px solid #ddd;
     background: #fff;
-    padding: 12px;
-    box-shadow: var(--shadow);
 }
 
 .mindmap h3 {
-    margin: 0 0 10px;
-    font-size: 15px;
+    margin: 0 0 8px;
+    font-size: 14px;
 }
 
 .mindmap input {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.mindmap-list {
-    margin-top: 10px;
 }
 
 .mind-node {
+    margin-top: 6px;
+    padding: 7px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 8px;
-    margin: 5px 0;
-    background: #fff;
-    font-size: 13px;
+    border-radius: 4px;
+    font-size: 12px;
     overflow-wrap: anywhere;
 }
 
@@ -591,16 +634,16 @@ select:focus-visible {
     display: none;
     align-items: center;
     justify-content: center;
-    padding: 18px;
+    padding: 15px;
     background: rgba(0,0,0,.35);
 }
 
 .dialog {
-    width: min(430px, 100%);
+    width: min(420px, 100%);
     padding: 20px;
+    border-radius: 8px;
     background: #fff;
-    border-radius: 9px;
-    box-shadow: 0 10px 40px rgba(0,0,0,.2);
+    box-shadow: 0 10px 40px #0002;
 }
 
 .dialog h3 {
@@ -609,29 +652,28 @@ select:focus-visible {
 
 .dialog input {
     width: 100%;
-    padding: 11px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 10px 0;
+    border-radius: 4px;
 }
 
 .dialog-actions {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    margin-top: 15px;
+    margin-top: 14px;
 }
 
 /* MOBILE */
 
-@media (max-width: 700px) {
+@media(max-width:700px) {
     .topbar {
         gap: 5px;
-        padding: 6px;
+        padding: 5px;
     }
 
     .brand {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .top-actions {
@@ -639,8 +681,8 @@ select:focus-visible {
     }
 
     .top-actions .btn {
+        padding: 6px;
         font-size: 11px;
-        padding: 7px;
     }
 
     .sidebar {
@@ -648,188 +690,239 @@ select:focus-visible {
     }
 
     .sidebar-head {
-        padding: 7px;
+        padding: 6px;
     }
 
-    .sidebar-title {
+    .sidebar-heading strong {
         font-size: 12px;
     }
 
     .small-btn {
         font-size: 10px;
-        padding: 6px;
-    }
-
-    .tree {
-        padding: 4px;
+        padding: 5px;
     }
 
     .tree-row {
         font-size: 11px;
-        padding: 7px 3px;
-    }
-
-    .editor-title-wrap {
-        padding: 9px 12px 4px;
     }
 
     .page-title {
         font-size: 19px;
     }
 
-    .editor-top {
+    .format-toolbar {
+        gap: 3px;
         padding: 5px;
-        gap: 4px;
     }
 
-    .editor-top button {
-        font-size: 11px;
-        padding: 7px;
+    .tool-group {
+        padding-right: 3px;
+        margin-right: 0;
+    }
+
+    .tool-btn {
+        min-width: 28px;
+        height: 29px;
+        padding: 3px 5px;
+    }
+
+    .tool-select {
+        max-width: 105px;
+        height: 29px;
     }
 
     .main-writing {
+        width: 794px;
         left: 12px;
         top: 12px;
-        width: 794px;
     }
 
-    .main-writing .writing-body {
+    .writing-body {
         padding: 18px;
-    }
-
-    .pdf-object {
-        width: 794px;
     }
 }
 
-@media (max-width: 420px) {
-    .brand {
-        font-size: 12px;
-    }
-
-    .top-actions .hide-mobile {
-        display: none;
-    }
-
+@media(max-width:420px) {
     .sidebar {
         width: 125px;
+    }
+
+    .brand {
+        font-size: 11px;
     }
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
     <header class="topbar">
+        <button class="icon-btn" id="sidebarToggle" title="Show/Hide Notebook panel">☰</button>
+
         <div class="brand">OneNote <span>Infinity Pro</span></div>
 
         <div class="top-actions">
             <button class="btn" id="saveBtn">Save</button>
-            <button class="btn hide-mobile" id="backupBtn">Backup</button>
-            <button class="btn hide-mobile" id="restoreBtn">Restore</button>
-            <button class="icon-btn" id="addNotebookBtn" title="New Notebook">＋</button>
+            <button class="btn" id="backupBtn">Backup</button>
+            <button class="btn" id="restoreBtn">Restore</button>
         </div>
     </header>
 
     <main class="main-layout">
 
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
 
             <div class="sidebar-head">
-                <div class="sidebar-title">📚 My Notebooks</div>
 
-                <div class="sidebar-buttons">
+                <div class="sidebar-heading">
+                    <strong>📚 Notebooks</strong>
+
+                    <button class="icon-btn"
+                        id="collapseSidebarBtn"
+                        title="Minimize notebook panel">−</button>
+                </div>
+
+                <div class="sidebar-actions">
                     <button class="small-btn" id="newNotebookBtn">＋ Notebook</button>
                     <button class="small-btn" id="newSectionBtn">＋ Section</button>
                     <button class="small-btn" id="newPageBtn">＋ Page</button>
                 </div>
+
             </div>
 
             <div class="tree" id="tree"></div>
 
             <div class="sidebar-footer">
-                Auto-save enabled · Local browser storage
+                Auto-save · Local storage
             </div>
 
         </aside>
 
         <section class="editor">
 
-            <div class="editor-top">
-                <button id="addTextBtn">＋ Text</button>
-                <button id="addImageBtn">＋ Image</button>
-                <button id="addPdfBtn">＋ PDF</button>
-                <button id="addMindBtn">＋ Mind Map</button>
-
-                <button id="boldBtn"><b>B</b></button>
-                <button id="italicBtn"><i>I</i></button>
-                <button id="underlineBtn"><u>U</u></button>
-
-                <button id="bulletBtn">• List</button>
-                <button id="undoBtn">↶ Undo</button>
-            </div>
-
             <div class="editor-title-wrap">
                 <input
                     id="pageTitle"
                     class="page-title"
-                    type="text"
                     placeholder="Page title"
                     autocomplete="off"
                 >
                 <div class="save-status" id="saveStatus">Ready</div>
             </div>
 
-            <div class="workspace-scroll" id="workspaceScroll">
+            <!-- ADVANCED FORMATTING TOOLBAR -->
 
-                <div class="workspace" id="workspace">
+            <div class="format-toolbar">
 
-                    <div class="main-writing" id="mainWritingArea">
-                        <div
-                            class="writing-body"
-                            id="mainWritingBody"
-                            contenteditable="true"
-                            spellcheck="true"
-                        ></div>
-                    </div>
+                <div class="tool-group">
+                    <button class="tool-btn" id="undoBtn" title="Undo">↶</button>
+                    <button class="tool-btn" id="redoBtn" title="Redo">↷</button>
+                </div>
 
+                <div class="tool-group">
+                    <select class="tool-select" id="blockFormat" title="Text style">
+                        <option value="P">Paragraph</option>
+                        <option value="H1">Heading 1</option>
+                        <option value="H2">Heading 2</option>
+                        <option value="H3">Heading 3</option>
+                        <option value="BLOCKQUOTE">Quote</option>
+                        <option value="PRE">Code</option>
+                    </select>
+
+                    <select class="tool-select" id="fontFamily" title="Font family">
+                        <option value="Arial">Arial</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Trebuchet MS">Trebuchet MS</option>
+                        <option value="Noto Sans Devanagari">Noto Sans Devanagari</option>
+                    </select>
+
+                    <select class="tool-select font-size-select" id="fontSize" title="Font size">
+                        <option value="1">8</option>
+                        <option value="2">10</option>
+                        <option value="3" selected>12</option>
+                        <option value="4">14</option>
+                        <option value="5">18</option>
+                        <option value="6">24</option>
+                        <option value="7">36</option>
+                    </select>
+                </div>
+
+                <div class="tool-group">
+                    <button class="tool-btn" data-command="bold" title="Bold"><b>B</b></button>
+                    <button class="tool-btn" data-command="italic" title="Italic"><i>I</i></button>
+                    <button class="tool-btn" data-command="underline" title="Underline"><u>U</u></button>
+                    <button class="tool-btn" data-command="strikeThrough" title="Strikethrough"><s>S</s></button>
+                </div>
+
+                <div class="tool-group">
+                    <label title="Font color">
+                        <input type="color" class="color-control" id="fontColor" value="#242424" aria-label="Font color">
+                    </label>
+
+                    <label title="Highlight / background color">
+                        <input type="color" class="color-control" id="highlightColor" value="#fff176" aria-label="Highlight color">
+                    </label>
+                </div>
+
+                <div class="tool-group">
+                    <button class="tool-btn" data-command="justifyLeft" title="Align left">⇤</button>
+                    <button class="tool-btn" data-command="justifyCenter" title="Align center">≡</button>
+                    <button class="tool-btn" data-command="justifyRight" title="Align right">⇥</button>
+                    <button class="tool-btn" data-command="justifyFull" title="Justify">☷</button>
+                </div>
+
+                <div class="tool-group">
+                    <button class="tool-btn" data-command="insertUnorderedList" title="Bullets">• List</button>
+                    <button class="tool-btn" data-command="insertOrderedList" title="Numbering">1. List</button>
+                    <button class="tool-btn" data-command="indent" title="Indent">→</button>
+                    <button class="tool-btn" data-command="outdent" title="Outdent">←</button>
+                </div>
+
+                <div class="tool-group">
+                    <button class="tool-btn" id="linkBtn" title="Insert link">🔗</button>
+                    <button class="tool-btn" id="tableBtn" title="Insert table">▦</button>
+                    <button class="tool-btn" id="clearFormatBtn" title="Clear formatting">Tx</button>
+                </div>
+
+                <div class="tool-group">
+                    <button class="tool-btn" id="addTextBtn" title="New text panel">＋ Text</button>
+                    <button class="tool-btn" id="addImageBtn" title="Upload image">＋ Image</button>
+                    <button class="tool-btn" id="addPdfBtn" title="Upload PDF">＋ PDF</button>
+                    <button class="tool-btn" id="addMindBtn" title="Mind map">＋ Mind Map</button>
                 </div>
 
             </div>
 
+            <div class="workspace-scroll" id="workspaceScroll">
+                <div class="workspace" id="workspace">
+
+                    <div class="main-writing" id="mainWritingArea">
+                        <div class="writing-body"
+                            id="mainWritingBody"
+                            contenteditable="true"
+                            spellcheck="true"></div>
+                    </div>
+
+                </div>
+            </div>
+
         </section>
-
     </main>
-
 </div>
 
-<input
-    type="file"
-    id="imageInput"
-    accept="image/*"
-    hidden
->
-
-<input
-    type="file"
-    id="pdfInput"
-    accept="application/pdf,.pdf"
-    hidden
->
-
-<input
-    type="file"
-    id="restoreInput"
-    accept=".json,application/json"
-    hidden
->
+<input type="file" id="imageInput" accept="image/*" hidden>
+<input type="file" id="pdfInput" accept="application/pdf,.pdf" hidden>
+<input type="file" id="restoreInput" accept=".json,application/json" hidden>
 
 <div class="dialog-backdrop" id="dialogBackdrop">
     <div class="dialog">
-        <h3 id="dialogTitle">Create item</h3>
-        <input id="dialogInput" placeholder="Enter name">
+        <h3 id="dialogTitle">Create</h3>
+        <input id="dialogInput" placeholder="Name">
 
         <div class="dialog-actions">
             <button class="btn" id="dialogCancel">Cancel</button>
@@ -838,23 +931,21 @@ select:focus-visible {
     </div>
 </div>
 
-<!-- PDF.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 <script>
 "use strict";
 
-/* =========================================================
-   ONENOTE INFINITY PRO
-   Blank workspace + auto-growing text + complete PDF pages
-   ========================================================= */
+/* =====================================================
+   CORE SETTINGS AND HELPERS
+   ===================================================== */
 
-const DB_NAME = "OneNoteInfinityProDB";
-const DB_VERSION = 1;
+const META_KEY = "oneNoteInfinityProAdvancedV2";
+const DB_NAME = "OneNoteInfinityProAdvancedAssets";
 const STORE_NAME = "assets";
-const META_KEY = "oneNoteInfinityProDataV1";
 
 const treeEl = document.getElementById("tree");
+const sidebar = document.getElementById("sidebar");
 const workspace = document.getElementById("workspace");
 const workspaceScroll = document.getElementById("workspaceScroll");
 const mainWritingArea = document.getElementById("mainWritingArea");
@@ -862,53 +953,38 @@ const mainWritingBody = document.getElementById("mainWritingBody");
 const pageTitle = document.getElementById("pageTitle");
 const saveStatus = document.getElementById("saveStatus");
 
-let state = null;
+let state;
 let activePageId = null;
-let dialogCallback = null;
-let saveTimer = null;
 let assetDB = null;
-let selectedTreeId = null;
+let saveTimer = null;
+let dialogCallback = null;
 
-/* PDF.js worker */
+/* Configure PDF.js worker */
 
 if (window.pdfjsLib) {
     pdfjsLib.GlobalWorkerOptions.workerSrc =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 }
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
 function uid() {
     return "id_" + Date.now().toString(36) +
         "_" + Math.random().toString(36).slice(2, 9);
 }
 
-function clone(obj) {
-    return JSON.parse(JSON.stringify(obj));
+function setStatus(text) {
+    saveStatus.textContent = text;
 }
 
-function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, ch => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[ch]);
-}
-
-function setStatus(message) {
-    saveStatus.textContent = message;
-}
+/* =====================================================
+   DIALOG
+   ===================================================== */
 
 function showDialog(title, placeholder, callback) {
     document.getElementById("dialogTitle").textContent = title;
 
     const input = document.getElementById("dialogInput");
     input.value = "";
-    input.placeholder = placeholder || "Enter name";
+    input.placeholder = placeholder || "Name";
 
     dialogCallback = callback;
 
@@ -933,6 +1009,7 @@ document.getElementById("dialogConfirm").onclick = () => {
     }
 
     const callback = dialogCallback;
+
     closeDialog();
 
     if (callback) callback(value);
@@ -948,24 +1025,24 @@ document.getElementById("dialogBackdrop").addEventListener("click", e => {
     if (e.target.id === "dialogBackdrop") closeDialog();
 });
 
-/* =========================================================
-   INDEXEDDB FOR PDF AND IMAGE FILES
-   ========================================================= */
+/* =====================================================
+   INDEXEDDB ASSETS
+   ===================================================== */
 
 function openAssetDB() {
     return new Promise((resolve, reject) => {
         if (!("indexedDB" in window)) {
-            reject(new Error("IndexedDB is not supported"));
+            reject(new Error("IndexedDB unavailable"));
             return;
         }
 
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        const request = indexedDB.open(DB_NAME, 1);
 
         request.onupgradeneeded = () => {
-            const db = request.result;
-
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME, { keyPath: "id" });
+            if (!request.result.objectStoreNames.contains(STORE_NAME)) {
+                request.result.createObjectStore(STORE_NAME, {
+                    keyPath: "id"
+                });
             }
         };
 
@@ -987,8 +1064,8 @@ async function putAsset(id, blob, name, type) {
         tx.objectStore(STORE_NAME).put({
             id,
             blob,
-            name: name || "file",
-            type: type || blob.type || "application/octet-stream",
+            name,
+            type,
             updatedAt: Date.now()
         });
 
@@ -1009,23 +1086,11 @@ async function getAsset(id) {
     });
 }
 
-async function deleteAsset(id) {
-    if (!assetDB) await openAssetDB();
+/* =====================================================
+   NOTEBOOK DATA MODEL
+   ===================================================== */
 
-    return new Promise((resolve, reject) => {
-        const tx = assetDB.transaction(STORE_NAME, "readwrite");
-        tx.objectStore(STORE_NAME).delete(id);
-
-        tx.oncomplete = resolve;
-        tx.onerror = () => reject(tx.error);
-    });
-}
-
-/* =========================================================
-   DATA MODEL
-   ========================================================= */
-
-function createPage(title = "New Page") {
+function makePage(title = "New Page") {
     return {
         id: uid(),
         type: "page",
@@ -1037,41 +1102,40 @@ function createPage(title = "New Page") {
     };
 }
 
-function createSection(title = "New Section") {
+function makeSection(title = "New Section") {
     return {
         id: uid(),
         type: "section",
         title,
-        children: [createPage("Page 1")],
-        expanded: true
+        expanded: true,
+        children: [makePage("Page 1")]
     };
 }
 
-function createNotebook(title = "My Notebook") {
+function makeNotebook(title = "My Notebook") {
     return {
         id: uid(),
         type: "notebook",
         title,
-        children: [createSection("General")],
-        expanded: true
+        expanded: true,
+        children: [makeSection("General")]
     };
 }
 
 function defaultState() {
-    const notebook = createNotebook("My Notebook");
+    const notebook = makeNotebook("My Notebook");
 
     return {
-        version: 1,
+        version: 2,
         notebooks: [notebook],
-        lastPageId: notebook.children[0].children[0].id,
-        updatedAt: Date.now()
+        lastPageId: notebook.children[0].children[0].id
     };
 }
 
 function allPages() {
     const result = [];
 
-    for (const notebook of state.notebooks) {
+    for (const notebook of state.notebooks || []) {
         for (const section of notebook.children || []) {
             for (const page of section.children || []) {
                 result.push(page);
@@ -1098,7 +1162,7 @@ function findNode(id) {
     return null;
 }
 
-function getParentSection(pageId) {
+function parentSection(pageId) {
     for (const notebook of state.notebooks) {
         for (const section of notebook.children || []) {
             if ((section.children || []).some(page => page.id === pageId)) {
@@ -1114,9 +1178,9 @@ function activePage() {
     return allPages().find(page => page.id === activePageId) || null;
 }
 
-/* =========================================================
-   SAVE AND LOAD
-   ========================================================= */
+/* =====================================================
+   LOAD / SAVE
+   ===================================================== */
 
 function loadState() {
     try {
@@ -1130,56 +1194,22 @@ function loadState() {
             }
         }
     } catch (error) {
-        console.warn("Could not read saved data:", error);
+        console.warn(error);
     }
 
     if (!state || !state.notebooks.length) {
         state = defaultState();
     }
 
-    const pages = allPages();
-
-    if (!pages.length) {
+    if (!allPages().length) {
         state = defaultState();
     }
 
-    const requestedPage = allPages().find(
+    activePageId = allPages().some(
         page => page.id === state.lastPageId
-    );
-
-    activePageId = requestedPage
-        ? requestedPage.id
+    )
+        ? state.lastPageId
         : allPages()[0].id;
-}
-
-function persistState() {
-    state.updatedAt = Date.now();
-
-    try {
-        localStorage.setItem(META_KEY, JSON.stringify(state));
-        setStatus("✓ Saved automatically");
-    } catch (error) {
-        console.error(error);
-
-        setStatus("Save failed");
-
-        alert(
-            "ब्राउज़र में स्टोरेज की जगह कम हो सकती है। " +
-            "PDF और इमेज IndexedDB में रखे जाते हैं, " +
-            "लेकिन बहुत अधिक टेक्स्ट होने पर बैकअप लेना उचित है।"
-        );
-    }
-}
-
-function scheduleSave() {
-    setStatus("Saving…");
-
-    clearTimeout(saveTimer);
-
-    saveTimer = setTimeout(() => {
-        saveCurrentPage();
-        persistState();
-    }, 450);
 }
 
 function saveCurrentPage() {
@@ -1190,35 +1220,29 @@ function saveCurrentPage() {
     page.title = pageTitle.value.trim() || "Untitled Page";
     page.content = mainWritingBody.innerHTML;
 
-    const objects = [];
-
     workspace.querySelectorAll(".object").forEach(el => {
-        const id = el.dataset.objectId;
-        const original = page.objects.find(obj => obj.id === id);
+        const obj = page.objects.find(
+            item => item.id === el.dataset.objectId
+        );
 
-        if (!original) return;
+        if (!obj) return;
 
-        original.x = parseFloat(el.style.left) || 0;
-        original.y = parseFloat(el.style.top) || 0;
+        obj.x = parseFloat(el.style.left) || 0;
+        obj.y = parseFloat(el.style.top) || 0;
 
-        if (original.type === "text") {
+        if (obj.type === "text") {
             const body = el.querySelector(".text-body");
 
-            if (body) {
-                original.html = body.innerHTML;
+            if (body) obj.html = body.innerHTML;
 
-                original.userWidth = el.dataset.userWidth === "1";
-                original.userHeight = el.dataset.userHeight === "1";
+            obj.w = el.offsetWidth;
+            obj.h = el.offsetHeight;
 
-                original.w = el.offsetWidth;
-                original.h = el.offsetHeight;
-            }
-        } else if (original.type === "image") {
-            original.w = el.offsetWidth;
-            original.h = el.offsetHeight;
-        } else if (original.type === "pdf") {
-            original.w = el.offsetWidth;
-            original.h = el.offsetHeight;
+            obj.userWidth = el.dataset.userWidth === "1";
+            obj.userHeight = el.dataset.userHeight === "1";
+        } else {
+            obj.w = el.offsetWidth;
+            obj.h = el.offsetHeight;
         }
     });
 
@@ -1228,25 +1252,55 @@ function saveCurrentPage() {
 
 function saveNow() {
     clearTimeout(saveTimer);
+
     saveCurrentPage();
-    persistState();
+
+    try {
+        localStorage.setItem(META_KEY, JSON.stringify(state));
+        setStatus("✓ Saved");
+    } catch (error) {
+        setStatus("Save error");
+        console.error(error);
+
+        alert(
+            "सेव करने में समस्या हुई। कृपया Backup डाउनलोड करें " +
+            "और ब्राउज़र स्टोरेज की जाँच करें।"
+        );
+    }
+}
+
+function scheduleSave() {
+    setStatus("Saving…");
+
+    clearTimeout(saveTimer);
+
+    saveTimer = setTimeout(saveNow, 400);
 }
 
 document.getElementById("saveBtn").onclick = saveNow;
 
-/* =========================================================
-   TREE RENDERING
-   ========================================================= */
+window.addEventListener("beforeunload", () => {
+    try {
+        saveCurrentPage();
+        localStorage.setItem(META_KEY, JSON.stringify(state));
+    } catch (error) {
+        console.warn(error);
+    }
+});
+
+/* =====================================================
+   NOTEBOOK / SECTION TREE
+   ===================================================== */
 
 function renderTree() {
     treeEl.innerHTML = "";
 
-    for (const notebook of state.notebooks) {
-        treeEl.appendChild(renderTreeNode(notebook, 0));
-    }
+    state.notebooks.forEach(notebook => {
+        treeEl.appendChild(renderNode(notebook));
+    });
 }
 
-function renderTreeNode(node, depth) {
+function renderNode(node) {
     const wrapper = document.createElement("div");
     wrapper.className = "tree-item";
 
@@ -1260,11 +1314,20 @@ function renderTreeNode(node, depth) {
     const hasChildren = Array.isArray(node.children) &&
         node.children.length > 0;
 
-    const toggle = document.createElement("span");
+    /*
+      The arrow button independently expands/collapses the tree node.
+      It does not open the page.
+    */
+
+    const toggle = document.createElement("button");
     toggle.className = "tree-toggle";
     toggle.textContent = hasChildren
         ? (node.expanded === false ? "▸" : "▾")
         : "•";
+
+    toggle.title = node.expanded === false
+        ? "Maximize / Expand"
+        : "Minimize / Collapse";
 
     const label = document.createElement("span");
     label.className = "tree-label";
@@ -1276,7 +1339,6 @@ function renderTreeNode(node, depth) {
             : "📄 ";
 
     label.textContent = icon + node.title;
-    label.title = node.title;
 
     const menu = document.createElement("button");
     menu.className = "tree-menu";
@@ -1286,37 +1348,42 @@ function renderTreeNode(node, depth) {
     row.append(toggle, label, menu);
     wrapper.appendChild(row);
 
-    row.addEventListener("click", e => {
-        if (e.target === menu) return;
+    toggle.onclick = e => {
+        e.stopPropagation();
 
-        if (hasChildren && e.target === toggle) {
-            node.expanded = node.expanded === false;
-            renderTree();
-            scheduleSave();
-            return;
-        }
+        if (!hasChildren) return;
+
+        node.expanded = node.expanded === false;
+
+        renderTree();
+        scheduleSave();
+    };
+
+    row.onclick = e => {
+        if (e.target.closest("button")) return;
 
         if (node.type === "page") {
             openPage(node.id);
         } else {
             node.expanded = node.expanded === false;
+
             renderTree();
             scheduleSave();
         }
-    });
+    };
 
-    menu.addEventListener("click", e => {
+    menu.onclick = e => {
         e.stopPropagation();
-        showNodeMenu(node);
-    });
+        nodeMenu(node);
+    };
 
     if (hasChildren && node.expanded !== false) {
         const children = document.createElement("div");
         children.className = "tree-children";
 
-        for (const child of node.children) {
-            children.appendChild(renderTreeNode(child, depth + 1));
-        }
+        node.children.forEach(child => {
+            children.appendChild(renderNode(child));
+        });
 
         wrapper.appendChild(children);
     }
@@ -1324,42 +1391,44 @@ function renderTreeNode(node, depth) {
     return wrapper;
 }
 
-function showNodeMenu(node) {
-    const options = node.type === "notebook"
-        ? ["Add Section", "Rename", "Delete"]
-        : node.type === "section"
-            ? ["Add Page", "Rename", "Delete"]
-            : ["Rename", "Delete"];
+function nodeMenu(node) {
+    let choices;
 
-    const choice = prompt(
+    if (node.type === "notebook") {
+        choices = ["Add Section", "Rename", "Delete"];
+    } else if (node.type === "section") {
+        choices = ["Add Page", "Rename", "Delete"];
+    } else {
+        choices = ["Rename", "Delete"];
+    }
+
+    const answer = prompt(
         node.title + "\n\n" +
-        options.map((option, i) => `${i + 1}. ${option}`).join("\n") +
+        choices.map((item, i) => `${i + 1}. ${item}`).join("\n") +
         "\n\nविकल्प का नंबर लिखें:"
     );
 
-    if (!choice) return;
+    if (!answer) return;
 
-    const index = Number(choice) - 1;
+    const index = Number(answer) - 1;
 
-    if (!Number.isInteger(index) || index < 0 || index >= options.length) {
-        return;
-    }
+    if (!Number.isInteger(index) || !choices[index]) return;
 
-    const action = options[index];
+    const action = choices[index];
 
-    if (action === "Add Section") addSectionTo(node.id);
-    if (action === "Add Page") addPageTo(node.id);
+    if (action === "Add Section") addSection(node.id);
+    if (action === "Add Page") addPage(node.id);
     if (action === "Rename") renameNode(node);
     if (action === "Delete") deleteNode(node);
 }
 
-/* =========================================================
-   NOTEBOOK / SECTION / PAGE ACTIONS
-   ========================================================= */
+/* =====================================================
+   CREATE / RENAME / DELETE
+   ===================================================== */
 
 function addNotebook() {
     showDialog("New Notebook", "Notebook name", name => {
-        const notebook = createNotebook(name);
+        const notebook = makeNotebook(name);
 
         state.notebooks.push(notebook);
 
@@ -1369,13 +1438,13 @@ function addNotebook() {
     });
 }
 
-function addSectionTo(notebookId) {
+function addSection(notebookId) {
     const notebook = findNode(notebookId);
 
     if (!notebook || notebook.type !== "notebook") return;
 
     showDialog("New Section", "Section name", name => {
-        const section = createSection(name);
+        const section = makeSection(name);
 
         notebook.children.push(section);
         notebook.expanded = true;
@@ -1386,13 +1455,13 @@ function addSectionTo(notebookId) {
     });
 }
 
-function addPageTo(sectionId) {
+function addPage(sectionId) {
     const section = findNode(sectionId);
 
     if (!section || section.type !== "section") return;
 
     showDialog("New Page", "Page name", name => {
-        const page = createPage(name);
+        const page = makePage(name);
 
         section.children.push(page);
         section.expanded = true;
@@ -1424,13 +1493,13 @@ function deleteNode(node) {
             item => item.id !== node.id
         );
     } else if (node.type === "section") {
-        for (const notebook of state.notebooks) {
+        state.notebooks.forEach(notebook => {
             notebook.children = notebook.children.filter(
                 item => item.id !== node.id
             );
-        }
+        });
     } else {
-        const section = getParentSection(node.id);
+        const section = parentSection(node.id);
 
         if (section) {
             section.children = section.children.filter(
@@ -1453,67 +1522,73 @@ function deleteNode(node) {
 }
 
 document.getElementById("newNotebookBtn").onclick = addNotebook;
-document.getElementById("addNotebookBtn").onclick = addNotebook;
 
 document.getElementById("newSectionBtn").onclick = () => {
-    const page = activePage();
-    const section = page ? getParentSection(page.id) : null;
+    const section = parentSection(activePageId);
 
-    let notebook = null;
+    let notebook = state.notebooks.find(item =>
+        item.children.some(s => s.id === section?.id)
+    );
 
-    if (section) {
-        notebook = state.notebooks.find(item =>
-            item.children.some(child => child.id === section.id)
-        );
-    }
+    if (!notebook) notebook = state.notebooks[0];
 
-    if (!notebook) {
-        notebook = state.notebooks[0];
-    }
-
-    if (notebook) addSectionTo(notebook.id);
+    if (notebook) addSection(notebook.id);
 };
 
 document.getElementById("newPageBtn").onclick = () => {
-    const page = activePage();
-    const section = page ? getParentSection(page.id) : null;
+    const section = parentSection(activePageId);
 
     if (section) {
-        addPageTo(section.id);
-    } else {
-        const notebook = state.notebooks[0];
+        addPage(section.id);
+    } else if (state.notebooks[0]) {
+        const newSection = makeSection("General");
 
-        if (!notebook) return;
+        state.notebooks[0].children.push(newSection);
 
-        const newSection = createSection("General");
-        notebook.children.push(newSection);
-
-        addPageTo(newSection.id);
+        addPage(newSection.id);
     }
 };
 
-/* =========================================================
-   OPEN PAGE
-   ========================================================= */
+/* Sidebar minimize / maximize */
 
-function openPage(pageId) {
+function toggleSidebar() {
+    sidebar.classList.toggle("collapsed");
+
+    document.getElementById("sidebarToggle").textContent =
+        sidebar.classList.contains("collapsed") ? "☰" : "☰";
+}
+
+document.getElementById("sidebarToggle").onclick = toggleSidebar;
+
+document.getElementById("collapseSidebarBtn").onclick = toggleSidebar;
+
+/* =====================================================
+   PAGE OPENING
+   ===================================================== */
+
+function openPage(id) {
     saveCurrentPage();
 
-    const page = allPages().find(item => item.id === pageId);
+    const page = allPages().find(item => item.id === id);
 
     if (!page) return;
 
-    activePageId = pageId;
-    state.lastPageId = pageId;
+    activePageId = id;
+    state.lastPageId = id;
 
     pageTitle.value = page.title || "";
     mainWritingBody.innerHTML = page.content || "";
 
+    mainWritingArea.classList.toggle(
+        "has-content",
+        mainWritingBody.textContent.trim().length > 0
+    );
+
     renderObjects(page);
     renderTree();
 
+    autoGrowMainWriting();
     setStatus("Ready");
-    updateWorkspaceSize();
 }
 
 pageTitle.addEventListener("input", () => {
@@ -1525,87 +1600,182 @@ pageTitle.addEventListener("input", () => {
     scheduleSave();
 });
 
+/* =====================================================
+   MAIN WRITING AREA
+   ===================================================== */
+
 mainWritingBody.addEventListener("input", () => {
+    updateMainBorder();
     autoGrowMainWriting();
     scheduleSave();
 });
 
 mainWritingBody.addEventListener("paste", () => {
     setTimeout(() => {
+        updateMainBorder();
         autoGrowMainWriting();
         scheduleSave();
     }, 100);
 });
 
+function updateMainBorder() {
+    mainWritingArea.classList.toggle(
+        "has-content",
+        mainWritingBody.textContent.trim().length > 0 ||
+        !!mainWritingBody.querySelector("img, table")
+    );
+}
+
 function autoGrowMainWriting() {
     mainWritingBody.style.height = "auto";
 
-    const contentHeight = Math.max(
+    const height = Math.max(
         480,
-        mainWritingBody.scrollHeight + 10
+        mainWritingBody.scrollHeight + 15
     );
 
-    mainWritingBody.style.height = contentHeight + "px";
-
-    mainWritingArea.style.height =
-        (contentHeight + 2) + "px";
+    mainWritingBody.style.height = height + "px";
+    mainWritingArea.style.height = (height + 2) + "px";
 
     updateWorkspaceSize();
 }
 
-/* =========================================================
+/* =====================================================
    WORKSPACE SIZE
-   ========================================================= */
+   ===================================================== */
 
 function updateWorkspaceSize() {
-    let maxRight = workspaceScroll.clientWidth || 1200;
-    let maxBottom = workspaceScroll.clientHeight || 800;
+    let right = workspaceScroll.clientWidth || 1200;
+    let bottom = workspaceScroll.clientHeight || 800;
 
-    workspace.querySelectorAll(".object, .main-writing, .mindmap")
-        .forEach(el => {
-            const left = parseFloat(el.style.left) || 0;
-            const top = parseFloat(el.style.top) || 0;
+    workspace.querySelectorAll(
+        ".object, .main-writing, .mindmap"
+    ).forEach(el => {
+        const x = parseFloat(el.style.left) || 0;
+        const y = parseFloat(el.style.top) || 0;
 
-            maxRight = Math.max(maxRight, left + el.offsetWidth + 100);
-            maxBottom = Math.max(maxBottom, top + el.offsetHeight + 100);
-        });
+        right = Math.max(right, x + el.offsetWidth + 100);
+        bottom = Math.max(bottom, y + el.offsetHeight + 100);
+    });
 
-    workspace.style.width = Math.max(
-        maxRight,
-        workspaceScroll.clientWidth
-    ) + "px";
-
-    workspace.style.height = Math.max(
-        maxBottom,
-        workspaceScroll.clientHeight
-    ) + "px";
+    workspace.style.width = right + "px";
+    workspace.style.height = bottom + "px";
 }
 
-/* =========================================================
-   OBJECT CREATION
-   ========================================================= */
+/* =====================================================
+   TEXT PANEL
+   ===================================================== */
 
-function createObjectElement(obj) {
+function addTextPanel(x, y, focusNow = true) {
+    const page = activePage();
+
+    if (!page) return;
+
+    const obj = {
+        id: uid(),
+        type: "text",
+        title: "Text",
+        x: Math.max(0, x),
+        y: Math.max(0, y),
+        w: 240,
+        h: 35,
+        html: "",
+        userWidth: false,
+        userHeight: false
+    };
+
+    page.objects.push(obj);
+
+    const el = createObject(obj);
+
+    workspace.appendChild(el);
+
+    if (focusNow) {
+        const body = el.querySelector(".text-body");
+
+        if (body) {
+            body.focus();
+
+            const range = document.createRange();
+            range.selectNodeContents(body);
+            range.collapse(false);
+
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    }
+
+    scheduleSave();
+    updateWorkspaceSize();
+
+    return el;
+}
+
+document.getElementById("addTextBtn").onclick = () => {
+    const rect = workspaceScroll.getBoundingClientRect();
+
+    addTextPanel(
+        workspaceScroll.scrollLeft + 80,
+        workspaceScroll.scrollTop + 80,
+        true
+    );
+};
+
+/*
+  Click on a blank area to start typing at that location.
+  Clicking an existing object or the main writing area will not
+  create another panel.
+*/
+
+let lastTapTime = 0;
+
+workspace.addEventListener("click", e => {
+    if (e.detail > 1) return;
+
+    if (e.target.closest(".object, .main-writing, .mindmap")) return;
+
+    /*
+      On desktop, a click creates the panel.
+      On mobile, the click event from a tap works too.
+    */
+
+    const rect = workspace.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const el = addTextPanel(x, y, true);
+
+    if (el) {
+        const body = el.querySelector(".text-body");
+
+        if (body) body.focus();
+    }
+});
+
+/* =====================================================
+   OBJECT CREATION
+   ===================================================== */
+
+function createObject(obj) {
     const el = document.createElement("div");
 
     el.className = "object " + obj.type + "-object";
     el.dataset.objectId = obj.id;
 
-    el.style.left = (obj.x || 100) + "px";
-    el.style.top = (obj.y || 100) + "px";
+    el.style.left = (obj.x || 0) + "px";
+    el.style.top = (obj.y || 0) + "px";
 
     if (obj.w) el.style.width = obj.w + "px";
 
     if (obj.type === "text" && obj.h) {
-        el.style.height = obj.h + "px";
+        el.style.height = "auto";
+        el.style.minHeight = "35px";
     }
 
     if (obj.type === "image" && obj.h) {
         el.style.height = obj.h + "px";
-    }
-
-    if (obj.type === "pdf") {
-        el.style.height = "auto";
     }
 
     const header = document.createElement("div");
@@ -1615,16 +1785,16 @@ function createObjectElement(obj) {
     title.className = "object-title";
 
     title.textContent = obj.type === "text"
-        ? "Text Panel"
+        ? "Text"
         : obj.type === "image"
-            ? (obj.name || "Image")
-            : (obj.name || "PDF Document");
+            ? obj.name || "Image"
+            : obj.name || "PDF";
 
     const close = document.createElement("button");
     close.className = "object-close";
     close.type = "button";
     close.textContent = "×";
-    close.title = "Remove object";
+    close.title = "Delete panel";
 
     header.append(title, close);
     el.appendChild(header);
@@ -1644,41 +1814,34 @@ function createObjectElement(obj) {
 
         body.appendChild(textBody);
 
-        if (obj.userWidth) {
-            el.dataset.userWidth = "1";
-        }
+        if (obj.userWidth) el.dataset.userWidth = "1";
+        if (obj.userHeight) el.dataset.userHeight = "1";
 
-        if (obj.userHeight) {
-            el.dataset.userHeight = "1";
-        }
+        updateTextPanelBorder(el);
 
         textBody.addEventListener("input", () => {
-            growTextObject(el, false);
+            updateTextPanelBorder(el);
+            autoGrowTextPanel(el);
             scheduleSave();
         });
 
         textBody.addEventListener("paste", () => {
             setTimeout(() => {
-                growTextObject(el, false);
+                updateTextPanelBorder(el);
+                autoGrowTextPanel(el);
                 scheduleSave();
             }, 100);
         });
 
-        textBody.addEventListener("keydown", e => {
-            if (e.key === "Escape") textBody.blur();
-        });
-
-        requestAnimationFrame(() => growTextObject(el, true));
+        requestAnimationFrame(() => autoGrowTextPanel(el));
 
     } else if (obj.type === "image") {
         const img = document.createElement("img");
 
-        img.alt = obj.name || "Uploaded image";
-        img.src = "";
-
+        img.alt = obj.name || "Image";
         body.appendChild(img);
 
-        loadImageObject(obj, img);
+        loadImage(obj, img);
 
     } else if (obj.type === "pdf") {
         const pages = document.createElement("div");
@@ -1686,496 +1849,195 @@ function createObjectElement(obj) {
 
         body.appendChild(pages);
 
-        loadPdfObject(obj, el, pages);
+        loadPdf(obj, el, pages);
     }
 
-    close.addEventListener("click", async () => {
+    close.onclick = async () => {
         if (!confirm("इस पैनल को हटाना चाहते हैं?")) return;
 
         const page = activePage();
 
         if (page) {
-            page.objects = page.objects.filter(item => item.id !== obj.id);
+            page.objects = page.objects.filter(
+                item => item.id !== obj.id
+            );
         }
 
         el.remove();
         scheduleSave();
         updateWorkspaceSize();
-    });
+    };
 
     makeDraggable(el, header);
 
-    if (obj.type !== "pdf") {
-        makeResizable(el);
-    } else {
-        makePdfResizable(el, obj);
+    if (obj.type === "text" || obj.type === "image") {
+        enableResize(el, obj);
+    }
+
+    if (obj.type === "pdf") {
+        enablePdfResize(el, obj);
     }
 
     return el;
 }
 
-/* =========================================================
-   TEXT PANEL: AUTO-GROW TO A4 WIDTH
-   ========================================================= */
-
-function growTextObject(el, initial) {
+function updateTextPanelBorder(el) {
     const body = el.querySelector(".text-body");
 
     if (!body) return;
 
-    const hasContent = body.textContent.trim().length > 0 ||
-        body.querySelector("img, table, video, iframe");
+    const hasContent =
+        body.textContent.trim().length > 0 ||
+        !!body.querySelector("img, table, video");
+
+    el.classList.toggle("has-content", hasContent);
+}
+
+function autoGrowTextPanel(el) {
+    const body = el.querySelector(".text-body");
+
+    if (!body) return;
+
+    const hasContent =
+        body.textContent.trim().length > 0 ||
+        !!body.querySelector("img, table, video");
 
     /*
-      Start small.
-      When user writes/pastes content, expand to A4-like width.
-      If the user manually resizes the panel, preserve their choice.
+      A newly created panel begins small.
+      Once text is entered, it grows to A4-like width.
+      If manually resized, preserve the user's width.
     */
 
     if (hasContent && el.dataset.userWidth !== "1") {
         el.style.width = "794px";
     }
 
-    if (!hasContent && initial && !el.dataset.userWidth) {
-        el.style.width = "240px";
-    }
-
     if (el.dataset.userHeight !== "1") {
         body.style.height = "auto";
 
-        const headerHeight = 34;
-        const bodyHeight = Math.max(65, body.scrollHeight + 25);
+        const desiredHeight = Math.max(
+            24,
+            body.scrollHeight + 8
+        );
 
-        el.style.height = (headerHeight + bodyHeight) + "px";
-
-        body.style.height = "calc(100% - 34px)";
+        body.style.height = desiredHeight + "px";
+        el.style.height = "auto";
     }
 
     updateWorkspaceSize();
 }
 
-function makeResizable(el) {
-    let oldWidth = el.offsetWidth;
-    let oldHeight = el.offsetHeight;
-
-    if (typeof ResizeObserver !== "undefined") {
-        const observer = new ResizeObserver(() => {
-            const width = el.offsetWidth;
-            const height = el.offsetHeight;
-
-            /*
-              ResizeObserver can run during initial layout.
-              Only mark a manual resize when a resize is detected
-              while the user is actively resizing.
-            */
-
-            if (el.dataset.userResizing === "1") {
-                if (width !== oldWidth) {
-                    el.dataset.userWidth = "1";
-                }
-
-                if (height !== oldHeight) {
-                    el.dataset.userHeight = "1";
-                }
-            }
-
-            oldWidth = width;
-            oldHeight = height;
-        });
-
-        observer.observe(el);
-    }
-
-    el.addEventListener("pointerdown", e => {
-        const rect = el.getBoundingClientRect();
-
-        const nearRight = rect.right - e.clientX < 25;
-        const nearBottom = rect.bottom - e.clientY < 25;
-
-        if (nearRight || nearBottom) {
-            el.dataset.userResizing = "1";
-        }
-    });
-
-    window.addEventListener("pointerup", () => {
-        if (el.dataset.userResizing === "1") {
-            delete el.dataset.userResizing;
-            scheduleSave();
-        }
-    });
-}
-
-/* =========================================================
-   DRAG OBJECTS
-   ========================================================= */
+/* =====================================================
+   DRAG AND RESIZE
+   ===================================================== */
 
 function makeDraggable(el, handle) {
-    let dragging = false;
+    let active = false;
     let startX = 0;
     let startY = 0;
-    let originalLeft = 0;
-    let originalTop = 0;
+    let originX = 0;
+    let originY = 0;
 
     handle.addEventListener("pointerdown", e => {
         if (e.target.closest(".object-close")) return;
 
-        /*
-          Do not start dragging if the pointer is near the resize
-          edge of a resizable panel.
-        */
-
         const rect = el.getBoundingClientRect();
 
+        /*
+          Ignore pointer presses near the resize edge.
+        */
+
         if (
-            e.clientX > rect.right - 18 ||
-            e.clientY > rect.bottom - 18
+            rect.right - e.clientX < 18 ||
+            rect.bottom - e.clientY < 18
         ) {
             return;
         }
 
-        dragging = true;
+        active = true;
 
         startX = e.clientX;
         startY = e.clientY;
 
-        originalLeft = parseFloat(el.style.left) || 0;
-        originalTop = parseFloat(el.style.top) || 0;
+        originX = parseFloat(el.style.left) || 0;
+        originY = parseFloat(el.style.top) || 0;
 
-        handle.setPointerCapture(e.pointerId);
+        try {
+            handle.setPointerCapture(e.pointerId);
+        } catch (_) {}
 
         e.preventDefault();
     });
 
     handle.addEventListener("pointermove", e => {
-        if (!dragging) return;
+        if (!active) return;
 
-        const scale = 1;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
 
-        const dx = (e.clientX - startX) / scale;
-        const dy = (e.clientY - startY) / scale;
-
-        el.style.left = Math.max(0, originalLeft + dx) + "px";
-        el.style.top = Math.max(0, originalTop + dy) + "px";
+        el.style.left = Math.max(0, originX + dx) + "px";
+        el.style.top = Math.max(0, originY + dy) + "px";
 
         updateWorkspaceSize();
     });
 
-    const stopDragging = () => {
-        if (!dragging) return;
+    const stop = () => {
+        if (!active) return;
 
-        dragging = false;
+        active = false;
 
         scheduleSave();
         updateWorkspaceSize();
     };
 
-    handle.addEventListener("pointerup", stopDragging);
-    handle.addEventListener("pointercancel", stopDragging);
+    handle.addEventListener("pointerup", stop);
+    handle.addEventListener("pointercancel", stop);
 }
 
-/* =========================================================
-   IMAGE OBJECT
-   ========================================================= */
+function enableResize(el, obj) {
+    let startW = el.offsetWidth;
+    let startH = el.offsetHeight;
 
-async function loadImageObject(obj, img) {
-    try {
-        const record = await getAsset(obj.assetId);
-
-        if (!record || !record.blob) {
-            img.alt = "Image file not found. Restore your backup.";
-            return;
-        }
-
-        const url = URL.createObjectURL(record.blob);
-
-        img.src = url;
-
-        img.onload = () => {
-            updateWorkspaceSize();
-        };
-
-    } catch (error) {
-        console.error("Image load error:", error);
-    }
-}
-
-/* =========================================================
-   PDF OBJECT: RENDER EVERY PAGE
-   ========================================================= */
-
-async function loadPdfObject(obj, el, pagesContainer) {
-    pagesContainer.innerHTML =
-        '<div class="pdf-message">PDF लोड हो रहा है…</div>';
-
-    try {
-        if (!window.pdfjsLib) {
-            throw new Error("PDF.js library could not load");
-        }
-
-        const record = await getAsset(obj.assetId);
-
-        if (!record || !record.blob) {
-            throw new Error("PDF file not found");
-        }
-
-        const buffer = await record.blob.arrayBuffer();
-
-        const pdf = await pdfjsLib.getDocument({
-            data: new Uint8Array(buffer)
-        }).promise;
-
-        pagesContainer.innerHTML = "";
-
-        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-            const pdfPage = await pdf.getPage(pageNumber);
-
-            /*
-              Fit page to the PDF object's available width.
-              Do not create an internal scrolling panel.
-            */
-
-            const originalViewport = pdfPage.getViewport({ scale: 1 });
-
-            const targetWidth = Math.max(
-                240,
-                el.clientWidth - 2
-            );
-
-            const scale = targetWidth / originalViewport.width;
-
-            const viewport = pdfPage.getViewport({ scale });
-
-            const canvas = document.createElement("canvas");
-            canvas.className = "pdf-canvas";
-
-            const ctx = canvas.getContext("2d", {
-                alpha: false
-            });
-
-            const outputScale = Math.min(
-                window.devicePixelRatio || 1,
-                2
-            );
-
-            canvas.width = Math.floor(
-                viewport.width * outputScale
-            );
-
-            canvas.height = Math.floor(
-                viewport.height * outputScale
-            );
-
-            canvas.style.width = "100%";
-            canvas.style.height = "auto";
-
-            const pageWrap = document.createElement("div");
-            pageWrap.className = "pdf-page";
-
-            pageWrap.appendChild(canvas);
-            pagesContainer.appendChild(pageWrap);
-
-            ctx.setTransform(
-                outputScale,
-                0,
-                0,
-                outputScale,
-                0,
-                0
-            );
-
-            await pdfPage.render({
-                canvasContext: ctx,
-                viewport: viewport
-            }).promise;
-
-            /*
-              Page number indicator
-            */
-
-            const number = document.createElement("div");
-
-            number.style.cssText = [
-                "position:absolute",
-                "right:8px",
-                "bottom:8px",
-                "font-size:10px",
-                "color:#666",
-                "background:rgba(255,255,255,.9)",
-                "padding:3px 5px",
-                "border-radius:3px"
-            ].join(";");
-
-            number.textContent =
-                pageNumber + " / " + pdf.numPages;
-
-            pageWrap.appendChild(number);
-        }
-
-        /*
-          Let the object grow to the combined height of all pages.
-          The workspace itself provides normal page scrolling.
-        */
-
-        el.style.height = "auto";
-
-        pagesContainer.style.height = "auto";
-        pagesContainer.style.overflow = "visible";
-
-        updateWorkspaceSize();
-        scheduleSave();
-
-    } catch (error) {
-        console.error("PDF rendering error:", error);
-
-        pagesContainer.innerHTML = "";
-
-        const message = document.createElement("div");
-        message.className = "pdf-message";
-
-        message.textContent =
-            "PDF लोड नहीं हो पाया। फ़ाइल दोबारा अपलोड करके देखें। " +
-            "(" + error.message + ")";
-
-        pagesContainer.appendChild(message);
-    }
-}
-
-/*
-  PDF panel width changes:
-  Re-render all pages so they match the new width.
-*/
-
-function makePdfResizable(el, obj) {
-    let resizeTimer = null;
-    let lastWidth = 0;
+    let lastW = startW;
+    let lastH = startH;
 
     const observer = new ResizeObserver(() => {
-        const width = el.clientWidth;
+        const w = el.offsetWidth;
+        const h = el.offsetHeight;
 
-        if (!width || Math.abs(width - lastWidth) < 8) return;
-
-        if (lastWidth === 0) {
-            lastWidth = width;
-            return;
+        if (el.dataset.resizing === "1") {
+            if (w !== lastW) el.dataset.userWidth = "1";
+            if (h !== lastH) el.dataset.userHeight = "1";
         }
 
-        lastWidth = width;
-
-        clearTimeout(resizeTimer);
-
-        resizeTimer = setTimeout(() => {
-            const container = el.querySelector(".pdf-pages");
-
-            if (container) {
-                loadPdfObject(obj, el, container);
-            }
-        }, 500);
+        lastW = w;
+        lastH = h;
     });
 
     observer.observe(el);
-}
 
-/* =========================================================
-   RENDER PAGE OBJECTS
-   ========================================================= */
+    el.addEventListener("pointerdown", e => {
+        const rect = el.getBoundingClientRect();
 
-function renderObjects(page) {
-    workspace.querySelectorAll(".object, .mindmap").forEach(el => el.remove());
+        if (
+            rect.right - e.clientX < 22 ||
+            rect.bottom - e.clientY < 22
+        ) {
+            el.dataset.resizing = "1";
+        }
+    });
 
-    page.objects = page.objects || [];
-
-    for (const obj of page.objects) {
-        const el = createObjectElement(obj);
-        workspace.appendChild(el);
-    }
-
-    renderMindMap(page);
-
-    requestAnimationFrame(() => {
-        autoGrowMainWriting();
-        updateWorkspaceSize();
+    window.addEventListener("pointerup", () => {
+        if (el.dataset.resizing === "1") {
+            delete el.dataset.resizing;
+            scheduleSave();
+        }
     });
 }
 
-/* =========================================================
-   ADD TEXT PANEL
-   ========================================================= */
-
-function addTextObject() {
-    const page = activePage();
-
-    if (!page) return;
-
-    const obj = {
-        id: uid(),
-        type: "text",
-        title: "Text Panel",
-        x: 80 + (page.objects.length % 5) * 35,
-        y: 80 + (page.objects.length % 5) * 35,
-        w: 240,
-        h: 140,
-        html: "",
-        userWidth: false,
-        userHeight: false
-    };
-
-    page.objects.push(obj);
-
-    const el = createObjectElement(obj);
-    workspace.appendChild(el);
-
-    const body = el.querySelector(".text-body");
-
-    if (body) body.focus();
-
-    scheduleSave();
-    updateWorkspaceSize();
-}
-
-document.getElementById("addTextBtn").onclick = addTextObject;
-
-/*
-  Double-click on the blank workspace creates a small text panel.
-  On touch devices, use a quick double tap.
-*/
-
-workspace.addEventListener("dblclick", e => {
-    if (e.target.closest(".object, .main-writing, .mindmap")) return;
-
-    const rect = workspace.getBoundingClientRect();
-
-    const obj = {
-        id: uid(),
-        type: "text",
-        title: "Text Panel",
-        x: Math.max(0, e.clientX - rect.left),
-        y: Math.max(0, e.clientY - rect.top),
-        w: 240,
-        h: 140,
-        html: "",
-        userWidth: false,
-        userHeight: false
-    };
-
-    const page = activePage();
-
-    if (!page) return;
-
-    page.objects.push(obj);
-
-    const el = createObjectElement(obj);
-    workspace.appendChild(el);
-
-    const body = el.querySelector(".text-body");
-
-    if (body) body.focus();
-
-    scheduleSave();
-});
-
-/* =========================================================
-   ADD IMAGE
-   ========================================================= */
+/* =====================================================
+   IMAGE UPLOAD
+   ===================================================== */
 
 document.getElementById("addImageBtn").onclick = () => {
     document.getElementById("imageInput").click();
@@ -2188,11 +2050,11 @@ document.getElementById("imageInput").addEventListener("change", async e => {
 
     if (!file) return;
 
-    const page = activePage();
-
-    if (!page) return;
-
     try {
+        const page = activePage();
+
+        if (!page) return;
+
         const assetId = uid();
 
         await putAsset(assetId, file, file.name, file.type);
@@ -2202,31 +2064,46 @@ document.getElementById("imageInput").addEventListener("change", async e => {
             type: "image",
             name: file.name,
             assetId,
-            x: 120,
-            y: 120,
+            x: 100,
+            y: 100,
             w: 340,
             h: 250
         };
 
         page.objects.push(obj);
 
-        workspace.appendChild(createObjectElement(obj));
+        workspace.appendChild(createObject(obj));
 
         saveNow();
-        updateWorkspaceSize();
 
     } catch (error) {
         console.error(error);
 
-        alert(
-            "इमेज सेव नहीं हो सकी। कृपया दूसरी इमेज या छोटी फ़ाइल आजमाएँ।"
-        );
+        alert("इमेज अपलोड नहीं हो सकी।");
     }
 });
 
-/* =========================================================
-   ADD PDF
-   ========================================================= */
+async function loadImage(obj, img) {
+    try {
+        const record = await getAsset(obj.assetId);
+
+        if (!record || !record.blob) {
+            img.alt = "Image missing";
+            return;
+        }
+
+        img.src = URL.createObjectURL(record.blob);
+
+        img.onload = updateWorkspaceSize;
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/* =====================================================
+   PDF UPLOAD AND ALL-PAGES VIEW
+   ===================================================== */
 
 document.getElementById("addPdfBtn").onclick = () => {
     document.getElementById("pdfInput").click();
@@ -2239,14 +2116,19 @@ document.getElementById("pdfInput").addEventListener("change", async e => {
 
     if (!file) return;
 
-    const page = activePage();
-
-    if (!page) return;
-
     try {
+        const page = activePage();
+
+        if (!page) return;
+
         const assetId = uid();
 
-        await putAsset(assetId, file, file.name, "application/pdf");
+        await putAsset(
+            assetId,
+            file,
+            file.name,
+            "application/pdf"
+        );
 
         const obj = {
             id: uid(),
@@ -2261,102 +2143,354 @@ document.getElementById("pdfInput").addEventListener("change", async e => {
 
         page.objects.push(obj);
 
-        const el = createObjectElement(obj);
+        workspace.appendChild(createObject(obj));
 
-        workspace.appendChild(el);
-
-        updateWorkspaceSize();
         saveNow();
 
     } catch (error) {
         console.error(error);
 
-        alert(
-            "PDF सेव नहीं हो सका। स्टोरेज की जगह जाँचें और फिर कोशिश करें।"
-        );
+        alert("PDF अपलोड नहीं हो सकी।");
     }
 });
 
-/* =========================================================
-   RICH TEXT TOOLBAR
-   ========================================================= */
-
-function formatCommand(command) {
-    mainWritingBody.focus();
+async function loadPdf(obj, el, container) {
+    container.innerHTML =
+        '<div class="pdf-message">PDF लोड हो रही है...</div>';
 
     try {
-        document.execCommand(command, false, null);
+        if (!window.pdfjsLib) {
+            throw new Error("PDF.js unavailable");
+        }
+
+        const record = await getAsset(obj.assetId);
+
+        if (!record || !record.blob) {
+            throw new Error("PDF file not found");
+        }
+
+        const buffer = await record.blob.arrayBuffer();
+
+        const pdf = await pdfjsLib.getDocument({
+            data: new Uint8Array(buffer)
+        }).promise;
+
+        container.innerHTML = "";
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+            const pdfPage = await pdf.getPage(i);
+
+            const original = pdfPage.getViewport({ scale: 1 });
+
+            const width = Math.max(250, el.clientWidth - 2);
+            const scale = width / original.width;
+
+            const viewport = pdfPage.getViewport({ scale });
+
+            const canvas = document.createElement("canvas");
+            canvas.className = "pdf-canvas";
+
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            canvas.width = Math.floor(viewport.width * dpr);
+            canvas.height = Math.floor(viewport.height * dpr);
+
+            canvas.style.width = "100%";
+            canvas.style.height = "auto";
+
+            const pageBox = document.createElement("div");
+            pageBox.className = "pdf-page";
+
+            pageBox.appendChild(canvas);
+            container.appendChild(pageBox);
+
+            const ctx = canvas.getContext("2d", {
+                alpha: false
+            });
+
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            await pdfPage.render({
+                canvasContext: ctx,
+                viewport
+            }).promise;
+
+            const label = document.createElement("div");
+
+            label.style.cssText =
+                "position:absolute;right:6px;bottom:6px;" +
+                "font-size:10px;color:#555;" +
+                "background:#ffffffdd;padding:3px 5px;";
+
+            label.textContent = `${i} / ${pdf.numPages}`;
+
+            pageBox.appendChild(label);
+        }
+
+        /*
+          Important: no fixed height and no internal vertical scrolling.
+        */
+
+        el.style.height = "auto";
+        container.style.height = "auto";
+        container.style.overflow = "visible";
+
+        updateWorkspaceSize();
+        scheduleSave();
+
+    } catch (error) {
+        console.error(error);
+
+        container.innerHTML = "";
+
+        const message = document.createElement("div");
+        message.className = "pdf-message";
+        message.textContent = "PDF लोड नहीं हो सकी: " + error.message;
+
+        container.appendChild(message);
+    }
+}
+
+function enablePdfResize(el, obj) {
+    let lastWidth = el.offsetWidth;
+    let timer = null;
+
+    const observer = new ResizeObserver(() => {
+        const width = el.clientWidth;
+
+        if (!width || Math.abs(width - lastWidth) < 8) return;
+
+        lastWidth = width;
+
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+            const pages = el.querySelector(".pdf-pages");
+
+            if (pages) {
+                loadPdf(obj, el, pages);
+            }
+        }, 450);
+    });
+
+    observer.observe(el);
+}
+
+/* =====================================================
+   RENDER OBJECTS
+   ===================================================== */
+
+function renderObjects(page) {
+    workspace.querySelectorAll(".object, .mindmap").forEach(
+        element => element.remove()
+    );
+
+    page.objects = page.objects || [];
+
+    page.objects.forEach(obj => {
+        workspace.appendChild(createObject(obj));
+    });
+
+    renderMindMap(page);
+
+    requestAnimationFrame(() => {
+        autoGrowMainWriting();
+        updateWorkspaceSize();
+    });
+}
+
+/* =====================================================
+   RICH TEXT FORMATTING
+   ===================================================== */
+
+/*
+  Keep the selected editor active so the toolbar applies formatting
+  to the current selection in the main page or a text panel.
+*/
+
+let lastEditor = mainWritingBody;
+
+document.addEventListener("selectionchange", () => {
+    const selection = window.getSelection();
+
+    if (!selection || !selection.rangeCount) return;
+
+    let node = selection.anchorNode;
+
+    if (!node) return;
+
+    if (node.nodeType === Node.TEXT_NODE) {
+        node = node.parentElement;
+    }
+
+    if (!node || !node.closest) return;
+
+    const editor = node.closest(
+        "#mainWritingBody, .text-body"
+    );
+
+    if (editor) {
+        lastEditor = editor;
+    }
+});
+
+function focusLastEditor() {
+    if (!lastEditor || !document.contains(lastEditor)) {
+        lastEditor = mainWritingBody;
+    }
+
+    lastEditor.focus();
+}
+
+function exec(command, value = null) {
+    focusLastEditor();
+
+    try {
+        document.execCommand(command, false, value);
     } catch (error) {
         console.warn(error);
     }
 
-    autoGrowMainWriting();
+    updateMainBorder();
     scheduleSave();
 }
 
-document.getElementById("boldBtn").onclick =
-    () => formatCommand("bold");
+document.querySelectorAll("[data-command]").forEach(button => {
+    button.addEventListener("mousedown", e => {
+        /*
+          Prevent toolbar buttons from destroying the selection
+          before the formatting command runs.
+        */
+        e.preventDefault();
+    });
 
-document.getElementById("italicBtn").onclick =
-    () => formatCommand("italic");
+    button.addEventListener("click", () => {
+        exec(button.dataset.command);
+    });
+});
 
-document.getElementById("underlineBtn").onclick =
-    () => formatCommand("underline");
+document.getElementById("fontFamily").addEventListener("change", e => {
+    exec("fontName", e.target.value);
+});
 
-document.getElementById("bulletBtn").onclick =
-    () => formatCommand("insertUnorderedList");
+document.getElementById("fontSize").addEventListener("change", e => {
+    exec("fontSize", e.target.value);
+});
 
-document.getElementById("undoBtn").onclick = () => {
-    mainWritingBody.focus();
+document.getElementById("fontColor").addEventListener("input", e => {
+    exec("foreColor", e.target.value);
+});
 
-    try {
-        document.execCommand("undo", false, null);
-    } catch (error) {
-        console.warn(error);
+document.getElementById("highlightColor").addEventListener("input", e => {
+    /*
+      hiliteColor works in most browsers; backColor is a fallback.
+    */
+    focusLastEditor();
+
+    const ok = document.execCommand(
+        "hiliteColor",
+        false,
+        e.target.value
+    );
+
+    if (!ok) {
+        document.execCommand(
+            "backColor",
+            false,
+            e.target.value
+        );
     }
 
-    autoGrowMainWriting();
+    scheduleSave();
+});
+
+document.getElementById("blockFormat").addEventListener("change", e => {
+    exec("formatBlock", "<" + e.target.value + ">");
+});
+
+document.getElementById("undoBtn").onclick = () => exec("undo");
+document.getElementById("redoBtn").onclick = () => exec("redo");
+
+document.getElementById("clearFormatBtn").onclick = () => {
+    exec("removeFormat");
+};
+
+document.getElementById("linkBtn").onclick = () => {
+    const url = prompt("Link URL लिखें:");
+
+    if (!url) return;
+
+    exec("createLink", url);
+};
+
+document.getElementById("tableBtn").onclick = () => {
+    const rows = Math.min(
+        20,
+        Math.max(1, Number(prompt("कितनी rows?", "3")) || 3)
+    );
+
+    const cols = Math.min(
+        12,
+        Math.max(1, Number(prompt("कितने columns?", "3")) || 3)
+    );
+
+    let html = "<table><tbody>";
+
+    for (let r = 0; r < rows; r++) {
+        html += "<tr>";
+
+        for (let c = 0; c < cols; c++) {
+            html += "<td>&nbsp;</td>";
+        }
+
+        html += "</tr>";
+    }
+
+    html += "</tbody></table><p><br></p>";
+
+    focusLastEditor();
+
+    document.execCommand("insertHTML", false, html);
+
     scheduleSave();
 };
 
-/* =========================================================
+/* =====================================================
    MIND MAP
-   ========================================================= */
+   ===================================================== */
 
 function renderMindMap(page) {
-    const old = workspace.querySelector(".mindmap");
+    const existing = workspace.querySelector(".mindmap");
 
-    if (old) old.remove();
+    if (existing) existing.remove();
 
-    if (!page || !page.mindmap || !page.mindmap.length) return;
+    if (!page.mindmap || !page.mindmap.length) return;
 
     const box = document.createElement("div");
-
     box.className = "mindmap";
     box.style.left = "900px";
     box.style.top = "30px";
 
-    const heading = document.createElement("h3");
-    heading.textContent = "Mind Map";
+    const title = document.createElement("h3");
+    title.textContent = "Mind Map";
 
     const input = document.createElement("input");
-    input.placeholder = "Type a new idea and press Enter";
+    input.placeholder = "New idea — press Enter";
+    input.style.width = "100%";
+    input.style.padding = "7px";
 
     const list = document.createElement("div");
-    list.className = "mindmap-list";
 
     function refresh() {
         list.innerHTML = "";
 
         page.mindmap.forEach((text, index) => {
             const node = document.createElement("div");
-
             node.className = "mind-node";
             node.textContent = text;
-            node.title = "Tap to delete";
 
             node.onclick = () => {
-                if (!confirm("इस Mind Map आइडिया को हटाएँ?")) return;
+                if (!confirm("इस आइडिया को हटाएँ?")) return;
 
                 page.mindmap.splice(index, 1);
 
@@ -2390,7 +2524,7 @@ function renderMindMap(page) {
         scheduleSave();
     });
 
-    box.append(heading, input, list);
+    box.append(title, input, list);
 
     workspace.appendChild(box);
 
@@ -2404,10 +2538,8 @@ document.getElementById("addMindBtn").onclick = () => {
 
     if (!page.mindmap) page.mindmap = [];
 
-    const existing = workspace.querySelector(".mindmap");
-
-    if (existing) {
-        existing.remove();
+    if (workspace.querySelector(".mindmap")) {
+        workspace.querySelector(".mindmap").remove();
         scheduleSave();
         return;
     }
@@ -2420,17 +2552,16 @@ document.getElementById("addMindBtn").onclick = () => {
     scheduleSave();
 };
 
-/* =========================================================
-   BACKUP
-   ========================================================= */
+/* =====================================================
+   BACKUP / RESTORE
+   ===================================================== */
 
 function blobToBase64(blob) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
         reader.onload = () => {
-            const result = String(reader.result);
-            resolve(result.split(",")[1]);
+            resolve(String(reader.result).split(",")[1]);
         };
 
         reader.onerror = () => reject(reader.error);
@@ -2452,32 +2583,31 @@ function base64ToBlob(base64, type) {
     });
 }
 
-async function exportBackup() {
+async function backup() {
     saveNow();
 
     try {
-        const backup = {
+        const data = {
             app: "OneNote Infinity Pro",
-            version: 1,
-            exportedAt: new Date().toISOString(),
+            version: 2,
             state,
             assets: []
         };
 
-        const ids = new Set();
+        const assetIds = new Set();
 
         for (const page of allPages()) {
             for (const obj of page.objects || []) {
-                if (obj.assetId) ids.add(obj.assetId);
+                if (obj.assetId) assetIds.add(obj.assetId);
             }
         }
 
-        for (const id of ids) {
+        for (const id of assetIds) {
             const record = await getAsset(id);
 
             if (!record || !record.blob) continue;
 
-            backup.assets.push({
+            data.assets.push({
                 id: record.id,
                 name: record.name,
                 type: record.type,
@@ -2486,41 +2616,29 @@ async function exportBackup() {
         }
 
         const blob = new Blob(
-            [JSON.stringify(backup)],
+            [JSON.stringify(data)],
             { type: "application/json" }
         );
 
         const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
 
-        link.href = url;
-        link.download =
-            "onenote-infinity-backup-" +
-            new Date().toISOString().slice(0, 10) +
-            ".json";
+        const a = document.createElement("a");
 
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        a.href = url;
+        a.download = "onenote-infinity-backup.json";
+
+        a.click();
 
         setTimeout(() => URL.revokeObjectURL(url), 1500);
-
-        setStatus("Backup downloaded");
 
     } catch (error) {
         console.error(error);
 
-        alert(
-            "Backup नहीं बन पाया। बड़ी PDF फ़ाइलों के लिए पर्याप्त स्टोरेज जाँचें।"
-        );
+        alert("Backup नहीं बन पाया।");
     }
 }
 
-document.getElementById("backupBtn").onclick = exportBackup;
-
-/* =========================================================
-   RESTORE
-   ========================================================= */
+document.getElementById("backupBtn").onclick = backup;
 
 document.getElementById("restoreBtn").onclick = () => {
     document.getElementById("restoreInput").click();
@@ -2533,40 +2651,32 @@ document.getElementById("restoreInput").addEventListener("change", async e => {
 
     if (!file) return;
 
-    if (!confirm(
-        "Restore करने पर वर्तमान नोटबुक डेटा बदल सकता है। " +
-        "क्या आपने वर्तमान डेटा का बैकअप ले लिया है?"
-    )) {
+    if (!confirm("Restore करने से वर्तमान डेटा बदल सकता है। जारी रखें?")) {
         return;
     }
 
     try {
-        const backup = JSON.parse(await file.text());
+        const backupData = JSON.parse(await file.text());
 
         if (
-            !backup ||
-            !backup.state ||
-            !Array.isArray(backup.state.notebooks)
+            !backupData.state ||
+            !Array.isArray(backupData.state.notebooks)
         ) {
-            throw new Error("Invalid backup file");
+            throw new Error("Invalid backup");
         }
 
-        for (const asset of backup.assets || []) {
-            const blob = base64ToBlob(asset.base64, asset.type);
-
+        for (const asset of backupData.assets || []) {
             await putAsset(
                 asset.id,
-                blob,
+                base64ToBlob(asset.base64, asset.type),
                 asset.name,
                 asset.type
             );
         }
 
-        state = backup.state;
+        state = backupData.state;
 
-        if (!allPages().length) {
-            state = defaultState();
-        }
+        if (!allPages().length) state = defaultState();
 
         activePageId = allPages().some(
             page => page.id === state.lastPageId
@@ -2574,56 +2684,28 @@ document.getElementById("restoreInput").addEventListener("change", async e => {
             ? state.lastPageId
             : allPages()[0].id;
 
-        persistState();
+        saveNow();
         renderTree();
         openPage(activePageId);
 
-        alert("Backup सफलतापूर्वक Restore हो गया।");
+        alert("Restore सफल हुआ।");
 
     } catch (error) {
         console.error(error);
 
-        alert(
-            "Backup Restore नहीं हो सका। कृपया सही JSON backup file चुनें।"
-        );
+        alert("Restore नहीं हो पाया। सही backup JSON फ़ाइल चुनें।");
     }
 });
 
-/* =========================================================
-   PAGE LIFECYCLE
-   ========================================================= */
-
-window.addEventListener("beforeunload", () => {
-    try {
-        saveCurrentPage();
-        localStorage.setItem(META_KEY, JSON.stringify(state));
-    } catch (error) {
-        console.warn(error);
-    }
-});
-
-document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") {
-        saveNow();
-    }
-});
-
-window.addEventListener("resize", () => {
-    updateWorkspaceSize();
-});
-
-/* =========================================================
-   START APPLICATION
-   ========================================================= */
+/* =====================================================
+   START
+   ===================================================== */
 
 async function startApp() {
     try {
         await openAssetDB();
     } catch (error) {
-        console.warn(
-            "IndexedDB unavailable. Text notes may still work.",
-            error
-        );
+        console.warn("Asset storage unavailable:", error);
     }
 
     loadState();
@@ -2637,6 +2719,5 @@ async function startApp() {
 startApp();
 
 </script>
-
 </body>
 </html>
