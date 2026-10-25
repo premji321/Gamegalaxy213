@@ -2,428 +2,187 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#263a70">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
 <title>OneNote Infinity Pro</title>
 
 <style>
 :root{
-    --primary:#536dfe;
-    --primary-light:#e8edff;
-    --bg:#f3f5fb;
-    --panel:#fff;
-    --text:#20243a;
-    --muted:#788098;
-    --border:#e0e5f0;
-    --danger:#e5484d;
+  --primary:#4f46e5;
+  --primary-soft:#eef2ff;
+  --bg:#f4f6fc;
+  --panel:#fff;
+  --text:#20243a;
+  --muted:#70788f;
+  --border:#e0e5ef;
+  --danger:#e5484d;
+}
+body.dark{
+  --bg:#151827;
+  --panel:#202438;
+  --text:#f2f4ff;
+  --muted:#aab1ca;
+  --border:#363c54;
+  --primary-soft:#303452;
 }
 *{box-sizing:border-box}
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    height:100dvh;
-    overflow:hidden;
+html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif}
+body{background:var(--bg);color:var(--text);overflow:hidden}
+button,input,select,textarea{font:inherit}
+button{
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--text);
+  padding:8px 11px;
+  border-radius:8px;
+  cursor:pointer;
 }
-button,input,select{font:inherit}
-button{cursor:pointer;touch-action:manipulation}
-button:focus-visible,input:focus-visible{
-    outline:2px solid var(--primary);
-    outline-offset:2px
-}
-.topbar{
-    height:56px;
-    background:var(--panel);
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    gap:7px;
-    padding:5px 10px;
-    overflow-x:auto;
-    white-space:nowrap;
-    position:relative;
-    z-index:20
-}
-.brand{font-weight:800;font-size:15px;margin-right:8px}
-.brand span{color:var(--primary)}
-button,.select,input{
-    border:1px solid var(--border);
-    border-radius:7px;
-    background:var(--panel);
-    color:var(--text);
-    padding:8px 10px
-}
-button:hover{background:var(--primary-light)}
+button:hover{background:var(--primary-soft)}
 button.primary{background:var(--primary);color:white;border-color:var(--primary)}
 button.danger{color:var(--danger)}
-.icon{font-size:16px}
-.layout{
-    height:calc(100dvh - 56px);
-    display:flex;
-    min-width:0
+input,select,textarea{
+  background:var(--panel);color:var(--text);
+  border:1px solid var(--border);border-radius:7px;padding:9px;
 }
+.topbar{
+  height:58px;display:flex;align-items:center;gap:7px;
+  padding:7px 10px;background:var(--panel);
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;white-space:nowrap;position:relative;z-index:30;
+}
+.brand{font-weight:800;font-size:15px;margin-right:6px}
+.brand span{color:var(--primary)}
+#saveState{font-size:11px;color:var(--muted)}
+.layout{display:flex;height:calc(100dvh - 58px);min-width:0}
 .sidebar{
-    width:255px;
-    min-width:210px;
-    background:var(--panel);
-    border-right:1px solid var(--border);
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-    z-index:10
+  width:270px;min-width:230px;background:var(--panel);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;
 }
 .sidebar-head{
-    padding:12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid var(--border)
+  padding:12px;display:flex;align-items:center;
+  justify-content:space-between;border-bottom:1px solid var(--border)
 }
-.sidebar-head strong{font-size:13px}
-.tree{
-    padding:8px;
-    overflow:auto;
-    flex:1;
-    overscroll-behavior:contain
-}
+.searchbox{width:100%;margin:8px 0}
+.tree{overflow:auto;flex:1;padding:8px}
 .tree-row{
-    min-height:34px;
-    display:flex;
-    align-items:center;
-    gap:5px;
-    border-radius:6px;
-    padding:3px;
-    font-size:13px;
-    user-select:none;
-    -webkit-user-select:none
+  display:flex;align-items:center;gap:5px;
+  min-height:36px;padding:3px;border-radius:7px;
+  font-size:13px;user-select:none;
 }
-.tree-row:hover{background:var(--primary-light)}
-.tree-row.active{background:var(--primary-light);color:var(--primary);font-weight:bold}
-.tree-toggle{
-    width:24px;height:28px;padding:0;border:0;background:transparent;flex-shrink:0
-}
+.tree-row.active,.tree-row:hover{background:var(--primary-soft)}
 .tree-label{
-    flex:1;
-    min-width:0;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    padding:6px 0;
-    cursor:pointer
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;padding:7px 0;cursor:pointer;
 }
-.tree-add{
-    border:0;background:transparent;padding:3px;color:var(--primary)
+.tree-toggle,.tree-more{
+  border:0;background:transparent;padding:5px;flex-shrink:0;
 }
-.tree-children{margin-left:13px;border-left:1px solid var(--border);padding-left:5px}
-.tree-empty{padding:15px 8px;color:var(--muted);font-size:12px}
-.work{
-    flex:1;
-    min-width:0;
-    position:relative;
-    display:flex;
-    flex-direction:column
-}
+.tree-children{margin-left:12px;padding-left:5px;border-left:1px solid var(--border)}
+.work{flex:1;min-width:0;position:relative;display:flex;flex-direction:column}
 .tabs{
-    height:43px;
-    background:var(--panel);
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    gap:5px;
-    padding:5px 10px;
-    overflow-x:auto;
-    flex-shrink:0
+  height:44px;display:flex;gap:6px;align-items:center;
+  padding:5px 10px;background:var(--panel);
+  border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0
 }
-.tab{
-    padding:7px 12px;
-    font-size:12px;
-    border-radius:7px;
-    border:1px solid transparent;
-    white-space:nowrap
-}
-.tab.active{background:var(--primary-light);color:var(--primary);font-weight:bold}
-.view{flex:1;min-height:0;position:relative;display:none}
+.tab{border:0;white-space:nowrap}
+.tab.active{background:var(--primary-soft);color:var(--primary);font-weight:bold}
+.view{display:none;flex:1;min-height:0;position:relative}
 .view.active{display:flex;flex-direction:column}
-.editor-top{
-    padding:12px;
-    background:var(--panel);
-    border-bottom:1px solid var(--border);
-    display:flex;
-    gap:7px;
-    align-items:center;
-    flex-wrap:wrap
+.editor-top,.toolbar{
+  display:flex;gap:6px;align-items:center;flex-wrap:wrap;
+  padding:9px;background:var(--panel);border-bottom:1px solid var(--border)
 }
-.title{
-    flex:1;
-    min-width:120px;
-    border:0;
-    font-size:20px;
-    font-weight:bold;
-    outline:none
-}
-.editor-tools{
-    display:flex;
-    flex-wrap:wrap;
-    gap:5px;
-    padding:8px;
-    background:var(--panel);
-    border-bottom:1px solid var(--border)
-}
-.editor-tools button{padding:7px 10px}
+.title{flex:1;min-width:130px;font-size:20px;font-weight:bold;border:0;outline:none}
 .rich-editor{
-    flex:1;
-    min-height:0;
-    overflow:auto;
-    padding:25px;
-    background:var(--panel);
-    outline:none;
-    line-height:1.8;
-    font-size:16px;
-    overflow-wrap:anywhere
+  flex:1;min-height:0;overflow:auto;padding:24px;
+  background:var(--panel);line-height:1.8;outline:none;
+  overflow-wrap:anywhere
 }
-.rich-editor:empty:before{
-    content:"Write your notes here...";
-    color:var(--muted)
-}
-.rich-editor img{max-width:100%}
+.rich-editor:empty:before{content:"Write your notes here...";color:var(--muted)}
+.rich-editor img{max-width:100%;height:auto}
 .rich-editor table{border-collapse:collapse;width:100%}
 .rich-editor td,.rich-editor th{border:1px solid var(--border);padding:8px}
-.statusbar{
-    padding:7px 12px;
-    font-size:11px;
-    background:var(--panel);
-    color:var(--muted);
-    border-top:1px solid var(--border)
+.statusbar{font-size:11px;padding:7px 10px;background:var(--panel);color:var(--muted);border-top:1px solid var(--border)}
+
+/* MIND MAP */
+#mapViewport{
+  flex:1;position:relative;overflow:hidden;touch-action:none;
+  background-color:var(--bg);
+  background-image:radial-gradient(#9ba5c744 1px,transparent 1px);
+  background-size:22px 22px;cursor:grab
+}
+#mapWorld{position:absolute;left:0;top:0;transform-origin:0 0}
+#mapConnections{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.map-node{
+  position:absolute;width:210px;min-height:105px;padding:10px;
+  border:2px solid #c7d2fe;border-radius:12px;
+  background:var(--panel);color:var(--text);
+  box-shadow:0 4px 14px #0001;touch-action:none
+}
+.map-node.selected{border-color:var(--primary);box-shadow:0 0 0 3px #4f46e533}
+.map-node input,.map-node textarea{width:100%;border:0;padding:4px;outline:none}
+.map-node textarea{resize:vertical;min-height:38px}
+.map-actions{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.map-actions button{padding:5px 7px;font-size:11px}
+.map-tools{
+  position:absolute;z-index:5;top:8px;left:8px;right:8px;
+  display:flex;gap:5px;flex-wrap:wrap;pointer-events:none
+}
+.map-tools>*{pointer-events:auto}
+.map-help{
+  position:absolute;bottom:10px;left:10px;
+  background:var(--panel);padding:8px;border-radius:7px;
+  font-size:11px;pointer-events:none
 }
 
-/* INFINITE WORKSPACE */
-
-.canvas-tools{
-    position:absolute;
-    top:10px;left:10px;right:10px;
-    z-index:5;
-    display:flex;
-    gap:5px;
-    align-items:center;
-    flex-wrap:wrap;
-    pointer-events:none
-}
-.canvas-tools>*{pointer-events:auto}
-.canvas-tools button,.canvas-tools select{box-shadow:0 2px 8px #00000012}
-.zoom-label{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:6px;
-    padding:8px;font-size:12px
-}
-.canvas-viewport{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    background-color:#f8f9ff;
-    background-image:radial-gradient(#cbd3e9 1px,transparent 1px);
-    background-size:22px 22px;
-    touch-action:none;
-    cursor:grab
-}
-.canvas-viewport.dragging{cursor:grabbing}
-.canvas-world{
-    position:absolute;
-    left:0;top:0;
-    width:1px;height:1px;
-    transform-origin:0 0
-}
-.canvas-item{
-    position:absolute;
-    width:210px;
-    min-height:95px;
-    padding:12px;
-    border:2px solid #d3dafa;
-    border-radius:10px;
-    background:white;
-    box-shadow:0 5px 15px #243b6712;
-    color:#22263b;
-    user-select:none;
-    touch-action:pan-y
-}
-.canvas-item.selected{border-color:var(--primary);box-shadow:0 0 0 3px #536dfe33}
-.canvas-item .node-head{
-    display:flex;
-    gap:6px;
-    align-items:center;
-    margin-bottom:8px;
-    font-weight:bold;
-    font-size:13px
-}
-.canvas-item .node-head span{flex:1;overflow:hidden;text-overflow:ellipsis}
-.canvas-item textarea{
-    width:100%;
-    min-height:38px;
-    resize:vertical;
-    border:0;
-    outline:none;
-    background:transparent;
-    color:#20243a;
-    font-size:13px;
-    padding:3px
-}
-.canvas-item .node-actions{display:flex;gap:4px;margin-top:5px}
-.canvas-item .node-actions button{padding:4px 7px;font-size:11px}
-.canvas-world svg{
-    position:absolute;
-    left:-100000px;
-    top:-100000px;
-    overflow:visible;
-    pointer-events:none
-}
-.canvas-world svg line{
-    stroke:#8998c8;
-    stroke-width:2;
-    vector-effect:non-scaling-stroke
-}
-.canvas-world svg path{
-    stroke:#8998c8;
-    stroke-width:2;
-    fill:none;
-    vector-effect:non-scaling-stroke
-}
-.canvas-help{
-    position:absolute;
-    bottom:12px;left:12px;
-    padding:9px 12px;
-    border-radius:8px;
-    background:#ffffffed;
-    border:1px solid var(--border);
-    color:#555e79;
-    font-size:11px;
-    pointer-events:none
-}
-
-/* PDF VIEWER AND ANNOTATION */
-
-.pdf-toolbar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    padding:9px;
-    align-items:center;
-    background:var(--panel);
-    border-bottom:1px solid var(--border)
-}
-.pdf-stage{
-    flex:1;
-    min-height:0;
-    overflow:auto;
-    background:#e8eaf1;
-    padding:15px;
-    position:relative
-}
-.pdf-page{
-    position:relative;
-    width:max-content;
-    max-width:100%;
-    margin:0 auto 20px;
-    background:white;
-    box-shadow:0 3px 15px #0002;
-    touch-action:pan-x pan-y
-}
-.pdf-page canvas{
-    display:block;
-    max-width:100%;
-    height:auto
-}
-.pdf-overlay{
-    position:absolute;
-    left:0;top:0;
-    width:100%;height:100%;
-    touch-action:none
-}
-.pdf-empty{
-    max-width:500px;
-    margin:60px auto;
-    text-align:center;
-    background:white;
-    border-radius:12px;
-    padding:30px;
-    color:#4c536b
-}
-.pdf-empty p{line-height:1.6}
-.pdf-color{
-    width:38px;
-    height:34px;
-    padding:3px
-}
-
-/* MOBILE */
-
-.menu-backdrop{display:none}
+/* PDF */
+.pdf-toolbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px;background:var(--panel);border-bottom:1px solid var(--border)}
+#pdfStage{flex:1;min-height:0;overflow:auto;background:#e5e7eb;padding:12px}
+.pdf-page{position:relative;width:max-content;margin:0 auto 18px;background:white;box-shadow:0 2px 12px #0002}
+.pdf-page canvas{display:block}
+.pdf-overlay{position:absolute;left:0;top:0;touch-action:none}
+.empty{max-width:500px;margin:50px auto;background:var(--panel);padding:25px;border-radius:12px;text-align:center;line-height:1.7}
 .context-menu{
-    position:fixed;
-    z-index:1000;
-    min-width:170px;
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:5px;
-    box-shadow:0 10px 30px #0002
+  position:fixed;z-index:1000;min-width:170px;
+  padding:5px;background:var(--panel);border:1px solid var(--border);
+  border-radius:9px;box-shadow:0 8px 25px #0002
 }
-.context-menu button{
-    display:block;width:100%;text-align:left;border:0;
-    background:transparent;border-radius:6px;padding:10px
-}
-.context-menu button:hover{background:var(--primary-light)}
+.context-menu button{display:block;width:100%;text-align:left;border:0}
 .toast{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#22263b;color:white;
-    border-radius:9px;padding:12px 18px;
-    z-index:2000;font-size:13px;
-    max-width:90%;display:none
+  position:fixed;z-index:2000;bottom:18px;left:50%;
+  transform:translateX(-50%);background:#20243a;color:#fff;
+  padding:12px 16px;border-radius:9px;display:none;max-width:90%
 }
 .toast.show{display:block}
 dialog{
-    width:min(420px,calc(100% - 25px));
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:var(--panel);
-    color:var(--text);
-    padding:20px
+  width:min(420px,94%);background:var(--panel);color:var(--text);
+  border:1px solid var(--border);border-radius:12px;padding:20px
 }
 dialog::backdrop{background:#0006}
-dialog input,dialog select{width:100%;margin:8px 0 14px}
-.dialog-actions{display:flex;justify-content:flex-end;gap:7px}
+dialog input{width:100%;margin:8px 0 14px}
+.dialog-actions{display:flex;justify-content:flex-end;gap:8px}
 @media(max-width:760px){
-    .brand{font-size:13px}
-    .topbar{gap:4px;padding:5px}
-    .sidebar{
-        position:fixed;left:0;top:56px;bottom:0;
-        width:270px;max-width:85vw;
-        transform:translateX(-110%);
-        transition:transform .2s;
-        box-shadow:0 0 20px #0002
-    }
-    body.show-tree .sidebar{transform:translateX(0)}
-    .menu-backdrop{
-        position:fixed;inset:56px 0 0;
-        background:#0004;z-index:9
-    }
-    body.show-tree .menu-backdrop{display:block}
-    .editor-top{padding:8px}
-    .title{font-size:17px}
-    .rich-editor{padding:16px}
-    .canvas-tools{top:5px;left:5px;right:5px}
-    .canvas-tools button{padding:7px;font-size:12px}
-    .canvas-help{max-width:90%;font-size:10px}
+  .topbar{height:56px;padding:5px;gap:4px}
+  .layout{height:calc(100dvh - 56px)}
+  .sidebar{
+    position:fixed;z-index:25;left:0;top:56px;bottom:0;
+    width:280px;max-width:86vw;
+    transform:translateX(-110%);transition:transform .2s;
+    box-shadow:0 0 25px #0002
+  }
+  body.show-tree .sidebar{transform:translateX(0)}
+  #backdrop{display:none;position:fixed;z-index:24;inset:56px 0 0;background:#0005}
+  body.show-tree #backdrop{display:block}
+  .brand{font-size:13px}
+  .rich-editor{padding:15px}
+  .title{font-size:17px}
 }
 @media print{
-    body{height:auto;overflow:visible;background:white}
-    .topbar,.sidebar,.tabs,.editor-top,.editor-tools,
-    .statusbar,.canvas-tools,.pdf-toolbar{display:none!important}
-    .layout,.work,.view.active{display:block;height:auto;overflow:visible}
-    .rich-editor{overflow:visible}
+  .topbar,.sidebar,.tabs,.toolbar,.editor-top,.statusbar,.map-tools,.pdf-toolbar{display:none!important}
+  body{height:auto;overflow:visible;background:white}
+  .layout,.work,.view.active{display:block;height:auto;overflow:visible}
+  .rich-editor{overflow:visible}
 }
 </style>
 </head>
@@ -431,1865 +190,641 @@ dialog input,dialog select{width:100%;margin:8px 0 14px}
 <body>
 
 <header class="topbar">
-    <button onclick="toggleTree()">☰</button>
-    <div class="brand">OneNote <span>Infinity Pro</span></div>
-
-    <button class="primary" onclick="manualSave()">💾 Save</button>
-    <button onclick="exportBackup()">⬇ Backup</button>
-    <button onclick="openBackup()">📂 Open File</button>
-    <button onclick="createNotebook()">＋ Notebook</button>
-
-    <span id="saveState" style="font-size:11px;color:#788098">Ready</span>
+  <button onclick="toggleTree()">☰</button>
+  <div class="brand">OneNote <span>Infinity Pro</span></div>
+  <button class="primary" onclick="saveNow()">💾 Save</button>
+  <button onclick="downloadBackup()">⬇ Backup</button>
+  <button onclick="openBackup()">📂 Restore</button>
+  <button onclick="createNotebook()">＋ Notebook</button>
+  <button onclick="toggleDark()">🌙</button>
+  <span id="saveState">Ready</span>
 </header>
 
-<div class="menu-backdrop" onclick="toggleTree()"></div>
+<div id="backdrop" onclick="toggleTree()"></div>
 
 <div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <b>NOTEBOOK TREE</b>
+      <button onclick="createNotebook()">＋</button>
+    </div>
+    <div style="padding:0 8px">
+      <input id="treeSearch" class="searchbox" placeholder="Search notebooks and pages..." oninput="renderTree()">
+    </div>
+    <div id="tree" class="tree"></div>
+    <div style="padding:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)">
+      Notebook → Section → Subsection → Page
+    </div>
+  </aside>
 
-    <aside class="sidebar">
-        <div class="sidebar-head">
-            <strong>NOTEBOOK TREE</strong>
-            <button onclick="createNotebook()">＋</button>
+  <main class="work">
+    <div class="tabs">
+      <button class="tab active" data-view="notes" onclick="switchView('notes')">📝 Notes</button>
+      <button class="tab" data-view="mindmap" onclick="switchView('mindmap')">🧠 Mind Map</button>
+      <button class="tab" data-view="pdf" onclick="switchView('pdf')">📄 PDF Studio</button>
+    </div>
+
+    <section class="view active" id="notesView">
+      <div class="editor-top">
+        <input id="noteTitle" class="title" placeholder="Page title" maxlength="250" oninput="scheduleSave()">
+        <button onclick="newPage()">＋ Page</button>
+        <button onclick="printNotes()">🖨 Print</button>
+      </div>
+      <div class="toolbar">
+        <button onclick="format('bold')"><b>B</b></button>
+        <button onclick="format('italic')"><i>I</i></button>
+        <button onclick="format('underline')"><u>U</u></button>
+        <button onclick="format('insertUnorderedList')">• List</button>
+        <button onclick="format('insertOrderedList')">1. List</button>
+        <button onclick="format('formatBlock','h1')">H1</button>
+        <button onclick="format('formatBlock','h2')">H2</button>
+        <button onclick="format('formatBlock','blockquote')">Quote</button>
+        <input type="color" value="#20243a" title="Text color" style="width:38px;padding:3px" onchange="format('foreColor',this.value)">
+        <button onclick="insertImage()">🖼 Image</button>
+        <button onclick="insertTable()">▦ Table</button>
+        <button onclick="undoEdit()">↶ Undo</button>
+        <button onclick="redoEdit()">↷ Redo</button>
+        <button onclick="document.getElementById('attachPDF').click()">📎 PDF</button>
+      </div>
+      <div id="noteContent" class="rich-editor" contenteditable="true" spellcheck="true" oninput="scheduleSave()"></div>
+      <div id="noteStatus" class="statusbar">Auto-save enabled · This browser</div>
+    </section>
+
+    <section class="view" id="mindmapView">
+      <div class="map-tools">
+        <button class="primary" onclick="addMapNode()">＋ Node</button>
+        <button onclick="addChildNode()">↳ Child</button>
+        <button onclick="connectSelected()">🔗 Connect</button>
+        <button onclick="deleteSelectedNode()">🗑 Delete</button>
+        <button onclick="fitMap()">⊡ Fit</button>
+        <button onclick="resetMap()">100%</button>
+        <span id="zoomLabel" style="background:var(--panel);padding:8px;border-radius:7px">100%</span>
+      </div>
+      <div id="mapViewport">
+        <div id="mapWorld">
+          <svg id="mapConnections" xmlns="http://www.w3.org/2000/svg"></svg>
+          <div id="mapNodes"></div>
         </div>
-        <div id="tree" class="tree"></div>
-        <div style="padding:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)">
-            Notebook → Section → Subsection → Page
+      </div>
+      <div class="map-help">Drag empty space to move · Pinch or wheel to zoom · Drag nodes to move them</div>
+    </section>
+
+    <section class="view" id="pdfView">
+      <div class="pdf-toolbar">
+        <button class="primary" onclick="document.getElementById('pdfInput').click()">📂 Open PDF</button>
+        <button onclick="downloadPDF()">⬇ Save Original PDF</button>
+        <button onclick="printPDF()">🖨 Print with marks</button>
+        <label>Color</label><input id="markerColor" type="color" value="#fff000" style="width:40px;padding:3px">
+        <label>Size</label><input id="markerSize" type="range" min="4" max="40" value="18" style="width:85px">
+        <button id="drawButton" onclick="toggleDraw()">🖍 Highlighter OFF</button>
+        <button onclick="clearMarks()">Clear marks</button>
+        <span id="pdfStatus" style="font-size:11px;color:var(--muted)">No PDF opened</span>
+      </div>
+      <div id="pdfStage">
+        <div class="empty">
+          <h2>PDF Studio</h2>
+          <p>Open a PDF, mark it with your finger and print a copy containing your marks.</p>
+          <button class="primary" onclick="document.getElementById('pdfInput').click()">Choose PDF</button>
         </div>
-    </aside>
-
-    <main class="work">
-        <div class="tabs">
-            <button class="tab active" data-view="notes" onclick="switchView('notes')">📝 Notes</button>
-            <button class="tab" data-view="mindmap" onclick="switchView('mindmap')">🧠 Infinite Mind Map</button>
-            <button class="tab" data-view="pdf" onclick="switchView('pdf')">📄 PDF Studio</button>
-        </div>
-
-        <!-- NOTES -->
-
-        <section class="view active" id="notesView">
-            <div class="editor-top">
-                <input id="noteTitle" class="title" placeholder="Untitled Page"
-                       maxlength="250" oninput="scheduleSave()">
-                <button onclick="newPage()">＋ Page</button>
-                <button onclick="printNotes()">🖨 Print</button>
-            </div>
-
-            <div class="editor-tools">
-                <button onclick="format('bold')"><b>B</b></button>
-                <button onclick="format('italic')"><i>I</i></button>
-                <button onclick="format('underline')"><u>U</u></button>
-                <button onclick="format('insertUnorderedList')">• List</button>
-                <button onclick="format('insertOrderedList')">1. List</button>
-                <button onclick="format('undo')">↶ Undo</button>
-                <button onclick="format('redo')">↷ Redo</button>
-                <button onclick="format('formatBlock','h1')">H1</button>
-                <button onclick="format('formatBlock','h2')">H2</button>
-                <button onclick="format('formatBlock','blockquote')">Quote</button>
-                <input type="color" title="Text color" value="#20243a"
-                       onchange="format('foreColor',this.value)" style="width:40px;padding:3px">
-                <button onclick="insertNoteImage()">🖼 Image</button>
-                <button onclick="insertPDF()">📎 Attach PDF</button>
-            </div>
-
-            <div id="noteContent" class="rich-editor" contenteditable="true"
-                 spellcheck="true" oninput="scheduleSave()"></div>
-
-            <div class="statusbar" id="noteStatus">Auto-save enabled · Local device</div>
-        </section>
-
-        <!-- INFINITE WORKSPACE -->
-
-        <section class="view" id="mindmapView">
-            <div class="canvas-tools">
-                <button class="primary" onclick="addNode()">＋ Node</button>
-                <button onclick="addChildNode()">↳ Child</button>
-                <button onclick="connectMode()">🔗 Connect</button>
-                <button onclick="deleteSelectedNode()">🗑</button>
-                <button onclick="fitCanvas()">⊡ Fit</button>
-                <button onclick="resetZoom()">100%</button>
-                <span id="zoomLabel" class="zoom-label">100%</span>
-            </div>
-
-            <div id="canvasViewport" class="canvas-viewport">
-                <div id="canvasWorld" class="canvas-world"></div>
-            </div>
-
-            <div class="canvas-help">
-                Drag empty space to pan · Pinch or wheel to zoom · Drag a node to move it.
-                Select a node and choose Child to create a branch.
-            </div>
-        </section>
-
-        <!-- PDF STUDIO -->
-
-        <section class="view" id="pdfView">
-            <div class="pdf-toolbar">
-                <button class="primary" onclick="choosePDF()">📂 Open PDF</button>
-                <button onclick="downloadPDF()">⬇ Save PDF</button>
-                <button onclick="printPDF()">🖨 Print PDF</button>
-                <button onclick="clearAnnotations()">Clear marks</button>
-
-                <label style="font-size:12px">Highlighter</label>
-                <input id="highlighterColor" class="pdf-color" type="color" value="#fff000">
-                <label style="font-size:12px">Size</label>
-                <input id="highlighterSize" type="range" min="4" max="40" value="18" style="width:85px">
-
-                <button id="drawToggle" onclick="toggleDrawing()">🖍 Draw: OFF</button>
-                <span id="pdfStatus" style="font-size:11px;color:var(--muted)">No PDF opened</span>
-            </div>
-
-            <div id="pdfStage" class="pdf-stage">
-                <div class="pdf-empty">
-                    <h2>PDF Annotation Studio</h2>
-                    <p>Open a PDF to view it, highlight text with your finger, save annotation data, and print the document.</p>
-                    <button class="primary" onclick="choosePDF()">Choose PDF</button>
-                </div>
-            </div>
-        </section>
-    </main>
+      </div>
+    </section>
+  </main>
 </div>
 
 <div id="contextMenu" class="context-menu" hidden></div>
 <div id="toast" class="toast"></div>
-
 <dialog id="nameDialog">
-    <h3 id="dialogHeading">Create Item</h3>
-    <label for="dialogName">Name</label>
-    <input id="dialogName" maxlength="250" placeholder="Enter name">
-    <div class="dialog-actions">
-        <button onclick="closeDialog()">Cancel</button>
-        <button class="primary" onclick="confirmName()">Save</button>
-    </div>
+  <h3 id="dialogHeading">Create Item</h3>
+  <label id="dialogLabel">Name</label>
+  <input id="dialogName" maxlength="250" placeholder="Enter name">
+  <div class="dialog-actions">
+    <button onclick="closeDialog()">Cancel</button>
+    <button class="primary" onclick="confirmName()">Save</button>
+  </div>
 </dialog>
 
 <input id="backupInput" type="file" accept=".json,application/json" hidden>
-<input id="pdfInput" type="file" accept="application/pdf,.pdf" hidden>
 <input id="imageInput" type="file" accept="image/*" hidden>
+<input id="pdfInput" type="file" accept=".pdf,application/pdf" hidden>
+<input id="attachPDF" type="file" accept=".pdf,application/pdf" hidden>
 
-<!-- PDF.js for PDF rendering -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
 <script>
 "use strict";
 
-/* ==========================================
-   DATA MODEL
-========================================== */
+const DB_KEY="onenote_infinity_pro_v3";
+const $=id=>document.getElementById(id);
+const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
 
-const DB_KEY = "onenote_infinity_pro_v2";
+let db,currentPageId=null,currentView="notes",saveTimer,dialogCallback;
+let map={nodes:[],connections:[],selected:null,x:300,y:180,scale:1};
+let connectStart=null,dragNode=null,panState=null,pointers=new Map(),pinchState=null;
+let pdfBytes=null,pdfDoc=null,pdfName="",pdfMarks={},pdfEntries=[],drawEnabled=false;
+let longPressTimer=null;
 
-let db;
-let currentPageId = null;
-let currentView = "notes";
-let saveTimer = null;
-let dialogCallback = null;
-let longPressTimer = null;
-let contextTargetId = null;
-let connectPendingId = null;
-
-let pdfBytes = null;
-let pdfDocument = null;
-let pdfFileName = "";
-let drawingEnabled = false;
-let pdfAnnotations = {};
-let pdfCanvases = [];
-
-const $ = id => document.getElementById(id);
-const uid = () => crypto.randomUUID
-    ? crypto.randomUUID()
-    : Date.now().toString(36) + Math.random().toString(36).slice(2);
-
-function defaultDB() {
-    const nb = uid(), sec = uid(), page = uid(), now = new Date().toISOString();
-
-    return {
-        version: 2,
-        notebooks: [{
-            id: nb,
-            name: "My Notebook",
-            type: "notebook",
-            expanded: true,
-            children: [{
-                id: sec,
-                name: "General",
-                type: "section",
-                expanded: true,
-                children: [{
-                    id: page,
-                    name: "Welcome",
-                    type: "page",
-                    title: "Welcome to OneNote Infinity Pro",
-                    content: "<h1>Welcome!</h1><p>Your advanced digital workspace is ready.</p><p>Create nested sections, pages, mind maps, and PDF annotations.</p>",
-                    mindmap: {
-                        nodes: [
-                            {id:uid(),x:300,y:200,text:"My Ideas",parent:null},
-                            {id:uid(),x:80,y:370,text:"Study",parent:null},
-                            {id:uid(),x:520,y:370,text:"Projects",parent:null}
-                        ]
-                    },
-                    pdf: null,
-                    createdAt: now,
-                    updatedAt: now
-                }]
-            }]
-        }]
-    };
+function makePage(name="New Page"){
+  return {id:uid(),type:"page",name,title:name,content:"",mindmap:{nodes:[],connections:[]},pdf:null,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
 }
+function makeDefault(){
+  const page=makePage("Welcome");
+  page.content="<h1>Welcome to OneNote Infinity Pro</h1><p>Create notes, mind maps and PDF annotations.</p>";
+  page.mindmap.nodes=[{id:uid(),x:0,y:0,text:"My Ideas",details:"",parent:null},{id:uid(),x:280,y:140,text:"Study",details:"",parent:null},{id:uid(),x:-280,y:140,text:"Projects",details:"",parent:null}];
+  const sec={id:uid(),type:"section",name:"General",expanded:true,children:[page]};
+  return {version:3,notebooks:[{id:uid(),type:"notebook",name:"My Notebook",expanded:true,children:[sec]}]};
+}
+function toast(message){
+  const t=$("toast");t.textContent=message;t.classList.add("show");
+  clearTimeout(t.timer);t.timer=setTimeout(()=>t.classList.remove("show"),3000);
+}
+function safeStore(){
+  try{
+    localStorage.setItem(DB_KEY,JSON.stringify(db));
+    $("saveState").textContent="✓ Saved";
+    $("noteStatus").textContent="Saved locally · "+new Date().toLocaleTimeString();
+    return true;
+  }catch(e){
+    $("saveState").textContent="Storage full";
+    toast("Browser storage is full. Download a backup.");
+    return false;
+  }
+}
+function loadDB(){
+  try{
+    const raw=localStorage.getItem(DB_KEY);
+    db=raw?JSON.parse(raw):makeDefault();
+    if(!db||!Array.isArray(db.notebooks))throw Error("Invalid data");
+  }catch(e){db=makeDefault();toast("Could not read old data; new workspace created.");}
+  if(!localStorage.getItem(DB_KEY))safeStore();
+}
+function walk(node,parent=null,out=[]){
+  out.push({node,parent});
+  (node.children||[]).forEach(c=>walk(c,node,out));
+  return out;
+}
+function allNodes(){return db.notebooks.flatMap(n=>walk(n));}
+function findItem(id){return allNodes().find(x=>x.node.id===id)||null}
+function findNode(id){const x=findItem(id);return x?x.node:null}
+function currentPage(){const n=findNode(currentPageId);return n&&n.type==="page"?n:null}
+function parentOf(id){const x=findItem(id);return x?x.parent:null}
+function firstPage(node){
+  if(!node)return null;if(node.type==="page")return node;
+  for(const c of node.children||[]){const p=firstPage(c);if(p)return p}
+  return null;
+}
+function saveEditor(){
+  const p=currentPage();if(!p)return;
+  p.title=$("noteTitle").value.trim()||"Untitled Page";
+  p.name=p.title;p.content=$("noteContent").innerHTML;p.updatedAt=new Date().toISOString();
+}
+function scheduleSave(){
+  $("saveState").textContent="Saving…";clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{saveEditor();safeStore();renderTree()},350);
+}
+function saveNow(){clearTimeout(saveTimer);saveEditor();safeStore();toast("Workspace saved in this browser.");}
+function toggleTree(){document.body.classList.toggle("show-tree")}
+function toggleDark(){document.body.classList.toggle("dark");localStorage.setItem("onp_dark",document.body.classList.contains("dark")?"1":"0")}
 
-/* ==========================================
-   TREE UTILITIES
-========================================== */
-
-function allTreeNodes() {
-    const result = [];
-
-    function walk(node, parent, notebook) {
-        result.push({node,parent,notebook});
-
-        if (Array.isArray(node.children)) {
-            for (const child of node.children) {
-                walk(child,node,node.type === "notebook" ? node : notebook);
-            }
-        }
+function renderTree(){
+  const root=$("tree");root.replaceChildren();
+  const query=$("treeSearch").value.trim().toLowerCase();
+  function matches(n){
+    return !query||n.name.toLowerCase().includes(query)||(n.children||[]).some(matches);
+  }
+  function draw(n){
+    const wrap=document.createElement("div"),row=document.createElement("div");
+    row.className="tree-row"+(n.id===currentPageId?" active":"");
+    const toggle=document.createElement("button");toggle.className="tree-toggle";
+    toggle.textContent=n.type==="page"?"·":(n.expanded?"−":"+");
+    toggle.onclick=e=>{e.stopPropagation();if(n.type==="page")openPage(n.id);else{n.expanded=!n.expanded;safeStore();renderTree()}};
+    const label=document.createElement("div");label.className="tree-label";
+    label.textContent=({notebook:"📚",section:"📂",subsection:"📁",page:"📄"}[n.type]||"📄")+" "+n.name;
+    label.onclick=()=>n.type==="page"?openPage(n.id):(n.expanded=!n.expanded,safeStore(),renderTree());
+    const more=document.createElement("button");more.className="tree-more";more.textContent="⋯";
+    more.onclick=e=>{e.stopPropagation();showMenu(n,e.clientX,e.clientY)};
+    row.append(toggle,label,more);
+    let timer;
+    row.addEventListener("pointerdown",e=>{if(e.target.closest("button"))return;timer=setTimeout(()=>showMenu(n,e.clientX,e.clientY),600)});
+    ["pointerup","pointercancel","pointerleave","pointermove"].forEach(ev=>row.addEventListener(ev,()=>clearTimeout(timer)));
+    wrap.appendChild(row);
+    if(n.expanded&&(n.children||[]).length){
+      const kids=document.createElement("div");kids.className="tree-children";
+      n.children.filter(matches).forEach(c=>kids.appendChild(draw(c)));wrap.appendChild(kids);
     }
+    return wrap;
+  }
+  db.notebooks.filter(matches).forEach(n=>root.appendChild(draw(n)));
+  if(!root.children.length)root.textContent="No matching items.";
+}
+function showMenu(node,x,y){
+  const m=$("contextMenu");m.replaceChildren();m.hidden=false;
+  const actions=[
+    ["＋ Create child",()=>createChild(node.id)],
+    ["＋ Create page",()=>createPageUnder(node.id)],
+    ["✏ Rename",()=>renameNode(node.id)],
+    ["🗑 Delete",()=>deleteTreeNode(node.id)]
+  ];
+  actions.forEach(([text,fn])=>{const b=document.createElement("button");b.textContent=text;b.onclick=()=>{m.hidden=true;fn()};m.appendChild(b)});
+  m.style.left=Math.max(5,Math.min(x,innerWidth-190))+"px";
+  m.style.top=Math.max(5,Math.min(y,innerHeight-180))+"px";
+}
+document.addEventListener("pointerdown",e=>{if(!e.target.closest("#contextMenu"))$("contextMenu").hidden=true});
 
-    for (const notebook of db.notebooks) {
-        walk(notebook,null,notebook);
+function askName(title,initial,callback){
+  dialogCallback=callback;$("dialogHeading").textContent=title;
+  $("dialogName").value=initial||"";$("nameDialog").showModal();
+  setTimeout(()=>$("dialogName").focus(),50);
+}
+function closeDialog(){$("nameDialog").close();dialogCallback=null}
+function confirmName(){
+  const name=$("dialogName").value.trim();if(!name)return toast("Please enter a name.");
+  const cb=dialogCallback;closeDialog();if(cb)cb(name);
+}
+$("dialogName").addEventListener("keydown",e=>{if(e.key==="Enter")confirmName()});
+function createNotebook(){
+  askName("Create Notebook","My Notebook",name=>{
+    db.notebooks.push({id:uid(),type:"notebook",name,expanded:true,children:[]});
+    safeStore();renderTree();toast("Notebook created.");
+  });
+}
+function createChild(id){
+  const parent=findNode(id);if(!parent)return;
+  if(parent.type==="page")return toast("Pages cannot contain children.");
+  const type=parent.type==="notebook"?"section":"subsection";
+  askName(type==="section"?"Create Section":"Create Nested Section","New "+type,name=>{
+    parent.children=parent.children||[];
+    const node={id:uid(),type,name,expanded:true,children:[]};
+    if(type==="subsection")node.children.push(makePage("New Page"));
+    parent.children.push(node);parent.expanded=true;safeStore();renderTree();
+    const p=firstPage(node);if(p)openPage(p.id);toast("Created successfully.");
+  });
+}
+function createPageUnder(id){
+  const node=findNode(id);if(!node)return;
+  if(node.type==="page")return newPage();
+  askName("Create Page","New Page",name=>{
+    const page=makePage(name);
+    let parent=node;
+    if(node.type==="notebook"){
+      parent.children=parent.children||[];
+      const sec={id:uid(),type:"section",name:"General",expanded:true,children:[page]};
+      parent.children.push(sec);
+    }else{
+      parent.children=parent.children||[];parent.children.push(page);
     }
-
-    return result;
+    parent.expanded=true;safeStore();renderTree();openPage(page.id);
+  });
+}
+function newPage(){
+  const p=currentPage();if(!p)return toast("Select a page first.");
+  const parent=parentOf(p.id);if(!parent)return;
+  askName("New Page","New Page",name=>{
+    const page=makePage(name);parent.children.push(page);parent.expanded=true;
+    safeStore();renderTree();openPage(page.id);
+  });
+}
+function renameNode(id){
+  const node=findNode(id);if(!node)return;
+  askName("Rename Item",node.name,name=>{
+    node.name=name;if(node.type==="page")node.title=name;
+    safeStore();renderTree();if(id===currentPageId)openPage(id);
+  });
+}
+function deleteTreeNode(id){
+  const item=findItem(id);if(!item)return;
+  if(!confirm('Delete "'+item.node.name+'" and all its contents?'))return;
+  if(!item.parent)db.notebooks=db.notebooks.filter(n=>n.id!==id);
+  else item.parent.children=item.parent.children.filter(n=>n.id!==id);
+  if(!findNode(currentPageId)){
+    currentPageId=null;
+  }
+  safeStore();renderTree();
+  const p=db.notebooks.map(firstPage).find(Boolean);
+  if(p)openPage(p.id);else clearEditor();
+}
+function clearEditor(){$("noteTitle").value="";$("noteContent").innerHTML="";currentPageId=null;renderTree()}
+function openPage(id){
+  saveEditor();const p=findNode(id);if(!p||p.type!=="page")return;
+  currentPageId=id;$("noteTitle").value=p.title||p.name;
+  $("noteContent").innerHTML=sanitizeHTML(p.content||"");
+  $("noteStatus").textContent="Last edited: "+new Date(p.updatedAt||Date.now()).toLocaleString();
+  loadMap(p);renderTree();
+  if(innerWidth<=760)document.body.classList.remove("show-tree");
+  if(p.pdf&&p.pdf.annotations)pdfMarks=p.pdf.annotations;
+  if(p.pdf&&p.pdf.name&&!pdfDoc)$("pdfStatus").textContent="Saved marks for "+p.pdf.name+"; reopen PDF to view.";
+}
+function switchView(view){
+  currentView=view;
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.view===view));
+  $(({notes:"notesView",mindmap:"mindmapView",pdf:"pdfView"})[view]).classList.add("active");
+  if(view==="mindmap")setTimeout(renderMap,60);
 }
 
-function findNode(id) {
-    return allTreeNodes().find(item => item.node.id === id) || null;
+function format(cmd,value=null){$("noteContent").focus();document.execCommand(cmd,false,value);scheduleSave()}
+function undoEdit(){format("undo")}
+function redoEdit(){format("redo")}
+function insertTable(){
+  const rows=Math.max(1,Math.min(15,Number(prompt("Number of rows","3"))||3));
+  const cols=Math.max(1,Math.min(10,Number(prompt("Number of columns","3"))||3));
+  let html="<table>";
+  for(let r=0;r<rows;r++){html+="<tr>";for(let c=0;c<cols;c++)html+=r===0?"<th>Heading</th>":"<td>Cell</td>";html+="</tr>"}
+  html+="</table><p><br></p>";document.execCommand("insertHTML",false,html);scheduleSave();
 }
-
-function findParent(id) {
-    const item = findNode(id);
-    return item ? item.parent : null;
-}
-
-function currentPage() {
-    const item = findNode(currentPageId);
-    return item && item.node.type === "page" ? item.node : null;
-}
-
-function ensureChildren(node) {
-    if (!Array.isArray(node.children)) node.children = [];
-    return node.children;
-}
-
-function findFirstPage(node) {
-    if (node.type === "page") return node;
-
-    for (const child of node.children || []) {
-        const result = findFirstPage(child);
-        if (result) return result;
-    }
-
-    return null;
-}
-
-/* ==========================================
-   PERSISTENT STORAGE
-========================================== */
-
-function safeStore() {
-    try {
-        localStorage.setItem(DB_KEY,JSON.stringify(db));
-        $("saveState").textContent = "✓ Saved";
-        $("noteStatus").textContent =
-            "All changes saved locally · " + new Date().toLocaleTimeString();
-
-        return true;
-    } catch (error) {
-        console.error(error);
-        $("saveState").textContent = "Storage full!";
-        $("noteStatus").textContent =
-            "Storage limit reached. Export a backup or remove large files.";
-        toast("Storage full. Export a backup immediately.");
-        return false;
-    }
-}
-
-function loadDB() {
-    try {
-        const raw = localStorage.getItem(DB_KEY);
-        db = raw ? JSON.parse(raw) : defaultDB();
-
-        if (!db || !Array.isArray(db.notebooks)) throw new Error("Invalid DB");
-
-        db.notebooks.forEach(nb => {
-            if (!Array.isArray(nb.children)) nb.children = [];
-        });
-
-    } catch (error) {
-        console.error(error);
-        db = defaultDB();
-        toast("A new workspace was created because saved data could not be read.");
-    }
-
-    if (!localStorage.getItem(DB_KEY)) safeStore();
-}
-
-function saveCurrentEditor() {
-    const page = currentPage();
-    if (!page) return;
-
-    page.title = $("noteTitle").value.trim() || "Untitled Page";
-    page.name = page.title;
-    page.content = $("noteContent").innerHTML;
-    page.updatedAt = new Date().toISOString();
-}
-
-function scheduleSave() {
-    $("saveState").textContent = "Saving...";
-
-    clearTimeout(saveTimer);
-
-    saveTimer = setTimeout(() => {
-        saveCurrentEditor();
-        safeStore();
-        renderTree();
-    },300);
-}
-
-function manualSave() {
-    clearTimeout(saveTimer);
-    saveCurrentEditor();
-    safeStore();
-    exportBackup();
-    toast("Saved locally and backup download started.");
-}
-
-/* ==========================================
-   NOTEBOOK TREE RENDERING
-========================================== */
-
-function renderTree() {
-    const root = $("tree");
-    root.replaceChildren();
-
-    if (!db.notebooks.length) {
-        root.textContent = "No notebooks. Create one to begin.";
-        root.className = "tree tree-empty";
-        return;
-    }
-
-    root.className = "tree";
-
-    db.notebooks.forEach(nb => root.appendChild(renderTreeNode(nb)));
-}
-
-function renderTreeNode(node) {
-    const wrapper = document.createElement("div");
-    const row = document.createElement("div");
-
-    row.className = "tree-row" + (node.id === currentPageId ? " active" : "");
-
-    const toggle = document.createElement("button");
-    toggle.className = "tree-toggle";
-    toggle.textContent = node.children && node.children.length
-        ? (node.expanded ? "−" : "+") : (node.type === "page" ? "·" : "+");
-
-    toggle.onclick = event => {
-        event.stopPropagation();
-
-        if (node.type === "page") {
-            openPage(node.id);
-            return;
-        }
-
-        node.expanded = !node.expanded;
-        safeStore();
-        renderTree();
-    };
-
-    const label = document.createElement("div");
-    label.className = "tree-label";
-    label.textContent = iconFor(node.type) + " " + node.name;
-    label.title = node.name;
-
-    label.onclick = () => {
-        if (node.type === "page") {
-            openPage(node.id);
-        } else {
-            node.expanded = !node.expanded;
-            safeStore();
-            renderTree();
-        }
-    };
-
-    const add = document.createElement("button");
-    add.className = "tree-add";
-    add.textContent = "⋯";
-    add.title = "Create / Rename / Delete";
-
-    add.onclick = event => {
-        event.stopPropagation();
-        showContextMenu(node,event.clientX,event.clientY);
-    };
-
-    // Long press on touch devices.
-    row.addEventListener("pointerdown",event => {
-        if (event.target.closest("button")) return;
-
-        clearTimeout(longPressTimer);
-
-        longPressTimer = setTimeout(() => {
-            showContextMenu(node,event.clientX,event.clientY);
-        },550);
-    });
-
-    ["pointerup","pointercancel","pointermove","pointerleave"].forEach(name => {
-        row.addEventListener(name,() => clearTimeout(longPressTimer));
-    });
-
-    row.append(toggle,label,add);
-    wrapper.appendChild(row);
-
-    if (node.expanded && node.children && node.children.length) {
-        const children = document.createElement("div");
-        children.className = "tree-children";
-
-        node.children.forEach(child => {
-            children.appendChild(renderTreeNode(child));
-        });
-
-        wrapper.appendChild(children);
-    }
-
-    return wrapper;
-}
-
-function iconFor(type) {
-    return ({
-        notebook:"📚",
-        section:"📂",
-        subsection:"📁",
-        page:"📄"
-    })[type] || "📄";
-}
-
-/* ==========================================
-   CONTEXT MENU AND TREE OPERATIONS
-========================================== */
-
-function showContextMenu(node,x,y) {
-    contextTargetId = node.id;
-
-    const menu = $("contextMenu");
-    menu.replaceChildren();
-    menu.hidden = false;
-
-    const actions = [
-        ["＋ Create child",() => createChild(node.id)],
-        ["✏ Rename",() => renameNode(node.id)],
-        ["🗑 Delete",() => deleteNode(node.id)]
-    ];
-
-    actions.forEach(([text,action]) => {
-        const button = document.createElement("button");
-        button.textContent = text;
-
-        button.onclick = () => {
-            menu.hidden = true;
-            action();
-        };
-
-        menu.appendChild(button);
-    });
-
-    const width = 185;
-    const height = 150;
-
-    menu.style.left = Math.max(5,Math.min(x,innerWidth-width-5))+"px";
-    menu.style.top = Math.max(5,Math.min(y,innerHeight-height-5))+"px";
-}
-
-document.addEventListener("pointerdown",event => {
-    if (!event.target.closest("#contextMenu")) {
-        $("contextMenu").hidden = true;
-    }
+function insertImage(){$("imageInput").click()}
+$("imageInput").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;
+  if(!f.type.startsWith("image/"))return toast("Choose an image.");
+  if(f.size>900000)return toast("Please choose an image below 900 KB.");
+  const reader=new FileReader();reader.onload=()=>{
+    const img=document.createElement("img");img.src=reader.result;img.alt=f.name;
+    $("noteContent").focus();document.execCommand("insertHTML",false,img.outerHTML);scheduleSave();
+  };reader.readAsDataURL(f);e.target.value="";
 });
-
-/*
-  Tree rules:
-  notebook -> section -> subsection -> subsection ... -> page
-  Pages are leaves and cannot have child nodes.
-*/
-
-function createNotebook() {
-    openNameDialog("Create Notebook","Notebook name",name => {
-        const node = {
-            id:uid(),name,type:"notebook",
-            expanded:true,children:[]
-        };
-
-        db.notebooks.push(node);
-        safeStore();
-        renderTree();
-        toast("Notebook created.");
+function sanitizeHTML(html){
+  const t=document.createElement("template");t.innerHTML=html;
+  const allowed=new Set(["P","DIV","BR","H1","H2","H3","H4","B","STRONG","I","EM","U","S","UL","OL","LI","BLOCKQUOTE","PRE","CODE","A","IMG","HR","TABLE","TBODY","THEAD","TR","TD","TH","SPAN"]);
+  t.content.querySelectorAll("*").forEach(el=>{
+    if(!allowed.has(el.tagName)){el.replaceWith(document.createTextNode(el.textContent||""));return}
+    [...el.attributes].forEach(a=>{
+      const n=a.name.toLowerCase(),v=a.value;
+      if(n.startsWith("on")||n==="srcdoc")el.removeAttribute(a.name);
+      else if(n==="href"&&el.tagName==="A"){
+        try{const u=new URL(v,location.href);if(!["https:","http:","mailto:"].includes(u.protocol))el.removeAttribute(n);else el.setAttribute("rel","noopener noreferrer")}catch{el.removeAttribute(n)}
+      }else if(n==="src"&&el.tagName==="IMG"){
+        if(!/^data:image\/(png|jpeg|gif|webp);base64,/i.test(v))el.removeAttribute(n);
+      }else if(n==="style"){
+        if(/url\s*\(|expression\s*\(|javascript:/i.test(v))el.removeAttribute(n);
+      }else if(!["href","src","alt","colspan","rowspan","style"].includes(n))el.removeAttribute(a.name);
     });
+  });
+  return t.innerHTML;
 }
+function printNotes(){saveEditor();window.print()}
 
-function createChild(parentId) {
-    const parentItem = findNode(parentId);
-    if (!parentItem) return;
-
-    const parent = parentItem.node;
-
-    if (parent.type === "page") {
-        toast("A page is the last level. Create a new sibling page instead.");
-        return;
-    }
-
-    let type;
-
-    if (parent.type === "notebook") type = "section";
-    else if (parent.type === "section" || parent.type === "subsection") {
-        type = "subsection";
-    }
-
-    openNameDialog(
-        type === "section" ? "Create Section" : "Create Subsection",
-        "Name",
-        name => {
-            const node = {
-                id:uid(),name,type,expanded:true,children:[]
-            };
-
-            if (type === "subsection") {
-                node.children.push({
-                    id:uid(),
-                    name:"New Page",
-                    title:"New Page",
-                    type:"page",
-                    content:"",
-                    mindmap:{nodes:[]},
-                    pdf:null,
-                    createdAt:new Date().toISOString(),
-                    updatedAt:new Date().toISOString()
-                });
-            }
-
-            ensureChildren(parent).push(node);
-            parent.expanded = true;
-
-            safeStore();
-            renderTree();
-
-            const page = findFirstPage(node);
-
-            if (page) openPage(page.id);
-
-            toast("Created successfully.");
-        }
-    );
+/* Mind map: SVG occupies a real canvas-sized area, so connections are visible. */
+const mapViewport=$("mapViewport"),mapWorld=$("mapWorld"),mapNodes=$("mapNodes"),svg=$("mapConnections");
+function loadMap(page){
+  map.nodes=page.mindmap&&Array.isArray(page.mindmap.nodes)?page.mindmap.nodes:[];
+  map.connections=page.mindmap&&Array.isArray(page.mindmap.connections)?page.mindmap.connections:[];
+  map.selected=null;renderMap();
 }
-
-function newPage() {
-    const page = currentPage();
-
-    if (!page) {
-        toast("Select a page first.");
-        return;
-    }
-
-    const parent = findParent(page.id);
-
-    if (!parent) return;
-
-    openNameDialog("Create Page","Page title",name => {
-        const newNode = {
-            id:uid(),
-            name,
-            title:name,
-            type:"page",
-            content:"",
-            mindmap:{nodes:[]},
-            pdf:null,
-            createdAt:new Date().toISOString(),
-            updatedAt:new Date().toISOString()
-        };
-
-        ensureChildren(parent).push(newNode);
-        parent.expanded = true;
-
-        safeStore();
-        renderTree();
-        openPage(newNode.id);
+function saveMap(){
+  const p=currentPage();if(!p)return;
+  p.mindmap={nodes:map.nodes,connections:map.connections};safeStore();
+}
+function transformMap(){
+  mapWorld.style.transform=`translate(${map.x}px,${map.y}px) scale(${map.scale})`;
+  $("zoomLabel").textContent=Math.round(map.scale*100)+"%";
+}
+function renderMap(){
+  mapWorld.style.width="1px";mapWorld.style.height="1px";
+  transformMap();mapNodes.replaceChildren();svg.replaceChildren();
+  const ns="http://www.w3.org/2000/svg";
+  svg.style.width="1px";svg.style.height="1px";
+  const lookup=new Map(map.nodes.map(n=>[n.id,n]));
+  map.connections.forEach(c=>{
+    const a=lookup.get(c.from),b=lookup.get(c.to);if(!a||!b)return;
+    const path=document.createElementNS(ns,"path");
+    const x1=a.x+105,y1=a.y+50,x2=b.x+105,y2=b.y+50,mid=(x1+x2)/2;
+    path.setAttribute("d",`M${x1},${y1} C${mid},${y1} ${mid},${y2} ${x2},${y2}`);
+    path.setAttribute("fill","none");path.setAttribute("stroke","#818cf8");path.setAttribute("stroke-width","2");
+    path.setAttribute("vector-effect","non-scaling-stroke");svg.appendChild(path);
+  });
+  map.nodes.forEach(n=>{
+    const card=document.createElement("div");card.className="map-node"+(map.selected===n.id?" selected":"");
+    card.style.left=n.x+"px";card.style.top=n.y+"px";
+    const title=document.createElement("input");title.value=n.text||"Idea";title.setAttribute("aria-label","Node title");
+    title.onchange=()=>{n.text=title.value;saveMap();renderMap()};
+    const details=document.createElement("textarea");details.placeholder="Add details...";details.value=n.details||"";
+    details.oninput=()=>{n.details=details.value;clearTimeout(map.saveTimer);map.saveTimer=setTimeout(saveMap,350)};
+    const actions=document.createElement("div");actions.className="map-actions";
+    const child=document.createElement("button");child.textContent="+ Child";child.onclick=e=>{e.stopPropagation();addChildNode(n.id)};
+    const con=document.createElement("button");con.textContent="Connect";con.onclick=e=>{e.stopPropagation();connectNode(n.id)};
+    const del=document.createElement("button");del.textContent="× Delete";del.onclick=e=>{e.stopPropagation();deleteMapNode(n.id)};
+    actions.append(child,con,del);card.append(title,details,actions);
+    card.addEventListener("pointerdown",e=>{
+      if(e.target.closest("button")||e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA")return;
+      e.stopPropagation();map.selected=n.id;
+      dragNode={id:n.id,startX:e.clientX,startY:e.clientY,x:n.x,y:n.y};
+      card.setPointerCapture(e.pointerId);card.classList.add("selected");
     });
+    card.addEventListener("pointermove",e=>{
+      if(!dragNode||dragNode.id!==n.id)return;
+      n.x=dragNode.x+(e.clientX-dragNode.startX)/map.scale;
+      n.y=dragNode.y+(e.clientY-dragNode.startY)/map.scale;
+      card.style.left=n.x+"px";card.style.top=n.y+"px";drawConnections();
+    });
+    const stop=()=>{if(dragNode&&dragNode.id===n.id){dragNode=null;saveMap();renderMap()}};
+    card.addEventListener("pointerup",stop);card.addEventListener("pointercancel",stop);
+    mapNodes.appendChild(card);
+  });
+  drawConnections();
 }
-
-function renameNode(id) {
-    const item = findNode(id);
-    if (!item) return;
-
-    openNameDialog("Rename","New name",name => {
-        item.node.name = name;
-
-        if (item.node.type === "page") {
-            item.node.title = name;
-        }
-
-        safeStore();
-        renderTree();
-
-        if (id === currentPageId) openPage(id);
-
-        toast("Renamed successfully.");
-    },item.node.name);
+function drawConnections(){
+  const ns="http://www.w3.org/2000/svg";svg.replaceChildren();
+  const lookup=new Map(map.nodes.map(n=>[n.id,n]));
+  map.connections.forEach(c=>{
+    const a=lookup.get(c.from),b=lookup.get(c.to);if(!a||!b)return;
+    const p=document.createElementNS(ns,"path"),x1=a.x+105,y1=a.y+50,x2=b.x+105,y2=b.y+50,m=(x1+x2)/2;
+    p.setAttribute("d",`M${x1} ${y1} C${m} ${y1},${m} ${y2},${x2} ${y2}`);
+    p.setAttribute("fill","none");p.setAttribute("stroke","#818cf8");p.setAttribute("stroke-width","2");p.setAttribute("vector-effect","non-scaling-stroke");svg.appendChild(p);
+  });
 }
-
-function deleteNode(id) {
-    const item = findNode(id);
-    if (!item) return;
-
-    if (!confirm(
-        `Delete "${item.node.name}" and all its contents? This cannot be undone.`
-    )) return;
-
-    if (!item.parent) {
-        db.notebooks = db.notebooks.filter(n => n.id !== id);
-    } else {
-        item.parent.children =
-            item.parent.children.filter(n => n.id !== id);
-    }
-
-    if (findNode(currentPageId) === null) {
-        currentPageId = null;
-    }
-
-    safeStore();
-    renderTree();
-
-    const first = db.notebooks.map(findFirstPage).find(Boolean);
-
-    if (first) openPage(first.id);
-    else clearEditor();
-
-    toast("Deleted.");
+function addMapNode(){
+  const n={id:uid(),x:(mapViewport.clientWidth/2-map.x)/map.scale,y:(mapViewport.clientHeight/2-map.y)/map.scale,text:"New Idea",details:"",parent:null};
+  map.nodes.push(n);map.selected=n.id;saveMap();renderMap();
 }
-
-/* ==========================================
-   DIALOGS
-========================================== */
-
-function openNameDialog(heading,label,callback,initialValue="") {
-    dialogCallback = callback;
-
-    $("dialogHeading").textContent = heading;
-
-    const input = $("dialogName");
-    input.placeholder = label;
-    input.value = initialValue;
-
-    $("nameDialog").showModal();
-
-    setTimeout(() => {
-        input.focus();
-        input.select();
-    },50);
+function addChildNode(parentId=map.selected){
+  const p=map.nodes.find(n=>n.id===parentId);if(!p)return addMapNode();
+  const n={id:uid(),x:p.x+280,y:p.y+130,text:"Child Idea",details:"",parent:p.id};
+  map.nodes.push(n);map.connections.push({from:p.id,to:n.id});map.selected=n.id;saveMap();renderMap();
 }
-
-function closeDialog() {
-    $("nameDialog").close();
-    dialogCallback = null;
+function connectSelected(){
+  if(!map.selected)return toast("Select a node first.");
+  connectStart=map.selected;toast("Now press Connect on another node.");
 }
-
-function confirmName() {
-    const name = $("dialogName").value.trim();
-
-    if (!name) {
-        toast("Enter a name.");
-        return;
-    }
-
-    const callback = dialogCallback;
-
-    closeDialog();
-
-    if (callback) callback(name);
+function connectNode(id){
+  if(!connectStart){connectStart=id;map.selected=id;return toast("Choose another node and press Connect.");}
+  if(connectStart===id){connectStart=null;return toast("Choose a different node.");}
+  if(!map.connections.some(c=>(c.from===connectStart&&c.to===id)||(c.from===id&&c.to===connectStart)))map.connections.push({from:connectStart,to:id});
+  connectStart=null;saveMap();renderMap();
 }
-
-$("dialogName").addEventListener("keydown",event => {
-    if (event.key === "Enter") confirmName();
+function deleteMapNode(id){
+  map.nodes=map.nodes.filter(n=>n.id!==id);map.connections=map.connections.filter(c=>c.from!==id&&c.to!==id);
+  if(map.selected===id)map.selected=null;saveMap();renderMap();
+}
+function deleteSelectedNode(){if(map.selected)deleteMapNode(map.selected);else toast("Select a node first.")}
+function setMapZoom(scale,cx=mapViewport.clientWidth/2,cy=mapViewport.clientHeight/2){
+  const rect=mapViewport.getBoundingClientRect(),px=cx-rect.left,py=cy-rect.top;
+  const wx=(px-map.x)/map.scale,wy=(py-map.y)/map.scale;
+  map.scale=Math.max(.2,Math.min(3,scale));map.x=px-wx*map.scale;map.y=py-wy*map.scale;transformMap();
+}
+function resetMap(){map.x=mapViewport.clientWidth/2;map.y=mapViewport.clientHeight/2;map.scale=1;transformMap()}
+function fitMap(){
+  if(!map.nodes.length)return resetMap();
+  const minX=Math.min(...map.nodes.map(n=>n.x)),maxX=Math.max(...map.nodes.map(n=>n.x+210));
+  const minY=Math.min(...map.nodes.map(n=>n.y)),maxY=Math.max(...map.nodes.map(n=>n.y+120));
+  map.scale=Math.max(.2,Math.min(1.5,(mapViewport.clientWidth-60)/(maxX-minX||1),(mapViewport.clientHeight-100)/(maxY-minY||1)));
+  map.x=(mapViewport.clientWidth-(maxX-minX)*map.scale)/2-minX*map.scale;
+  map.y=(mapViewport.clientHeight-(maxY-minY)*map.scale)/2-minY*map.scale;transformMap();
+}
+mapViewport.addEventListener("pointerdown",e=>{
+  if(e.target.closest(".map-node"))return;
+  mapViewport.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pointers.size===1)panState={x:e.clientX,y:e.clientY,mx:map.x,my:map.y};
+  else if(pointers.size===2){
+    const a=[...pointers.values()];pinchState={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),s:map.scale};panState=null;
+  }
 });
-
-/* ==========================================
-   OPEN PAGE
-========================================== */
-
-function openPage(id) {
-    saveCurrentEditor();
-
-    const item = findNode(id);
-
-    if (!item || item.node.type !== "page") return;
-
-    currentPageId = id;
-
-    $("noteTitle").value = item.node.title || item.node.name || "";
-    $("noteContent").innerHTML = sanitizeHTML(item.node.content || "");
-
-    $("noteStatus").textContent =
-        "Last edited: " + new Date(item.node.updatedAt || Date.now()).toLocaleString();
-
-    renderTree();
-    loadPageMindMap(item.node);
-
-    if (item.node.pdf && item.node.pdf.annotations) {
-        pdfAnnotations = item.node.pdf.annotations;
-    } else {
-        pdfAnnotations = {};
-    }
-
-    if (item.node.pdf && item.node.pdf.name) {
-        $("pdfStatus").textContent =
-            "Saved PDF reference: " + item.node.pdf.name +
-            " — reopen the original PDF to annotate it.";
-    }
-
-    if (innerWidth <= 760) {
-        document.body.classList.remove("show-tree");
-    }
-
-    switchView(currentView);
-}
-
-function clearEditor() {
-    currentPageId = null;
-    $("noteTitle").value = "";
-    $("noteContent").innerHTML = "";
-    renderTree();
-}
-
-function switchView(view) {
-    currentView = view;
-
-    document.querySelectorAll(".view").forEach(el => {
-        el.classList.remove("active");
-    });
-
-    document.querySelectorAll(".tab").forEach(el => {
-        el.classList.toggle("active",el.dataset.view === view);
-    });
-
-    const target = ({
-        notes:"notesView",
-        mindmap:"mindmapView",
-        pdf:"pdfView"
-    })[view];
-
-    $(target).classList.add("active");
-
-    if (view === "mindmap") {
-        setTimeout(drawMindMapConnections,50);
-    }
-}
-
-/* ==========================================
-   RICH TEXT NOTES
-========================================== */
-
-function format(command,value=null) {
-    $("noteContent").focus();
-    document.execCommand(command,false,value);
-    scheduleSave();
-}
-
-function insertNoteImage() {
-    $("imageInput").click();
-}
-
-$("imageInput").addEventListener("change",event => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-        toast("Choose an image.");
-        return;
-    }
-
-    if (file.size > 1024*1024) {
-        toast("For local storage, use an image below 1 MB.");
-        return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-        const image = document.createElement("img");
-        image.src = reader.result;
-        image.alt = file.name;
-
-        $("noteContent").focus();
-        $("noteContent").appendChild(image);
-
-        scheduleSave();
-    };
-
-    reader.readAsDataURL(file);
-    event.target.value = "";
+mapViewport.addEventListener("pointermove",e=>{
+  if(!pointers.has(e.pointerId))return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pointers.size===2&&pinchState){
+    const a=[...pointers.values()],d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+    setMapZoom(pinchState.s*d/pinchState.d,(a[0].x+a[1].x)/2,(a[0].y+a[1].y)/2);
+  }else if(panState){map.x=panState.mx+e.clientX-panState.x;map.y=panState.my+e.clientY-panState.y;transformMap()}
 });
-
-function insertPDF() {
-    choosePDF();
+function releaseMapPointer(e){
+  pointers.delete(e.pointerId);
+  if(pointers.size===0){panState=null;pinchState=null}
+  else if(pointers.size===1){const p=[...pointers.values()][0];panState={x:p.x,y:p.y,mx:map.x,my:map.y};pinchState=null}
 }
-
-/* ==========================================
-   BASIC HTML SANITIZATION
-========================================== */
-
-function sanitizeHTML(html) {
-    const template = document.createElement("template");
-    template.innerHTML = html;
-
-    const allowed = new Set([
-        "P","DIV","BR","H1","H2","H3","H4",
-        "B","STRONG","I","EM","U","S",
-        "UL","OL","LI","BLOCKQUOTE","PRE","CODE",
-        "A","IMG","HR","TABLE","TBODY","THEAD",
-        "TR","TD","TH","SPAN"
-    ]);
-
-    for (const element of [...template.content.querySelectorAll("*")]) {
-        if (!allowed.has(element.tagName)) {
-            element.replaceWith(document.createTextNode(element.textContent || ""));
-            continue;
-        }
-
-        for (const attr of [...element.attributes]) {
-            const name = attr.name.toLowerCase();
-            const value = attr.value;
-
-            if (name.startsWith("on") || name === "srcdoc") {
-                element.removeAttribute(attr.name);
-            } else if (name === "style") {
-                if (/url\s*\(|expression\s*\(|javascript:/i.test(value)) {
-                    element.removeAttribute("style");
-                }
-            } else if (name === "href" && element.tagName === "A") {
-                try {
-                    const url = new URL(value,location.href);
-
-                    if (!["http:","https:","mailto:"].includes(url.protocol)) {
-                        element.removeAttribute("href");
-                    } else {
-                        element.setAttribute("rel","noopener noreferrer");
-                    }
-                } catch {
-                    element.removeAttribute("href");
-                }
-            } else if (name === "src" && element.tagName === "IMG") {
-                if (!/^(data:image\/(?:png|jpeg|gif|webp);base64,|blob:|https?:\/\/)/i.test(value)) {
-                    element.removeAttribute("src");
-                }
-            } else if (!["href","src","alt","colspan","rowspan"].includes(name)) {
-                element.removeAttribute(attr.name);
-            }
-        }
-    }
-
-    return template.innerHTML;
-}
-
-/* ==========================================
-   INFINITE CANVAS + MIND MAP
-========================================== */
-
-const viewport = $("canvasViewport");
-const world = $("canvasWorld");
-
-let canvasState = {
-    x:innerWidth/2,
-    y:innerHeight/2,
-    scale:1,
-    selected:null,
-    nodes:[],
-    connections:[],
-    drag:null,
-    pan:null,
-    pointers:new Map(),
-    pinch:null
-};
-
-function loadPageMindMap(page) {
-    const map = page.mindmap || {nodes:[],connections:[]};
-
-    canvasState.nodes = Array.isArray(map.nodes) ? map.nodes : [];
-    canvasState.connections = Array.isArray(map.connections) ? map.connections : [];
-    canvasState.selected = null;
-
-    renderCanvas();
-}
-
-function persistMindMap() {
-    const page = currentPage();
-
-    if (!page) return;
-
-    page.mindmap = {
-        nodes:canvasState.nodes,
-        connections:canvasState.connections
-    };
-
-    page.updatedAt = new Date().toISOString();
-
-    safeStore();
-}
-
-function renderCanvas() {
-    world.replaceChildren();
-
-    // World origin is centered in the viewport.
-    world.style.transform =
-        `translate(${canvasState.x}px,${canvasState.y}px) scale(${canvasState.scale})`;
-
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS,"svg");
-
-    svg.style.position = "absolute";
-    svg.style.left = "-100000px";
-    svg.style.top = "-100000px";
-    svg.style.width = "1px";
-    svg.style.height = "1px";
-
-    const lookup = new Map(canvasState.nodes.map(n => [n.id,n]));
-
-    canvasState.connections.forEach(connection => {
-        const a = lookup.get(connection.from);
-        const b = lookup.get(connection.to);
-
-        if (!a || !b) return;
-
-        const line = document.createElementNS(svgNS,"path");
-
-        const ax = a.x + 105, ay = a.y + 50;
-        const bx = b.x + 105, by = b.y + 50;
-        const mid = (ax+bx)/2;
-
-        line.setAttribute("d",
-            `M ${ax} ${ay} C ${mid} ${ay}, ${mid} ${by}, ${bx} ${by}`);
-
-        svg.appendChild(line);
-    });
-
-    world.appendChild(svg);
-
-    canvasState.nodes.forEach(node => {
-        const card = document.createElement("div");
-
-        card.className = "canvas-item" +
-            (canvasState.selected === node.id ? " selected" : "");
-
-        card.style.left = node.x+"px";
-        card.style.top = node.y+"px";
-
-        const head = document.createElement("div");
-        head.className = "node-head";
-
-        const heading = document.createElement("span");
-        heading.textContent = node.text || "Idea";
-
-        const edit = document.createElement("button");
-        edit.textContent = "✏";
-        edit.title = "Rename node";
-        edit.onclick = event => {
-            event.stopPropagation();
-            const text = prompt("Node title",node.text);
-
-            if (text !== null) {
-                node.text = text;
-                persistMindMap();
-                renderCanvas();
-            }
-        };
-
-        head.append(heading,edit);
-
-        const textarea = document.createElement("textarea");
-        textarea.placeholder = "Add details...";
-        textarea.value = node.details || "";
-
-        textarea.addEventListener("input",() => {
-            node.details = textarea.value;
-            scheduleMindMapSave();
-        });
-
-        const actions = document.createElement("div");
-        actions.className = "node-actions";
-
-        const child = document.createElement("button");
-        child.textContent = "+ Child";
-        child.onclick = event => {
-            event.stopPropagation();
-            addChildNode(node.id);
-        };
-
-        const connect = document.createElement("button");
-        connect.textContent = "Connect";
-        connect.onclick = event => {
-            event.stopPropagation();
-            connectNode(node.id);
-        };
-
-        const del = document.createElement("button");
-        del.textContent = "×";
-        del.title = "Delete node";
-        del.onclick = event => {
-            event.stopPropagation();
-            deleteNodeFromCanvas(node.id);
-        };
-
-        actions.append(child,connect,del);
-        card.append(head,textarea,actions);
-
-        card.addEventListener("pointerdown",event => {
-            if (event.target.closest("button") ||
-                event.target.tagName === "TEXTAREA") return;
-
-            event.stopPropagation();
-
-            canvasState.selected = node.id;
-
-            canvasState.drag = {
-                id:node.id,
-                startX:event.clientX,
-                startY:event.clientY,
-                nodeX:node.x,
-                nodeY:node.y
-            };
-
-            card.setPointerCapture(event.pointerId);
-            renderCanvas();
-        });
-
-        card.addEventListener("pointermove",event => {
-            const drag = canvasState.drag;
-
-            if (!drag || drag.id !== node.id) return;
-
-            const dx = (event.clientX-drag.startX)/canvasState.scale;
-            const dy = (event.clientY-drag.startY)/canvasState.scale;
-
-            node.x = drag.nodeX+dx;
-            node.y = drag.nodeY+dy;
-
-            card.style.left = node.x+"px";
-            card.style.top = node.y+"px";
-
-            persistMindMap();
-        });
-
-        const stopDrag = () => {
-            canvasState.drag = null;
-            drawMindMapConnections();
-        };
-
-        card.addEventListener("pointerup",stopDrag);
-        card.addEventListener("pointercancel",stopDrag);
-
-        card.addEventListener("click",() => {
-            canvasState.selected = node.id;
-            renderCanvas();
-        });
-
-        world.appendChild(card);
-    });
-
-    drawMindMapConnections();
-    updateZoomLabel();
-}
-
-let mindMapSaveTimer;
-
-function scheduleMindMapSave() {
-    clearTimeout(mindMapSaveTimer);
-    mindMapSaveTimer = setTimeout(persistMindMap,300);
-}
-
-function drawMindMapConnections() {
-    // Connection SVG is rebuilt in renderCanvas.
-}
-
-function addNode() {
-    const node = {
-        id:uid(),
-        x:(-canvasState.x+viewport.clientWidth/2)/canvasState.scale,
-        y:(-canvasState.y+viewport.clientHeight/2)/canvasState.scale,
-        text:"New Idea",
-        details:"",
-        parent:null
-    };
-
-    canvasState.nodes.push(node);
-    canvasState.selected = node.id;
-
-    persistMindMap();
-    renderCanvas();
-}
-
-function addChildNode(parentId=canvasState.selected) {
-    if (!parentId) {
-        addNode();
-        return;
-    }
-
-    const parent = canvasState.nodes.find(n => n.id === parentId);
-
-    if (!parent) return;
-
-    const node = {
-        id:uid(),
-        x:parent.x+280,
-        y:parent.y+130,
-        text:"Child Idea",
-        details:"",
-        parent:parentId
-    };
-
-    canvasState.nodes.push(node);
-
-    canvasState.connections.push({
-        from:parentId,
-        to:node.id
-    });
-
-    canvasState.selected = node.id;
-
-    persistMindMap();
-    renderCanvas();
-}
-
-function connectMode() {
-    if (!canvasState.selected) {
-        toast("Select a node first.");
-        return;
-    }
-
-    connectPendingId = canvasState.selected;
-    toast("Now select another node and press Connect.");
-}
-
-function connectNode(id) {
-    if (!connectPendingId) {
-        connectPendingId = id;
-        canvasState.selected = id;
-        toast("Select another node and press Connect.");
-        return;
-    }
-
-    if (connectPendingId === id) {
-        connectPendingId = null;
-        toast("Choose a different node.");
-        return;
-    }
-
-    const exists = canvasState.connections.some(c =>
-        (c.from === connectPendingId && c.to === id) ||
-        (c.from === id && c.to === connectPendingId)
-    );
-
-    if (!exists) {
-        canvasState.connections.push({
-            from:connectPendingId,
-            to:id
-        });
-    }
-
-    connectPendingId = null;
-
-    persistMindMap();
-    renderCanvas();
-}
-
-function deleteNodeFromCanvas(id) {
-    canvasState.nodes = canvasState.nodes.filter(n => n.id !== id);
-
-    canvasState.connections = canvasState.connections.filter(c =>
-        c.from !== id && c.to !== id
-    );
-
-    if (canvasState.selected === id) canvasState.selected = null;
-
-    persistMindMap();
-    renderCanvas();
-}
-
-function deleteSelectedNode() {
-    if (canvasState.selected) {
-        deleteNodeFromCanvas(canvasState.selected);
-    } else {
-        toast("Select a node first.");
-    }
-}
-
-function updateZoomLabel() {
-    $("zoomLabel").textContent =
-        Math.round(canvasState.scale*100)+"%";
-}
-
-function setZoom(scale,clientX=viewport.clientWidth/2,
-                 clientY=viewport.clientHeight/2) {
-    const old = canvasState.scale;
-
-    scale = Math.max(0.2,Math.min(3,scale));
-
-    const rect = viewport.getBoundingClientRect();
-    const px = clientX-rect.left;
-    const py = clientY-rect.top;
-
-    const wx = (px-canvasState.x)/old;
-    const wy = (py-canvasState.y)/old;
-
-    canvasState.scale = scale;
-    canvasState.x = px-wx*scale;
-    canvasState.y = py-wy*scale;
-
-    renderCanvas();
-}
-
-function resetZoom() {
-    canvasState.x = viewport.clientWidth/2;
-    canvasState.y = viewport.clientHeight/2;
-    canvasState.scale = 1;
-    renderCanvas();
-}
-
-function fitCanvas() {
-    if (!canvasState.nodes.length) {
-        resetZoom();
-        return;
-    }
-
-    const xs = canvasState.nodes.map(n => n.x);
-    const ys = canvasState.nodes.map(n => n.y);
-
-    const minX = Math.min(...xs);
-    const maxX = Math.max(...xs)+210;
-    const minY = Math.min(...ys);
-    const maxY = Math.max(...ys)+100;
-
-    const width = maxX-minX;
-    const height = maxY-minY;
-
-    const scale = Math.max(0.2,Math.min(
-        1.5,
-        (viewport.clientWidth-80)/width,
-        (viewport.clientHeight-100)/height
-    ));
-
-    canvasState.scale = scale;
-
-    canvasState.x =
-        (viewport.clientWidth-width*scale)/2-minX*scale;
-
-    canvasState.y =
-        (viewport.clientHeight-height*scale)/2-minY*scale;
-
-    renderCanvas();
-}
-
-/* Pan with one finger on empty canvas; pinch zoom with two fingers. */
-viewport.addEventListener("pointerdown",event => {
-    if (event.target.closest(".canvas-item")) return;
-
-    viewport.setPointerCapture(event.pointerId);
-
-    canvasState.pointers.set(event.pointerId,{
-        x:event.clientX,y:event.clientY
-    });
-
-    if (canvasState.pointers.size === 1) {
-        canvasState.pan = {
-            x:event.clientX,
-            y:event.clientY,
-            originX:canvasState.x,
-            originY:canvasState.y
-        };
-    } else if (canvasState.pointers.size === 2) {
-        const points = [...canvasState.pointers.values()];
-
-        canvasState.pinch = {
-            distance:Math.hypot(
-                points[0].x-points[1].x,
-                points[0].y-points[1].y
-            ),
-            scale:canvasState.scale
-        };
-
-        canvasState.pan = null;
-    }
+mapViewport.addEventListener("pointerup",releaseMapPointer);
+mapViewport.addEventListener("pointercancel",releaseMapPointer);
+mapViewport.addEventListener("wheel",e=>{e.preventDefault();setMapZoom(map.scale*(e.deltaY<0?1.1:.9),e.clientX,e.clientY)},{passive:false});
+
+/* PDF Studio */
+if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+$("pdfInput").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;
+  if(!window.pdfjsLib){toast("PDF library could not load. Check your internet.");return}
+  if(f.size>25*1024*1024){toast("Please use a PDF smaller than 25 MB.");return}
+  try{
+    pdfBytes=await f.arrayBuffer();pdfName=f.name;
+    pdfDoc=await pdfjsLib.getDocument({data:new Uint8Array(pdfBytes.slice(0))}).promise;
+    const p=currentPage();
+    if(p&&p.pdf&&p.pdf.name===pdfName)pdfMarks=p.pdf.annotations||{};else pdfMarks={};
+    $("pdfStatus").textContent=pdfName+" · "+pdfDoc.numPages+" pages";
+    await renderPDF();toast("PDF opened.");
+  }catch(err){console.error(err);toast("PDF could not be opened.");}
+  e.target.value="";
 });
-
-viewport.addEventListener("pointermove",event => {
-    if (!canvasState.pointers.has(event.pointerId)) return;
-
-    canvasState.pointers.set(event.pointerId,{
-        x:event.clientX,y:event.clientY
-    });
-
-    if (canvasState.pointers.size === 2 && canvasState.pinch) {
-        const points = [...canvasState.pointers.values()];
-
-        const distance = Math.hypot(
-            points[0].x-points[1].x,
-            points[0].y-points[1].y
-        );
-
-        setZoom(
-            canvasState.pinch.scale *
-            distance/canvasState.pinch.distance,
-            (points[0].x+points[1].x)/2,
-            (points[0].y+points[1].y)/2
-        );
-
-    } else if (canvasState.pan) {
-        canvasState.x =
-            canvasState.pan.originX+event.clientX-canvasState.pan.x;
-
-        canvasState.y =
-            canvasState.pan.originY+event.clientY-canvasState.pan.y;
-
-        renderCanvas();
-    }
+$("attachPDF").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;
+  if(f.size>25*1024*1024)return toast("PDF is too large.");
+  pdfBytes=await f.arrayBuffer();pdfName=f.name;
+  if(window.pdfjsLib){
+    try{pdfDoc=await pdfjsLib.getDocument({data:new Uint8Array(pdfBytes.slice(0))}).promise;
+      const p=currentPage();if(p){p.pdf={name:pdfName,annotations:{}};safeStore()}
+      switchView("pdf");$("pdfStatus").textContent=pdfName+" · "+pdfDoc.numPages+" pages";await renderPDF();
+    }catch(err){toast("Could not open PDF.");}
+  }
+  e.target.value="";
 });
-
-function releasePointer(event) {
-    canvasState.pointers.delete(event.pointerId);
-
-    if (canvasState.pointers.size === 1) {
-        const remaining = [...canvasState.pointers.values()][0];
-
-        canvasState.pan = {
-            x:remaining.x,
-            y:remaining.y,
-            originX:canvasState.x,
-            originY:canvasState.y
-        };
-
-        canvasState.pinch = null;
-
-    } else if (canvasState.pointers.size === 0) {
-        canvasState.pan = null;
-        canvasState.pinch = null;
+async function renderPDF(){
+  const stage=$("pdfStage");stage.replaceChildren();pdfEntries=[];
+  for(let i=1;i<=pdfDoc.numPages;i++){
+    const page=await pdfDoc.getPage(i);
+    const scale=Math.min(1.5,Math.max(.6,(stage.clientWidth-24)/page.view[2]));
+    const vp=page.getViewport({scale});
+    const wrap=document.createElement("div");wrap.className="pdf-page";wrap.style.width=vp.width+"px";
+    const canvas=document.createElement("canvas");canvas.width=Math.ceil(vp.width);canvas.height=Math.ceil(vp.height);
+    canvas.style.width=vp.width+"px";canvas.style.height=vp.height+"px";
+    const overlay=document.createElement("canvas");overlay.className="pdf-overlay";overlay.width=canvas.width;overlay.height=canvas.height;
+    overlay.style.width=vp.width+"px";overlay.style.height=vp.height+"px";
+    wrap.append(canvas,overlay);stage.appendChild(wrap);
+    await page.render({canvasContext:canvas.getContext("2d"),viewport:vp}).promise;
+    const entry={number:i,canvas,overlay,ctx:overlay.getContext("2d")};pdfEntries.push(entry);attachMarker(entry);redrawMarks(entry);
+  }
+}
+function toggleDraw(){
+  drawEnabled=!drawEnabled;$("drawButton").textContent="🖍 Highlighter "+(drawEnabled?"ON":"OFF");
+  pdfEntries.forEach(e=>e.overlay.style.pointerEvents=drawEnabled?"auto":"none");
+}
+function attachMarker(entry){
+  const c=entry.overlay;c.style.pointerEvents=drawEnabled?"auto":"none";let active=false;
+  const pos=e=>{const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height}};
+  c.addEventListener("pointerdown",e=>{
+    if(!drawEnabled)return;e.preventDefault();active=true;c.setPointerCapture(e.pointerId);
+    const p=pos(e),mark={color:$("markerColor").value,size:Number($("markerSize").value),points:[p]};
+    (pdfMarks[entry.number]||(pdfMarks[entry.number]=[])).push(mark);
+    paintSegment(entry,mark,p,p);saveMarks();
+  });
+  c.addEventListener("pointermove",e=>{
+    if(!active||!drawEnabled)return;e.preventDefault();
+    const marks=pdfMarks[entry.number]||[],mark=marks[marks.length-1];if(!mark)return;
+    const p=pos(e),prev=mark.points[mark.points.length-1];mark.points.push(p);paintSegment(entry,mark,prev,p);saveMarks();
+  });
+  c.addEventListener("pointerup",()=>active=false);c.addEventListener("pointercancel",()=>active=false);
+}
+function paintSegment(entry,mark,a,b){
+  const ctx=entry.ctx;ctx.save();ctx.globalAlpha=.38;ctx.strokeStyle=mark.color;ctx.lineWidth=mark.size;
+  ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.restore();
+}
+function redrawMarks(entry){
+  const ctx=entry.ctx;ctx.clearRect(0,0,entry.overlay.width,entry.overlay.height);
+  (pdfMarks[entry.number]||[]).forEach(mark=>{
+    for(let i=0;i<mark.points.length;i++){
+      const p=mark.points[i];paintSegment(entry,mark,p,mark.points[i+1]||p);
     }
+  });
+}
+function saveMarks(){
+  const p=currentPage();if(p)p.pdf={name:pdfName,annotations:pdfMarks};safeStore();
+}
+function clearMarks(){
+  if(!confirm("Clear all marks on this PDF?"))return;
+  pdfMarks={};pdfEntries.forEach(redrawMarks);saveMarks();toast("Marks cleared.");
+}
+function downloadPDF(){
+  if(!pdfBytes)return toast("Open a PDF first.");
+  const url=URL.createObjectURL(new Blob([pdfBytes],{type:"application/pdf"}));
+  const a=document.createElement("a");a.href=url;a.download=pdfName||"document.pdf";a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+  toast("Original PDF downloaded. Marks are stored separately.");
+}
+function printPDF(){
+  if(!pdfEntries.length)return toast("Open a PDF first.");
+  const w=window.open("","_blank");if(!w)return toast("Allow pop-ups to print.");
+  const images=pdfEntries.map(e=>{
+    const c=document.createElement("canvas");c.width=e.canvas.width;c.height=e.canvas.height;
+    const ctx=c.getContext("2d");ctx.drawImage(e.canvas,0,0);ctx.drawImage(e.overlay,0,0);return c.toDataURL("image/png");
+  });
+  w.document.write("<!doctype html><html><head><title>Annotated PDF</title><style>@page{margin:0}body{margin:0}img{display:block;width:100%;page-break-after:always}</style></head><body>"+images.map(src=>'<img src="'+src+'">').join("")+"<script>window.onload=()=>setTimeout(()=>window.print(),500)<\/script></body></html>");
+  w.document.close();
 }
 
-viewport.addEventListener("pointerup",releasePointer);
-viewport.addEventListener("pointercancel",releasePointer);
-
-viewport.addEventListener("wheel",event => {
-    event.preventDefault();
-
-    const factor = event.deltaY < 0 ? 1.1 : 0.9;
-
-    setZoom(
-        canvasState.scale*factor,
-        event.clientX,event.clientY
-    );
-},{passive:false});
-
-/* ==========================================
-   PDF VIEWER AND FINGER HIGHLIGHTER
-========================================== */
-
-if (window.pdfjsLib) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+/* Backup and restore */
+function downloadBackup(){
+  saveEditor();
+  const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="OneNote-Infinity-Backup.json";a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);toast("Backup downloaded.");
 }
-
-function choosePDF() {
-    $("pdfInput").click();
-}
-
-$("pdfInput").addEventListener("change",async event => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    if (file.type !== "application/pdf" &&
-        !file.name.toLowerCase().endsWith(".pdf")) {
-        toast("Choose a PDF file.");
-        return;
-    }
-
-    if (file.size > 30*1024*1024) {
-        toast("PDF is larger than 30 MB.");
-        return;
-    }
-
-    try {
-        pdfBytes = await file.arrayBuffer();
-        pdfFileName = file.name;
-
-        pdfDocument = await pdfjsLib.getDocument({
-            data:new Uint8Array(pdfBytes.slice(0))
-        }).promise;
-
-        pdfAnnotations = {};
-
-        const page = currentPage();
-
-        if (page) {
-            page.pdf = {
-                name:file.name,
-                annotations:{}
-            };
-
-            safeStore();
-        }
-
-        $("pdfStatus").textContent =
-            file.name+" · "+pdfDocument.numPages+" pages";
-
-        await renderPDF();
-
-        toast("PDF opened.");
-
-    } catch(error) {
-        console.error(error);
-        toast("Could not open PDF. Try another file.");
-    }
-
-    event.target.value = "";
+function openBackup(){$("backupInput").click()}
+$("backupInput").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;
+  try{
+    if(f.size>30*1024*1024)throw Error("Too large");
+    const imported=JSON.parse(await f.text());
+    if(!imported||!Array.isArray(imported.notebooks))throw Error("Invalid backup");
+    if(!confirm("Replace current workspace with this backup?"))return;
+    db=imported;safeStore();const p=db.notebooks.map(firstPage).find(Boolean);
+    if(p)openPage(p.id);else clearEditor();renderTree();toast("Backup restored.");
+  }catch(err){toast("Invalid backup file.");}
+  e.target.value="";
 });
+document.addEventListener("visibilitychange",()=>{if(document.hidden){saveEditor();safeStore()}});
+window.addEventListener("pagehide",()=>{saveEditor();safeStore()});
+window.addEventListener("beforeunload",()=>{saveEditor();safeStore()});
 
-async function renderPDF() {
-    const stage = $("pdfStage");
-    stage.replaceChildren();
-
-    pdfCanvases = [];
-
-    if (!pdfDocument) {
-        stage.textContent = "Open a PDF to begin.";
-        return;
-    }
-
-    for (let number=1;number<=pdfDocument.numPages;number++) {
-        const page = await pdfDocument.getPage(number);
-
-        const scale = Math.min(
-            1.6,
-            Math.max(0.7,(stage.clientWidth-30)/page.view[2])
-        );
-
-        const viewportPDF = page.getViewport({scale});
-
-        const wrap = document.createElement("div");
-        wrap.className = "pdf-page";
-
-        wrap.style.width = viewportPDF.width+"px";
-        wrap.style.maxWidth = "100%";
-
-        const canvas = document.createElement("canvas");
-        const context = canvas.getContext("2d");
-
-        canvas.width = Math.ceil(viewportPDF.width);
-        canvas.height = Math.ceil(viewportPDF.height);
-
-        canvas.style.width = viewportPDF.width+"px";
-        canvas.style.height = viewportPDF.height+"px";
-
-        const overlay = document.createElement("canvas");
-        overlay.className = "pdf-overlay";
-        overlay.width = canvas.width;
-        overlay.height = canvas.height;
-
-        overlay.style.width = viewportPDF.width+"px";
-        overlay.style.height = viewportPDF.height+"px";
-
-        wrap.append(canvas,overlay);
-        stage.appendChild(wrap);
-
-        await page.render({
-            canvasContext:context,
-            viewport:viewportPDF
-        }).promise;
-
-        const entry = {
-            pageNumber:number,
-            canvas,
-            overlay,
-            context:overlay.getContext("2d")
-        };
-
-        pdfCanvases.push(entry);
-
-        attachHighlighter(entry);
-        redrawAnnotations(entry);
-    }
+function initialize(){
+  if(localStorage.getItem("onp_dark")==="1")document.body.classList.add("dark");
+  loadDB();renderTree();const p=db.notebooks.map(firstPage).find(Boolean);
+  if(p)openPage(p.id);else clearEditor();
+  $("saveState").textContent="✓ Workspace loaded";
 }
-
-function toggleDrawing() {
-    drawingEnabled = !drawingEnabled;
-
-    $("drawToggle").textContent =
-        "🖍 Draw: "+(drawingEnabled?"ON":"OFF");
-
-    pdfCanvases.forEach(entry => {
-        entry.overlay.style.pointerEvents =
-            drawingEnabled ? "auto" : "none";
-    });
-
-    toast(drawingEnabled
-        ? "Highlighter enabled. Draw with your finger."
-        : "Highlighter disabled.");
-}
-
-function attachHighlighter(entry) {
-    const canvas = entry.overlay;
-
-    canvas.style.pointerEvents = drawingEnabled ? "auto" : "none";
-
-    let active = false;
-
-    function position(event) {
-        const rect = canvas.getBoundingClientRect();
-
-        return {
-            x:(event.clientX-rect.left)*canvas.width/rect.width,
-            y:(event.clientY-rect.top)*canvas.height/rect.height
-        };
-    }
-
-    canvas.addEventListener("pointerdown",event => {
-        if (!drawingEnabled) return;
-
-        event.preventDefault();
-
-        active = true;
-
-        canvas.setPointerCapture(event.pointerId);
-
-        const pos = position(event);
-
-        const annotation = {
-            color:$("highlighterColor").value,
-            size:Number($("highlighterSize").value),
-            points:[pos]
-        };
-
-        if (!pdfAnnotations[entry.pageNumber]) {
-            pdfAnnotations[entry.pageNumber] = [];
-        }
-
-        pdfAnnotations[entry.pageNumber].push(annotation);
-
-        entry.context.lineCap = "round";
-        entry.context.lineJoin = "round";
-        entry.context.strokeStyle = annotation.color;
-        entry.context.globalAlpha = 0.38;
-        entry.context.lineWidth = annotation.size;
-
-        entry.context.beginPath();
-        entry.context.moveTo(pos.x,pos.y);
-        entry.context.lineTo(pos.x+0.1,pos.y+0.1);
-        entry.context.stroke();
-
-        saveAnnotations();
-    });
-
-    canvas.addEventListener("pointermove",event => {
-        if (!drawingEnabled || !active) return;
-
-        event.preventDefault();
-
-        const annotationList = pdfAnnotations[entry.pageNumber] || [];
-        const annotation = annotationList[annotationList.length-1];
-
-        if (!annotation) return;
-
-        const pos = position(event);
-        const previous = annotation.points[annotation.points.length-1];
-
-        annotation.points.push(pos);
-
-        entry.context.lineCap = "round";
-        entry.context.lineJoin = "round";
-        entry.context.strokeStyle = annotation.color;
-        entry.context.globalAlpha = 0.38;
-        entry.context.lineWidth = annotation.size;
-
-        entry.context.beginPath();
-        entry.context.moveTo(previous.x,previous.y);
-        entry.context.lineTo(pos.x,pos.y);
-        entry.context.stroke();
-
-        saveAnnotations();
-    });
-
-    const finish = () => {
-        active = false;
-        entry.context.globalAlpha = 1;
-    };
-
-    canvas.addEventListener("pointerup",finish);
-    canvas.addEventListener("pointercancel",finish);
-}
-
-function redrawAnnotations(entry) {
-    const ctx = entry.context;
-
-    ctx.clearRect(0,0,entry.overlay.width,entry.overlay.height);
-
-    const annotations = pdfAnnotations[entry.pageNumber] || [];
-
-    annotations.forEach(annotation => {
-        if (!annotation.points.length) return;
-
-        ctx.beginPath();
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
-        ctx.strokeStyle = annotation.color;
-        ctx.globalAlpha = 0.38;
-        ctx.lineWidth = annotation.size;
-
-        ctx.moveTo(annotation.points[0].x,annotation.points[0].y);
-
-        annotation.points.slice(1).forEach(point => {
-            ctx.lineTo(point.x,point.y);
-        });
-
-        ctx.stroke();
-    });
-
-    ctx.globalAlpha = 1;
-}
-
-function saveAnnotations() {
-    const page = currentPage();
-
-    if (page) {
-        page.pdf = {
-            name:pdfFileName,
-            annotations:pdfAnnotations
-        };
-    }
-
-    safeStore();
-}
-
-function clearAnnotations() {
-    if (!confirm("Clear all highlighter marks?")) return;
-
-    pdfAnnotations = {};
-
-    pdfCanvases.forEach(redrawAnnotations);
-
-    saveAnnotations();
-    toast("Annotations cleared.");
-}
-
-function downloadPDF() {
-    if (!pdfDocument || !pdfBytes) {
-        toast("Open a PDF first.");
-        return;
-    }
-
-    /*
-      Download the original PDF.
-      Highlighter marks are saved separately in application data.
-      This download does NOT flatten the marks into the PDF.
-    */
-    const blob = new Blob([pdfBytes],{type:"application/pdf"});
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = pdfFileName || "document.pdf";
-    link.click();
-
-    setTimeout(() => URL.revokeObjectURL(url),2000);
-
-    toast("Original PDF downloaded. Use Print for a marked copy.");
-}
-
-function printPDF() {
-    if (!pdfDocument || !pdfCanvases.length) {
-        toast("Open a PDF first.");
-        return;
-    }
-
-    const printWindow = window.open("","_blank");
-
-    if (!printWindow) {
-        toast("Allow pop-ups to print the PDF.");
-        return;
-    }
-
-    const images = pdfCanvases.map(entry => {
-        const merged = document.createElement("canvas");
-
-        merged.width = entry.canvas.width;
-        merged.height = entry.canvas.height;
-
-        const ctx = merged.getContext("2d");
-
-        ctx.drawImage(entry.canvas,0,0);
-        ctx.drawImage(entry.overlay,0,0);
-
-        return merged.toDataURL("image/png");
-    });
-
-    printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Print Annotated PDF</title>
-            <style>
-                @page{margin:0}
-                body{margin:0}
-                img{display:block;width:100%;height:auto;page-break-after:always}
-            </style>
-        </head>
-        <body>
-        ${images.map(src => `<img src="${src}">`).join("")}
-        <script>
-            window.onload=()=>{
-                setTimeout(()=>window.print(),500);
-            };
-        <\/script>
-        </body>
-        </html>
-    `);
-
-    printWindow.document.close();
-}
-
-/* ==========================================
-   LOCAL BACKUP AND OPEN FILE
-========================================== */
-
-function exportBackup() {
-    saveCurrentEditor();
-
-    const blob = new Blob(
-        [JSON.stringify(db,null,2)],
-        {type:"application/json"}
-    );
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "OneNote-Infinity-Backup.json";
-    link.click();
-
-    setTimeout(() => URL.revokeObjectURL(url),2000);
-
-    toast("Backup downloaded.");
-}
-
-function openBackup() {
-    $("backupInput").click();
-}
-
-$("backupInput").addEventListener("change",async event => {
-    const file = event.target.files[0];
-
-    if (!file) return;
-
-    try {
-        if (file.size > 40*1024*1024) {
-            throw new Error("Backup is too large.");
-        }
-
-        const imported = JSON.parse(await file.text());
-
-        if (!imported || !Array.isArray(imported.notebooks)) {
-            throw new Error("Invalid backup.");
-        }
-
-        if (!confirm("Replace your current workspace with this backup?")) {
-            return;
-        }
-
-        db = imported;
-        safeStore();
-        renderTree();
-
-        const first = db.notebooks.map(findFirstPage).find(Boolean);
-
-        if (first) openPage(first.id);
-        else clearEditor();
-
-        toast("Backup opened.");
-
-    } catch(error) {
-        console.error(error);
-        toast("Could not open this backup.");
-    }
-
-    event.target.value = "";
-}
-
-function printNotes() {
-    saveCurrentEditor();
-    window.print();
-}
-
-/* ==========================================
-   MOBILE NAVIGATION
-========================================== */
-
-function toggleTree() {
-    document.body.classList.toggle("show-tree");
-}
-
-function toast(message) {
-    const element = $("toast");
-
-    element.textContent = message;
-    element.classList.add("show");
-
-    clearTimeout(toast.timer);
-
-    toast.timer = setTimeout(() => {
-        element.classList.remove("show");
-    },2800);
-}
-
-/* ==========================================
-   STARTUP AND AUTO SAVE
-========================================== */
-
-function initialize() {
-    loadDB();
-    renderTree();
-
-    const first = db.notebooks.map(findFirstPage).find(Boolean);
-
-    if (first) {
-        openPage(first.id);
-    } else {
-        clearEditor();
-    }
-
-    // Recover saved workspace every time the website is reopened.
-    $("saveState").textContent = "✓ Workspace loaded";
-}
-
-document.addEventListener("visibilitychange",() => {
-    if (document.visibilityState === "hidden") {
-        saveCurrentEditor();
-        safeStore();
-    }
-});
-
-window.addEventListener("pagehide",() => {
-    saveCurrentEditor();
-    safeStore();
-});
-
-window.addEventListener("beforeunload",() => {
-    saveCurrentEditor();
-    safeStore();
-});
-
 initialize();
-
 </script>
 </body>
 </html>
