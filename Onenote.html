@@ -2,2601 +2,2641 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#4f46e5">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+
 <title>OneNote Infinity Pro</title>
 
 <style>
 :root {
-  --primary: #4f46e5;
-  --soft: #eef2ff;
-  --bg: #f4f6fc;
-  --panel: #ffffff;
-  --text: #20243a;
-  --muted: #70788f;
-  --border: #e0e5ef;
-  --danger: #e5484d;
-  --a4-width: 794px;
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --text: #242424;
+    --muted: #666666;
+    --border: #dddddd;
+    --accent: #7252cc;
+    --hover: #f3f0fb;
+    --toolbar: #fafafa;
+    --shadow: 0 2px 10px rgba(0,0,0,.09);
 }
 
-body.dark {
-  --bg: #151827;
-  --panel: #202438;
-  --text: #f2f4ff;
-  --muted: #aab1ca;
-  --border: #363c54;
-  --soft: #303452;
+* {
+    box-sizing: border-box;
 }
-
-* { box-sizing: border-box; }
 
 html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  font-family: Arial, sans-serif;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
+    color: var(--text);
+    background: #fff;
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  overflow: hidden;
+button, input, select {
+    font: inherit;
 }
-
-button, input, select, textarea { font: inherit; }
 
 button {
-  border: 1px solid var(--border);
-  background: var(--panel);
-  color: var(--text);
-  padding: 8px 11px;
-  border-radius: 8px;
-  cursor: pointer;
+    cursor: pointer;
 }
 
-button:hover { background: var(--soft); }
-button.primary { background: var(--primary); color: white; border-color: var(--primary); }
-button.danger { color: var(--danger); }
-
-input, select, textarea {
-  background: var(--panel);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 9px;
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
+
+.app {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* TOP BAR */
 
 .topbar {
-  height: 58px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 10px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  white-space: nowrap;
-  position: relative;
-  z-index: 30;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+    flex-shrink: 0;
 }
 
-.brand { font-weight: 800; font-size: 15px; margin-right: 6px; }
-.brand span { color: var(--primary); }
-#saveState { font-size: 11px; color: var(--muted); }
-
-.layout {
-  display: flex;
-  height: calc(100dvh - 58px);
-  min-width: 0;
+.brand {
+    font-size: 17px;
+    font-weight: 700;
+    white-space: nowrap;
 }
+
+.brand span {
+    color: var(--accent);
+}
+
+.top-actions {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px 11px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: #333;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: var(--hover);
+}
+
+.btn.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.icon-btn {
+    min-width: 36px;
+    min-height: 35px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    font-size: 19px;
+}
+
+.icon-btn:hover {
+    background: var(--hover);
+}
+
+/* MAIN LAYOUT */
+
+.main-layout {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* SIDEBAR */
 
 .sidebar {
-  width: 270px;
-  min-width: 230px;
-  background: var(--panel);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+    width: 255px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-right: 1px solid var(--border);
+    min-height: 0;
 }
 
 .sidebar-head {
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
+    padding: 12px;
+    border-bottom: 1px solid #eee;
 }
 
-.searchbox { width: 100%; margin: 8px 0; }
-.tree { overflow: auto; flex: 1; padding: 8px; }
+.sidebar-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.sidebar-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.small-btn {
+    padding: 7px 8px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.small-btn:hover {
+    background: var(--hover);
+}
+
+.tree {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 8px;
+}
+
+.tree-item {
+    margin: 2px 0;
+}
 
 .tree-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  min-height: 36px;
-  padding: 3px;
-  border-radius: 7px;
-  font-size: 13px;
-  user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 5px;
+    padding: 7px 5px;
+    cursor: pointer;
+    font-size: 13px;
 }
 
-.tree-row.active, .tree-row:hover { background: var(--soft); }
+.tree-row:hover {
+    background: #f5f5f5;
+}
+
+.tree-row.active {
+    background: #eee8ff;
+    color: #4d319c;
+    font-weight: 600;
+}
+
+.tree-toggle {
+    width: 18px;
+    flex-shrink: 0;
+    text-align: center;
+    color: #777;
+}
 
 .tree-label {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 7px 0;
-  cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
 }
 
-.tree-toggle, .tree-more {
-  border: 0;
-  background: transparent;
-  padding: 5px;
-  flex-shrink: 0;
+.tree-menu {
+    border: 0;
+    background: transparent;
+    color: #777;
+    font-size: 18px;
+    padding: 0 5px;
 }
 
 .tree-children {
-  margin-left: 12px;
-  padding-left: 5px;
-  border-left: 1px solid var(--border);
+    margin-left: 15px;
+    border-left: 1px solid #eee;
+    padding-left: 5px;
 }
 
-.work {
-  flex: 1;
-  min-width: 0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+.sidebar-footer {
+    border-top: 1px solid #eee;
+    padding: 9px;
+    color: #777;
+    font-size: 11px;
 }
 
-.tabs {
-  height: 44px;
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  padding: 5px 10px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  flex-shrink: 0;
+/* EDITOR */
+
+.editor {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
 }
 
-.tab { border: 0; white-space: nowrap; }
-.tab.active { background: var(--soft); color: var(--primary); font-weight: bold; }
-
-.view { display: none; flex: 1; min-height: 0; position: relative; }
-.view.active { display: flex; flex-direction: column; }
-
-.editor-top, .toolbar {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 9px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
+.editor-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
 }
 
-.title {
-  flex: 1;
-  min-width: 130px;
-  font-size: 20px;
-  font-weight: bold;
-  border: 0;
-  outline: none;
+.editor-top button {
+    padding: 7px 10px;
+    border: 1px solid #e1e1e1;
+    background: #fff;
+    border-radius: 5px;
+    font-size: 13px;
 }
 
-.toolbar { padding: 7px; }
-.toolbar button { padding: 7px 9px; }
-
-.statusbar {
-  font-size: 11px;
-  padding: 7px 10px;
-  background: var(--panel);
-  color: var(--muted);
-  border-top: 1px solid var(--border);
+.editor-top button:hover {
+    background: var(--hover);
 }
 
-/* PAGE WORKSPACE */
-
-#workspaceViewport {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  position: relative;
-  background-color: #eef1f8;
-  background-image: radial-gradient(#98a3bd66 1px, transparent 1px);
-  background-size: 22px 22px;
-  overscroll-behavior: contain;
+.editor-title-wrap {
+    padding: 12px 18px 5px;
+    background: #fff;
+    flex-shrink: 0;
 }
 
-body.dark #workspaceViewport {
-  background-color: #171b2c;
-  background-image: radial-gradient(#8c95b533 1px, transparent 1px);
+.page-title {
+    width: 100%;
+    border: 0;
+    outline: none;
+    font-size: 23px;
+    font-weight: 700;
+    color: #252525;
+    padding: 5px 0;
+    background: transparent;
 }
 
-/*
-  Workspace begins at the top-left.
-  It grows right and down as required.
-*/
-
-#workspaceWorld {
-  position: relative;
-  width: 2400px;
-  height: 1800px;
-  min-width: 2400px;
-  min-height: 1800px;
+.page-title::placeholder {
+    color: #aaa;
 }
 
-#workspaceHint {
-  position: sticky;
-  top: 7px;
-  left: 7px;
-  z-index: 4;
-  width: max-content;
-  max-width: 95%;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 7px 10px;
-  border-radius: 8px;
-  font-size: 11px;
-  opacity: .93;
-  pointer-events: none;
-  margin: 7px;
+.save-status {
+    font-size: 11px;
+    color: #777;
+    margin-top: 3px;
 }
 
-.workspace-object {
-  position: absolute;
-  background: var(--panel);
-  color: var(--text);
-  border: 1px solid #cbd2e1;
-  border-radius: 5px;
-  box-shadow: 0 3px 12px #1111;
-  overflow: hidden;
-  min-width: 150px;
-  min-height: 80px;
+/* WORKSPACE: COMPLETELY BLANK */
+
+.workspace-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    position: relative;
+    background: #fff !important;
+    background-image: none !important;
+    overscroll-behavior: contain;
 }
 
-.object-head {
-  height: 32px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 7px;
-  background: var(--soft);
-  border-bottom: 1px solid var(--border);
-  cursor: move;
-  touch-action: none;
-  user-select: none;
+.workspace {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+    width: 1400px;
+    height: 1000px;
+
+    /* No dots, grid or repeating pattern */
+    background: #fff !important;
+    background-image: none !important;
 }
 
-.object-head strong {
-  font-size: 12px;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/* MAIN WRITING AREA */
+
+.main-writing {
+    position: absolute;
+    left: 24px;
+    top: 20px;
+    width: 794px;
+    min-height: 500px;
+    height: auto;
+    background: #fff !important;
+    background-image: none !important;
+    border: 1px solid #f0f0f0;
+    border-radius: 0;
+    box-shadow: none;
 }
 
-.object-head button { padding: 3px 7px; font-size: 12px; }
+.main-writing .writing-body {
+    min-height: 480px;
+    padding: 24px 28px;
+    outline: none;
+    overflow-wrap: anywhere;
+    line-height: 1.65;
+    font-size: 15px;
+    background: #fff !important;
+    background-image: none !important;
+}
+
+.writing-body:empty::before {
+    content: "यहाँ लिखना शुरू करें...";
+    color: #aaa;
+    pointer-events: none;
+}
+
+.writing-body img {
+    max-width: 100%;
+    height: auto;
+}
+
+.writing-body table {
+    border-collapse: collapse;
+    max-width: 100%;
+}
+
+.writing-body td,
+.writing-body th {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.writing-body pre {
+    white-space: pre-wrap;
+}
+
+/* FLOATING OBJECTS */
+
+.object {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    background: #fff !important;
+    background-image: none !important;
+    border: 1px solid #dedede;
+    box-shadow: var(--shadow);
+    border-radius: 4px;
+    overflow: visible;
+}
+
+.object-header {
+    height: 34px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 8px;
+    background: #fafafa;
+    border-bottom: 1px solid #eee;
+    cursor: move;
+    user-select: none;
+    touch-action: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.object-title {
+    font-size: 12px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.object-close {
+    border: 0;
+    background: transparent;
+    font-size: 18px;
+    color: #666;
+    padding: 0 4px;
+}
 
 .object-body {
-  height: calc(100% - 32px);
-  overflow: auto;
+    background: #fff !important;
+    background-image: none !important;
+    min-height: 60px;
+    overflow: visible;
 }
 
-/* Small panel on creation, A4 width after typing */
+/* TEXT OBJECT */
 
 .text-object {
-  width: 220px;
-  height: 120px;
-  min-width: 150px;
-  min-height: 80px;
-  resize: both;
-  overflow: hidden;
+    width: 240px;
+    height: 140px;
+    min-width: 150px;
+    min-height: 80px;
+    resize: both;
+    overflow: hidden;
 }
 
-.text-object.a4-mode {
-  width: var(--a4-width);
-  height: auto;
-  min-height: 140px;
+.text-object .object-body {
+    height: calc(100% - 34px);
+    min-height: 40px;
 }
 
 .text-body {
-  display: block;
-  width: 100%;
-  min-height: 100%;
-  padding: 22px;
-  line-height: 1.75;
-  font-size: 16px;
-  outline: none;
-  border: 0;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-.text-body:empty::before {
-  content: "यहाँ क्लिक करके लिखना शुरू करें...";
-  color: var(--muted);
-  pointer-events: none;
+    height: 100%;
+    min-height: 45px;
+    padding: 12px;
+    overflow: auto;
+    outline: none;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+    background: #fff !important;
+    background-image: none !important;
 }
 
 .text-body img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
-.text-body table {
-  border-collapse: collapse;
-  width: 100%;
+/* IMAGE OBJECT */
+
+.image-object {
+    width: 340px;
+    min-width: 150px;
+    resize: both;
+    overflow: hidden;
 }
 
-.text-body td, .text-body th {
-  border: 1px solid var(--border);
-  padding: 7px;
+.image-object .object-body {
+    padding: 5px;
 }
 
-/* PDF objects */
+.image-object img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* PDF OBJECT
+   All pages are visible in the workspace.
+   The PDF object itself grows to the height of all pages.
+   No internal vertical scroll box. */
 
 .pdf-object {
-  width: var(--a4-width);
-  height: 780px;
-  min-width: 300px;
-  min-height: 300px;
-  resize: both;
-  overflow: hidden;
+    width: 794px;
+    min-width: 280px;
+    max-width: none;
+    height: auto;
+    min-height: 150px;
+    resize: horizontal;
+    overflow: visible !important;
+    background: #fff !important;
 }
 
-.pdf-body {
-  height: calc(100% - 32px);
-  overflow: auto;
-  padding: 10px;
-  box-sizing: border-box;
-  background: #e5e7eb;
+.pdf-object .object-body {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0;
+    background: #fff !important;
 }
 
 .pdf-pages {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff !important;
+    gap: 12px;
 }
 
 .pdf-page {
-  position: relative;
-  flex-shrink: 0;
-  background: white;
-  box-shadow: 0 2px 8px #0002;
-  overflow: hidden;
+    position: relative;
+    display: block;
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    background: #fff;
+    border: 1px solid #e7e7e7;
 }
 
-.pdf-page canvas { display: block; }
-
-.pdf-page .marker-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  touch-action: none;
+.pdf-page canvas.pdf-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #fff;
 }
 
-/* Image objects */
-
-.image-object {
-  width: 330px;
-  height: 260px;
-  resize: both;
+.pdf-page canvas.mark-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
 
-.image-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f8fafc;
+.pdf-message {
+    padding: 20px;
+    font-size: 13px;
+    color: #666;
 }
 
-.image-body img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+/* MIND MAP */
+
+.mindmap {
+    position: absolute;
+    left: 900px;
+    top: 30px;
+    width: 420px;
+    min-height: 300px;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 12px;
+    box-shadow: var(--shadow);
 }
 
-/* Mind map */
-
-#mapViewport {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  touch-action: none;
-  background-color: var(--bg);
-  background-image: radial-gradient(#9ba5c744 1px, transparent 1px);
-  background-size: 22px 22px;
-  cursor: grab;
+.mindmap h3 {
+    margin: 0 0 10px;
+    font-size: 15px;
 }
 
-#mapWorld {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-origin: 0 0;
+.mindmap input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-#mapConnections {
-  position: absolute;
-  left: 0;
-  top: 0;
-  overflow: visible;
-  pointer-events: none;
+.mindmap-list {
+    margin-top: 10px;
 }
 
-.map-node {
-  position: absolute;
-  width: 210px;
-  min-height: 105px;
-  padding: 10px;
-  border: 2px solid #c7d2fe;
-  border-radius: 12px;
-  background: var(--panel);
-  color: var(--text);
-  box-shadow: 0 4px 14px #0001;
-  touch-action: none;
+.mind-node {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 5px 0;
+    background: #fff;
+    font-size: 13px;
+    overflow-wrap: anywhere;
 }
 
-.map-node.selected { border-color: var(--primary); }
+/* DIALOG */
 
-.map-node input, .map-node textarea {
-  width: 100%;
-  border: 0;
-  padding: 4px;
-  outline: none;
-}
-
-.map-node textarea { resize: vertical; min-height: 38px; }
-
-.map-actions { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
-.map-actions button { padding: 5px 7px; font-size: 11px; }
-
-.map-tools {
-  position: absolute;
-  z-index: 5;
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-  pointer-events: none;
-}
-
-.map-tools > * { pointer-events: auto; }
-
-.map-help {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  background: var(--panel);
-  padding: 8px;
-  border-radius: 7px;
-  font-size: 11px;
-  pointer-events: none;
-}
-
-.context-menu {
-  position: fixed;
-  z-index: 1000;
-  min-width: 170px;
-  padding: 5px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  box-shadow: 0 8px 25px #0002;
-}
-
-.context-menu button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  border: 0;
-}
-
-.toast {
-  position: fixed;
-  z-index: 2000;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #20243a;
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 9px;
-  display: none;
-  max-width: 90%;
-}
-
-.toast.show { display: block; }
-
-dialog {
-  width: min(420px, 94%);
-  background: var(--panel);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-}
-
-dialog::backdrop { background: #0006; }
-dialog input { width: 100%; margin: 8px 0 14px; }
-.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
-
-@media (max-width: 760px) {
-  .topbar { height: 56px; padding: 5px; gap: 4px; }
-  .layout { height: calc(100dvh - 56px); }
-
-  .sidebar {
+.dialog-backdrop {
     position: fixed;
-    z-index: 25;
-    left: 0;
-    top: 56px;
-    bottom: 0;
-    width: 280px;
-    max-width: 86vw;
-    transform: translateX(-110%);
-    transition: transform .2s;
-    box-shadow: 0 0 25px #0002;
-  }
-
-  body.show-tree .sidebar { transform: translateX(0); }
-
-  #backdrop {
+    inset: 0;
+    z-index: 1000;
     display: none;
-    position: fixed;
-    z-index: 24;
-    inset: 56px 0 0;
-    background: #0005;
-  }
-
-  body.show-tree #backdrop { display: block; }
-
-  .brand { font-size: 13px; }
-  .title { font-size: 17px; }
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(0,0,0,.35);
 }
 
-@media print {
-  .topbar, .sidebar, .tabs, .toolbar, .editor-top,
-  .statusbar, .map-tools, #workspaceHint {
-    display: none !important;
-  }
+.dialog {
+    width: min(430px, 100%);
+    padding: 20px;
+    background: #fff;
+    border-radius: 9px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.2);
+}
 
-  body { height: auto; overflow: visible; background: white; }
+.dialog h3 {
+    margin-top: 0;
+}
+
+.dialog input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+    .topbar {
+        gap: 5px;
+        padding: 6px;
+    }
+
+    .brand {
+        font-size: 14px;
+    }
+
+    .top-actions {
+        gap: 3px;
+    }
+
+    .top-actions .btn {
+        font-size: 11px;
+        padding: 7px;
+    }
+
+    .sidebar {
+        width: 155px;
+    }
+
+    .sidebar-head {
+        padding: 7px;
+    }
+
+    .sidebar-title {
+        font-size: 12px;
+    }
+
+    .small-btn {
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    .tree {
+        padding: 4px;
+    }
+
+    .tree-row {
+        font-size: 11px;
+        padding: 7px 3px;
+    }
+
+    .editor-title-wrap {
+        padding: 9px 12px 4px;
+    }
+
+    .page-title {
+        font-size: 19px;
+    }
+
+    .editor-top {
+        padding: 5px;
+        gap: 4px;
+    }
+
+    .editor-top button {
+        font-size: 11px;
+        padding: 7px;
+    }
+
+    .main-writing {
+        left: 12px;
+        top: 12px;
+        width: 794px;
+    }
+
+    .main-writing .writing-body {
+        padding: 18px;
+    }
+
+    .pdf-object {
+        width: 794px;
+    }
+}
+
+@media (max-width: 420px) {
+    .brand {
+        font-size: 12px;
+    }
+
+    .top-actions .hide-mobile {
+        display: none;
+    }
+
+    .sidebar {
+        width: 125px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header class="topbar">
-  <button onclick="toggleTree()">☰</button>
-  <div class="brand">OneNote <span>Infinity Pro</span></div>
-  <button class="primary" onclick="saveNow()">💾 Save</button>
-  <button onclick="downloadBackup()">⬇ Backup</button>
-  <button onclick="openBackup()">📂 Restore</button>
-  <button onclick="createNotebook()">＋ Notebook</button>
-  <button onclick="toggleDark()">🌙</button>
-  <span id="saveState">Ready</span>
-</header>
+<div class="app">
 
-<div id="backdrop" onclick="toggleTree()"></div>
+    <header class="topbar">
+        <div class="brand">OneNote <span>Infinity Pro</span></div>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="sidebar-head">
-      <b>NOTEBOOK TREE</b>
-      <button onclick="createNotebook()">＋</button>
-    </div>
-    <div style="padding:0 8px">
-      <input id="treeSearch" class="searchbox"
-             placeholder="Search notebooks and pages..."
-             oninput="renderTree()">
-    </div>
-    <div id="tree" class="tree"></div>
-    <div style="padding:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)">
-      Notebook → Section → Subsection → Page
-    </div>
-  </aside>
+        <div class="top-actions">
+            <button class="btn" id="saveBtn">Save</button>
+            <button class="btn hide-mobile" id="backupBtn">Backup</button>
+            <button class="btn hide-mobile" id="restoreBtn">Restore</button>
+            <button class="icon-btn" id="addNotebookBtn" title="New Notebook">＋</button>
+        </div>
+    </header>
 
-  <main class="work">
-    <div class="tabs">
-      <button class="tab active" data-view="notes" onclick="switchView('notes')">📝 Notes / Page</button>
-      <button class="tab" data-view="mindmap" onclick="switchView('mindmap')">🧠 Mind Map</button>
-    </div>
+    <main class="main-layout">
 
-    <section class="view active" id="notesView">
-      <div class="editor-top">
-        <input id="noteTitle" class="title" placeholder="Page title"
-               maxlength="250" oninput="scheduleSave()">
-        <button onclick="newPage()">＋ Page</button>
-        <button onclick="addTextObject()">＋ Text Box</button>
-        <button onclick="$('pdfInput').click()">📄 Insert PDF</button>
-        <button onclick="$('imageInput').click()">🖼 Insert Photo</button>
-        <button onclick="printNotes()">🖨 Print</button>
-      </div>
+        <aside class="sidebar">
 
-      <div class="toolbar">
-        <button onclick="format('bold')"><b>B</b></button>
-        <button onclick="format('italic')"><i>I</i></button>
-        <button onclick="format('underline')"><u>U</u></button>
-        <button onclick="format('insertUnorderedList')">• List</button>
-        <button onclick="format('insertOrderedList')">1. List</button>
-        <button onclick="format('formatBlock','h1')">H1</button>
-        <button onclick="format('formatBlock','h2')">H2</button>
-        <button onclick="format('formatBlock','blockquote')">Quote</button>
-        <input type="color" id="textColor" value="#20243a"
-               title="Text color" style="width:38px;padding:3px"
-               onchange="format('foreColor',this.value)">
-        <button onclick="insertImageIntoSelectedText()">🖼 Image in text</button>
-        <button onclick="insertTable()">▦ Table</button>
-        <button onclick="undoEdit()">↶ Undo</button>
-        <button onclick="redoEdit()">↷ Redo</button>
-        <button onclick="toggleMarker()">🖍 PDF Marker</button>
-        <input type="color" id="markerColor" value="#fff000"
-               title="Marker color" style="width:38px;padding:3px">
-        <input type="range" id="markerSize" min="4" max="35"
-               value="16" title="Marker size" style="width:85px">
-      </div>
+            <div class="sidebar-head">
+                <div class="sidebar-title">📚 My Notebooks</div>
 
-      <div id="workspaceViewport">
-        <div id="workspaceWorld">
-          <div id="workspaceHint">
-            पेज पर लिखना शुरू करें। खाली जगह पर डबल-टैप से Text Box बनाएँ।
-            PDF/Photo जोड़ें और उन्हें ड्रैग करके स्थान बदलें।
-          </div>
-          <div id="mainWritingArea"
-               class="workspace-object text-object a4-mode"
-               style="left:24px;top:65px;width:794px;min-height:220px;height:auto;">
-            <div class="object-head">
-              <strong>Page Notes</strong>
+                <div class="sidebar-buttons">
+                    <button class="small-btn" id="newNotebookBtn">＋ Notebook</button>
+                    <button class="small-btn" id="newSectionBtn">＋ Section</button>
+                    <button class="small-btn" id="newPageBtn">＋ Page</button>
+                </div>
             </div>
-            <div id="mainWritingBody"
-                 class="text-body"
-                 contenteditable="true"
-                 spellcheck="true"
-                 data-main-writing="true"></div>
-          </div>
-        </div>
-      </div>
 
-      <div id="noteStatus" class="statusbar">Auto-save enabled · This browser</div>
-    </section>
+            <div class="tree" id="tree"></div>
 
-    <section class="view" id="mindmapView">
-      <div class="map-tools">
-        <button class="primary" onclick="addMapNode()">＋ Node</button>
-        <button onclick="addChildNode()">↳ Child</button>
-        <button onclick="connectSelected()">🔗 Connect</button>
-        <button onclick="deleteSelectedNode()">🗑 Delete</button>
-        <button onclick="fitMap()">⊡ Fit</button>
-        <button onclick="resetMap()">100%</button>
-        <span id="zoomLabel" style="background:var(--panel);padding:8px;border-radius:7px">100%</span>
-      </div>
+            <div class="sidebar-footer">
+                Auto-save enabled · Local browser storage
+            </div>
 
-      <div id="mapViewport">
-        <div id="mapWorld">
-          <svg id="mapConnections" xmlns="http://www.w3.org/2000/svg"></svg>
-          <div id="mapNodes"></div>
-        </div>
-      </div>
+        </aside>
 
-      <div class="map-help">Drag empty space to move · Pinch or wheel to zoom · Drag nodes to move them</div>
-    </section>
-  </main>
+        <section class="editor">
+
+            <div class="editor-top">
+                <button id="addTextBtn">＋ Text</button>
+                <button id="addImageBtn">＋ Image</button>
+                <button id="addPdfBtn">＋ PDF</button>
+                <button id="addMindBtn">＋ Mind Map</button>
+
+                <button id="boldBtn"><b>B</b></button>
+                <button id="italicBtn"><i>I</i></button>
+                <button id="underlineBtn"><u>U</u></button>
+
+                <button id="bulletBtn">• List</button>
+                <button id="undoBtn">↶ Undo</button>
+            </div>
+
+            <div class="editor-title-wrap">
+                <input
+                    id="pageTitle"
+                    class="page-title"
+                    type="text"
+                    placeholder="Page title"
+                    autocomplete="off"
+                >
+                <div class="save-status" id="saveStatus">Ready</div>
+            </div>
+
+            <div class="workspace-scroll" id="workspaceScroll">
+
+                <div class="workspace" id="workspace">
+
+                    <div class="main-writing" id="mainWritingArea">
+                        <div
+                            class="writing-body"
+                            id="mainWritingBody"
+                            contenteditable="true"
+                            spellcheck="true"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
 </div>
 
-<div id="contextMenu" class="context-menu" hidden></div>
-<div id="toast" class="toast"></div>
+<input
+    type="file"
+    id="imageInput"
+    accept="image/*"
+    hidden
+>
 
-<dialog id="nameDialog">
-  <h3 id="dialogHeading">Create Item</h3>
-  <label>Name</label>
-  <input id="dialogName" maxlength="250" placeholder="Enter name">
-  <div class="dialog-actions">
-    <button onclick="closeDialog()">Cancel</button>
-    <button class="primary" onclick="confirmName()">Save</button>
-  </div>
-</dialog>
+<input
+    type="file"
+    id="pdfInput"
+    accept="application/pdf,.pdf"
+    hidden
+>
 
-<input id="backupInput" type="file" accept=".json,application/json" hidden>
-<input id="imageInput" type="file" accept="image/*" hidden>
-<input id="pdfInput" type="file" accept=".pdf,application/pdf" hidden>
+<input
+    type="file"
+    id="restoreInput"
+    accept=".json,application/json"
+    hidden
+>
 
+<div class="dialog-backdrop" id="dialogBackdrop">
+    <div class="dialog">
+        <h3 id="dialogTitle">Create item</h3>
+        <input id="dialogInput" placeholder="Enter name">
+
+        <div class="dialog-actions">
+            <button class="btn" id="dialogCancel">Cancel</button>
+            <button class="btn primary" id="dialogConfirm">Create</button>
+        </div>
+    </div>
+</div>
+
+<!-- PDF.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 <script>
 "use strict";
 
-const DB_KEY = "onenote_infinity_pro_v5";
-const $ = id => document.getElementById(id);
-const uid = () => crypto.randomUUID
-  ? crypto.randomUUID()
-  : Date.now().toString(36) + Math.random().toString(36).slice(2);
+/* =========================================================
+   ONENOTE INFINITY PRO
+   Blank workspace + auto-growing text + complete PDF pages
+   ========================================================= */
 
-let db, currentPageId = null, saveTimer, dialogCallback;
-let selectedTextObject = "main";
-let markerEnabled = false;
-let map = {nodes:[],connections:[],selected:null,x:300,y:180,scale:1};
-let connectStart = null, dragNode = null, panState = null;
-let pointers = new Map(), pinchState = null;
-let dbPromise = null;
+const DB_NAME = "OneNoteInfinityProDB";
+const DB_VERSION = 1;
+const STORE_NAME = "assets";
+const META_KEY = "oneNoteInfinityProDataV1";
 
-/* =========================
-   PAGE DATA
-========================= */
+const treeEl = document.getElementById("tree");
+const workspace = document.getElementById("workspace");
+const workspaceScroll = document.getElementById("workspaceScroll");
+const mainWritingArea = document.getElementById("mainWritingArea");
+const mainWritingBody = document.getElementById("mainWritingBody");
+const pageTitle = document.getElementById("pageTitle");
+const saveStatus = document.getElementById("saveStatus");
 
-function makePage(name="New Page") {
-  return {
-    id:uid(),
-    type:"page",
-    name,
-    title:name,
-    mainContent:"",
-    objects:[],
-    mindmap:{nodes:[],connections:[]},
-    createdAt:new Date().toISOString(),
-    updatedAt:new Date().toISOString()
-  };
+let state = null;
+let activePageId = null;
+let dialogCallback = null;
+let saveTimer = null;
+let assetDB = null;
+let selectedTreeId = null;
+
+/* PDF.js worker */
+
+if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 }
 
-function makeDefault() {
-  const page = makePage("Welcome");
-  const section = {
-    id:uid(),
-    type:"section",
-    name:"General",
-    expanded:true,
-    children:[page]
-  };
+/* =========================================================
+   HELPERS
+   ========================================================= */
 
-  return {
-    version:5,
-    notebooks:[{
-      id:uid(),
-      type:"notebook",
-      name:"My Notebook",
-      expanded:true,
-      children:[section]
-    }]
-  };
+function uid() {
+    return "id_" + Date.now().toString(36) +
+        "_" + Math.random().toString(36).slice(2, 9);
 }
 
-function toast(message) {
-  const t = $("toast");
-  t.textContent = message;
-  t.classList.add("show");
-  clearTimeout(t.timer);
-  t.timer = setTimeout(() => t.classList.remove("show"), 3200);
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
 }
 
-/* =========================
-   INDEXED DB FOR FILES
-========================= */
-
-function openAssetDB() {
-  if (dbPromise) return dbPromise;
-
-  dbPromise = new Promise((resolve,reject) => {
-    if (!window.indexedDB) {
-      reject(new Error("IndexedDB unavailable"));
-      return;
-    }
-
-    const request = indexedDB.open("OneNoteInfinityAssets",1);
-
-    request.onupgradeneeded = () => {
-      const d = request.result;
-      if (!d.objectStoreNames.contains("assets")) {
-        d.createObjectStore("assets",{keyPath:"id"});
-      }
-    };
-
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
-
-  return dbPromise;
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[ch]);
 }
 
-async function putAsset(id,blob,name,type) {
-  const d = await openAssetDB();
-
-  return new Promise((resolve,reject) => {
-    const tx = d.transaction("assets","readwrite");
-    tx.objectStore("assets").put({id,blob,name,type});
-
-    tx.oncomplete = () => resolve(true);
-    tx.onerror = () => reject(tx.error);
-  });
+function setStatus(message) {
+    saveStatus.textContent = message;
 }
 
-async function getAsset(id) {
-  if (!id) return null;
+function showDialog(title, placeholder, callback) {
+    document.getElementById("dialogTitle").textContent = title;
 
-  try {
-    const d = await openAssetDB();
+    const input = document.getElementById("dialogInput");
+    input.value = "";
+    input.placeholder = placeholder || "Enter name";
 
-    return await new Promise((resolve,reject) => {
-      const tx = d.transaction("assets","readonly");
-      const request = tx.objectStore("assets").get(id);
+    dialogCallback = callback;
 
-      request.onsuccess = () => resolve(request.result || null);
-      request.onerror = () => reject(request.error);
-    });
-  } catch {
-    return null;
-  }
-}
+    document.getElementById("dialogBackdrop").style.display = "flex";
 
-async function deleteAsset(id) {
-  if (!id) return;
-
-  try {
-    const d = await openAssetDB();
-
-    await new Promise((resolve,reject) => {
-      const tx = d.transaction("assets","readwrite");
-      tx.objectStore("assets").delete(id);
-      tx.oncomplete = resolve;
-      tx.onerror = () => reject(tx.error);
-    });
-  } catch {}
-}
-
-/* =========================
-   SAVE / LOAD
-========================= */
-
-function safeStore() {
-  try {
-    localStorage.setItem(DB_KEY,JSON.stringify(db));
-    $("saveState").textContent = "✓ Saved";
-    $("noteStatus").textContent =
-      "Saved locally · " + new Date().toLocaleTimeString();
-    return true;
-  } catch {
-    $("saveState").textContent = "Storage error";
-    toast("डेटा सेव नहीं हो सका। Backup डाउनलोड करें।");
-    return false;
-  }
-}
-
-function loadDB() {
-  try {
-    const raw =
-      localStorage.getItem(DB_KEY) ||
-      localStorage.getItem("onenote_infinity_pro_v4") ||
-      localStorage.getItem("onenote_infinity_pro_v3");
-
-    db = raw ? JSON.parse(raw) : makeDefault();
-
-    if (!db || !Array.isArray(db.notebooks)) {
-      throw new Error("Invalid data");
-    }
-
-    walkAllPages().forEach(page => {
-      if (!Array.isArray(page.objects)) page.objects = [];
-      if (!page.mindmap) page.mindmap = {nodes:[],connections:[]};
-      if (typeof page.mainContent !== "string") page.mainContent = "";
-    });
-
-  } catch {
-    db = makeDefault();
-    toast("पुराना डेटा नहीं पढ़ा जा सका; नया Workspace बनाया गया।");
-  }
-
-  safeStore();
-}
-
-function walk(node,parent=null,out=[]) {
-  out.push({node,parent});
-  (node.children || []).forEach(child => walk(child,node,out));
-  return out;
-}
-
-function allNodes() {
-  return db.notebooks.flatMap(n => walk(n));
-}
-
-function walkAllPages() {
-  return allNodes().map(x=>x.node).filter(n=>n.type==="page");
-}
-
-function findItem(id) {
-  return allNodes().find(x=>x.node.id===id) || null;
-}
-
-function findNode(id) {
-  const result = findItem(id);
-  return result ? result.node : null;
-}
-
-function currentPage() {
-  const n = findNode(currentPageId);
-  return n && n.type==="page" ? n : null;
-}
-
-function parentOf(id) {
-  const result = findItem(id);
-  return result ? result.parent : null;
-}
-
-function firstPage(node) {
-  if (!node) return null;
-  if (node.type==="page") return node;
-
-  for (const child of node.children || []) {
-    const p = firstPage(child);
-    if (p) return p;
-  }
-
-  return null;
-}
-
-function saveEditor() {
-  const p = currentPage();
-  if (!p) return;
-
-  p.title = $("noteTitle").value.trim() || "Untitled Page";
-  p.name = p.title;
-  p.updatedAt = new Date().toISOString();
-}
-
-function scheduleSave() {
-  $("saveState").textContent = "Saving…";
-  clearTimeout(saveTimer);
-
-  saveTimer = setTimeout(() => {
-    saveEditor();
-    safeStore();
-    renderTree();
-  },350);
-}
-
-function saveNow() {
-  clearTimeout(saveTimer);
-  saveEditor();
-  saveWorkspaceContent();
-  safeStore();
-  toast("Workspace saved in this browser.");
-}
-
-function toggleTree() {
-  document.body.classList.toggle("show-tree");
-}
-
-function toggleDark() {
-  document.body.classList.toggle("dark");
-  localStorage.setItem(
-    "onp_dark",
-    document.body.classList.contains("dark") ? "1" : "0"
-  );
-}
-
-/* =========================
-   NOTEBOOK TREE
-========================= */
-
-function renderTree() {
-  const root = $("tree");
-  root.replaceChildren();
-
-  const query = $("treeSearch").value.trim().toLowerCase();
-
-  function matches(n) {
-    return !query ||
-      String(n.name || "").toLowerCase().includes(query) ||
-      (n.children || []).some(matches);
-  }
-
-  function draw(n) {
-    const wrap = document.createElement("div");
-    const row = document.createElement("div");
-
-    row.className = "tree-row" +
-      (n.id===currentPageId ? " active" : "");
-
-    const toggle = document.createElement("button");
-    toggle.className = "tree-toggle";
-    toggle.textContent = n.type==="page" ? "·" : (n.expanded ? "−" : "+");
-
-    toggle.onclick = e => {
-      e.stopPropagation();
-
-      if (n.type==="page") {
-        openPage(n.id);
-      } else {
-        n.expanded = !n.expanded;
-        safeStore();
-        renderTree();
-      }
-    };
-
-    const label = document.createElement("div");
-    label.className = "tree-label";
-    label.textContent =
-      ({notebook:"📚",section:"📂",subsection:"📁",page:"📄"}[n.type] || "📄")
-      + " " + n.name;
-
-    label.onclick = () => {
-      if (n.type==="page") {
-        openPage(n.id);
-      } else {
-        n.expanded = !n.expanded;
-        safeStore();
-        renderTree();
-      }
-    };
-
-    const more = document.createElement("button");
-    more.className = "tree-more";
-    more.textContent = "⋯";
-    more.onclick = e => {
-      e.stopPropagation();
-      showMenu(n,e.clientX,e.clientY);
-    };
-
-    row.append(toggle,label,more);
-    wrap.appendChild(row);
-
-    if (n.expanded && (n.children || []).length) {
-      const kids = document.createElement("div");
-      kids.className = "tree-children";
-      n.children.filter(matches).forEach(child => kids.appendChild(draw(child)));
-      wrap.appendChild(kids);
-    }
-
-    return wrap;
-  }
-
-  db.notebooks.filter(matches).forEach(n=>root.appendChild(draw(n)));
-
-  if (!root.children.length) root.textContent = "No matching items.";
-}
-
-function showMenu(node,x,y) {
-  const menu = $("contextMenu");
-  menu.replaceChildren();
-  menu.hidden = false;
-
-  [
-    ["＋ Create child",()=>createChild(node.id)],
-    ["＋ Create page",()=>createPageUnder(node.id)],
-    ["✏ Rename",()=>renameNode(node.id)],
-    ["🗑 Delete",()=>deleteTreeNode(node.id)]
-  ].forEach(([label,action]) => {
-    const b = document.createElement("button");
-    b.textContent = label;
-    b.onclick = () => {
-      menu.hidden = true;
-      action();
-    };
-    menu.appendChild(b);
-  });
-
-  menu.style.left = Math.max(5,Math.min(x,innerWidth-190))+"px";
-  menu.style.top = Math.max(5,Math.min(y,innerHeight-190))+"px";
-}
-
-document.addEventListener("pointerdown",e=>{
-  if (!e.target.closest("#contextMenu")) $("contextMenu").hidden = true;
-});
-
-function askName(title,initial,callback) {
-  dialogCallback = callback;
-  $("dialogHeading").textContent = title;
-  $("dialogName").value = initial || "";
-  $("nameDialog").showModal();
-  setTimeout(()=>$("dialogName").focus(),50);
+    setTimeout(() => input.focus(), 50);
 }
 
 function closeDialog() {
-  $("nameDialog").close();
-  dialogCallback = null;
+    document.getElementById("dialogBackdrop").style.display = "none";
+    dialogCallback = null;
 }
 
-function confirmName() {
-  const name = $("dialogName").value.trim();
-  if (!name) return toast("कृपया नाम लिखें।");
+document.getElementById("dialogCancel").onclick = closeDialog;
 
-  const callback = dialogCallback;
-  closeDialog();
+document.getElementById("dialogConfirm").onclick = () => {
+    const value = document.getElementById("dialogInput").value.trim();
 
-  if (callback) callback(name);
-}
+    if (!value) {
+        alert("कृपया नाम लिखें।");
+        return;
+    }
 
-$("dialogName").addEventListener("keydown",e=>{
-  if (e.key==="Enter") confirmName();
+    const callback = dialogCallback;
+    closeDialog();
+
+    if (callback) callback(value);
+};
+
+document.getElementById("dialogInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+        document.getElementById("dialogConfirm").click();
+    }
 });
 
-function createNotebook() {
-  askName("Create Notebook","My Notebook",name=>{
-    db.notebooks.push({
-      id:uid(),type:"notebook",name,expanded:true,children:[]
-    });
-
-    safeStore();
-    renderTree();
-    toast("Notebook created.");
-  });
-}
-
-function createChild(id) {
-  const parent = findNode(id);
-  if (!parent) return;
-
-  if (parent.type==="page") {
-    return toast("Page के अंदर child नहीं बनाया जा सकता।");
-  }
-
-  const type = parent.type==="notebook" ? "section" : "subsection";
-
-  askName(type==="section"?"Create Section":"Create Subsection","New "+type,name=>{
-    parent.children = parent.children || [];
-
-    const node = {
-      id:uid(),type,name,expanded:true,children:[]
-    };
-
-    if (type==="subsection") node.children.push(makePage("New Page"));
-
-    parent.children.push(node);
-    parent.expanded = true;
-
-    safeStore();
-    renderTree();
-
-    const p = firstPage(node);
-    if (p) openPage(p.id);
-  });
-}
-
-function createPageUnder(id) {
-  const node = findNode(id);
-  if (!node) return;
-
-  if (node.type==="page") return newPage();
-
-  askName("Create Page","New Page",name=>{
-    const page = makePage(name);
-
-    if (node.type==="notebook") {
-      node.children = node.children || [];
-      node.children.push({
-        id:uid(),type:"section",name:"General",
-        expanded:true,children:[page]
-      });
-    } else {
-      node.children = node.children || [];
-      node.children.push(page);
-    }
-
-    node.expanded = true;
-    safeStore();
-    renderTree();
-    openPage(page.id);
-  });
-}
-
-function newPage() {
-  const page = currentPage();
-
-  if (!page) return toast("पहले कोई Page चुनें।");
-
-  const parent = parentOf(page.id);
-  if (!parent) return;
-
-  askName("New Page","New Page",name=>{
-    const next = makePage(name);
-    parent.children.push(next);
-    parent.expanded = true;
-    safeStore();
-    renderTree();
-    openPage(next.id);
-  });
-}
-
-function renameNode(id) {
-  const node = findNode(id);
-  if (!node) return;
-
-  askName("Rename Item",node.name,name=>{
-    node.name = name;
-    if (node.type==="page") node.title = name;
-    safeStore();
-    renderTree();
-
-    if (id===currentPageId) openPage(id);
-  });
-}
-
-async function deleteTreeNode(id) {
-  const item = findItem(id);
-  if (!item) return;
-
-  if (!confirm('Delete "'+item.node.name+'" and all its contents?')) return;
-
-  const assets = [];
-  walk(item.node).forEach(({node})=>{
-    if (node.type==="page") {
-      (node.objects || []).forEach(o=>{
-        if (o.assetId) assets.push(o.assetId);
-      });
-    }
-  });
-
-  if (!item.parent) {
-    db.notebooks = db.notebooks.filter(n=>n.id!==id);
-  } else {
-    item.parent.children = item.parent.children.filter(n=>n.id!==id);
-  }
-
-  for (const id of assets) await deleteAsset(id);
-
-  if (!findNode(currentPageId)) currentPageId = null;
-
-  safeStore();
-  renderTree();
-
-  const page = db.notebooks.map(firstPage).find(Boolean);
-
-  if (page) openPage(page.id);
-  else clearEditor();
-}
-
-function clearEditor() {
-  $("noteTitle").value = "";
-  $("mainWritingBody").innerHTML = "";
-  currentPageId = null;
-  $("workspaceWorld").querySelectorAll(".workspace-object:not(#mainWritingArea)")
-    .forEach(el=>el.remove());
-  renderTree();
-}
-
-/* =========================
-   OPEN PAGE / VIEWS
-========================= */
-
-function switchView(view) {
-  document.querySelectorAll(".view").forEach(el=>el.classList.remove("active"));
-
-  document.querySelectorAll(".tab").forEach(el=>{
-    el.classList.toggle("active",el.dataset.view===view);
-  });
-
-  $(({notes:"notesView",mindmap:"mindmapView"})[view]).classList.add("active");
-
-  if (view==="mindmap") setTimeout(renderMap,60);
-}
-
-function openPage(id) {
-  saveEditor();
-  saveWorkspaceContent();
-
-  const page = findNode(id);
-  if (!page || page.type!=="page") return;
-
-  currentPageId = id;
-  $("noteTitle").value = page.title || page.name;
-
-  $("mainWritingBody").innerHTML = sanitizeHTML(page.mainContent || "");
-
-  $("noteStatus").textContent =
-    "Last edited: " + new Date(page.updatedAt || Date.now()).toLocaleString();
-
-  renderWorkspace(page);
-  loadMap(page);
-  renderTree();
-
-  if (innerWidth<=760) document.body.classList.remove("show-tree");
-
-  $("workspaceViewport").scrollTop = 0;
-  $("workspaceViewport").scrollLeft = 0;
-}
-
-function getActiveTextBody() {
-  const active = document.activeElement;
-
-  if (active && active.classList && active.classList.contains("text-body")) {
-    return active;
-  }
-
-  if (active && active.id==="mainWritingBody") return active;
-
-  if (selectedTextObject==="main") return $("mainWritingBody");
-
-  if (selectedTextObject) {
-    return document.querySelector(
-      '[data-object-id="'+selectedTextObject+'"] .text-body'
-    );
-  }
-
-  return null;
-}
-
-function format(command,value=null) {
-  const editor = getActiveTextBody();
-
-  if (!editor) return toast("पहले Text Area में क्लिक करें।");
-
-  editor.focus();
-  document.execCommand(command,false,value);
-
-  if (editor.id==="mainWritingBody") {
-    saveWorkspaceContent();
-  } else {
-    scheduleWorkspaceSave();
-  }
-}
-
-function undoEdit() { format("undo"); }
-function redoEdit() { format("redo"); }
-
-function insertTable() {
-  const rows = Math.max(1,Math.min(15,Number(prompt("Number of rows","3"))||3));
-  const cols = Math.max(1,Math.min(10,Number(prompt("Number of columns","3"))||3));
-
-  let html = "<table>";
-
-  for (let r=0;r<rows;r++) {
-    html += "<tr>";
-
-    for (let c=0;c<cols;c++) {
-      html += r===0 ? "<th>Heading</th>" : "<td>Cell</td>";
-    }
-
-    html += "</tr>";
-  }
-
-  html += "</table><p><br></p>";
-
-  const editor = getActiveTextBody();
-  if (!editor) return toast("पहले Text Area चुनें。");
-
-  editor.focus();
-  document.execCommand("insertHTML",false,html);
-
-  if (editor.id==="mainWritingBody") saveWorkspaceContent();
-  else scheduleWorkspaceSave();
-}
-
-function insertImageIntoSelectedText() {
-  const editor = getActiveTextBody();
-
-  if (!editor) return toast("पहले Text Area चुनें।");
-
-  $("imageInput").dataset.mode = "inline";
-  $("imageInput").click();
-}
-
-/* =========================
-   CONTENT SAVE
-========================= */
-
-function saveWorkspaceContent() {
-  const page = currentPage();
-  if (!page) return;
-
-  page.title = $("noteTitle").value.trim() || "Untitled Page";
-  page.name = page.title;
-  page.mainContent = $("mainWritingBody").innerHTML;
-
-  document.querySelectorAll("#workspaceWorld .workspace-object").forEach(el=>{
-    const id = el.dataset.objectId;
-    if (!id) return;
-
-    const obj = page.objects.find(o=>o.id===id);
-    if (!obj) return;
-
-    obj.x = parseFloat(el.style.left) || 0;
-    obj.y = parseFloat(el.style.top) || 0;
-    obj.w = el.offsetWidth;
-    obj.h = el.offsetHeight;
-
-    const body = el.querySelector(".text-body");
-    if (body) obj.html = body.innerHTML;
-
-    obj.manuallyResized = el.dataset.manuallyResized==="true";
-  });
-
-  page.updatedAt = new Date().toISOString();
-  safeStore();
-}
-
-function scheduleWorkspaceSave() {
-  clearTimeout(saveTimer);
-  $("saveState").textContent = "Saving…";
-
-  saveTimer = setTimeout(()=>{
-    document.querySelectorAll("#workspaceWorld .text-object").forEach(box=>{
-      const body = box.querySelector(".text-body");
-      if (!body) return;
-
-      const text = body.innerText.trim();
-
-      if (text && !box.dataset.manuallyResized) {
-        box.classList.add("a4-mode");
-        box.style.width = "794px";
-        box.style.height = "auto";
-
-        const headerHeight = box.querySelector(".object-head").offsetHeight;
-        box.style.height = Math.max(
-          140,
-          body.scrollHeight + headerHeight
-        ) + "px";
-      }
-    });
-
-    ensureWorkspaceSize();
-    saveWorkspaceContent();
-  },300);
-}
-
-/* =========================
-   WORKSPACE GROWTH
-========================= */
-
-function ensureWorkspaceSize() {
-  const world = $("workspaceWorld");
-  const viewport = $("workspaceViewport");
-
-  let maxRight = viewport.clientWidth + 400;
-  let maxBottom = viewport.clientHeight + 400;
-
-  document.querySelectorAll("#workspaceWorld .workspace-object").forEach(box=>{
-    maxRight = Math.max(maxRight,box.offsetLeft+box.offsetWidth+500);
-    maxBottom = Math.max(maxBottom,box.offsetTop+box.offsetHeight+500);
-  });
-
-  maxRight = Math.max(maxRight,world.clientWidth);
-  maxBottom = Math.max(maxBottom,world.clientHeight);
-
-  const width = Math.max(2400,Math.ceil(maxRight/800)*800);
-  const height = Math.max(1800,Math.ceil(maxBottom/700)*700);
-
-  world.style.width = width+"px";
-  world.style.minWidth = width+"px";
-  world.style.height = height+"px";
-  world.style.minHeight = height+"px";
-}
-
-/* =========================
-   TEXT OBJECTS / PDF / PHOTO
-========================= */
-
-function addTextObject(x,y,html="") {
-  const page = currentPage();
-  if (!page) return toast("पहले कोई Page चुनें।");
-
-  const viewport = $("workspaceViewport");
-
-  if (x==null) x=viewport.scrollLeft+viewport.clientWidth/2-110;
-  if (y==null) y=viewport.scrollTop+viewport.clientHeight/2-60;
-
-  const obj = {
-    id:uid(),type:"text",
-    x:Math.max(0,x),y:Math.max(0,y),
-    w:220,h:120,html:html||"",
-    manuallyResized:false
-  };
-
-  page.objects.push(obj);
-  renderWorkspace(page);
-
-  const box = document.querySelector('[data-object-id="'+obj.id+'"]');
-  const body = box && box.querySelector(".text-body");
-
-  selectedTextObject = obj.id;
-
-  if (body) body.focus();
-
-  saveWorkspaceContent();
-}
-
-function createObjectElement(obj) {
-  const box = document.createElement("div");
-
-  box.className = "workspace-object " +
-    (obj.type==="text" ? "text-object" :
-     obj.type==="pdf" ? "pdf-object" : "image-object");
-
-  box.dataset.objectId = obj.id;
-  box.style.left = (obj.x||0)+"px";
-  box.style.top = (obj.y||0)+"px";
-  box.style.width = (obj.w||(obj.type==="pdf"?794:obj.type==="image"?330:220))+"px";
-  box.style.height = (obj.h||(obj.type==="pdf"?780:obj.type==="image"?260:120))+"px";
-
-  if (obj.type==="text" && obj.html && !obj.manuallyResized) {
-    box.classList.add("a4-mode");
-  }
-
-  if (obj.manuallyResized) box.dataset.manuallyResized = "true";
-
-  const head = document.createElement("div");
-  head.className = "object-head";
-
-  const title = document.createElement("strong");
-  title.textContent =
-    obj.type==="pdf" ? (obj.name||"PDF Document") :
-    obj.type==="image" ? (obj.name||"Photo") : "Text Box";
-
-  const addBeside = document.createElement("button");
-  addBeside.textContent = "＋";
-  addBeside.title = "इसके बगल में Text Box बनाएँ";
-  addBeside.onclick = e=>{
-    e.stopPropagation();
-    addTextObject(
-      obj.x + obj.w + 25,
-      obj.y
-    );
-  };
-
-  const del = document.createElement("button");
-  del.textContent = "×";
-  del.title = "Delete object";
-
-  del.onclick = async e=>{
-    e.stopPropagation();
-
-    if (!confirm("इस ऑब्जेक्ट को हटाएँ?")) return;
-
-    const page = currentPage();
-    if (!page) return;
-
-    page.objects = page.objects.filter(o=>o.id!==obj.id);
-
-    if (obj.assetId) await deleteAsset(obj.assetId);
-
-    renderWorkspace(page);
-    safeStore();
-  };
-
-  head.append(title,addBeside,del);
-  box.appendChild(head);
-
-  const body = document.createElement("div");
-  body.className = "object-body";
-
-  if (obj.type==="text") {
-    const text = document.createElement("div");
-    text.className = "text-body";
-    text.contentEditable = "true";
-    text.spellcheck = true;
-    text.innerHTML = sanitizeHTML(obj.html||"");
-
-    text.addEventListener("focus",()=>selectedTextObject=obj.id);
-
-    text.addEventListener("input",()=>{
-      selectedTextObject=obj.id;
-      scheduleWorkspaceSave();
-    });
-
-    text.addEventListener("click",()=>selectedTextObject=obj.id);
-
-    body.appendChild(text);
-
-  } else if (obj.type==="image") {
-    body.classList.add("image-body");
-
-    const img = document.createElement("img");
-    img.alt = obj.name || "Inserted image";
-    body.appendChild(img);
-
-    loadImageAsset(obj,img);
-
-  } else if (obj.type==="pdf") {
-    body.classList.add("pdf-body");
-
-    const status = document.createElement("div");
-    status.style.cssText = "padding:12px;text-align:center;color:#444";
-    status.textContent = "Loading PDF…";
-    body.appendChild(status);
-
-    loadPdfObject(obj,body);
-  }
-
-  box.appendChild(body);
-
-  /* Drag using the top handle */
-  head.addEventListener("pointerdown",e=>{
-    if (e.target.closest("button")) return;
-
-    e.preventDefault();
-
-    const startX=e.clientX;
-    const startY=e.clientY;
-    const origX=parseFloat(box.style.left)||0;
-    const origY=parseFloat(box.style.top)||0;
-
-    head.setPointerCapture(e.pointerId);
-
-    const move=ev=>{
-      box.style.left=Math.max(0,origX+ev.clientX-startX)+"px";
-      box.style.top=Math.max(0,origY+ev.clientY-startY)+"px";
-    };
-
-    const end=()=>{
-      head.removeEventListener("pointermove",move);
-      head.removeEventListener("pointerup",end);
-      head.removeEventListener("pointercancel",end);
-      ensureWorkspaceSize();
-      saveWorkspaceContent();
-    };
-
-    head.addEventListener("pointermove",move);
-    head.addEventListener("pointerup",end,{once:true});
-    head.addEventListener("pointercancel",end,{once:true});
-  });
-
-  box.addEventListener("pointerdown",()=>{
-    document.querySelectorAll(".workspace-object").forEach(el=>el.classList.remove("object-selected"));
-    box.classList.add("object-selected");
-  });
-
-  /* Save manual resizing without changing it back automatically */
-  let resizeTimer;
-
-  if (window.ResizeObserver) {
-    const observer = new ResizeObserver(()=>{
-      if (!box.isConnected) return;
-
-      clearTimeout(resizeTimer);
-
-      resizeTimer=setTimeout(()=>{
-        const current = currentPage();
-        const item = current && current.objects.find(o=>o.id===obj.id);
-
-        if (item) {
-          item.w=box.offsetWidth;
-          item.h=box.offsetHeight;
-          item.manuallyResized=true;
+document.getElementById("dialogBackdrop").addEventListener("click", e => {
+    if (e.target.id === "dialogBackdrop") closeDialog();
+});
+
+/* =========================================================
+   INDEXEDDB FOR PDF AND IMAGE FILES
+   ========================================================= */
+
+function openAssetDB() {
+    return new Promise((resolve, reject) => {
+        if (!("indexedDB" in window)) {
+            reject(new Error("IndexedDB is not supported"));
+            return;
         }
 
-        box.dataset.manuallyResized="true";
-        ensureWorkspaceSize();
-        safeStore();
-      },400);
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+        request.onupgradeneeded = () => {
+            const db = request.result;
+
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME, { keyPath: "id" });
+            }
+        };
+
+        request.onsuccess = () => {
+            assetDB = request.result;
+            resolve(assetDB);
+        };
+
+        request.onerror = () => reject(request.error);
     });
-
-    observer.observe(box);
-  }
-
-  return box;
 }
 
-function renderWorkspace(page) {
-  const world = $("workspaceWorld");
+async function putAsset(id, blob, name, type) {
+    if (!assetDB) await openAssetDB();
 
-  world.querySelectorAll(".workspace-object:not(#mainWritingArea)")
-    .forEach(el=>el.remove());
+    return new Promise((resolve, reject) => {
+        const tx = assetDB.transaction(STORE_NAME, "readwrite");
 
-  page.objects = Array.isArray(page.objects) ? page.objects : [];
+        tx.objectStore(STORE_NAME).put({
+            id,
+            blob,
+            name: name || "file",
+            type: type || blob.type || "application/octet-stream",
+            updatedAt: Date.now()
+        });
 
-  page.objects.forEach(obj=>{
-    world.appendChild(createObjectElement(obj));
-  });
-
-  $("mainWritingBody").innerHTML = sanitizeHTML(page.mainContent||"");
-
-  ensureWorkspaceSize();
-}
-
-async function loadImageAsset(obj,img) {
-  const record = await getAsset(obj.assetId);
-
-  if (!record || !img.isConnected) return;
-
-  img.src = URL.createObjectURL(record.blob);
-}
-
-async function loadPdfObject(obj,body) {
-  if (!window.pdfjsLib) {
-    body.textContent = "PDF library load नहीं हुई। Internet connection जाँचें।";
-    return;
-  }
-
-  const record = await getAsset(obj.assetId);
-
-  if (!record) {
-    body.textContent =
-      "यह PDF इस browser में नहीं मिली। Backup restore करें या PDF दोबारा insert करें।";
-    return;
-  }
-
-  try {
-    const bytes = await record.blob.arrayBuffer();
-
-    const pdf = await pdfjsLib.getDocument({
-      data:new Uint8Array(bytes)
-    }).promise;
-
-    body.replaceChildren();
-
-    const pages = document.createElement("div");
-    pages.className = "pdf-pages";
-    body.appendChild(pages);
-
-    for (let i=1;i<=pdf.numPages;i++) {
-      const page = await pdf.getPage(i);
-
-      const targetWidth = 774;
-      const scale = targetWidth / page.view[2];
-      const viewport = page.getViewport({scale});
-
-      const wrap = document.createElement("div");
-      wrap.className = "pdf-page";
-      wrap.style.width = viewport.width+"px";
-      wrap.style.height = viewport.height+"px";
-
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.ceil(viewport.width);
-      canvas.height = Math.ceil(viewport.height);
-      canvas.style.width = viewport.width+"px";
-      canvas.style.height = viewport.height+"px";
-
-      const marker = document.createElement("canvas");
-      marker.className = "marker-canvas";
-      marker.width = canvas.width;
-      marker.height = canvas.height;
-      marker.style.width = viewport.width+"px";
-      marker.style.height = viewport.height+"px";
-
-      wrap.append(canvas,marker);
-      pages.appendChild(wrap);
-
-      await page.render({
-        canvasContext:canvas.getContext("2d"),
-        viewport
-      }).promise;
-
-      drawStoredMarks(obj,i,marker);
-      attachInlineMarker(obj,i,marker);
-    }
-
-    ensureWorkspaceSize();
-
-  } catch (error) {
-    console.error(error);
-    body.textContent = "PDF खुल नहीं सकी।";
-  }
-}
-
-function drawStoredMarks(obj,pageNumber,canvas) {
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  ((obj.annotations||{})[pageNumber]||[]).forEach(mark=>{
-    ctx.save();
-    ctx.globalAlpha=.38;
-    ctx.strokeStyle=mark.color;
-    ctx.lineWidth=mark.size;
-    ctx.lineCap="round";
-    ctx.lineJoin="round";
-    ctx.beginPath();
-
-    (mark.points||[]).forEach((p,i)=>{
-      if (i) ctx.lineTo(p.x,p.y);
-      else ctx.moveTo(p.x,p.y);
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
     });
-
-    if (mark.points && mark.points.length===1) {
-      ctx.lineTo(mark.points[0].x+.1,mark.points[0].y+.1);
-    }
-
-    ctx.stroke();
-    ctx.restore();
-  });
 }
 
-function attachInlineMarker(obj,pageNumber,canvas) {
-  let active=false;
-  let currentMark=null;
+async function getAsset(id) {
+    if (!assetDB) await openAssetDB();
 
-  canvas.style.pointerEvents=markerEnabled?"auto":"none";
+    return new Promise((resolve, reject) => {
+        const tx = assetDB.transaction(STORE_NAME, "readonly");
+        const request = tx.objectStore(STORE_NAME).get(id);
 
-  const getPosition=e=>{
-    const rect=canvas.getBoundingClientRect();
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+async function deleteAsset(id) {
+    if (!assetDB) await openAssetDB();
+
+    return new Promise((resolve, reject) => {
+        const tx = assetDB.transaction(STORE_NAME, "readwrite");
+        tx.objectStore(STORE_NAME).delete(id);
+
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+    });
+}
+
+/* =========================================================
+   DATA MODEL
+   ========================================================= */
+
+function createPage(title = "New Page") {
+    return {
+        id: uid(),
+        type: "page",
+        title,
+        content: "",
+        objects: [],
+        mindmap: [],
+        updatedAt: Date.now()
+    };
+}
+
+function createSection(title = "New Section") {
+    return {
+        id: uid(),
+        type: "section",
+        title,
+        children: [createPage("Page 1")],
+        expanded: true
+    };
+}
+
+function createNotebook(title = "My Notebook") {
+    return {
+        id: uid(),
+        type: "notebook",
+        title,
+        children: [createSection("General")],
+        expanded: true
+    };
+}
+
+function defaultState() {
+    const notebook = createNotebook("My Notebook");
 
     return {
-      x:(e.clientX-rect.left)*canvas.width/rect.width,
-      y:(e.clientY-rect.top)*canvas.height/rect.height
+        version: 1,
+        notebooks: [notebook],
+        lastPageId: notebook.children[0].children[0].id,
+        updatedAt: Date.now()
     };
-  };
-
-  canvas.addEventListener("pointerdown",e=>{
-    if (!markerEnabled) return;
-
-    e.preventDefault();
-    active=true;
-    canvas.setPointerCapture(e.pointerId);
-
-    currentMark={
-      color:$("markerColor").value,
-      size:Number($("markerSize").value),
-      points:[getPosition(e)]
-    };
-
-    obj.annotations=obj.annotations||{};
-    obj.annotations[pageNumber]=obj.annotations[pageNumber]||[];
-    obj.annotations[pageNumber].push(currentMark);
-
-    drawStoredMarks(obj,pageNumber,canvas);
-    saveWorkspaceContent();
-  });
-
-  canvas.addEventListener("pointermove",e=>{
-    if (!active || !currentMark) return;
-
-    currentMark.points.push(getPosition(e));
-    drawStoredMarks(obj,pageNumber,canvas);
-  });
-
-  const end=()=>{
-    active=false;
-    currentMark=null;
-    saveWorkspaceContent();
-  };
-
-  canvas.addEventListener("pointerup",end);
-  canvas.addEventListener("pointercancel",end);
 }
 
-function toggleMarker() {
-  markerEnabled=!markerEnabled;
+function allPages() {
+    const result = [];
 
-  document.querySelectorAll(".marker-canvas").forEach(canvas=>{
-    canvas.style.pointerEvents=markerEnabled?"auto":"none";
-  });
-
-  toast("PDF Marker "+(markerEnabled?"ON":"OFF"));
-}
-
-async function addPhotoObject(file) {
-  const page = currentPage();
-  if (!page) return toast("पहले Page चुनें।");
-
-  const assetId=uid();
-
-  try {
-    await putAsset(assetId,file,file.name,file.type);
-
-    const viewport=$("workspaceViewport");
-
-    page.objects.push({
-      id:uid(),
-      assetId,
-      type:"image",
-      name:file.name,
-      x:viewport.scrollLeft+viewport.clientWidth/2-165,
-      y:viewport.scrollTop+viewport.clientHeight/2-130,
-      w:330,
-      h:260
-    });
-
-    renderWorkspace(page);
-    safeStore();
-    toast("Photo inserted.");
-
-  } catch {
-    toast("Photo save नहीं हो सकी।");
-  }
-}
-
-async function addPdfObject(file) {
-  const page = currentPage();
-
-  if (!page) return toast("पहले Page चुनें।");
-
-  if (file.size>40*1024*1024) {
-    return toast("PDF 40 MB से छोटी चुनें।");
-  }
-
-  const assetId=uid();
-
-  try {
-    await putAsset(assetId,file,file.name,file.type||"application/pdf");
-
-    const viewport=$("workspaceViewport");
-
-    page.objects.push({
-      id:uid(),
-      assetId,
-      type:"pdf",
-      name:file.name,
-      x:viewport.scrollLeft+25,
-      y:viewport.scrollTop+25,
-      w:794,
-      h:780,
-      annotations:{}
-    });
-
-    renderWorkspace(page);
-    ensureWorkspaceSize();
-    safeStore();
-    toast("PDF Page में insert हो गई।");
-
-  } catch (error) {
-    console.error(error);
-    toast("PDF save नहीं हो सकी।");
-  }
-}
-
-$("pdfInput").addEventListener("change",e=>{
-  const file=e.target.files[0];
-  if (file) addPdfObject(file);
-  e.target.value="";
-});
-
-$("imageInput").addEventListener("change",e=>{
-  const file=e.target.files[0];
-  if (!file) return;
-
-  if (!file.type.startsWith("image/")) {
-    toast("Image फ़ाइल चुनें।");
-    e.target.value="";
-    return;
-  }
-
-  if ($("imageInput").dataset.mode==="inline") {
-    const editor=getActiveTextBody();
-    $("imageInput").dataset.mode="";
-
-    if (!editor) {
-      toast("पहले Text Area चुनें।");
-      e.target.value="";
-      return;
+    for (const notebook of state.notebooks) {
+        for (const section of notebook.children || []) {
+            for (const page of section.children || []) {
+                result.push(page);
+            }
+        }
     }
 
-    if (file.size>8*1024*1024) {
-      toast("Inline image 8 MB से छोटी चुनें।");
-      e.target.value="";
-      return;
-    }
-
-    const reader=new FileReader();
-
-    reader.onload=()=>{
-      editor.focus();
-
-      document.execCommand(
-        "insertHTML",
-        false,
-        '<img alt="'+escapeHTML(file.name)+'" src="'+reader.result+'">'
-      );
-
-      if (editor.id==="mainWritingBody") saveWorkspaceContent();
-      else scheduleWorkspaceSave();
-    };
-
-    reader.readAsDataURL(file);
-
-  } else {
-    addPhotoObject(file);
-  }
-
-  e.target.value="";
-});
-
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g,char=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[char]));
+    return result;
 }
 
-function sanitizeHTML(html) {
-  const template=document.createElement("template");
-  template.innerHTML=html;
+function findNode(id) {
+    for (const notebook of state.notebooks) {
+        if (notebook.id === id) return notebook;
 
-  const allowed=new Set([
-    "P","DIV","BR","H1","H2","H3","H4","B","STRONG","I","EM",
-    "U","S","UL","OL","LI","BLOCKQUOTE","PRE","CODE","A","IMG",
-    "HR","TABLE","TBODY","THEAD","TR","TD","TH","SPAN"
-  ]);
+        for (const section of notebook.children || []) {
+            if (section.id === id) return section;
 
-  template.content.querySelectorAll("*").forEach(el=>{
-    if (!allowed.has(el.tagName)) {
-      el.replaceWith(document.createTextNode(el.textContent||""));
-      return;
+            for (const page of section.children || []) {
+                if (page.id === id) return page;
+            }
+        }
     }
 
-    [...el.attributes].forEach(attr=>{
-      const name=attr.name.toLowerCase();
-      const value=attr.value;
-
-      if (name.startsWith("on") || name==="srcdoc") {
-        el.removeAttribute(attr.name);
-      } else if (name==="href" && el.tagName==="A") {
-        try {
-          const url=new URL(value,location.href);
-
-          if (!["https:","http:","mailto:"].includes(url.protocol)) {
-            el.removeAttribute(name);
-          } else {
-            el.setAttribute("rel","noopener noreferrer");
-          }
-        } catch {
-          el.removeAttribute(name);
-        }
-      } else if (name==="src" && el.tagName==="IMG") {
-        if (!/^data:image\/(png|jpeg|gif|webp);base64,/i.test(value)) {
-          el.removeAttribute(name);
-        }
-      } else if (name==="style") {
-        if (/url\s*\(|expression\s*\(|javascript:/i.test(value)) {
-          el.removeAttribute(name);
-        }
-      } else if (![
-        "href","src","alt","colspan","rowspan","style","width","height"
-      ].includes(name)) {
-        el.removeAttribute(attr.name);
-      }
-    });
-  });
-
-  return template.innerHTML;
+    return null;
 }
 
-/* Main writing area autosaves separately from floating text boxes */
+function getParentSection(pageId) {
+    for (const notebook of state.notebooks) {
+        for (const section of notebook.children || []) {
+            if ((section.children || []).some(page => page.id === pageId)) {
+                return section;
+            }
+        }
+    }
 
-$("mainWritingBody").addEventListener("input",()=>{
-  const page=currentPage();
-  if (!page) return;
+    return null;
+}
 
-  page.mainContent=$("mainWritingBody").innerHTML;
+function activePage() {
+    return allPages().find(page => page.id === activePageId) || null;
+}
 
-  const body=$("mainWritingBody");
-  const box=$("mainWritingArea");
+/* =========================================================
+   SAVE AND LOAD
+   ========================================================= */
 
-  box.style.height=Math.max(220,body.scrollHeight+10)+"px";
+function loadState() {
+    try {
+        const raw = localStorage.getItem(META_KEY);
 
-  ensureWorkspaceSize();
-  scheduleSave();
-});
+        if (raw) {
+            const parsed = JSON.parse(raw);
 
-$("mainWritingBody").addEventListener("focus",()=>{
-  selectedTextObject="main";
-});
+            if (parsed && Array.isArray(parsed.notebooks)) {
+                state = parsed;
+            }
+        }
+    } catch (error) {
+        console.warn("Could not read saved data:", error);
+    }
 
-$("noteTitle").addEventListener("input",scheduleSave);
+    if (!state || !state.notebooks.length) {
+        state = defaultState();
+    }
 
-$("workspaceViewport").addEventListener("dblclick",e=>{
-  if (e.target.closest(".workspace-object") ||
-      e.target.closest("#workspaceHint")) return;
+    const pages = allPages();
 
-  const world=$("workspaceWorld");
-  const rect=world.getBoundingClientRect();
+    if (!pages.length) {
+        state = defaultState();
+    }
 
-  addTextObject(
-    e.clientX-rect.left,
-    e.clientY-rect.top
-  );
-});
-
-let lastTap=0;
-
-$("workspaceViewport").addEventListener("pointerup",e=>{
-  if (e.pointerType!=="touch") return;
-
-  if (e.target.closest(".workspace-object") ||
-      e.target.closest("#workspaceHint")) return;
-
-  const now=Date.now();
-
-  if (now-lastTap<330) {
-    const world=$("workspaceWorld");
-    const rect=world.getBoundingClientRect();
-
-    addTextObject(
-      e.clientX-rect.left,
-      e.clientY-rect.top
+    const requestedPage = allPages().find(
+        page => page.id === state.lastPageId
     );
 
-    lastTap=0;
-  } else {
-    lastTap=now;
-  }
-});
-
-function printNotes() {
-  saveWorkspaceContent();
-  window.print();
+    activePageId = requestedPage
+        ? requestedPage.id
+        : allPages()[0].id;
 }
 
-/* =========================
-   MIND MAP
-========================= */
+function persistState() {
+    state.updatedAt = Date.now();
 
-const mapViewport=$("mapViewport");
-const mapWorld=$("mapWorld");
-const mapNodes=$("mapNodes");
-const svg=$("mapConnections");
+    try {
+        localStorage.setItem(META_KEY, JSON.stringify(state));
+        setStatus("✓ Saved automatically");
+    } catch (error) {
+        console.error(error);
 
-function loadMap(page) {
-  map.nodes=page.mindmap?.nodes || [];
-  map.connections=page.mindmap?.connections || [];
-  map.selected=null;
-  renderMap();
+        setStatus("Save failed");
+
+        alert(
+            "ब्राउज़र में स्टोरेज की जगह कम हो सकती है। " +
+            "PDF और इमेज IndexedDB में रखे जाते हैं, " +
+            "लेकिन बहुत अधिक टेक्स्ट होने पर बैकअप लेना उचित है।"
+        );
+    }
 }
 
-function saveMap() {
-  const page=currentPage();
-  if (!page) return;
+function scheduleSave() {
+    setStatus("Saving…");
 
-  page.mindmap={nodes:map.nodes,connections:map.connections};
-  safeStore();
+    clearTimeout(saveTimer);
+
+    saveTimer = setTimeout(() => {
+        saveCurrentPage();
+        persistState();
+    }, 450);
 }
 
-function transformMap() {
-  mapWorld.style.transform=
-    `translate(${map.x}px,${map.y}px) scale(${map.scale})`;
+function saveCurrentPage() {
+    const page = activePage();
 
-  $("zoomLabel").textContent=Math.round(map.scale*100)+"%";
-}
+    if (!page) return;
 
-function renderMap() {
-  mapWorld.style.width="1px";
-  mapWorld.style.height="1px";
+    page.title = pageTitle.value.trim() || "Untitled Page";
+    page.content = mainWritingBody.innerHTML;
 
-  transformMap();
-  mapNodes.replaceChildren();
-  svg.replaceChildren();
+    const objects = [];
 
-  map.nodes.forEach(node=>{
-    const card=document.createElement("div");
-    card.className="map-node"+(map.selected===node.id?" selected":"");
-    card.style.left=node.x+"px";
-    card.style.top=node.y+"px";
+    workspace.querySelectorAll(".object").forEach(el => {
+        const id = el.dataset.objectId;
+        const original = page.objects.find(obj => obj.id === id);
 
-    const title=document.createElement("input");
-    title.value=node.text||"Idea";
-    title.onchange=()=>{
-      node.text=title.value;
-      saveMap();
-      renderMap();
-    };
+        if (!original) return;
 
-    const details=document.createElement("textarea");
-    details.placeholder="Add details...";
-    details.value=node.details||"";
-    details.oninput=()=>{
-      node.details=details.value;
-      clearTimeout(map.saveTimer);
-      map.saveTimer=setTimeout(saveMap,350);
-    };
+        original.x = parseFloat(el.style.left) || 0;
+        original.y = parseFloat(el.style.top) || 0;
 
-    const actions=document.createElement("div");
-    actions.className="map-actions";
+        if (original.type === "text") {
+            const body = el.querySelector(".text-body");
 
-    const child=document.createElement("button");
-    child.textContent="+ Child";
-    child.onclick=e=>{e.stopPropagation();addChildNode(node.id)};
+            if (body) {
+                original.html = body.innerHTML;
 
-    const connect=document.createElement("button");
-    connect.textContent="Connect";
-    connect.onclick=e=>{e.stopPropagation();connectNode(node.id)};
+                original.userWidth = el.dataset.userWidth === "1";
+                original.userHeight = el.dataset.userHeight === "1";
 
-    const del=document.createElement("button");
-    del.textContent="× Delete";
-    del.onclick=e=>{e.stopPropagation();deleteMapNode(node.id)};
-
-    actions.append(child,connect,del);
-    card.append(title,details,actions);
-
-    card.addEventListener("pointerdown",e=>{
-      if (e.target.closest("button") ||
-          ["INPUT","TEXTAREA"].includes(e.target.tagName)) return;
-
-      e.stopPropagation();
-      map.selected=node.id;
-
-      dragNode={
-        id:node.id,
-        startX:e.clientX,
-        startY:e.clientY,
-        x:node.x,
-        y:node.y
-      };
-
-      card.setPointerCapture(e.pointerId);
+                original.w = el.offsetWidth;
+                original.h = el.offsetHeight;
+            }
+        } else if (original.type === "image") {
+            original.w = el.offsetWidth;
+            original.h = el.offsetHeight;
+        } else if (original.type === "pdf") {
+            original.w = el.offsetWidth;
+            original.h = el.offsetHeight;
+        }
     });
 
-    card.addEventListener("pointermove",e=>{
-      if (!dragNode || dragNode.id!==node.id) return;
-
-      node.x=dragNode.x+(e.clientX-dragNode.startX)/map.scale;
-      node.y=dragNode.y+(e.clientY-dragNode.startY)/map.scale;
-
-      card.style.left=node.x+"px";
-      card.style.top=node.y+"px";
-      drawConnections();
-    });
-
-    const stop=()=>{
-      if (dragNode && dragNode.id===node.id) {
-        dragNode=null;
-        saveMap();
-        renderMap();
-      }
-    };
-
-    card.addEventListener("pointerup",stop);
-    card.addEventListener("pointercancel",stop);
-
-    mapNodes.appendChild(card);
-  });
-
-  drawConnections();
+    page.updatedAt = Date.now();
+    state.lastPageId = page.id;
 }
 
-function drawConnections() {
-  const ns="http://www.w3.org/2000/svg";
-  svg.replaceChildren();
+function saveNow() {
+    clearTimeout(saveTimer);
+    saveCurrentPage();
+    persistState();
+}
 
-  const lookup=new Map(map.nodes.map(n=>[n.id,n]));
+document.getElementById("saveBtn").onclick = saveNow;
 
-  map.connections.forEach(connection=>{
-    const a=lookup.get(connection.from);
-    const b=lookup.get(connection.to);
+/* =========================================================
+   TREE RENDERING
+   ========================================================= */
 
-    if (!a || !b) return;
+function renderTree() {
+    treeEl.innerHTML = "";
 
-    const path=document.createElementNS(ns,"path");
-    const x1=a.x+105,y1=a.y+50;
-    const x2=b.x+105,y2=b.y+50;
-    const mid=(x1+x2)/2;
+    for (const notebook of state.notebooks) {
+        treeEl.appendChild(renderTreeNode(notebook, 0));
+    }
+}
 
-    path.setAttribute(
-      "d",`M${x1} ${y1} C${mid} ${y1},${mid} ${y2},${x2} ${y2}`
+function renderTreeNode(node, depth) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "tree-item";
+
+    const row = document.createElement("div");
+    row.className = "tree-row";
+
+    if (node.id === activePageId) {
+        row.classList.add("active");
+    }
+
+    const hasChildren = Array.isArray(node.children) &&
+        node.children.length > 0;
+
+    const toggle = document.createElement("span");
+    toggle.className = "tree-toggle";
+    toggle.textContent = hasChildren
+        ? (node.expanded === false ? "▸" : "▾")
+        : "•";
+
+    const label = document.createElement("span");
+    label.className = "tree-label";
+
+    const icon = node.type === "notebook"
+        ? "📚 "
+        : node.type === "section"
+            ? "📁 "
+            : "📄 ";
+
+    label.textContent = icon + node.title;
+    label.title = node.title;
+
+    const menu = document.createElement("button");
+    menu.className = "tree-menu";
+    menu.textContent = "⋯";
+    menu.title = "Options";
+
+    row.append(toggle, label, menu);
+    wrapper.appendChild(row);
+
+    row.addEventListener("click", e => {
+        if (e.target === menu) return;
+
+        if (hasChildren && e.target === toggle) {
+            node.expanded = node.expanded === false;
+            renderTree();
+            scheduleSave();
+            return;
+        }
+
+        if (node.type === "page") {
+            openPage(node.id);
+        } else {
+            node.expanded = node.expanded === false;
+            renderTree();
+            scheduleSave();
+        }
+    });
+
+    menu.addEventListener("click", e => {
+        e.stopPropagation();
+        showNodeMenu(node);
+    });
+
+    if (hasChildren && node.expanded !== false) {
+        const children = document.createElement("div");
+        children.className = "tree-children";
+
+        for (const child of node.children) {
+            children.appendChild(renderTreeNode(child, depth + 1));
+        }
+
+        wrapper.appendChild(children);
+    }
+
+    return wrapper;
+}
+
+function showNodeMenu(node) {
+    const options = node.type === "notebook"
+        ? ["Add Section", "Rename", "Delete"]
+        : node.type === "section"
+            ? ["Add Page", "Rename", "Delete"]
+            : ["Rename", "Delete"];
+
+    const choice = prompt(
+        node.title + "\n\n" +
+        options.map((option, i) => `${i + 1}. ${option}`).join("\n") +
+        "\n\nविकल्प का नंबर लिखें:"
     );
-    path.setAttribute("fill","none");
-    path.setAttribute("stroke","#818cf8");
-    path.setAttribute("stroke-width","2");
 
-    svg.appendChild(path);
-  });
+    if (!choice) return;
+
+    const index = Number(choice) - 1;
+
+    if (!Number.isInteger(index) || index < 0 || index >= options.length) {
+        return;
+    }
+
+    const action = options[index];
+
+    if (action === "Add Section") addSectionTo(node.id);
+    if (action === "Add Page") addPageTo(node.id);
+    if (action === "Rename") renameNode(node);
+    if (action === "Delete") deleteNode(node);
 }
 
-function addMapNode() {
-  const node={
-    id:uid(),
-    x:mapViewport.clientWidth/2,
-    y:mapViewport.clientHeight/2,
-    text:"New Idea",
-    details:"",
-    parent:null
-  };
+/* =========================================================
+   NOTEBOOK / SECTION / PAGE ACTIONS
+   ========================================================= */
 
-  map.nodes.push(node);
-  map.selected=node.id;
-  saveMap();
-  renderMap();
-}
+function addNotebook() {
+    showDialog("New Notebook", "Notebook name", name => {
+        const notebook = createNotebook(name);
 
-function addChildNode(parentId=map.selected) {
-  const parent=map.nodes.find(n=>n.id===parentId);
-  if (!parent) return addMapNode();
+        state.notebooks.push(notebook);
 
-  const node={
-    id:uid(),
-    x:parent.x+280,
-    y:parent.y+130,
-    text:"Child Idea",
-    details:"",
-    parent:parent.id
-  };
-
-  map.nodes.push(node);
-  map.connections.push({from:parent.id,to:node.id});
-  map.selected=node.id;
-  saveMap();
-  renderMap();
-}
-
-function connectSelected() {
-  if (!map.selected) return toast("पहले Node चुनें।");
-  connectStart=map.selected;
-  toast("अब दूसरे Node पर Connect दबाएँ।");
-}
-
-function connectNode(id) {
-  if (!connectStart) {
-    connectStart=id;
-    return toast("दूसरा Node चुनकर Connect दबाएँ।");
-  }
-
-  if (connectStart===id) {
-    connectStart=null;
-    return toast("दूसरा Node चुनें।");
-  }
-
-  if (!map.connections.some(c=>
-    (c.from===connectStart && c.to===id) ||
-    (c.from===id && c.to===connectStart)
-  )) {
-    map.connections.push({from:connectStart,to:id});
-  }
-
-  connectStart=null;
-  saveMap();
-  renderMap();
-}
-
-function deleteMapNode(id) {
-  map.nodes=map.nodes.filter(n=>n.id!==id);
-  map.connections=map.connections.filter(c=>c.from!==id && c.to!==id);
-
-  if (map.selected===id) map.selected=null;
-
-  saveMap();
-  renderMap();
-}
-
-function deleteSelectedNode() {
-  if (map.selected) deleteMapNode(map.selected);
-  else toast("पहले Node चुनें।");
-}
-
-function setMapZoom(scale,cx=mapViewport.clientWidth/2,cy=mapViewport.clientHeight/2) {
-  const rect=mapViewport.getBoundingClientRect();
-  const px=cx-rect.left,py=cy-rect.top;
-  const wx=(px-map.x)/map.scale;
-  const wy=(py-map.y)/map.scale;
-
-  map.scale=Math.max(.2,Math.min(3,scale));
-  map.x=px-wx*map.scale;
-  map.y=py-wy*map.scale;
-
-  transformMap();
-}
-
-function resetMap() {
-  map.x=mapViewport.clientWidth/2;
-  map.y=mapViewport.clientHeight/2;
-  map.scale=1;
-  transformMap();
-}
-
-function fitMap() {
-  if (!map.nodes.length) return resetMap();
-
-  const minX=Math.min(...map.nodes.map(n=>n.x));
-  const maxX=Math.max(...map.nodes.map(n=>n.x+210));
-  const minY=Math.min(...map.nodes.map(n=>n.y));
-  const maxY=Math.max(...map.nodes.map(n=>n.y+120));
-
-  map.scale=Math.max(.2,Math.min(
-    1.5,
-    (mapViewport.clientWidth-60)/(maxX-minX||1),
-    (mapViewport.clientHeight-100)/(maxY-minY||1)
-  ));
-
-  map.x=(mapViewport.clientWidth-(maxX-minX)*map.scale)/2-minX*map.scale;
-  map.y=(mapViewport.clientHeight-(maxY-minY)*map.scale)/2-minY*map.scale;
-
-  transformMap();
-}
-
-mapViewport.addEventListener("pointerdown",e=>{
-  if (e.target.closest(".map-node")) return;
-
-  mapViewport.setPointerCapture(e.pointerId);
-  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
-
-  if (pointers.size===1) {
-    panState={x:e.clientX,y:e.clientY,mx:map.x,my:map.y};
-  } else if (pointers.size===2) {
-    const a=[...pointers.values()];
-    pinchState={
-      d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),
-      s:map.scale
-    };
-    panState=null;
-  }
-});
-
-mapViewport.addEventListener("pointermove",e=>{
-  if (!pointers.has(e.pointerId)) return;
-
-  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
-
-  if (pointers.size===2 && pinchState) {
-    const a=[...pointers.values()];
-    const distance=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
-
-    setMapZoom(
-      pinchState.s*distance/pinchState.d,
-      (a[0].x+a[1].x)/2,
-      (a[0].y+a[1].y)/2
-    );
-  } else if (panState) {
-    map.x=panState.mx+e.clientX-panState.x;
-    map.y=panState.my+e.clientY-panState.y;
-    transformMap();
-  }
-});
-
-function releaseMapPointer(e) {
-  pointers.delete(e.pointerId);
-
-  if (!pointers.size) {
-    panState=null;
-    pinchState=null;
-  } else if (pointers.size===1) {
-    const p=[...pointers.values()][0];
-    panState={x:p.x,y:p.y,mx:map.x,my:map.y};
-    pinchState=null;
-  }
-}
-
-mapViewport.addEventListener("pointerup",releaseMapPointer);
-mapViewport.addEventListener("pointercancel",releaseMapPointer);
-
-mapViewport.addEventListener("wheel",e=>{
-  e.preventDefault();
-  setMapZoom(map.scale*(e.deltaY<0?1.1:.9),e.clientX,e.clientY);
-},{passive:false});
-
-/* =========================
-   BACKUP AND RESTORE
-========================= */
-
-function blobToDataURL(blob) {
-  return new Promise((resolve,reject)=>{
-    const reader=new FileReader();
-    reader.onload=()=>resolve(reader.result);
-    reader.onerror=()=>reject(reader.error);
-    reader.readAsDataURL(blob);
-  });
-}
-
-function dataURLToBlob(data) {
-  const parts=data.split(",");
-  const mime=(parts[0].match(/:(.*?);/)||[])[1]||"application/octet-stream";
-  const raw=atob(parts[1]);
-  const arr=new Uint8Array(raw.length);
-
-  for (let i=0;i<raw.length;i++) arr[i]=raw.charCodeAt(i);
-
-  return new Blob([arr],{type:mime});
-}
-
-async function downloadBackup() {
-  saveEditor();
-  saveWorkspaceContent();
-
-  const backup=JSON.parse(JSON.stringify(db));
-  backup.assets=[];
-
-  try {
-    const ids=new Set();
-
-    walkAllPages().forEach(page=>{
-      (page.objects||[]).forEach(obj=>{
-        if (obj.assetId) ids.add(obj.assetId);
-      });
+        renderTree();
+        openPage(notebook.children[0].children[0].id);
+        saveNow();
     });
-
-    for (const id of ids) {
-      const record=await getAsset(id);
-      if (!record) continue;
-
-      backup.assets.push({
-        id,
-        name:record.name,
-        type:record.type,
-        data:await blobToDataURL(record.blob)
-      });
-    }
-
-  } catch (error) {
-    console.error(error);
-    toast("कुछ फाइलें Backup में शामिल नहीं हो सकीं।");
-  }
-
-  const blob=new Blob([JSON.stringify(backup)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-
-  a.href=url;
-  a.download="OneNote-Infinity-Backup.json";
-  a.click();
-
-  setTimeout(()=>URL.revokeObjectURL(url),3000);
-
-  toast("Backup downloaded.");
 }
 
-function openBackup() { $("backupInput").click(); }
+function addSectionTo(notebookId) {
+    const notebook = findNode(notebookId);
 
-$("backupInput").addEventListener("change",async e=>{
-  const file=e.target.files[0];
-  if (!file) return;
+    if (!notebook || notebook.type !== "notebook") return;
 
-  try {
-    if (file.size>100*1024*1024) throw new Error("Backup too large");
+    showDialog("New Section", "Section name", name => {
+        const section = createSection(name);
 
-    const imported=JSON.parse(await file.text());
+        notebook.children.push(section);
+        notebook.expanded = true;
 
-    if (!imported || !Array.isArray(imported.notebooks)) {
-      throw new Error("Invalid backup");
+        renderTree();
+        openPage(section.children[0].id);
+        saveNow();
+    });
+}
+
+function addPageTo(sectionId) {
+    const section = findNode(sectionId);
+
+    if (!section || section.type !== "section") return;
+
+    showDialog("New Page", "Page name", name => {
+        const page = createPage(name);
+
+        section.children.push(page);
+        section.expanded = true;
+
+        renderTree();
+        openPage(page.id);
+        saveNow();
+    });
+}
+
+function renameNode(node) {
+    showDialog("Rename", "New name", name => {
+        node.title = name;
+
+        if (node.id === activePageId) {
+            pageTitle.value = name;
+        }
+
+        renderTree();
+        saveNow();
+    });
+}
+
+function deleteNode(node) {
+    if (!confirm(`"${node.title}" को हटाना चाहते हैं?`)) return;
+
+    if (node.type === "notebook") {
+        state.notebooks = state.notebooks.filter(
+            item => item.id !== node.id
+        );
+    } else if (node.type === "section") {
+        for (const notebook of state.notebooks) {
+            notebook.children = notebook.children.filter(
+                item => item.id !== node.id
+            );
+        }
+    } else {
+        const section = getParentSection(node.id);
+
+        if (section) {
+            section.children = section.children.filter(
+                item => item.id !== node.id
+            );
+        }
     }
 
-    if (!confirm("क्या मौजूदा Workspace को इस Backup से बदलना है?")) return;
-
-    db=imported;
-
-    for (const asset of imported.assets||[]) {
-      await putAsset(
-        asset.id,
-        dataURLToBlob(asset.data),
-        asset.name,
-        asset.type
-      );
+    if (!allPages().length) {
+        state = defaultState();
     }
 
-    safeStore();
-
-    const page=db.notebooks.map(firstPage).find(Boolean);
-
-    if (page) openPage(page.id);
-    else clearEditor();
+    if (!allPages().some(page => page.id === activePageId)) {
+        activePageId = allPages()[0].id;
+    }
 
     renderTree();
-    toast("Backup restored.");
-
-  } catch (error) {
-    console.error(error);
-    toast("Backup फ़ाइल गलत है या Restore नहीं हो सका।");
-  }
-
-  e.target.value="";
-});
-
-/* =========================
-   AUTO SAVE EVENTS
-========================= */
-
-document.addEventListener("visibilitychange",()=>{
-  if (document.hidden) {
-    saveEditor();
-    saveWorkspaceContent();
-  }
-});
-
-window.addEventListener("pagehide",()=>{
-  saveEditor();
-  saveWorkspaceContent();
-});
-
-function initialize() {
-  if (localStorage.getItem("onp_dark")==="1") {
-    document.body.classList.add("dark");
-  }
-
-  loadDB();
-  renderTree();
-
-  const page=db.notebooks.map(firstPage).find(Boolean);
-
-  if (page) openPage(page.id);
-  else clearEditor();
-
-  $("saveState").textContent="✓ Workspace loaded";
+    openPage(activePageId);
+    saveNow();
 }
 
-initialize();
+document.getElementById("newNotebookBtn").onclick = addNotebook;
+document.getElementById("addNotebookBtn").onclick = addNotebook;
+
+document.getElementById("newSectionBtn").onclick = () => {
+    const page = activePage();
+    const section = page ? getParentSection(page.id) : null;
+
+    let notebook = null;
+
+    if (section) {
+        notebook = state.notebooks.find(item =>
+            item.children.some(child => child.id === section.id)
+        );
+    }
+
+    if (!notebook) {
+        notebook = state.notebooks[0];
+    }
+
+    if (notebook) addSectionTo(notebook.id);
+};
+
+document.getElementById("newPageBtn").onclick = () => {
+    const page = activePage();
+    const section = page ? getParentSection(page.id) : null;
+
+    if (section) {
+        addPageTo(section.id);
+    } else {
+        const notebook = state.notebooks[0];
+
+        if (!notebook) return;
+
+        const newSection = createSection("General");
+        notebook.children.push(newSection);
+
+        addPageTo(newSection.id);
+    }
+};
+
+/* =========================================================
+   OPEN PAGE
+   ========================================================= */
+
+function openPage(pageId) {
+    saveCurrentPage();
+
+    const page = allPages().find(item => item.id === pageId);
+
+    if (!page) return;
+
+    activePageId = pageId;
+    state.lastPageId = pageId;
+
+    pageTitle.value = page.title || "";
+    mainWritingBody.innerHTML = page.content || "";
+
+    renderObjects(page);
+    renderTree();
+
+    setStatus("Ready");
+    updateWorkspaceSize();
+}
+
+pageTitle.addEventListener("input", () => {
+    const page = activePage();
+
+    if (page) page.title = pageTitle.value;
+
+    renderTree();
+    scheduleSave();
+});
+
+mainWritingBody.addEventListener("input", () => {
+    autoGrowMainWriting();
+    scheduleSave();
+});
+
+mainWritingBody.addEventListener("paste", () => {
+    setTimeout(() => {
+        autoGrowMainWriting();
+        scheduleSave();
+    }, 100);
+});
+
+function autoGrowMainWriting() {
+    mainWritingBody.style.height = "auto";
+
+    const contentHeight = Math.max(
+        480,
+        mainWritingBody.scrollHeight + 10
+    );
+
+    mainWritingBody.style.height = contentHeight + "px";
+
+    mainWritingArea.style.height =
+        (contentHeight + 2) + "px";
+
+    updateWorkspaceSize();
+}
+
+/* =========================================================
+   WORKSPACE SIZE
+   ========================================================= */
+
+function updateWorkspaceSize() {
+    let maxRight = workspaceScroll.clientWidth || 1200;
+    let maxBottom = workspaceScroll.clientHeight || 800;
+
+    workspace.querySelectorAll(".object, .main-writing, .mindmap")
+        .forEach(el => {
+            const left = parseFloat(el.style.left) || 0;
+            const top = parseFloat(el.style.top) || 0;
+
+            maxRight = Math.max(maxRight, left + el.offsetWidth + 100);
+            maxBottom = Math.max(maxBottom, top + el.offsetHeight + 100);
+        });
+
+    workspace.style.width = Math.max(
+        maxRight,
+        workspaceScroll.clientWidth
+    ) + "px";
+
+    workspace.style.height = Math.max(
+        maxBottom,
+        workspaceScroll.clientHeight
+    ) + "px";
+}
+
+/* =========================================================
+   OBJECT CREATION
+   ========================================================= */
+
+function createObjectElement(obj) {
+    const el = document.createElement("div");
+
+    el.className = "object " + obj.type + "-object";
+    el.dataset.objectId = obj.id;
+
+    el.style.left = (obj.x || 100) + "px";
+    el.style.top = (obj.y || 100) + "px";
+
+    if (obj.w) el.style.width = obj.w + "px";
+
+    if (obj.type === "text" && obj.h) {
+        el.style.height = obj.h + "px";
+    }
+
+    if (obj.type === "image" && obj.h) {
+        el.style.height = obj.h + "px";
+    }
+
+    if (obj.type === "pdf") {
+        el.style.height = "auto";
+    }
+
+    const header = document.createElement("div");
+    header.className = "object-header";
+
+    const title = document.createElement("span");
+    title.className = "object-title";
+
+    title.textContent = obj.type === "text"
+        ? "Text Panel"
+        : obj.type === "image"
+            ? (obj.name || "Image")
+            : (obj.name || "PDF Document");
+
+    const close = document.createElement("button");
+    close.className = "object-close";
+    close.type = "button";
+    close.textContent = "×";
+    close.title = "Remove object";
+
+    header.append(title, close);
+    el.appendChild(header);
+
+    const body = document.createElement("div");
+    body.className = "object-body";
+
+    el.appendChild(body);
+
+    if (obj.type === "text") {
+        const textBody = document.createElement("div");
+
+        textBody.className = "text-body";
+        textBody.contentEditable = "true";
+        textBody.spellcheck = true;
+        textBody.innerHTML = obj.html || "";
+
+        body.appendChild(textBody);
+
+        if (obj.userWidth) {
+            el.dataset.userWidth = "1";
+        }
+
+        if (obj.userHeight) {
+            el.dataset.userHeight = "1";
+        }
+
+        textBody.addEventListener("input", () => {
+            growTextObject(el, false);
+            scheduleSave();
+        });
+
+        textBody.addEventListener("paste", () => {
+            setTimeout(() => {
+                growTextObject(el, false);
+                scheduleSave();
+            }, 100);
+        });
+
+        textBody.addEventListener("keydown", e => {
+            if (e.key === "Escape") textBody.blur();
+        });
+
+        requestAnimationFrame(() => growTextObject(el, true));
+
+    } else if (obj.type === "image") {
+        const img = document.createElement("img");
+
+        img.alt = obj.name || "Uploaded image";
+        img.src = "";
+
+        body.appendChild(img);
+
+        loadImageObject(obj, img);
+
+    } else if (obj.type === "pdf") {
+        const pages = document.createElement("div");
+        pages.className = "pdf-pages";
+
+        body.appendChild(pages);
+
+        loadPdfObject(obj, el, pages);
+    }
+
+    close.addEventListener("click", async () => {
+        if (!confirm("इस पैनल को हटाना चाहते हैं?")) return;
+
+        const page = activePage();
+
+        if (page) {
+            page.objects = page.objects.filter(item => item.id !== obj.id);
+        }
+
+        el.remove();
+        scheduleSave();
+        updateWorkspaceSize();
+    });
+
+    makeDraggable(el, header);
+
+    if (obj.type !== "pdf") {
+        makeResizable(el);
+    } else {
+        makePdfResizable(el, obj);
+    }
+
+    return el;
+}
+
+/* =========================================================
+   TEXT PANEL: AUTO-GROW TO A4 WIDTH
+   ========================================================= */
+
+function growTextObject(el, initial) {
+    const body = el.querySelector(".text-body");
+
+    if (!body) return;
+
+    const hasContent = body.textContent.trim().length > 0 ||
+        body.querySelector("img, table, video, iframe");
+
+    /*
+      Start small.
+      When user writes/pastes content, expand to A4-like width.
+      If the user manually resizes the panel, preserve their choice.
+    */
+
+    if (hasContent && el.dataset.userWidth !== "1") {
+        el.style.width = "794px";
+    }
+
+    if (!hasContent && initial && !el.dataset.userWidth) {
+        el.style.width = "240px";
+    }
+
+    if (el.dataset.userHeight !== "1") {
+        body.style.height = "auto";
+
+        const headerHeight = 34;
+        const bodyHeight = Math.max(65, body.scrollHeight + 25);
+
+        el.style.height = (headerHeight + bodyHeight) + "px";
+
+        body.style.height = "calc(100% - 34px)";
+    }
+
+    updateWorkspaceSize();
+}
+
+function makeResizable(el) {
+    let oldWidth = el.offsetWidth;
+    let oldHeight = el.offsetHeight;
+
+    if (typeof ResizeObserver !== "undefined") {
+        const observer = new ResizeObserver(() => {
+            const width = el.offsetWidth;
+            const height = el.offsetHeight;
+
+            /*
+              ResizeObserver can run during initial layout.
+              Only mark a manual resize when a resize is detected
+              while the user is actively resizing.
+            */
+
+            if (el.dataset.userResizing === "1") {
+                if (width !== oldWidth) {
+                    el.dataset.userWidth = "1";
+                }
+
+                if (height !== oldHeight) {
+                    el.dataset.userHeight = "1";
+                }
+            }
+
+            oldWidth = width;
+            oldHeight = height;
+        });
+
+        observer.observe(el);
+    }
+
+    el.addEventListener("pointerdown", e => {
+        const rect = el.getBoundingClientRect();
+
+        const nearRight = rect.right - e.clientX < 25;
+        const nearBottom = rect.bottom - e.clientY < 25;
+
+        if (nearRight || nearBottom) {
+            el.dataset.userResizing = "1";
+        }
+    });
+
+    window.addEventListener("pointerup", () => {
+        if (el.dataset.userResizing === "1") {
+            delete el.dataset.userResizing;
+            scheduleSave();
+        }
+    });
+}
+
+/* =========================================================
+   DRAG OBJECTS
+   ========================================================= */
+
+function makeDraggable(el, handle) {
+    let dragging = false;
+    let startX = 0;
+    let startY = 0;
+    let originalLeft = 0;
+    let originalTop = 0;
+
+    handle.addEventListener("pointerdown", e => {
+        if (e.target.closest(".object-close")) return;
+
+        /*
+          Do not start dragging if the pointer is near the resize
+          edge of a resizable panel.
+        */
+
+        const rect = el.getBoundingClientRect();
+
+        if (
+            e.clientX > rect.right - 18 ||
+            e.clientY > rect.bottom - 18
+        ) {
+            return;
+        }
+
+        dragging = true;
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        originalLeft = parseFloat(el.style.left) || 0;
+        originalTop = parseFloat(el.style.top) || 0;
+
+        handle.setPointerCapture(e.pointerId);
+
+        e.preventDefault();
+    });
+
+    handle.addEventListener("pointermove", e => {
+        if (!dragging) return;
+
+        const scale = 1;
+
+        const dx = (e.clientX - startX) / scale;
+        const dy = (e.clientY - startY) / scale;
+
+        el.style.left = Math.max(0, originalLeft + dx) + "px";
+        el.style.top = Math.max(0, originalTop + dy) + "px";
+
+        updateWorkspaceSize();
+    });
+
+    const stopDragging = () => {
+        if (!dragging) return;
+
+        dragging = false;
+
+        scheduleSave();
+        updateWorkspaceSize();
+    };
+
+    handle.addEventListener("pointerup", stopDragging);
+    handle.addEventListener("pointercancel", stopDragging);
+}
+
+/* =========================================================
+   IMAGE OBJECT
+   ========================================================= */
+
+async function loadImageObject(obj, img) {
+    try {
+        const record = await getAsset(obj.assetId);
+
+        if (!record || !record.blob) {
+            img.alt = "Image file not found. Restore your backup.";
+            return;
+        }
+
+        const url = URL.createObjectURL(record.blob);
+
+        img.src = url;
+
+        img.onload = () => {
+            updateWorkspaceSize();
+        };
+
+    } catch (error) {
+        console.error("Image load error:", error);
+    }
+}
+
+/* =========================================================
+   PDF OBJECT: RENDER EVERY PAGE
+   ========================================================= */
+
+async function loadPdfObject(obj, el, pagesContainer) {
+    pagesContainer.innerHTML =
+        '<div class="pdf-message">PDF लोड हो रहा है…</div>';
+
+    try {
+        if (!window.pdfjsLib) {
+            throw new Error("PDF.js library could not load");
+        }
+
+        const record = await getAsset(obj.assetId);
+
+        if (!record || !record.blob) {
+            throw new Error("PDF file not found");
+        }
+
+        const buffer = await record.blob.arrayBuffer();
+
+        const pdf = await pdfjsLib.getDocument({
+            data: new Uint8Array(buffer)
+        }).promise;
+
+        pagesContainer.innerHTML = "";
+
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+            const pdfPage = await pdf.getPage(pageNumber);
+
+            /*
+              Fit page to the PDF object's available width.
+              Do not create an internal scrolling panel.
+            */
+
+            const originalViewport = pdfPage.getViewport({ scale: 1 });
+
+            const targetWidth = Math.max(
+                240,
+                el.clientWidth - 2
+            );
+
+            const scale = targetWidth / originalViewport.width;
+
+            const viewport = pdfPage.getViewport({ scale });
+
+            const canvas = document.createElement("canvas");
+            canvas.className = "pdf-canvas";
+
+            const ctx = canvas.getContext("2d", {
+                alpha: false
+            });
+
+            const outputScale = Math.min(
+                window.devicePixelRatio || 1,
+                2
+            );
+
+            canvas.width = Math.floor(
+                viewport.width * outputScale
+            );
+
+            canvas.height = Math.floor(
+                viewport.height * outputScale
+            );
+
+            canvas.style.width = "100%";
+            canvas.style.height = "auto";
+
+            const pageWrap = document.createElement("div");
+            pageWrap.className = "pdf-page";
+
+            pageWrap.appendChild(canvas);
+            pagesContainer.appendChild(pageWrap);
+
+            ctx.setTransform(
+                outputScale,
+                0,
+                0,
+                outputScale,
+                0,
+                0
+            );
+
+            await pdfPage.render({
+                canvasContext: ctx,
+                viewport: viewport
+            }).promise;
+
+            /*
+              Page number indicator
+            */
+
+            const number = document.createElement("div");
+
+            number.style.cssText = [
+                "position:absolute",
+                "right:8px",
+                "bottom:8px",
+                "font-size:10px",
+                "color:#666",
+                "background:rgba(255,255,255,.9)",
+                "padding:3px 5px",
+                "border-radius:3px"
+            ].join(";");
+
+            number.textContent =
+                pageNumber + " / " + pdf.numPages;
+
+            pageWrap.appendChild(number);
+        }
+
+        /*
+          Let the object grow to the combined height of all pages.
+          The workspace itself provides normal page scrolling.
+        */
+
+        el.style.height = "auto";
+
+        pagesContainer.style.height = "auto";
+        pagesContainer.style.overflow = "visible";
+
+        updateWorkspaceSize();
+        scheduleSave();
+
+    } catch (error) {
+        console.error("PDF rendering error:", error);
+
+        pagesContainer.innerHTML = "";
+
+        const message = document.createElement("div");
+        message.className = "pdf-message";
+
+        message.textContent =
+            "PDF लोड नहीं हो पाया। फ़ाइल दोबारा अपलोड करके देखें। " +
+            "(" + error.message + ")";
+
+        pagesContainer.appendChild(message);
+    }
+}
+
+/*
+  PDF panel width changes:
+  Re-render all pages so they match the new width.
+*/
+
+function makePdfResizable(el, obj) {
+    let resizeTimer = null;
+    let lastWidth = 0;
+
+    const observer = new ResizeObserver(() => {
+        const width = el.clientWidth;
+
+        if (!width || Math.abs(width - lastWidth) < 8) return;
+
+        if (lastWidth === 0) {
+            lastWidth = width;
+            return;
+        }
+
+        lastWidth = width;
+
+        clearTimeout(resizeTimer);
+
+        resizeTimer = setTimeout(() => {
+            const container = el.querySelector(".pdf-pages");
+
+            if (container) {
+                loadPdfObject(obj, el, container);
+            }
+        }, 500);
+    });
+
+    observer.observe(el);
+}
+
+/* =========================================================
+   RENDER PAGE OBJECTS
+   ========================================================= */
+
+function renderObjects(page) {
+    workspace.querySelectorAll(".object, .mindmap").forEach(el => el.remove());
+
+    page.objects = page.objects || [];
+
+    for (const obj of page.objects) {
+        const el = createObjectElement(obj);
+        workspace.appendChild(el);
+    }
+
+    renderMindMap(page);
+
+    requestAnimationFrame(() => {
+        autoGrowMainWriting();
+        updateWorkspaceSize();
+    });
+}
+
+/* =========================================================
+   ADD TEXT PANEL
+   ========================================================= */
+
+function addTextObject() {
+    const page = activePage();
+
+    if (!page) return;
+
+    const obj = {
+        id: uid(),
+        type: "text",
+        title: "Text Panel",
+        x: 80 + (page.objects.length % 5) * 35,
+        y: 80 + (page.objects.length % 5) * 35,
+        w: 240,
+        h: 140,
+        html: "",
+        userWidth: false,
+        userHeight: false
+    };
+
+    page.objects.push(obj);
+
+    const el = createObjectElement(obj);
+    workspace.appendChild(el);
+
+    const body = el.querySelector(".text-body");
+
+    if (body) body.focus();
+
+    scheduleSave();
+    updateWorkspaceSize();
+}
+
+document.getElementById("addTextBtn").onclick = addTextObject;
+
+/*
+  Double-click on the blank workspace creates a small text panel.
+  On touch devices, use a quick double tap.
+*/
+
+workspace.addEventListener("dblclick", e => {
+    if (e.target.closest(".object, .main-writing, .mindmap")) return;
+
+    const rect = workspace.getBoundingClientRect();
+
+    const obj = {
+        id: uid(),
+        type: "text",
+        title: "Text Panel",
+        x: Math.max(0, e.clientX - rect.left),
+        y: Math.max(0, e.clientY - rect.top),
+        w: 240,
+        h: 140,
+        html: "",
+        userWidth: false,
+        userHeight: false
+    };
+
+    const page = activePage();
+
+    if (!page) return;
+
+    page.objects.push(obj);
+
+    const el = createObjectElement(obj);
+    workspace.appendChild(el);
+
+    const body = el.querySelector(".text-body");
+
+    if (body) body.focus();
+
+    scheduleSave();
+});
+
+/* =========================================================
+   ADD IMAGE
+   ========================================================= */
+
+document.getElementById("addImageBtn").onclick = () => {
+    document.getElementById("imageInput").click();
+};
+
+document.getElementById("imageInput").addEventListener("change", async e => {
+    const file = e.target.files[0];
+
+    e.target.value = "";
+
+    if (!file) return;
+
+    const page = activePage();
+
+    if (!page) return;
+
+    try {
+        const assetId = uid();
+
+        await putAsset(assetId, file, file.name, file.type);
+
+        const obj = {
+            id: uid(),
+            type: "image",
+            name: file.name,
+            assetId,
+            x: 120,
+            y: 120,
+            w: 340,
+            h: 250
+        };
+
+        page.objects.push(obj);
+
+        workspace.appendChild(createObjectElement(obj));
+
+        saveNow();
+        updateWorkspaceSize();
+
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            "इमेज सेव नहीं हो सकी। कृपया दूसरी इमेज या छोटी फ़ाइल आजमाएँ।"
+        );
+    }
+});
+
+/* =========================================================
+   ADD PDF
+   ========================================================= */
+
+document.getElementById("addPdfBtn").onclick = () => {
+    document.getElementById("pdfInput").click();
+};
+
+document.getElementById("pdfInput").addEventListener("change", async e => {
+    const file = e.target.files[0];
+
+    e.target.value = "";
+
+    if (!file) return;
+
+    const page = activePage();
+
+    if (!page) return;
+
+    try {
+        const assetId = uid();
+
+        await putAsset(assetId, file, file.name, "application/pdf");
+
+        const obj = {
+            id: uid(),
+            type: "pdf",
+            name: file.name,
+            assetId,
+            x: 100,
+            y: 100,
+            w: 794,
+            h: 500
+        };
+
+        page.objects.push(obj);
+
+        const el = createObjectElement(obj);
+
+        workspace.appendChild(el);
+
+        updateWorkspaceSize();
+        saveNow();
+
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            "PDF सेव नहीं हो सका। स्टोरेज की जगह जाँचें और फिर कोशिश करें।"
+        );
+    }
+});
+
+/* =========================================================
+   RICH TEXT TOOLBAR
+   ========================================================= */
+
+function formatCommand(command) {
+    mainWritingBody.focus();
+
+    try {
+        document.execCommand(command, false, null);
+    } catch (error) {
+        console.warn(error);
+    }
+
+    autoGrowMainWriting();
+    scheduleSave();
+}
+
+document.getElementById("boldBtn").onclick =
+    () => formatCommand("bold");
+
+document.getElementById("italicBtn").onclick =
+    () => formatCommand("italic");
+
+document.getElementById("underlineBtn").onclick =
+    () => formatCommand("underline");
+
+document.getElementById("bulletBtn").onclick =
+    () => formatCommand("insertUnorderedList");
+
+document.getElementById("undoBtn").onclick = () => {
+    mainWritingBody.focus();
+
+    try {
+        document.execCommand("undo", false, null);
+    } catch (error) {
+        console.warn(error);
+    }
+
+    autoGrowMainWriting();
+    scheduleSave();
+};
+
+/* =========================================================
+   MIND MAP
+   ========================================================= */
+
+function renderMindMap(page) {
+    const old = workspace.querySelector(".mindmap");
+
+    if (old) old.remove();
+
+    if (!page || !page.mindmap || !page.mindmap.length) return;
+
+    const box = document.createElement("div");
+
+    box.className = "mindmap";
+    box.style.left = "900px";
+    box.style.top = "30px";
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Mind Map";
+
+    const input = document.createElement("input");
+    input.placeholder = "Type a new idea and press Enter";
+
+    const list = document.createElement("div");
+    list.className = "mindmap-list";
+
+    function refresh() {
+        list.innerHTML = "";
+
+        page.mindmap.forEach((text, index) => {
+            const node = document.createElement("div");
+
+            node.className = "mind-node";
+            node.textContent = text;
+            node.title = "Tap to delete";
+
+            node.onclick = () => {
+                if (!confirm("इस Mind Map आइडिया को हटाएँ?")) return;
+
+                page.mindmap.splice(index, 1);
+
+                if (!page.mindmap.length) {
+                    box.remove();
+                } else {
+                    refresh();
+                }
+
+                scheduleSave();
+            };
+
+            list.appendChild(node);
+        });
+
+        updateWorkspaceSize();
+    }
+
+    input.addEventListener("keydown", e => {
+        if (e.key !== "Enter") return;
+
+        const value = input.value.trim();
+
+        if (!value) return;
+
+        page.mindmap.push(value);
+
+        input.value = "";
+
+        refresh();
+        scheduleSave();
+    });
+
+    box.append(heading, input, list);
+
+    workspace.appendChild(box);
+
+    refresh();
+}
+
+document.getElementById("addMindBtn").onclick = () => {
+    const page = activePage();
+
+    if (!page) return;
+
+    if (!page.mindmap) page.mindmap = [];
+
+    const existing = workspace.querySelector(".mindmap");
+
+    if (existing) {
+        existing.remove();
+        scheduleSave();
+        return;
+    }
+
+    if (!page.mindmap.length) {
+        page.mindmap.push("Main Idea");
+    }
+
+    renderMindMap(page);
+    scheduleSave();
+};
+
+/* =========================================================
+   BACKUP
+   ========================================================= */
+
+function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const result = String(reader.result);
+            resolve(result.split(",")[1]);
+        };
+
+        reader.onerror = () => reject(reader.error);
+
+        reader.readAsDataURL(blob);
+    });
+}
+
+function base64ToBlob(base64, type) {
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+
+    for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+    }
+
+    return new Blob([bytes], {
+        type: type || "application/octet-stream"
+    });
+}
+
+async function exportBackup() {
+    saveNow();
+
+    try {
+        const backup = {
+            app: "OneNote Infinity Pro",
+            version: 1,
+            exportedAt: new Date().toISOString(),
+            state,
+            assets: []
+        };
+
+        const ids = new Set();
+
+        for (const page of allPages()) {
+            for (const obj of page.objects || []) {
+                if (obj.assetId) ids.add(obj.assetId);
+            }
+        }
+
+        for (const id of ids) {
+            const record = await getAsset(id);
+
+            if (!record || !record.blob) continue;
+
+            backup.assets.push({
+                id: record.id,
+                name: record.name,
+                type: record.type,
+                base64: await blobToBase64(record.blob)
+            });
+        }
+
+        const blob = new Blob(
+            [JSON.stringify(backup)],
+            { type: "application/json" }
+        );
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download =
+            "onenote-infinity-backup-" +
+            new Date().toISOString().slice(0, 10) +
+            ".json";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+
+        setStatus("Backup downloaded");
+
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            "Backup नहीं बन पाया। बड़ी PDF फ़ाइलों के लिए पर्याप्त स्टोरेज जाँचें।"
+        );
+    }
+}
+
+document.getElementById("backupBtn").onclick = exportBackup;
+
+/* =========================================================
+   RESTORE
+   ========================================================= */
+
+document.getElementById("restoreBtn").onclick = () => {
+    document.getElementById("restoreInput").click();
+};
+
+document.getElementById("restoreInput").addEventListener("change", async e => {
+    const file = e.target.files[0];
+
+    e.target.value = "";
+
+    if (!file) return;
+
+    if (!confirm(
+        "Restore करने पर वर्तमान नोटबुक डेटा बदल सकता है। " +
+        "क्या आपने वर्तमान डेटा का बैकअप ले लिया है?"
+    )) {
+        return;
+    }
+
+    try {
+        const backup = JSON.parse(await file.text());
+
+        if (
+            !backup ||
+            !backup.state ||
+            !Array.isArray(backup.state.notebooks)
+        ) {
+            throw new Error("Invalid backup file");
+        }
+
+        for (const asset of backup.assets || []) {
+            const blob = base64ToBlob(asset.base64, asset.type);
+
+            await putAsset(
+                asset.id,
+                blob,
+                asset.name,
+                asset.type
+            );
+        }
+
+        state = backup.state;
+
+        if (!allPages().length) {
+            state = defaultState();
+        }
+
+        activePageId = allPages().some(
+            page => page.id === state.lastPageId
+        )
+            ? state.lastPageId
+            : allPages()[0].id;
+
+        persistState();
+        renderTree();
+        openPage(activePageId);
+
+        alert("Backup सफलतापूर्वक Restore हो गया।");
+
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            "Backup Restore नहीं हो सका। कृपया सही JSON backup file चुनें।"
+        );
+    }
+});
+
+/* =========================================================
+   PAGE LIFECYCLE
+   ========================================================= */
+
+window.addEventListener("beforeunload", () => {
+    try {
+        saveCurrentPage();
+        localStorage.setItem(META_KEY, JSON.stringify(state));
+    } catch (error) {
+        console.warn(error);
+    }
+});
+
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+        saveNow();
+    }
+});
+
+window.addEventListener("resize", () => {
+    updateWorkspaceSize();
+});
+
+/* =========================================================
+   START APPLICATION
+   ========================================================= */
+
+async function startApp() {
+    try {
+        await openAssetDB();
+    } catch (error) {
+        console.warn(
+            "IndexedDB unavailable. Text notes may still work.",
+            error
+        );
+    }
+
+    loadState();
+
+    renderTree();
+    openPage(activePageId);
+
+    setStatus("Ready");
+}
+
+startApp();
+
 </script>
+
 </body>
 </html>
