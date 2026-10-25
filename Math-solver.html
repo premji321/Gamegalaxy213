@@ -3,54 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#7719aa">
+<meta name="theme-color" content="#101827">
 
-<title>OneNote Pro — Smart Workspace</title>
+<title>Current Affairs Hub | Prem Vikash Sir</title>
 
 <style>
 :root {
-    --primary: #7719aa;
-    --primary-light: #f1e6fa;
-    --bg: #ffffff;
-    --panel: #f7f6f9;
-    --surface: #ffffff;
-    --surface2: #f0eef4;
-    --text: #25232b;
-    --muted: #777481;
-    --border: #e4e0e9;
-    --hover: #ece8f2;
-    --grid: #e8e1f0;
-    --sidebar-width: 210px;
-    --section-width: 190px;
-    --page-width: 200px;
-}
-
-body.dark {
-    --primary: #c38aee;
-    --primary-light: #392647;
-    --bg: #201e24;
-    --panel: #29272f;
-    --surface: #242229;
-    --surface2: #34313b;
-    --text: #f4eff9;
-    --muted: #b6afc1;
-    --border: #45414d;
-    --hover: #3a3642;
-    --grid: #413a49;
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --text: #172033;
+    --muted: #68758b;
+    --primary: #4f46e5;
+    --border: #e4e9f2;
+    --sidebar: #101827;
+    --green: #16a34a;
+    --shadow: 0 5px 20px rgba(25, 35, 60, .06);
 }
 
 * {
     box-sizing: border-box;
 }
 
-html, body {
+body {
     margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
     background: var(--bg);
+    color: var(--text);
 }
 
 button, input, select, textarea {
@@ -61,830 +39,617 @@ button {
     cursor: pointer;
 }
 
-button:focus-visible,
-input:focus-visible,
-select:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-}
-
-button:disabled {
-    opacity: .45;
-    cursor: not-allowed;
-}
-
-/* ================================
-   APPLICATION
-================================ */
-
 .app {
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    min-height: 100vh;
 }
 
-/* ================================
-   HEADER
-================================ */
+/* SIDEBAR */
 
-.topbar {
-    height: 56px;
-    min-height: 56px;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 0 12px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    z-index: 30;
+.sidebar {
+    background: var(--sidebar);
+    color: white;
+    padding: 22px 15px;
 }
 
 .brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 17px;
+    font-size: 22px;
     font-weight: 800;
-    color: var(--primary);
-    white-space: nowrap;
+    padding: 8px 10px 4px;
 }
 
-.logo {
-    width: 31px;
-    height: 31px;
-    border-radius: 7px;
-    display: grid;
-    place-items: center;
-    background: var(--primary);
-    color: white;
-    font-weight: 800;
+.brand span {
+    color: #a5b4fc;
 }
 
-.search {
-    flex: 1;
-    max-width: 420px;
-    min-width: 50px;
-    margin-left: 10px;
+.brand-sub {
+    color: #aeb9ca;
+    font-size: 12px;
+    padding: 0 10px 22px;
 }
 
-.search input {
+.nav-heading {
+    color: #8c9ab0;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.4px;
+    padding: 17px 10px 8px;
+}
+
+.nav-btn {
     width: 100%;
-    height: 34px;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    background: var(--panel);
-    color: var(--text);
-    padding: 0 10px;
+    border: 0;
+    color: #d7deeb;
+    background: transparent;
+    text-align: left;
+    padding: 12px;
+    border-radius: 9px;
+    margin: 2px 0;
+    font-size: 14px;
 }
 
-.header-actions {
+.nav-btn:hover,
+.nav-btn.active {
+    background: #29364d;
+    color: white;
+}
+
+.sidebar-footer {
+    margin: 30px 8px 0;
+    padding-top: 20px;
+    border-top: 1px solid #344052;
+    color: #aeb9ca;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* MAIN */
+
+.main {
+    min-width: 0;
+}
+
+.topbar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 17px 26px;
     display: flex;
-    gap: 5px;
-    margin-left: auto;
     align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.topbar h2 {
+    font-size: 19px;
+    margin: 0;
+}
+
+.topbar p {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 5px 0 0;
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
 }
 
 .btn {
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 7px 10px;
-    background: var(--surface);
+    background: white;
     color: var(--text);
-    white-space: nowrap;
-}
-
-.btn:hover {
-    background: var(--hover);
-}
-
-.btn.primary {
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-}
-
-.btn.active {
-    color: var(--primary);
-    background: var(--primary-light);
-    border-color: var(--primary);
-}
-
-.btn.compact {
-    padding: 6px 8px;
-}
-
-/* ================================
-   WORKSPACE LAYOUT
-================================ */
-
-.workspace {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    position: relative;
-    overflow: hidden;
-}
-
-.sidebar,
-.section-panel,
-.page-panel {
-    flex-shrink: 0;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    transition:
-        width .2s ease,
-        min-width .2s ease,
-        opacity .15s ease;
-}
-
-.sidebar {
-    width: var(--sidebar-width);
-}
-
-.section-panel {
-    width: var(--section-width);
-}
-
-.page-panel {
-    width: var(--page-width);
-}
-
-/* Independent collapse states */
-
-body.hide-notebooks .sidebar {
-    width: 0 !important;
-    min-width: 0 !important;
-    border-right: 0;
-    opacity: 0;
-    pointer-events: none;
-}
-
-body.hide-sections .section-panel {
-    width: 0 !important;
-    min-width: 0 !important;
-    border-right: 0;
-    opacity: 0;
-    pointer-events: none;
-}
-
-body.hide-pages .page-panel {
-    width: 0 !important;
-    min-width: 0 !important;
-    border-right: 0;
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* ================================
-   PANEL HEADINGS
-================================ */
-
-.panel-heading {
-    min-height: 43px;
-    padding: 6px 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 4px;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .4px;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-}
-
-.panel-heading span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.panel-heading-actions {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.icon-btn {
-    min-width: 27px;
-    height: 27px;
-    padding: 3px 6px;
-    border: none;
-    border-radius: 5px;
-    background: transparent;
-    color: var(--text);
-}
-
-.icon-btn:hover {
-    background: var(--hover);
-}
-
-.list {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 6px;
-}
-
-.list-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 9px 7px;
-    border-radius: 6px;
-    margin-bottom: 3px;
-    cursor: pointer;
-    min-width: 0;
-}
-
-.list-item:hover {
-    background: var(--hover);
-}
-
-.list-item.active {
-    background: var(--primary-light);
-    color: var(--primary);
-    font-weight: 650;
-}
-
-.list-item .name {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 12px;
-}
-
-.page-item {
-    padding: 9px;
-    border-radius: 6px;
-    margin-bottom: 5px;
-    cursor: pointer;
-    border: 1px solid transparent;
-}
-
-.page-item:hover {
-    background: var(--hover);
-}
-
-.page-item.active {
-    background: var(--primary-light);
-    border-color: var(--primary);
-}
-
-.page-item .name {
-    font-size: 12px;
-    font-weight: 700;
-    overflow-wrap: anywhere;
-}
-
-.page-item .preview {
-    margin-top: 5px;
-    font-size: 10px;
-    line-height: 1.4;
-    color: var(--muted);
-    overflow-wrap: anywhere;
-}
-
-/* ================================
-   MAIN EDITOR
-================================ */
-
-.editor-area {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: var(--surface);
-}
-
-.editor-header {
-    height: 43px;
-    min-height: 43px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 0 10px;
-    border-bottom: 1px solid var(--border);
-}
-
-.breadcrumb {
-    min-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.save-status {
-    font-size: 10px;
-    color: var(--muted);
-    white-space: nowrap;
-}
-
-.tabs {
-    display: flex;
-    gap: 4px;
-    padding: 7px 9px;
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-}
-
-.tab {
-    border: 1px solid transparent;
-    border-radius: 6px;
-    padding: 7px 10px;
-    color: var(--text);
-    background: transparent;
-    white-space: nowrap;
-    font-size: 12px;
-}
-
-.tab:hover {
-    background: var(--hover);
-}
-
-.tab.active {
-    background: var(--primary-light);
-    color: var(--primary);
-    border-color: var(--primary);
-    font-weight: 700;
-}
-
-.toolstrip {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 4px;
-    padding: 7px 9px;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-}
-
-.toolstrip select,
-.toolstrip input[type="color"] {
-    height: 30px;
-    max-width: 115px;
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    background: var(--surface);
-    color: var(--text);
-}
-
-.toolstrip input[type="color"] {
-    width: 33px;
-    padding: 2px;
-}
-
-.tool-btn {
-    padding: 6px 9px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    background: transparent;
-    color: var(--text);
-}
-
-.tool-btn:hover {
-    background: var(--hover);
-}
-
-/* ================================
-   NOTES
-================================ */
-
-.note-scroll {
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-    padding: 25px 30px 50px;
-}
-
-.note-container {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.page-title {
-    width: 100%;
-    display: block;
-    resize: none;
-    overflow: hidden;
-    border: none;
-    outline: none;
-    padding: 4px 0 13px;
-    font-size: 28px;
-    font-weight: 750;
-    line-height: 1.3;
-    color: var(--text);
-    background: transparent;
-}
-
-.page-meta {
-    color: var(--muted);
-    font-size: 11px;
-    padding-bottom: 15px;
-    margin-bottom: 18px;
-    border-bottom: 1px solid var(--border);
-}
-
-.note-editor {
-    min-height: 500px;
-    outline: none;
-    font-size: 16px;
-    line-height: 1.85;
-    overflow-wrap: anywhere;
-}
-
-.note-editor:empty::before {
-    content: "Start writing your notes here...";
-    color: var(--muted);
-}
-
-.note-editor img {
-    max-width: 100%;
-}
-
-.note-editor table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.note-editor th,
-.note-editor td {
-    border: 1px solid var(--border);
-    padding: 8px;
-}
-
-/* ================================
-   INFINITE CANVAS
-================================ */
-
-.canvas-shell,
-.mindmap-shell {
-    display: none;
-    flex: 1;
-    min-height: 0;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.canvas-toolbar,
-.mindmap-toolbar {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 5px;
-    padding: 7px 9px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-}
-
-.canvas-help {
-    color: var(--muted);
-    font-size: 10px;
-}
-
-.canvas-viewport,
-.mindmap-viewport {
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-    position: relative;
-    overscroll-behavior: contain;
-    background-color: var(--bg);
-    background-image:
-        radial-gradient(var(--grid) 1px, transparent 1px);
-    background-size: 22px 22px;
-}
-
-.canvas-world {
-    position: relative;
-    width: 5000px;
-    height: 5000px;
-}
-
-.canvas-card {
-    position: absolute;
-    width: 280px;
-    min-height: 150px;
-    border: 1px solid var(--border);
+    padding: 10px 13px;
     border-radius: 9px;
-    background: var(--surface);
-    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.btn-primary {
+    color: white;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.content {
+    max-width: 1450px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* HERO */
+
+.hero {
+    background: linear-gradient(120deg, #25256b, #4f46e5 65%, #818cf8);
+    color: white;
+    padding: 30px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
     overflow: hidden;
 }
 
-.canvas-card-header {
+.hero h1 {
+    font-size: clamp(25px, 3vw, 37px);
+    margin: 12px 0;
+}
+
+.hero p {
+    line-height: 1.7;
+    color: #e2e5ff;
+    max-width: 650px;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 7px 11px;
+    border: 1px solid #ffffff55;
+    background: #ffffff16;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.hero-icon {
+    font-size: 85px;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin: 22px 0;
+}
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+}
+
+.stat-icon {
+    font-size: 24px;
+}
+
+.stat-number {
+    font-size: 27px;
+    font-weight: 800;
+    margin: 12px 0 5px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* SECTION */
+
+.section {
+    margin: 27px 0;
+}
+
+.section-header {
     display: flex;
-    gap: 5px;
     align-items: center;
-    padding: 7px;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-    cursor: grab;
-    touch-action: none;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 
-.canvas-card-title {
-    flex: 1;
-    min-width: 0;
-    background: transparent;
+.section-header h2 {
+    font-size: 19px;
+    margin: 0;
+}
+
+.section-header p {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 5px 0 0;
+}
+
+/* CATEGORY GRID */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.category {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 17px;
+    text-align: left;
+    transition: .2s;
+}
+
+.category:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow);
+}
+
+.category .icon {
+    font-size: 27px;
+}
+
+.category h3 {
+    font-size: 14px;
+    margin: 12px 0 5px;
+}
+
+.category p {
+    color: var(--muted);
+    font-size: 11px;
+    margin: 0;
+}
+
+/* FILTERS */
+
+.filters {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.field {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 9px;
+    padding: 12px;
     color: var(--text);
-    border: none;
-}
-
-.canvas-card-body {
-    min-height: 100px;
-    padding: 9px;
     outline: none;
-    font-size: 13px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
 }
 
-/* ================================
-   MIND MAP
-================================ */
-
-.mindmap-world {
-    position: relative;
-    width: 4000px;
-    height: 3000px;
+.field:focus {
+    border-color: var(--primary);
 }
 
-.mindmap-lines {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
+input, select, textarea {
+    min-width: 0;
 }
 
-.mindmap-nodes {
-    position: absolute;
-    inset: 0;
+textarea {
+    resize: vertical;
 }
 
-.mind-node {
-    position: absolute;
-    width: 170px;
-    min-height: 62px;
-    padding: 9px;
-    border: 2px solid var(--primary);
-    border-radius: 12px;
-    background: var(--surface);
-    color: var(--text);
-    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+/* NEWS */
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.news-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
     display: flex;
+    flex-direction: column;
+    min-width: 0;
+    box-shadow: var(--shadow);
+}
+
+.news-meta {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 7px;
-    touch-action: none;
-    z-index: 2;
+    margin-bottom: 12px;
 }
 
-.mind-node.root {
-    background: var(--primary);
-    color: white;
-}
-
-.mind-node.selected {
-    outline: 3px solid #f4b942;
-    outline-offset: 2px;
-}
-
-.node-text {
-    flex: 1;
-    min-width: 0;
-    text-align: center;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
-}
-
-.node-dot {
-    flex-shrink: 0;
-    width: 8px;
-    height: 8px;
-    background: var(--primary);
-    border-radius: 50%;
-}
-
-.root .node-dot {
-    background: white;
-}
-
-.mindmap-status {
-    min-height: 24px;
-    padding: 5px 9px;
-    color: var(--muted);
+.tag {
+    background: #eef2ff;
+    color: #4338ca;
+    padding: 5px 8px;
+    border-radius: 5px;
     font-size: 10px;
-    border-top: 1px solid var(--border);
+    font-weight: bold;
 }
 
-/* ================================
-   FOOTER / MODAL / TOAST
-================================ */
+.date {
+    font-size: 11px;
+    color: var(--muted);
+}
 
-.footer {
-    min-height: 24px;
+.news-card h3 {
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 0 0 10px;
+}
+
+.news-summary {
+    color: #596579;
+    font-size: 13px;
+    line-height: 1.7;
+    flex: 1;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.news-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    padding: 0 9px;
-    background: var(--panel);
     border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 10px;
+    margin-top: 15px;
+    padding-top: 12px;
 }
 
-.modal-bg {
+.news-footer button {
+    border: 0;
+    background: transparent;
+    color: var(--primary);
+    font-size: 12px;
+    padding: 5px 0;
+}
+
+.empty {
+    background: white;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+    padding: 45px 20px;
+    text-align: center;
+    color: var(--muted);
+    grid-column: 1 / -1;
+}
+
+/* MONTHS AND REGIONS */
+
+.pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.pill {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 10px 15px;
+    color: var(--text);
+}
+
+.pill:hover,
+.pill.active {
+    color: white;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+/* EXAM PANEL */
+
+.exam-panel {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 14px;
+}
+
+.exam-panel h3 {
+    margin-top: 0;
+}
+
+.exam-panel p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* MODAL */
+
+.modal {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: rgba(0,0,0,.45);
+    background: #101827aa;
+    padding: 18px;
+    overflow-y: auto;
     align-items: center;
     justify-content: center;
-    padding: 16px;
 }
 
-.modal-bg.show {
+.modal.show {
     display: flex;
 }
 
-.modal {
+.modal-box {
+    background: white;
     width: 100%;
-    max-width: 420px;
-    background: var(--surface);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 22px;
+    max-width: 650px;
+    border-radius: 16px;
+    padding: 24px;
+    margin: auto;
 }
 
-.modal input {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 12px 0 18px;
-    background: var(--surface);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 6px;
+.modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.modal-head h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.close-btn {
+    border: 0;
+    background: #f0f2f7;
+    border-radius: 8px;
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 13px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.full {
+    grid-column: 1 / -1;
 }
 
 .modal-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 7px;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-.toast {
-    position: fixed;
-    left: 50%;
-    bottom: 35px;
-    transform: translateX(-50%);
-    z-index: 200;
-    background: #28232f;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 7px;
+.quiz-option {
+    display: block;
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 12px;
+    margin: 9px 0;
+    text-align: left;
+}
+
+.quiz-option:hover {
+    border-color: var(--primary);
+    background: #f5f5ff;
+}
+
+.notice {
+    background: #fff7ed;
+    color: #9a3412;
+    border: 1px solid #fed7aa;
+    padding: 12px;
+    border-radius: 9px;
     font-size: 12px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .2s;
-    max-width: 90vw;
+    line-height: 1.6;
+    margin-bottom: 15px;
 }
 
-.toast.show {
-    opacity: 1;
-}
+/* MOBILE */
 
-/* ================================
-   TABLET / MOBILE
-================================ */
-
-.mobile-only {
+.mobile-menu {
     display: none;
 }
 
-@media(max-width: 900px) {
-    :root {
-        --sidebar-width: 170px;
-        --section-width: 150px;
-        --page-width: 160px;
+@media (max-width: 1100px) {
+    .news-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .note-scroll {
-        padding: 20px;
+    .category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-@media(max-width: 700px) {
-    .topbar {
-        height: 52px;
-        min-height: 52px;
-        padding: 0 6px;
-        gap: 5px;
+@media (max-width: 760px) {
+    .app {
+        grid-template-columns: 1fr;
     }
 
-    .brand {
-        font-size: 13px;
-    }
-
-    .brand .brand-text {
+    .sidebar {
         display: none;
     }
 
-    .search {
-        margin-left: 0;
+    .sidebar.mobile-open {
+        display: block;
     }
 
-    .header-actions .desktop-only {
-        display: none;
-    }
-
-    .header-actions .btn {
-        padding: 6px 7px;
-        font-size: 11px;
-    }
-
-    .mobile-only {
+    .mobile-menu {
         display: inline-block;
     }
 
-    /*
-      On mobile, the columns become temporary overlay panels.
-      They do not reduce the width of the main editor.
-    */
+    .topbar {
+        padding: 14px;
+    }
 
-    .sidebar,
-    .section-panel,
-    .page-panel {
+    .topbar h2 {
+        font-size: 16px;
+    }
+
+    .top-actions .btn {
+        padding: 9px;
+        font-size: 12px;
+    }
+
+    .content {
+        padding: 14px;
+    }
+
+    .hero {
+        padding: 22px;
+    }
+
+    .hero-icon {
         display: none;
-        position: absolute;
-        inset: 0;
-        width: min(310px, 86vw) !important;
-        min-width: 0 !important;
-        z-index: 25;
-        background: var(--surface);
-        box-shadow: 8px 0 25px rgba(0,0,0,.13);
     }
 
-    body.show-mobile-notebooks .sidebar,
-    body.show-mobile-sections .section-panel,
-    body.show-mobile-pages .page-panel {
-        display: flex;
+    .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .editor-header {
-        padding: 0 7px;
+    .news-grid {
+        grid-template-columns: 1fr;
     }
 
-    .breadcrumb {
-        font-size: 10px;
+    .filters {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .save-status {
-        font-size: 9px;
+    .filters input {
+        grid-column: 1 / -1;
     }
 
-    .tabs {
-        padding: 6px;
+    .form-grid {
+        grid-template-columns: 1fr;
     }
 
-    .tab {
-        font-size: 11px;
-        padding: 7px;
+    .full {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 380px) {
+    .stats {
+        gap: 8px;
     }
 
-    .note-scroll {
-        padding: 16px 12px 35px;
+    .stat {
+        padding: 12px;
     }
 
-    .page-title {
-        font-size: 24px;
-    }
-
-    .note-editor {
-        font-size: 15px;
-    }
-
-    .toolstrip {
-        max-height: 105px;
-        overflow-y: auto;
-    }
-
-    .canvas-toolbar,
-    .mindmap-toolbar {
-        max-height: 125px;
-        overflow-y: auto;
+    .stat-number {
+        font-size: 22px;
     }
 }
 </style>
@@ -894,1914 +659,1325 @@ body.hide-pages .page-panel {
 
 <div class="app">
 
-<header class="topbar">
+    <!-- SIDEBAR -->
 
-    <button class="btn mobile-only"
-            onclick="toggleMobilePanel('notebooks')"
-            title="Open notebooks">☰</button>
+    <aside class="sidebar" id="sidebar">
 
-    <div class="brand">
-        <div class="logo">N</div>
-        <span class="brand-text">OneNote Pro</span>
-    </div>
+        <div class="brand">📰 Current<span>Affairs</span></div>
 
-    <div class="search">
-        <input id="searchInput" placeholder="Search all notes...">
-    </div>
+        <div class="brand-sub">CURRENT AFFAIRS LEARNING HUB</div>
 
-    <div class="header-actions">
+        <div class="nav-heading">MAIN MENU</div>
 
-        <button class="btn desktop-only" onclick="exportBackup()">Export</button>
-
-        <button class="btn desktop-only"
-                onclick="document.getElementById('importFile').click()">
-            Import
+        <button class="nav-btn active" data-page="dashboard">
+            🏠 Dashboard
         </button>
 
-        <button class="btn" onclick="toggleTheme()">◐</button>
+        <button class="nav-btn" data-page="all">
+            📰 All News
+        </button>
 
-        <button class="btn primary" onclick="newNotebook()">+ Notebook</button>
+        <button class="nav-btn" data-page="bookmarks">
+            🔖 Bookmarks
+        </button>
 
-    </div>
+        <button class="nav-btn" data-page="quiz">
+            🧠 Practice Quiz
+        </button>
 
-</header>
+        <div class="nav-heading">CATEGORIES</div>
 
-<main class="workspace" id="workspace">
+        <button class="nav-btn" data-category="National">🇮🇳 National</button>
+        <button class="nav-btn" data-category="International">🌍 International</button>
+        <button class="nav-btn" data-category="Political">🏛️ Political</button>
+        <button class="nav-btn" data-category="Economic">📈 Economic</button>
+        <button class="nav-btn" data-category="Sports">🏆 Sports</button>
+        <button class="nav-btn" data-category="Social Issue">🤝 Social Issues</button>
+        <button class="nav-btn" data-category="Scheme">📋 Government Schemes</button>
 
-    <!-- NOTEBOOK COLUMN -->
+        <div class="nav-heading">REGIONS</div>
 
-    <aside class="sidebar" id="notebookPanel">
+        <button class="nav-btn" data-region="India">🇮🇳 India</button>
+        <button class="nav-btn" data-region="Bihar">📍 Bihar</button>
+        <button class="nav-btn" data-region="Jharkhand">📍 Jharkhand</button>
+        <button class="nav-btn" data-region="Uttar Pradesh">📍 Uttar Pradesh</button>
+        <button class="nav-btn" data-region="West Bengal">📍 West Bengal</button>
 
-        <div class="panel-heading">
-
-            <span>NOTEBOOKS</span>
-
-            <div class="panel-heading-actions">
-                <button class="icon-btn"
-                        title="Create notebook"
-                        onclick="newNotebook()">＋</button>
-
-                <button class="icon-btn"
-                        title="Minimize notebooks"
-                        onclick="togglePanel('notebooks')">◀</button>
-            </div>
-
+        <div class="sidebar-footer">
+            <strong>Current Affairs Hub</strong><br>
+            Designed for UPSC, BPSC & other exams.<br><br>
+            By Prem Vikash Sir
         </div>
-
-        <div class="list" id="notebookList"></div>
 
     </aside>
 
-    <!-- SECTION COLUMN -->
+    <!-- MAIN CONTENT -->
 
-    <aside class="section-panel" id="sectionPanel">
+    <main class="main">
 
-        <div class="panel-heading">
+        <header class="topbar">
 
-            <span>SECTIONS</span>
+            <div style="display:flex;align-items:center;gap:10px">
 
-            <div class="panel-heading-actions">
+                <button class="btn mobile-menu"
+                        onclick="toggleSidebar()">☰</button>
 
-                <button class="icon-btn"
-                        title="Create section"
-                        onclick="newSection()">＋</button>
-
-                <button class="icon-btn"
-                        title="Minimize sections"
-                        onclick="togglePanel('sections')">◀</button>
-
-            </div>
-
-        </div>
-
-        <div class="list" id="sectionList"></div>
-
-    </aside>
-
-    <!-- PAGE COLUMN -->
-
-    <aside class="page-panel" id="pagePanel">
-
-        <div class="panel-heading">
-
-            <span>PAGES</span>
-
-            <div class="panel-heading-actions">
-
-                <button class="icon-btn"
-                        title="Create page"
-                        onclick="newPage()">＋</button>
-
-                <button class="icon-btn"
-                        title="Minimize pages"
-                        onclick="togglePanel('pages')">◀</button>
-
-            </div>
-
-        </div>
-
-        <div class="list" id="pageList"></div>
-
-    </aside>
-
-    <!-- MAIN WORK AREA -->
-
-    <section class="editor-area">
-
-        <div class="editor-header">
-
-            <div class="breadcrumb" id="breadcrumb">My Notebook</div>
-
-            <div class="save-status" id="saveStatus">Ready</div>
-
-        </div>
-
-        <!-- SIDEBAR VISIBILITY CONTROLS -->
-
-        <div class="tabs">
-
-            <button class="btn compact"
-                    id="showNotebookBtn"
-                    onclick="togglePanel('notebooks')"
-                    title="Show or hide notebooks">📚</button>
-
-            <button class="btn compact"
-                    id="showSectionBtn"
-                    onclick="togglePanel('sections')"
-                    title="Show or hide sections">📂</button>
-
-            <button class="btn compact"
-                    id="showPageBtn"
-                    onclick="togglePanel('pages')"
-                    title="Show or hide pages">📄</button>
-
-            <span style="width:1px;background:var(--border);margin:0 3px"></span>
-
-            <button class="btn compact"
-                    onclick="toggleAllPanels()"
-                    id="allPanelsBtn">
-                ⛶ Full Workspace
-            </button>
-
-            <button class="tab active"
-                    data-mode="note"
-                    onclick="switchMode('note')">
-                📝 Notes
-            </button>
-
-            <button class="tab"
-                    data-mode="canvas"
-                    onclick="switchMode('canvas')">
-                ▦ Infinite Workspace
-            </button>
-
-            <button class="tab"
-                    data-mode="mindmap"
-                    onclick="switchMode('mindmap')">
-                🧠 Mind Map
-            </button>
-
-        </div>
-
-        <!-- NOTES TOOLBAR -->
-
-        <div class="toolstrip" id="noteToolbar">
-
-            <button class="tool-btn" onclick="formatText('undo')">↶</button>
-            <button class="tool-btn" onclick="formatText('redo')">↷</button>
-
-            <select onchange="formatBlock(this.value)">
-                <option value="P">Paragraph</option>
-                <option value="H1">Heading 1</option>
-                <option value="H2">Heading 2</option>
-                <option value="H3">Heading 3</option>
-            </select>
-
-            <button class="tool-btn" onclick="formatText('bold')"><b>B</b></button>
-            <button class="tool-btn" onclick="formatText('italic')"><i>I</i></button>
-            <button class="tool-btn" onclick="formatText('underline')"><u>U</u></button>
-
-            <button class="tool-btn"
-                    onclick="formatText('insertUnorderedList')">• List</button>
-
-            <button class="tool-btn"
-                    onclick="formatText('insertOrderedList')">1. List</button>
-
-            <input type="color"
-                   value="#7719aa"
-                   title="Text color"
-                   onchange="formatText('foreColor',this.value)">
-
-            <button class="tool-btn" onclick="insertTable()">▦ Table</button>
-
-        </div>
-
-        <!-- NOTES VIEW -->
-
-        <div class="note-scroll" id="noteView">
-
-            <div class="note-container">
-
-                <textarea class="page-title"
-                          id="pageTitle"
-                          rows="1"
-                          placeholder="Page name"></textarea>
-
-                <div class="page-meta" id="pageMeta"></div>
-
-                <div class="note-editor"
-                     id="noteEditor"
-                     contenteditable="true"
-                     spellcheck="true"></div>
-
-            </div>
-
-        </div>
-
-        <!-- INFINITE WORKSPACE -->
-
-        <div class="canvas-shell" id="canvasView">
-
-            <div class="canvas-toolbar">
-
-                <button class="btn primary" onclick="addCanvasCard()">
-                    + Add Note
-                </button>
-
-                <button class="btn" onclick="expandCanvas()">
-                    Expand Workspace
-                </button>
-
-                <button class="btn" onclick="centerCanvas()">
-                    Origin
-                </button>
-
-                <button class="btn" onclick="toggleGrid()">
-                    Toggle Grid
-                </button>
-
-                <span class="canvas-help">
-                    Drag note headers to arrange notes.
-                </span>
-
-            </div>
-
-            <div class="canvas-viewport" id="canvasViewport">
-                <div class="canvas-world" id="canvasWorld"></div>
-            </div>
-
-        </div>
-
-        <!-- MIND MAP -->
-
-        <div class="mindmap-shell" id="mindmapView">
-
-            <div class="mindmap-toolbar">
-
-                <button class="btn primary" onclick="addMindNode()">+ Node</button>
-
-                <button class="btn" onclick="addChildNode()">+ Child</button>
-
-                <button class="btn" onclick="editMindNode()">Edit</button>
-
-                <button class="btn" onclick="deleteMindNode()">Delete</button>
-
-                <button class="btn" onclick="connectMindNodes()">Connect</button>
-
-                <button class="btn" onclick="disconnectMindNode()">Disconnect</button>
-
-                <button class="btn" onclick="centerMindMap()">Center</button>
-
-            </div>
-
-            <div class="mindmap-viewport" id="mindmapViewport">
-
-                <div class="mindmap-world" id="mindmapWorld">
-
-                    <svg class="mindmap-lines" id="mindmapLines"></svg>
-
-                    <div id="mindNodes"></div>
-
+                <div>
+                    <h2 id="pageTitle">Dashboard</h2>
+                    <p id="todayDate"></p>
                 </div>
 
             </div>
 
-            <div class="mindmap-status" id="mindmapStatus">
-                Select a node to edit it.
+            <div class="top-actions">
+
+                <button class="btn"
+                        onclick="exportNews()">⬇ Export</button>
+
+                <button class="btn btn-primary"
+                        onclick="openAddModal()">＋ Add News</button>
+
             </div>
+
+        </header>
+
+        <div class="content">
+
+            <!-- DASHBOARD -->
+
+            <section id="dashboardPage">
+
+                <div class="hero">
+
+                    <div>
+                        <span class="hero-badge">
+                            YOUR DAILY EXAM PREPARATION
+                        </span>
+
+                        <h1>Stay Updated.<br>Stay Ahead.</h1>
+
+                        <p>
+                            Read, organize and revise current affairs
+                            category-wise, month-wise and region-wise.
+                            Prepare smarter for UPSC, BPSC and other
+                            competitive examinations.
+                        </p>
+
+                        <button class="btn"
+                                onclick="showPage('all')">
+                            Explore Current Affairs →
+                        </button>
+                    </div>
+
+                    <div class="hero-icon">📚</div>
+
+                </div>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <div class="stat-icon">📰</div>
+                        <div class="stat-number" id="totalNews">0</div>
+                        <div class="stat-label">Total News</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-icon">🔖</div>
+                        <div class="stat-number" id="totalBookmarks">0</div>
+                        <div class="stat-label">Bookmarked News</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-icon">🗂️</div>
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">News Categories</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-icon">📍</div>
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Regions Covered</div>
+                    </div>
+
+                </div>
+
+                <!-- CATEGORY GRID -->
+
+                <section class="section">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Browse by Category</h2>
+                            <p>Select a category to explore relevant news.</p>
+                        </div>
+                    </div>
+
+                    <div class="category-grid" id="categoryGrid"></div>
+
+                </section>
+
+                <!-- MONTHS -->
+
+                <section class="section">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Browse Month-wise</h2>
+                            <p>Choose a month to revise current affairs.</p>
+                        </div>
+                    </div>
+
+                    <div class="pill-list" id="monthList"></div>
+
+                </section>
+
+                <!-- REGIONS -->
+
+                <section class="section">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Browse by Region</h2>
+                            <p>Focus on state-specific current affairs.</p>
+                        </div>
+                    </div>
+
+                    <div class="pill-list" id="regionList"></div>
+
+                </section>
+
+                <!-- LATEST NEWS -->
+
+                <section class="section">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Latest Added News</h2>
+                            <p>News entries saved in this application.</p>
+                        </div>
+
+                        <button class="btn"
+                                onclick="showPage('all')">
+                            View All →
+                        </button>
+                    </div>
+
+                    <div class="news-grid" id="latestNews"></div>
+
+                </section>
+
+                <section class="section">
+
+                    <div class="exam-panel">
+                        <h3>🎯 Exam Preparation Centre</h3>
+
+                        <p>
+                            Organize important facts, constitutional
+                            developments, economic indicators, government
+                            schemes, sports achievements and state-specific
+                            news for your examination.
+                        </p>
+
+                        <button class="btn btn-primary"
+                                onclick="showPage('quiz')">
+                            Start Practice Quiz
+                        </button>
+                    </div>
+
+                </section>
+
+            </section>
+
+            <!-- ALL NEWS -->
+
+            <section id="allPage" hidden>
+
+                <div class="section-header">
+                    <div>
+                        <h2 id="newsHeading">All Current Affairs</h2>
+                        <p>Search and filter your news database.</p>
+                    </div>
+                </div>
+
+                <div class="filters">
+
+                    <input class="field"
+                           id="searchInput"
+                           placeholder="🔍 Search news, topic or keyword..."
+                           oninput="renderNews()">
+
+                    <select class="field"
+                            id="categoryFilter"
+                            onchange="renderNews()">
+                        <option value="">All Categories</option>
+                    </select>
+
+                    <select class="field"
+                            id="monthFilter"
+                            onchange="renderNews()">
+                        <option value="">All Months</option>
+                    </select>
+
+                    <select class="field"
+                            id="regionFilter"
+                            onchange="renderNews()">
+                        <option value="">All Regions</option>
+                    </select>
+
+                </div>
+
+                <div class="news-grid" id="newsGrid"></div>
+
+            </section>
+
+            <!-- BOOKMARKS -->
+
+            <section id="bookmarksPage" hidden>
+
+                <div class="section-header">
+                    <div>
+                        <h2>🔖 Your Bookmarks</h2>
+                        <p>Important news saved for quick revision.</p>
+                    </div>
+                </div>
+
+                <div class="news-grid" id="bookmarkGrid"></div>
+
+            </section>
+
+            <!-- QUIZ -->
+
+            <section id="quizPage" hidden>
+
+                <div class="section-header">
+                    <div>
+                        <h2>🧠 Current Affairs Practice Quiz</h2>
+                        <p>Test your knowledge using your saved news.</p>
+                    </div>
+                </div>
+
+                <div class="exam-panel" id="quizPanel"></div>
+
+            </section>
 
         </div>
 
-        <footer class="footer">
-            <span id="wordCount">0 words</span>
-            <span>Offline workspace • Local storage</span>
-        </footer>
-
-    </section>
-
-</main>
+    </main>
 
 </div>
 
-<input type="file"
-       id="importFile"
-       accept=".json,application/json"
-       hidden>
+<!-- ADD NEWS MODAL -->
 
-<div class="modal-bg" id="modalBg">
+<div class="modal" id="addModal">
 
-    <div class="modal">
+    <div class="modal-box">
 
-        <h3 id="modalTitle">Create</h3>
+        <div class="modal-head">
+            <h2>Add Current Affairs</h2>
 
-        <label id="modalLabel">Name</label>
-
-        <input id="modalInput" maxlength="200">
-
-        <div class="modal-actions">
-
-            <button class="btn" onclick="closeModal()">Cancel</button>
-
-            <button class="btn primary"
-                    id="modalSubmit">Save</button>
-
+            <button class="close-btn"
+                    onclick="closeAddModal()">×</button>
         </div>
+
+        <div class="notice">
+            Enter verified information from a reliable source.
+            This application does not automatically verify news.
+        </div>
+
+        <form id="newsForm">
+
+            <div class="form-grid">
+
+                <div class="form-group full">
+                    <label>News Headline *</label>
+
+                    <input class="field"
+                           name="title"
+                           required
+                           maxlength="250"
+                           placeholder="Enter news headline">
+                </div>
+
+                <div class="form-group">
+                    <label>Category *</label>
+
+                    <select class="field"
+                            name="category"
+                            required>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Region *</label>
+
+                    <select class="field"
+                            name="region"
+                            required>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Month *</label>
+
+                    <select class="field"
+                            name="month"
+                            required>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Date *</label>
+
+                    <input class="field"
+                           type="date"
+                           name="date"
+                           required>
+                </div>
+
+                <div class="form-group full">
+                    <label>News Summary / Important Facts *</label>
+
+                    <textarea class="field"
+                              name="summary"
+                              rows="5"
+                              required
+                              maxlength="10000"
+                              placeholder="Write the key facts, background and exam relevance..."></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label>Source URL (optional)</label>
+
+                    <input class="field"
+                           name="source"
+                           type="url"
+                           maxlength="2000"
+                           placeholder="https://official-source.gov.in">
+                </div>
+
+                <div class="form-group full">
+                    <label>Exam Relevance / Notes (optional)</label>
+
+                    <textarea class="field"
+                              name="notes"
+                              rows="3"
+                              maxlength="5000"
+                              placeholder="BPSC / UPSC facts, important dates, key terms..."></textarea>
+                </div>
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button type="button"
+                        class="btn"
+                        onclick="closeAddModal()">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save News
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
 </div>
 
-<div class="toast" id="toast"></div>
-
 <script>
-"use strict";
 
-/* ==========================================
-   DATA MODEL
-========================================== */
+/* ===================================
+   APPLICATION CONFIGURATION
+=================================== */
 
-const STORAGE_KEY = "onenote_pro_collapsible_v3";
-const THEME_KEY = "onenote_pro_theme";
-const PANEL_KEY = "onenote_pro_panels";
-
-let data;
-let notebookId = null;
-let sectionId = null;
-let pageId = null;
-
-let currentMode = "note";
-let selectedCard = null;
-let selectedNode = null;
-let connectionStart = null;
-
-let saveTimer;
-let toastTimer;
-let modalCallback = null;
-
-const sectionColors = [
-    "#7b61ff", "#e34d75", "#16a085",
-    "#f39c12", "#3498db", "#8e44ad"
+const CATEGORIES = [
+    {name:"National", icon:"🇮🇳", desc:"National developments"},
+    {name:"International", icon:"🌍", desc:"World affairs"},
+    {name:"Political", icon:"🏛️", desc:"Politics and governance"},
+    {name:"Economic", icon:"📈", desc:"Economy and finance"},
+    {name:"Sports", icon:"🏆", desc:"Sports and tournaments"},
+    {name:"Social Issue", icon:"🤝", desc:"Society and social issues"},
+    {name:"Scheme", icon:"📋", desc:"Government schemes"}
 ];
 
-function uid() {
-    return "id_" + Date.now().toString(36) +
-        "_" + Math.random().toString(36).slice(2, 8);
-}
+const MONTHS = [
+    "January", "February", "March", "April",
+    "May", "June", "July", "August",
+    "September", "October", "November", "December"
+];
 
-function esc(s) {
-    return String(s ?? "").replace(/[&<>"']/g, c => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[c]);
-}
+const REGIONS = [
+    "India",
+    "Bihar",
+    "Jharkhand",
+    "Uttar Pradesh",
+    "West Bengal"
+];
 
-function textFromHTML(html) {
-    const d = document.createElement("div");
-    d.innerHTML = html || "";
-    return (d.textContent || "").trim();
-}
+const STORAGE_NEWS = "ca_hub_news_v1";
+const STORAGE_BOOKMARKS = "ca_hub_bookmarks_v1";
 
-function newPageObject(name = "New Page") {
-    return {
-        id: uid(),
-        name,
-        content: "",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+let news = readStorage(STORAGE_NEWS, []);
+let bookmarks = readStorage(STORAGE_BOOKMARKS, []);
+let currentPage = "dashboard";
 
-        canvas: {
-            width: 5000,
-            height: 5000,
-            grid: true,
-            cards: []
-        },
+let quizQuestions = [];
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
 
-        mindmap: {
-            width: 4000,
-            height: 3000,
-            nodes: [{
-                id: uid(),
-                text: name,
-                x: 1750,
-                y: 1300,
-                root: true
-            }],
-            edges: []
-        }
-    };
-}
 
-function newSectionObject(name = "General") {
-    return {
-        id: uid(),
-        name,
-        color: sectionColors[0],
-        pages: [newPageObject("Welcome")]
-    };
-}
+/* ===================================
+   STORAGE
+=================================== */
 
-function newNotebookObject(name = "My Notebook") {
-    return {
-        id: uid(),
-        name,
-        sections: [newSectionObject()]
-    };
-}
-
-function makeInitialData() {
-    const n = newNotebookObject();
-    const p = n.sections[0].pages[0];
-
-    p.name = "Welcome to OneNote Pro";
-
-    p.content = `
-        <h1>Welcome to OneNote Pro</h1>
-        <p>Organize your notes, ideas and mind maps.</p>
-        <h2>New features</h2>
-        <ul>
-            <li>Hide or show each navigation panel independently.</li>
-            <li>Use Full Workspace to maximize the working area.</li>
-            <li>Create mind maps and arrange note cards.</li>
-        </ul>
-    `;
-
-    p.mindmap.nodes[0].text = "My Ideas";
-
-    return {
-        version: 3,
-        notebooks: [n]
-    };
-}
-
-/* ==========================================
-   VALIDATION
-========================================== */
-
-function validateData(input) {
-    if (!input || !Array.isArray(input.notebooks)) {
-        throw new Error("Invalid backup");
-    }
-
-    const result = {
-        version: 3,
-        notebooks: []
-    };
-
-    for (const n of input.notebooks) {
-        if (!n || typeof n.name !== "string") continue;
-
-        const nn = {
-            id: typeof n.id === "string" ? n.id : uid(),
-            name: n.name.slice(0, 200),
-            sections: []
-        };
-
-        for (const s of (Array.isArray(n.sections) ? n.sections : [])) {
-            if (!s || typeof s.name !== "string") continue;
-
-            const ss = {
-                id: typeof s.id === "string" ? s.id : uid(),
-                name: s.name.slice(0, 200),
-                color: sectionColors.includes(s.color) ? s.color : sectionColors[0],
-                pages: []
-            };
-
-            for (const p of (Array.isArray(s.pages) ? s.pages : [])) {
-                if (!p || typeof p.name !== "string") continue;
-
-                const pp = newPageObject(p.name);
-
-                pp.id = typeof p.id === "string" ? p.id : uid();
-                pp.content = typeof p.content === "string" ? p.content : "";
-                pp.createdAt = p.createdAt || pp.createdAt;
-                pp.updatedAt = p.updatedAt || pp.updatedAt;
-
-                if (p.canvas && typeof p.canvas === "object") {
-                    pp.canvas.width = Math.max(
-                        2000, Math.min(50000, Number(p.canvas.width) || 5000)
-                    );
-
-                    pp.canvas.height = Math.max(
-                        2000, Math.min(50000, Number(p.canvas.height) || 5000)
-                    );
-
-                    pp.canvas.grid = p.canvas.grid !== false;
-
-                    pp.canvas.cards = Array.isArray(p.canvas.cards)
-                        ? p.canvas.cards.filter(c => c && typeof c.content === "string")
-                            .map(c => ({
-                                id: String(c.id || uid()),
-                                title: String(c.title || "Note").slice(0, 200),
-                                content: c.content.slice(0, 200000),
-                                x: Number(c.x) || 0,
-                                y: Number(c.y) || 0
-                            }))
-                        : [];
-                }
-
-                if (p.mindmap && typeof p.mindmap === "object") {
-                    pp.mindmap.width = Math.max(
-                        2000, Math.min(50000, Number(p.mindmap.width) || 4000)
-                    );
-
-                    pp.mindmap.height = Math.max(
-                        2000, Math.min(50000, Number(p.mindmap.height) || 3000)
-                    );
-
-                    pp.mindmap.nodes = Array.isArray(p.mindmap.nodes)
-                        ? p.mindmap.nodes.filter(x => x && typeof x.text === "string")
-                            .map(x => ({
-                                id: String(x.id || uid()),
-                                text: x.text.slice(0, 2000),
-                                x: Number(x.x) || 0,
-                                y: Number(x.y) || 0,
-                                root: !!x.root
-                            }))
-                        : [];
-
-                    const nodeIds = new Set(pp.mindmap.nodes.map(x => x.id));
-
-                    pp.mindmap.edges = Array.isArray(p.mindmap.edges)
-                        ? p.mindmap.edges.filter(e =>
-                            e &&
-                            nodeIds.has(e.from) &&
-                            nodeIds.has(e.to) &&
-                            e.from !== e.to
-                        ).map(e => ({
-                            from: e.from,
-                            to: e.to
-                        }))
-                        : [];
-                }
-
-                ss.pages.push(pp);
-            }
-
-            nn.sections.push(ss);
-        }
-
-        result.notebooks.push(nn);
-    }
-
-    return result;
-}
-
-/* ==========================================
-   LOAD AND SAVE
-========================================== */
-
-function loadData() {
+function readStorage(key, fallback) {
     try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const value = localStorage.getItem(key);
 
-        if (raw) {
-            data = validateData(JSON.parse(raw));
-        } else {
-            data = makeInitialData();
-        }
+        if (value === null) return fallback;
+
+        const parsed = JSON.parse(value);
+
+        return parsed;
     } catch (error) {
-        console.error(error);
-        data = makeInitialData();
+        console.error("Storage read error:", error);
+        return fallback;
     }
-
-    if (!data.notebooks.length) data = makeInitialData();
-
-    notebookId = data.notebooks[0].id;
-    sectionId = data.notebooks[0].sections[0]?.id || null;
-    pageId = data.notebooks[0].sections[0]?.pages[0]?.id || null;
-
-    try {
-        if (localStorage.getItem(THEME_KEY) === "dark") {
-            document.body.classList.add("dark");
-        }
-
-        const panels = JSON.parse(localStorage.getItem(PANEL_KEY) || "{}");
-
-        document.body.classList.toggle("hide-notebooks", !!panels.notebooks);
-        document.body.classList.toggle("hide-sections", !!panels.sections);
-        document.body.classList.toggle("hide-pages", !!panels.pages);
-
-    } catch (error) {
-        console.warn("Could not restore preferences", error);
-    }
-
-    renderAll();
-    updateEditor();
-    updatePanelButtons();
 }
 
-function saveData() {
+function saveStorage() {
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-
-        document.getElementById("saveStatus").textContent =
-            "Saved " + new Date().toLocaleTimeString();
+        localStorage.setItem(STORAGE_NEWS, JSON.stringify(news));
+        localStorage.setItem(STORAGE_BOOKMARKS, JSON.stringify(bookmarks));
 
         return true;
     } catch (error) {
-        document.getElementById("saveStatus").textContent = "Storage full";
-        notify("Storage full. Export a backup and remove large images.");
+        alert(
+            "Storage failed. Your browser may be out of storage space. " +
+            "Export your news as a backup."
+        );
+
         return false;
     }
 }
 
-function scheduleSave() {
-    document.getElementById("saveStatus").textContent = "Saving...";
 
-    clearTimeout(saveTimer);
+/* ===================================
+   INITIALIZE
+=================================== */
 
-    saveTimer = setTimeout(() => {
-        saveData();
-        renderPages();
-    }, 300);
-}
+function initialize() {
 
-/* ==========================================
-   GET ACTIVE ITEMS
-========================================== */
+    document.getElementById("todayDate").textContent =
+        new Date().toLocaleDateString("en-IN", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
 
-function getNotebook() {
-    return data.notebooks.find(n => n.id === notebookId) || null;
-}
+    const categoryGrid = document.getElementById("categoryGrid");
 
-function getSection() {
-    return getNotebook()?.sections.find(s => s.id === sectionId) || null;
-}
+    CATEGORIES.forEach(category => {
 
-function getPage() {
-    return getSection()?.pages.find(p => p.id === pageId) || null;
-}
+        const button = document.createElement("button");
 
-function ensureSelection() {
-    if (!data.notebooks.length) data.notebooks.push(newNotebookObject());
+        button.className = "category";
 
-    let n = getNotebook();
+        const icon = document.createElement("div");
+        icon.className = "icon";
+        icon.textContent = category.icon;
 
-    if (!n) {
-        n = data.notebooks[0];
-        notebookId = n.id;
-    }
+        const title = document.createElement("h3");
+        title.textContent = category.name;
 
-    if (!n.sections.length) n.sections.push(newSectionObject());
+        const description = document.createElement("p");
+        description.textContent = category.desc;
 
-    let s = n.sections.find(x => x.id === sectionId);
+        button.append(icon, title, description);
 
-    if (!s) {
-        s = n.sections[0];
-        sectionId = s.id;
-    }
+        button.addEventListener("click", () => {
+            openCategory(category.name);
+        });
 
-    if (!s.pages.length) s.pages.push(newPageObject());
-
-    let p = s.pages.find(x => x.id === pageId);
-
-    if (!p) {
-        p = s.pages[0];
-        pageId = p.id;
-    }
-}
-
-/* ==========================================
-   COLLAPSIBLE PANELS
-========================================== */
-
-function togglePanel(which) {
-    const classes = {
-        notebooks: "hide-notebooks",
-        sections: "hide-sections",
-        pages: "hide-pages"
-    };
-
-    const className = classes[which];
-
-    if (!className) return;
-
-    document.body.classList.toggle(className);
-
-    savePanelPreferences();
-    updatePanelButtons();
-}
-
-function savePanelPreferences() {
-    const settings = {
-        notebooks: document.body.classList.contains("hide-notebooks"),
-        sections: document.body.classList.contains("hide-sections"),
-        pages: document.body.classList.contains("hide-pages")
-    };
-
-    localStorage.setItem(PANEL_KEY, JSON.stringify(settings));
-}
-
-function updatePanelButtons() {
-    const mappings = [
-        ["showNotebookBtn", "hide-notebooks", "📚 Notebook"],
-        ["showSectionBtn", "hide-sections", "📂 Section"],
-        ["showPageBtn", "hide-pages", "📄 Page"]
-    ];
-
-    mappings.forEach(([id, className, label]) => {
-        const button = document.getElementById(id);
-        const hidden = document.body.classList.contains(className);
-
-        button.classList.toggle("active", hidden);
-        button.title = (hidden ? "Show " : "Hide ") + label;
+        categoryGrid.appendChild(button);
     });
 
-    const allHidden =
-        document.body.classList.contains("hide-notebooks") &&
-        document.body.classList.contains("hide-sections") &&
-        document.body.classList.contains("hide-pages");
+    const monthList = document.getElementById("monthList");
 
-    document.getElementById("allPanelsBtn").textContent =
-        allHidden ? "▣ Show Panels" : "⛶ Full Workspace";
+    MONTHS.forEach(month => {
+
+        const button = document.createElement("button");
+
+        button.className = "pill";
+        button.textContent = month;
+
+        button.addEventListener("click", () => {
+            openMonth(month);
+        });
+
+        monthList.appendChild(button);
+    });
+
+    const regionList = document.getElementById("regionList");
+
+    REGIONS.forEach(region => {
+
+        const button = document.createElement("button");
+
+        button.className = "pill";
+        button.textContent = region;
+
+        button.addEventListener("click", () => {
+            openRegion(region);
+        });
+
+        regionList.appendChild(button);
+    });
+
+    populateSelect("categoryFilter", CATEGORIES.map(x => x.name));
+    populateSelect("monthFilter", MONTHS);
+    populateSelect("regionFilter", REGIONS);
+
+    populateFormSelect("category", CATEGORIES.map(x => x.name));
+    populateFormSelect("month", MONTHS);
+    populateFormSelect("region", REGIONS);
+
+    document.querySelectorAll(".nav-btn").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            if (button.dataset.page) {
+                showPage(button.dataset.page);
+            }
+
+            if (button.dataset.category) {
+                openCategory(button.dataset.category);
+            }
+
+            if (button.dataset.region) {
+                openRegion(button.dataset.region);
+            }
+
+        });
+
+    });
+
+    // Default date for new entries.
+    document.querySelector('[name="date"]').value =
+        new Date().toISOString().slice(0, 10);
+
+    renderAll();
 }
 
-function toggleAllPanels() {
-    const allHidden =
-        document.body.classList.contains("hide-notebooks") &&
-        document.body.classList.contains("hide-sections") &&
-        document.body.classList.contains("hide-pages");
+function populateSelect(id, values) {
 
-    const hide = !allHidden;
+    const select = document.getElementById(id);
 
-    document.body.classList.toggle("hide-notebooks", hide);
-    document.body.classList.toggle("hide-sections", hide);
-    document.body.classList.toggle("hide-pages", hide);
+    values.forEach(value => {
 
-    savePanelPreferences();
-    updatePanelButtons();
+        const option = document.createElement("option");
+
+        option.value = value;
+        option.textContent = value;
+
+        select.appendChild(option);
+    });
 }
 
-function toggleMobilePanel(which) {
-    const classes = [
-        "show-mobile-notebooks",
-        "show-mobile-sections",
-        "show-mobile-pages"
-    ];
+function populateFormSelect(name, values) {
 
-    const target = {
-        notebooks: "show-mobile-notebooks",
-        sections: "show-mobile-sections",
-        pages: "show-mobile-pages"
-    }[which];
-
-    const wasOpen = document.body.classList.contains(target);
-
-    document.body.classList.remove(...classes);
-
-    if (!wasOpen) {
-        document.body.classList.add(target);
-    }
-}
-
-function closeMobilePanels() {
-    document.body.classList.remove(
-        "show-mobile-notebooks",
-        "show-mobile-sections",
-        "show-mobile-pages"
+    const select = document.querySelector(
+        '#newsForm [name="' + name + '"]'
     );
-}
 
-/* ==========================================
-   RENDER PANELS
-========================================== */
+    values.forEach(value => {
 
-function renderNotebooks() {
-    document.getElementById("notebookList").innerHTML =
-        data.notebooks.map(n => `
-            <div class="list-item ${n.id === notebookId ? "active" : ""}"
-                 onclick="selectNotebook('${n.id}')">
+        const option = document.createElement("option");
 
-                <span>📘</span>
+        option.value = value;
+        option.textContent = value;
 
-                <span class="name">${esc(n.name)}</span>
-
-                <button class="icon-btn"
-                        onclick="event.stopPropagation();renameNotebook('${n.id}')">
-                    ⋮
-                </button>
-
-            </div>
-        `).join("");
-}
-
-function renderSections() {
-    const n = getNotebook();
-
-    document.getElementById("sectionList").innerHTML =
-        (n?.sections || []).map(s => `
-            <div class="list-item ${s.id === sectionId ? "active" : ""}"
-                 onclick="selectSection('${s.id}')">
-
-                <span style="color:${esc(s.color)}">●</span>
-
-                <span class="name">${esc(s.name)}</span>
-
-                <button class="icon-btn"
-                        onclick="event.stopPropagation();renameSection('${s.id}')">
-                    ⋮
-                </button>
-
-            </div>
-        `).join("");
-}
-
-function renderPages() {
-    const s = getSection();
-
-    document.getElementById("pageList").innerHTML =
-        (s?.pages || []).map(p => `
-            <div class="page-item ${p.id === pageId ? "active" : ""}"
-                 onclick="selectPage('${p.id}')">
-
-                <div class="name">${esc(p.name)}</div>
-
-                <div class="preview">
-                    ${esc(textFromHTML(p.content).slice(0, 55))}
-                </div>
-
-                <button class="icon-btn"
-                        onclick="event.stopPropagation();renamePage('${p.id}')">
-                    Rename
-                </button>
-
-            </div>
-        `).join("");
-}
-
-function renderAll() {
-    ensureSelection();
-    renderNotebooks();
-    renderSections();
-    renderPages();
-    updateBreadcrumb();
-}
-
-function updateBreadcrumb() {
-    const n = getNotebook();
-    const s = getSection();
-    const p = getPage();
-
-    document.getElementById("breadcrumb").textContent =
-        [n?.name, s?.name, p?.name].filter(Boolean).join(" › ");
-}
-
-/* ==========================================
-   CRUD
-========================================== */
-
-function modal(title, label, initial, callback) {
-    modalCallback = callback;
-
-    document.getElementById("modalTitle").textContent = title;
-    document.getElementById("modalLabel").textContent = label;
-    document.getElementById("modalInput").value = initial || "";
-
-    document.getElementById("modalBg").classList.add("show");
-
-    setTimeout(() => document.getElementById("modalInput").focus(), 40);
-}
-
-function closeModal() {
-    document.getElementById("modalBg").classList.remove("show");
-    modalCallback = null;
-}
-
-document.getElementById("modalSubmit").onclick = () => {
-    const value = document.getElementById("modalInput").value.trim();
-
-    if (!value) {
-        notify("Enter a name");
-        return;
-    }
-
-    const cb = modalCallback;
-    closeModal();
-
-    if (cb) cb(value);
-};
-
-document.getElementById("modalInput").addEventListener("keydown", e => {
-    if (e.key === "Enter") document.getElementById("modalSubmit").click();
-    if (e.key === "Escape") closeModal();
-});
-
-function newNotebook() {
-    modal("Create Notebook", "Notebook name", "My Notebook", name => {
-        const n = newNotebookObject(name);
-
-        data.notebooks.push(n);
-
-        notebookId = n.id;
-        sectionId = n.sections[0].id;
-        pageId = n.sections[0].pages[0].id;
-
-        saveData();
-        renderAll();
-        updateEditor();
+        select.appendChild(option);
     });
 }
 
-function renameNotebook(id) {
-    const n = data.notebooks.find(x => x.id === id);
-    if (!n) return;
 
-    modal("Rename Notebook", "Notebook name", n.name, name => {
-        n.name = name;
-        saveData();
-        renderAll();
+/* ===================================
+   NAVIGATION
+=================================== */
+
+function toggleSidebar() {
+
+    document.getElementById("sidebar")
+        .classList.toggle("mobile-open");
+}
+
+function showPage(page) {
+
+    currentPage = page;
+
+    const pages = [
+        "dashboardPage",
+        "allPage",
+        "bookmarksPage",
+        "quizPage"
+    ];
+
+    pages.forEach(id => {
+        document.getElementById(id).hidden = true;
     });
-}
 
-function newSection() {
-    const n = getNotebook();
-    if (!n) return;
+    const pageMap = {
+        dashboard: "dashboardPage",
+        all: "allPage",
+        bookmarks: "bookmarksPage",
+        quiz: "quizPage"
+    };
 
-    modal("Create Section", "Section name", "New Section", name => {
-        const s = newSectionObject(name);
-        s.color = sectionColors[n.sections.length % sectionColors.length];
+    document.getElementById(pageMap[page]).hidden = false;
 
-        n.sections.push(s);
+    const titleMap = {
+        dashboard: "Dashboard",
+        all: "All Current Affairs",
+        bookmarks: "Bookmarked News",
+        quiz: "Practice Quiz"
+    };
 
-        sectionId = s.id;
-        pageId = s.pages[0].id;
+    document.getElementById("pageTitle").textContent =
+        titleMap[page] || "Current Affairs";
 
-        saveData();
-        renderAll();
-        updateEditor();
+    document.querySelectorAll(".nav-btn").forEach(button => {
+        button.classList.remove("active");
     });
-}
 
-function renameSection(id) {
-    const s = getNotebook()?.sections.find(x => x.id === id);
-    if (!s) return;
+    document.querySelectorAll(".nav-btn").forEach(button => {
 
-    modal("Rename Section", "Section name", s.name, name => {
-        s.name = name;
-        saveData();
-        renderAll();
-    });
-}
-
-function newPage() {
-    const s = getSection();
-    if (!s) return;
-
-    const p = newPageObject("New Page");
-
-    s.pages.push(p);
-    pageId = p.id;
-
-    saveData();
-    renderAll();
-    updateEditor();
-
-    switchMode("note");
-}
-
-function renamePage(id) {
-    const p = getSection()?.pages.find(x => x.id === id);
-    if (!p) return;
-
-    modal("Rename Page", "Page name", p.name, name => {
-        p.name = name;
-        p.updatedAt = new Date().toISOString();
-
-        saveData();
-        renderAll();
-        updateBreadcrumb();
-    });
-}
-
-function selectNotebook(id) {
-    notebookId = id;
-
-    const n = getNotebook();
-
-    sectionId = n?.sections[0]?.id || null;
-    pageId = n?.sections[0]?.pages[0]?.id || null;
-
-    renderAll();
-    updateEditor();
-    closeMobilePanels();
-}
-
-function selectSection(id) {
-    sectionId = id;
-
-    const s = getSection();
-
-    pageId = s?.pages[0]?.id || null;
-
-    renderAll();
-    updateEditor();
-    closeMobilePanels();
-}
-
-function selectPage(id) {
-    pageId = id;
-
-    renderPages();
-    updateEditor();
-    closeMobilePanels();
-}
-
-/* ==========================================
-   NOTES EDITOR
-========================================== */
-
-function updateEditor() {
-    ensureSelection();
-
-    const p = getPage();
-
-    document.getElementById("pageTitle").value = p.name;
-    document.getElementById("noteEditor").innerHTML = p.content || "";
-
-    document.getElementById("pageMeta").textContent =
-        "Last updated: " + new Date(p.updatedAt).toLocaleString();
-
-    updateBreadcrumb();
-    updateWordCount();
-
-    renderCanvas();
-    renderMindMap();
-}
-
-function saveNote() {
-    const p = getPage();
-    if (!p) return;
-
-    p.name =
-        document.getElementById("pageTitle").value.trim() || "New Page";
-
-    p.content = document.getElementById("noteEditor").innerHTML;
-    p.updatedAt = new Date().toISOString();
-
-    updateBreadcrumb();
-    updateWordCount();
-
-    scheduleSave();
-}
-
-document.getElementById("pageTitle").addEventListener("input", saveNote);
-document.getElementById("noteEditor").addEventListener("input", saveNote);
-
-function updateWordCount() {
-    const text = textFromHTML(document.getElementById("noteEditor").innerHTML);
-
-    const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
-
-    document.getElementById("wordCount").textContent = words + " words";
-}
-
-function formatText(command, value = null) {
-    document.getElementById("noteEditor").focus();
-
-    document.execCommand(command, false, value);
-
-    saveNote();
-}
-
-function formatBlock(tag) {
-    document.getElementById("noteEditor").focus();
-
-    document.execCommand("formatBlock", false, "<" + tag.toLowerCase() + ">");
-
-    saveNote();
-}
-
-function insertTable() {
-    const rows = Number(prompt("Rows (1–15)", "3"));
-    const cols = Number(prompt("Columns (1–10)", "3"));
-
-    if (
-        !Number.isInteger(rows) || rows < 1 || rows > 15 ||
-        !Number.isInteger(cols) || cols < 1 || cols > 10
-    ) {
-        notify("Invalid table size");
-        return;
-    }
-
-    let html = "<table><tbody>";
-
-    for (let r = 0; r < rows; r++) {
-        html += "<tr>";
-
-        for (let c = 0; c < cols; c++) {
-            html += r === 0 ? "<th>Heading</th>" : "<td>Text</td>";
+        if (button.dataset.page === page) {
+            button.classList.add("active");
         }
 
-        html += "</tr>";
-    }
-
-    html += "</tbody></table><p><br></p>";
-
-    document.getElementById("noteEditor").focus();
-    document.execCommand("insertHTML", false, html);
-
-    saveNote();
-}
-
-/* ==========================================
-   VIEW SWITCHING
-========================================== */
-
-function switchMode(mode) {
-    currentMode = mode;
-
-    document.querySelectorAll(".tab[data-mode]").forEach(tab => {
-        tab.classList.toggle("active", tab.dataset.mode === mode);
     });
 
-    document.getElementById("noteToolbar").style.display =
-        mode === "note" ? "flex" : "none";
+    if (page === "all") renderNews();
+    if (page === "bookmarks") renderBookmarks();
+    if (page === "quiz") renderQuizStart();
 
-    document.getElementById("noteView").style.display =
-        mode === "note" ? "block" : "none";
-
-    document.getElementById("canvasView").style.display =
-        mode === "canvas" ? "flex" : "none";
-
-    document.getElementById("mindmapView").style.display =
-        mode === "mindmap" ? "flex" : "none";
-
-    if (mode === "canvas") renderCanvas();
-    if (mode === "mindmap") renderMindMap();
-
-    closeMobilePanels();
-}
-
-/* ==========================================
-   INFINITE WORKSPACE
-========================================== */
-
-function getCanvas() {
-    const p = getPage();
-
-    if (!p.canvas) {
-        p.canvas = {
-            width: 5000,
-            height: 5000,
-            grid: true,
-            cards: []
-        };
+    if (window.innerWidth <= 760) {
+        document.getElementById("sidebar")
+            .classList.remove("mobile-open");
     }
 
-    return p.canvas;
+    window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-function addCanvasCard() {
-    const c = getCanvas();
-    const viewport = document.getElementById("canvasViewport");
+function openCategory(category) {
 
-    const card = {
-        id: uid(),
-        title: "New Note",
-        content: "",
-        x: Math.max(20, viewport.scrollLeft + 70),
-        y: Math.max(20, viewport.scrollTop + 70)
-    };
+    showPage("all");
 
-    c.cards.push(card);
+    document.getElementById("categoryFilter").value = category;
 
-    selectedCard = card.id;
+    document.getElementById("newsHeading").textContent =
+        category + " Current Affairs";
 
-    renderCanvas();
-    scheduleSave();
+    renderNews();
 }
 
-function expandCanvas() {
-    const c = getCanvas();
+function openMonth(month) {
 
-    c.width = Math.min(50000, c.width + 3000);
-    c.height = Math.min(50000, c.height + 3000);
+    showPage("all");
 
-    renderCanvas();
-    scheduleSave();
+    document.getElementById("monthFilter").value = month;
 
-    notify("Workspace expanded");
+    document.getElementById("newsHeading").textContent =
+        month + " Current Affairs";
+
+    renderNews();
 }
 
-function centerCanvas() {
-    const viewport = document.getElementById("canvasViewport");
+function openRegion(region) {
 
-    viewport.scrollLeft = 0;
-    viewport.scrollTop = 0;
+    showPage("all");
+
+    document.getElementById("regionFilter").value = region;
+
+    document.getElementById("newsHeading").textContent =
+        region + " Current Affairs";
+
+    renderNews();
 }
 
-function toggleGrid() {
-    const c = getCanvas();
 
-    c.grid = !c.grid;
+/* ===================================
+   NEWS MANAGEMENT
+=================================== */
 
-    renderCanvas();
-    scheduleSave();
-}
+document.getElementById("newsForm")
+.addEventListener("submit", function(event) {
 
-function renderCanvas() {
-    const c = getCanvas();
-    const world = document.getElementById("canvasWorld");
+    event.preventDefault();
 
-    world.style.width = c.width + "px";
-    world.style.height = c.height + "px";
+    const form = new FormData(this);
 
-    world.style.backgroundImage = c.grid
-        ? "radial-gradient(var(--grid) 1px, transparent 1px)"
-        : "none";
+    const title = String(form.get("title") || "").trim();
+    const summary = String(form.get("summary") || "").trim();
+    const date = String(form.get("date") || "");
+    const source = String(form.get("source") || "").trim();
 
-    world.style.backgroundSize = "22px 22px";
-
-    world.replaceChildren();
-
-    c.cards.forEach(card => {
-        const element = document.createElement("div");
-
-        element.className = "canvas-card";
-        element.style.left = card.x + "px";
-        element.style.top = card.y + "px";
-
-        const header = document.createElement("div");
-        header.className = "canvas-card-header";
-
-        const title = document.createElement("input");
-        title.className = "canvas-card-title";
-        title.value = card.title;
-
-        title.addEventListener("input", () => {
-            card.title = title.value;
-            scheduleSave();
-        });
-
-        const remove = document.createElement("button");
-        remove.className = "icon-btn";
-        remove.textContent = "×";
-
-        remove.onclick = () => {
-            if (!confirm("Delete this note card?")) return;
-
-            c.cards = c.cards.filter(x => x.id !== card.id);
-
-            renderCanvas();
-            scheduleSave();
-        };
-
-        header.append(title, remove);
-
-        const body = document.createElement("div");
-        body.className = "canvas-card-body";
-        body.contentEditable = "true";
-        body.innerHTML = card.content;
-
-        body.addEventListener("input", () => {
-            card.content = body.innerHTML;
-            scheduleSave();
-        });
-
-        element.append(header, body);
-
-        header.addEventListener("pointerdown", event => {
-            if (event.target.closest("button") ||
-                event.target.closest("input")) return;
-
-            event.preventDefault();
-
-            const startX = event.clientX;
-            const startY = event.clientY;
-            const originalX = card.x;
-            const originalY = card.y;
-
-            header.setPointerCapture(event.pointerId);
-
-            const move = e => {
-                card.x = originalX + e.clientX - startX;
-                card.y = originalY + e.clientY - startY;
-
-                element.style.left = card.x + "px";
-                element.style.top = card.y + "px";
-            };
-
-            const stop = () => {
-                header.removeEventListener("pointermove", move);
-                header.removeEventListener("pointerup", stop);
-                header.removeEventListener("pointercancel", stop);
-
-                scheduleSave();
-            };
-
-            header.addEventListener("pointermove", move);
-            header.addEventListener("pointerup", stop);
-            header.addEventListener("pointercancel", stop);
-        });
-
-        world.appendChild(element);
-    });
-}
-
-/* ==========================================
-   MIND MAP
-========================================== */
-
-function getMindMap() {
-    const p = getPage();
-
-    if (!p.mindmap) {
-        p.mindmap = {
-            width: 4000,
-            height: 3000,
-            nodes: [],
-            edges: []
-        };
-    }
-
-    if (!p.mindmap.nodes.length) {
-        p.mindmap.nodes.push({
-            id: uid(),
-            text: p.name,
-            x: 1750,
-            y: 1300,
-            root: true
-        });
-    }
-
-    return p.mindmap;
-}
-
-function getNode(id) {
-    return getMindMap().nodes.find(n => n.id === id) || null;
-}
-
-function addMindNode() {
-    const m = getMindMap();
-
-    const node = {
-        id: uid(),
-        text: "New Idea",
-        x: 1900 + Math.round(Math.random() * 400),
-        y: 1500 + Math.round(Math.random() * 400),
-        root: false
-    };
-
-    m.nodes.push(node);
-
-    selectedNode = node.id;
-
-    renderMindMap();
-    scheduleSave();
-}
-
-function addChildNode() {
-    const m = getMindMap();
-
-    const parent = getNode(selectedNode) ||
-        m.nodes.find(n => n.root) ||
-        m.nodes[0];
-
-    if (!parent) {
-        addMindNode();
+    if (!title || !summary || !date) {
+        alert("Please complete all required fields.");
         return;
     }
 
-    const count = m.edges.filter(e => e.from === parent.id).length;
+    if (source) {
 
-    const child = {
-        id: uid(),
-        text: "Child Idea",
-        x: parent.x + 280,
-        y: parent.y + count * 110,
-        root: false
-    };
+        try {
 
-    m.nodes.push(child);
-    m.edges.push({ from: parent.id, to: child.id });
+            const url = new URL(source);
 
-    selectedNode = child.id;
-
-    renderMindMap();
-    scheduleSave();
-}
-
-function editMindNode() {
-    const node = getNode(selectedNode);
-
-    if (!node) {
-        notify("Select a node first");
-        return;
-    }
-
-    modal("Edit Node", "Node text", node.text, text => {
-        node.text = text;
-        renderMindMap();
-        scheduleSave();
-    });
-}
-
-function deleteMindNode() {
-    const m = getMindMap();
-    const node = getNode(selectedNode);
-
-    if (!node) {
-        notify("Select a node first");
-        return;
-    }
-
-    if (!confirm("Delete this node?")) return;
-
-    m.nodes = m.nodes.filter(n => n.id !== node.id);
-
-    m.edges = m.edges.filter(e =>
-        e.from !== node.id && e.to !== node.id
-    );
-
-    selectedNode = null;
-
-    renderMindMap();
-    scheduleSave();
-}
-
-function connectMindNodes() {
-    if (!selectedNode) {
-        notify("Select a node first");
-        return;
-    }
-
-    if (!connectionStart) {
-        connectionStart = selectedNode;
-
-        notify("Now select another node");
-
-        return;
-    }
-
-    const first = connectionStart;
-    const second = selectedNode;
-
-    connectionStart = null;
-
-    if (first === second) {
-        notify("Select two different nodes");
-        return;
-    }
-
-    const m = getMindMap();
-
-    const exists = m.edges.some(e =>
-        (e.from === first && e.to === second) ||
-        (e.from === second && e.to === first)
-    );
-
-    if (!exists) {
-        m.edges.push({ from: first, to: second });
-    }
-
-    renderMindMap();
-    scheduleSave();
-}
-
-function disconnectMindNode() {
-    const m = getMindMap();
-
-    if (!selectedNode) {
-        notify("Select a node first");
-        return;
-    }
-
-    const edges = m.edges.filter(e =>
-        e.from === selectedNode || e.to === selectedNode
-    );
-
-    if (!edges.length) {
-        notify("No connections for this node");
-        return;
-    }
-
-    const otherIds = [...new Set(edges.map(e =>
-        e.from === selectedNode ? e.to : e.from
-    ))];
-
-    const answer = prompt(
-        "Enter connection number to remove:\n" +
-        otherIds.map((id, i) => `${i + 1}. ${getNode(id)?.text}`).join("\n")
-    );
-
-    if (!answer) return;
-
-    const id = otherIds[Number(answer) - 1];
-
-    if (!id) {
-        notify("Invalid selection");
-        return;
-    }
-
-    m.edges = m.edges.filter(e =>
-        !(
-            (e.from === selectedNode && e.to === id) ||
-            (e.from === id && e.to === selectedNode)
-        )
-    );
-
-    renderMindMap();
-    scheduleSave();
-}
-
-function renderMindMap() {
-    const m = getMindMap();
-
-    const world = document.getElementById("mindmapWorld");
-    const svg = document.getElementById("mindmapLines");
-    const container = document.getElementById("mindNodes");
-
-    world.style.width = m.width + "px";
-    world.style.height = m.height + "px";
-
-    svg.setAttribute("width", m.width);
-    svg.setAttribute("height", m.height);
-    svg.setAttribute("viewBox", `0 0 ${m.width} ${m.height}`);
-
-    svg.replaceChildren();
-    container.replaceChildren();
-
-    m.edges.forEach(edge => {
-        const a = getNode(edge.from);
-        const b = getNode(edge.to);
-
-        if (!a || !b) return;
-
-        const line = document.createElementNS(
-            "http://www.w3.org/2000/svg", "line"
-        );
-
-        line.setAttribute("x1", a.x + 85);
-        line.setAttribute("y1", a.y + 31);
-        line.setAttribute("x2", b.x + 85);
-        line.setAttribute("y2", b.y + 31);
-        line.setAttribute("stroke", "#a98bc5");
-        line.setAttribute("stroke-width", "3");
-
-        svg.appendChild(line);
-    });
-
-    m.nodes.forEach(node => {
-        const element = document.createElement("div");
-
-        element.className =
-            "mind-node" +
-            (node.root ? " root" : "") +
-            (node.id === selectedNode ? " selected" : "");
-
-        element.style.left = node.x + "px";
-        element.style.top = node.y + "px";
-
-        const dot = document.createElement("span");
-        dot.className = "node-dot";
-
-        const text = document.createElement("div");
-        text.className = "node-text";
-        text.textContent = node.text;
-
-        const edit = document.createElement("button");
-        edit.className = "icon-btn";
-        edit.textContent = "✎";
-
-        edit.onclick = event => {
-            event.stopPropagation();
-            selectedNode = node.id;
-            editMindNode();
-        };
-
-        element.append(dot, text, edit);
-
-        element.addEventListener("pointerdown", event => {
-            if (event.target.closest("button")) return;
-
-            selectedNode = node.id;
-
-            if (connectionStart && connectionStart !== node.id) {
-                renderMindMap();
+            if (!["http:", "https:"].includes(url.protocol)) {
+                alert("Source must use HTTP or HTTPS.");
                 return;
             }
 
-            renderMindMap();
+        } catch {
+            alert("Please enter a valid source URL.");
+            return;
+        }
 
-            if (event.target.closest(".node-text")) return;
+    }
 
-            event.preventDefault();
+    const entry = {
+        id: "news_" + Date.now() + "_" +
+            Math.random().toString(36).slice(2, 8),
 
-            const sx = event.clientX;
-            const sy = event.clientY;
-            const ox = node.x;
-            const oy = node.y;
+        title: title,
+        category: form.get("category"),
+        region: form.get("region"),
+        month: MONTHS[Number(date.slice(5, 7)) - 1],
+        date: date,
+        summary: summary,
+        source: source,
+        notes: String(form.get("notes") || "").trim(),
+        createdAt: new Date().toISOString()
+    };
 
-            element.setPointerCapture(event.pointerId);
+    news.unshift(entry);
 
-            const move = e => {
-                node.x = ox + e.clientX - sx;
-                node.y = oy + e.clientY - sy;
-
-                element.style.left = node.x + "px";
-                element.style.top = node.y + "px";
-
-                redrawLines();
-            };
-
-            const stop = () => {
-                element.removeEventListener("pointermove", move);
-                element.removeEventListener("pointerup", stop);
-                element.removeEventListener("pointercancel", stop);
-
-                renderMindMap();
-                scheduleSave();
-            };
-
-            element.addEventListener("pointermove", move);
-            element.addEventListener("pointerup", stop);
-            element.addEventListener("pointercancel", stop);
-        });
-
-        text.addEventListener("dblclick", () => {
-            selectedNode = node.id;
-            editMindNode();
-        });
-
-        container.appendChild(element);
-    });
-
-    document.getElementById("mindmapStatus").textContent =
-        `${m.nodes.length} nodes • ${m.edges.length} connections` +
-        (connectionStart ? " • Select the second node" : "");
-}
-
-function redrawLines() {
-    const m = getMindMap();
-    const svg = document.getElementById("mindmapLines");
-
-    svg.replaceChildren();
-
-    m.edges.forEach(edge => {
-        const a = getNode(edge.from);
-        const b = getNode(edge.to);
-
-        if (!a || !b) return;
-
-        const line = document.createElementNS(
-            "http://www.w3.org/2000/svg", "line"
-        );
-
-        line.setAttribute("x1", a.x + 85);
-        line.setAttribute("y1", a.y + 31);
-        line.setAttribute("x2", b.x + 85);
-        line.setAttribute("y2", b.y + 31);
-        line.setAttribute("stroke", "#a98bc5");
-        line.setAttribute("stroke-width", "3");
-
-        svg.appendChild(line);
-    });
-}
-
-function centerMindMap() {
-    const viewport = document.getElementById("mindmapViewport");
-    const m = getMindMap();
-
-    const root = m.nodes.find(n => n.root) || m.nodes[0];
-
-    if (!root) return;
-
-    viewport.scrollLeft = Math.max(0, root.x - viewport.clientWidth / 2);
-    viewport.scrollTop = Math.max(0, root.y - viewport.clientHeight / 2);
-}
-
-/* ==========================================
-   SEARCH
-========================================== */
-
-document.getElementById("searchInput").addEventListener("input", function() {
-    const query = this.value.trim().toLowerCase();
-
-    if (!query) {
-        renderAll();
+    if (!saveStorage()) {
+        news.shift();
         return;
     }
 
-    const matches = [];
+    closeAddModal();
+    this.reset();
 
-    for (const n of data.notebooks) {
-        for (const s of n.sections) {
-            for (const p of s.pages) {
-                const content = [
-                    n.name,
-                    s.name,
-                    p.name,
-                    textFromHTML(p.content),
-                    ...(p.mindmap?.nodes || []).map(x => x.text),
-                    ...(p.canvas?.cards || []).map(x =>
-                        x.title + " " + textFromHTML(x.content)
-                    )
-                ].join(" ").toLowerCase();
-
-                if (content.includes(query)) matches.push({ n, s, p });
-            }
-        }
-    }
-
-    document.getElementById("notebookList").innerHTML =
-        matches.map(m => `
-            <div class="list-item"
-                 onclick="openSearchResult('${m.n.id}','${m.s.id}','${m.p.id}')">
-                🔎 <span class="name">${esc(m.p.name)}</span>
-            </div>
-        `).join("") || "<div style='padding:10px'>No results found</div>";
-});
-
-function openSearchResult(n, s, p) {
-    notebookId = n;
-    sectionId = s;
-    pageId = p;
+    document.querySelector('[name="date"]').value =
+        new Date().toISOString().slice(0, 10);
 
     renderAll();
-    updateEditor();
+
+    showPage("all");
 
     document.getElementById("searchInput").value = "";
-    closeMobilePanels();
+    document.getElementById("categoryFilter").value = "";
+    document.getElementById("monthFilter").value = "";
+    document.getElementById("regionFilter").value = "";
+
+    alert("Current affairs saved successfully!");
+});
+
+function openAddModal() {
+    document.getElementById("addModal").classList.add("show");
 }
 
-/* ==========================================
-   IMPORT / EXPORT
-========================================== */
+function closeAddModal() {
+    document.getElementById("addModal").classList.remove("show");
+}
 
-function downloadFile(content, filename, type) {
-    const blob = new Blob([content], { type });
+
+/* ===================================
+   NEWS RENDERING
+=================================== */
+
+function renderAll() {
+
+    document.getElementById("totalNews").textContent =
+        news.length;
+
+    document.getElementById("totalBookmarks").textContent =
+        bookmarks.length;
+
+    renderLatest();
+    renderNews();
+    renderBookmarks();
+}
+
+function makeNewsCard(item) {
+
+    const article = document.createElement("article");
+    article.className = "news-card";
+
+    const meta = document.createElement("div");
+    meta.className = "news-meta";
+
+    const categoryTag = document.createElement("span");
+    categoryTag.className = "tag";
+    categoryTag.textContent = item.category;
+
+    const regionTag = document.createElement("span");
+    regionTag.className = "tag";
+    regionTag.textContent = item.region;
+
+    const date = document.createElement("span");
+    date.className = "date";
+    date.textContent = item.date;
+
+    meta.append(categoryTag, regionTag, date);
+
+    const title = document.createElement("h3");
+    title.textContent = item.title;
+
+    const summary = document.createElement("div");
+    summary.className = "news-summary";
+    summary.textContent = item.summary;
+
+    article.append(meta, title, summary);
+
+    if (item.notes) {
+
+        const notes = document.createElement("p");
+
+        notes.style.fontSize = "12px";
+        notes.style.lineHeight = "1.6";
+
+        const strong = document.createElement("strong");
+        strong.textContent = "Exam Notes: ";
+
+        notes.append(strong, document.createTextNode(item.notes));
+
+        article.appendChild(notes);
+    }
+
+    if (item.source) {
+
+        const sourceLink = document.createElement("a");
+
+        sourceLink.href = item.source;
+        sourceLink.target = "_blank";
+        sourceLink.rel = "noopener noreferrer";
+        sourceLink.textContent = "Open Original Source ↗";
+
+        sourceLink.style.fontSize = "12px";
+        sourceLink.style.marginTop = "12px";
+
+        article.appendChild(sourceLink);
+    }
+
+    const footer = document.createElement("div");
+    footer.className = "news-footer";
+
+    const saveButton = document.createElement("button");
+
+    saveButton.textContent = bookmarks.includes(item.id)
+        ? "★ Bookmarked"
+        : "☆ Bookmark";
+
+    saveButton.addEventListener("click", () => {
+        toggleBookmark(item.id);
+    });
+
+    const deleteButton = document.createElement("button");
+
+    deleteButton.textContent = "Delete";
+
+    deleteButton.addEventListener("click", () => {
+        deleteNews(item.id);
+    });
+
+    footer.append(saveButton, deleteButton);
+    article.appendChild(footer);
+
+    return article;
+}
+
+function renderNews() {
+
+    const grid = document.getElementById("newsGrid");
+
+    grid.replaceChildren();
+
+    const search = document.getElementById("searchInput")
+        .value.trim().toLowerCase();
+
+    const category = document.getElementById("categoryFilter").value;
+    const month = document.getElementById("monthFilter").value;
+    const region = document.getElementById("regionFilter").value;
+
+    const filtered = news.filter(item => {
+
+        const searchable = [
+            item.title,
+            item.summary,
+            item.notes,
+            item.category,
+            item.region
+        ].join(" ").toLowerCase();
+
+        return (
+            (!search || searchable.includes(search)) &&
+            (!category || item.category === category) &&
+            (!month || item.month === month) &&
+            (!region || item.region === region)
+        );
+
+    });
+
+    if (filtered.length === 0) {
+
+        const empty = document.createElement("div");
+
+        empty.className = "empty";
+        empty.textContent =
+            "No matching news found. Add news or change your filters.";
+
+        grid.appendChild(empty);
+
+        return;
+    }
+
+    filtered.forEach(item => {
+        grid.appendChild(makeNewsCard(item));
+    });
+}
+
+function renderLatest() {
+
+    const grid = document.getElementById("latestNews");
+
+    grid.replaceChildren();
+
+    const latest = [...news]
+        .sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
+        .slice(0, 3);
+
+    if (!latest.length) {
+
+        const empty = document.createElement("div");
+
+        empty.className = "empty";
+
+        empty.textContent =
+            "No news added yet. Click + Add News to create your first entry.";
+
+        grid.appendChild(empty);
+
+        return;
+    }
+
+    latest.forEach(item => {
+        grid.appendChild(makeNewsCard(item));
+    });
+}
+
+function renderBookmarks() {
+
+    const grid = document.getElementById("bookmarkGrid");
+
+    grid.replaceChildren();
+
+    const saved = news.filter(item => bookmarks.includes(item.id));
+
+    if (!saved.length) {
+
+        const empty = document.createElement("div");
+
+        empty.className = "empty";
+        empty.textContent =
+            "No bookmarks yet. Open All News and save important articles.";
+
+        grid.appendChild(empty);
+
+        return;
+    }
+
+    saved.forEach(item => {
+        grid.appendChild(makeNewsCard(item));
+    });
+}
+
+function toggleBookmark(id) {
+
+    if (bookmarks.includes(id)) {
+
+        bookmarks = bookmarks.filter(item => item !== id);
+
+    } else {
+
+        bookmarks.push(id);
+    }
+
+    saveStorage();
+    renderAll();
+}
+
+function deleteNews(id) {
+
+    const item = news.find(n => n.id === id);
+
+    if (!item) return;
+
+    if (!confirm("Delete this news entry?\n\n" + item.title)) {
+        return;
+    }
+
+    const oldNews = news;
+    const oldBookmarks = bookmarks;
+
+    news = news.filter(n => n.id !== id);
+    bookmarks = bookmarks.filter(b => b !== id);
+
+    if (!saveStorage()) {
+        news = oldNews;
+        bookmarks = oldBookmarks;
+        return;
+    }
+
+    renderAll();
+}
+
+
+/* ===================================
+   EXPORT BACKUP
+=================================== */
+
+function exportNews() {
+
+    const backup = {
+        application: "Current Affairs Hub",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        news: news,
+        bookmarks: bookmarks
+    };
+
+    const blob = new Blob(
+        [JSON.stringify(backup, null, 2)],
+        {type: "application/json"}
+    );
+
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
 
     a.href = url;
-    a.download = filename;
+    a.download = "current-affairs-backup.json";
 
     document.body.appendChild(a);
     a.click();
     a.remove();
 
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    URL.revokeObjectURL(url);
 }
 
-function exportBackup() {
-    if (!saveData()) return;
 
-    downloadFile(
-        JSON.stringify(data, null, 2),
-        "onenote-pro-backup.json",
-        "application/json"
-    );
+/* ===================================
+   QUIZ SYSTEM
+=================================== */
 
-    notify("Backup exported");
+function renderQuizStart() {
+
+    const panel = document.getElementById("quizPanel");
+
+    panel.replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Practice from Your Current Affairs";
+
+    const description = document.createElement("p");
+
+    description.textContent =
+        "Create a short quiz from your saved news entries. " +
+        "For reliable answers, write the correct fact in the Exam Notes " +
+        "field when adding each news item.";
+
+    const button = document.createElement("button");
+
+    button.className = "btn btn-primary";
+    button.textContent = "Generate Quiz";
+
+    button.addEventListener("click", startQuiz);
+
+    const note = document.createElement("div");
+    note.className = "notice";
+    note.textContent =
+        "The quiz uses the headline and category as options. " +
+        "It is a revision activity, not an independently verified MCQ test.";
+
+    panel.append(heading, description, note, button);
 }
 
-document.getElementById("importFile").addEventListener("change", async e => {
-    const file = e.target.files[0];
+function startQuiz() {
 
-    if (!file) return;
+    if (news.length < 2) {
 
-    try {
-        if (file.size > 25 * 1024 * 1024) {
-            throw new Error("Backup too large");
-        }
+        alert("Please add at least two news entries before starting the quiz.");
 
-        const imported = validateData(JSON.parse(await file.text()));
+        return;
+    }
 
-        if (!confirm("Replace current notebooks with this backup?")) return;
+    quizQuestions = [...news]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, Math.min(10, news.length));
 
-        data = imported;
+    quizIndex = 0;
+    quizScore = 0;
+    quizAnswered = false;
 
-        if (!data.notebooks.length) data = makeInitialData();
+    renderQuestion();
+}
 
-        notebookId = data.notebooks[0].id;
-        sectionId = data.notebooks[0].sections[0]?.id || null;
-        pageId = data.notebooks[0].sections[0]?.pages[0]?.id || null;
+function renderQuestion() {
 
-        if (!saveData()) return;
+    const panel = document.getElementById("quizPanel");
 
-        renderAll();
-        updateEditor();
+    panel.replaceChildren();
 
-        notify("Backup imported");
+    if (quizIndex >= quizQuestions.length) {
 
-    } catch (error) {
-        console.error(error);
-        notify("Could not import this backup");
-    } finally {
-        e.target.value = "";
+        const heading = document.createElement("h3");
+
+        heading.textContent = "Quiz Completed!";
+
+        const result = document.createElement("p");
+
+        result.textContent =
+            "You completed " + quizQuestions.length +
+            " revision questions. Score: " + quizScore +
+            " / " + quizQuestions.length + ".";
+
+        const restart = document.createElement("button");
+
+        restart.className = "btn btn-primary";
+        restart.textContent = "Try Again";
+        restart.addEventListener("click", startQuiz);
+
+        panel.append(heading, result, restart);
+
+        return;
+    }
+
+    const item = quizQuestions[quizIndex];
+
+    const progress = document.createElement("p");
+
+    progress.textContent =
+        "Question " + (quizIndex + 1) +
+        " of " + quizQuestions.length;
+
+    const heading = document.createElement("h3");
+
+    heading.textContent = item.title;
+
+    const instruction = document.createElement("p");
+
+    instruction.textContent =
+        "Which category does this news belong to?";
+
+    panel.append(progress, heading, instruction);
+
+    const options = [...new Set([
+        item.category,
+        ...CATEGORIES
+            .map(c => c.name)
+            .filter(name => name !== item.category)
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 3)
+    ])].sort(() => Math.random() - 0.5);
+
+    options.forEach(option => {
+
+        const button = document.createElement("button");
+
+        button.className = "quiz-option";
+        button.textContent = option;
+
+        button.addEventListener("click", () => {
+
+            if (quizAnswered) return;
+
+            quizAnswered = true;
+
+            const correct = option === item.category;
+
+            if (correct) quizScore++;
+
+            const feedback = document.createElement("p");
+
+            feedback.textContent = correct
+                ? "Correct! Category: " + item.category
+                : "Correct answer: " + item.category;
+
+            feedback.style.fontWeight = "bold";
+            feedback.style.color = correct ? "#15803d" : "#b91c1c";
+
+            panel.appendChild(feedback);
+
+            const next = document.createElement("button");
+
+            next.className = "btn btn-primary";
+            next.textContent =
+                quizIndex === quizQuestions.length - 1
+                    ? "See Results"
+                    : "Next Question →";
+
+            next.style.marginTop = "12px";
+
+            next.addEventListener("click", () => {
+                quizIndex++;
+                quizAnswered = false;
+                renderQuestion();
+            });
+
+            panel.appendChild(next);
+        });
+
+        panel.appendChild(button);
+    });
+}
+
+
+/* ===================================
+   KEYBOARD AND MODAL
+=================================== */
+
+document.getElementById("addModal")
+.addEventListener("click", function(event) {
+
+    if (event.target === this) {
+        closeAddModal();
     }
 });
 
-/* ==========================================
-   THEME
-========================================== */
-
-function toggleTheme() {
-    document.body.classList.toggle("dark");
-
-    localStorage.setItem(
-        THEME_KEY,
-        document.body.classList.contains("dark") ? "dark" : "light"
-    );
-}
-
-/* ==========================================
-   TOAST
-========================================== */
-
-function notify(message) {
-    const toast = document.getElementById("toast");
-
-    toast.textContent = message;
-    toast.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer = setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2400);
-}
-
-/* ==========================================
-   KEYBOARD SHORTCUTS
-========================================== */
-
-document.addEventListener("keydown", event => {
-    const mod = event.ctrlKey || event.metaKey;
+document.addEventListener("keydown", function(event) {
 
     if (event.key === "Escape") {
-        closeModal();
-        closeMobilePanels();
-        connectionStart = null;
-    }
-
-    if (mod && event.key.toLowerCase() === "s") {
-        event.preventDefault();
-        saveNote();
-        saveData();
-        notify("Saved");
-    }
-
-    if (mod && event.key.toLowerCase() === "n") {
-        event.preventDefault();
-
-        if (currentMode === "canvas") addCanvasCard();
-        else if (currentMode === "mindmap") addMindNode();
-        else newPage();
+        closeAddModal();
     }
 });
 
-/* ==========================================
-   BEFORE EXIT
-========================================== */
 
-window.addEventListener("beforeunload", () => {
-    clearTimeout(saveTimer);
+/* ===================================
+   START APPLICATION
+=================================== */
 
-    const p = getPage();
+initialize();
 
-    if (p) {
-        p.name = document.getElementById("pageTitle").value.trim() || "New Page";
-        p.content = document.getElementById("noteEditor").innerHTML;
-        p.updatedAt = new Date().toISOString();
-    }
-
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch (error) {
-        console.warn("Could not save before exit", error);
-    }
-});
-
-/* ==========================================
-   INITIALIZE
-========================================== */
-
-loadData();
 </script>
 
 </body>
