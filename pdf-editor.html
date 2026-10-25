@@ -1,274 +1,507 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#07111d">
+<title>PDF Master Pro - Advanced PDF Editor</title>
 
-<title>Extreme Moto Racing</title>
+<!-- PDF Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<!-- ZIP Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <style>
+:root {
+    --primary: #6558f5;
+    --primary-dark: #4939dc;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #20243a;
+    --muted: #72788c;
+    --border: #e4e7f0;
+    --success: #12a875;
+    --danger: #e74c3c;
+}
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background: #07111d;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+header {
+    background: linear-gradient(120deg, #5745e8, #8877ff);
     color: white;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-    touch-action: none;
-    user-select: none;
-}
-
-#gameCanvas {
-    display: block;
-    width: 100vw;
-    height: 100dvh;
-    background: #87ceeb;
-}
-
-#hud {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
+    padding: 20px 24px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 5px;
-    pointer-events: none;
-}
-
-.stat {
-    min-width: 65px;
-    padding: 8px;
-    background: rgba(0,0,0,.72);
-    border: 1px solid #506171;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.stat small {
-    font-size: 9px;
-    color: #bdc9d6;
-    display: block;
-}
-
-.stat strong {
-    display: block;
-    margin-top: 3px;
-    font-size: 18px;
-}
-
-#speedValue {
-    color: #00ffab;
-}
-
-#nitroContainer {
-    width: 65px;
-    height: 6px;
-    background: #444;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 6px;
-}
-
-#nitroFill {
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg,#00d9ff,#00ff73);
-}
-
-#pauseBtn {
-    position: fixed;
-    right: 10px;
-    top: 83px;
-    padding: 9px 12px;
-    border: 1px solid white;
-    border-radius: 10px;
-    color: white;
-    background: rgba(0,0,0,.75);
-    font-weight: bold;
-    z-index: 3;
-}
-
-#controls {
-    position: fixed;
-    bottom: max(15px, env(safe-area-inset-bottom));
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 0 13px;
-    pointer-events: none;
-}
-
-.group {
-    display: flex;
-    gap: 9px;
-    pointer-events: auto;
-}
-
-.control {
-    width: 62px;
-    height: 62px;
-    border: 2px solid #b7c9dc;
-    border-radius: 18px;
-    color: white;
-    background: rgba(8,19,35,.88);
-    font-size: 25px;
-    font-weight: bold;
-    box-shadow: 0 4px 0 rgba(0,0,0,.35);
-    touch-action: none;
-}
-
-.control:active {
-    background: #087aff;
-    transform: scale(.95);
-}
-
-#brakeBtn {
-    font-size: 12px;
-    background: #333b47;
-}
-
-#nitroBtn {
-    font-size: 15px;
-    background: linear-gradient(135deg,#ff9b00,#ff3500);
-}
-
-#message {
-    position: fixed;
-    top: 30%;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 30px;
-    font-weight: 900;
-    text-shadow: 0 3px 10px #000;
-    pointer-events: none;
-}
-
-#tiltInfo {
-    position: fixed;
-    bottom: 92px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 6px 10px;
-    background: rgba(0,0,0,.5);
-    border-radius: 20px;
-    font-size: 10px;
-    white-space: nowrap;
-}
-
-#startScreen {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 18px;
-    background: linear-gradient(
-        180deg,
-        rgba(3,12,27,.85),
-        rgba(2,8,18,.97)
-    );
-}
-
-.card {
-    width: 100%;
-    max-width: 410px;
-    padding: 25px 20px;
-    border-radius: 24px;
-    text-align: center;
-    background: #122239;
-    border: 1px solid #536d89;
-    box-shadow: 0 0 35px rgba(0,140,255,.18);
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .logo {
-    font-size: 52px;
+    font-size: 25px;
+    font-weight: bold;
 }
 
-.card h1 {
-    font-size: 30px;
-    margin: 10px 0;
-    line-height: 1.15;
+.logo span {
+    color: #ffe18b;
 }
 
-.card h1 span {
-    color: #00ffab;
+.header-subtitle {
+    font-size: 12px;
+    opacity: .9;
+    margin-top: 5px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.header-actions button {
+    border: 1px solid #ffffff66;
+    background: #ffffff18;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 9px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    min-height: calc(100vh - 90px);
+}
+
+.sidebar {
+    background: white;
+    border-right: 1px solid var(--border);
+    padding: 20px 12px;
+}
+
+.sidebar h3 {
+    margin: 4px 12px 15px;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: none;
+    padding: 13px 12px;
+    background: transparent;
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #555b70;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    background: #efedff;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.nav-icon {
+    font-size: 19px;
+    width: 25px;
+    text-align: center;
+}
+
+main {
+    padding: 25px;
+    min-width: 0;
+}
+
+.page-title {
+    font-size: 27px;
+    margin: 0 0 8px;
+}
+
+.page-description {
+    color: var(--muted);
+    margin: 0 0 24px;
+    line-height: 1.6;
+}
+
+.workspace {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 5px 20px #242c4a08;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.dropzone {
+    border: 2px dashed #c8c4ff;
+    background: #faf9ff;
+    border-radius: 14px;
+    padding: 35px 15px;
+    text-align: center;
+    transition: .2s;
+}
+
+.dropzone.dragover {
+    border-color: var(--primary);
+    background: #efedff;
+}
+
+.upload-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.dropzone h3 {
+    margin: 0 0 8px;
+}
+
+.dropzone p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.btn {
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 9px;
+    padding: 12px 18px;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+}
+
+.btn.secondary {
+    background: #eeecff;
+    color: var(--primary);
+}
+
+.btn.danger {
+    background: #fff0ef;
+    color: var(--danger);
+}
+
+.btn.success {
+    background: var(--success);
+}
+
+.btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.file-input {
+    display: none;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 18px 0;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 13px 0;
+}
+
+.field label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    outline-color: var(--primary);
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    background: white;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin-top: 0;
 }
 
 .card p {
-    color: #c7d5e5;
+    color: var(--muted);
     font-size: 13px;
-    line-height: 1.8;
-    margin: 15px 0 20px;
+    line-height: 1.6;
 }
 
-.action {
-    width: 100%;
-    padding: 15px;
-    margin-top: 9px;
+.file-list {
+    margin-top: 18px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 8px 0;
+    background: white;
+    overflow-wrap: anywhere;
+}
+
+.file-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.file-size {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.remove-file {
+    background: #fff0ef;
+    color: var(--danger);
     border: none;
+    padding: 8px 10px;
+    border-radius: 7px;
+}
+
+.split-section {
+    border: 1px solid var(--border);
     border-radius: 12px;
-    font-size: 16px;
-    font-weight: 900;
-    color: #00140d;
-    background: linear-gradient(90deg,#00ffab,#00c8ff);
+    padding: 16px;
+    margin: 12px 0;
+    background: #fcfcff;
 }
 
-.action.secondary {
-    background: #263d58;
-    color: white;
-    border: 1px solid #60758c;
+.split-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
 }
 
-#diagnostic {
-    position: fixed;
-    left: 10px;
-    bottom: 100px;
-    color: #fff;
-    font-size: 10px;
-    max-width: 80%;
-    pointer-events: none;
+.split-heading strong {
+    color: var(--primary);
 }
 
-@media(max-height:600px) {
-    .card {
+.status {
+    margin-top: 18px;
+    padding: 13px;
+    border-radius: 9px;
+    background: #f3f4fa;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.status.success {
+    background: #e9fbf3;
+    color: #087a50;
+}
+
+.status.error {
+    background: #fff0ef;
+    color: #b42318;
+}
+
+.status:empty {
+    display: none;
+}
+
+.progress {
+    height: 7px;
+    background: #e9eaf2;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 14px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background: var(--primary);
+    transition: width .2s;
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.preview-page {
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    background: white;
+    cursor: pointer;
+}
+
+.preview-page.selected {
+    border-color: var(--primary);
+    background: #f5f3ff;
+}
+
+.preview-page canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #eee;
+    border-radius: 4px;
+}
+
+.preview-page .page-label {
+    font-size: 12px;
+    margin: 8px 0 3px;
+}
+
+.preview-page input {
+    margin: 7px;
+}
+
+.output-list {
+    margin-top: 15px;
+}
+
+.output-item {
+    padding: 13px;
+    background: #eafaf3;
+    border-radius: 9px;
+    margin-bottom: 9px;
+    font-size: 13px;
+}
+
+.output-item a {
+    display: inline-block;
+    margin-top: 8px;
+    color: #087a50;
+    font-weight: bold;
+}
+
+.warning {
+    padding: 13px;
+    background: #fff7df;
+    color: #745600;
+    border-radius: 9px;
+    line-height: 1.6;
+    font-size: 13px;
+    margin: 15px 0;
+}
+
+.feature-note {
+    background: #f5f6fb;
+    border-radius: 10px;
+    padding: 14px;
+    color: #626a7e;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 15px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 800px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
         padding: 12px;
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
     }
 
-    .logo {
-        font-size: 35px;
+    .sidebar h3 {
+        display: none;
     }
 
-    .card h1 {
-        font-size: 24px;
+    .nav-btn {
+        width: auto;
+        white-space: nowrap;
+        flex-shrink: 0;
+        margin: 0;
+        padding: 11px;
     }
 
-    .card p {
-        margin: 8px 0;
-        line-height: 1.5;
+    main {
+        padding: 14px;
     }
 
-    .action {
-        padding: 10px;
+    .workspace {
+        padding: 15px;
     }
 
-    .control {
-        width: 54px;
-        height: 54px;
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .page-title {
+        font-size: 23px;
     }
 }
 </style>
@@ -276,1052 +509,2023 @@ body {
 
 <body>
 
-<canvas id="gameCanvas"></canvas>
-
-<div id="hud">
-
-    <div class="stat">
-        <small>SPEED</small>
-        <strong id="speedValue">0</strong>
-        <small>KM/H</small>
+<header>
+    <div>
+        <div class="logo">📄 PDF <span>Master Pro</span></div>
+        <div class="header-subtitle">Advanced PDF Tools • Secure • Mobile Friendly</div>
     </div>
 
-    <div class="stat">
-        <small>POSITION</small>
-        <strong id="rankValue">1/8</strong>
+    <div class="header-actions">
+        <button onclick="showSection('home')">Home</button>
+        <button onclick="clearWorkspace()">Clear Workspace</button>
     </div>
+</header>
 
-    <div class="stat">
-        <small>DISTANCE</small>
-        <strong id="distanceValue">0</strong>
-        <small>METERS</small>
-    </div>
+<div class="layout">
 
-    <div class="stat">
-        <small>NITRO ⚡</small>
-        <div id="nitroContainer">
-            <div id="nitroFill"></div>
+<aside class="sidebar">
+
+    <h3>PDF Tools</h3>
+
+    <button class="nav-btn active" data-section="home"
+        onclick="showSection('home')">
+        <span class="nav-icon">🏠</span> Dashboard
+    </button>
+
+    <button class="nav-btn" data-section="merge"
+        onclick="showSection('merge')">
+        <span class="nav-icon">📚</span> Merge PDF
+    </button>
+
+    <button class="nav-btn" data-section="split"
+        onclick="showSection('split')">
+        <span class="nav-icon">✂️</span> Split PDF
+    </button>
+
+    <button class="nav-btn" data-section="preview"
+        onclick="showSection('preview')">
+        <span class="nav-icon">👁️</span> PDF Preview
+    </button>
+
+    <button class="nav-btn" data-section="pdfimage"
+        onclick="showSection('pdfimage')">
+        <span class="nav-icon">🖼️</span> PDF to Image
+    </button>
+
+    <button class="nav-btn" data-section="imagetopdf"
+        onclick="showSection('imagetopdf')">
+        <span class="nav-icon">📷</span> Image to PDF
+    </button>
+
+    <button class="nav-btn" data-section="text"
+        onclick="showSection('text')">
+        <span class="nav-icon">✏️</span> Edit PDF Text
+    </button>
+
+    <button class="nav-btn" data-section="password"
+        onclick="showSection('password')">
+        <span class="nav-icon">🔓</span> PDF Password
+    </button>
+
+    <h3 style="margin-top:25px">Convert PDF</h3>
+
+    <button class="nav-btn" data-section="office"
+        onclick="showSection('office')">
+        <span class="nav-icon">📝</span> Office to PDF
+    </button>
+
+    <button class="nav-btn" data-section="pdfword"
+        onclick="showSection('pdfword')">
+        <span class="nav-icon">📃</span> PDF to Word
+    </button>
+
+    <button class="nav-btn" data-section="pdfppt"
+        onclick="showSection('pdfppt')">
+        <span class="nav-icon">📊</span> PDF to PPT
+    </button>
+
+</aside>
+
+<main>
+
+<!-- DASHBOARD -->
+
+<section class="section active" id="home">
+
+    <h1 class="page-title">Advanced PDF Editor</h1>
+
+    <p class="page-description">
+        Manage, organize, split, merge and convert your PDF documents
+        from one convenient workspace.
+    </p>
+
+    <div class="grid-2">
+
+        <div class="card">
+            <h3>📚 Merge PDF</h3>
+            <p>Combine multiple PDF files into one document.</p>
+            <button class="btn" onclick="showSection('merge')">
+                Open Tool
+            </button>
         </div>
+
+        <div class="card">
+            <h3>✂️ Split PDF</h3>
+            <p>Split pages into multiple sections or individual files.</p>
+            <button class="btn" onclick="showSection('split')">
+                Open Tool
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>🖼️ PDF to Image</h3>
+            <p>Convert PDF pages into PNG images and download them.</p>
+            <button class="btn" onclick="showSection('pdfimage')">
+                Open Tool
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>📷 Image to PDF</h3>
+            <p>Combine JPG, PNG and WebP images into a PDF document.</p>
+            <button class="btn" onclick="showSection('imagetopdf')">
+                Open Tool
+            </button>
+        </div>
+
     </div>
 
-</div>
-
-<button id="pauseBtn">Ⅱ PAUSE</button>
-
-<div id="message"></div>
-
-<div id="tiltInfo">🎮 BUTTON CONTROL ACTIVE</div>
-
-<div id="diagnostic"></div>
-
-<div id="controls">
-
-    <div class="group">
-        <button class="control" id="leftBtn">◀</button>
-        <button class="control" id="rightBtn">▶</button>
+    <div class="warning">
+        🔒 Your selected files are processed locally in your browser
+        for the supported operations. Avoid uploading sensitive files
+        to third-party conversion services without checking their privacy
+        policies.
     </div>
 
-    <div class="group">
-        <button class="control" id="brakeBtn">BRAKE</button>
-        <button class="control" id="nitroBtn">⚡ NITRO</button>
+</section>
+
+<!-- MERGE PDF -->
+
+<section class="section" id="merge">
+
+    <h1 class="page-title">Merge PDF Files</h1>
+
+    <p class="page-description">
+        Select two or more PDF files. Arrange them in the desired order
+        before merging.
+    </p>
+
+    <div class="dropzone" id="mergeDrop">
+        <div class="upload-icon">📚</div>
+        <h3>Choose PDF files</h3>
+        <p>Select multiple PDF documents from your device.</p>
+
+        <input class="file-input" type="file" id="mergeFiles"
+            accept=".pdf,application/pdf" multiple>
+
+        <button class="btn"
+            onclick="document.getElementById('mergeFiles').click()">
+            Select PDF Files
+        </button>
     </div>
 
-</div>
+    <div class="file-list" id="mergeList"></div>
 
-<div id="startScreen">
+    <div class="toolbar">
+        <button class="btn secondary" onclick="moveMergeFile(-1)">
+            ↑ Move Up
+        </button>
+
+        <button class="btn secondary" onclick="moveMergeFile(1)">
+            ↓ Move Down
+        </button>
+
+        <button class="btn" onclick="mergePDFs()">
+            Merge PDFs
+        </button>
+    </div>
+
+    <div id="mergeStatus" class="status"></div>
+
+</section>
+
+<!-- SPLIT PDF -->
+
+<section class="section" id="split">
+
+    <h1 class="page-title">Split PDF</h1>
+
+    <p class="page-description">
+        Upload a PDF, specify page ranges and create multiple output
+        documents.
+    </p>
+
+    <div class="dropzone">
+        <div class="upload-icon">✂️</div>
+        <h3>Select source PDF</h3>
+
+        <input class="file-input" type="file" id="splitFile"
+            accept=".pdf,application/pdf">
+
+        <button class="btn"
+            onclick="document.getElementById('splitFile').click()">
+            Upload PDF
+        </button>
+
+        <p id="splitFileInfo">No PDF selected.</p>
+    </div>
+
+    <div id="splitControls" style="display:none">
+
+        <div class="field">
+            <label>Total Pages</label>
+            <input id="splitTotal" readonly>
+        </div>
+
+        <div class="field">
+            <label>Split Method</label>
+
+            <select id="splitMode" onchange="updateSplitMode()">
+                <option value="ranges">Multiple Page Ranges</option>
+                <option value="every">Split Every N Pages</option>
+                <option value="individual">Every Page as Separate PDF</option>
+            </select>
+        </div>
+
+        <div id="rangeSettings">
+
+            <div class="warning">
+                Example: For a 20-page PDF, you can create:
+                Section 1: pages 1–5,
+                Section 2: pages 6–12,
+                Section 3: pages 13–20.
+            </div>
+
+            <div id="splitSections"></div>
+
+            <button class="btn secondary" onclick="addSplitSection()">
+                + Add Another Section
+            </button>
+
+        </div>
+
+        <div id="everySettings" style="display:none">
+
+            <div class="field">
+                <label>Pages per PDF file</label>
+                <input id="pagesPerFile" type="number" min="1" value="5">
+            </div>
+
+        </div>
+
+        <div class="toolbar">
+            <button class="btn" onclick="executeSplit()">
+                Split and Download
+            </button>
+        </div>
+
+    </div>
+
+    <div id="splitStatus" class="status"></div>
+    <div id="splitOutputs" class="output-list"></div>
+
+</section>
+
+<!-- PDF PREVIEW -->
+
+<section class="section" id="preview">
+
+    <h1 class="page-title">PDF Page Preview</h1>
+
+    <p class="page-description">
+        Preview PDF pages and select specific pages to export as a new PDF.
+    </p>
+
+    <div class="dropzone">
+        <input class="file-input" type="file" id="previewFile"
+            accept=".pdf,application/pdf">
+
+        <button class="btn"
+            onclick="document.getElementById('previewFile').click()">
+            Open PDF
+        </button>
+    </div>
+
+    <div class="toolbar">
+        <button class="btn secondary" onclick="selectAllPages(true)">
+            Select All
+        </button>
+
+        <button class="btn secondary" onclick="selectAllPages(false)">
+            Deselect All
+        </button>
+
+        <button class="btn" onclick="exportSelectedPages()">
+            Export Selected Pages
+        </button>
+    </div>
+
+    <div id="previewInfo" class="status"></div>
+    <div id="previewGrid" class="preview-grid"></div>
+    <div id="previewStatus" class="status"></div>
+
+</section>
+
+<!-- PDF TO IMAGE -->
+
+<section class="section" id="pdfimage">
+
+    <h1 class="page-title">PDF to Image Converter</h1>
+
+    <p class="page-description">
+        Render PDF pages as PNG images. All exported images can be
+        downloaded together in a ZIP file.
+    </p>
+
+    <div class="dropzone">
+
+        <div class="upload-icon">🖼️</div>
+
+        <input class="file-input" type="file" id="imagePDF"
+            accept=".pdf,application/pdf">
+
+        <button class="btn"
+            onclick="document.getElementById('imagePDF').click()">
+            Choose PDF
+        </button>
+
+    </div>
+
+    <div class="field">
+        <label>Image Quality</label>
+
+        <select id="renderScale">
+            <option value="1">Standard</option>
+            <option value="1.5" selected>High Quality</option>
+            <option value="2">Very High Quality</option>
+        </select>
+    </div>
+
+    <button class="btn" onclick="convertPDFToImages()">
+        Convert PDF to PNG
+    </button>
+
+    <div id="imageStatus" class="status"></div>
+    <div id="imageOutputs" class="output-list"></div>
+
+</section>
+
+<!-- IMAGE TO PDF -->
+
+<section class="section" id="imagetopdf">
+
+    <h1 class="page-title">Image to PDF</h1>
+
+    <p class="page-description">
+        Combine multiple images into one PDF. Supported formats include
+        JPG, PNG and WebP.
+    </p>
+
+    <div class="dropzone">
+
+        <div class="upload-icon">📷</div>
+
+        <input class="file-input" type="file" id="imageFiles"
+            accept="image/jpeg,image/png,image/webp" multiple>
+
+        <button class="btn"
+            onclick="document.getElementById('imageFiles').click()">
+            Select Images
+        </button>
+
+    </div>
+
+    <div id="selectedImages" class="file-list"></div>
+
+    <div class="toolbar">
+        <button class="btn secondary" onclick="moveImage(-1)">
+            ↑ Move Up
+        </button>
+
+        <button class="btn secondary" onclick="moveImage(1)">
+            ↓ Move Down
+        </button>
+
+        <button class="btn" onclick="convertImagesToPDF()">
+            Create PDF
+        </button>
+    </div>
+
+    <div id="imageToPDFStatus" class="status"></div>
+
+</section>
+
+<!-- EDIT TEXT -->
+
+<section class="section" id="text">
+
+    <h1 class="page-title">Edit PDF Text</h1>
+
+    <p class="page-description">
+        Extract selectable text from a PDF and prepare corrected text
+        for export.
+    </p>
+
+    <div class="warning">
+        A PDF is not the same as a Word document. Directly changing
+        existing text while preserving its original position, font,
+        formatting and layout requires a specialized PDF editor.
+    </div>
+
+    <div class="dropzone">
+
+        <input class="file-input" type="file" id="textPDF"
+            accept=".pdf,application/pdf">
+
+        <button class="btn"
+            onclick="document.getElementById('textPDF').click()">
+            Select PDF
+        </button>
+
+    </div>
+
+    <div class="field">
+        <label>Page Number (1-based)</label>
+        <input id="textPage" type="number" value="1" min="1">
+    </div>
+
+    <button class="btn" onclick="extractPDFText()">
+        Extract Text
+    </button>
+
+    <div class="field">
+        <label>Extracted / Editable Text</label>
+        <textarea id="editableText"
+            style="width:100%;min-height:260px;padding:14px;
+            border:1px solid var(--border);border-radius:10px;"
+            placeholder="Extracted text will appear here..."></textarea>
+    </div>
+
+    <button class="btn" onclick="downloadTextFile()">
+        Download Edited Text (.txt)
+    </button>
+
+    <div class="feature-note">
+        This tool extracts selectable text into an editable text box.
+        It does not replace text inside the original PDF. A dedicated
+        PDF text replacement engine is required for that operation.
+    </div>
+
+    <div id="textStatus" class="status"></div>
+
+</section>
+
+<!-- PASSWORD -->
+
+<section class="section" id="password">
+
+    <h1 class="page-title">PDF Password Tools</h1>
+
+    <p class="page-description">
+        Work with PDFs you own or are authorized to access.
+    </p>
+
+    <div class="warning">
+        This browser-only version does not remove PDF encryption.
+        Use the correct password and a trusted tool that explicitly
+        supports decrypting the PDF. Do not upload confidential files
+        to unknown websites.
+    </div>
 
     <div class="card">
 
-        <div class="logo">🏍️</div>
+        <h3>Open a Password-Protected PDF</h3>
 
-        <h1>EXTREME <span>MOTO</span><br>RACING</h1>
+        <div class="field">
+            <label>Select PDF</label>
+            <input type="file" id="passwordPDF" accept=".pdf,application/pdf">
+        </div>
 
-        <p>
-            HIGH SPEED MOTORCYCLE RACING<br><br>
-            🏍️ दूसरी बाइकों से रेस लगाएँ।<br>
-            🛣️ हाईवे पर ट्रैफिक से बचें।<br>
-            ⚡ नाइट्रो से स्पीड बढ़ाएँ।<br>
-            📱 मोबाइल झुकाकर या बटन से बाइक चलाएँ।
-        </p>
+        <div class="field">
+            <label>PDF Password</label>
+            <input type="password" id="pdfPassword"
+                autocomplete="off" placeholder="Enter known password">
+        </div>
 
-        <button class="action" id="startBtn">
-            🏁 START RACE
+        <button class="btn" onclick="checkPDFPassword()">
+            Open and Check Password
         </button>
 
-        <button class="action secondary" id="tiltBtn">
-            📱 ENABLE TILT CONTROL
+        <div id="passwordStatus" class="status"></div>
+
+    </div>
+
+</section>
+
+<!-- OFFICE TO PDF -->
+
+<section class="section" id="office">
+
+    <h1 class="page-title">Word / Excel / PowerPoint to PDF</h1>
+
+    <p class="page-description">
+        Convert Microsoft Office documents to PDF.
+    </p>
+
+    <div class="warning">
+        This feature requires a document conversion engine. A standalone
+        HTML page cannot reliably render every DOCX, XLSX and PPTX file
+        with its original layout.
+    </div>
+
+    <div class="card">
+
+        <h3>Select Office Document</h3>
+
+        <div class="field">
+            <label>Supported document types</label>
+
+            <select id="officeType">
+                <option value=".doc,.docx">Word (.doc / .docx)</option>
+                <option value=".xls,.xlsx">Excel (.xls / .xlsx)</option>
+                <option value=".ppt,.pptx">PowerPoint (.ppt / .pptx)</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Choose File</label>
+
+            <input type="file" id="officeFile"
+                accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx">
+        </div>
+
+        <button class="btn" onclick="convertOfficeFile()">
+            Convert Office File
+        </button>
+
+        <div id="officeStatus" class="status"></div>
+
+    </div>
+
+    <div class="feature-note">
+        Connect this interface to a trusted conversion API or a backend
+        using LibreOffice. Configure API credentials on the server,
+        never inside public JavaScript.
+    </div>
+
+</section>
+
+<!-- PDF TO WORD -->
+
+<section class="section" id="pdfword">
+
+    <h1 class="page-title">PDF to Word</h1>
+
+    <p class="page-description">
+        Convert PDF documents into editable Word documents.
+    </p>
+
+    <div class="warning">
+        True PDF-to-DOCX conversion must preserve paragraphs, tables,
+        fonts, images and page layout. The browser version needs a
+        specialized conversion engine for this.
+    </div>
+
+    <div class="dropzone">
+
+        <input class="file-input" type="file" id="wordPDF"
+            accept=".pdf,application/pdf">
+
+        <button class="btn"
+            onclick="document.getElementById('wordPDF').click()">
+            Select PDF
         </button>
 
     </div>
 
+    <button class="btn" onclick="convertPDFToWord()"
+        style="margin-top:15px">
+        Convert to Word
+    </button>
+
+    <div id="wordStatus" class="status"></div>
+
+</section>
+
+<!-- PDF TO PPT -->
+
+<section class="section" id="pdfppt">
+
+    <h1 class="page-title">PDF to PowerPoint</h1>
+
+    <p class="page-description">
+        Convert PDF pages into PowerPoint slides.
+    </p>
+
+    <div class="warning">
+        Editable PowerPoint conversion requires a specialized converter.
+        A PDF page can also be placed on a slide as an image, but that
+        does not make its original text and objects editable.
+    </div>
+
+    <div class="dropzone">
+
+        <input class="file-input" type="file" id="pptPDF"
+            accept=".pdf,application/pdf">
+
+        <button class="btn"
+            onclick="document.getElementById('pptPDF').click()">
+            Select PDF
+        </button>
+
+    </div>
+
+    <button class="btn" onclick="convertPDFToPPT()"
+        style="margin-top:15px">
+        Convert to PowerPoint
+    </button>
+
+    <div id="pptStatus" class="status"></div>
+
+</section>
+
+</main>
 </div>
 
+<footer>
+    PDF Master Pro • Browser-Based PDF Utilities
+    <br><br>
+    Always keep a backup of important documents.
+</footer>
+
 <script>
-"use strict";
+/* ========================================
+   GLOBAL SETTINGS
+======================================== */
 
-/* ===================================
-   EXTREME MOTO RACING
-   Canvas-only game engine
-   No external libraries required
-=================================== */
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+const { PDFDocument } = PDFLib;
 
-const $ = id => document.getElementById(id);
+let mergeFiles = [];
+let splitSource = null;
+let previewSource = null;
+let previewSelected = new Set();
+let imageSource = null;
+let imageFilesList = [];
+let selectedMergeIndex = -1;
+let selectedImageIndex = -1;
+let previewRenderToken = 0;
 
-let W = 0;
-let H = 0;
-let DPR = 1;
+/* ========================================
+   GENERAL UTILITIES
+======================================== */
 
-let running = false;
-let paused = false;
-let crashed = 0;
-
-let speed = 0;
-let distance = 0;
-let score = 0;
-let nitro = 100;
-
-let playerX = 0;
-let steer = 0;
-let lean = 0;
-
-let left = false;
-let right = false;
-let brake = false;
-let nitroHeld = false;
-
-let tiltEnabled = false;
-let tiltValue = 0;
-let tiltZero = null;
-
-let lastTime = 0;
-let gameTime = 0;
-let roadOffset = 0;
-let spawnClock = 0;
-let shake = 0;
-
-let opponents = [];
-let particles = [];
-let roadside = [];
-
-const COLORS = [
-    "#ff3030",
-    "#ffc928",
-    "#167aff",
-    "#f5f5f5",
-    "#a72cff",
-    "#161616",
-    "#00d7a2"
-];
-
-const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
-
-function resize() {
-    W = window.innerWidth;
-    H = window.innerHeight;
-
-    DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-
-    canvas.width = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
-
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
-
-    ctx.setTransform(DPR,0,0,DPR,0,0);
+function $(id) {
+    return document.getElementById(id);
 }
 
-window.addEventListener("resize", resize);
-resize();
+function showSection(id) {
 
-/* Road perspective */
-
-function horizon() {
-    return H * 0.34;
-}
-
-function roadHalfWidth(y) {
-    const t = clamp((y-horizon())/(H-horizon()),0,1);
-    return W * (0.045 + t*0.48);
-}
-
-function roadCenter(y) {
-    const t = clamp((y-horizon())/(H-horizon()),0,1);
-
-    return W*0.5
-        + Math.sin(gameTime*0.12 + t*1.7)*W*0.055*t
-        + Math.sin(gameTime*0.035)*W*0.025*t;
-}
-
-function roadX(y,lane) {
-    return roadCenter(y)+roadHalfWidth(y)*lane;
-}
-
-/* Drawing helpers */
-
-function polygon(points,color) {
-    ctx.fillStyle=color;
-    ctx.beginPath();
-
-    points.forEach((p,i)=>{
-        if(i===0) ctx.moveTo(p[0],p[1]);
-        else ctx.lineTo(p[0],p[1]);
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
     });
 
-    ctx.closePath();
-    ctx.fill();
+    document.querySelectorAll('.nav-btn').forEach(button => {
+        button.classList.toggle(
+            'active',
+            button.dataset.section === id
+        );
+    });
+
+    $(id).classList.add('active');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
-function roundedRect(x,y,w,h,r,color) {
-    ctx.fillStyle=color;
-    ctx.beginPath();
-    ctx.roundRect(x,y,w,h,r);
-    ctx.fill();
-}
+function setStatus(id, message, type = '') {
 
-function drawSky() {
+    const element = $(id);
 
-    const sky=ctx.createLinearGradient(0,0,0,horizon());
+    element.textContent = message;
+    element.className = 'status';
 
-    sky.addColorStop(0,"#1686cf");
-    sky.addColorStop(.6,"#80d8fa");
-    sky.addColorStop(1,"#e5f8ff");
-
-    ctx.fillStyle=sky;
-    ctx.fillRect(0,0,W,H);
-
-    // Sun
-    const sunX=W*.80;
-    const sunY=H*.12;
-
-    const glow=ctx.createRadialGradient(
-        sunX,sunY,5,sunX,sunY,W*.14
-    );
-
-    glow.addColorStop(0,"rgba(255,248,190,.95)");
-    glow.addColorStop(1,"rgba(255,245,180,0)");
-
-    ctx.fillStyle=glow;
-    ctx.fillRect(
-        sunX-W*.15,sunY-W*.15,W*.30,W*.30
-    );
-
-    // Clouds
-    for(let i=0;i<5;i++) {
-
-        const x=(
-            i*W*.27 + gameTime*3
-        )%(W+180)-80;
-
-        const y=H*(.08+(i%3)*.055);
-
-        ctx.fillStyle="rgba(255,255,255,.65)";
-
-        ctx.beginPath();
-        ctx.ellipse(x,y,34,12,0,0,Math.PI*2);
-        ctx.ellipse(x+25,y-7,24,15,0,0,Math.PI*2);
-        ctx.ellipse(x+48,y,34,12,0,0,Math.PI*2);
-        ctx.fill();
+    if (type) {
+        element.classList.add(type);
     }
 }
 
-function drawMountains() {
+function formatBytes(bytes) {
 
-    const hy=horizon();
+    if (bytes < 1024) return bytes + ' B';
 
-    polygon([
-        [0,hy+10],
-        [W*.10,hy-65],
-        [W*.20,hy+4],
-        [W*.34,hy-95],
-        [W*.47,hy+5],
-        [W*.60,hy-75],
-        [W*.74,hy+2],
-        [W*.88,hy-90],
-        [W,hy+5],
-        [W,H],
-        [0,H]
-    ],"#718d92");
-
-    polygon([
-        [0,hy+35],
-        [W*.15,hy-20],
-        [W*.28,hy+30],
-        [W*.46,hy-35],
-        [W*.65,hy+25],
-        [W*.82,hy-32],
-        [W,hy+30],
-        [W,H],
-        [0,H]
-    ],"#4d7e52");
-
-    ctx.fillStyle="#72a65b";
-    ctx.fillRect(0,hy+5,W,H-hy);
-}
-
-function drawRoad() {
-
-    const hy=horizon();
-
-    // Roadside ground
-    ctx.fillStyle="#518744";
-    ctx.fillRect(0,hy,W,H-hy);
-
-    // Asphalt
-    polygon([
-        [W*.49,hy],
-        [W*.51,hy],
-        [W*1.08,H],
-        [-W*.08,H]
-    ],"#34383e");
-
-    // Road shoulder
-    polygon([
-        [W*.485,hy],
-        [W*.49,hy],
-        [W*.00,H],
-        [-W*.08,H]
-    ],"#e7e7e7");
-
-    polygon([
-        [W*.51,hy],
-        [W*.515,hy],
-        [W*1.08,H],
-        [W,H]
-    ],"#e7e7e7");
-
-    // Red/white roadside blocks
-    const blocks=22;
-
-    for(let i=0;i<blocks;i++) {
-
-        const f=(i/blocks+roadOffset*.012)%1;
-        const t=f*f;
-
-        const y=hy+t*(H-hy);
-        const hw=roadHalfWidth(y);
-
-        const y2=hy+Math.min(1,t+.018)*(H-hy);
-
-        const c=i%2===0?"#f9f9f9":"#e92b2b";
-
-        polygon([
-            [roadCenter(y)-hw,y],
-            [roadCenter(y)-hw-5-t*8,y],
-            [roadCenter(y2)-roadHalfWidth(y2)-5-t*8,y2],
-            [roadCenter(y2)-roadHalfWidth(y2),y2]
-        ],c);
-
-        polygon([
-            [roadCenter(y)+hw,y],
-            [roadCenter(y)+hw+5+t*8,y],
-            [roadCenter(y2)+roadHalfWidth(y2)+5+t*8,y2],
-            [roadCenter(y2)+roadHalfWidth(y2),y2]
-        ],c);
+    if (bytes < 1024 * 1024) {
+        return (bytes / 1024).toFixed(1) + ' KB';
     }
 
-    // Lane markings
-    for(let lane=-1;lane<=1;lane++) {
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
 
-        if(lane===0) continue;
+function downloadBlob(blob, filename) {
 
-        for(let i=0;i<14;i++) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
 
-            const f=(i/14+roadOffset*.018)%1;
-            const t=f*f;
+    a.href = url;
+    a.download = filename;
 
-            const y=hy+t*(H-hy);
-            const y2=hy+Math.min(1,t+.028)*(H-hy);
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
 
-            const x1=roadX(y,lane);
-            const x2=roadX(y2,lane);
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
 
-            const width=1+t*4;
+function downloadBytes(bytes, filename, type = 'application/pdf') {
 
-            polygon([
-                [x1-width,y],
-                [x1+width,y],
-                [x2+width*1.3,y2],
-                [x2-width*1.3,y2]
-            ],"#f1f1f1");
+    downloadBlob(
+        new Blob([bytes], { type }),
+        filename
+    );
+}
+
+function safeName(filename) {
+
+    return filename
+        .replace(/\.pdf$/i, '')
+        .replace(/[<>:"/\\|?*\x00-\x1F]/g, '_');
+}
+
+async function readPDF(file) {
+
+    const buffer = await file.arrayBuffer();
+
+    return PDFDocument.load(buffer);
+}
+
+async function getPdfJsDocument(file, password = undefined) {
+
+    const buffer = await file.arrayBuffer();
+
+    return pdfjsLib.getDocument({
+        data: new Uint8Array(buffer),
+        password
+    }).promise;
+}
+
+function clearWorkspace() {
+
+    if (!confirm('Clear the current workspace?')) return;
+
+    location.reload();
+}
+
+/* ========================================
+   FILE INPUTS
+======================================== */
+
+$('mergeFiles').addEventListener('change', event => {
+
+    addMergeFiles(Array.from(event.target.files || []));
+    event.target.value = '';
+
+});
+
+$('splitFile').addEventListener('change', event => {
+
+    const file = event.target.files[0];
+
+    if (file) loadSplitPDF(file);
+
+    event.target.value = '';
+
+});
+
+$('previewFile').addEventListener('change', event => {
+
+    const file = event.target.files[0];
+
+    if (file) loadPreviewPDF(file);
+
+    event.target.value = '';
+
+});
+
+$('imagePDF').addEventListener('change', event => {
+
+    imageSource = event.target.files[0] || null;
+
+    setStatus(
+        'imageStatus',
+        imageSource ? 'Selected: ' + imageSource.name : ''
+    );
+
+    event.target.value = '';
+
+});
+
+$('imageFiles').addEventListener('change', event => {
+
+    addImages(Array.from(event.target.files || []));
+    event.target.value = '';
+
+});
+
+$('mergeDrop').addEventListener('dragover', event => {
+
+    event.preventDefault();
+    $('mergeDrop').classList.add('dragover');
+
+});
+
+$('mergeDrop').addEventListener('dragleave', () => {
+
+    $('mergeDrop').classList.remove('dragover');
+
+});
+
+$('mergeDrop').addEventListener('drop', event => {
+
+    event.preventDefault();
+
+    $('mergeDrop').classList.remove('dragover');
+
+    addMergeFiles(
+        Array.from(event.dataTransfer.files || [])
+    );
+
+});
+
+/* ========================================
+   MERGE PDF
+======================================== */
+
+function addMergeFiles(files) {
+
+    const pdfs = files.filter(file =>
+        file.type === 'application/pdf' ||
+        file.name.toLowerCase().endsWith('.pdf')
+    );
+
+    mergeFiles.push(...pdfs);
+
+    renderMergeList();
+}
+
+function renderMergeList() {
+
+    const list = $('mergeList');
+
+    list.innerHTML = '';
+
+    mergeFiles.forEach((file, index) => {
+
+        const item = document.createElement('div');
+
+        item.className = 'file-item';
+
+        if (index === selectedMergeIndex) {
+            item.style.borderColor = 'var(--primary)';
         }
-    }
-}
 
-/* Perspective trees */
+        item.innerHTML = `
+            <div>
+                <div class="file-name"></div>
+                <div class="file-size"></div>
+            </div>
 
-function drawTree(x,y,size) {
+            <button class="remove-file">Remove</button>
+        `;
 
-    if(y<horizon()) return;
+        item.querySelector('.file-name').textContent =
+            (index + 1) + '. ' + file.name;
 
-    const s=size;
+        item.querySelector('.file-size').textContent =
+            formatBytes(file.size);
 
-    // Trunk
-    ctx.fillStyle="#67442b";
-    ctx.fillRect(x-s*.12,y-s*.5,s*.24,s*.55);
+        item.addEventListener('click', event => {
 
-    // Tree foliage
-    polygon([
-        [x,y-s*1.7],
-        [x-s*.62,y-s*.65],
-        [x+s*.62,y-s*.65]
-    ],"#1e6030");
+            if (event.target.tagName === 'BUTTON') return;
 
-    polygon([
-        [x,y-s*1.35],
-        [x-s*.52,y-s*.35],
-        [x+s*.52,y-s*.35]
-    ],"#2c843c");
+            selectedMergeIndex = index;
+            renderMergeList();
 
-    polygon([
-        [x,y-s*1.0],
-        [x-s*.4,y],
-        [x+s*.4,y]
-    ],"#43a84d");
-}
+        });
 
-function drawRoadside() {
+        item.querySelector('button').addEventListener('click', () => {
 
-    for(let i=0;i<26;i++) {
+            mergeFiles.splice(index, 1);
 
-        const f=(i/26+roadOffset*.013)%1;
-        const t=f*f;
+            selectedMergeIndex = -1;
 
-        const y=horizon()+t*(H-horizon());
+            renderMergeList();
 
-        const size=8+t*65;
+        });
 
-        const leftX=roadCenter(y)-roadHalfWidth(y)-size*.8;
-        const rightX=roadCenter(y)+roadHalfWidth(y)+size*.8;
+        list.appendChild(item);
 
-        drawTree(leftX,y,size);
-        drawTree(rightX,y,size*.95);
-    }
-}
-
-/* Motorcycle drawing */
-
-function drawMotorcycle(x,y,size,color,isPlayer=false,angle=0) {
-
-    ctx.save();
-
-    ctx.translate(x,y);
-    ctx.rotate(angle);
-
-    const s=size;
-
-    // Shadow
-    ctx.fillStyle="rgba(0,0,0,.30)";
-    ctx.beginPath();
-    ctx.ellipse(0,s*.07,s*.43,s*.15,0,0,Math.PI*2);
-    ctx.fill();
-
-    // Wheels
-    ctx.fillStyle="#11151b";
-
-    ctx.beginPath();
-    ctx.ellipse(0,s*.12,s*.15,s*.30,0,0,Math.PI*2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.ellipse(0,-s*.45,s*.13,s*.24,0,0,Math.PI*2);
-    ctx.fill();
-
-    // Wheel rims
-    ctx.strokeStyle="#a7b2bc";
-    ctx.lineWidth=Math.max(1,s*.035);
-
-    ctx.beginPath();
-    ctx.ellipse(0,s*.12,s*.09,s*.21,0,0,Math.PI*2);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.ellipse(0,-s*.45,s*.08,s*.16,0,0,Math.PI*2);
-    ctx.stroke();
-
-    // Exhaust
-    ctx.fillStyle="#9daab6";
-    ctx.fillRect(s*.16,-s*.02,s*.13,s*.32);
-
-    // Bike frame
-    polygon([
-        [-s*.12,s*.20],
-        [s*.12,s*.20],
-        [s*.19,-s*.27],
-        [-s*.17,-s*.28]
-    ],"#222a33");
-
-    // Fuel tank
-    polygon([
-        [-s*.22,-s*.05],
-        [-s*.20,-s*.29],
-        [-s*.08,-s*.38],
-        [s*.18,-s*.27],
-        [s*.17,-s*.08],
-        [s*.05,s*.02]
-    ],color);
-
-    // Front fairing
-    polygon([
-        [-s*.19,-s*.28],
-        [-s*.14,-s*.53],
-        [0,-s*.66],
-        [s*.15,-s*.50],
-        [s*.18,-s*.27],
-        [0,-s*.19]
-    ],color);
-
-    // Headlight
-    ctx.fillStyle="#fff6bf";
-    ctx.fillRect(-s*.075,-s*.58,s*.15,s*.07);
-
-    // Rider legs
-    polygon([
-        [-s*.16,-s*.04],
-        [-s*.25,s*.12],
-        [-s*.10,s*.22],
-        [0,s*.05]
-    ],"#151c26");
-
-    polygon([
-        [s*.10,-s*.03],
-        [s*.24,s*.10],
-        [s*.10,s*.22],
-        [-s*.02,s*.05]
-    ],"#151c26");
-
-    // Body
-    polygon([
-        [-s*.17,-s*.35],
-        [-s*.20,-s*.69],
-        [-s*.10,-s*.85],
-        [s*.10,-s*.85],
-        [s*.20,-s*.63],
-        [s*.13,-s*.34]
-    ],isPlayer?"#08a9e5":"#242e3b");
-
-    // Arms
-    ctx.strokeStyle=isPlayer?"#08a9e5":color;
-    ctx.lineWidth=Math.max(2,s*.085);
-    ctx.lineCap="round";
-
-    ctx.beginPath();
-    ctx.moveTo(-s*.12,-s*.67);
-    ctx.lineTo(-s*.30,-s*.46);
-    ctx.lineTo(-s*.17,-s*.40);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(s*.12,-s*.67);
-    ctx.lineTo(s*.30,-s*.46);
-    ctx.lineTo(s*.17,-s*.40);
-    ctx.stroke();
-
-    // Helmet
-    ctx.fillStyle=isPlayer?"#f4f7fb":"#e7eaf0";
-
-    ctx.beginPath();
-    ctx.ellipse(0,-s*.91,s*.17,s*.18,0,0,Math.PI*2);
-    ctx.fill();
-
-    // Visor
-    ctx.fillStyle="#142b42";
-    ctx.fillRect(-s*.13,-s*.94,s*.26,s*.09);
-
-    // Player tail light
-    ctx.fillStyle="#ff3030";
-    ctx.fillRect(-s*.09,s*.17,s*.18,s*.06);
-
-    ctx.restore();
-}
-
-/* Opponents */
-
-function spawnOpponent() {
-
-    if(opponents.length>=9) return;
-
-    const lane=randomLane();
-
-    opponents.push({
-        lane,
-        depth:0.02,
-        speed:Math.random()*0.25+0.45,
-        color:COLORS[
-            Math.floor(Math.random()*COLORS.length)
-        ],
-        phase:Math.random()*6.28
     });
+
 }
 
-function randomLane() {
-    return [-0.68,-0.22,0.22,0.68][
-        Math.floor(Math.random()*4)
+function moveMergeFile(direction) {
+
+    if (selectedMergeIndex < 0) {
+        alert('Select a PDF from the list first.');
+        return;
+    }
+
+    const target = selectedMergeIndex + direction;
+
+    if (target < 0 || target >= mergeFiles.length) return;
+
+    [
+        mergeFiles[selectedMergeIndex],
+        mergeFiles[target]
+    ] = [
+        mergeFiles[target],
+        mergeFiles[selectedMergeIndex]
     ];
+
+    selectedMergeIndex = target;
+
+    renderMergeList();
 }
 
-function drawOpponents() {
+async function mergePDFs() {
 
-    const sorted=[...opponents].sort(
-        (a,b)=>a.depth-b.depth
-    );
+    if (mergeFiles.length < 2) {
 
-    for(const o of sorted) {
-
-        const t=clamp(o.depth,0,1);
-
-        const y=horizon()+t*(H-horizon());
-
-        const lane=o.lane+Math.sin(o.phase)*.025;
-
-        const x=roadX(y,lane)-playerX*roadHalfWidth(y)*.45;
-
-        const size=8+t*Math.min(W,H)*.19;
-
-        drawMotorcycle(
-            x,y,
-            size,
-            o.color,
-            false,
-            Math.sin(o.phase)*.04
+        setStatus(
+            'mergeStatus',
+            'Please select at least two PDF files.',
+            'error'
         );
+
+        return;
     }
-}
-
-/* Player motorcycle */
-
-function drawPlayer() {
-
-    const y=H*.80;
-
-    const x=W*.5+playerX*W*.29;
-
-    const size=Math.min(W,H)*.31;
-
-    drawMotorcycle(
-        x,y,size,
-        "#00baff",
-        true,
-        -lean*.15
-    );
-
-    // Speed lines during nitro
-    if(nitroHeld && nitro>0 && speed>100) {
-
-        ctx.strokeStyle="rgba(180,240,255,.55)";
-        ctx.lineWidth=2;
-
-        for(let i=0;i<9;i++) {
-
-            const xx=Math.random()*W;
-            const yy=H*.45+Math.random()*H*.4;
-
-            ctx.beginPath();
-            ctx.moveTo(xx,yy);
-            ctx.lineTo(xx,yy+20+Math.random()*55);
-            ctx.stroke();
-        }
-    }
-}
-
-function random(a,b) {
-    return a+Math.random()*(b-a);
-}
-
-/* Particles */
-
-function addCrashParticles() {
-
-    for(let i=0;i<22;i++) {
-
-        particles.push({
-            x:W*.5+playerX*W*.29,
-            y:H*.80,
-            vx:random(-150,150),
-            vy:random(-180,80),
-            life:random(.2,.8),
-            color:Math.random()<.5?"#ff8a00":"#ffe36b"
-        });
-    }
-}
-
-function drawParticles(dt) {
-
-    for(let i=particles.length-1;i>=0;i--) {
-
-        const p=particles[i];
-
-        p.x+=p.vx*dt;
-        p.y+=p.vy*dt;
-
-        p.vy+=180*dt;
-        p.life-=dt;
-
-        ctx.globalAlpha=clamp(p.life*2,0,1);
-        ctx.fillStyle=p.color;
-        ctx.fillRect(p.x,p.y,5,5);
-
-        if(p.life<=0) particles.splice(i,1);
-    }
-
-    ctx.globalAlpha=1;
-}
-
-/* Update logic */
-
-function update(dt) {
-
-    if(!running || paused) return;
-
-    gameTime+=dt;
-
-    if(crashed>0) crashed-=dt;
-
-    const buttonSteer=(right?1:0)-(left?1:0);
-
-    steer=clamp(buttonSteer+(tiltEnabled?tiltValue:0),-1,1);
-
-    playerX+=steer*dt*(0.95+speed/115);
-
-    playerX=clamp(playerX,-1.05,1.05);
-
-    lean+=(steer-lean)*Math.min(1,dt*7);
-
-    let target=170;
-
-    if(brake) target=35;
-
-    if(nitroHeld && nitro>0 && !brake) {
-
-        target=235;
-        nitro=Math.max(0,nitro-dt*30);
-
-    } else {
-
-        nitro=Math.min(100,nitro+dt*5);
-    }
-
-    if(speed<target) {
-        speed+=dt*45;
-    } else {
-        speed-=dt*(brake?100:20);
-    }
-
-    speed=clamp(speed,0,235);
-
-    roadOffset+=speed*dt*.055;
-
-    distance+=speed*dt*.10;
-    score+=Math.floor(speed*dt*.12);
-
-    spawnClock-=dt;
-
-    if(spawnClock<=0) {
-
-        spawnOpponent();
-
-        spawnClock=random(.6,1.35);
-    }
-
-    for(let i=opponents.length-1;i>=0;i--) {
-
-        const o=opponents[i];
-
-        o.depth+=(speed/170-o.speed)*dt*.22;
-        o.phase+=dt;
-
-        // Crash when the rival is close
-        if(
-            o.depth>.83 &&
-            o.depth<.97 &&
-            Math.abs(o.lane-playerX*.85)<.20 &&
-            crashed<=0
-        ) {
-
-            speed*=.40;
-
-            crashed=.9;
-
-            shake=.35;
-
-            addCrashParticles();
-
-            $("message").textContent="💥 CRASH!";
-
-            setTimeout(()=>{
-                if($("message").textContent==="💥 CRASH!") {
-                    $("message").textContent="";
-                }
-            },650);
-
-            o.depth=.99;
-        }
-
-        // Passed opponent
-        if(o.depth>=1.05) {
-
-            score+=100;
-
-            opponents.splice(i,1);
-
-            continue;
-        }
-
-        if(o.depth<-.1) {
-            opponents.splice(i,1);
-        }
-    }
-
-    if(Math.abs(playerX)>.88) {
-        speed=Math.max(30,speed-dt*65);
-    }
-
-    if(shake>0) shake-=dt;
-
-    $("speedValue").textContent=Math.round(speed);
-    $("distanceValue").textContent=Math.floor(distance);
-    $("nitroFill").style.width=nitro+"%";
-
-    const rank=1+opponents.filter(o=>o.depth>.7).length;
-
-    $("rankValue").textContent=Math.min(rank,8)+"/8";
-
-    if(Math.abs(playerX)>.88) {
-        $("message").textContent="⚠️ OFF ROAD!";
-    } else if(crashed<=0 && $("message").textContent==="⚠️ OFF ROAD!") {
-        $("message").textContent="";
-    }
-}
-
-/* Main rendering */
-
-function render(dt) {
-
-    ctx.save();
-
-    if(shake>0) {
-
-        ctx.translate(
-            random(-5,5)*shake*4,
-            random(-5,5)*shake*4
-        );
-    }
-
-    drawSky();
-    drawMountains();
-    drawRoad();
-    drawRoadside();
-    drawOpponents();
-    drawPlayer();
-    drawParticles(dt);
-
-    // Slight vignette
-    const vignette=ctx.createRadialGradient(
-        W*.5,H*.5,H*.15,
-        W*.5,H*.5,H*.8
-    );
-
-    vignette.addColorStop(0,"rgba(0,0,0,0)");
-    vignette.addColorStop(1,"rgba(0,0,0,.20)");
-
-    ctx.fillStyle=vignette;
-    ctx.fillRect(0,0,W,H);
-
-    ctx.restore();
-}
-
-function loop(now) {
-
-    requestAnimationFrame(loop);
-
-    let dt=(now-lastTime)/1000;
-
-    lastTime=now;
-
-    dt=clamp(dt||0,0,.04);
 
     try {
 
-        update(dt);
-        render(dt);
+        setStatus('mergeStatus', 'Merging PDF files...');
 
-    } catch(error) {
+        const merged = await PDFDocument.create();
 
-        $("diagnostic").textContent=
-            "Game error: "+error.message;
+        for (const file of mergeFiles) {
 
-        running=false;
+            const pdf = await readPDF(file);
+
+            const pages = await merged.copyPages(
+                pdf,
+                pdf.getPageIndices()
+            );
+
+            pages.forEach(page => merged.addPage(page));
+
+        }
+
+        const bytes = await merged.save();
+
+        downloadBytes(bytes, 'merged-document.pdf');
+
+        setStatus(
+            'mergeStatus',
+            'PDF files merged successfully.',
+            'success'
+        );
+
+    } catch (error) {
+
+        setStatus(
+            'mergeStatus',
+            'Unable to merge PDF. Check whether the files are valid, ' +
+            'encrypted or corrupted. Details: ' + error.message,
+            'error'
+        );
+
     }
+
 }
 
-requestAnimationFrame(loop);
+/* ========================================
+   SPLIT PDF
+======================================== */
 
-/* Game controls */
+$('splitFile').addEventListener('change', () => {});
 
-function bindHold(id,down,up) {
+async function loadSplitPDF(file) {
 
-    const el=$(id);
+    splitSource = file;
 
-    el.addEventListener("pointerdown",e=>{
-        e.preventDefault();
+    try {
 
-        down();
+        const pdf = await readPDF(file);
 
-        try {
-            el.setPointerCapture(e.pointerId);
-        } catch(err) {}
+        $('splitTotal').value = pdf.getPageCount();
+
+        $('splitFileInfo').textContent =
+            file.name + ' • ' +
+            pdf.getPageCount() + ' pages • ' +
+            formatBytes(file.size);
+
+        $('splitControls').style.display = 'block';
+
+        $('splitSections').innerHTML = '';
+
+        addSplitSection(1, Math.min(5, pdf.getPageCount()));
+
+        setStatus(
+            'splitStatus',
+            'PDF loaded. Configure your page ranges.'
+        );
+
+    } catch (error) {
+
+        $('splitControls').style.display = 'none';
+
+        setStatus(
+            'splitStatus',
+            'Could not open PDF. It may be encrypted or invalid. ' +
+            error.message,
+            'error'
+        );
+
+    }
+
+}
+
+function addSplitSection(start = 1, end = 5) {
+
+    const total = Number($('splitTotal').value) || 1;
+
+    const container = $('splitSections');
+
+    const number = container.children.length + 1;
+
+    const section = document.createElement('div');
+
+    section.className = 'split-section';
+
+    section.innerHTML = `
+        <div class="split-heading">
+            <strong>Section ${number}</strong>
+            <button class="remove-file">Remove</button>
+        </div>
+
+        <div class="grid-2">
+
+            <div class="field">
+                <label>From Page</label>
+                <input class="start-page" type="number"
+                    min="1" max="${total}" value="${start}">
+            </div>
+
+            <div class="field">
+                <label>To Page</label>
+                <input class="end-page" type="number"
+                    min="1" max="${total}" value="${end}">
+            </div>
+
+        </div>
+    `;
+
+    section.querySelector('button').addEventListener('click', () => {
+
+        section.remove();
+
+        renumberSections();
+
     });
 
-    function release(e) {
-        up();
-    }
+    container.appendChild(section);
 
-    el.addEventListener("pointerup",release);
-    el.addEventListener("pointercancel",release);
-    el.addEventListener("lostpointercapture",release);
+    renumberSections();
 }
 
-bindHold("leftBtn",()=>left=true,()=>left=false);
-bindHold("rightBtn",()=>right=true,()=>right=false);
-bindHold("brakeBtn",()=>brake=true,()=>brake=false);
-bindHold("nitroBtn",()=>nitroHeld=true,()=>nitroHeld=false);
+function renumberSections() {
 
-window.addEventListener("keydown",e=>{
+    Array.from($('splitSections').children).forEach(
+        (section, index) => {
 
-    if(e.key==="ArrowLeft" || e.key.toLowerCase()==="a") left=true;
-    if(e.key==="ArrowRight" || e.key.toLowerCase()==="d") right=true;
-    if(e.key==="ArrowDown" || e.key.toLowerCase()==="s") brake=true;
-    if(e.key==="ArrowUp" || e.key.toLowerCase()==="w") speed=Math.min(235,speed+5);
-    if(e.code==="Space") nitroHeld=true;
-});
+            section.querySelector('strong').textContent =
+                'Section ' + (index + 1);
 
-window.addEventListener("keyup",e=>{
+        }
+    );
 
-    if(e.key==="ArrowLeft" || e.key.toLowerCase()==="a") left=false;
-    if(e.key==="ArrowRight" || e.key.toLowerCase()==="d") right=false;
-    if(e.key==="ArrowDown" || e.key.toLowerCase()==="s") brake=false;
-    if(e.code==="Space") nitroHeld=false;
-});
+}
 
-/* Tilt support */
+function updateSplitMode() {
 
-async function enableTilt() {
+    const mode = $('splitMode').value;
+
+    $('rangeSettings').style.display =
+        mode === 'ranges' ? 'block' : 'none';
+
+    $('everySettings').style.display =
+        mode === 'every' ? 'block' : 'none';
+
+}
+
+async function executeSplit() {
+
+    if (!splitSource) {
+
+        setStatus('splitStatus', 'Please upload a PDF first.', 'error');
+
+        return;
+    }
 
     try {
 
-        if(
-            typeof DeviceOrientationEvent!=="undefined" &&
-            typeof DeviceOrientationEvent.requestPermission==="function"
-        ) {
+        setStatus('splitStatus', 'Processing PDF sections...');
 
-            const permission=
-                await DeviceOrientationEvent.requestPermission();
+        $('splitOutputs').innerHTML = '';
 
-            if(permission!=="granted") {
-                alert("Motion permission nahi mili. Buttons use karein.");
-                return;
+        const source = await readPDF(splitSource);
+
+        const total = source.getPageCount();
+
+        const mode = $('splitMode').value;
+
+        let ranges = [];
+
+        if (mode === 'individual') {
+
+            for (let page = 1; page <= total; page++) {
+
+                ranges.push([page, page]);
+
             }
-        }
 
-        tiltEnabled=true;
-        tiltZero=null;
+        } else if (mode === 'every') {
 
-        $("tiltInfo").textContent="📱 TILT CONTROL ENABLED";
+            const chunk = Number($('pagesPerFile').value);
 
-        window.addEventListener(
-            "deviceorientation",
-            e=>{
+            if (!Number.isInteger(chunk) || chunk < 1) {
+                throw new Error('Pages per file must be at least 1.');
+            }
 
-                if(e.gamma===null) return;
+            for (let start = 1; start <= total; start += chunk) {
 
-                if(tiltZero===null) {
-                    tiltZero=e.gamma;
+                ranges.push([
+                    start,
+                    Math.min(start + chunk - 1, total)
+                ]);
+
+            }
+
+        } else {
+
+            const sections = Array.from(
+                $('splitSections').children
+            );
+
+            if (!sections.length) {
+                throw new Error('Add at least one section.');
+            }
+
+            ranges = sections.map(section => [
+
+                Number(section.querySelector('.start-page').value),
+
+                Number(section.querySelector('.end-page').value)
+
+            ]);
+
+            ranges.forEach(([start, end]) => {
+
+                if (
+                    !Number.isInteger(start) ||
+                    !Number.isInteger(end) ||
+                    start < 1 ||
+                    end > total ||
+                    start > end
+                ) {
+
+                    throw new Error(
+                        `Invalid page range ${start}-${end}. ` +
+                        `Valid pages are 1-${total}.`
+                    );
+
                 }
 
-                tiltValue=clamp(
-                    (e.gamma-tiltZero)/24,
-                    -1,1
-                );
-            },
-            true
+            });
+
+        }
+
+        const zip = new JSZip();
+
+        const base = safeName(splitSource.name);
+
+        let outputCount = 0;
+
+        for (let i = 0; i < ranges.length; i++) {
+
+            const [start, end] = ranges[i];
+
+            const output = await PDFDocument.create();
+
+            const indexes = [];
+
+            for (let page = start; page <= end; page++) {
+                indexes.push(page - 1);
+            }
+
+            const copied = await output.copyPages(source, indexes);
+
+            copied.forEach(page => output.addPage(page));
+
+            const bytes = await output.save();
+
+            const filename =
+                `${base}_section_${i + 1}_pages_${start}-${end}.pdf`;
+
+            zip.file(filename, bytes);
+
+            outputCount++;
+
+        }
+
+        const blob = await zip.generateAsync({
+            type: 'blob'
+        });
+
+        downloadBlob(blob, base + '_split_files.zip');
+
+        setStatus(
+            'splitStatus',
+            `${outputCount} PDF sections created and packed into ZIP.`,
+            'success'
         );
 
-        alert("Tilt control enabled! Phone ko dheere se jhukayein.");
+        $('splitOutputs').innerHTML =
+            '<div class="output-item">' +
+            'Your split PDFs have been packaged into a ZIP file.' +
+            '</div>';
 
-    } catch(error) {
+    } catch (error) {
 
-        alert("Tilt control available nahi hai. Buttons use karein.");
+        setStatus(
+            'splitStatus',
+            error.message || 'Unable to split PDF.',
+            'error'
+        );
+
     }
+
 }
 
-$("tiltBtn").addEventListener("click",enableTilt);
+/* ========================================
+   PDF PREVIEW AND PAGE SELECTION
+======================================== */
 
-/* Start / restart */
+async function loadPreviewPDF(file) {
 
-$("startBtn").addEventListener("click",()=>{
+    const token = ++previewRenderToken;
 
-    speed=0;
-    distance=0;
-    score=0;
-    nitro=100;
+    previewSource = file;
+    previewSelected = new Set();
 
-    playerX=0;
-    lean=0;
-    crashed=0;
+    $('previewGrid').innerHTML = '';
 
-    gameTime=0;
-    roadOffset=0;
-    spawnClock=0;
+    setStatus('previewInfo', 'Loading PDF pages...');
 
-    opponents=[];
-    particles=[];
+    try {
 
-    for(let i=0;i<4;i++) {
+        const pdf = await getPdfJsDocument(file);
 
-        opponents.push({
-            lane:randomLane(),
-            depth:.12+i*.17,
-            speed:random(.5,.8),
-            color:COLORS[i],
-            phase:Math.random()*6.28
-        });
+        if (token !== previewRenderToken) return;
+
+        setStatus(
+            'previewInfo',
+            `${file.name} • ${pdf.numPages} pages`
+        );
+
+        for (let pageNo = 1; pageNo <= pdf.numPages; pageNo++) {
+
+            if (token !== previewRenderToken) return;
+
+            const page = await pdf.getPage(pageNo);
+
+            const viewport = page.getViewport({ scale: 0.5 });
+
+            const canvas = document.createElement('canvas');
+
+            const context = canvas.getContext('2d');
+
+            canvas.width = Math.ceil(viewport.width);
+            canvas.height = Math.ceil(viewport.height);
+
+            const wrapper = document.createElement('div');
+
+            wrapper.className = 'preview-page';
+
+            const checkbox = document.createElement('input');
+
+            checkbox.type = 'checkbox';
+            checkbox.checked = true;
+
+            previewSelected.add(pageNo);
+
+            const label = document.createElement('div');
+
+            label.className = 'page-label';
+            label.textContent = 'Page ' + pageNo;
+
+            wrapper.append(canvas, checkbox, label);
+
+            function toggle() {
+
+                checkbox.checked = !checkbox.checked;
+
+                if (checkbox.checked) {
+                    previewSelected.add(pageNo);
+                } else {
+                    previewSelected.delete(pageNo);
+                }
+
+                wrapper.classList.toggle(
+                    'selected',
+                    checkbox.checked
+                );
+
+            }
+
+            checkbox.addEventListener('click', event => {
+
+                event.stopPropagation();
+
+                if (checkbox.checked) {
+                    previewSelected.add(pageNo);
+                } else {
+                    previewSelected.delete(pageNo);
+                }
+
+                wrapper.classList.toggle(
+                    'selected',
+                    checkbox.checked
+                );
+
+            });
+
+            wrapper.addEventListener('click', event => {
+
+                if (event.target === checkbox) return;
+
+                toggle();
+
+            });
+
+            wrapper.classList.add('selected');
+
+            $('previewGrid').appendChild(wrapper);
+
+            await page.render({
+                canvasContext: context,
+                viewport
+            }).promise;
+
+        }
+
+    } catch (error) {
+
+        setStatus(
+            'previewInfo',
+            'Unable to preview PDF. It may require a password. ' +
+            error.message,
+            'error'
+        );
+
     }
 
-    running=true;
-    paused=false;
+}
 
-    $("pauseBtn").textContent="Ⅱ PAUSE";
-    $("message").textContent="";
-    $("startScreen").style.display="none";
-    $("diagnostic").textContent="";
-});
+function selectAllPages(select) {
 
-$("pauseBtn").addEventListener("click",()=>{
+    document.querySelectorAll('.preview-page').forEach(
+        wrapper => {
 
-    if(!running) return;
+            const checkbox = wrapper.querySelector('input');
 
-    paused=!paused;
+            checkbox.checked = select;
 
-    $("pauseBtn").textContent=
-        paused?"▶ RESUME":"Ⅱ PAUSE";
+            wrapper.classList.toggle('selected', select);
 
-    $("message").textContent=
-        paused?"PAUSED":"";
-});
+        }
+    );
 
-/* Prevent page scrolling */
+    if (!previewSource) return;
 
-document.addEventListener("touchmove",e=>{
-    e.preventDefault();
-},{passive:false});
+    if (select) {
 
-/* Initial screen render is always active.
-   Game drawing starts before START RACE. */
+        const total = document.querySelectorAll(
+            '.preview-page'
+        ).length;
 
-$("diagnostic").textContent=
-    "Canvas engine ready • No external libraries";
+        previewSelected = new Set(
+            Array.from(
+                { length: total },
+                (_, index) => index + 1
+            )
+        );
+
+    } else {
+
+        previewSelected.clear();
+
+    }
+
+}
+
+async function exportSelectedPages() {
+
+    if (!previewSource) {
+
+        setStatus(
+            'previewStatus',
+            'Open a PDF first.',
+            'error'
+        );
+
+        return;
+    }
+
+    if (previewSelected.size === 0) {
+
+        setStatus(
+            'previewStatus',
+            'Select at least one page.',
+            'error'
+        );
+
+        return;
+    }
+
+    try {
+
+        const source = await readPDF(previewSource);
+
+        const output = await PDFDocument.create();
+
+        const indexes = Array.from(previewSelected)
+            .sort((a, b) => a - b)
+            .map(page => page - 1);
+
+        const pages = await output.copyPages(source, indexes);
+
+        pages.forEach(page => output.addPage(page));
+
+        const bytes = await output.save();
+
+        downloadBytes(bytes, 'selected-pages.pdf');
+
+        setStatus(
+            'previewStatus',
+            'Selected pages exported successfully.',
+            'success'
+        );
+
+    } catch (error) {
+
+        setStatus(
+            'previewStatus',
+            'Could not export pages: ' + error.message,
+            'error'
+        );
+
+    }
+
+}
+
+/* ========================================
+   PDF TO IMAGE
+======================================== */
+
+async function convertPDFToImages() {
+
+    if (!imageSource) {
+
+        setStatus(
+            'imageStatus',
+            'Please choose a PDF.',
+            'error'
+        );
+
+        return;
+    }
+
+    try {
+
+        $('imageOutputs').innerHTML = '';
+
+        setStatus('imageStatus', 'Rendering PDF pages...');
+
+        const pdf = await getPdfJsDocument(imageSource);
+
+        const zip = new JSZip();
+
+        const scale = Number($('renderScale').value) || 1.5;
+
+        for (let pageNo = 1; pageNo <= pdf.numPages; pageNo++) {
+
+            setStatus(
+                'imageStatus',
+                `Rendering page ${pageNo} of ${pdf.numPages}...`
+            );
+
+            const page = await pdf.getPage(pageNo);
+
+            const viewport = page.getViewport({ scale });
+
+            const canvas = document.createElement('canvas');
+
+            canvas.width = Math.ceil(viewport.width);
+            canvas.height = Math.ceil(viewport.height);
+
+            await page.render({
+
+                canvasContext: canvas.getContext('2d'),
+
+                viewport
+
+            }).promise;
+
+            const blob = await new Promise(resolve =>
+                canvas.toBlob(resolve, 'image/png')
+            );
+
+            if (!blob) {
+                throw new Error('Unable to create PNG image.');
+            }
+
+            zip.file(
+                `page-${String(pageNo).padStart(3, '0')}.png`,
+                blob
+            );
+
+        }
+
+        const zipBlob = await zip.generateAsync({
+            type: 'blob'
+        });
+
+        downloadBlob(
+            zipBlob,
+            safeName(imageSource.name) + '_images.zip'
+        );
+
+        setStatus(
+            'imageStatus',
+            'All PDF pages converted to PNG images and downloaded as ZIP.',
+            'success'
+        );
+
+    } catch (error) {
+
+        setStatus(
+            'imageStatus',
+            'Image conversion failed: ' + error.message,
+            'error'
+        );
+
+    }
+
+}
+
+/* ========================================
+   IMAGE TO PDF
+======================================== */
+
+function addImages(files) {
+
+    const allowed = files.filter(file =>
+        file.type.startsWith('image/')
+    );
+
+    imageFilesList.push(...allowed);
+
+    renderImageList();
+
+}
+
+function renderImageList() {
+
+    const list = $('selectedImages');
+
+    list.innerHTML = '';
+
+    imageFilesList.forEach((file, index) => {
+
+        const item = document.createElement('div');
+
+        item.className = 'file-item';
+
+        item.innerHTML = `
+            <div>
+                <div class="file-name"></div>
+                <div class="file-size"></div>
+            </div>
+
+            <button class="remove-file">Remove</button>
+        `;
+
+        item.querySelector('.file-name').textContent =
+            (index + 1) + '. ' + file.name;
+
+        item.querySelector('.file-size').textContent =
+            formatBytes(file.size);
+
+        item.style.borderColor =
+            index === selectedImageIndex
+                ? 'var(--primary)'
+                : 'var(--border)';
+
+        item.addEventListener('click', event => {
+
+            if (event.target.tagName === 'BUTTON') return;
+
+            selectedImageIndex = index;
+
+            renderImageList();
+
+        });
+
+        item.querySelector('button').addEventListener('click', () => {
+
+            imageFilesList.splice(index, 1);
+
+            selectedImageIndex = -1;
+
+            renderImageList();
+
+        });
+
+        list.appendChild(item);
+
+    });
+
+}
+
+function moveImage(direction) {
+
+    if (selectedImageIndex < 0) {
+
+        alert('Select an image from the list first.');
+
+        return;
+    }
+
+    const target = selectedImageIndex + direction;
+
+    if (target < 0 || target >= imageFilesList.length) return;
+
+    [
+        imageFilesList[selectedImageIndex],
+        imageFilesList[target]
+    ] = [
+        imageFilesList[target],
+        imageFilesList[selectedImageIndex]
+    ];
+
+    selectedImageIndex = target;
+
+    renderImageList();
+
+}
+
+async function convertImagesToPDF() {
+
+    if (imageFilesList.length === 0) {
+
+        setStatus(
+            'imageToPDFStatus',
+            'Select at least one image.',
+            'error'
+        );
+
+        return;
+    }
+
+    try {
+
+        setStatus(
+            'imageToPDFStatus',
+            'Creating PDF from images...'
+        );
+
+        const pdf = await PDFDocument.create();
+
+        for (const file of imageFilesList) {
+
+            const buffer = await file.arrayBuffer();
+
+            let image;
+
+            if (file.type === 'image/jpeg') {
+
+                image = await pdf.embedJpg(buffer);
+
+            } else if (file.type === 'image/png') {
+
+                image = await pdf.embedPng(buffer);
+
+            } else {
+
+                // Convert WebP and other browser-supported formats to PNG.
+                const bitmap = await createImageBitmap(file);
+
+                const canvas = document.createElement('canvas');
+
+                canvas.width = bitmap.width;
+                canvas.height = bitmap.height;
+
+                canvas.getContext('2d').drawImage(bitmap, 0, 0);
+
+                const pngBlob = await new Promise(resolve =>
+                    canvas.toBlob(resolve, 'image/png')
+                );
+
+                bitmap.close();
+
+                if (!pngBlob) {
+                    throw new Error(
+                        'Could not convert image: ' + file.name
+                    );
+                }
+
+                const pngBytes = await pngBlob.arrayBuffer();
+
+                image = await pdf.embedPng(pngBytes);
+
+            }
+
+            const page = pdf.addPage([
+                image.width,
+                image.height
+            ]);
+
+            page.drawImage(image, {
+                x: 0,
+                y: 0,
+                width: image.width,
+                height: image.height
+            });
+
+        }
+
+        const bytes = await pdf.save();
+
+        downloadBytes(bytes, 'images-to-pdf.pdf');
+
+        setStatus(
+            'imageToPDFStatus',
+            'PDF created successfully.',
+            'success'
+        );
+
+    } catch (error) {
+
+        setStatus(
+            'imageToPDFStatus',
+            'Image-to-PDF conversion failed: ' + error.message,
+            'error'
+        );
+
+    }
+
+}
+
+/* ========================================
+   EXTRACT PDF TEXT
+======================================== */
+
+async function extractPDFText() {
+
+    const file = $('textPDF').files[0];
+
+    if (!file) {
+
+        setStatus(
+            'textStatus',
+            'Select a PDF first.',
+            'error'
+        );
+
+        return;
+    }
+
+    try {
+
+        setStatus('textStatus', 'Extracting selectable text...');
+
+        const pdf = await getPdfJsDocument(file);
+
+        const pageNo = Number($('textPage').value);
+
+        if (
+            !Number.isInteger(pageNo) ||
+            pageNo < 1 ||
+            pageNo > pdf.numPages
+        ) {
+
+            throw new Error(
+                `Page number must be between 1 and ${pdf.numPages}.`
+            );
+
+        }
+
+        const page = await pdf.getPage(pageNo);
+
+        const content = await page.getTextContent();
+
+        const text = content.items
+            .filter(item => typeof item.str === 'string')
+            .map(item => item.str)
+            .join(' ');
+
+        $('editableText').value = text;
+
+        if (!text.trim()) {
+
+            setStatus(
+                'textStatus',
+                'No selectable text found. This may be a scanned PDF. ' +
+                'OCR is required to recognize its text.',
+                'error'
+            );
+
+        } else {
+
+            setStatus(
+                'textStatus',
+                'Text extracted. You can edit it in the text box.',
+                'success'
+            );
+
+        }
+
+    } catch (error) {
+
+        setStatus(
+            'textStatus',
+            'Text extraction failed: ' + error.message,
+            'error'
+        );
+
+    }
+
+}
+
+function downloadTextFile() {
+
+    const text = $('editableText').value;
+
+    if (!text.trim()) {
+
+        setStatus(
+            'textStatus',
+            'There is no text to download.',
+            'error'
+        );
+
+        return;
+    }
+
+    downloadBlob(
+        new Blob([text], {
+            type: 'text/plain;charset=utf-8'
+        }),
+        'edited-pdf-text.txt'
+    );
+
+}
+
+/* ========================================
+   PDF PASSWORD CHECK
+======================================== */
+
+async function checkPDFPassword() {
+
+    const file = $('passwordPDF').files[0];
+
+    const password = $('pdfPassword').value;
+
+    if (!file) {
+
+        setStatus(
+            'passwordStatus',
+            'Choose a PDF first.',
+            'error'
+        );
+
+        return;
+    }
+
+    try {
+
+        setStatus(
+            'passwordStatus',
+            'Checking the PDF password...'
+        );
+
+        const pdf = await getPdfJsDocument(file, password);
+
+        setStatus(
+            'passwordStatus',
+            `PDF opened successfully. Pages: ${pdf.numPages}. ` +
+            'This only verifies access; it does not remove encryption.',
+            'success'
+        );
+
+    } catch (error) {
+
+        setStatus(
+            'passwordStatus',
+            'Could not open PDF. The password may be incorrect, ' +
+            'or the PDF may be invalid. ' + error.message,
+            'error'
+        );
+
+    }
+
+}
+
+/* ========================================
+   OFFICE CONVERSION PLACEHOLDER
+======================================== */
+
+async function convertOfficeFile() {
+
+    const file = $('officeFile').files[0];
+
+    if (!file) {
+
+        setStatus(
+            'officeStatus',
+            'Select a Word, Excel or PowerPoint document.',
+            'error'
+        );
+
+        return;
+    }
+
+    setStatus(
+        'officeStatus',
+        'Office-to-PDF conversion requires a configured backend ' +
+        'or trusted document conversion API. No conversion has been ' +
+        'performed by this HTML-only version.',
+        'error'
+    );
+
+}
+
+/* ========================================
+   PDF TO WORD PLACEHOLDER
+======================================== */
+
+async function convertPDFToWord() {
+
+    const file = $('wordPDF').files[0];
+
+    if (!file) {
+
+        setStatus(
+            'wordStatus',
+            'Select a PDF first.',
+            'error'
+        );
+
+        return;
+    }
+
+    setStatus(
+        'wordStatus',
+        'PDF-to-DOCX conversion requires a specialized conversion ' +
+        'engine. Use the Edit PDF Text tool to extract selectable text, ' +
+        'or connect a DOCX conversion service.',
+        'error'
+    );
+
+}
+
+/* ========================================
+   PDF TO POWERPOINT PLACEHOLDER
+======================================== */
+
+async function convertPDFToPPT() {
+
+    const file = $('pptPDF').files[0];
+
+    if (!file) {
+
+        setStatus(
+            'pptStatus',
+            'Select a PDF first.',
+            'error'
+        );
+
+        return;
+    }
+
+    setStatus(
+        'pptStatus',
+        'PDF-to-PPT conversion requires a specialized conversion ' +
+        'engine. This HTML-only version does not create PPTX files.',
+        'error'
+    );
+
+}
+
+/* ========================================
+   STARTUP
+======================================== */
+
+updateSplitMode();
 
 </script>
 
