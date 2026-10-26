@@ -1,61 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Current Affairs Pro | Prem Vikash Sir</title>
+<meta name="theme-color" content="#173b82">
+<title>Current Affairs Pro</title>
 
 <style>
 :root {
-    --bg:#f3f6fb;
-    --panel:#ffffff;
-    --text:#182235;
-    --muted:#64748b;
     --primary:#2457d6;
+    --primary-dark:#173b82;
+    --background:#f3f6fc;
+    --surface:#fff;
+    --text:#172033;
+    --muted:#68758a;
     --border:#dfe6f0;
     --green:#15803d;
     --red:#dc2626;
-    --shadow:0 4px 18px rgba(25,45,80,.07);
+    --shadow:0 5px 20px rgba(25,45,80,.07);
 }
 
-* {
-    box-sizing:border-box;
-}
+* { box-sizing:border-box; }
 
 body {
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:var(--bg);
+    background:var(--background);
     color:var(--text);
 }
 
-button,input,select,textarea {
-    font:inherit;
-}
+button,input,select,textarea { font:inherit; }
 
 button {
     cursor:pointer;
+    transition:.15s;
 }
 
 button:disabled {
-    opacity:.5;
+    opacity:.55;
     cursor:not-allowed;
 }
 
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline:2px solid var(--primary);
+    outline-offset:2px;
+}
+
 header {
-    background:linear-gradient(120deg,#132c68,#2457d6);
+    background:linear-gradient(120deg,#142b62,#2862df);
     color:white;
-    padding:22px;
+    padding:20px;
 }
 
 .header-inner {
-    max-width:1450px;
+    max-width:1500px;
     margin:auto;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:15px;
     flex-wrap:wrap;
+    gap:15px;
 }
 
 header h1 {
@@ -65,8 +72,8 @@ header h1 {
 
 header p {
     margin:0;
-    color:#dbeafe;
     font-size:13px;
+    color:#dce7ff;
 }
 
 .header-actions {
@@ -76,51 +83,61 @@ header p {
 }
 
 .header-actions button {
-    border:1px solid #ffffff60;
-    color:white;
-    background:#ffffff18;
-    border-radius:8px;
     padding:10px 13px;
+    border:1px solid #ffffff60;
+    border-radius:8px;
+    background:#ffffff17;
+    color:white;
+}
+
+.header-actions button:hover {
+    background:#ffffff30;
 }
 
 .app {
-    max-width:1450px;
-    margin:22px auto;
+    max-width:1500px;
+    margin:20px auto;
     padding:0 15px;
     display:grid;
-    grid-template-columns:255px minmax(0,1fr);
-    gap:20px;
+    grid-template-columns:250px minmax(0,1fr);
+    gap:18px;
 }
 
 .sidebar,.panel,.stat {
-    background:var(--panel);
+    background:var(--surface);
     border:1px solid var(--border);
     border-radius:13px;
     box-shadow:var(--shadow);
 }
 
 .sidebar {
-    padding:17px;
+    padding:15px;
     align-self:start;
     position:sticky;
-    top:12px;
+    top:10px;
 }
 
 .sidebar h3 {
-    margin:5px 0 12px;
     font-size:14px;
+    margin:8px 0 12px;
+}
+
+.sidebar hr {
+    border:0;
+    border-top:1px solid var(--border);
+    margin:15px 0;
 }
 
 .nav-btn {
     display:block;
     width:100%;
-    padding:11px;
-    margin:4px 0;
     border:0;
     background:transparent;
+    color:var(--text);
+    padding:10px;
     text-align:left;
     border-radius:8px;
-    color:var(--text);
+    margin:3px 0;
 }
 
 .nav-btn:hover,.nav-btn.active {
@@ -129,41 +146,34 @@ header p {
     font-weight:bold;
 }
 
-.sidebar hr {
-    border:0;
-    border-top:1px solid var(--border);
-    margin:18px 0;
-}
-
-.main {
-    min-width:0;
-}
+.main { min-width:0; }
 
 .stats {
     display:grid;
     grid-template-columns:repeat(4,minmax(0,1fr));
     gap:12px;
-    margin-bottom:17px;
+    margin-bottom:16px;
 }
 
 .stat {
-    padding:16px;
+    padding:15px;
+    min-width:0;
 }
 
 .stat span {
-    color:var(--muted);
     font-size:12px;
+    color:var(--muted);
 }
 
 .stat strong {
     display:block;
-    font-size:25px;
+    font-size:26px;
     margin-top:8px;
 }
 
 .panel {
-    padding:18px;
-    margin-bottom:17px;
+    padding:17px;
+    margin-bottom:16px;
 }
 
 .panel h2 {
@@ -174,7 +184,7 @@ header p {
 .filters {
     display:grid;
     grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:10px;
+    gap:11px;
 }
 
 .field label {
@@ -185,30 +195,32 @@ header p {
 }
 
 .field input,.field select,.field textarea,
-.search-box,.modal input,.modal select,.modal textarea {
+.modal-box input,.modal-box select,.modal-box textarea {
     width:100%;
-    padding:10px;
     border:1px solid var(--border);
     border-radius:8px;
-    background:white;
+    padding:10px;
+    background:#fff;
     color:var(--text);
 }
 
-.field textarea,.modal textarea {
-    min-height:110px;
+.field textarea,.modal-box textarea {
     resize:vertical;
+    min-height:110px;
 }
 
 .btn {
-    padding:10px 13px;
     border:0;
-    border-radius:8px;
     background:var(--primary);
     color:white;
+    padding:10px 13px;
+    border-radius:8px;
 }
 
+.btn:hover { filter:brightness(.96); }
+
 .btn.secondary {
-    background:#e8eefb;
+    background:#e8efff;
     color:#2148a9;
 }
 
@@ -239,13 +251,11 @@ header p {
     align-items:center;
     justify-content:space-between;
     flex-wrap:wrap;
-    gap:12px;
+    gap:10px;
     margin-bottom:15px;
 }
 
-.news-toolbar h2 {
-    margin:0;
-}
+.news-toolbar h2 { margin:0; }
 
 .news-list {
     display:grid;
@@ -254,29 +264,23 @@ header p {
 }
 
 .news-card {
+    min-width:0;
     background:white;
     border:1px solid var(--border);
     border-radius:12px;
-    padding:16px;
-    min-width:0;
-    transition:.15s;
-}
-
-.news-card:hover {
-    box-shadow:var(--shadow);
-    transform:translateY(-1px);
+    padding:15px;
 }
 
 .news-card h3 {
     font-size:16px;
-    line-height:1.45;
+    line-height:1.5;
     margin:10px 0;
     overflow-wrap:anywhere;
 }
 
 .news-card p {
     font-size:13px;
-    line-height:1.65;
+    line-height:1.7;
     color:#475569;
     white-space:pre-wrap;
     overflow-wrap:anywhere;
@@ -290,11 +294,11 @@ header p {
 
 .badge {
     display:inline-block;
+    padding:5px 8px;
+    border-radius:20px;
+    font-size:11px;
     background:#edf2ff;
     color:#2449a4;
-    border-radius:20px;
-    padding:5px 8px;
-    font-size:11px;
 }
 
 .badge.green {
@@ -307,41 +311,39 @@ header p {
     color:#9a3412;
 }
 
+.card-date {
+    font-size:11px;
+    color:var(--muted);
+    margin-top:10px;
+    line-height:1.6;
+}
+
 .card-footer {
-    border-top:1px solid var(--border);
-    padding-top:11px;
-    margin-top:12px;
     display:flex;
     flex-wrap:wrap;
     align-items:center;
     gap:7px;
+    border-top:1px solid var(--border);
+    padding-top:11px;
+    margin-top:12px;
 }
 
 .card-footer a {
     color:var(--primary);
-    text-decoration:none;
     font-size:12px;
     font-weight:bold;
-}
-
-.card-footer a:hover {
-    text-decoration:underline;
-}
-
-.card-date {
-    color:var(--muted);
-    font-size:11px;
-    margin-top:8px;
+    text-decoration:none;
+    margin-right:auto;
 }
 
 .empty {
     grid-column:1/-1;
     text-align:center;
-    padding:35px 15px;
+    background:white;
     border:1px dashed #b9c5d8;
     border-radius:12px;
+    padding:35px 15px;
     color:var(--muted);
-    background:white;
 }
 
 .source-list {
@@ -351,16 +353,16 @@ header p {
 }
 
 .source-card {
+    min-width:0;
     border:1px solid var(--border);
-    border-radius:10px;
+    border-radius:11px;
     padding:14px;
     background:white;
-    min-width:0;
 }
 
 .source-card h3 {
-    font-size:15px;
     margin:0 0 8px;
+    font-size:15px;
 }
 
 .source-card a {
@@ -370,26 +372,29 @@ header p {
 }
 
 .source-card p {
-    color:var(--muted);
     font-size:12px;
-    line-height:1.5;
+    color:var(--muted);
+    line-height:1.6;
 }
 
 .source-status {
     font-size:11px;
-    margin-top:8px;
     color:var(--muted);
+    line-height:1.6;
     overflow-wrap:anywhere;
+    margin-top:8px;
 }
+
+.hidden { display:none!important; }
 
 .modal {
     display:none;
     position:fixed;
     inset:0;
-    z-index:100;
-    background:#0f172acc;
+    z-index:1000;
+    background:rgba(10,20,40,.72);
     padding:15px;
-    overflow-y:auto;
+    overflow:auto;
 }
 
 .modal.open {
@@ -399,15 +404,19 @@ header p {
 }
 
 .modal-box {
-    width:min(700px,100%);
     background:white;
-    border-radius:14px;
+    width:min(760px,100%);
     padding:22px;
+    border-radius:14px;
     margin:auto;
 }
 
-.modal-box h2 {
-    margin-top:0;
+.modal-box h2 { margin-top:0; }
+
+.modal-box>p {
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.7;
 }
 
 .modal-grid {
@@ -416,111 +425,78 @@ header p {
     gap:12px;
 }
 
-.modal .field.full {
-    grid-column:1/-1;
-}
+.full { grid-column:1/-1; }
 
-.status {
+.status-box {
+    background:#f6f8fc;
+    border:1px solid var(--border);
+    padding:12px;
+    border-radius:9px;
+    margin-top:12px;
     font-size:13px;
-    margin-top:10px;
-    color:var(--muted);
-    line-height:1.5;
+    line-height:1.7;
     white-space:pre-wrap;
+    overflow-wrap:anywhere;
 }
 
-.hidden {
-    display:none!important;
+.preview-list {
+    max-height:260px;
+    overflow:auto;
+    margin-top:10px;
 }
+
+.preview-item {
+    padding:9px;
+    border-bottom:1px solid var(--border);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.preview-item strong { display:block; }
 
 footer {
     text-align:center;
     color:var(--muted);
     padding:20px;
     font-size:12px;
+    line-height:1.8;
 }
 
-@media(max-width:1000px) {
-    .app {
-        grid-template-columns:210px minmax(0,1fr);
-    }
-
-    .stats {
-        grid-template-columns:repeat(2,minmax(0,1fr));
-    }
-
-    .filters {
-        grid-template-columns:repeat(2,minmax(0,1fr));
-    }
+@media(max-width:1050px) {
+    .app { grid-template-columns:215px minmax(0,1fr); }
+    .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .filters { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 
-@media(max-width:700px) {
-    header {
-        padding:18px 14px;
-    }
-
-    header h1 {
-        font-size:21px;
-    }
+@media(max-width:720px) {
+    header { padding:17px 12px; }
+    header h1 { font-size:21px; }
 
     .app {
         display:flex;
         flex-direction:column;
-        margin-top:13px;
+        margin-top:12px;
         padding:0 10px;
-        gap:13px;
+        gap:12px;
     }
 
-    .sidebar {
-        position:static;
-    }
-
+    .sidebar { position:static; }
     .sidebar nav {
         display:grid;
         grid-template-columns:repeat(2,minmax(0,1fr));
         gap:3px;
     }
 
-    .sidebar hr {
-        margin:12px 0;
-    }
-
-    .panel {
-        padding:13px;
-    }
-
-    .news-list,.source-list {
-        grid-template-columns:1fr;
-    }
-
-    .filters {
-        grid-template-columns:1fr 1fr;
-    }
-
-    .modal-grid {
-        grid-template-columns:1fr;
-    }
-
-    .modal .field.full {
-        grid-column:auto;
-    }
+    .news-list,.source-list { grid-template-columns:1fr; }
+    .panel { padding:13px; }
+    .modal-grid { grid-template-columns:1fr; }
+    .full { grid-column:auto; }
 }
 
 @media(max-width:390px) {
-    .filters {
-        grid-template-columns:1fr;
-    }
-
-    .stats {
-        gap:8px;
-    }
-
-    .stat {
-        padding:12px;
-    }
-
-    .stat strong {
-        font-size:21px;
-    }
+    .filters { grid-template-columns:1fr; }
+    .stat { padding:11px; }
+    .stat strong { font-size:21px; }
 }
 </style>
 </head>
@@ -535,7 +511,8 @@ footer {
         </div>
 
         <div class="header-actions">
-            <button onclick="openNewsModal()">＋ Add News</button>
+            <button onclick="openImportModal()">📥 Add News</button>
+            <button onclick="openNewsModal()">＋ Manual News</button>
             <button onclick="refreshAllSources()">↻ Refresh RSS</button>
             <button onclick="exportBackup()">⬇ Backup</button>
         </div>
@@ -545,7 +522,6 @@ footer {
 <div class="app">
 
     <aside class="sidebar">
-
         <h3>📚 Dashboard</h3>
 
         <nav>
@@ -556,44 +532,41 @@ footer {
                 onclick="changeView('bookmarks',this)">⭐ Bookmarks</button>
 
             <button class="nav-btn" data-view="mynews"
-                onclick="changeView('mynews',this)">📝 My Notes</button>
+                onclick="changeView('mynews',this)">📝 My News & Notes</button>
 
             <button class="nav-btn" data-view="sources"
                 onclick="changeView('sources',this)">🌐 News Sources</button>
         </nav>
 
         <hr>
-
-        <h3>📂 Quick Categories</h3>
-
+        <h3>📂 Categories</h3>
         <nav id="categoryNav"></nav>
 
         <hr>
-
-        <h3>🗺️ Quick Regions</h3>
-
+        <h3>🗺️ Regions</h3>
         <nav id="regionNav"></nav>
 
         <hr>
-
         <h3>💾 Data Management</h3>
 
-        <button class="nav-btn" onclick="exportBackup()">⬇ Export JSON Backup</button>
+        <button class="nav-btn" onclick="openImportModal()">📥 Add News JSON</button>
+        <button class="nav-btn" onclick="exportBackup()">⬇ Export Backup</button>
 
-        <button class="nav-btn" onclick="document.getElementById('restoreFile').click()">
-            ⬆ Restore JSON Backup
+        <button class="nav-btn"
+            onclick="document.getElementById('restoreFile').click()">
+            ⬆ Restore Backup
         </button>
 
-        <input type="file" id="restoreFile" accept=".json,application/json"
-            hidden onchange="importBackup(event)">
+        <input type="file" id="restoreFile"
+            accept=".json,application/json" hidden
+            onchange="importBackup(event)">
 
         <button class="nav-btn" onclick="clearFilters()">↺ Clear Filters</button>
 
-        <p style="font-size:11px;color:#64748b;line-height:1.5">
-            आपका डेटा इसी ब्राउज़र में सेव होता है।
-            नियमित रूप से JSON Backup बनाते रहें।
+        <p style="font-size:11px;color:#64748b;line-height:1.6">
+            समाचार इस ब्राउज़र के IndexedDB में सेव होते हैं।
+            नियमित रूप से JSON Backup डाउनलोड करें।
         </p>
-
     </aside>
 
     <main class="main">
@@ -603,17 +576,14 @@ footer {
                 <span>Total Saved News</span>
                 <strong id="totalCount">0</strong>
             </div>
-
             <div class="stat">
                 <span>Bookmarks</span>
                 <strong id="bookmarkCount">0</strong>
             </div>
-
             <div class="stat">
                 <span>Today's News</span>
                 <strong id="todayCount">0</strong>
             </div>
-
             <div class="stat">
                 <span>News Sources</span>
                 <strong id="sourceCount">15</strong>
@@ -624,11 +594,10 @@ footer {
             <h2>🔎 Search & Filter</h2>
 
             <div class="filters">
-
                 <div class="field">
                     <label>Search News</label>
                     <input id="searchInput" type="search"
-                        placeholder="Search title, topic, notes..."
+                        placeholder="Search news, facts, notes..."
                         oninput="renderNews()">
                 </div>
 
@@ -667,73 +636,125 @@ footer {
                 </div>
 
                 <div class="field">
-                    <label>Actions</label>
+                    <label>Clear Filters</label>
                     <button class="btn secondary" style="width:100%"
-                        onclick="clearFilters()">Clear All Filters</button>
+                        onclick="clearFilters()">Clear All</button>
                 </div>
-
             </div>
         </section>
 
         <section class="panel" id="newsPanel">
-
             <div class="news-toolbar">
                 <h2 id="listTitle">📰 Current Affairs</h2>
-
-                <button class="btn" onclick="openNewsModal()">＋ Add News</button>
+                <button class="btn" onclick="openImportModal()">📥 Add News JSON</button>
             </div>
 
             <div id="newsList" class="news-list">
-                <div class="empty">Loading your local news...</div>
+                <div class="empty">Loading...</div>
             </div>
-
         </section>
 
         <section class="panel hidden" id="sourcesPanel">
-
-            <h2>🌐 Your 15 News Sources</h2>
-
-            <p style="font-size:13px;color:#64748b;line-height:1.6">
-                Insights IAS का RSS Feed पहले से जोड़ा गया है।
-                अन्य वेबसाइटों के लिए Configure Feed दबाकर उनका RSS/Atom URL जोड़ें।
-                कुछ वेबसाइटें browser requests को CORS के कारण रोक सकती हैं।
+            <h2>🌐 News Sources</h2>
+            <p style="font-size:13px;line-height:1.7;color:#64748b">
+                Insights IAS RSS पहले से कॉन्फ़िगर है। अन्य वेबसाइटों के RSS
+                Feed को Configure Feed से जोड़ा जा सकता है। RSS काम करने के लिए
+                वेबसाइट को browser requests की अनुमति देनी होगी।
             </p>
 
-            <div class="button-row" style="margin-bottom:15px">
-                <button class="btn" onclick="refreshAllSources()">↻ Refresh Configured Feeds</button>
-                <button class="btn secondary" onclick="renderSources()">Update Source List</button>
+            <div class="button-row">
+                <button class="btn" onclick="refreshAllSources()">↻ Refresh Feeds</button>
             </div>
 
-            <div id="sourceList" class="source-list"></div>
-
+            <div id="sourceList" class="source-list" style="margin-top:15px"></div>
         </section>
 
     </main>
-
 </div>
 
 <footer>
-    Personal Current Affairs Organizer • Local Browser Storage
-    <br>Educational use only. Always verify important news with the original publisher.
+    Current Affairs Pro • Personal Study Organizer
+    <br>Local Browser Database • JSON Import / Export
 </footer>
 
-<!-- ADD / EDIT NEWS MODAL -->
+
+<!-- ================================================
+     ADD NEWS JSON MODAL
+================================================ -->
+
+<div class="modal" id="importModal">
+    <div class="modal-box">
+
+        <h2>📥 Add Current Affairs</h2>
+
+        <p>
+            ChatGPT से तैयार किया गया JSON डेटा पेस्ट करें या JSON फ़ाइल अपलोड करें।
+            पहले Preview देखें, फिर Continue दबाकर समाचार सेव करें।
+        </p>
+
+        <div class="field">
+            <label>JSON Data</label>
+            <textarea id="jsonInput"
+                placeholder='{"version":1,"news":[{"title":"Example","date":"2026-10-25","category":"National","region":"India","summary":"News summary"}]}'
+                style="min-height:220px"></textarea>
+        </div>
+
+        <div class="button-row">
+            <button class="btn secondary"
+                onclick="document.getElementById('jsonFile').click()">
+                📂 Add File
+            </button>
+
+            <input type="file" id="jsonFile"
+                accept=".json,application/json" hidden
+                onchange="loadJSONFile(event)">
+
+            <button class="btn secondary" onclick="pasteFromClipboard()">
+                📋 Paste
+            </button>
+
+            <button class="btn secondary" onclick="validateJSON()">
+                👁 Preview
+            </button>
+
+            <button class="btn" id="continueImportBtn"
+                onclick="continueJSONImport()">
+                Continue →
+            </button>
+
+            <button class="btn secondary" onclick="closeImportModal()">
+                Cancel
+            </button>
+        </div>
+
+        <div id="importPreview" class="status-box">
+            JSON डेटा पेस्ट करें या Add File चुनें।
+        </div>
+
+        <div id="previewList" class="preview-list"></div>
+
+        <div id="importResults" class="status-box hidden"></div>
+
+    </div>
+</div>
+
+
+<!-- ================================================
+     MANUAL NEWS MODAL
+================================================ -->
 
 <div class="modal" id="newsModal">
     <div class="modal-box">
 
-        <h2 id="modalTitle">Add Current Affairs</h2>
+        <h2 id="manualModalTitle">＋ Add News Manually</h2>
 
         <form id="newsForm">
-
             <input type="hidden" id="newsId">
 
             <div class="modal-grid">
-
                 <div class="field full">
                     <label>News Title *</label>
-                    <input id="newsTitle" required maxlength="500"
-                        placeholder="Enter news headline">
+                    <input id="newsTitle" required maxlength="500">
                 </div>
 
                 <div class="field">
@@ -752,27 +773,25 @@ footer {
                 </div>
 
                 <div class="field">
-                    <label>Source Website</label>
+                    <label>Source</label>
                     <select id="newsSource"></select>
                 </div>
 
                 <div class="field full">
                     <label>Original Article URL</label>
                     <input id="newsUrl" type="url"
-                        placeholder="https://example.com/news">
+                        placeholder="https://example.com/article">
                 </div>
 
                 <div class="field full">
-                    <label>Summary / Your Notes</label>
-                    <textarea id="newsSummary"
-                        placeholder="Write important facts, exam points, data, schemes, etc."></textarea>
+                    <label>Summary / Important Facts</label>
+                    <textarea id="newsSummary"></textarea>
                 </div>
 
                 <div class="field full">
                     <label>Tags (comma separated)</label>
-                    <input id="newsTags" placeholder="UPSC, BPSC, Economy, Bihar">
+                    <input id="newsTags" placeholder="UPSC, BPSC, Economy">
                 </div>
-
             </div>
 
             <div class="button-row">
@@ -781,19 +800,18 @@ footer {
                     onclick="closeNewsModal()">Cancel</button>
             </div>
 
-            <div id="formStatus" class="status"></div>
-
+            <div id="manualStatus" class="status-box"></div>
         </form>
-
     </div>
 </div>
+
 
 <script>
 "use strict";
 
-/* =========================================================
-   1. APP CONFIGURATION
-========================================================= */
+/* ==========================================
+   1. CONSTANTS AND SOURCES
+========================================== */
 
 const CATEGORIES = [
     "National",
@@ -819,15 +837,6 @@ const MONTHS = [
     "September","October","November","December"
 ];
 
-/*
-  Insights IAS RSS is preconfigured below.
-  The app tries a direct browser request first.
-  If CORS blocks the request, it tries a public proxy.
-
-  Public proxies are third-party services. Do not use them
-  for private URLs or sensitive data.
-*/
-
 const SOURCES = [
     {
         id:"pib",
@@ -841,14 +850,14 @@ const SOURCES = [
         name:"The Hindu",
         url:"https://www.thehindu.com/",
         feed:"",
-        description:"National and international journalism"
+        description:"National and international news"
     },
     {
         id:"indian-express",
         name:"The Indian Express",
         url:"https://indianexpress.com/",
         feed:"",
-        description:"Politics, governance and current affairs"
+        description:"Politics and governance"
     },
     {
         id:"bbc",
@@ -862,184 +871,207 @@ const SOURCES = [
         name:"Reuters",
         url:"https://www.reuters.com/",
         feed:"",
-        description:"Global news and business"
+        description:"World news and business"
     },
     {
         id:"economic-times",
         name:"Economic Times",
         url:"https://economictimes.indiatimes.com/",
         feed:"",
-        description:"Economy, business and markets"
+        description:"Economy and finance"
     },
     {
         id:"business-standard",
         name:"Business Standard",
         url:"https://www.business-standard.com/",
         feed:"",
-        description:"Business, finance and economic policy"
+        description:"Business and economic policy"
     },
     {
         id:"drishti",
         name:"Drishti IAS",
         url:"https://www.drishtiias.com/",
         feed:"",
-        description:"UPSC and state PCS current affairs"
+        description:"UPSC and state PCS"
     },
     {
         id:"affairscloud",
         name:"AffairsCloud",
         url:"https://affairscloud.com/",
         feed:"",
-        description:"Daily current affairs and exam preparation"
+        description:"Daily current affairs"
     },
     {
         id:"sansad-tv",
         name:"Sansad TV",
         url:"https://sansadtv.nic.in/",
         feed:"",
-        description:"Parliamentary proceedings and policy"
+        description:"Parliament and policy"
     },
     {
         id:"vajiram",
         name:"Vajiram & Ravi",
         url:"https://vajiramandravi.com/",
         feed:"",
-        description:"UPSC preparation and current affairs"
+        description:"UPSC preparation"
     },
     {
         id:"vision-ias",
         name:"Vision IAS",
         url:"https://visionias.in/",
         feed:"",
-        description:"Current affairs and exam resources"
+        description:"Current affairs and study material"
     },
     {
         id:"insights-ias",
         name:"Insights IAS",
         url:"https://www.insightsonindia.com/",
         feed:"https://www.insightsonindia.com/feed/",
-        description:"Daily current affairs, quizzes and UPSC analysis"
+        description:"Daily current affairs and quizzes"
     },
     {
         id:"forum-ias",
         name:"ForumIAS",
         url:"https://forumias.com/",
         feed:"",
-        description:"Civil services preparation and current affairs"
+        description:"Civil services preparation"
     },
     {
         id:"next-ias",
         name:"NEXT IAS",
         url:"https://www.nextias.com/",
         feed:"",
-        description:"UPSC and current affairs preparation"
+        description:"UPSC current affairs"
     }
 ];
 
 const DB_NAME = "CurrentAffairsProDB";
 const DB_VERSION = 1;
 const STORE_NAME = "news";
+const RSS_PROXY = "https://api.allorigins.win/raw?url=";
 
-let db;
+let db = null;
 let allNews = [];
 let currentView = "dashboard";
-
-let activeCategory = "";
-let activeRegion = "";
-
 let sourceStates = {};
+let pendingJSONNews = null;
+let pendingJSONErrors = [];
 
-const DEFAULT_PROXY =
-    "https://api.allorigins.win/raw?url=";
 
-
-/* =========================================================
-   2. SAFE UTILITIES
-========================================================= */
+/* ==========================================
+   2. UTILITY FUNCTIONS
+========================================== */
 
 function uid() {
     if (window.crypto && crypto.randomUUID) {
         return crypto.randomUUID();
     }
 
-    return "news-" + Date.now() + "-" +
+    return "CA-" + Date.now() + "-" +
         Math.random().toString(36).slice(2);
 }
 
 function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, function(ch) {
-        return {
-            "&":"&amp;",
-            "<":"&lt;",
-            ">":"&gt;",
-            '"':"&quot;",
-            "'":"&#39;"
-        }[ch];
-    });
-}
-
-function validDate(value) {
-    if (!value) return new Date().toISOString().slice(0,10);
-
-    const d = new Date(value);
-
-    if (Number.isNaN(d.getTime())) {
-        return new Date().toISOString().slice(0,10);
-    }
-
-    return d.toISOString().slice(0,10);
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+    })[ch]);
 }
 
 function safeURL(value) {
-    try {
-        const u = new URL(value);
+    if (!value) return "";
 
-        if (u.protocol === "https:" || u.protocol === "http:") {
-            return u.href;
+    try {
+        const url = new URL(String(value));
+
+        if (url.protocol === "http:" || url.protocol === "https:") {
+            return url.href;
+        }
+    } catch(error) {}
+
+    return "";
+}
+
+function simpleHash(text) {
+    let hash = 0;
+
+    for (let i=0;i<text.length;i++) {
+        hash = ((hash << 5) - hash) + text.charCodeAt(i);
+        hash |= 0;
+    }
+
+    return Math.abs(hash).toString(36);
+}
+
+function validDate(value) {
+    if (!value) return "";
+
+    const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+    if (match) {
+        const d = new Date(
+            Number(match[1]),
+            Number(match[2])-1,
+            Number(match[3])
+        );
+
+        if (
+            d.getFullYear() === Number(match[1]) &&
+            d.getMonth() === Number(match[2])-1 &&
+            d.getDate() === Number(match[3])
+        ) {
+            return String(value);
         }
 
         return "";
-    } catch {
-        return "";
     }
+
+    const d = new Date(value);
+
+    if (Number.isNaN(d.getTime())) return "";
+
+    return d.getFullYear() + "-" +
+        String(d.getMonth()+1).padStart(2,"0") + "-" +
+        String(d.getDate()).padStart(2,"0");
 }
 
 function sourceName(id) {
     const source = SOURCES.find(s => s.id === id);
-    return source ? source.name : "Personal Note";
+    return source ? source.name : "Personal / Other";
 }
 
-function getMonthName(date) {
+function monthForDate(date) {
+    if (!date) return "";
+
     const d = new Date(date + "T12:00:00");
+
+    if (Number.isNaN(d.getTime())) return "";
+
     return MONTHS[d.getMonth()];
 }
 
-function getYear(date) {
-    return String(new Date(date + "T12:00:00").getFullYear());
-}
-
-function setStatus(message, color) {
-    const status = document.getElementById("formStatus");
-
-    status.textContent = message;
-    status.style.color = color || "#64748b";
+function yearForDate(date) {
+    return date ? date.slice(0,4) : "";
 }
 
 
-/* =========================================================
-   3. INDEXEDDB LOCAL DATABASE
-========================================================= */
+/* ==========================================
+   3. INDEXEDDB
+========================================== */
 
 function openDatabase() {
     return new Promise((resolve,reject) => {
         if (!("indexedDB" in window)) {
-            reject(new Error("IndexedDB is not supported by this browser."));
+            reject(new Error("IndexedDB इस ब्राउज़र में उपलब्ध नहीं है।"));
             return;
         }
 
         const request = indexedDB.open(DB_NAME,DB_VERSION);
 
-        request.onupgradeneeded = function(event) {
+        request.onupgradeneeded = event => {
             const database = event.target.result;
 
             if (!database.objectStoreNames.contains(STORE_NAME)) {
@@ -1053,17 +1085,12 @@ function openDatabase() {
             }
         };
 
-        request.onsuccess = function() {
-            resolve(request.result);
-        };
-
-        request.onerror = function() {
-            reject(request.error);
-        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
     });
 }
 
-function databaseTransaction(mode,action) {
+function dbRequest(mode,action) {
     return new Promise((resolve,reject) => {
         const tx = db.transaction(STORE_NAME,mode);
         const store = tx.objectStore(STORE_NAME);
@@ -1077,25 +1104,35 @@ function databaseTransaction(mode,action) {
             return;
         }
 
-        tx.oncomplete = () => resolve(request ? request.result : true);
+        let result;
+
+        if (request) {
+            request.onsuccess = () => {
+                result = request.result;
+            };
+
+            request.onerror = () => reject(request.error);
+        }
+
+        tx.oncomplete = () => resolve(result);
         tx.onerror = () => reject(tx.error);
-        tx.onabort = () => reject(tx.error || new Error("Database transaction aborted"));
+        tx.onabort = () => reject(tx.error || new Error("Transaction aborted"));
     });
 }
 
-async function getAllFromDB() {
-    return databaseTransaction("readonly",store => store.getAll());
+function getAllFromDB() {
+    return dbRequest("readonly",store => store.getAll());
 }
 
-async function saveNewsToDB(item) {
-    return databaseTransaction("readwrite",store => store.put(item));
+function saveNewsToDB(item) {
+    return dbRequest("readwrite",store => store.put(item));
 }
 
-async function deleteNewsFromDB(id) {
-    return databaseTransaction("readwrite",store => store.delete(id));
+function deleteNewsFromDB(id) {
+    return dbRequest("readwrite",store => store.delete(id));
 }
 
-async function replaceAllNews(items) {
+function replaceAllNews(items) {
     return new Promise((resolve,reject) => {
         const tx = db.transaction(STORE_NAME,"readwrite");
         const store = tx.objectStore(STORE_NAME);
@@ -1106,39 +1143,35 @@ async function replaceAllNews(items) {
 
         tx.oncomplete = resolve;
         tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(tx.error);
     });
 }
 
 
-/* =========================================================
-   4. SETTINGS AND RSS FEED STORAGE
-========================================================= */
+/* ==========================================
+   4. SETTINGS
+========================================== */
 
 function loadSettings() {
     try {
-        const saved = JSON.parse(
+        const settings = JSON.parse(
             localStorage.getItem("cap_settings") || "{}"
         );
 
-        /*
-          Preserve Insights IAS as the default if the user
-          has not configured any feed settings previously.
-        */
-
-        if (saved.feeds) {
+        if (settings.feeds) {
             SOURCES.forEach(source => {
                 if (Object.prototype.hasOwnProperty.call(
-                    saved.feeds,source.id
+                    settings.feeds,source.id
                 )) {
-                    source.feed = saved.feeds[source.id];
+                    source.feed = safeURL(settings.feeds[source.id]);
                 }
             });
         }
 
-        sourceStates = saved.states || {};
+        sourceStates = settings.states || {};
 
     } catch(error) {
-        console.warn("Could not load settings",error);
+        console.warn("Settings could not be loaded",error);
     }
 }
 
@@ -1156,9 +1189,9 @@ function saveSettings() {
 }
 
 
-/* =========================================================
-   5. INITIALIZE FILTERS AND NAVIGATION
-========================================================= */
+/* ==========================================
+   5. SELECT BOXES AND NAVIGATION
+========================================== */
 
 function fillSelect(id,items,firstLabel) {
     const select = document.getElementById(id);
@@ -1166,16 +1199,23 @@ function fillSelect(id,items,firstLabel) {
     select.innerHTML = "";
 
     if (firstLabel !== null) {
-        const option = document.createElement("option");
-        option.value = "";
-        option.textContent = firstLabel;
-        select.appendChild(option);
+        const first = document.createElement("option");
+        first.value = "";
+        first.textContent = firstLabel;
+        select.appendChild(first);
     }
 
     items.forEach(item => {
         const option = document.createElement("option");
-        option.value = item.value ?? item;
-        option.textContent = item.label ?? item;
+
+        if (typeof item === "object") {
+            option.value = item.value;
+            option.textContent = item.label;
+        } else {
+            option.value = item;
+            option.textContent = item;
+        }
+
         select.appendChild(option);
     });
 }
@@ -1193,7 +1233,7 @@ function initializeFilters() {
 
     const years = [];
 
-    for(let y = new Date().getFullYear()+1; y >= 2020; y--) {
+    for (let y=new Date().getFullYear()+1;y>=2020;y--) {
         years.push(String(y));
     }
 
@@ -1205,84 +1245,73 @@ function initializeFilters() {
     fillSelect(
         "newsSource",
         [
-            {value:"",label:"Personal Note / Other"},
+            {value:"",label:"Personal / Other"},
             ...SOURCES.map(s => ({value:s.id,label:s.name}))
         ],
         null
     );
 
-    const categoryNav = document.getElementById("categoryNav");
+    document.getElementById("categoryNav").innerHTML =
+        CATEGORIES.map(category => `
+            <button class="nav-btn"
+                onclick="quickCategory('${escapeHTML(category)}')">
+                ${escapeHTML(category)}
+            </button>
+        `).join("");
 
-    categoryNav.innerHTML = CATEGORIES.map(cat => `
-        <button class="nav-btn"
-            onclick="quickCategory('${escapeHTML(cat)}')">
-            ${escapeHTML(cat)}
-        </button>
-    `).join("");
-
-    const regionNav = document.getElementById("regionNav");
-
-    regionNav.innerHTML = REGIONS.map(region => `
-        <button class="nav-btn"
-            onclick="quickRegion('${escapeHTML(region)}')">
-            📍 ${escapeHTML(region)}
-        </button>
-    `).join("");
+    document.getElementById("regionNav").innerHTML =
+        REGIONS.map(region => `
+            <button class="nav-btn"
+                onclick="quickRegion('${escapeHTML(region)}')">
+                📍 ${escapeHTML(region)}
+            </button>
+        `).join("");
 }
 
 
-/* =========================================================
-   6. VIEW NAVIGATION
-========================================================= */
+/* ==========================================
+   6. NAVIGATION
+========================================== */
 
 function changeView(view,button) {
     currentView = view;
 
-    document.querySelectorAll(".nav-btn[data-view]")
-        .forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll("[data-view]").forEach(btn =>
+        btn.classList.remove("active")
+    );
 
-    if (button) {
-        button.classList.add("active");
-    }
+    if (button) button.classList.add("active");
 
-    const sources = document.getElementById("sourcesPanel");
-    const filters = document.getElementById("filterPanel");
-    const newsPanel = document.getElementById("newsPanel");
+    const sourceView = view === "sources";
 
-    sources.classList.toggle("hidden",view !== "sources");
-    filters.classList.toggle("hidden",view === "sources");
-    newsPanel.classList.toggle("hidden",view === "sources");
+    document.getElementById("sourcesPanel")
+        .classList.toggle("hidden",!sourceView);
 
-    if (view === "sources") {
+    document.getElementById("filterPanel")
+        .classList.toggle("hidden",sourceView);
+
+    document.getElementById("newsPanel")
+        .classList.toggle("hidden",sourceView);
+
+    if (sourceView) {
         renderSources();
         return;
     }
-
-    activeCategory = "";
-    activeRegion = "";
 
     renderNews();
 }
 
 function quickCategory(category) {
-    activeCategory = category;
-    currentView = "dashboard";
-
     document.getElementById("categoryFilter").value = category;
 
     changeView("dashboard",document.querySelector('[data-view="dashboard"]'));
-    document.getElementById("categoryFilter").value = category;
-
     renderNews();
 }
 
 function quickRegion(region) {
-    activeRegion = region;
-    currentView = "dashboard";
-
-    changeView("dashboard",document.querySelector('[data-view="dashboard"]'));
     document.getElementById("regionFilter").value = region;
 
+    changeView("dashboard",document.querySelector('[data-view="dashboard"]'));
     renderNews();
 }
 
@@ -1300,109 +1329,103 @@ function clearFilters() {
 
     document.getElementById("sortFilter").value = "newest";
 
-    activeCategory = "";
-    activeRegion = "";
-
     renderNews();
 }
 
 
-/* =========================================================
-   7. AUTO CATEGORY CLASSIFICATION
-========================================================= */
+/* ==========================================
+   7. AUTO CATEGORY / REGION
+========================================== */
 
 function classifyNews(title,summary) {
     const text = (title + " " + summary).toLowerCase();
 
     const rules = [
-        {
-            category:"Sports",
-            words:["cricket","football","hockey","olympic",
-                "medal","tournament","world cup","sport",
-                "badminton","tennis","athlete","fifa"]
-        },
-        {
-            category:"Economic",
-            words:["economy","economic","gdp","inflation",
-                "rbi","banking","budget","tax","trade",
-                "fiscal","monetary","investment","rupee",
-                "unemployment","exports","imports"]
-        },
-        {
-            category:"Scheme",
-            words:["scheme","yojana","mission","subsidy",
-                "beneficiary","welfare programme","pension",
-                "government programme","pm-kisan",
-                "ayushman bharat","implementation"]
-        },
-        {
-            category:"Political",
-            words:["election","parliament","political",
-                "minister","chief minister","president",
-                "cabinet","legislature","party","bill passed",
-                "opposition","governor"]
-        },
-        {
-            category:"International",
-            words:["united nations","un security council",
-                "world bank","imf","international",
-                "bilateral","foreign affairs","summit",
-                "global","nato","g20","brics","diplomacy"]
-        },
-        {
-            category:"Social Issue",
-            words:["poverty","education","healthcare",
-                "women","child labour","gender","caste",
-                "inequality","human rights","malnutrition",
-                "social justice","migration","unicef"]
-        }
+        ["Sports",[
+            "cricket","football","hockey","olympic","medal",
+            "tournament","world cup","sports","badminton",
+            "tennis","athlete","fifa"
+        ]],
+        ["Economic",[
+            "economy","economic","gdp","inflation","rbi",
+            "banking","budget","tax","trade","fiscal",
+            "monetary","investment","rupee","exports","imports"
+        ]],
+        ["Scheme",[
+            "scheme","yojana","mission","subsidy","beneficiary",
+            "welfare programme","pension","pm-kisan",
+            "ayushman bharat"
+        ]],
+        ["Political",[
+            "election","parliament","political","minister",
+            "chief minister","president","cabinet","legislature",
+            "opposition","governor"
+        ]],
+        ["International",[
+            "united nations","world bank","imf","international",
+            "bilateral","foreign affairs","summit","global",
+            "nato","g20","brics","diplomacy"
+        ]],
+        ["Social Issue",[
+            "poverty","education","healthcare","women",
+            "child labour","gender","inequality","human rights",
+            "malnutrition","social justice","migration"
+        ]]
     ];
 
-    for (const rule of rules) {
-        if (rule.words.some(word => text.includes(word))) {
-            return rule.category;
-        }
+    for (const [category,words] of rules) {
+        if (words.some(word => text.includes(word))) return category;
     }
 
     return "National";
 }
 
+function detectRegion(text) {
+    const t = text.toLowerCase();
 
-/* =========================================================
-   8. NEWS MODAL: ADD AND EDIT
-========================================================= */
+    if (/\bbihar\b|\bpatna\b|\bgaya\b|\bmuzaffarpur\b/.test(t))
+        return "Bihar";
 
-function openNewsModal(item) {
-    const form = document.getElementById("newsForm");
+    if (/\bjharkhand\b|\branchi\b|\bdhanbad\b|\bjamshedpur\b/.test(t))
+        return "Jharkhand";
 
-    form.reset();
+    if (/\buttar pradesh\b|\blucknow\b|\bvaranasi\b|\bprayagraj\b/.test(t))
+        return "Uttar Pradesh";
+
+    if (/\bwest bengal\b|\bkolkata\b|\bdarjeeling\b|\bhowrah\b/.test(t))
+        return "West Bengal";
+
+    return "India";
+}
+
+
+/* ==========================================
+   8. ADD / EDIT NEWS MANUALLY
+========================================== */
+
+function openNewsModal(item=null) {
+    document.getElementById("newsForm").reset();
 
     document.getElementById("newsId").value = "";
+
     document.getElementById("newsDate").value =
         new Date().toISOString().slice(0,10);
 
-    document.getElementById("modalTitle").textContent =
-        item ? "Edit Current Affairs" : "Add Current Affairs";
+    document.getElementById("manualModalTitle").textContent =
+        item ? "Edit Current Affairs" : "Add News Manually";
 
-    setStatus("");
+    document.getElementById("manualStatus").textContent = "";
 
     if (item) {
         document.getElementById("newsId").value = item.id;
         document.getElementById("newsTitle").value = item.title || "";
-        document.getElementById("newsCategory").value =
-            item.category || "National";
-        document.getElementById("newsRegion").value =
-            item.region || "India";
-        document.getElementById("newsDate").value =
-            validDate(item.date);
-        document.getElementById("newsSource").value =
-            item.sourceId || "";
-        document.getElementById("newsUrl").value =
-            item.url || "";
-        document.getElementById("newsSummary").value =
-            item.summary || "";
-        document.getElementById("newsTags").value =
-            (item.tags || []).join(", ");
+        document.getElementById("newsCategory").value = item.category || "National";
+        document.getElementById("newsRegion").value = item.region || "India";
+        document.getElementById("newsDate").value = item.date || "";
+        document.getElementById("newsSource").value = item.sourceId || "";
+        document.getElementById("newsUrl").value = item.url || "";
+        document.getElementById("newsSummary").value = item.summary || "";
+        document.getElementById("newsTags").value = (item.tags || []).join(", ");
     }
 
     document.getElementById("newsModal").classList.add("open");
@@ -1412,70 +1435,53 @@ function closeNewsModal() {
     document.getElementById("newsModal").classList.remove("open");
 }
 
-document.getElementById("newsForm").addEventListener(
-    "submit",
-    async function(event) {
-        event.preventDefault();
+document.getElementById("newsForm").addEventListener("submit",async event => {
+    event.preventDefault();
 
-        try {
-            const id = document.getElementById("newsId").value || uid();
+    try {
+        const id = document.getElementById("newsId").value || uid();
+        const old = allNews.find(n => n.id === id);
 
-            const title = document.getElementById("newsTitle")
-                .value.trim();
+        const title = document.getElementById("newsTitle").value.trim();
 
-            const summary = document.getElementById("newsSummary")
-                .value.trim();
+        const urlInput = document.getElementById("newsUrl").value.trim();
+        const url = urlInput ? safeURL(urlInput) : "";
 
-            const urlRaw = document.getElementById("newsUrl")
-                .value.trim();
-
-            const url = urlRaw ? safeURL(urlRaw) : "";
-
-            if (urlRaw && !url) {
-                setStatus("Please enter a valid HTTP/HTTPS URL.","#dc2626");
-                return;
-            }
-
-            const existing = allNews.find(n => n.id === id);
-
-            const item = {
-                id,
-                title,
-                summary,
-                date:validDate(
-                    document.getElementById("newsDate").value
-                ),
-                category:document.getElementById("newsCategory").value,
-                region:document.getElementById("newsRegion").value,
-                sourceId:document.getElementById("newsSource").value,
-                url,
-                tags:document.getElementById("newsTags").value
-                    .split(",")
-                    .map(x => x.trim())
-                    .filter(Boolean),
-                bookmarked:existing ? !!existing.bookmarked : false,
-                createdAt:existing ? existing.createdAt : new Date().toISOString(),
-                updatedAt:new Date().toISOString(),
-                type:"manual"
-            };
-
-            await saveNewsToDB(item);
-
-            await reloadNews();
-
-            closeNewsModal();
-
-        } catch(error) {
-            console.error(error);
-            setStatus("Could not save news: " + error.message,"#dc2626");
+        if (urlInput && !url) {
+            throw new Error("कृपया सही HTTP/HTTPS URL डालें।");
         }
+
+        const item = {
+            id,
+            title,
+            date:document.getElementById("newsDate").value || "",
+            category:document.getElementById("newsCategory").value,
+            region:document.getElementById("newsRegion").value,
+            sourceId:document.getElementById("newsSource").value,
+            url,
+            summary:document.getElementById("newsSummary").value.trim(),
+            tags:document.getElementById("newsTags").value
+                .split(",").map(s => s.trim()).filter(Boolean),
+            bookmarked:old ? !!old.bookmarked : false,
+            createdAt:old ? old.createdAt : new Date().toISOString(),
+            updatedAt:new Date().toISOString(),
+            type:"manual"
+        };
+
+        await saveNewsToDB(item);
+        await reloadNews();
+        closeNewsModal();
+
+    } catch(error) {
+        document.getElementById("manualStatus").textContent =
+            "❌ " + error.message;
     }
-);
+});
 
 
-/* =========================================================
-   9. FILTERING AND RENDERING NEWS
-========================================================= */
+/* ==========================================
+   9. SEARCH AND RENDER NEWS
+========================================== */
 
 function filteredNews() {
     let list = [...allNews];
@@ -1488,9 +1494,7 @@ function filteredNews() {
         list = list.filter(n => n.type === "manual");
     }
 
-    const search = document.getElementById("searchInput")
-        .value.trim().toLowerCase();
-
+    const search = document.getElementById("searchInput").value.trim().toLowerCase();
     const category = document.getElementById("categoryFilter").value;
     const month = document.getElementById("monthFilter").value;
     const region = document.getElementById("regionFilter").value;
@@ -1498,61 +1502,37 @@ function filteredNews() {
     const year = document.getElementById("yearFilter").value;
 
     if (search) {
-        list = list.filter(n => {
-            const text = [
-                n.title,
-                n.summary,
-                n.category,
-                n.region,
-                sourceName(n.sourceId),
-                ...(n.tags || [])
-            ].join(" ").toLowerCase();
-
-            return text.includes(search);
-        });
+        list = list.filter(n => [
+            n.title,n.summary,n.category,n.region,
+            sourceName(n.sourceId),...(n.tags || [])
+        ].join(" ").toLowerCase().includes(search));
     }
 
-    if (category) {
-        list = list.filter(n => n.category === category);
-    }
-
-    if (month) {
-        list = list.filter(n => getMonthName(n.date) === month);
-    }
-
-    if (region) {
-        list = list.filter(n => n.region === region);
-    }
-
-    if (source) {
-        list = list.filter(n => n.sourceId === source);
-    }
-
-    if (year) {
-        list = list.filter(n => getYear(n.date) === year);
-    }
+    if (category) list = list.filter(n => n.category === category);
+    if (month) list = list.filter(n => monthForDate(n.date) === month);
+    if (region) list = list.filter(n => n.region === region);
+    if (source) list = list.filter(n => n.sourceId === source);
+    if (year) list = list.filter(n => yearForDate(n.date) === year);
 
     const sort = document.getElementById("sortFilter").value;
 
     if (sort === "oldest") {
-        list.sort((a,b) => a.date.localeCompare(b.date));
+        list.sort((a,b) => (a.date || "9999").localeCompare(b.date || "9999"));
     } else if (sort === "title") {
         list.sort((a,b) => a.title.localeCompare(b.title));
     } else {
-        list.sort((a,b) => {
-            const dateCompare = (b.date || "").localeCompare(a.date || "");
-
-            if (dateCompare !== 0) return dateCompare;
-
-            return (b.createdAt || "").localeCompare(a.createdAt || "");
-        });
+        list.sort((a,b) =>
+            (b.date || "").localeCompare(a.date || "") ||
+            (b.createdAt || "").localeCompare(a.createdAt || "")
+        );
     }
 
     return list;
 }
 
 function renderNews() {
-    const list = filteredNews();
+    const container = document.getElementById("newsList");
+    if (!container) return;
 
     const titles = {
         dashboard:"📰 Current Affairs",
@@ -1563,14 +1543,14 @@ function renderNews() {
     document.getElementById("listTitle").textContent =
         titles[currentView] || "📰 Current Affairs";
 
-    const container = document.getElementById("newsList");
+    const list = filteredNews();
 
     if (!list.length) {
         container.innerHTML = `
             <div class="empty">
-                <h3>No news found</h3>
-                <p>अपनी खबर जोड़ें या Search/Filters बदलें।</p>
-                <button class="btn" onclick="openNewsModal()">＋ Add News</button>
+                <h3>कोई समाचार नहीं मिला</h3>
+                <p>JSON फ़ाइल आयात करें या Manual News जोड़ें।</p>
+                <button class="btn" onclick="openImportModal()">📥 Add News</button>
             </div>
         `;
 
@@ -1580,46 +1560,37 @@ function renderNews() {
 
     container.innerHTML = list.map(item => {
         const url = safeURL(item.url);
-        const source = sourceName(item.sourceId);
-
-        const summary = item.summary
-            ? escapeHTML(item.summary.slice(0,650)) +
-                (item.summary.length > 650 ? "…" : "")
-            : "No summary added. Open the original article or add your own notes.";
-
-        const tags = (item.tags || []).slice(0,8).map(tag =>
-            `<span class="badge">${escapeHTML(tag)}</span>`
-        ).join("");
+        const summary = item.summary || "अभी कोई सारांश उपलब्ध नहीं है।";
 
         return `
             <article class="news-card">
-
                 <div class="badges">
                     <span class="badge">${escapeHTML(item.category || "National")}</span>
                     <span class="badge green">${escapeHTML(item.region || "India")}</span>
-                    ${item.type === "rss"
-                        ? '<span class="badge orange">RSS</span>'
-                        : '<span class="badge">Personal</span>'}
+                    <span class="badge">${item.type === "rss" ? "RSS" : "Saved"}</span>
                 </div>
 
                 <h3>${escapeHTML(item.title)}</h3>
 
-                <p>${summary}</p>
+                <p>${escapeHTML(summary)}</p>
 
-                ${tags ? `<div class="badges">${tags}</div>` : ""}
+                ${(item.tags || []).length
+                    ? `<div class="badges">
+                        ${item.tags.slice(0,10).map(tag =>
+                            `<span class="badge">${escapeHTML(tag)}</span>`
+                        ).join("")}
+                       </div>`
+                    : ""}
 
                 <div class="card-date">
-                    📅 ${escapeHTML(item.date || "")}
-                    &nbsp;•&nbsp; ${escapeHTML(source)}
+                    📅 ${escapeHTML(item.date || "तारीख उपलब्ध नहीं")}
+                    <br>🌐 ${escapeHTML(sourceName(item.sourceId))}
+                    ${item.importedFromChatGPT ? "<br>📥 ChatGPT JSON Import" : ""}
                 </div>
 
                 <div class="card-footer">
-
-                    ${url
-                        ? `<a href="${escapeHTML(url)}"
-                            target="_blank"
-                            rel="noopener noreferrer">Read Original ↗</a>`
-                        : ""}
+                    ${url ? `<a href="${escapeHTML(url)}" target="_blank"
+                        rel="noopener noreferrer">Read Original ↗</a>` : ""}
 
                     <button class="btn small secondary"
                         onclick="toggleBookmark('${escapeHTML(item.id)}')">
@@ -1627,47 +1598,16 @@ function renderNews() {
                     </button>
 
                     <button class="btn small secondary"
-                        onclick="editNews('${escapeHTML(item.id)}')">
-                        Edit
-                    </button>
+                        onclick="editNews('${escapeHTML(item.id)}')">Edit</button>
 
                     <button class="btn small danger"
-                        onclick="deleteNews('${escapeHTML(item.id)}')">
-                        Delete
-                    </button>
-
+                        onclick="deleteNews('${escapeHTML(item.id)}')">Delete</button>
                 </div>
-
             </article>
         `;
     }).join("");
 
     updateStats();
-}
-
-function editNews(id) {
-    const item = allNews.find(n => n.id === id);
-    if (item) openNewsModal(item);
-}
-
-async function toggleBookmark(id) {
-    const item = allNews.find(n => n.id === id);
-    if (!item) return;
-
-    item.bookmarked = !item.bookmarked;
-
-    await saveNewsToDB(item);
-    await reloadNews();
-}
-
-async function deleteNews(id) {
-    const item = allNews.find(n => n.id === id);
-    if (!item) return;
-
-    if (!confirm("Delete this saved news item?")) return;
-
-    await deleteNewsFromDB(id);
-    await reloadNews();
 }
 
 function updateStats() {
@@ -1684,487 +1624,390 @@ function updateStats() {
     document.getElementById("sourceCount").textContent = SOURCES.length;
 }
 
+function editNews(id) {
+    const item = allNews.find(n => n.id === id);
+    if (item) openNewsModal(item);
+}
 
-/* =========================================================
-   10. RSS FETCHING
-========================================================= */
+async function toggleBookmark(id) {
+    const item = allNews.find(n => n.id === id);
+    if (!item) return;
 
-async function fetchTextWithTimeout(url,timeoutMs=15000) {
-    const controller = new AbortController();
+    item.bookmarked = !item.bookmarked;
+    item.updatedAt = new Date().toISOString();
 
-    const timeout = setTimeout(() => controller.abort(),timeoutMs);
+    await saveNewsToDB(item);
+    await reloadNews();
+}
+
+async function deleteNews(id) {
+    if (!confirm("क्या आप यह समाचार हटाना चाहते हैं?")) return;
+
+    await deleteNewsFromDB(id);
+    await reloadNews();
+}
+
+
+/* ==========================================
+   10. ADD NEWS JSON IMPORT
+========================================== */
+
+function openImportModal() {
+    pendingJSONNews = null;
+    pendingJSONErrors = [];
+
+    document.getElementById("jsonInput").value = "";
+    document.getElementById("importPreview").textContent =
+        "JSON डेटा पेस्ट करें या Add File चुनें।";
+    document.getElementById("previewList").innerHTML = "";
+    document.getElementById("importResults").textContent = "";
+    document.getElementById("importResults").classList.add("hidden");
+
+    const button = document.getElementById("continueImportBtn");
+    button.textContent = "Continue →";
+    button.disabled = false;
+
+    document.getElementById("importModal").classList.add("open");
+}
+
+function closeImportModal() {
+    document.getElementById("importModal").classList.remove("open");
+}
+
+async function loadJSONFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
 
     try {
-        const response = await fetch(url,{
-            method:"GET",
-            signal:controller.signal,
-            cache:"no-store"
-        });
-
-        if (!response.ok) {
-            throw new Error("HTTP " + response.status);
+        if (file.size > 15 * 1024 * 1024) {
+            throw new Error("फ़ाइल 15 MB से बड़ी है।");
         }
 
-        return await response.text();
+        const text = await file.text();
 
+        document.getElementById("jsonInput").value = text;
+
+        document.getElementById("importPreview").textContent =
+            "फ़ाइल लोड हुई: " + file.name +
+            "\nअब Preview दबाएँ।";
+
+        document.getElementById("previewList").innerHTML = "";
+        pendingJSONNews = null;
+
+    } catch(error) {
+        alert("फ़ाइल पढ़ने में समस्या: " + error.message);
     } finally {
-        clearTimeout(timeout);
+        event.target.value = "";
     }
 }
 
-async function fetchFeedText(feedURL) {
-    let directError;
-
+async function pasteFromClipboard() {
     try {
-        return await fetchTextWithTimeout(feedURL);
+        const text = await navigator.clipboard.readText();
+
+        if (!text) throw new Error("Clipboard खाली है।");
+
+        document.getElementById("jsonInput").value = text;
+
+        document.getElementById("importPreview").textContent =
+            "Clipboard से डेटा पेस्ट हो गया। अब Preview दबाएँ।";
+
     } catch(error) {
-        directError = error;
+        alert("Clipboard access उपलब्ध नहीं है। JSON बॉक्स में लंबे समय तक दबाकर Paste करें।");
+    }
+}
+
+function normalizeImportedNews(item,index) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+        throw new Error("समाचार " + (index+1) + " का डेटा गलत है।");
     }
 
-    /*
-      Fallback proxy is only an attempt.
-      Public proxies can be unavailable or rate-limited.
-    */
+    const title = String(item.title || "").trim();
 
-    try {
-        const proxyURL = DEFAULT_PROXY + encodeURIComponent(feedURL);
+    if (!title) {
+        throw new Error("समाचार " + (index+1) + " का title खाली है।");
+    }
 
-        return await fetchTextWithTimeout(proxyURL,20000);
+    const date = validDate(item.date || "");
 
-    } catch(proxyError) {
-        throw new Error(
-            "Direct request failed: " + directError.message +
-            " | Proxy request failed: " + proxyError.message +
-            ". CORS or feed access restrictions may be blocking this request."
+    if (item.date && !date) {
+        throw new Error("समाचार " + (index+1) + " की date गलत है।");
+    }
+
+    const category = CATEGORIES.includes(item.category)
+        ? item.category
+        : classifyNews(title,String(item.summary || ""));
+
+    const region = REGIONS.includes(item.region)
+        ? item.region
+        : detectRegion(title + " " + String(item.summary || ""));
+
+    const source = SOURCES.find(s =>
+        s.id === item.sourceId ||
+        s.name.toLowerCase() === String(item.source || "").toLowerCase()
+    );
+
+    const rawURL = item.url || "";
+    const url = rawURL ? safeURL(rawURL) : "";
+
+    if (rawURL && !url) {
+        throw new Error("समाचार " + (index+1) + " का URL गलत है।");
+    }
+
+    const facts = Array.isArray(item.facts)
+        ? item.facts.map(x => String(x))
+        : [];
+
+    const tags = [
+        ...(Array.isArray(item.tags) ? item.tags : []),
+        ...(Array.isArray(item.exam_tags) ? item.exam_tags : [])
+    ].map(x => String(x).trim()).filter(Boolean);
+
+    const summaryParts = [];
+
+    if (item.summary) summaryParts.push(String(item.summary));
+
+    if (facts.length) {
+        summaryParts.push(
+            "महत्त्वपूर्ण तथ्य:\n" +
+            facts.map((fact,i) => (i+1)+". "+fact).join("\n")
         );
     }
-}
 
-function parseFeed(xmlText,source) {
-    const parser = new DOMParser();
+    const summary = summaryParts.join("\n\n");
 
-    const doc = parser.parseFromString(xmlText,"text/xml");
+    /*
+      Stable identity:
+      same explicit ID, URL, title and date will be recognized.
+    */
 
-    if (doc.querySelector("parsererror")) {
-        throw new Error("The response is not valid RSS/Atom XML.");
-    }
+    const stableBase = item.id
+        ? "id:" + String(item.id)
+        : "article:" + (url || "") + "|" + title.toLowerCase() + "|" + date;
 
-    const items = Array.from(doc.querySelectorAll("item, entry"));
+    const id = "ca-" + simpleHash(stableBase);
 
-    return items.map(node => {
-        const getText = selectors => {
-            for (const selector of selectors) {
-                const el = node.querySelector(selector);
-
-                if (el) {
-                    const text = el.textContent || "";
-
-                    if (text.trim()) return text.trim();
-                }
-            }
-
-            return "";
-        };
-
-        let link = "";
-
-        const linkEl = node.querySelector("link");
-
-        if (linkEl) {
-            link = linkEl.textContent.trim();
-
-            if (!link) {
-                link = linkEl.getAttribute("href") || "";
-            }
-        }
-
-        let description = getText([
-            "description",
-            "summary",
-            "content",
-            "content\\:encoded"
-        ]);
-
-        description = description
-            .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,"")
-            .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,"")
-            .replace(/<[^>]*>/g," ")
-            .replace(/&nbsp;/gi," ")
-            .replace(/&amp;/gi,"&")
-            .replace(/&quot;/gi,'"')
-            .replace(/&#39;/gi,"'")
-            .replace(/&lt;/gi,"<")
-            .replace(/&gt;/gi,">")
-            .replace(/\s+/g," ")
-            .trim();
-
-        const title = getText(["title"]);
-
-        const published = getText([
-            "pubDate",
-            "published",
-            "updated",
-            "dc\\:date"
-        ]);
-
-        const date = validDate(published);
-
-        const cleanURL = safeURL(link) || source.url;
-
-        const category = classifyNews(title,description);
-
-        return {
-            id:"rss-" + source.id + "-" + simpleHash(cleanURL + title),
-            title:title || "Untitled article",
-            summary:description.slice(0,3000),
-            date,
-            category,
-            region:detectRegion(title + " " + description),
-            sourceId:source.id,
-            url:cleanURL,
-            tags:["RSS"],
-            bookmarked:false,
-            createdAt:new Date().toISOString(),
-            updatedAt:new Date().toISOString(),
-            type:"rss"
-        };
-    }).filter(item => item.title && item.url);
-}
-
-function simpleHash(text) {
-    let hash = 0;
-
-    for (let i=0;i<text.length;i++) {
-        hash = ((hash << 5) - hash) + text.charCodeAt(i);
-        hash |= 0;
-    }
-
-    return Math.abs(hash).toString(36);
-}
-
-function detectRegion(text) {
-    const t = text.toLowerCase();
-
-    if (/\bbihar\b|\bpatna\b|\bgaya\b|\bmuzaffarpur\b/.test(t)) {
-        return "Bihar";
-    }
-
-    if (/\bjharkhand\b|\branchi\b|\bdhanbad\b|\bjamshedpur\b/.test(t)) {
-        return "Jharkhand";
-    }
-
-    if (/\buttar pradesh\b|\blucknow\b|\bvaranasi\b|\bprayagraj\b/.test(t)) {
-        return "Uttar Pradesh";
-    }
-
-    if (/\bwest bengal\b|\bkolkata\b|\bdarjeeling\b|\bhowrah\b/.test(t)) {
-        return "West Bengal";
-    }
-
-    return "India";
-}
-
-async function refreshSource(source) {
-    if (!source.feed) {
-        sourceStates[source.id] = {
-            status:"Not configured",
-            message:"No RSS URL configured",
-            checkedAt:new Date().toISOString()
-        };
-
-        saveSettings();
-        return {count:0,source:source.name,skipped:true};
-    }
-
-    sourceStates[source.id] = {
-        status:"Loading",
-        message:"Fetching feed...",
-        checkedAt:new Date().toISOString()
+    return {
+        id,
+        title,
+        date,
+        category,
+        region,
+        sourceId:source ? source.id : "",
+        url,
+        summary,
+        tags:[...new Set(tags)],
+        bookmarked:!!item.bookmarked,
+        createdAt:new Date().toISOString(),
+        updatedAt:new Date().toISOString(),
+        type:"manual",
+        importedFromChatGPT:true,
+        originalId:item.id ? String(item.id) : "",
+        language:item.language || "hi"
     };
+}
 
-    saveSettings();
-    renderSources();
+function validateJSON() {
+    const text = document.getElementById("jsonInput").value.trim();
+
+    const preview = document.getElementById("importPreview");
+    const previewList = document.getElementById("previewList");
+    const resultBox = document.getElementById("importResults");
+    const button = document.getElementById("continueImportBtn");
+
+    resultBox.classList.add("hidden");
+    resultBox.textContent = "";
+    previewList.innerHTML = "";
+    pendingJSONNews = null;
+    pendingJSONErrors = [];
+
+    button.textContent = "Continue →";
+    button.disabled = false;
 
     try {
-        const feedText = await fetchFeedText(source.feed);
-
-        const parsed = parseFeed(feedText,source);
-
-        /*
-          Preserve bookmarks for articles already saved.
-          Deduplicate using a stable item ID.
-        */
-
-        const existingById = new Map(allNews.map(item => [item.id,item]));
-
-        let count = 0;
-
-        for (const item of parsed) {
-            const old = existingById.get(item.id);
-
-            if (old) {
-                item.bookmarked = !!old.bookmarked;
-                item.createdAt = old.createdAt || item.createdAt;
-
-                /*
-                  Do not overwrite personal notes if an article
-                  has been edited manually.
-                */
-
-                if (old.type === "manual") continue;
-            }
-
-            await saveNewsToDB(item);
-            count++;
+        if (!text) {
+            throw new Error("पहले JSON डेटा पेस्ट करें या Add File चुनें।");
         }
 
-        sourceStates[source.id] = {
-            status:"Success",
-            message:count + " feed items processed",
-            checkedAt:new Date().toISOString()
-        };
+        const data = JSON.parse(text);
 
-        saveSettings();
+        let items;
 
-        return {count,source:source.name};
+        if (Array.isArray(data)) {
+            items = data;
+        } else if (data && Array.isArray(data.news)) {
+            items = data.news;
+        } else if (data && Array.isArray(data.items)) {
+            items = data.items;
+        } else {
+            throw new Error('JSON में "news" या "items" array होना चाहिए।');
+        }
+
+        if (!items.length) {
+            throw new Error("इस फ़ाइल में कोई समाचार नहीं मिला।");
+        }
+
+        if (items.length > 10000) {
+            throw new Error("एक बार में अधिकतम 10,000 समाचार आयात करें।");
+        }
+
+        const validItems = [];
+        const errors = [];
+
+        items.forEach((item,index) => {
+            try {
+                validItems.push(normalizeImportedNews(item,index));
+            } catch(error) {
+                errors.push("Item " + (index+1) + ": " + error.message);
+            }
+        });
+
+        if (!validItems.length) {
+            throw new Error(
+                "कोई वैध समाचार नहीं मिला।\n" + errors.slice(0,10).join("\n")
+            );
+        }
+
+        pendingJSONNews = validItems;
+        pendingJSONErrors = errors;
+
+        preview.textContent =
+            "✅ JSON जाँच पूरी हुई।\n" +
+            "कुल आइटम: " + items.length + "\n" +
+            "आयात के लिए तैयार: " + validItems.length + "\n" +
+            "गलत प्रारूप वाले आइटम छोड़े जाएँगे: " + errors.length +
+            "\n\nContinue दबाकर समाचार सेव करें।";
+
+        previewList.innerHTML = validItems.slice(0,50).map((item,index) => `
+            <div class="preview-item">
+                <strong>${index+1}. ${escapeHTML(item.title)}</strong>
+                <span>
+                    ${escapeHTML(item.date || "तारीख उपलब्ध नहीं")}
+                    • ${escapeHTML(item.category)}
+                    • ${escapeHTML(item.region)}
+                </span>
+            </div>
+        `).join("");
+
+        if (validItems.length > 50) {
+            previewList.insertAdjacentHTML("beforeend",
+                `<div class="preview-item">और ${validItems.length-50} समाचार...</div>`
+            );
+        }
+
+        button.textContent = "Continue →";
 
     } catch(error) {
-        sourceStates[source.id] = {
-            status:"Failed",
-            message:error.message,
-            checkedAt:new Date().toISOString()
-        };
-
-        saveSettings();
-
-        return {
-            count:0,
-            source:source.name,
-            error:error.message
-        };
-
-    } finally {
-        renderSources();
+        preview.textContent = "❌ JSON Error:\n" + error.message;
     }
 }
 
-async function refreshAllSources() {
-    const configured = SOURCES.filter(source => source.feed);
+async function continueJSONImport() {
+    if (!pendingJSONNews) {
+        validateJSON();
 
-    if (!configured.length) {
-        alert("No RSS feeds are configured yet.");
+        if (!pendingJSONNews) return;
+
+        /*
+          First click previews and validates.
+          The user then clicks Continue again to save.
+        */
+        document.getElementById("importPreview").textContent +=
+            "\n\nडेटा जाँच लिया गया है। अब Continue दोबारा दबाएँ।";
+
         return;
     }
 
-    const button = document.querySelector(
-        '.header-actions button:nth-child(2)'
-    );
+    const button = document.getElementById("continueImportBtn");
+    const preview = document.getElementById("importPreview");
+    const resultBox = document.getElementById("importResults");
 
-    if (button) {
-        button.disabled = true;
-        button.textContent = "↻ Refreshing...";
+    if (!db) {
+        preview.textContent = "Local database तैयार नहीं है। फिर प्रयास करें।";
+        return;
     }
 
+    button.disabled = true;
+    button.textContent = "Saving...";
+
+    resultBox.classList.remove("hidden");
+    resultBox.textContent = "समाचार सेव किए जा रहे हैं...";
+
+    let added = 0;
+    let duplicates = 0;
+    let failed = 0;
+
     try {
-        for (const source of configured) {
-            await refreshSource(source);
+        const existing = await getAllFromDB();
+
+        const ids = new Set(existing.map(n => n.id));
+
+        const urls = new Set(
+            existing.map(n => safeURL(n.url || "")).filter(Boolean)
+        );
+
+        const titleDates = new Set(
+            existing.map(n =>
+                String(n.title || "").trim().toLowerCase() +
+                "|" + String(n.date || "")
+            )
+        );
+
+        for (const item of pendingJSONNews) {
+            const titleDate =
+                item.title.trim().toLowerCase() + "|" + item.date;
+
+            if (
+                ids.has(item.id) ||
+                (item.url && urls.has(item.url)) ||
+                titleDates.has(titleDate)
+            ) {
+                duplicates++;
+                continue;
+            }
+
+            try {
+                await saveNewsToDB(item);
+
+                ids.add(item.id);
+                if (item.url) urls.add(item.url);
+                titleDates.add(titleDate);
+
+                added++;
+
+            } catch(error) {
+                console.error(error);
+                failed++;
+            }
         }
 
         await reloadNews();
 
-        const successes = configured.filter(source =>
-            sourceStates[source.id] &&
-            sourceStates[source.id].status === "Success"
-        ).length;
+        preview.textContent = "✅ Import पूरा हो गया।";
 
-        alert(
-            "RSS refresh finished.\n" +
-            "Configured feeds: " + configured.length + "\n" +
-            "Successful feeds: " + successes + "\n\n" +
-            "If a feed fails, check its URL or CORS restrictions."
-        );
+        resultBox.textContent =
+            "नए समाचार सेव हुए: " + added + "\n" +
+            "डुप्लिकेट छोड़े गए: " + duplicates + "\n" +
+            "सेव करने में असफल: " + failed + "\n" +
+            "गलत प्रारूप वाले छोड़े गए: " + pendingJSONErrors.length +
+            "\n\nसमाचार आपके लोकल ब्राउज़र में सेव हैं।";
 
-    } finally {
-        if (button) {
-            button.disabled = false;
-            button.textContent = "↻ Refresh RSS";
-        }
+        pendingJSONNews = null;
+        pendingJSONErrors = [];
 
-        renderSources();
+        button.textContent = "Imported ✓";
+
+    } catch(error) {
+        preview.textContent = "❌ Import असफल: " + error.message;
+        button.disabled = false;
+        button.textContent = "Retry Import";
     }
 }
 
 
-/* =========================================================
-   11. SOURCE DIRECTORY AND CONFIGURATION
-========================================================= */
-
-function renderSources() {
-    const container = document.getElementById("sourceList");
-
-    if (!container) return;
-
-    container.innerHTML = SOURCES.map(source => {
-        const state = sourceStates[source.id] || {};
-
-        let statusClass = "";
-
-        if (state.status === "Success") statusClass = "green";
-        if (state.status === "Failed") statusClass = "orange";
-
-        return `
-            <article class="source-card">
-
-                <h3>${escapeHTML(source.name)}</h3>
-
-                <a href="${escapeHTML(source.url)}"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Open Website ↗
-                </a>
-
-                <p>${escapeHTML(source.description)}</p>
-
-                <div class="badges">
-                    <span class="badge ${source.feed ? "green" : ""}">
-                        ${source.feed ? "RSS Configured" : "Website Only"}
-                    </span>
-                    ${source.id === "insights-ias"
-                        ? '<span class="badge green">Preconfigured</span>'
-                        : ""}
-                </div>
-
-                <div class="source-status ${statusClass}">
-                    <strong>Status:</strong>
-                    ${escapeHTML(state.status || "Not checked")}
-                    <br>
-                    ${escapeHTML(state.message || "")}
-                    ${state.checkedAt
-                        ? "<br>Last checked: " + escapeHTML(
-                            new Date(state.checkedAt).toLocaleString()
-                        )
-                        : ""}
-                </div>
-
-                <div class="button-row">
-                    <button class="btn small"
-                        onclick="configureFeed('${escapeHTML(source.id)}')">
-                        ${source.feed ? "Change Feed" : "Configure Feed"}
-                    </button>
-
-                    <button class="btn small secondary"
-                        onclick="testSource('${escapeHTML(source.id)}')">
-                        Test / Refresh
-                    </button>
-
-                    ${source.feed
-                        ? `<button class="btn small danger"
-                            onclick="removeFeed('${escapeHTML(source.id)}')">
-                            Remove Feed
-                           </button>`
-                        : ""}
-                </div>
-
-            </article>
-        `;
-    }).join("");
-}
-
-function configureFeed(id) {
-    const source = SOURCES.find(s => s.id === id);
-
-    if (!source) return;
-
-    const value = prompt(
-        "Enter the RSS/Atom feed URL for " + source.name +
-        ".\n\nPaste the full feed URL.\n\n" +
-        "Insights IAS is already configured by default.",
-        source.feed || ""
-    );
-
-    if (value === null) return;
-
-    const trimmed = value.trim();
-
-    if (!trimmed) {
-        alert("No changes made. Use Remove Feed if you want to clear a feed.");
-        return;
-    }
-
-    const valid = safeURL(trimmed);
-
-    if (!valid) {
-        alert("Please enter a valid HTTP/HTTPS feed URL.");
-        return;
-    }
-
-    source.feed = valid;
-
-    sourceStates[source.id] = {
-        status:"Configured",
-        message:"Feed URL saved. You can now test it.",
-        checkedAt:new Date().toISOString()
-    };
-
-    saveSettings();
-    renderSources();
-
-    alert("RSS Feed saved for " + source.name + ".");
-}
-
-function removeFeed(id) {
-    const source = SOURCES.find(s => s.id === id);
-
-    if (!source) return;
-
-    if (!confirm("Remove the RSS Feed configuration for " + source.name + "?")) {
-        return;
-    }
-
-    source.feed = "";
-
-    sourceStates[source.id] = {
-        status:"Not configured",
-        message:"Feed removed",
-        checkedAt:new Date().toISOString()
-    };
-
-    saveSettings();
-    renderSources();
-}
-
-async function testSource(id) {
-    const source = SOURCES.find(s => s.id === id);
-
-    if (!source) return;
-
-    if (!source.feed) {
-        configureFeed(id);
-
-        if (!source.feed) return;
-    }
-
-    await refreshSource(source);
-    await reloadNews();
-
-    const state = sourceStates[source.id];
-
-    if (state && state.status === "Success") {
-        alert(source.name + " feed refreshed successfully.\n" + state.message);
-    } else {
-        alert(
-            source.name + " feed failed.\n\n" +
-            (state ? state.message : "Unknown error") +
-            "\n\nThe website may block browser requests. " +
-            "You can still open its website and add news manually."
-        );
-    }
-}
-
-
-/* =========================================================
-   12. BACKUP AND RESTORE
-========================================================= */
+/* ==========================================
+   11. JSON BACKUP AND RESTORE
+========================================== */
 
 function exportBackup() {
     const data = {
@@ -2192,62 +2035,53 @@ function exportBackup() {
     a.download = "current-affairs-backup-" +
         new Date().toISOString().slice(0,10) + ".json";
 
+    document.body.appendChild(a);
     a.click();
+    a.remove();
 
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url),1000);
 }
 
 async function importBackup(event) {
     const file = event.target.files[0];
-
     if (!file) return;
 
     try {
-        const text = await file.text();
-        const data = JSON.parse(text);
-
-        if (!Array.isArray(data.news)) {
-            throw new Error("Invalid backup file: news array missing.");
+        if (file.size > 30 * 1024 * 1024) {
+            throw new Error("Backup फ़ाइल 30 MB से बड़ी है।");
         }
 
-        const cleaned = data.news
-            .filter(n => n && n.id && n.title)
-            .map(n => ({
-                id:String(n.id),
-                title:String(n.title),
-                summary:String(n.summary || ""),
-                date:validDate(n.date),
-                category:CATEGORIES.includes(n.category)
-                    ? n.category : "National",
-                region:REGIONS.includes(n.region)
-                    ? n.region : "India",
-                sourceId:SOURCES.some(s => s.id === n.sourceId)
-                    ? n.sourceId : "",
-                url:safeURL(n.url || ""),
-                tags:Array.isArray(n.tags)
-                    ? n.tags.map(String) : [],
-                bookmarked:!!n.bookmarked,
-                createdAt:n.createdAt || new Date().toISOString(),
-                updatedAt:n.updatedAt || new Date().toISOString(),
-                type:n.type === "rss" ? "rss" : "manual"
-            }));
+        const data = JSON.parse(await file.text());
+
+        if (!data || !Array.isArray(data.news)) {
+            throw new Error("यह वैध Current Affairs Backup नहीं है।");
+        }
+
+        const cleaned = data.news.map((n,index) => {
+            const item = normalizeImportedNews(n,index);
+
+            item.id = String(n.id || item.id);
+            item.bookmarked = !!n.bookmarked;
+            item.createdAt = n.createdAt || item.createdAt;
+            item.updatedAt = n.updatedAt || item.updatedAt;
+            item.type = n.type === "rss" ? "rss" : "manual";
+
+            return item;
+        });
 
         if (!confirm(
-            "Restore " + cleaned.length + " news items?\n\n" +
-            "This will replace all currently saved news."
-        )) {
-            event.target.value = "";
-            return;
-        }
+            cleaned.length + " समाचार Restore होंगे।\n" +
+            "वर्तमान समाचारों की जगह Backup का डेटा आ जाएगा।\n\nजारी रखें?"
+        )) return;
 
         await replaceAllNews(cleaned);
 
         if (data.settings && data.settings.feeds) {
             SOURCES.forEach(source => {
-                const value = data.settings.feeds[source.id];
+                const feed = data.settings.feeds[source.id];
 
-                if (typeof value === "string") {
-                    source.feed = safeURL(value) || "";
+                if (typeof feed === "string") {
+                    source.feed = safeURL(feed);
                 }
             });
 
@@ -2257,19 +2091,322 @@ async function importBackup(event) {
 
         await reloadNews();
 
-        alert("Backup restored successfully.");
+        alert("Backup सफलतापूर्वक Restore हो गया।");
 
     } catch(error) {
-        alert("Could not restore backup:\n" + error.message);
+        alert("Restore असफल:\n" + error.message);
     } finally {
         event.target.value = "";
     }
 }
 
 
-/* =========================================================
-   13. LOAD DATA AND START APP
-========================================================= */
+/* ==========================================
+   12. RSS FEED SUPPORT
+========================================== */
+
+async function fetchTextWithTimeout(url,timeout=15000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(),timeout);
+
+    try {
+        const response = await fetch(url,{
+            signal:controller.signal,
+            cache:"no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        return await response.text();
+
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+async function fetchFeedText(url) {
+    let directError;
+
+    try {
+        return await fetchTextWithTimeout(url);
+    } catch(error) {
+        directError = error;
+    }
+
+    try {
+        return await fetchTextWithTimeout(
+            RSS_PROXY + encodeURIComponent(url),
+            20000
+        );
+    } catch(error) {
+        throw new Error(
+            "Direct request और proxy दोनों असफल। " +
+            "CORS या वेबसाइट की अनुमति समस्या हो सकती है। " +
+            "Direct: " + directError.message
+        );
+    }
+}
+
+function parseFeed(xmlText,source) {
+    const doc = new DOMParser().parseFromString(xmlText,"text/xml");
+
+    if (doc.querySelector("parsererror")) {
+        throw new Error("वैध RSS/Atom XML नहीं मिला।");
+    }
+
+    const nodes = Array.from(doc.querySelectorAll("item,entry"));
+
+    return nodes.map(node => {
+        const getText = selectors => {
+            for (const selector of selectors) {
+                const element = node.querySelector(selector);
+
+                if (element) {
+                    const value = element.textContent.trim();
+                    if (value) return value;
+                }
+            }
+
+            return "";
+        };
+
+        let link = "";
+        const linkEl = node.querySelector("link");
+
+        if (linkEl) {
+            link = linkEl.textContent.trim() ||
+                linkEl.getAttribute("href") || "";
+        }
+
+        const title = getText(["title"]);
+
+        let summary = getText(["description","summary","content"]);
+
+        summary = summary
+            .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,"")
+            .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,"")
+            .replace(/<[^>]*>/g," ")
+            .replace(/&nbsp;/gi," ")
+            .replace(/&amp;/gi,"&")
+            .replace(/&quot;/gi,'"')
+            .replace(/&#39;/gi,"'")
+            .replace(/&lt;/gi,"<")
+            .replace(/&gt;/gi,">")
+            .replace(/\s+/g," ")
+            .trim();
+
+        const published = getText(["pubDate","published","updated"]);
+        const date = validDate(published);
+
+        const url = safeURL(link) || source.url;
+
+        return {
+            id:"rss-" + source.id + "-" + simpleHash(url + title),
+            title:title || "Untitled article",
+            summary:summary.slice(0,3000),
+            date,
+            category:classifyNews(title,summary),
+            region:detectRegion(title + " " + summary),
+            sourceId:source.id,
+            url,
+            tags:["RSS"],
+            bookmarked:false,
+            createdAt:new Date().toISOString(),
+            updatedAt:new Date().toISOString(),
+            type:"rss"
+        };
+    }).filter(n => n.title && n.url);
+}
+
+async function refreshSource(source) {
+    if (!source.feed) {
+        sourceStates[source.id] = {
+            status:"Not configured",
+            message:"RSS URL नहीं जोड़ा गया"
+        };
+
+        saveSettings();
+        return;
+    }
+
+    sourceStates[source.id] = {
+        status:"Loading",
+        message:"Feed पढ़ा जा रहा है..."
+    };
+
+    saveSettings();
+    renderSources();
+
+    try {
+        const text = await fetchFeedText(source.feed);
+        const parsed = parseFeed(text,source);
+        const existing = await getAllFromDB();
+
+        const map = new Map(existing.map(n => [n.id,n]));
+
+        let count = 0;
+
+        for (const item of parsed) {
+            const old = map.get(item.id);
+
+            if (old) {
+                item.bookmarked = !!old.bookmarked;
+            }
+
+            await saveNewsToDB(item);
+            count++;
+        }
+
+        sourceStates[source.id] = {
+            status:"Success",
+            message:count + " RSS items processed",
+            checkedAt:new Date().toISOString()
+        };
+
+    } catch(error) {
+        sourceStates[source.id] = {
+            status:"Failed",
+            message:error.message,
+            checkedAt:new Date().toISOString()
+        };
+    }
+
+    saveSettings();
+    renderSources();
+}
+
+async function refreshAllSources() {
+    const configured = SOURCES.filter(s => s.feed);
+
+    if (!configured.length) {
+        alert("कोई RSS Feed configured नहीं है।");
+        return;
+    }
+
+    for (const source of configured) {
+        await refreshSource(source);
+    }
+
+    await reloadNews();
+
+    const success = configured.filter(s =>
+        sourceStates[s.id] &&
+        sourceStates[s.id].status === "Success"
+    ).length;
+
+    alert(
+        "RSS Refresh पूरा हुआ।\n" +
+        "Configured feeds: " + configured.length + "\n" +
+        "Successful feeds: " + success
+    );
+}
+
+
+/* ==========================================
+   13. SOURCE MANAGEMENT
+========================================== */
+
+function renderSources() {
+    const container = document.getElementById("sourceList");
+
+    container.innerHTML = SOURCES.map(source => {
+        const state = sourceStates[source.id] || {};
+
+        return `
+            <article class="source-card">
+                <h3>${escapeHTML(source.name)}</h3>
+
+                <a href="${escapeHTML(source.url)}"
+                    target="_blank" rel="noopener noreferrer">
+                    Open Website ↗
+                </a>
+
+                <p>${escapeHTML(source.description)}</p>
+
+                <div class="badges">
+                    <span class="badge ${source.feed ? "green" : ""}">
+                        ${source.feed ? "RSS Configured" : "Website Only"}
+                    </span>
+                    ${source.id === "insights-ias"
+                        ? '<span class="badge green">Default Feed</span>' : ""}
+                </div>
+
+                <div class="source-status">
+                    <strong>Status:</strong> ${escapeHTML(state.status || "Not checked")}
+                    <br>${escapeHTML(state.message || "")}
+                </div>
+
+                <div class="button-row">
+                    <button class="btn small"
+                        onclick="configureFeed('${escapeHTML(source.id)}')">
+                        ${source.feed ? "Change Feed" : "Configure Feed"}
+                    </button>
+
+                    <button class="btn small secondary"
+                        onclick="testSource('${escapeHTML(source.id)}')">
+                        Test / Refresh
+                    </button>
+                </div>
+            </article>
+        `;
+    }).join("");
+}
+
+function configureFeed(id) {
+    const source = SOURCES.find(s => s.id === id);
+    if (!source) return;
+
+    const value = prompt(
+        "RSS/Atom Feed URL डालें:",
+        source.feed || ""
+    );
+
+    if (value === null) return;
+
+    const url = safeURL(value.trim());
+
+    if (!url) {
+        alert("कृपया वैध HTTP/HTTPS URL डालें।");
+        return;
+    }
+
+    source.feed = url;
+
+    sourceStates[id] = {
+        status:"Configured",
+        message:"Feed URL सेव हो गया।"
+    };
+
+    saveSettings();
+    renderSources();
+}
+
+async function testSource(id) {
+    const source = SOURCES.find(s => s.id === id);
+    if (!source) return;
+
+    if (!source.feed) {
+        configureFeed(id);
+        if (!source.feed) return;
+    }
+
+    await refreshSource(source);
+    await reloadNews();
+
+    const state = sourceStates[id];
+
+    alert(
+        source.name + "\n" +
+        (state ? state.status + "\n" + state.message : "No status")
+    );
+}
+
+
+/* ==========================================
+   14. RELOAD DATABASE
+========================================== */
 
 async function reloadNews() {
     allNews = await getAllFromDB();
@@ -2282,50 +2419,45 @@ async function reloadNews() {
     updateStats();
 }
 
+
+/* ==========================================
+   15. MODAL CLOSE HANDLERS
+========================================== */
+
+document.getElementById("importModal").addEventListener("click",event => {
+    if (event.target === event.currentTarget) closeImportModal();
+});
+
+document.getElementById("newsModal").addEventListener("click",event => {
+    if (event.target === event.currentTarget) closeNewsModal();
+});
+
+
+/* ==========================================
+   16. INITIALIZE APP
+========================================== */
+
 async function initialize() {
     loadSettings();
     initializeFilters();
 
     try {
         db = await openDatabase();
-
         await reloadNews();
-
         renderSources();
-
     } catch(error) {
-        console.error(error);
-
         document.getElementById("newsList").innerHTML = `
             <div class="empty">
-                <h3>Local database could not be opened</h3>
+                <h3>Database Error</h3>
                 <p>${escapeHTML(error.message)}</p>
-                <p>Try opening this page in a modern browser such as Chrome.</p>
+                <p>Chrome या किसी आधुनिक ब्राउज़र में ऐप खोलकर देखें।</p>
             </div>
         `;
     }
 }
 
-
-/* =========================================================
-   14. CLICK OUTSIDE MODAL TO CLOSE
-========================================================= */
-
-document.getElementById("newsModal").addEventListener(
-    "click",
-    function(event) {
-        if (event.target === this) closeNewsModal();
-    }
-);
-
-
-/* =========================================================
-   15. RUN APP
-========================================================= */
-
 initialize();
 
 </script>
-
 </body>
 </html>
