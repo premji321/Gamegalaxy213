@@ -12,9 +12,10 @@
     --navy: #080d32;
     --navy2: #18265e;
     --blue: #315efb;
+    --blue-dark: #2448d8;
     --cyan: #13c8f5;
     --gold: #ffc857;
-    --green: #16a34a;
+    --green: #087f55;
     --red: #dc2626;
     --bg: #f3f6fc;
     --card: #ffffff;
@@ -44,24 +45,31 @@ button {
 }
 
 button:disabled {
-    opacity: 0.55;
+    opacity: .5;
     cursor: not-allowed;
 }
+
+.hidden {
+    display: none !important;
+}
+
+/* HEADER */
 
 .topbar {
     background: linear-gradient(120deg, var(--navy), var(--navy2));
     color: white;
-    padding: 20px 5%;
+    padding: 22px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
     flex-wrap: wrap;
 }
 
 .brand {
     font-size: 23px;
     font-weight: 900;
+    letter-spacing: .3px;
 }
 
 .brand span {
@@ -69,9 +77,9 @@ button:disabled {
 }
 
 .topbar-subtitle {
-    font-size: 12px;
     color: #c6d1f2;
-    margin-top: 5px;
+    font-size: 12px;
+    margin-top: 6px;
 }
 
 .top-actions {
@@ -82,78 +90,106 @@ button:disabled {
 
 .container {
     width: min(1200px, 94%);
-    margin: 25px auto 45px;
+    margin: 26px auto 45px;
 }
 
+/* GENERAL CARDS */
+
 .card {
-    background: var(--card);
+    background: white;
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 24px;
+    border-radius: 20px;
+    padding: 25px;
     box-shadow: var(--shadow);
     margin-bottom: 22px;
 }
 
 .hero {
-    padding: 36px 28px;
-    background: linear-gradient(130deg, #101947, #273d8e);
+    padding: 38px 30px;
     color: white;
-    border-radius: 22px;
-    margin-bottom: 22px;
+    background: linear-gradient(130deg, #101947, #293f8d);
+    border-radius: 23px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero h1 {
-    font-size: clamp(27px, 4vw, 42px);
+    font-size: clamp(28px, 4vw, 43px);
     margin: 0 0 12px;
 }
 
 .hero p {
     color: #d9e3ff;
-    max-width: 650px;
-    line-height: 1.7;
+    max-width: 680px;
+    line-height: 1.8;
 }
 
 .badge {
     display: inline-block;
-    background: rgba(255, 200, 87, 0.15);
-    color: var(--gold);
-    border: 1px solid rgba(255, 200, 87, 0.35);
-    padding: 7px 12px;
+    background: #eef2ff;
+    color: #263db7;
+    border: 1px solid #d6dcff;
+    padding: 9px 14px;
     border-radius: 100px;
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: .5px;
     margin-bottom: 12px;
+}
+
+.muted {
+    color: var(--muted);
+    line-height: 1.7;
 }
 
 h2, h3 {
     margin-top: 0;
 }
 
-.muted {
-    color: var(--muted);
-    line-height: 1.6;
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 22px;
 }
+
+.section-heading h2 {
+    color: #101947;
+    font-size: clamp(25px, 3vw, 34px);
+    letter-spacing: -.6px;
+    margin-bottom: 7px;
+}
+
+.section-heading p {
+    margin: 0;
+}
+
+/* BUTTONS */
 
 .btn {
     display: inline-flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     gap: 8px;
-    padding: 11px 16px;
-    border-radius: 10px;
+    padding: 12px 17px;
     border: 1px solid transparent;
-    font-weight: 750;
+    border-radius: 12px;
     font-size: 14px;
-    transition: 0.2s;
+    font-weight: 800;
+    transition: .2s;
 }
 
 .btn:hover:not(:disabled) {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .btn-primary {
-    background: var(--blue);
+    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
     color: white;
+    box-shadow: 0 5px 14px rgba(49, 94, 251, .15);
 }
 
 .btn-dark {
@@ -163,23 +199,27 @@ h2, h3 {
 
 .btn-gold {
     background: var(--gold);
-    color: #242424;
+    color: #282828;
 }
 
 .btn-outline {
     background: white;
-    border-color: var(--border);
+    border-color: #dce3ef;
     color: var(--text);
 }
 
-.btn-small {
-    padding: 7px 11px;
-    font-size: 12px;
+.btn-outline:hover {
+    background: #f2f6ff;
+    border-color: #bdcbf5;
 }
 
-.hidden {
-    display: none !important;
+.btn-small {
+    padding: 8px 11px;
+    font-size: 12px;
+    min-height: 35px;
 }
+
+/* HOME */
 
 .grid {
     display: grid;
@@ -188,47 +228,50 @@ h2, h3 {
 }
 
 .game-card {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 22px;
     background: white;
-    transition: 0.2s;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    transition: .2s;
 }
 
 .game-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow);
 }
 
 .game-icon {
-    font-size: 32px;
-    margin-bottom: 14px;
+    font-size: 34px;
+    margin-bottom: 15px;
 }
+
+/* FORMS */
 
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: 17px;
 }
 
 .field {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 8px;
 }
 
 .field label {
-    font-weight: 750;
     font-size: 13px;
+    font-weight: 800;
 }
 
 .field input,
 .field select,
 .search-input {
     width: 100%;
-    padding: 12px 13px;
+    min-height: 50px;
+    padding: 12px 14px;
     border: 1px solid #d8dfeb;
-    border-radius: 10px;
+    border-radius: 12px;
     background: white;
     color: var(--text);
     outline: none;
@@ -238,179 +281,214 @@ h2, h3 {
 .field select:focus,
 .search-input:focus {
     border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(49, 94, 251, 0.1);
+    box-shadow: 0 0 0 4px rgba(49, 94, 251, .10);
 }
 
-.section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 20px;
+/* PREMIUM HISTORY */
+
+#kbcHistoryScreen {
+    animation: fadeIn .35s ease;
 }
 
-.section-heading h2 {
-    margin-bottom: 5px;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.section-heading p {
-    margin: 0;
+#kbcHistoryScreen > .card,
+#playerDetailPanel,
+#singleGameDetailPanel {
+    background: linear-gradient(180deg, #ffffff, #fbfcff);
+    border: 1px solid #e1e7f2;
+    border-radius: 23px;
+    padding: 27px;
+    box-shadow: 0 15px 45px rgba(8, 13, 50, .07);
 }
 
-.stat-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-    margin-bottom: 22px;
-}
-
-.stat-card {
-    padding: 20px;
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    background: white;
-}
-
-.stat-label {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 750;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-}
-
-.stat-value {
-    font-size: clamp(20px, 3vw, 27px);
-    font-weight: 900;
-    margin-top: 10px;
-    overflow-wrap: anywhere;
-}
-
-.table-wrap {
-    width: 100%;
-    overflow-x: auto;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 650px;
-    background: white;
-}
-
-thead {
-    background: #101947;
-    color: white;
-}
-
-th, td {
-    text-align: left;
-    padding: 15px 16px;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-}
-
-th {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    white-space: nowrap;
-}
-
-tbody tr:hover {
-    background: #f6f8ff;
-}
-
-tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.rank-badge {
-    display: inline-flex;
-    min-width: 35px;
-    height: 35px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background: #eef2ff;
-    color: #253db4;
-    font-weight: 900;
-}
-
-.rank-1 {
-    background: #fff1c7;
-    color: #986500;
-}
-
-.rank-2 {
-    background: #edf0f4;
-    color: #526071;
-}
-
-.rank-3 {
-    background: #fce5d5;
-    color: #9a4e16;
-}
-
-.player-link {
-    border: none;
-    background: transparent;
-    padding: 0;
-    color: #244be4;
-    font-weight: 850;
-    text-align: left;
-}
-
-.player-link:hover {
-    text-decoration: underline;
-}
+/* Search */
 
 .toolbar {
     display: flex;
+    gap: 12px;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 18px;
+    margin: 23px 0;
 }
 
 .toolbar > * {
     flex: 1 1 180px;
 }
 
-.empty-state {
-    text-align: center;
-    padding: 40px 15px;
-    color: var(--muted);
+#kbcHistoryScreen .search-input {
+    min-height: 53px;
+    border: 1px solid #dce3ef;
+    border-radius: 13px;
+    background: white;
+    font-size: 14px;
 }
 
-.empty-icon {
-    font-size: 38px;
-    margin-bottom: 10px;
+#kbcHistoryScreen .search-input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(49, 94, 251, .10);
 }
 
-.player-profile {
-    display: flex;
+/* TABLE */
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e0e6f0;
+    border-radius: 17px;
+    background: white;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, .04);
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 540px;
+    background: white;
+}
+
+thead {
+    background: linear-gradient(120deg, #080d32, #263d88);
+    color: white;
+}
+
+th {
+    padding: 18px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    white-space: nowrap;
+    border: none;
+}
+
+td {
+    padding: 18px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #edf0f6;
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: background .2s;
+}
+
+tbody tr:hover {
+    background: #f2f6ff;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* RANK BADGES */
+
+.rank-badge {
+    display: inline-flex;
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    padding: 20px;
-    border-radius: 14px;
-    background: linear-gradient(120deg, #eef2ff, #f7f9ff);
-    margin-bottom: 20px;
+    justify-content: center;
+    min-width: 39px;
+    height: 39px;
+    border-radius: 12px;
+    background: #edf2ff;
+    color: #2746c7;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.rank-1 {
+    background: linear-gradient(135deg, #fff1b8, #ffd76a);
+    color: #815300;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, .15);
+}
+
+.rank-2 {
+    background: linear-gradient(135deg, #f4f6fa, #d9e0ec);
+    color: #45546b;
+}
+
+.rank-3 {
+    background: linear-gradient(135deg, #ffe2cf, #f4b995);
+    color: #8a451c;
+}
+
+/* CLICKABLE PLAYER NAME */
+
+.player-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #2349d8;
+    font-size: 14px;
+    font-weight: 850;
+    text-align: left;
+    cursor: pointer;
+}
+
+.player-link:hover {
+    color: #102b9e;
+    text-decoration: underline;
+}
+
+.player-link::after {
+    content: "↗";
+    font-size: 12px;
+    opacity: .6;
+}
+
+/* WINNING AMOUNT */
+
+.amount {
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+/* PLAYER DETAILS */
+
+#playerDetailPanel,
+#singleGameDetailPanel {
+    margin-top: 24px;
+    animation: fadeIn .3s ease;
+}
+
+#playerDetailPanel .player-profile {
+    padding: 24px;
+    border-radius: 19px;
+    background: linear-gradient(125deg, #101947, #293f8d);
+    color: white;
+    border: none;
+    gap: 17px;
+    box-shadow: 0 10px 25px rgba(16, 25, 71, .16);
 }
 
 .avatar {
-    width: 58px;
-    height: 58px;
-    border-radius: 17px;
-    background: var(--navy);
-    color: white;
+    width: 66px;
+    height: 66px;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, .35);
+    border-radius: 19px;
+    background: linear-gradient(135deg, #ffd76a, #ffb629);
+    color: #101947;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 900;
 }
 
@@ -419,20 +497,63 @@ tbody tr:last-child td {
     min-width: 180px;
 }
 
-.profile-details h3 {
-    margin: 0 0 5px;
+#playerDetailPanel .profile-details h3 {
+    color: white;
+    font-size: 22px;
+    margin-bottom: 7px;
 }
 
-.profile-details p {
-    margin: 0;
-    color: var(--muted);
+#playerDetailPanel .profile-details p {
+    color: #d9e3ff;
     font-size: 13px;
+    margin: 0;
 }
+
+#playerDetailPanel .player-profile .badge {
+    background: rgba(255, 255, 255, .12);
+    color: #ffda79;
+    border-color: rgba(255, 255, 255, .2);
+    margin: 0;
+}
+
+/* PLAYER STAT CARDS */
+
+.player-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+    margin: 20px 0;
+}
+
+.player-stat {
+    padding: 17px;
+    border: 1px solid #e3e9f4;
+    border-radius: 15px;
+    background: #f8faff;
+}
+
+.player-stat .label {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 850;
+    letter-spacing: .4px;
+}
+
+.player-stat .value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #172554;
+    margin-top: 9px;
+    overflow-wrap: anywhere;
+}
+
+/* STATUS */
 
 .status {
     display: inline-block;
     border-radius: 100px;
-    padding: 6px 9px;
+    padding: 7px 10px;
     font-size: 11px;
     font-weight: 850;
     white-space: nowrap;
@@ -463,6 +584,24 @@ tbody tr:last-child td {
     color: #3730a3;
 }
 
+/* EMPTY STATE */
+
+.empty-state {
+    text-align: center;
+    padding: 44px 20px;
+    border: 1px dashed #cfd8e8;
+    border-radius: 17px;
+    background: #f8faff;
+    color: var(--muted);
+}
+
+.empty-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+/* QUIZ */
+
 .quiz-header {
     display: flex;
     justify-content: space-between;
@@ -475,7 +614,7 @@ tbody tr:last-child td {
 .quiz-question {
     font-size: clamp(19px, 3vw, 25px);
     font-weight: 850;
-    line-height: 1.5;
+    line-height: 1.6;
     margin: 22px 0;
 }
 
@@ -533,7 +672,7 @@ tbody tr:last-child td {
     height: 100%;
     width: 0;
     background: linear-gradient(90deg, var(--blue), var(--cyan));
-    transition: width 0.25s;
+    transition: width .25s;
 }
 
 .lifeline-row {
@@ -554,7 +693,7 @@ tbody tr:last-child td {
 }
 
 .lifeline.used {
-    opacity: 0.4;
+    opacity: .4;
     text-decoration: line-through;
 }
 
@@ -590,20 +729,22 @@ tbody tr:last-child td {
     border: 1px solid #c7f1dc;
     color: #145b3d;
     border-radius: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
     margin-top: 15px;
 }
 
 .review-item {
-    border: 1px solid var(--border);
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 19px;
+    border-radius: 15px;
+    margin-bottom: 13px;
+    background: linear-gradient(180deg, #ffffff, #fbfcff);
 }
 
 .review-item h4 {
-    margin: 0 0 10px;
-    line-height: 1.5;
+    margin: 0 0 12px;
+    line-height: 1.7;
+    color: #172554;
 }
 
 .footer {
@@ -613,13 +754,11 @@ tbody tr:last-child td {
     padding: 22px 10px;
 }
 
+/* RESPONSIVE */
+
 @media (max-width: 850px) {
     .grid {
         grid-template-columns: 1fr;
-    }
-
-    .stat-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .quiz-layout {
@@ -631,7 +770,7 @@ tbody tr:last-child td {
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 600px) {
     .container {
         width: 94%;
         margin-top: 15px;
@@ -645,24 +784,47 @@ tbody tr:last-child td {
         grid-template-columns: 1fr;
     }
 
-    .stat-grid {
-        gap: 9px;
-    }
-
-    .stat-card {
-        padding: 14px;
-    }
-
-    .stat-value {
-        font-size: 19px;
-    }
-
     .topbar {
-        padding: 17px 4%;
+        padding: 18px 4%;
     }
 
     .brand {
         font-size: 20px;
+    }
+
+    #kbcHistoryScreen > .card,
+    #playerDetailPanel,
+    #singleGameDetailPanel {
+        padding: 17px;
+        border-radius: 19px;
+    }
+
+    #kbcHistoryScreen .toolbar {
+        flex-direction: column;
+    }
+
+    #kbcHistoryScreen .toolbar > * {
+        width: 100%;
+        flex: auto;
+    }
+
+    #rankingTableContainer th,
+    #rankingTableContainer td,
+    #playerGameTableContainer th,
+    #playerGameTableContainer td {
+        padding: 14px 12px;
+    }
+
+    #playerDetailPanel .player-profile {
+        padding: 17px;
+    }
+
+    #playerDetailPanel .profile-details h3 {
+        font-size: 19px;
+    }
+
+    .player-stat-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -690,14 +852,20 @@ tbody tr:last-child td {
         margin: 0;
     }
 
-    .card {
-        border: none;
+    #kbcHistoryScreen > .card {
         box-shadow: none;
+        border: none;
         padding: 0;
+    }
+
+    #playerDetailPanel,
+    #singleGameDetailPanel {
+        box-shadow: none;
     }
 
     .table-wrap {
         overflow: visible;
+        box-shadow: none;
     }
 
     table {
@@ -734,17 +902,20 @@ tbody tr:last-child td {
 
 <main class="container">
 
-    <!-- HOME -->
+    <!-- HOME SCREEN -->
+
     <section id="homeScreen">
 
         <div class="hero">
             <span class="badge">ULTIMATE QUIZ EXPERIENCE</span>
             <h1>Challenge Your Knowledge</h1>
+
             <p>
                 Practice school subjects, prepare for competitive examinations,
                 and experience the excitement of a virtual quiz show.
-                Track your progress and compete for the top position.
+                Track your performance and compete for the top position.
             </p>
+
             <button class="btn btn-gold" onclick="showKbcSetup()">
                 Start KBC Challenge →
             </button>
@@ -787,24 +958,26 @@ tbody tr:last-child td {
 
         </div>
 
-        <div class="card" style="margin-top:22px">
+        <div class="card" style="margin-top:24px">
             <div class="section-heading">
                 <div>
                     <h2>Top Players</h2>
                     <p class="muted">
-                        Rankings based on total correct answers across recorded KBC games.
+                        Players ranked by total winning amount.
                     </p>
                 </div>
                 <button class="btn btn-outline" onclick="showKbcHistory()">
-                    View All Rankings
+                    View Rankings
                 </button>
             </div>
+
             <div id="homeRankingPreview"></div>
         </div>
 
     </section>
 
     <!-- KBC SETUP -->
+
     <section id="kbcSetupScreen" class="hidden">
         <div class="card">
 
@@ -815,18 +988,23 @@ tbody tr:last-child td {
                         Enter your name and configure your quiz.
                     </p>
                 </div>
+
                 <button class="btn btn-outline" onclick="showHome()">
                     ← Back to Home
                 </button>
             </div>
 
             <form id="kbcSetupForm">
+
                 <div class="form-grid">
 
                     <div class="field">
                         <label for="kbcPlayerName">Player Name</label>
-                        <input id="kbcPlayerName" maxlength="60" required
+                        <input id="kbcPlayerName"
+                               maxlength="60"
+                               required
                                placeholder="Enter your name">
+
                         <small class="muted">
                             You can play multiple games using the same name.
                         </small>
@@ -868,11 +1046,14 @@ tbody tr:last-child td {
                     <button type="submit" class="btn btn-primary">
                         Start KBC Game
                     </button>
-                    <button type="button" class="btn btn-outline"
+
+                    <button type="button"
+                            class="btn btn-outline"
                             onclick="showKbcHistory()">
                         View Player Rankings
                     </button>
                 </div>
+
             </form>
 
             <p id="kbcSetupMessage" class="muted" style="margin-top:15px"></p>
@@ -881,6 +1062,7 @@ tbody tr:last-child td {
     </section>
 
     <!-- SCHOOL SETUP -->
+
     <section id="schoolSetupScreen" class="hidden">
         <div class="card">
 
@@ -889,17 +1071,21 @@ tbody tr:last-child td {
                     <h2>School Quiz Setup</h2>
                     <p class="muted">Configure your school practice test.</p>
                 </div>
+
                 <button class="btn btn-outline" onclick="showHome()">
                     ← Back to Home
                 </button>
             </div>
 
             <form id="schoolSetupForm">
+
                 <div class="form-grid">
 
                     <div class="field">
                         <label for="schoolPlayerName">Student Name</label>
-                        <input id="schoolPlayerName" required maxlength="60"
+                        <input id="schoolPlayerName"
+                               required
+                               maxlength="60"
                                placeholder="Enter student name">
                     </div>
 
@@ -941,17 +1127,20 @@ tbody tr:last-child td {
 
                 </div>
 
-                <button class="btn btn-primary" type="submit"
+                <button class="btn btn-primary"
+                        type="submit"
                         style="margin-top:20px">
                     Start School Quiz
                 </button>
-                <p id="schoolSetupMessage" class="muted"></p>
-            </form>
 
+                <p id="schoolSetupMessage" class="muted"></p>
+
+            </form>
         </div>
     </section>
 
     <!-- COMPETITIVE SETUP -->
+
     <section id="competitiveSetupScreen" class="hidden">
         <div class="card">
 
@@ -962,17 +1151,21 @@ tbody tr:last-child td {
                         Test your preparation with objective questions.
                     </p>
                 </div>
+
                 <button class="btn btn-outline" onclick="showHome()">
                     ← Back to Home
                 </button>
             </div>
 
             <form id="competitiveSetupForm">
+
                 <div class="form-grid">
 
                     <div class="field">
                         <label for="competitivePlayerName">Candidate Name</label>
-                        <input id="competitivePlayerName" required maxlength="60"
+                        <input id="competitivePlayerName"
+                               required
+                               maxlength="60"
                                placeholder="Enter candidate name">
                     </div>
 
@@ -1010,17 +1203,20 @@ tbody tr:last-child td {
 
                 </div>
 
-                <button class="btn btn-primary" type="submit"
+                <button class="btn btn-primary"
+                        type="submit"
                         style="margin-top:20px">
                     Start Practice Test
                 </button>
-                <p id="competitiveSetupMessage" class="muted"></p>
-            </form>
 
+                <p id="competitiveSetupMessage" class="muted"></p>
+
+            </form>
         </div>
     </section>
 
-    <!-- KBC QUIZ -->
+    <!-- KBC QUIZ SCREEN -->
+
     <section id="kbcQuizScreen" class="hidden">
 
         <div class="quiz-header">
@@ -1028,6 +1224,7 @@ tbody tr:last-child td {
                 <div class="muted" id="kbcPlayerLabel">Player</div>
                 <h2 id="kbcRoundTitle">Question 1</h2>
             </div>
+
             <div class="timer" id="kbcTimer">30s</div>
         </div>
 
@@ -1040,31 +1237,39 @@ tbody tr:last-child td {
             <div class="card">
 
                 <div class="lifeline-row">
-                    <button class="lifeline" id="fiftyFiftyBtn"
+                    <button class="lifeline"
+                            id="fiftyFiftyBtn"
                             onclick="useFiftyFifty()">
                         50:50 Lifeline
                     </button>
 
-                    <button class="lifeline" id="audienceBtn"
+                    <button class="lifeline"
+                            id="audienceBtn"
                             onclick="useAudiencePoll()">
                         Audience Poll
                     </button>
                 </div>
 
                 <div id="kbcQuestionText" class="quiz-question"></div>
+
                 <div id="kbcOptions" class="option-list"></div>
+
                 <div id="kbcExplanation" class="explanation hidden"></div>
 
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
-                    <button class="btn btn-outline" id="kbcQuitBtn"
+
+                    <button class="btn btn-outline"
+                            id="kbcQuitBtn"
                             onclick="quitKbcGame()">
                         Quit Game
                     </button>
 
-                    <button class="btn btn-primary hidden" id="kbcNextBtn"
+                    <button class="btn btn-primary hidden"
+                            id="kbcNextBtn"
                             onclick="nextKbcQuestion()">
                         Next Question →
                     </button>
+
                 </div>
 
             </div>
@@ -1080,7 +1285,8 @@ tbody tr:last-child td {
         </div>
     </section>
 
-    <!-- STANDARD QUIZ -->
+    <!-- STANDARD QUIZ SCREEN -->
+
     <section id="standardQuizScreen" class="hidden">
 
         <div class="quiz-header">
@@ -1088,6 +1294,7 @@ tbody tr:last-child td {
                 <div class="muted" id="standardPlayerLabel">Candidate</div>
                 <h2 id="standardRoundTitle">Question 1</h2>
             </div>
+
             <div class="timer" id="standardTimer">30s</div>
         </div>
 
@@ -1096,25 +1303,32 @@ tbody tr:last-child td {
         </div>
 
         <div class="card">
+
             <div id="standardQuestionText" class="quiz-question"></div>
+
             <div id="standardOptions" class="option-list"></div>
+
             <div id="standardExplanation" class="explanation hidden"></div>
 
             <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+
                 <button class="btn btn-outline" onclick="quitStandardGame()">
                     Finish Test
                 </button>
 
-                <button class="btn btn-primary hidden" id="standardNextBtn"
+                <button class="btn btn-primary hidden"
+                        id="standardNextBtn"
                         onclick="nextStandardQuestion()">
                     Next Question →
                 </button>
-            </div>
-        </div>
 
+            </div>
+
+        </div>
     </section>
 
     <!-- RESULTS -->
+
     <section id="resultScreen" class="hidden">
         <div class="card">
 
@@ -1123,20 +1337,24 @@ tbody tr:last-child td {
                     <h2 id="resultTitle">Game Results</h2>
                     <p class="muted" id="resultSubtitle"></p>
                 </div>
+
                 <button class="btn btn-outline" onclick="showHome()">
                     Home
                 </button>
             </div>
 
-            <div class="stat-grid" id="resultStats"></div>
+            <div id="resultStats" class="player-stat-grid"></div>
 
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px">
+
                 <button class="btn btn-primary" onclick="showKbcSetup()">
                     Play KBC Again
                 </button>
+
                 <button class="btn btn-outline" onclick="showKbcHistory()">
                     View Player Rankings
                 </button>
+
             </div>
 
             <h3>Answer Review</h3>
@@ -1145,94 +1363,68 @@ tbody tr:last-child td {
         </div>
     </section>
 
-    <!-- KBC HISTORY -->
+    <!-- KBC HISTORY / RANKING DASHBOARD -->
+
     <section id="kbcHistoryScreen" class="hidden">
 
         <div class="card">
 
             <div class="section-heading">
                 <div>
-                    <span class="badge"
-                          style="background:#eef2ff;color:#263db7;border-color:#d6dcff">
-                        KBC PERFORMANCE CENTER
-                    </span>
+                    <span class="badge">🏆 KBC PERFORMANCE CENTER</span>
 
                     <h2>Player Rankings</h2>
 
                     <p class="muted">
-                        Players are ranked by their total correct answers across all recorded KBC games.
+                        Players are ranked by their total winning amount.
+                        Select a player to view their complete game history.
                     </p>
                 </div>
 
-                <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap">
+                <div class="no-print" style="display:flex;gap:9px;flex-wrap:wrap">
                     <button class="btn btn-outline" onclick="showHome()">
                         ← Home
                     </button>
+
                     <button class="btn btn-primary" onclick="printRankings()">
                         Print Rankings
                     </button>
                 </div>
             </div>
 
-            <div class="stat-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Total Games</div>
-                    <div class="stat-value" id="historyTotalGames">0</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-label">Registered Players</div>
-                    <div class="stat-value" id="historyUniquePlayers">0</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-label">Total Correct Answers</div>
-                    <div class="stat-value" id="historyTotalCorrect">0</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-label">Highest Correct Answers in One Game</div>
-                    <div class="stat-value" id="historyHighestCorrect">0</div>
-                </div>
-            </div>
-
             <div class="toolbar no-print">
-                <input class="search-input" id="rankingSearch"
-                       placeholder="Search player by name..."
-                       oninput="renderRankings()">
 
-                <select class="search-input" id="rankingSort"
-                        onchange="renderRankings()">
-                    <option value="correct">Most Correct Answers</option>
-                    <option value="accuracy">Highest Accuracy</option>
-                    <option value="games">Most Games Played</option>
-                    <option value="name">Player Name: A–Z</option>
-                </select>
+                <input
+                    class="search-input"
+                    id="rankingSearch"
+                    placeholder="Search player by name..."
+                    oninput="renderRankings()">
+
             </div>
 
             <div class="section-heading">
                 <div>
-                    <h3 style="margin-bottom:5px">Overall Leaderboard</h3>
+                    <h3 style="margin-bottom:6px">Overall Leaderboard</h3>
                     <p class="muted">
-                        Click any player name to view their complete game history.
+                        Top three players are shown by default.
+                        Search to find other players.
                     </p>
                 </div>
-
-                <span class="badge" id="rankingCountBadge">0 Players</span>
             </div>
 
             <div id="rankingTableContainer"></div>
 
         </div>
 
-        <!-- PLAYER RECORD PANEL -->
+        <!-- PLAYER HISTORY PANEL -->
+
         <div class="card hidden" id="playerDetailPanel">
 
             <div class="section-heading">
                 <div>
                     <h2>Player Game History</h2>
                     <p class="muted">
-                        Review individual games and answer-level details.
+                        View individual games and performance records.
                     </p>
                 </div>
 
@@ -1244,63 +1436,73 @@ tbody tr:last-child td {
 
             <div id="playerProfile"></div>
 
-            <div class="stat-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Overall Rank</div>
-                    <div class="stat-value" id="playerRankValue">—</div>
+            <div class="player-stat-grid">
+
+                <div class="player-stat">
+                    <div class="label">Overall Rank</div>
+                    <div class="value" id="playerRankValue">—</div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-label">Total Correct Answers</div>
-                    <div class="stat-value" id="playerTotalCorrect">0</div>
+                <div class="player-stat">
+                    <div class="label">Total Winning Amount</div>
+                    <div class="value" id="playerTotalWinnings">₹0</div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-label">Games Played</div>
-                    <div class="stat-value" id="playerGamesPlayed">0</div>
+                <div class="player-stat">
+                    <div class="label">Games Played</div>
+                    <div class="value" id="playerGamesPlayed">0</div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-label">Average Accuracy</div>
-                    <div class="stat-value" id="playerAverageAccuracy">0%</div>
-                </div>
             </div>
 
             <div class="toolbar no-print">
-                <input class="search-input" id="playerGameSearch"
-                       placeholder="Search by game ID, date, or status..."
-                       oninput="renderPlayerGames()">
 
-                <select class="search-input" id="playerGameFilter"
-                        onchange="renderPlayerGames()">
+                <input
+                    class="search-input"
+                    id="playerGameSearch"
+                    placeholder="Search game ID, date, or status..."
+                    oninput="renderPlayerGames()">
+
+                <select
+                    class="search-input"
+                    id="playerGameFilter"
+                    onchange="renderPlayerGames()">
+
                     <option value="all">All Game Results</option>
                     <option value="completed">Completed Games</option>
                     <option value="wrong_answer">Wrong Answer</option>
                     <option value="time_expired">Time Expired</option>
                     <option value="quit">Quit Games</option>
+
                 </select>
 
-                <select class="search-input" id="playerGameSort"
-                        onchange="renderPlayerGames()">
+                <select
+                    class="search-input"
+                    id="playerGameSort"
+                    onchange="renderPlayerGames()">
+
                     <option value="newest">Newest First</option>
                     <option value="oldest">Oldest First</option>
-                    <option value="correct">Most Correct Answers</option>
-                    <option value="accuracy">Highest Accuracy</option>
+                    <option value="highest">Highest Single Win</option>
+                    <option value="lowest">Lowest Single Win</option>
+
                 </select>
+
             </div>
 
             <div id="playerGameTableContainer"></div>
 
         </div>
 
-        <!-- SINGLE GAME DETAIL -->
+        <!-- INDIVIDUAL GAME RECORD -->
+
         <div class="card hidden" id="singleGameDetailPanel">
 
             <div class="section-heading">
                 <div>
                     <h2>Game Record Details</h2>
                     <p class="muted">
-                        Detailed information about the selected game.
+                        Review the questions and answers from this game.
                     </p>
                 </div>
 
@@ -1325,43 +1527,54 @@ tbody tr:last-child td {
 <script>
 "use strict";
 
-/* =========================================================
+/* ======================================================
    CONFIGURATION
-========================================================= */
+====================================================== */
 
 const QUESTION_URL =
-    "https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
+"https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
 
 const HISTORY_KEY = "mcqQuizProKbcHistoryV3";
 
 const KBC_PRIZES = [
-    1000, 2000, 3000, 5000, 10000,
-    20000, 40000, 80000, 160000, 320000,
-    640000, 1250000, 2500000, 5000000, 10000000,
-    30000000, 50000000, 75000000, 1000000000
+    1000,
+    2000,
+    3000,
+    5000,
+    10000,
+    20000,
+    40000,
+    80000,
+    160000,
+    320000,
+    640000,
+    1250000,
+    2500000,
+    5000000,
+    10000000,
+    30000000,
+    50000000,
+    75000000,
+    1000000000
 ];
 
 let allQuestions = [];
 let kbcState = null;
 let standardState = null;
-
 let activeTimer = null;
 let activeTimerDeadline = 0;
-
 let selectedPlayerName = null;
 
-let questionSequence = 0;
-
-/* =========================================================
-   GENERAL HELPERS
-========================================================= */
+/* ======================================================
+   UTILITIES
+====================================================== */
 
 function formatMoney(value) {
     return "₹" + Number(value || 0).toLocaleString("en-IN");
 }
 
 function formatDate(timestamp) {
-    const date = new Date(timestamp);
+    const date = new Date(Number(timestamp));
 
     if (Number.isNaN(date.getTime())) {
         return "Unknown Date";
@@ -1399,10 +1612,17 @@ function shuffle(items) {
 
     for (let i = result.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
+
         [result[i], result[j]] = [result[j], result[i]];
     }
 
     return result;
+}
+
+function calculateAccuracy(correct, answered) {
+    if (!answered) return 0;
+
+    return Math.round((Number(correct || 0) / Number(answered)) * 100);
 }
 
 function showOnly(screenId) {
@@ -1424,7 +1644,10 @@ function showOnly(screenId) {
         );
     });
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 function showHome() {
@@ -1440,7 +1663,7 @@ function showKbcSetup() {
     document.getElementById("kbcSetupMessage").textContent =
         allQuestions.length
             ? `${allQuestions.length} questions are available.`
-            : "The question bank is not loaded. Please check the question file.";
+            : "Unable to load the question bank. Check the question file URL.";
 }
 
 function showSchoolSetup() {
@@ -1451,9 +1674,9 @@ function showCompetitiveSetup() {
     showOnly("competitiveSetupScreen");
 }
 
-/* =========================================================
-   LOCAL STORAGE
-========================================================= */
+/* ======================================================
+   HISTORY STORAGE
+====================================================== */
 
 function loadHistory() {
     try {
@@ -1461,11 +1684,11 @@ function loadHistory() {
 
         if (!stored) return [];
 
-        const parsed = JSON.parse(stored);
+        const history = JSON.parse(stored);
 
-        return Array.isArray(parsed) ? parsed : [];
+        return Array.isArray(history) ? history : [];
     } catch (error) {
-        console.error("Unable to read game history:", error);
+        console.error("History loading error:", error);
         return [];
     }
 }
@@ -1475,11 +1698,11 @@ function saveHistory(history) {
         localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
         return true;
     } catch (error) {
-        console.error("Unable to save game history:", error);
+        console.error("History saving error:", error);
 
         alert(
             "The game record could not be saved. " +
-            "Your browser storage may be unavailable or full."
+            "Please check your browser storage."
         );
 
         return false;
@@ -1488,13 +1711,15 @@ function saveHistory(history) {
 
 function addKbcHistory(record) {
     const history = loadHistory();
+
     history.push(record);
+
     return saveHistory(history);
 }
 
-/* =========================================================
+/* ======================================================
    QUESTION BANK
-========================================================= */
+====================================================== */
 
 /*
 Expected questions.txt format:
@@ -1512,16 +1737,15 @@ D: Subhas Chandra Bose
 ANSWER: A
 EXPLANATION: Mahatma Gandhi led the Salt March in 1930.
 
-Repeat this structure for each question.
+Repeat the same structure for every question.
 */
 
 function parseQuestions(text) {
     const blocks = text
-        .split(/(?=^\s*Q:\s*$)/mi)
-        .map(block => block.trim())
-        .filter(Boolean);
+        .split(/^\s*Q:\s*$/mi)
+        .slice(1);
 
-    const parsed = [];
+    const questions = [];
 
     blocks.forEach(block => {
         const getField = field => {
@@ -1535,7 +1759,7 @@ function parseQuestions(text) {
             return match ? match[1].trim() : "";
         };
 
-        const questionText = getField("Q");
+        const question = getField("Q");
 
         const options = [
             getField("A"),
@@ -1546,29 +1770,29 @@ function parseQuestions(text) {
 
         const rawAnswer = getField("ANSWER").toUpperCase();
 
-        const answerIndex = ["A", "B", "C", "D"].indexOf(rawAnswer);
+        const answer = ["A", "B", "C", "D"].indexOf(rawAnswer);
 
         if (
-            !questionText ||
+            !question ||
             options.some(option => !option) ||
-            answerIndex < 0
+            answer < 0
         ) {
             return;
         }
 
-        parsed.push({
+        questions.push({
             className: getField("CLASS"),
             subject: getField("SUBJECT") || "General Knowledge",
             chapter: getField("CHAPTER"),
             level: getField("LEVEL") || "Medium",
-            question: questionText,
+            question,
             options,
-            answer: answerIndex,
+            answer,
             explanation: getField("EXPLANATION")
         });
     });
 
-    return parsed;
+    return questions;
 }
 
 async function loadQuestionBank() {
@@ -1581,9 +1805,7 @@ async function loadQuestionBank() {
             throw new Error("HTTP " + response.status);
         }
 
-        const text = await response.text();
-
-        allQuestions = parseQuestions(text);
+        allQuestions = parseQuestions(await response.text());
 
         if (!allQuestions.length) {
             throw new Error("No valid questions found.");
@@ -1596,38 +1818,37 @@ async function loadQuestionBank() {
         document.getElementById("schoolSetupMessage").textContent = message;
         document.getElementById("competitiveSetupMessage").textContent = message;
 
-        renderHomeRankingPreview();
-
     } catch (error) {
-        console.error("Question bank loading failed:", error);
+        console.error("Question bank error:", error);
 
         allQuestions = [];
 
         const message =
-            "Unable to load the online question bank. " +
-            "Please verify the question file URL and format.";
+            "Unable to load questions. Please check the question bank URL and file format.";
 
         document.getElementById("kbcSetupMessage").textContent = message;
         document.getElementById("schoolSetupMessage").textContent = message;
         document.getElementById("competitiveSetupMessage").textContent = message;
     }
+
+    renderHomeRankingPreview();
 }
 
-/* =========================================================
+/* ======================================================
    QUESTION FILTERING
-========================================================= */
+====================================================== */
 
 function getFilteredQuestions(category, classValue, subjectValue) {
     let questions = [...allQuestions];
 
     if (category === "school") {
-        if (classValue && classValue !== "all") {
+        if (classValue !== "all") {
             questions = questions.filter(question =>
                 String(question.className).trim() === String(classValue)
             );
         }
 
-        if (subjectValue && subjectValue !== "all") {
+        if (subjectValue !== "all") {
             questions = questions.filter(question =>
                 question.subject.toLowerCase().includes(
                     subjectValue.toLowerCase()
@@ -1636,10 +1857,7 @@ function getFilteredQuestions(category, classValue, subjectValue) {
         }
     }
 
-    if (category === "competitive" &&
-        subjectValue &&
-        subjectValue !== "all") {
-
+    if (category === "competitive" && subjectValue !== "all") {
         questions = questions.filter(question =>
             question.subject.toLowerCase().includes(
                 subjectValue.toLowerCase()
@@ -1651,18 +1869,18 @@ function getFilteredQuestions(category, classValue, subjectValue) {
 }
 
 function takeQuestionSet(questions, countValue) {
-    const shuffled = shuffle(questions);
+    const items = shuffle(questions);
 
     if (countValue === "all") {
-        return shuffled;
+        return items;
     }
 
-    return shuffled.slice(0, Math.max(1, Number(countValue) || 10));
+    return items.slice(0, Math.max(1, Number(countValue) || 10));
 }
 
-/* =========================================================
+/* ======================================================
    TIMER
-========================================================= */
+====================================================== */
 
 function stopTimer() {
     if (activeTimer) {
@@ -1706,11 +1924,11 @@ function startTimer(seconds, elementId, onExpire) {
     activeTimer = setInterval(tick, 250);
 }
 
-/* =========================================================
+/* ======================================================
    KBC GAME
-========================================================= */
+====================================================== */
 
-function getPrizeForQuestionIndex(index) {
+function prizeForQuestion(index) {
     return KBC_PRIZES[
         Math.min(index, KBC_PRIZES.length - 1)
     ] || 0;
@@ -1757,7 +1975,7 @@ document.getElementById("kbcSetupForm").addEventListener(
         );
 
         if (!questions.length) {
-            alert("No questions are available for this category.");
+            alert("No questions are available for the selected category.");
             return;
         }
 
@@ -1775,8 +1993,7 @@ document.getElementById("kbcSetupForm").addEventListener(
             endingReason: "",
             timerSeconds: Number(
                 document.getElementById("kbcTimerDuration").value
-            ) || 0,
-            startedAt: Date.now()
+            ) || 0
         };
 
         document.getElementById("kbcPlayerLabel").textContent =
@@ -1819,9 +2036,9 @@ function renderKbcQuestion() {
     document.getElementById("kbcNextBtn").classList.add("hidden");
     document.getElementById("kbcQuitBtn").classList.remove("hidden");
 
-    const optionsContainer = document.getElementById("kbcOptions");
+    const container = document.getElementById("kbcOptions");
 
-    optionsContainer.innerHTML = "";
+    container.innerHTML = "";
 
     question.options.forEach((option, optionIndex) => {
         const button = document.createElement("button");
@@ -1837,7 +2054,7 @@ function renderKbcQuestion() {
             chooseKbcAnswer(optionIndex, button)
         );
 
-        optionsContainer.appendChild(button);
+        container.appendChild(button);
     });
 
     renderPrizeLadder();
@@ -1873,7 +2090,7 @@ function chooseKbcAnswer(selectedIndex, selectedButton) {
 
         kbcState.correctAnswers++;
 
-        kbcState.winnings = getPrizeForQuestionIndex(
+        kbcState.winnings = prizeForQuestion(
             kbcState.currentIndex
         );
     } else {
@@ -1967,10 +2184,8 @@ function useFiftyFifty() {
 
     kbcState.lifelines.fiftyFifty = true;
 
-    const button = document.getElementById("fiftyFiftyBtn");
-
-    button.classList.add("used");
-    button.disabled = true;
+    document.getElementById("fiftyFiftyBtn").classList.add("used");
+    document.getElementById("fiftyFiftyBtn").disabled = true;
 }
 
 function useAudiencePoll() {
@@ -2007,25 +2222,24 @@ function useAudiencePoll() {
         percentages[question.answer] += 100 - total;
     }
 
-    const lines = percentages.map((value, index) =>
-        `${String.fromCharCode(65 + index)}: ${value}%`
+    alert(
+        "Audience Poll\n\n" +
+        percentages.map((value, index) =>
+            `${String.fromCharCode(65 + index)}: ${value}%`
+        ).join("\n")
     );
-
-    alert("Audience Poll\n\n" + lines.join("\n"));
 
     kbcState.lifelines.audience = true;
 
-    const button = document.getElementById("audienceBtn");
-
-    button.classList.add("used");
-    button.disabled = true;
+    document.getElementById("audienceBtn").classList.add("used");
+    document.getElementById("audienceBtn").disabled = true;
 }
 
 function quitKbcGame() {
     if (!kbcState) return;
 
     if (confirm(
-        "Are you sure you want to quit this game? Your current result will be saved."
+        "Are you sure you want to quit? Your current game record will be saved."
     )) {
         finishKbcGame("quit");
     }
@@ -2036,7 +2250,7 @@ function finishKbcGame(reason) {
 
     stopTimer();
 
-    kbcState.endingReason = reason;
+    const state = kbcState;
 
     const game = {
         id: "KBC-" +
@@ -2044,27 +2258,29 @@ function finishKbcGame(reason) {
             "-" +
             Math.random().toString(36).slice(2, 7).toUpperCase(),
 
-        playerName: normalizeName(kbcState.playerName),
+        playerName: normalizeName(state.playerName),
         timestamp: Date.now(),
         date: new Date().toISOString(),
 
-        winnings: Math.max(0, Number(kbcState.winnings) || 0),
+        winnings: Math.max(0, Number(state.winnings) || 0),
 
-        totalQuestions: kbcState.questions.length,
-        answeredQuestions: kbcState.answers.length,
-        correctAnswers: kbcState.correctAnswers,
+        totalQuestions: state.questions.length,
+        answeredQuestions: state.answers.length,
+        correctAnswers: state.correctAnswers,
 
         endingReason: reason,
 
         lifelinesUsed: {
-            fiftyFifty: kbcState.lifelines.fiftyFifty,
-            audience: kbcState.lifelines.audience
+            fiftyFifty: state.lifelines.fiftyFifty,
+            audience: state.lifelines.audience
         },
 
-        answers: [...kbcState.answers]
+        answers: [...state.answers]
     };
 
     addKbcHistory(game);
+
+    kbcState = null;
 
     showResults({
         title: reason === "completed"
@@ -2076,16 +2292,16 @@ function finishKbcGame(reason) {
 
         stats: [
             [
+                "Winning Amount",
+                formatMoney(game.winnings)
+            ],
+            [
                 "Correct Answers",
                 `${game.correctAnswers} / ${game.totalQuestions}`
             ],
             [
                 "Questions Answered",
                 game.answeredQuestions
-            ],
-            [
-                "Accuracy",
-                calculateAccuracy(game.correctAnswers, game.answeredQuestions) + "%"
             ],
             [
                 "Game Status",
@@ -2096,21 +2312,19 @@ function finishKbcGame(reason) {
         answers: game.answers
     });
 
-    kbcState = null;
-
     renderHomeRankingPreview();
 }
 
-/* =========================================================
-   SCHOOL AND COMPETITIVE QUIZZES
-========================================================= */
+/* ======================================================
+   STANDARD QUIZ
+====================================================== */
 
 document.getElementById("schoolSetupForm").addEventListener(
     "submit",
     event => {
         event.preventDefault();
 
-        const playerName = normalizeName(
+        const name = normalizeName(
             document.getElementById("schoolPlayerName").value
         );
 
@@ -2130,12 +2344,7 @@ document.getElementById("schoolSetupForm").addEventListener(
             return;
         }
 
-        startStandardGame(
-            playerName,
-            questions,
-            0,
-            "School Quiz"
-        );
+        startStandardGame(name, questions, 0, "School Quiz");
     }
 );
 
@@ -2144,7 +2353,7 @@ document.getElementById("competitiveSetupForm").addEventListener(
     event => {
         event.preventDefault();
 
-        const playerName = normalizeName(
+        const name = normalizeName(
             document.getElementById("competitivePlayerName").value
         );
 
@@ -2166,7 +2375,7 @@ document.getElementById("competitiveSetupForm").addEventListener(
         ) || 0;
 
         startStandardGame(
-            playerName,
+            name,
             questions,
             timer,
             "Competitive Exam"
@@ -2174,24 +2383,19 @@ document.getElementById("competitiveSetupForm").addEventListener(
     }
 );
 
-function startStandardGame(
-    playerName,
-    questions,
-    timerSeconds,
-    gameType
-) {
+function startStandardGame(name, questions, timer, gameType) {
     standardState = {
-        playerName,
+        playerName: name,
         questions,
         currentIndex: 0,
         correctAnswers: 0,
         answers: [],
-        timerSeconds,
+        timerSeconds: timer,
         gameType
     };
 
     document.getElementById("standardPlayerLabel").textContent =
-        `${gameType}: ${playerName}`;
+        `${gameType}: ${name}`;
 
     showOnly("standardQuizScreen");
 
@@ -2258,9 +2462,7 @@ function chooseStandardAnswer(selectedIndex, selectedButton) {
 
     stopTimer();
 
-    buttons.forEach(button => {
-        button.disabled = true;
-    });
+    buttons.forEach(button => button.disabled = true);
 
     const isCorrect = selectedIndex === question.answer;
 
@@ -2284,8 +2486,7 @@ function chooseStandardAnswer(selectedIndex, selectedButton) {
         explanation: question.explanation || ""
     });
 
-    const explanation =
-        document.getElementById("standardExplanation");
+    const explanation = document.getElementById("standardExplanation");
 
     explanation.textContent = question.explanation
         ? "Explanation: " + question.explanation
@@ -2358,7 +2559,10 @@ function finishStandardGame(reason) {
             ],
             [
                 "Accuracy",
-                calculateAccuracy(state.correctAnswers, state.answers.length) + "%"
+                calculateAccuracy(
+                    state.correctAnswers,
+                    state.answers.length
+                ) + "%"
             ],
             [
                 "Test Status",
@@ -2370,15 +2574,9 @@ function finishStandardGame(reason) {
     });
 }
 
-/* =========================================================
-   RESULT HELPERS
-========================================================= */
-
-function calculateAccuracy(correct, total) {
-    if (!total) return 0;
-
-    return Math.round((correct / total) * 100);
-}
+/* ======================================================
+   RESULTS
+====================================================== */
 
 function statusLabel(reason) {
     const labels = {
@@ -2403,17 +2601,14 @@ function statusClass(reason) {
 }
 
 function showResults(result) {
-    document.getElementById("resultTitle").textContent =
-        result.title;
-
-    document.getElementById("resultSubtitle").textContent =
-        result.subtitle;
+    document.getElementById("resultTitle").textContent = result.title;
+    document.getElementById("resultSubtitle").textContent = result.subtitle;
 
     document.getElementById("resultStats").innerHTML =
         result.stats.map(([label, value]) => `
-            <div class="stat-card">
-                <div class="stat-label">${escapeHtml(label)}</div>
-                <div class="stat-value">${escapeHtml(value)}</div>
+            <div class="player-stat">
+                <div class="label">${escapeHtml(label)}</div>
+                <div class="value">${escapeHtml(value)}</div>
             </div>
         `).join("");
 
@@ -2424,13 +2619,16 @@ function showResults(result) {
             <div class="empty-state">
                 <div class="empty-icon">📝</div>
                 <h3>No Questions Answered</h3>
-                <p>Your game has been recorded with the current result.</p>
+                <p>Your result has been recorded.</p>
             </div>
         `;
     } else {
         review.innerHTML = result.answers.map((answer, index) => `
             <div class="review-item">
-                <h4>${index + 1}. ${escapeHtml(answer.question)}</h4>
+
+                <h4>
+                    ${index + 1}. ${escapeHtml(answer.question)}
+                </h4>
 
                 <p>
                     <strong>Your Answer:</strong>
@@ -2458,6 +2656,7 @@ function showResults(result) {
                         ? `<p class="muted">${escapeHtml(answer.explanation)}</p>`
                         : ""
                 }
+
             </div>
         `).join("");
     }
@@ -2465,13 +2664,12 @@ function showResults(result) {
     showOnly("resultScreen");
 }
 
-/* =========================================================
-   PLAYER AGGREGATION AND RANKINGS
-========================================================= */
+/* ======================================================
+   PLAYER GROUPING AND RANKING
+====================================================== */
 
 function getPlayerGroups() {
     const history = loadHistory();
-
     const groups = new Map();
 
     history.forEach(game => {
@@ -2484,40 +2682,27 @@ function getPlayerGroups() {
             groups.set(key, {
                 key,
                 playerName,
-                totalCorrect: 0,
-                totalAnswered: 0,
-                totalQuestions: 0,
+                totalWinnings: 0,
                 gamesPlayed: 0,
-                highestCorrect: 0,
+                highestWin: 0,
+                totalCorrect: 0,
                 lastPlayed: 0,
                 games: []
             });
         }
 
         const player = groups.get(key);
+        const winnings = Math.max(
+            0,
+            Number(game.winnings) || 0
+        );
 
-        const correct = Math.max(
+        player.totalWinnings += winnings;
+        player.gamesPlayed++;
+        player.highestWin = Math.max(player.highestWin, winnings);
+        player.totalCorrect += Math.max(
             0,
             Number(game.correctAnswers) || 0
-        );
-
-        const answered = Math.max(
-            0,
-            Number(game.answeredQuestions) || 0
-        );
-
-        const totalQuestions = Math.max(
-            0,
-            Number(game.totalQuestions) || 0
-        );
-
-        player.totalCorrect += correct;
-        player.totalAnswered += answered;
-        player.totalQuestions += totalQuestions;
-        player.gamesPlayed++;
-        player.highestCorrect = Math.max(
-            player.highestCorrect,
-            correct
         );
 
         player.lastPlayed = Math.max(
@@ -2528,19 +2713,13 @@ function getPlayerGroups() {
         player.games.push(game);
     });
 
-    return [...groups.values()].map(player => ({
-        ...player,
-        accuracy: calculateAccuracy(
-            player.totalCorrect,
-            player.totalAnswered
-        )
-    }));
+    return [...groups.values()];
 }
 
 function comparePlayers(a, b) {
     return (
-        b.totalCorrect - a.totalCorrect ||
-        b.accuracy - a.accuracy ||
+        b.totalWinnings - a.totalWinnings ||
+        b.highestWin - a.highestWin ||
         a.playerName.localeCompare(b.playerName, "en")
     );
 }
@@ -2550,14 +2729,14 @@ function getRankedPlayers() {
 }
 
 function getPlayerRank(key) {
-    const players = getRankedPlayers();
-
-    return players.findIndex(player => player.key === key) + 1;
+    return getRankedPlayers().findIndex(
+        player => player.key === key
+    ) + 1;
 }
 
-/* =========================================================
-   KBC HISTORY SCREEN
-========================================================= */
+/* ======================================================
+   HISTORY SCREEN
+====================================================== */
 
 function showKbcHistory() {
     stopTimer();
@@ -2571,87 +2750,30 @@ function showKbcHistory() {
         .classList.add("hidden");
 
     document.getElementById("rankingSearch").value = "";
-    document.getElementById("rankingSort").value = "correct";
 
     showOnly("kbcHistoryScreen");
 
-    renderHistoryStats();
     renderRankings();
-}
-
-function renderHistoryStats() {
-    const history = loadHistory();
-
-    const players = getRankedPlayers();
-
-    const totalCorrect = history.reduce(
-        (sum, game) => sum + Math.max(
-            0,
-            Number(game.correctAnswers) || 0
-        ),
-        0
-    );
-
-    const highestCorrect = history.reduce(
-        (highest, game) => Math.max(
-            highest,
-            Number(game.correctAnswers) || 0
-        ),
-        0
-    );
-
-    document.getElementById("historyTotalGames").textContent =
-        history.length.toLocaleString("en-IN");
-
-    document.getElementById("historyUniquePlayers").textContent =
-        players.length.toLocaleString("en-IN");
-
-    document.getElementById("historyTotalCorrect").textContent =
-        totalCorrect.toLocaleString("en-IN");
-
-    document.getElementById("historyHighestCorrect").textContent =
-        highestCorrect.toLocaleString("en-IN");
 }
 
 function renderRankings() {
     const search = normalizeName(
         document.getElementById("rankingSearch").value
-    ).toLocaleLowerCase("en");
+    ).toLowerCase();
 
-    const sort = document.getElementById("rankingSort").value;
+    const allPlayers = getRankedPlayers();
 
-    const allRankedPlayers = getRankedPlayers();
-
-    let players = [...allRankedPlayers];
+    let players;
 
     if (search) {
-        players = players.filter(player =>
-            player.playerName.toLocaleLowerCase("en").includes(search)
-        );
-    }
-
-    if (sort === "accuracy") {
-        players.sort((a, b) =>
-            b.accuracy - a.accuracy ||
-            b.totalCorrect - a.totalCorrect ||
-            a.playerName.localeCompare(b.playerName, "en")
-        );
-    } else if (sort === "games") {
-        players.sort((a, b) =>
-            b.gamesPlayed - a.gamesPlayed ||
-            b.totalCorrect - a.totalCorrect ||
-            a.playerName.localeCompare(b.playerName, "en")
-        );
-    } else if (sort === "name") {
-        players.sort((a, b) =>
-            a.playerName.localeCompare(b.playerName, "en")
+        // Search across all players, not just the top three.
+        players = allPlayers.filter(player =>
+            player.playerName.toLowerCase().includes(search)
         );
     } else {
-        players.sort(comparePlayers);
+        // Show only the top three by default.
+        players = allPlayers.slice(0, 3);
     }
-
-    document.getElementById("rankingCountBadge").textContent =
-        `${players.length} ${players.length === 1 ? "Player" : "Players"}`;
 
     const container =
         document.getElementById("rankingTableContainer");
@@ -2660,13 +2782,9 @@ function renderRankings() {
         container.innerHTML = `
             <div class="empty-state">
                 <div class="empty-icon">🏆</div>
-
-                <h3>${search
-                    ? "No Matching Players"
-                    : "No Rankings Available"}</h3>
-
+                <h3>${search ? "No Players Found" : "No Rankings Available"}</h3>
                 <p>${search
-                    ? "Try another player name."
+                    ? "Try searching with another player name."
                     : "Complete a KBC game to create the first ranking."}</p>
 
                 <button class="btn btn-primary no-print"
@@ -2681,20 +2799,20 @@ function renderRankings() {
 
     container.innerHTML = `
         <div class="table-wrap">
+
             <table>
+
                 <thead>
                     <tr>
-                        <th>Rank</th>
+                        <th>Sl. No.</th>
                         <th>Player Name</th>
-                        <th>Total Correct Answers</th>
-                        <th>Games Played</th>
-                        <th>Accuracy</th>
+                        <th>Total Winning Amount</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     ${players.map(player => {
-                        const rank = allRankedPlayers.findIndex(
+                        const rank = allPlayers.findIndex(
                             item => item.key === player.key
                         ) + 1;
 
@@ -2721,23 +2839,23 @@ function renderRankings() {
                                     </button>
                                 </td>
 
-                                <td><strong>${player.totalCorrect}</strong></td>
-
-                                <td>${player.gamesPlayed}</td>
-
-                                <td>${player.accuracy}%</td>
+                                <td class="amount">
+                                    ${formatMoney(player.totalWinnings)}
+                                </td>
                             </tr>
                         `;
                     }).join("")}
                 </tbody>
+
             </table>
+
         </div>
     `;
 }
 
-/* =========================================================
-   HOME LEADERBOARD PREVIEW
-========================================================= */
+/* ======================================================
+   HOME LEADERBOARD
+====================================================== */
 
 function renderHomeRankingPreview() {
     const container =
@@ -2745,7 +2863,7 @@ function renderHomeRankingPreview() {
 
     if (!container) return;
 
-    const players = getRankedPlayers().slice(0, 5);
+    const players = getRankedPlayers().slice(0, 3);
 
     if (!players.length) {
         container.innerHTML = `
@@ -2761,13 +2879,14 @@ function renderHomeRankingPreview() {
 
     container.innerHTML = `
         <div class="table-wrap">
+
             <table>
+
                 <thead>
                     <tr>
-                        <th>Rank</th>
+                        <th>Sl. No.</th>
                         <th>Player Name</th>
-                        <th>Total Correct Answers</th>
-                        <th>Games Played</th>
+                        <th>Total Winning Amount</th>
                     </tr>
                 </thead>
 
@@ -2778,34 +2897,37 @@ function renderHomeRankingPreview() {
                                 <span class="rank-badge ${
                                     index === 0 ? "rank-1" :
                                     index === 1 ? "rank-2" :
-                                    index === 2 ? "rank-3" : ""
+                                    "rank-3"
                                 }">
                                     ${index + 1}
                                 </span>
                             </td>
 
                             <td>
-                                <button class="player-link"
+                                <button
+                                    class="player-link"
                                     data-player-key="${escapeHtml(player.key)}"
                                     onclick="showKbcHistory();openPlayerDetailsByKey(this.dataset.playerKey)">
                                     ${escapeHtml(player.playerName)}
                                 </button>
                             </td>
 
-                            <td><strong>${player.totalCorrect}</strong></td>
-
-                            <td>${player.gamesPlayed}</td>
+                            <td class="amount">
+                                ${formatMoney(player.totalWinnings)}
+                            </td>
                         </tr>
                     `).join("")}
                 </tbody>
+
             </table>
+
         </div>
     `;
 }
 
-/* =========================================================
-   PLAYER RECORD PANEL
-========================================================= */
+/* ======================================================
+   PLAYER HISTORY PANEL
+====================================================== */
 
 function openPlayerDetailsByKey(key) {
     const player = getPlayerGroups().find(
@@ -2847,13 +2969,11 @@ function openPlayerDetailsByKey(key) {
                 <p>
                     Player Profile ·
                     ${player.gamesPlayed}
-                    Recorded ${player.gamesPlayed === 1 ? "Game" : "Games"}
+                    ${player.gamesPlayed === 1 ? "Recorded Game" : "Recorded Games"}
                 </p>
             </div>
 
-            <span class="badge" style="margin:0">
-                KBC PLAYER
-            </span>
+            <span class="badge">KBC PLAYER</span>
 
         </div>
     `;
@@ -2861,14 +2981,11 @@ function openPlayerDetailsByKey(key) {
     document.getElementById("playerRankValue").textContent =
         "#" + getPlayerRank(player.key);
 
-    document.getElementById("playerTotalCorrect").textContent =
-        player.totalCorrect.toLocaleString("en-IN");
+    document.getElementById("playerTotalWinnings").textContent =
+        formatMoney(player.totalWinnings);
 
     document.getElementById("playerGamesPlayed").textContent =
         player.gamesPlayed.toLocaleString("en-IN");
-
-    document.getElementById("playerAverageAccuracy").textContent =
-        player.accuracy + "%";
 
     renderPlayerGames();
 
@@ -2888,9 +3005,9 @@ function closePlayerDetails() {
         .classList.add("hidden");
 }
 
-/* =========================================================
-   INDIVIDUAL PLAYER GAME TABLE
-========================================================= */
+/* ======================================================
+   PLAYER GAME TABLE
+====================================================== */
 
 function renderPlayerGames() {
     if (!selectedPlayerName) return;
@@ -2927,15 +3044,10 @@ function renderPlayerGames() {
 
     if (sort === "oldest") {
         games.sort((a, b) => a.timestamp - b.timestamp);
-    } else if (sort === "correct") {
-        games.sort((a, b) =>
-            b.correctAnswers - a.correctAnswers
-        );
-    } else if (sort === "accuracy") {
-        games.sort((a, b) =>
-            calculateAccuracy(b.correctAnswers, b.answeredQuestions) -
-            calculateAccuracy(a.correctAnswers, a.answeredQuestions)
-        );
+    } else if (sort === "highest") {
+        games.sort((a, b) => b.winnings - a.winnings);
+    } else if (sort === "lowest") {
+        games.sort((a, b) => a.winnings - b.winnings);
     } else {
         games.sort((a, b) => b.timestamp - a.timestamp);
     }
@@ -2957,7 +3069,9 @@ function renderPlayerGames() {
 
     container.innerHTML = `
         <div class="table-wrap">
+
             <table>
+
                 <thead>
                     <tr>
                         <th>Sl. No.</th>
@@ -2965,7 +3079,6 @@ function renderPlayerGames() {
                         <th>Date &amp; Time</th>
                         <th>Correct Answers</th>
                         <th>Total Questions</th>
-                        <th>Accuracy</th>
                         <th>Game Status</th>
                         <th class="no-print">Action</th>
                     </tr>
@@ -2987,20 +3100,14 @@ function renderPlayerGames() {
                             <td>${Number(game.totalQuestions || 0)}</td>
 
                             <td>
-                                ${calculateAccuracy(
-                                    game.correctAnswers,
-                                    game.answeredQuestions
-                                )}%
-                            </td>
-
-                            <td>
                                 <span class="status ${statusClass(game.endingReason)}">
                                     ${escapeHtml(statusLabel(game.endingReason))}
                                 </span>
                             </td>
 
                             <td class="no-print">
-                                <button class="btn btn-outline btn-small"
+                                <button
+                                    class="btn btn-outline btn-small"
                                     data-game-id="${escapeHtml(game.id)}"
                                     onclick="viewSingleGame(this.dataset.gameId)">
                                     View Details
@@ -3009,19 +3116,21 @@ function renderPlayerGames() {
                         </tr>
                     `).join("")}
                 </tbody>
+
             </table>
+
         </div>
 
-        <p class="muted" style="font-size:12px;margin-top:12px">
+        <p class="muted" style="font-size:12px;margin-top:13px">
             Showing ${games.length}
-            matching ${games.length === 1 ? "game record" : "game records"}.
+            ${games.length === 1 ? "game record" : "game records"}.
         </p>
     `;
 }
 
-/* =========================================================
-   SINGLE GAME DETAILS
-========================================================= */
+/* ======================================================
+   INDIVIDUAL GAME DETAILS
+====================================================== */
 
 function viewSingleGame(gameId) {
     const game = loadHistory().find(
@@ -3041,36 +3150,28 @@ function viewSingleGame(gameId) {
         .classList.remove("hidden");
 
     document.getElementById("singleGameDetailContent").innerHTML = `
-        <div class="stat-grid">
+        <div class="player-stat-grid">
 
-            <div class="stat-card">
-                <div class="stat-label">Player Name</div>
-                <div class="stat-value" style="font-size:18px">
+            <div class="player-stat">
+                <div class="label">Player Name</div>
+                <div class="value" style="font-size:18px">
                     ${escapeHtml(game.playerName)}
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="stat-label">Correct Answers</div>
-                <div class="stat-value">
+            <div class="player-stat">
+                <div class="label">Winning Amount</div>
+                <div class="value">
+                    ${formatMoney(game.winnings)}
+                </div>
+            </div>
+
+            <div class="player-stat">
+                <div class="label">Correct Answers</div>
+                <div class="value">
                     ${Number(game.correctAnswers || 0)}
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-label">Total Questions</div>
-                <div class="stat-value">
+                    /
                     ${Number(game.totalQuestions || 0)}
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-label">Accuracy</div>
-                <div class="stat-value">
-                    ${calculateAccuracy(
-                        game.correctAnswers,
-                        game.answeredQuestions
-                    )}%
                 </div>
             </div>
 
@@ -3112,6 +3213,7 @@ function viewSingleGame(gameId) {
             answers.length
                 ? answers.map((answer, index) => `
                     <div class="review-item">
+
                         <h4>
                             ${index + 1}.
                             ${escapeHtml(answer.question)}
@@ -3146,13 +3248,12 @@ function viewSingleGame(gameId) {
                                 ? `<p class="muted">${escapeHtml(answer.explanation)}</p>`
                                 : ""
                         }
+
                     </div>
                 `).join("")
                 : `
                     <div class="empty-state">
-                        <p>
-                            No answer-level details were stored for this game.
-                        </p>
+                        <p>No answer-level details were saved for this game.</p>
                     </div>
                 `
         }
@@ -3169,9 +3270,9 @@ function closeSingleGameDetails() {
         .classList.add("hidden");
 }
 
-/* =========================================================
+/* ======================================================
    PRINT
-========================================================= */
+====================================================== */
 
 function printRankings() {
     const oldTitle = document.title;
@@ -3183,9 +3284,9 @@ function printRankings() {
     document.title = oldTitle;
 }
 
-/* =========================================================
+/* ======================================================
    INITIALIZATION
-========================================================= */
+====================================================== */
 
 renderHomeRankingPreview();
 loadQuestionBank();
