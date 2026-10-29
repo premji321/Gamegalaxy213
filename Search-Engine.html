@@ -1,53 +1,39 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#a61032">
-<meta name="description" content="ExamPortal Pro - Latest Government Jobs, Results, Admit Cards, Answer Keys and Syllabus">
 
-<title>ExamPortal Pro | Government Exam Information</title>
+<title>AI Singing Studio</title>
 
 <style>
 :root {
-    --primary: #a61032;
-    --primary-dark: #780b24;
-    --secondary: #173d85;
-    --background: #f4f6fa;
-    --surface: #ffffff;
-    --text: #202635;
-    --muted: #687386;
-    --border: #dfe4ed;
-    --success: #16834a;
-    --shadow: 0 5px 20px rgba(0,0,0,.07);
-}
-
-body.dark {
-    --background: #101522;
-    --surface: #1b2333;
-    --text: #f1f4fa;
-    --muted: #aab4c6;
-    --border: #343d50;
-    --shadow: 0 5px 20px rgba(0,0,0,.2);
+    --bg: #080b18;
+    --panel: #12182b;
+    --panel2: #1a2340;
+    --primary: #a855f7;
+    --secondary: #06b6d4;
+    --text: #f8fafc;
+    --muted: #a5b4d0;
+    --border: rgba(255,255,255,.1);
 }
 
 * {
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     margin: 0;
-    background: var(--background);
+    font-family: Arial, sans-serif;
     color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.5;
+    background:
+        radial-gradient(circle at top left, #242052, transparent 40%),
+        radial-gradient(circle at bottom right, #073749, transparent 40%),
+        var(--bg);
+    min-height: 100vh;
 }
 
-button, input, select, textarea {
+button, select, textarea, input {
     font: inherit;
 }
 
@@ -55,584 +41,276 @@ button {
     cursor: pointer;
 }
 
-a {
-    color: inherit;
+.app {
+    max-width: 1150px;
+    margin: auto;
+    padding: 22px;
 }
 
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-a:focus-visible {
-    outline: 3px solid #4389ff;
-    outline-offset: 2px;
-}
-
-/* HEADER */
-
-.topbar {
-    background: #151515;
-    color: #fff;
-    padding: 7px 4%;
-    font-size: 12px;
+header {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
-}
-
-.header {
-    background: var(--primary);
-    color: #fff;
-    padding: 22px 4%;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 17px;
-    text-align: center;
-}
-
-.brand-logo {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: #fff;
-    color: var(--primary);
-    display: grid;
-    place-items: center;
-    font-size: 31px;
-    font-weight: bold;
-    border: 4px solid #f1cc77;
-}
-
-.brand h1 {
-    font-size: clamp(24px,4vw,37px);
-    margin: 0;
-}
-
-.brand p {
-    margin: 3px 0 0;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
-/* NAVIGATION */
-
-.nav {
-    background: #111;
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-    padding: 0 2%;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
-}
-
-.nav button {
-    color: #fff;
-    background: transparent;
-    border: none;
-    border-right: 1px solid #383838;
-    padding: 16px 15px;
-    white-space: nowrap;
-    font-size: 13px;
-}
-
-.nav button:hover,
-.nav button.active {
-    background: var(--primary);
-}
-
-/* MAIN */
-
-.container {
-    width: min(1400px,96%);
-    margin: 0 auto;
-}
-
-.intro {
-    text-align: center;
-    padding: 19px 5px 10px;
-}
-
-.intro h2 {
-    color: var(--secondary);
-    font-family: Georgia, serif;
-    font-size: clamp(20px,3vw,29px);
-    margin: 0 0 8px;
-}
-
-body.dark .intro h2 {
-    color: #a9beff;
-}
-
-.intro p {
-    margin: 5px;
-    font-size: 13px;
-}
-
-.notice {
-    color: var(--primary);
-    font-weight: bold;
-}
-
-/* SEARCH */
-
-.search-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 12px;
-}
-
-.search-row {
-    display: flex;
-    gap: 9px;
-}
-
-.search-row input {
-    min-width: 0;
-    flex: 1;
-    padding: 13px;
-    background: var(--background);
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: 7px;
-}
-
-.primary-btn {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 7px;
-    font-weight: bold;
-}
-
-.secondary-btn {
-    background: var(--surface);
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 10px 13px;
-    border-radius: 7px;
-}
-
-.search-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.search-filters select {
-    padding: 8px;
-    background: var(--surface);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-}
-
-/* QUICK LINKS */
-
-.quick-links {
-    display: grid;
-    grid-template-columns: repeat(4,minmax(0,1fr));
-    gap: 8px;
-    margin: 18px 0;
-}
-
-.quick-links a {
-    padding: 12px 6px;
-    text-align: center;
-    color: white;
-    background: var(--secondary);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-.quick-links a:nth-child(4n+1) {
-    background: #748700;
-}
-
-.quick-links a:nth-child(4n+2) {
-    background: #1e47ad;
-}
-
-.quick-links a:nth-child(4n+3) {
-    background: #e65d00;
-}
-
-.quick-links a:nth-child(4n) {
-    background: #a61032;
-}
-
-/* ANNOUNCEMENT */
-
-.announcement {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    margin: 16px 0;
-    padding: 12px;
-    overflow: hidden;
-}
-
-.announcement strong {
-    color: var(--primary);
-}
-
-.announcement-track {
-    overflow: hidden;
-    white-space: nowrap;
-    margin-top: 5px;
-}
-
-.announcement-track a {
-    color: var(--secondary);
-    font-weight: bold;
-    margin-right: 25px;
-}
-
-body.dark .announcement-track a {
-    color: #a9beff;
-}
-
-/* THREE-COLUMN CONTENT */
-
-.sections-grid {
-    display: grid;
-    grid-template-columns: repeat(3,minmax(0,1fr));
-    gap: 12px;
-    align-items: stretch;
-    margin: 20px 0;
-}
-
-.exam-section {
-    background: var(--surface);
-    border: 1px solid #d6b96b;
-    box-shadow: var(--shadow);
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.section-title {
-    background: var(--primary);
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    font-size: 17px;
-    padding: 8px 5px;
-}
-
-.section-content {
-    padding: 10px 10px 4px;
-    flex: 1;
-}
-
-.exam-list {
-    margin: 0;
-    padding-left: 20px;
-}
-
-.exam-list li {
-    margin-bottom: 13px;
-    font-size: 13px;
-    overflow-wrap: anywhere;
-}
-
-.exam-list a {
-    color: #123f9a;
-}
-
-body.dark .exam-list a {
-    color: #a9beff;
-}
-
-.exam-list a:hover {
-    color: var(--primary);
-}
-
-.item-meta {
-    display: block;
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 3px;
-}
-
-.view-more {
-    text-align: right;
-    padding: 10px;
-}
-
-.view-more button {
-    border: none;
-    color: var(--secondary);
-    background: transparent;
-    font-weight: bold;
-}
-
-body.dark .view-more button {
-    color: #a9beff;
-}
-
-/* CATEGORY CARDS */
-
-.category-heading {
-    text-align: center;
-    margin: 30px 0 15px;
-}
-
-.category-heading h2 {
-    margin-bottom: 5px;
-}
-
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(4,minmax(0,1fr));
-    gap: 12px;
+    gap: 15px;
     margin-bottom: 25px;
-}
-
-.category-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 17px 10px;
-    text-align: center;
-    box-shadow: var(--shadow);
-}
-
-.category-card button {
-    border: 0;
-    background: transparent;
-    color: var(--text);
-    font-weight: bold;
-    width: 100%;
-}
-
-.category-card span {
-    font-size: 29px;
-    display: block;
-    margin-bottom: 6px;
-}
-
-/* FOOTER */
-
-.footer {
-    background: #151515;
-    color: #fff;
-    margin-top: 30px;
-    padding: 30px 4%;
-    text-align: center;
-}
-
-.footer p {
-    font-size: 13px;
-    color: #d3d3d3;
-}
-
-.footer-links {
-    display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 16px;
-    margin: 15px 0;
 }
 
-.footer a {
-    color: white;
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #c084fc, #22d3ee);
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
-/* ADMIN PANEL */
-
-.admin-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.65);
-    z-index: 50;
-    display: none;
-    overflow-y: auto;
-    padding: 20px;
+.badge {
+    background: #152a37;
+    color: #67e8f9;
+    border: 1px solid #155e75;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
 }
 
-.admin-box {
-    background: var(--surface);
-    color: var(--text);
-    max-width: 800px;
-    width: 100%;
-    margin: 20px auto;
+.hero {
+    text-align: center;
+    padding: 28px 15px 35px;
+}
+
+.hero h1 {
+    font-size: clamp(30px, 6vw, 52px);
+    margin: 0 0 12px;
+}
+
+.hero h1 span {
+    color: #c084fc;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 20px;
+}
+
+.card {
+    background: rgba(18,24,43,.92);
+    border: 1px solid var(--border);
+    border-radius: 20px;
     padding: 22px;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    box-shadow: 0 15px 45px rgba(0,0,0,.16);
 }
 
-.admin-header {
+.card h2 {
+    font-size: 19px;
+    margin: 0 0 18px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+textarea, select {
+    width: 100%;
+    color: white;
+    background: #0b1021;
+    border: 1px solid #303b59;
+    border-radius: 12px;
+    padding: 13px;
+    outline: none;
+}
+
+textarea:focus, select:focus {
+    border-color: var(--primary);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 240px;
+    line-height: 1.8;
+}
+
+select {
+    min-height: 45px;
+}
+
+option {
+    background: #12182b;
+}
+
+.field {
+    margin-bottom: 18px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: #c084fc;
+}
+
+.range-head {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
 }
 
-.admin-form {
-    display: grid;
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: 12px;
-    margin: 20px 0;
+.range-head span:last-child {
+    color: #c084fc;
 }
 
-.form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.btn {
+    border: none;
+    border-radius: 12px;
+    padding: 13px 17px;
+    font-weight: 700;
+    transition: .2s;
 }
 
-.form-field.full {
-    grid-column: 1/-1;
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
 }
 
-.form-field input,
-.form-field select,
-.form-field textarea {
-    padding: 11px;
-    border: 1px solid var(--border);
-    background: var(--background);
-    color: var(--text);
-    border-radius: 6px;
+.primary {
+    background: linear-gradient(110deg, #9333ea, #6366f1);
+    color: white;
+}
+
+.secondary {
+    background: #20304f;
+    color: white;
+    border: 1px solid #384b70;
+}
+
+.record {
+    background: linear-gradient(110deg, #e11d48, #be123c);
+    color: white;
+}
+
+.full {
     width: 100%;
 }
 
-.admin-items {
+.button-grid {
     display: grid;
-    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-.admin-item {
+.status {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    border: 1px solid var(--border);
-    padding: 10px;
-    border-radius: 7px;
+    gap: 10px;
+    background: #0b1021;
+    padding: 13px;
+    border-radius: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 15px;
 }
 
-.admin-item-title {
-    overflow-wrap: anywhere;
-}
-
-.admin-item-actions {
-    display: flex;
-    gap: 5px;
+.dot {
+    width: 9px;
+    height: 9px;
+    background: #64748b;
+    border-radius: 50%;
     flex-shrink: 0;
 }
 
-.admin-item-actions button {
-    padding: 7px;
-    border: 1px solid var(--border);
-    background: var(--background);
-    color: var(--text);
+.dot.active {
+    background: #4ade80;
+    box-shadow: 0 0 12px #4ade80;
+}
+
+.visualizer {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: #0b1021;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.bar {
+    width: 5px;
+    height: 8px;
     border-radius: 5px;
+    background: linear-gradient(to top, #6366f1, #22d3ee, #c084fc);
+    transition: height .15s;
 }
 
-.danger {
-    background: #a61032 !important;
-    color: white !important;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #171717;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 9px;
-    z-index: 100;
+.recording-indicator {
+    color: #fb7185;
+    font-size: 13px;
     display: none;
-    max-width: 90%;
+    margin-top: 10px;
 }
 
-.empty {
-    padding: 15px 5px;
+.recording-indicator.show {
+    display: block;
+}
+
+audio {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.note {
     color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    margin-top: 14px;
+}
+
+footer {
     text-align: center;
+    color: #7c8aa8;
+    padding: 20px 0;
+    font-size: 12px;
 }
 
-@media(max-width:800px) {
-    .sections-grid {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-
-    .category-grid {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-}
-
-@media(max-width:520px) {
-    .topbar {
-        padding: 6px 3%;
-        font-size: 10px;
-    }
-
-    .header {
-        padding: 18px 8px;
-        gap: 10px;
-    }
-
-    .brand-logo {
-        width: 55px;
-        height: 55px;
-        font-size: 24px;
-    }
-
-    .brand p {
-        font-size: 9px;
-    }
-
-    .nav button {
-        padding: 14px 11px;
-        font-size: 12px;
-    }
-
-    .container {
-        width: 97%;
-    }
-
-    .sections-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .quick-links {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-
-    .exam-list li {
-        font-size: 13px;
-    }
-
-    .admin-form {
+@media(max-width: 760px) {
+    .layout {
         grid-template-columns: 1fr;
     }
 
-    .form-field.full {
-        grid-column: auto;
-    }
-
-    .admin-overlay {
-        padding: 8px;
-    }
-
-    .admin-box {
+    .app {
         padding: 14px;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+    .hero {
+        padding-top: 15px;
+    }
+}
+
+@media(max-width: 380px) {
+    .row {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 }
 </style>
@@ -640,1300 +318,935 @@ body.dark .view-more button {
 
 <body>
 
-<div class="topbar">
-    <span id="currentDate">Exam Information Portal</span>
-    <span>Education • Exams • Results</span>
-</div>
+<div class="app">
 
-<header class="header">
-    <div class="brand-logo">EP</div>
-    <div class="brand">
-        <h1>EXAMPORTAL PRO</h1>
-        <p>GOVERNMENT JOBS • RESULTS • ADMISSIONS</p>
-    </div>
+<header>
+    <div class="logo">♫ AI SINGING STUDIO</div>
+    <div class="badge">MUSIC CREATION STUDIO</div>
 </header>
 
-<nav class="nav" aria-label="Main navigation">
-    <button class="active" data-nav="home">Home</button>
-    <button data-nav="latest-job">Latest Job</button>
-    <button data-nav="admit-card">Admit Card</button>
-    <button data-nav="result">Results</button>
-    <button data-nav="answer-key">Answer Key</button>
-    <button data-nav="syllabus">Syllabus</button>
-    <button data-nav="admission">Admission</button>
-    <button data-nav="scholarship">Scholarship</button>
-    <button data-nav="admin">⚙ Admin</button>
-    <button id="themeToggle" aria-label="Toggle dark mode">🌙</button>
-</nav>
-
-<main class="container" id="home">
-
-    <section class="intro">
-        <h2>Government Jobs, Results & Exam Updates</h2>
-        <p>
-            सरकारी नौकरी, परीक्षा परिणाम, एडमिट कार्ड और सिलेबस की जानकारी
-            एक ही जगह।
-        </p>
-        <p class="notice">
-            कृपया आवेदन करने से पहले संबंधित विभाग की आधिकारिक अधिसूचना अवश्य जाँचें।
-        </p>
-    </section>
-
-    <section class="search-box">
-        <div class="search-row">
-            <input
-                id="searchInput"
-                type="search"
-                placeholder="Search job, result, admit card, syllabus..."
-                aria-label="Search exam information">
-            <button class="primary-btn" id="searchButton">🔍 Search</button>
-        </div>
-
-        <div class="search-filters">
-            <select id="categoryFilter" aria-label="Filter category">
-                <option value="all">All Categories</option>
-                <option value="latest-job">Latest Jobs</option>
-                <option value="result">Results</option>
-                <option value="admit-card">Admit Cards</option>
-                <option value="answer-key">Answer Keys</option>
-                <option value="syllabus">Syllabus</option>
-                <option value="admission">Admission</option>
-                <option value="scholarship">Scholarships</option>
-            </select>
-
-            <select id="stateFilter" aria-label="Filter state">
-                <option value="all">All States</option>
-                <option value="Bihar">Bihar</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                <option value="Jharkhand">Jharkhand</option>
-                <option value="National">National</option>
-            </select>
-
-            <button class="secondary-btn" id="clearSearch">Clear</button>
-            <button class="secondary-btn" id="bookmarkFilter">⭐ Bookmarks</button>
-        </div>
-    </section>
-
-    <section class="announcement">
-        <strong>📢 Important Updates:</strong>
-        <div class="announcement-track" id="announcementTrack">
-            नवीनतम जानकारी देखने के लिए नीचे दिए गए सेक्शन देखें।
-        </div>
-    </section>
-
-    <section class="quick-links" aria-label="Popular examinations">
-        <a href="#latest-job" data-quick="latest-job">Latest Government Jobs</a>
-        <a href="#result" data-quick="result">Latest Results</a>
-        <a href="#admit-card" data-quick="admit-card">Admit Cards</a>
-        <a href="#answer-key" data-quick="answer-key">Answer Keys</a>
-        <a href="#syllabus" data-quick="syllabus">Exam Syllabus</a>
-        <a href="#admission" data-quick="admission">Admissions</a>
-        <a href="#scholarship" data-quick="scholarship">Scholarships</a>
-        <a href="#latest-job" data-quick="latest-job">Teaching Jobs</a>
-    </section>
-
-    <div id="resultsMessage" aria-live="polite"></div>
-
-    <section class="sections-grid" id="sectionsGrid">
-
-        <article class="exam-section" id="result">
-            <div class="section-title">📊 Result</div>
-            <div class="section-content">
-                <ul class="exam-list" id="list-result"></ul>
-            </div>
-            <div class="view-more">
-                <button data-view="result">View More →</button>
-            </div>
-        </article>
-
-        <article class="exam-section" id="admit-card">
-            <div class="section-title">🎫 Admit Card</div>
-            <div class="section-content">
-                <ul class="exam-list" id="list-admit-card"></ul>
-            </div>
-            <div class="view-more">
-                <button data-view="admit-card">View More →</button>
-            </div>
-        </article>
-
-        <article class="exam-section" id="latest-job">
-            <div class="section-title">💼 Latest Job</div>
-            <div class="section-content">
-                <ul class="exam-list" id="list-latest-job"></ul>
-            </div>
-            <div class="view-more">
-                <button data-view="latest-job">View More →</button>
-            </div>
-        </article>
-
-        <article class="exam-section" id="answer-key">
-            <div class="section-title">📝 Answer Key</div>
-            <div class="section-content">
-                <ul class="exam-list" id="list-answer-key"></ul>
-            </div>
-            <div class="view-more">
-                <button data-view="answer-key">View More →</button>
-            </div>
-        </article>
-
-        <article class="exam-section" id="syllabus">
-            <div class="section-title">📚 Syllabus</div>
-            <div class="section-content">
-                <ul class="exam-list" id="list-syllabus"></ul>
-            </div>
-            <div class="view-more">
-                <button data-view="syllabus">View More →</button>
-            </div>
-        </article>
-
-        <article class="exam-section" id="admission">
-            <div class="section-title">🎓 Admission</div>
-            <div class="section-content">
-                <ul class="exam-list" id="list-admission"></ul>
-            </div>
-            <div class="view-more">
-                <button data-view="admission">View More →</button>
-            </div>
-        </article>
-
-        <article class="exam-section" id="scholarship">
-            <div class="section-title">🎒 Scholarship</div>
-            <div class="section-content">
-                <ul class="exam-list" id="list-scholarship"></ul>
-            </div>
-            <div class="view-more">
-                <button data-view="scholarship">View More →</button>
-            </div>
-        </article>
-
-    </section>
-
-    <section class="category-heading">
-        <h2>Explore Examination Categories</h2>
-        <p>अपनी परीक्षा और विभाग के अनुसार जानकारी खोजें।</p>
-    </section>
-
-    <section class="category-grid">
-        <div class="category-card">
-            <button data-topic="SSC">
-                <span>🏢</span>SSC Exams
-            </button>
-        </div>
-
-        <div class="category-card">
-            <button data-topic="UPSC">
-                <span>🇮🇳</span>UPSC Exams
-            </button>
-        </div>
-
-        <div class="category-card">
-            <button data-topic="BPSC">
-                <span>📘</span>BPSC Exams
-            </button>
-        </div>
-
-        <div class="category-card">
-            <button data-topic="Railway">
-                <span>🚆</span>Railway Jobs
-            </button>
-        </div>
-
-        <div class="category-card">
-            <button data-topic="Banking">
-                <span>🏦</span>Banking Exams
-            </button>
-        </div>
-
-        <div class="category-card">
-            <button data-topic="Teaching">
-                <span>👨‍🏫</span>Teaching Jobs
-            </button>
-        </div>
-
-        <div class="category-card">
-            <button data-topic="Police">
-                <span>👮</span>Police Recruitment
-            </button>
-        </div>
-
-        <div class="category-card">
-            <button data-topic="Defence">
-                <span>🪖</span>Defence Exams
-            </button>
-        </div>
-    </section>
-
-    <section class="search-box">
-        <h3>⭐ My Bookmarks</h3>
-        <p>अपने पसंदीदा अपडेट यहाँ सेव करें।</p>
-        <div id="bookmarksList"></div>
-    </section>
-
-</main>
-
-<footer class="footer">
-    <h2>EXAMPORTAL PRO</h2>
-    <p>Independent educational information portal.</p>
-
-    <div class="footer-links">
-        <a href="#home">Home</a>
-        <a href="#latest-job">Latest Jobs</a>
-        <a href="#result">Results</a>
-        <a href="#admit-card">Admit Cards</a>
-        <a href="#syllabus">Syllabus</a>
-        <a href="#home" id="footerAdmin">Admin Panel</a>
-    </div>
-
+<section class="hero">
+    <h1>Your Lyrics. <span>Your Music.</span></h1>
     <p>
-        यह एक स्वतंत्र डेमो वेबसाइट है, किसी सरकारी विभाग की आधिकारिक वेबसाइट नहीं।
-        उदाहरण के तौर पर डाले गए डेटा को वास्तविक सरकारी सूचना न मानें।
+        Write your lyrics, choose a voice, create a musical background
+        and enjoy your performance.
     </p>
+</section>
 
-    <p>© <span id="year"></span> ExamPortal Pro</p>
-</footer>
+<div class="layout">
 
-<!-- ADMIN PANEL -->
+<!-- LEFT COLUMN -->
 
-<div class="admin-overlay" id="adminOverlay">
-    <section class="admin-box">
-        <div class="admin-header">
-            <div>
-                <h2>⚙️ Admin Dashboard</h2>
-                <p>Manage job, result and examination updates.</p>
-            </div>
+<div>
 
-            <button class="secondary-btn" id="closeAdmin">✕ Close</button>
+    <section class="card">
+        <h2>🎤 Your Song Lyrics</h2>
+
+        <div class="field">
+            <label for="lyrics">Enter your song lyrics</label>
+
+            <textarea id="lyrics"
+                placeholder="Write your song here...
+
+Example:
+
+Dil ki dhadkan keh rahi hai,
+Nayi subah ab aa rahi hai,
+Sapno ko pankh lagane do,
+Manzil ko paas bulane do..."></textarea>
         </div>
 
-        <div id="adminLogin">
-            <p>
-                इस डेमो में एडमिन पैनल स्थानीय ब्राउज़र में चलता है।
-                यह सुरक्षित सर्वर-आधारित लॉगिन नहीं है।
-            </p>
+        <div class="row">
+            <button class="btn secondary" id="sampleBtn">
+                ✨ Load Sample
+            </button>
 
-            <button class="primary-btn" id="enterDemoAdmin">
-                Open Local Demo Admin
+            <button class="btn secondary" id="clearBtn">
+                🗑 Clear Lyrics
             </button>
         </div>
 
-        <div id="adminDashboard" class="hidden">
-
-            <div class="admin-header">
-                <h3>Add / Edit Update</h3>
-                <button class="secondary-btn" id="exportData">
-                    📥 Export JSON
-                </button>
-            </div>
-
-            <form class="admin-form" id="postForm">
-
-                <input type="hidden" id="editId">
-
-                <div class="form-field full">
-                    <label for="postTitle">Post Title *</label>
-                    <input id="postTitle" required maxlength="180"
-                           placeholder="Example: Recruitment Notification">
-                </div>
-
-                <div class="form-field">
-                    <label for="postCategory">Category *</label>
-                    <select id="postCategory" required>
-                        <option value="latest-job">Latest Job</option>
-                        <option value="result">Result</option>
-                        <option value="admit-card">Admit Card</option>
-                        <option value="answer-key">Answer Key</option>
-                        <option value="syllabus">Syllabus</option>
-                        <option value="admission">Admission</option>
-                        <option value="scholarship">Scholarship</option>
-                    </select>
-                </div>
-
-                <div class="form-field">
-                    <label for="postState">State / Scope</label>
-                    <select id="postState">
-                        <option value="National">National</option>
-                        <option value="Bihar">Bihar</option>
-                        <option value="Uttar Pradesh">Uttar Pradesh</option>
-                        <option value="Jharkhand">Jharkhand</option>
-                    </select>
-                </div>
-
-                <div class="form-field">
-                    <label for="postDate">Notification Date</label>
-                    <input id="postDate" type="date">
-                </div>
-
-                <div class="form-field">
-                    <label for="postLastDate">Last Date (optional)</label>
-                    <input id="postLastDate" type="date">
-                </div>
-
-                <div class="form-field full">
-                    <label for="postURL">Official Notification URL</label>
-                    <input id="postURL" type="url"
-                           placeholder="https://official-website.gov.in/notification">
-                </div>
-
-                <div class="form-field full">
-                    <label for="postDescription">Short Description</label>
-                    <textarea id="postDescription" rows="3" maxlength="600"
-                              placeholder="Important details about this update"></textarea>
-                </div>
-
-                <div class="form-field full">
-                    <label>
-                        <input type="checkbox" id="postFeatured">
-                        Mark as featured
-                    </label>
-                </div>
-
-                <div class="form-field full">
-                    <button class="primary-btn" type="submit" id="savePost">
-                        💾 Save Update
-                    </button>
-                    <button class="secondary-btn" type="button" id="cancelEdit">
-                        Cancel Edit
-                    </button>
-                </div>
-            </form>
-
-            <hr>
-
-            <h3>Manage Published Items</h3>
-            <div id="adminItems" class="admin-items"></div>
-
-            <hr>
-
-            <button class="secondary-btn" id="importData">
-                📤 Import JSON Backup
-            </button>
-
-            <input type="file" id="importFile"
-                   accept=".json,application/json" class="hidden">
-
-            <button class="secondary-btn danger" id="resetDemo">
-                Reset Demo Data
-            </button>
-
+        <div class="status">
+            <span class="dot"></span>
+            <span id="wordCount">0 words · 0 characters</span>
         </div>
     </section>
+
+    <section class="card">
+        <h2>🎚 Voice & Rhythm Settings</h2>
+
+        <div class="field">
+            <label for="voiceSelect">Choose Available Voice</label>
+            <select id="voiceSelect">
+                <option value="">Loading available voices...</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="styleSelect">Performance Style</label>
+            <select id="styleSelect">
+                <option value="normal">Natural Voice</option>
+                <option value="soft">Soft & Gentle</option>
+                <option value="dramatic">Dramatic</option>
+                <option value="energetic">Energetic</option>
+                <option value="slow">Slow & Emotional</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <div class="range-head">
+                <label for="tempo">Speaking Tempo</label>
+                <span id="tempoValue">80%</span>
+            </div>
+
+            <input id="tempo" type="range"
+                min="50" max="150" value="80">
+        </div>
+
+        <div class="field">
+            <div class="range-head">
+                <label for="pitch">Voice Pitch</label>
+                <span id="pitchValue">1.0</span>
+            </div>
+
+            <input id="pitch" type="range"
+                min="0.5" max="2" step="0.1" value="1">
+        </div>
+
+        <div class="field">
+            <div class="range-head">
+                <label for="voiceVolume">Voice Volume</label>
+                <span id="voiceVolumeValue">100%</span>
+            </div>
+
+            <input id="voiceVolume" type="range"
+                min="0" max="100" value="100">
+        </div>
+    </section>
+
 </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<!-- RIGHT COLUMN -->
+
+<div>
+
+    <section class="card">
+        <h2>🎹 Background Music</h2>
+
+        <div class="field">
+            <label for="musicSelect">Choose Music Style</label>
+
+            <select id="musicSelect">
+                <option value="piano">Soft Piano</option>
+                <option value="romantic">Romantic Melody</option>
+                <option value="flute">Flute-like Synth</option>
+                <option value="sad">Sad Atmosphere</option>
+                <option value="pop">Pop Rhythm</option>
+                <option value="electronic">Electronic Beat</option>
+                <option value="ambient">Ambient Meditation</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="keySelect">Musical Scale</label>
+
+            <select id="keySelect">
+                <option value="261.63">C Major</option>
+                <option value="293.66">D Major</option>
+                <option value="329.63">E Major</option>
+                <option value="349.23">F Major</option>
+                <option value="392">G Major</option>
+                <option value="440">A Minor</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <div class="range-head">
+                <label for="musicVolume">Music Volume</label>
+                <span id="musicVolumeValue">25%</span>
+            </div>
+
+            <input id="musicVolume" type="range"
+                min="0" max="100" value="25">
+        </div>
+
+        <div class="field">
+            <div class="range-head">
+                <label for="beat">Music Speed</label>
+                <span id="beatValue">90 BPM</span>
+            </div>
+
+            <input id="beat" type="range"
+                min="50" max="160" value="90">
+        </div>
+
+        <div class="visualizer" id="visualizer"></div>
+
+        <div class="button-grid">
+            <button class="btn primary" id="musicStart">
+                ▶ Start Music
+            </button>
+
+            <button class="btn secondary" id="musicStop">
+                ■ Stop Music
+            </button>
+        </div>
+
+        <p class="note">
+            The background music is generated using your browser's
+            audio engine. These are synthesized musical tones,
+            not prerecorded instrumental tracks.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>🔴 Performance Studio</h2>
+
+        <button class="btn primary full" id="playBtn">
+            ▶ Play Performance
+        </button>
+
+        <div class="button-grid">
+            <button class="btn secondary" id="pauseBtn">
+                ⏸ Pause
+            </button>
+
+            <button class="btn secondary" id="resumeBtn">
+                ▶ Resume
+            </button>
+        </div>
+
+        <button class="btn secondary full"
+            style="margin-top:10px" id="stopBtn">
+            ⏹ Stop Performance
+        </button>
+
+        <div class="status">
+            <span class="dot" id="statusDot"></span>
+            <span id="statusText">Ready to start</span>
+        </div>
+
+        <div class="recording-indicator" id="recordingIndicator">
+            ● RECORDING IN PROGRESS
+        </div>
+
+        <div class="button-grid">
+            <button class="btn record" id="recordBtn">
+                ⏺ Start Recording
+            </button>
+
+            <button class="btn secondary" id="stopRecordBtn">
+                ■ Stop Recording
+            </button>
+        </div>
+
+        <div id="recordingResult"></div>
+
+        <p class="note">
+            Recording uses your microphone to capture the audible
+            performance. Allow microphone access and keep the
+            speakers audible near the microphone. Headphones may
+            prevent the music and generated voice from being captured.
+        </p>
+
+    </section>
+
+</div>
+</div>
+
+<footer>
+    AI Singing Studio · Single-file HTML prototype
+</footer>
+
+</div>
 
 <script>
-"use strict";
+/* ======================================
+   1. ELEMENTS
+====================================== */
 
-/* ==========================================
-   EXAMPORTAL PRO
-   Frontend demonstration application
-========================================== */
+const lyrics = document.getElementById("lyrics");
+const voiceSelect = document.getElementById("voiceSelect");
+const styleSelect = document.getElementById("styleSelect");
 
-const $ = selector => document.querySelector(selector);
-const $$ = selector => [...document.querySelectorAll(selector)];
+const tempo = document.getElementById("tempo");
+const pitch = document.getElementById("pitch");
+const voiceVolume = document.getElementById("voiceVolume");
 
-const DB_KEY = "examportal_posts_v1";
-const BOOKMARK_KEY = "examportal_bookmarks_v1";
-const THEME_KEY = "examportal_theme_v1";
+const musicSelect = document.getElementById("musicSelect");
+const keySelect = document.getElementById("keySelect");
+const musicVolume = document.getElementById("musicVolume");
+const beat = document.getElementById("beat");
 
-const CATEGORIES = [
-    "latest-job",
-    "result",
-    "admit-card",
-    "answer-key",
-    "syllabus",
-    "admission",
-    "scholarship"
-];
+const statusText = document.getElementById("statusText");
+const statusDot = document.getElementById("statusDot");
 
-const CATEGORY_NAMES = {
-    "latest-job": "Latest Job",
-    "result": "Result",
-    "admit-card": "Admit Card",
-    "answer-key": "Answer Key",
-    "syllabus": "Syllabus",
-    "admission": "Admission",
-    "scholarship": "Scholarship"
+const recordingIndicator =
+    document.getElementById("recordingIndicator");
+
+let voices = [];
+let isPlaying = false;
+let currentUtteranceId = 0;
+
+let audioContext = null;
+let masterGain = null;
+let musicGain = null;
+let musicTimer = null;
+let noteIndex = 0;
+
+let mediaRecorder = null;
+let recordedChunks = [];
+let micStream = null;
+
+
+/* ======================================
+   2. WORD COUNTER
+====================================== */
+
+function updateWordCount() {
+    const text = lyrics.value.trim();
+
+    const words = text
+        ? text.split(/\s+/).length
+        : 0;
+
+    document.getElementById("wordCount").textContent =
+        `${words} words · ${lyrics.value.length} characters`;
+}
+
+lyrics.addEventListener("input", updateWordCount);
+
+
+/* ======================================
+   3. SAMPLE SONG
+====================================== */
+
+document.getElementById("sampleBtn").addEventListener("click", () => {
+    lyrics.value =
+`Dil ki dhadkan keh rahi hai,
+Nayi subah ab aa rahi hai,
+Sapno ko pankh lagane do,
+Manzil ko paas bulane do.
+
+Chalte jaana, rukna nahi,
+Apne sapno se darna nahi,
+Mehnat se duniya jeetenge,
+Ek naya itihaas likhenge.`;
+
+    updateWordCount();
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+    lyrics.value = "";
+    updateWordCount();
+});
+
+
+/* ======================================
+   4. BROWSER VOICES
+====================================== */
+
+function loadVoices() {
+    voices = window.speechSynthesis
+        ? speechSynthesis.getVoices()
+        : [];
+
+    const previousValue = voiceSelect.value;
+
+    voiceSelect.innerHTML = "";
+
+    if (!voices.length) {
+        const option = document.createElement("option");
+        option.textContent = "No browser voices available";
+        voiceSelect.appendChild(option);
+        return;
+    }
+
+    voices.forEach((voice, index) => {
+        const option = document.createElement("option");
+
+        option.value = index;
+
+        option.textContent =
+            `${voice.name} (${voice.lang})`;
+
+        voiceSelect.appendChild(option);
+    });
+
+    if (previousValue !== "" &&
+        voices[Number(previousValue)]) {
+        voiceSelect.value = previousValue;
+    } else {
+        const preferred = voices.findIndex(v =>
+            /^en-IN$/i.test(v.lang)
+        );
+
+        const hindi = voices.findIndex(v =>
+            /^hi-IN$/i.test(v.lang)
+        );
+
+        const english = voices.findIndex(v =>
+            /^en/i.test(v.lang)
+        );
+
+        voiceSelect.value =
+            preferred >= 0 ? preferred :
+            hindi >= 0 ? hindi :
+            english >= 0 ? english : 0;
+    }
+}
+
+if ("speechSynthesis" in window) {
+    loadVoices();
+
+    speechSynthesis.onvoiceschanged = loadVoices;
+} else {
+    voiceSelect.innerHTML =
+        "<option>Speech synthesis is not supported</option>";
+}
+
+
+/* ======================================
+   5. SETTINGS LABELS
+====================================== */
+
+tempo.addEventListener("input", () => {
+    document.getElementById("tempoValue").textContent =
+        tempo.value + "%";
+});
+
+pitch.addEventListener("input", () => {
+    document.getElementById("pitchValue").textContent =
+        Number(pitch.value).toFixed(1);
+});
+
+voiceVolume.addEventListener("input", () => {
+    document.getElementById("voiceVolumeValue").textContent =
+        voiceVolume.value + "%";
+});
+
+musicVolume.addEventListener("input", () => {
+    document.getElementById("musicVolumeValue").textContent =
+        musicVolume.value + "%";
+
+    if (musicGain) {
+        musicGain.gain.setTargetAtTime(
+            Number(musicVolume.value) / 100 * 0.25,
+            audioContext.currentTime,
+            0.05
+        );
+    }
+});
+
+beat.addEventListener("input", () => {
+    document.getElementById("beatValue").textContent =
+        beat.value + " BPM";
+});
+
+
+/* ======================================
+   6. STATUS
+====================================== */
+
+function setStatus(message, active = false) {
+    statusText.textContent = message;
+
+    statusDot.classList.toggle("active", active);
+}
+
+
+/* ======================================
+   7. AUDIO ENGINE
+====================================== */
+
+async function initAudio() {
+    if (!audioContext) {
+        const AudioCtx =
+            window.AudioContext || window.webkitAudioContext;
+
+        if (!AudioCtx) {
+            throw new Error("Web Audio is not supported.");
+        }
+
+        audioContext = new AudioCtx();
+
+        masterGain = audioContext.createGain();
+        masterGain.gain.value = 0.8;
+
+        musicGain = audioContext.createGain();
+
+        musicGain.gain.value =
+            Number(musicVolume.value) / 100 * 0.25;
+
+        musicGain.connect(masterGain);
+        masterGain.connect(audioContext.destination);
+    }
+
+    if (audioContext.state === "suspended") {
+        await audioContext.resume();
+    }
+}
+
+
+/* ======================================
+   8. MUSIC SYNTHESIZER
+====================================== */
+
+const scales = {
+    piano:      [0, 4, 7, 12, 7, 4],
+    romantic:   [0, 4, 7, 11, 7, 4],
+    flute:      [0, 2, 4, 7, 9, 7],
+    sad:        [0, 3, 7, 10, 7, 3],
+    pop:        [0, 4, 7, 12, 7, 4],
+    electronic: [0, 7, 12, 7, 3, 10],
+    ambient:    [0, 7, 12, 7, 5, 2]
 };
 
-const DEMO_POSTS = [
-    {
-        id: "demo-1",
-        title: "Demo: Government Recruitment Notification",
-        category: "latest-job",
-        state: "National",
-        date: "2026-10-24",
-        lastDate: "",
-        url: "",
-        description: "यह केवल डेमो पोस्ट है। वास्तविक भर्ती की जानकारी आधिकारिक वेबसाइट पर जाँचें।",
-        featured: true,
-        demo: true
-    },
-    {
-        id: "demo-2",
-        title: "Demo: Examination Result Update",
-        category: "result",
-        state: "National",
-        date: "2026-10-24",
-        lastDate: "",
-        url: "",
-        description: "यह एक उदाहरण है, वास्तविक परीक्षा परिणाम नहीं।",
-        featured: true,
-        demo: true
-    },
-    {
-        id: "demo-3",
-        title: "Demo: Admit Card Information",
-        category: "admit-card",
-        state: "Bihar",
-        date: "2026-10-24",
-        lastDate: "",
-        url: "",
-        description: "यह स्थानीय डेमो डेटा है।",
-        featured: false,
-        demo: true
-    },
-    {
-        id: "demo-4",
-        title: "Demo: Answer Key Notification",
-        category: "answer-key",
-        state: "National",
-        date: "2026-10-24",
-        lastDate: "",
-        url: "",
-        description: "संबंधित परीक्षा की आधिकारिक Answer Key देखें।",
-        featured: false,
-        demo: true
-    },
-    {
-        id: "demo-5",
-        title: "Demo: Examination Syllabus",
-        category: "syllabus",
-        state: "Uttar Pradesh",
-        date: "2026-10-24",
-        lastDate: "",
-        url: "",
-        description: "परीक्षा की तैयारी से पहले आधिकारिक पाठ्यक्रम की पुष्टि करें।",
-        featured: false,
-        demo: true
-    },
-    {
-        id: "demo-6",
-        title: "Demo: College Admission Information",
-        category: "admission",
-        state: "Bihar",
-        date: "2026-10-24",
-        lastDate: "",
-        url: "",
-        description: "यह डेमो एडमिशन पोस्ट है।",
-        featured: false,
-        demo: true
-    },
-    {
-        id: "demo-7",
-        title: "Demo: Scholarship Information",
-        category: "scholarship",
-        state: "National",
-        date: "2026-10-24",
-        lastDate: "",
-        url: "",
-        description: "स्कॉलरशिप के लिए आधिकारिक पात्रता और अंतिम तिथि जाँचें।",
-        featured: false,
-        demo: true
-    }
-];
+function playTone(frequency, duration, type, volume) {
+    if (!audioContext || !musicGain) return;
 
-let posts = loadArray(DB_KEY, DEMO_POSTS);
-let bookmarks = loadArray(BOOKMARK_KEY, []);
-let bookmarkOnly = false;
-let activeSearch = "";
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
-function loadArray(key, fallback) {
-    try {
-        const value = localStorage.getItem(key);
+    osc.type = type;
+    osc.frequency.value = frequency;
 
-        if (value === null) return structuredCloneSafe(fallback);
+    gain.gain.setValueAtTime(
+        0.0001,
+        audioContext.currentTime
+    );
 
-        const parsed = JSON.parse(value);
+    gain.gain.exponentialRampToValueAtTime(
+        Math.max(volume, 0.0002),
+        audioContext.currentTime + 0.03
+    );
 
-        return Array.isArray(parsed) ? parsed : structuredCloneSafe(fallback);
-    } catch (error) {
-        return structuredCloneSafe(fallback);
-    }
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        audioContext.currentTime + duration
+    );
+
+    osc.connect(gain);
+    gain.connect(musicGain);
+
+    osc.start();
+    osc.stop(audioContext.currentTime + duration + 0.05);
 }
 
-function structuredCloneSafe(value) {
-    return JSON.parse(JSON.stringify(value));
-}
+function playBeat() {
+    if (!audioContext) return;
 
-function savePosts() {
-    try {
-        localStorage.setItem(DB_KEY, JSON.stringify(posts));
-        return true;
-    } catch (error) {
-        notify("Data could not be saved. Browser storage may be full.");
-        return false;
-    }
-}
+    const style = musicSelect.value;
+    const base = Number(keySelect.value);
+    const notes = scales[style] || scales.piano;
 
-function saveBookmarks() {
-    try {
-        localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bookmarks));
-    } catch (error) {
-        notify("Bookmarks could not be saved.");
-    }
-}
+    const semitone = notes[noteIndex % notes.length];
 
-let toastTimer;
+    const frequency =
+        base * Math.pow(2, semitone / 12);
 
-function notify(message) {
-    const toast = $("#toast");
-    toast.textContent = message;
-    toast.style.display = "block";
+    const duration = 60 / Number(beat.value);
 
-    clearTimeout(toastTimer);
+    if (style === "flute") {
+        playTone(frequency, duration * 1.3, "sine", 0.15);
 
-    toastTimer = setTimeout(() => {
-        toast.style.display = "none";
-    }, 2800);
-}
+    } else if (style === "electronic") {
+        playTone(frequency / 2, duration * 0.8, "sawtooth", 0.08);
+        playTone(base * 2, 0.09, "square", 0.06);
 
-function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[char]);
-}
+    } else if (style === "pop") {
+        playTone(frequency, duration * 0.65, "triangle", 0.11);
 
-function validExternalURL(value) {
-    if (!value) return "";
-
-    try {
-        const url = new URL(value);
-
-        if (url.protocol !== "https:" && url.protocol !== "http:") {
-            return "";
+        if (noteIndex % 2 === 0) {
+            playTone(base / 2, 0.12, "sine", 0.13);
         }
 
-        return url.href;
-    } catch (error) {
-        return "";
+    } else if (style === "ambient") {
+        playTone(frequency, duration * 2, "sine", 0.09);
+
+    } else if (style === "sad") {
+        playTone(frequency, duration * 1.4, "triangle", 0.12);
+
+    } else {
+        playTone(frequency, duration * 0.75, "triangle", 0.13);
+
+        if (noteIndex % 3 === 0) {
+            playTone(
+                frequency * 1.5,
+                duration * 0.8,
+                "sine",
+                0.05
+            );
+        }
     }
+
+    noteIndex++;
+    animateBars();
 }
 
-function safeLinkHTML(url, label) {
-    const safeURL = validExternalURL(url);
+async function startMusic() {
+    try {
+        await initAudio();
 
-    if (!safeURL) {
-        return escapeHTML(label);
-    }
-
-    return '<a href="' + escapeHTML(safeURL) +
-        '" target="_blank" rel="noopener noreferrer">' +
-        escapeHTML(label) + '</a>';
-}
-
-/* ==========================================
-   HEADER DATE
-========================================== */
-
-function updateDate() {
-    $("#currentDate").textContent =
-        new Date().toLocaleDateString("en-IN", {
-            weekday: "short",
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        });
-}
-
-$("#year").textContent = new Date().getFullYear();
-updateDate();
-
-/* ==========================================
-   DATA FILTERING
-========================================== */
-
-function getFilteredPosts(category = "all") {
-    const query = activeSearch.toLowerCase().trim();
-    const state = $("#stateFilter").value;
-
-    return posts.filter(post => {
-        const matchesCategory =
-            category === "all" || post.category === category;
-
-        const searchableText = [
-            post.title,
-            post.description,
-            post.category,
-            post.state
-        ].join(" ").toLowerCase();
-
-        const matchesQuery =
-            !query || searchableText.includes(query);
-
-        const matchesState =
-            state === "all" || post.state === state;
-
-        const matchesBookmark =
-            !bookmarkOnly || bookmarks.includes(post.id);
-
-        return matchesCategory &&
-            matchesQuery &&
-            matchesState &&
-            matchesBookmark;
-    }).sort((a, b) => {
-        if (Boolean(a.featured) !== Boolean(b.featured)) {
-            return a.featured ? -1 : 1;
+        if (musicTimer) {
+            clearInterval(musicTimer);
         }
 
-        return String(b.date || "").localeCompare(String(a.date || ""));
+        noteIndex = 0;
+        playBeat();
+
+        musicTimer = setInterval(
+            playBeat,
+            60000 / Number(beat.value)
+        );
+
+        setStatus("Background music is playing", true);
+
+    } catch (error) {
+        setStatus(error.message);
+    }
+}
+
+function stopMusic() {
+    if (musicTimer) {
+        clearInterval(musicTimer);
+        musicTimer = null;
+    }
+
+    setStatus("Background music stopped", false);
+}
+
+document.getElementById("musicStart")
+    .addEventListener("click", startMusic);
+
+document.getElementById("musicStop")
+    .addEventListener("click", stopMusic);
+
+
+/* ======================================
+   9. VISUALIZER
+====================================== */
+
+const visualizer = document.getElementById("visualizer");
+
+for (let i = 0; i < 42; i++) {
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    visualizer.appendChild(bar);
+}
+
+function animateBars() {
+    const bars = document.querySelectorAll(".bar");
+
+    bars.forEach(bar => {
+        bar.style.height =
+            (5 + Math.random() * 80) + "px";
     });
 }
 
-/* ==========================================
-   RENDER POSTS
-========================================== */
 
-function renderSection(category) {
-    const list = $("#list-" + category);
-    if (!list) return;
+/* ======================================
+   10. PERFORMANCE ENGINE
+====================================== */
 
-    list.replaceChildren();
-
-    const filtered = getFilteredPosts(category);
-    const displayed = filtered.slice(0, 10);
-
-    if (!displayed.length) {
-        const li = document.createElement("li");
-        li.className = "empty";
-        li.textContent = "No matching updates found.";
-        list.appendChild(li);
-        return;
-    }
-
-    displayed.forEach(post => {
-        const li = document.createElement("li");
-
-        const title = document.createElement("div");
-        title.innerHTML = safeLinkHTML(post.url, post.title);
-
-        const meta = document.createElement("span");
-        meta.className = "item-meta";
-
-        let metaText = post.state || "National";
-
-        if (post.date) metaText += " • " + post.date;
-        if (post.demo) metaText += " • DEMO";
-
-        meta.textContent = metaText;
-
-        const description = document.createElement("div");
-        description.className = "item-meta";
-        description.textContent = post.description || "";
-
-        const actions = document.createElement("div");
-        actions.style.marginTop = "4px";
-
-        const bookmarkButton = document.createElement("button");
-        bookmarkButton.className = "secondary-btn";
-        bookmarkButton.style.padding = "4px 7px";
-        bookmarkButton.style.fontSize = "11px";
-        bookmarkButton.textContent =
-            bookmarks.includes(post.id) ? "★ Saved" : "☆ Save";
-
-        bookmarkButton.addEventListener("click", () => {
-            toggleBookmark(post.id);
-        });
-
-        actions.appendChild(bookmarkButton);
-
-        li.append(title, meta, description, actions);
-        list.appendChild(li);
-    });
+function splitLyrics(text) {
+    return text
+        .replace(/\r/g, "")
+        .split(/(?<=[.!?।,;\n])\s*/)
+        .map(line => line.trim())
+        .filter(Boolean);
 }
 
-function renderAll() {
-    CATEGORIES.forEach(renderSection);
-    renderBookmarks();
-    renderAnnouncements();
-    renderResultsMessage();
-}
-
-function renderResultsMessage() {
-    const count = getFilteredPosts("all").length;
-
-    $("#resultsMessage").textContent =
-        activeSearch || bookmarkOnly
-            ? count + " matching item(s) found."
-            : "";
-}
-
-/* ==========================================
-   ANNOUNCEMENT BAR
-========================================== */
-
-function renderAnnouncements() {
-    const featured = posts
-        .filter(post => post.featured)
-        .slice(0, 8);
-
-    const track = $("#announcementTrack");
-    track.replaceChildren();
-
-    if (!featured.length) {
-        track.textContent = "No featured updates.";
-        return;
-    }
-
-    featured.forEach((post, index) => {
-        const span = document.createElement("span");
-        span.style.marginRight = "24px";
-
-        const link = document.createElement("a");
-        link.href = validExternalURL(post.url) || "#home";
-        link.textContent = post.title;
-
-        if (validExternalURL(post.url)) {
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-        }
-
-        span.append(link);
-
-        if (index !== featured.length - 1) {
-            span.append("  |  ");
-        }
-
-        track.append(span);
-    });
-}
-
-/* ==========================================
-   SEARCH
-========================================== */
-
-function performSearch() {
-    activeSearch = $("#searchInput").value.trim();
-    renderAll();
-
-    if (activeSearch) {
-        notify("Search completed.");
-    }
-
-    $("#sectionsGrid").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-}
-
-$("#searchButton").addEventListener("click", performSearch);
-
-$("#searchInput").addEventListener("keydown", event => {
-    if (event.key === "Enter") performSearch();
-});
-
-$("#categoryFilter").addEventListener("change", () => {
-    renderAll();
-});
-
-$("#stateFilter").addEventListener("change", () => {
-    renderAll();
-});
-
-$("#clearSearch").addEventListener("click", () => {
-    $("#searchInput").value = "";
-    $("#categoryFilter").value = "all";
-    $("#stateFilter").value = "all";
-
-    activeSearch = "";
-    bookmarkOnly = false;
-
-    renderAll();
-    notify("Filters cleared.");
-});
-
-$("#bookmarkFilter").addEventListener("click", () => {
-    bookmarkOnly = !bookmarkOnly;
-
-    $("#bookmarkFilter").textContent =
-        bookmarkOnly ? "⭐ Show All" : "⭐ Bookmarks";
-
-    renderAll();
-});
-
-/* ==========================================
-   CATEGORY NAVIGATION
-========================================== */
-
-$$("[data-nav]").forEach(button => {
-    button.addEventListener("click", () => {
-        const section = button.dataset.nav;
-
-        $$(".nav button").forEach(item => {
-            item.classList.toggle("active", item === button);
-        });
-
-        if (section === "admin") {
-            openAdmin();
+function speakLine(line, runId) {
+    return new Promise(resolve => {
+        if (runId !== currentUtteranceId) {
+            resolve();
             return;
         }
 
-        if (section === "home") {
-            $("#home").scrollIntoView({behavior: "smooth"});
-            return;
+        const utterance = new SpeechSynthesisUtterance(line);
+
+        const voiceIndex = Number(voiceSelect.value);
+
+        if (voices[voiceIndex]) {
+            utterance.voice = voices[voiceIndex];
+            utterance.lang = voices[voiceIndex].lang;
         }
 
-        const element = $("#" + section);
+        let rate = Number(tempo.value) / 100;
+        let pitchValue = Number(pitch.value);
 
-        if (element) {
-            element.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
+        switch (styleSelect.value) {
+            case "soft":
+                rate *= 0.85;
+                pitchValue *= 1.05;
+                break;
+
+            case "dramatic":
+                rate *= 0.8;
+                pitchValue *= 0.9;
+                break;
+
+            case "energetic":
+                rate *= 1.15;
+                pitchValue *= 1.1;
+                break;
+
+            case "slow":
+                rate *= 0.65;
+                pitchValue *= 0.95;
+                break;
+        }
+
+        utterance.rate = Math.max(0.1, Math.min(10, rate));
+        utterance.pitch = Math.max(0, Math.min(2, pitchValue));
+
+        utterance.volume =
+            Number(voiceVolume.value) / 100;
+
+        utterance.onend = () => resolve();
+
+        utterance.onerror = event => {
+            if (event.error !== "canceled" &&
+                event.error !== "interrupted") {
+                console.warn("Speech error:", event.error);
+            }
+
+            resolve();
+        };
+
+        speechSynthesis.speak(utterance);
+    });
+}
+
+async function playPerformance() {
+    if (!("speechSynthesis" in window)) {
+        setStatus("This browser does not support speech synthesis.");
+        return;
+    }
+
+    const text = lyrics.value.trim();
+
+    if (!text) {
+        alert("Please enter your song lyrics first.");
+        lyrics.focus();
+        return;
+    }
+
+    await initAudio();
+
+    stopPerformance();
+
+    const runId = currentUtteranceId;
+
+    isPlaying = true;
+
+    setStatus("Performance in progress...", true);
+
+    const lines = splitLyrics(text);
+
+    try {
+        for (let i = 0; i < lines.length; i++) {
+            if (runId !== currentUtteranceId) return;
+
+            await speakLine(lines[i], runId);
+
+            if (runId !== currentUtteranceId) return;
+
+            // Small pause between lyric lines.
+            await new Promise(resolve =>
+                setTimeout(resolve, 300)
+            );
+        }
+
+        if (runId === currentUtteranceId) {
+            isPlaying = false;
+            setStatus("Performance completed", false);
+        }
+
+    } catch (error) {
+        isPlaying = false;
+        setStatus("Unable to play performance.");
+        console.error(error);
+    }
+}
+
+function stopPerformance() {
+    currentUtteranceId++;
+    isPlaying = false;
+
+    if ("speechSynthesis" in window) {
+        speechSynthesis.cancel();
+    }
+}
+
+document.getElementById("playBtn")
+    .addEventListener("click", playPerformance);
+
+document.getElementById("pauseBtn")
+    .addEventListener("click", () => {
+        if (speechSynthesis.speaking) {
+            speechSynthesis.pause();
+            setStatus("Performance paused");
+        }
+    });
+
+document.getElementById("resumeBtn")
+    .addEventListener("click", () => {
+        speechSynthesis.resume();
+        setStatus("Performance resumed", true);
+    });
+
+document.getElementById("stopBtn")
+    .addEventListener("click", () => {
+        stopPerformance();
+        stopMusic();
+        setStatus("Performance stopped");
+    });
+
+
+/* ======================================
+   11. MICROPHONE RECORDING
+====================================== */
+
+async function startRecording() {
+    try {
+        if (!navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia) {
+            throw new Error(
+                "Microphone recording requires HTTPS or localhost."
+            );
+        }
+
+        // Ask permission only after the user clicks Record.
+        micStream = await navigator.mediaDevices.getUserMedia({
+            audio: true
+        });
+
+        recordedChunks = [];
+
+        const mimeCandidates = [
+            "audio/webm;codecs=opus",
+            "audio/webm",
+            "audio/mp4"
+        ];
+
+        const supportedType = mimeCandidates.find(type =>
+            MediaRecorder.isTypeSupported(type)
+        );
+
+        mediaRecorder = supportedType
+            ? new MediaRecorder(micStream, {
+                mimeType: supportedType
+            })
+            : new MediaRecorder(micStream);
+
+        mediaRecorder.ondataavailable = event => {
+            if (event.data && event.data.size > 0) {
+                recordedChunks.push(event.data);
+            }
+        };
+
+        mediaRecorder.onstop = () => {
+            const mimeType =
+                mediaRecorder.mimeType || "audio/webm";
+
+            const blob = new Blob(recordedChunks, {
+                type: mimeType
             });
-        }
-    });
-});
 
-$$("[data-quick]").forEach(link => {
-    link.addEventListener("click", event => {
-        event.preventDefault();
+            const audioURL = URL.createObjectURL(blob);
 
-        const category = link.dataset.quick;
+            const extension = mimeType.includes("mp4")
+                ? "mp4"
+                : "webm";
 
-        $("#categoryFilter").value = category;
-        activeSearch = "";
-        bookmarkOnly = false;
+            const result =
+                document.getElementById("recordingResult");
 
-        renderAll();
+            result.innerHTML = `
+                <p style="color:#86efac;font-size:14px">
+                    ✓ Recording completed
+                </p>
 
-        const section = $("#" + category);
+                <audio controls></audio>
 
-        if (section) {
-            section.scrollIntoView({behavior: "smooth"});
-        }
-    });
-});
+                <a class="btn primary full"
+                    style="display:block;text-align:center;
+                    text-decoration:none;margin-top:12px"
+                    download="singing-performance.${extension}"
+                    href="${audioURL}">
+                    ⬇ Download Recording
+                </a>
+            `;
 
-$$("[data-view]").forEach(button => {
-    button.addEventListener("click", () => {
-        $("#categoryFilter").value = button.dataset.view;
-        activeSearch = "";
-        bookmarkOnly = false;
-        renderAll();
+            result.querySelector("audio").src = audioURL;
 
-        $("#searchInput").focus();
-        notify("Use search to filter this category.");
-    });
-});
+            recordingIndicator.classList.remove("show");
 
-$$("[data-topic]").forEach(button => {
-    button.addEventListener("click", () => {
-        $("#searchInput").value = button.dataset.topic;
-        $("#categoryFilter").value = "all";
-        activeSearch = button.dataset.topic;
-        bookmarkOnly = false;
-        renderAll();
+            setStatus("Recording saved. Preview or download it.");
 
-        $("#sectionsGrid").scrollIntoView({behavior: "smooth"});
-    });
-});
+            if (micStream) {
+                micStream.getTracks().forEach(track => track.stop());
+                micStream = null;
+            }
+        };
 
-/* ==========================================
-   BOOKMARKS
-========================================== */
+        mediaRecorder.start();
 
-function toggleBookmark(id) {
-    if (bookmarks.includes(id)) {
-        bookmarks = bookmarks.filter(item => item !== id);
-        notify("Bookmark removed.");
-    } else {
-        bookmarks.push(id);
-        notify("Bookmark saved.");
-    }
+        recordingIndicator.classList.add("show");
 
-    saveBookmarks();
-    renderAll();
-}
+        setStatus("Recording microphone audio...", true);
 
-function renderBookmarks() {
-    const container = $("#bookmarksList");
-    container.replaceChildren();
-
-    const saved = posts.filter(post => bookmarks.includes(post.id));
-
-    if (!saved.length) {
-        const message = document.createElement("p");
-        message.className = "empty";
-        message.textContent = "No bookmarks saved yet.";
-        container.appendChild(message);
-        return;
-    }
-
-    saved.forEach(post => {
-        const row = document.createElement("div");
-        row.className = "admin-item";
-
-        const title = document.createElement("span");
-        title.className = "admin-item-title";
-        title.textContent = post.title;
-
-        const remove = document.createElement("button");
-        remove.className = "secondary-btn";
-        remove.textContent = "Remove";
-
-        remove.addEventListener("click", () => {
-            toggleBookmark(post.id);
-        });
-
-        row.append(title, remove);
-        container.appendChild(row);
-    });
-}
-
-/* ==========================================
-   DARK MODE
-========================================== */
-
-function setTheme(theme) {
-    document.body.classList.toggle("dark", theme === "dark");
-
-    $("#themeToggle").textContent =
-        theme === "dark" ? "☀️" : "🌙";
-
-    localStorage.setItem(THEME_KEY, theme);
-}
-
-$("#themeToggle").addEventListener("click", () => {
-    setTheme(document.body.classList.contains("dark") ? "light" : "dark");
-});
-
-try {
-    setTheme(localStorage.getItem(THEME_KEY) || "light");
-} catch (error) {
-    setTheme("light");
-}
-
-/* ==========================================
-   ADMIN PANEL
-========================================== */
-
-function openAdmin() {
-    $("#adminOverlay").style.display = "block";
-    document.body.style.overflow = "hidden";
-}
-
-function closeAdmin() {
-    $("#adminOverlay").style.display = "none";
-    document.body.style.overflow = "";
-}
-
-$("#closeAdmin").addEventListener("click", closeAdmin);
-
-$("#footerAdmin").addEventListener("click", event => {
-    event.preventDefault();
-    openAdmin();
-});
-
-$("#enterDemoAdmin").addEventListener("click", () => {
-    $("#adminLogin").classList.add("hidden");
-    $("#adminDashboard").classList.remove("hidden");
-
-    renderAdminItems();
-});
-
-function resetForm() {
-    $("#postForm").reset();
-    $("#editId").value = "";
-    $("#savePost").textContent = "💾 Save Update";
-}
-
-$("#cancelEdit").addEventListener("click", resetForm);
-
-$("#postForm").addEventListener("submit", event => {
-    event.preventDefault();
-
-    const title = $("#postTitle").value.trim();
-
-    if (!title) {
-        notify("Please enter a title.");
-        return;
-    }
-
-    const rawURL = $("#postURL").value.trim();
-    const safeURL = validExternalURL(rawURL);
-
-    if (rawURL && !safeURL) {
-        notify("Enter a valid HTTP or HTTPS URL.");
-        return;
-    }
-
-    const id = $("#editId").value || (
-        "post-" + Date.now() + "-" +
-        Math.random().toString(36).slice(2, 7)
-    );
-
-    const existing = posts.find(post => post.id === id);
-
-    const post = {
-        id,
-        title,
-        category: $("#postCategory").value,
-        state: $("#postState").value,
-        date: $("#postDate").value,
-        lastDate: $("#postLastDate").value,
-        url: safeURL,
-        description: $("#postDescription").value.trim(),
-        featured: $("#postFeatured").checked,
-        demo: false
-    };
-
-    if (existing) {
-        posts = posts.map(item => item.id === id ? post : item);
-    } else {
-        posts.unshift(post);
-    }
-
-    if (!savePosts()) return;
-
-    resetForm();
-    renderAll();
-    renderAdminItems();
-
-    notify(existing ? "Update edited successfully." : "New update added.");
-});
-
-function renderAdminItems() {
-    const container = $("#adminItems");
-    container.replaceChildren();
-
-    if (!posts.length) {
-        const empty = document.createElement("p");
-        empty.className = "empty";
-        empty.textContent = "No items available.";
-        container.appendChild(empty);
-        return;
-    }
-
-    posts.forEach(post => {
-        const row = document.createElement("div");
-        row.className = "admin-item";
-
-        const title = document.createElement("div");
-        title.className = "admin-item-title";
-
-        const strong = document.createElement("strong");
-        strong.textContent = post.title;
-
-        const meta = document.createElement("div");
-        meta.className = "item-meta";
-        meta.textContent =
-            (CATEGORY_NAMES[post.category] || post.category) +
-            " • " + (post.state || "National");
-
-        title.append(strong, meta);
-
-        const actions = document.createElement("div");
-        actions.className = "admin-item-actions";
-
-        const edit = document.createElement("button");
-        edit.textContent = "✏️";
-        edit.title = "Edit";
-
-        edit.addEventListener("click", () => editPost(post.id));
-
-        const remove = document.createElement("button");
-        remove.textContent = "🗑️";
-        remove.title = "Delete";
-
-        remove.addEventListener("click", () => deletePost(post.id));
-
-        actions.append(edit, remove);
-        row.append(title, actions);
-        container.appendChild(row);
-    });
-}
-
-function editPost(id) {
-    const post = posts.find(item => item.id === id);
-    if (!post) return;
-
-    $("#editId").value = post.id;
-    $("#postTitle").value = post.title;
-    $("#postCategory").value = post.category;
-    $("#postState").value = post.state || "National";
-    $("#postDate").value = post.date || "";
-    $("#postLastDate").value = post.lastDate || "";
-    $("#postURL").value = post.url || "";
-    $("#postDescription").value = post.description || "";
-    $("#postFeatured").checked = Boolean(post.featured);
-
-    $("#savePost").textContent = "💾 Update Post";
-
-    $("#postForm").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-}
-
-function deletePost(id) {
-    const post = posts.find(item => item.id === id);
-    if (!post) return;
-
-    if (!confirm("Delete this item: " + post.title + "?")) return;
-
-    posts = posts.filter(item => item.id !== id);
-    bookmarks = bookmarks.filter(item => item !== id);
-
-    savePosts();
-    saveBookmarks();
-
-    renderAll();
-    renderAdminItems();
-
-    notify("Item deleted.");
-}
-
-/* ==========================================
-   EXPORT JSON BACKUP
-========================================== */
-
-function downloadJSON(filename, data) {
-    const blob = new Blob(
-        [JSON.stringify(data, null, 2)],
-        {type: "application/json"}
-    );
-
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-
-    anchor.href = url;
-    anchor.download = filename;
-
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-$("#exportData").addEventListener("click", () => {
-    downloadJSON("examportal-backup.json", {
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        posts,
-        bookmarks
-    });
-
-    notify("Backup exported.");
-});
-
-/* ==========================================
-   IMPORT JSON BACKUP
-========================================== */
-
-$("#importData").addEventListener("click", () => {
-    $("#importFile").click();
-});
-
-$("#importFile").addEventListener("change", async event => {
-    const file = event.target.files[0];
-
-    if (!file) return;
-
-    try {
-        if (file.size > 3 * 1024 * 1024) {
-            throw new Error("Backup file is too large.");
-        }
-
-        const data = JSON.parse(await file.text());
-
-        if (!data || !Array.isArray(data.posts)) {
-            throw new Error("Invalid backup file.");
-        }
-
-        const imported = data.posts.filter(post =>
-            post &&
-            typeof post.id === "string" &&
-            typeof post.title === "string" &&
-            CATEGORIES.includes(post.category)
-        ).slice(0, 5000);
-
-        if (!confirm("Replace existing posts with imported data?")) {
-            return;
-        }
-
-        posts = imported.map(post => ({
-            id: post.id,
-            title: post.title.slice(0, 180),
-            category: post.category,
-            state: typeof post.state === "string" ? post.state : "National",
-            date: typeof post.date === "string" ? post.date : "",
-            lastDate: typeof post.lastDate === "string" ? post.lastDate : "",
-            url: validExternalURL(post.url),
-            description: typeof post.description === "string"
-                ? post.description.slice(0, 600) : "",
-            featured: Boolean(post.featured),
-            demo: false
-        }));
-
-        bookmarks = Array.isArray(data.bookmarks)
-            ? data.bookmarks.filter(id =>
-                posts.some(post => post.id === id)
-            )
-            : [];
-
-        savePosts();
-        saveBookmarks();
-
-        renderAll();
-        renderAdminItems();
-
-        notify("Backup imported successfully.");
     } catch (error) {
-        notify(error.message || "Import failed.");
-    } finally {
-        event.target.value = "";
+        alert(
+            "Recording could not start: " + error.message +
+            "\n\nAllow microphone permission and use HTTPS or localhost."
+        );
+
+        setStatus("Recording unavailable");
     }
-});
+}
 
-/* ==========================================
-   RESET DEMO DATA
-========================================== */
+function stopRecording() {
+    if (mediaRecorder &&
+        mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+        setStatus("Preparing recording...");
+    }
+}
 
-$("#resetDemo").addEventListener("click", () => {
-    if (!confirm(
-        "This will delete all locally stored posts and restore demo data. Continue?"
-    )) return;
+document.getElementById("recordBtn")
+    .addEventListener("click", startRecording);
 
-    posts = structuredCloneSafe(DEMO_POSTS);
-    bookmarks = [];
-    activeSearch = "";
-    bookmarkOnly = false;
+document.getElementById("stopRecordBtn")
+    .addEventListener("click", stopRecording);
 
-    $("#searchInput").value = "";
-    $("#categoryFilter").value = "all";
-    $("#stateFilter").value = "all";
 
-    savePosts();
-    saveBookmarks();
+/* ======================================
+   12. INITIALIZATION
+====================================== */
 
-    renderAll();
-    renderAdminItems();
-    resetForm();
+updateWordCount();
 
-    notify("Demo data restored.");
-});
+document.getElementById("tempoValue").textContent =
+    tempo.value + "%";
 
-/* ==========================================
-   START APPLICATION
-========================================== */
+document.getElementById("pitchValue").textContent =
+    Number(pitch.value).toFixed(1);
 
-renderAll();
+document.getElementById("voiceVolumeValue").textContent =
+    voiceVolume.value + "%";
+
+document.getElementById("musicVolumeValue").textContent =
+    musicVolume.value + "%";
+
+document.getElementById("beatValue").textContent =
+    beat.value + " BPM";
+
+setStatus("Ready to start");
 
 </script>
+
 </body>
 </html>
