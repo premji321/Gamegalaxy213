@@ -2,755 +2,159 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080d32">
-
-<title>MCQ Quiz Pro Ultimate</title>
+<title>MCQ QUIZ PRO ULTIMATE</title>
 
 <style>
-:root {
-    --navy: #080d32;
-    --navy-light: #17245b;
-    --blue: #315efb;
-    --cyan: #13c8f5;
-    --gold: #ffc857;
-    --green: #18b981;
-    --red: #ef4444;
-    --bg: #f3f6fc;
-    --card: #ffffff;
-    --text: #172033;
-    --muted: #69758b;
-    --border: #e2e8f0;
-    --shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Inter, Arial, Helvetica, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-}
-
-button, input, select {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.topbar {
-    background: linear-gradient(120deg, var(--navy), var(--navy-light));
-    color: white;
-    padding: 20px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.brand {
-    font-size: 23px;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-}
-
-.brand span {
-    color: var(--gold);
-}
-
-.topbar-subtitle {
-    font-size: 12px;
-    color: #c6d1f2;
-    margin-top: 5px;
-}
-
-.top-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.container {
-    width: min(1200px, 94%);
-    margin: 25px auto 50px;
-}
-
-.card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 24px;
-    box-shadow: var(--shadow);
-    margin-bottom: 22px;
-}
-
-.hero {
-    padding: 36px 28px;
-    background: linear-gradient(130deg, #101947, #273d8e);
-    color: white;
-    border-radius: 22px;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 22px;
-}
-
-.hero h1 {
-    font-size: clamp(27px, 4vw, 42px);
-    margin: 0 0 12px;
-}
-
-.hero p {
-    color: #d9e3ff;
-    max-width: 650px;
-    line-height: 1.7;
-}
-
-.badge {
-    display: inline-block;
-    background: rgba(255, 200, 87, 0.15);
-    color: var(--gold);
-    border: 1px solid rgba(255, 200, 87, 0.35);
-    padding: 7px 12px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 800;
-    margin-bottom: 12px;
-}
-
-h2, h3 {
-    margin-top: 0;
-}
-
-.muted {
-    color: var(--muted);
-    line-height: 1.6;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 11px 16px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    font-weight: 750;
-    font-size: 14px;
-    transition: 0.2s;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-}
-
-.btn-primary {
-    background: var(--blue);
-    color: white;
-}
-
-.btn-dark {
-    background: var(--navy);
-    color: white;
-}
-
-.btn-gold {
-    background: var(--gold);
-    color: #242424;
-}
-
-.btn-outline {
-    background: white;
-    border-color: var(--border);
-    color: var(--text);
-}
-
-.btn-danger {
-    background: #fff0f0;
-    color: #c62828;
-    border-color: #ffd1d1;
-}
-
-.btn-success {
-    background: var(--green);
-    color: white;
-}
-
-.btn-small {
-    padding: 7px 11px;
-    font-size: 12px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-}
-
-.game-card {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 22px;
-    background: white;
-    transition: 0.2s;
-}
-
-.game-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow);
-}
-
-.game-icon {
-    font-size: 32px;
-    margin-bottom: 14px;
-}
-
-.game-card h3 {
-    margin-bottom: 8px;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-}
-
-.field {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
-
-.field label {
-    font-weight: 750;
-    font-size: 13px;
-}
-
-.field input,
-.field select,
-.search-input {
-    width: 100%;
-    padding: 12px 13px;
-    border: 1px solid #d8dfeb;
-    border-radius: 10px;
-    background: white;
-    color: var(--text);
-    outline: none;
-}
-
-.field input:focus,
-.field select:focus,
-.search-input:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(49, 94, 251, 0.1);
-}
-
-.hidden {
-    display: none !important;
-}
-
-.section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.section-heading h2 {
-    margin-bottom: 5px;
-}
-
-.section-heading p {
-    margin: 0;
-}
-
-.stat-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-    margin-bottom: 22px;
-}
-
-.stat-card {
-    padding: 20px;
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    background: white;
-}
-
-.stat-label {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 750;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-}
-
-.stat-value {
-    font-size: clamp(20px, 3vw, 27px);
-    font-weight: 900;
-    margin-top: 10px;
-    overflow-wrap: anywhere;
-}
-
-.table-wrap {
-    width: 100%;
-    overflow-x: auto;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 650px;
-    background: white;
-}
-
-thead {
-    background: #101947;
-    color: white;
-}
-
-th, td {
-    text-align: left;
-    padding: 15px 16px;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-}
-
-th {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    white-space: nowrap;
-}
-
-tbody tr:hover {
-    background: #f6f8ff;
-}
-
-tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.rank-badge {
-    display: inline-flex;
-    min-width: 34px;
-    height: 34px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background: #eef2ff;
-    color: #253db4;
-    font-weight: 900;
-}
-
-.rank-1 {
-    background: #fff1c7;
-    color: #986500;
-}
-
-.rank-2 {
-    background: #edf0f4;
-    color: #526071;
-}
-
-.rank-3 {
-    background: #fce5d5;
-    color: #9a4e16;
-}
-
-.player-link {
-    border: none;
-    background: transparent;
-    padding: 0;
-    color: #244be4;
-    font-weight: 850;
-    text-align: left;
-    text-decoration: none;
-}
-
-.player-link:hover {
-    text-decoration: underline;
-}
-
-.amount {
-    color: #087f55;
-    font-weight: 900;
-    white-space: nowrap;
-}
-
-.toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 18px;
-}
-
-.toolbar > * {
-    flex: 1 1 180px;
-}
-
-.toolbar button {
-    flex: 0 0 auto;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 40px 15px;
-    color: var(--muted);
-}
-
-.empty-icon {
-    font-size: 38px;
-    margin-bottom: 10px;
-}
-
-.player-profile {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    padding: 20px;
-    border-radius: 14px;
-    background: linear-gradient(120deg, #eef2ff, #f7f9ff);
-    margin-bottom: 20px;
-}
-
-.avatar {
-    width: 58px;
-    height: 58px;
-    border-radius: 17px;
-    background: var(--navy);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: 900;
-}
-
-.profile-details {
-    flex: 1;
-    min-width: 180px;
-}
-
-.profile-details h3 {
-    margin: 0 0 5px;
-}
-
-.profile-details p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.status {
-    display: inline-block;
-    border-radius: 100px;
-    padding: 6px 9px;
-    font-size: 11px;
-    font-weight: 850;
-    white-space: nowrap;
-}
-
-.status-completed {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.status-wrong {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.status-time {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.status-quit {
-    background: #e2e8f0;
-    color: #334155;
-}
-
-.status-other {
-    background: #e0e7ff;
-    color: #3730a3;
-}
-
-.pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 18px;
-}
-
-.pagination-buttons {
-    display: flex;
-    gap: 8px;
-}
-
-.quiz-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.quiz-question {
-    font-size: clamp(19px, 3vw, 25px);
-    font-weight: 850;
-    line-height: 1.5;
-    margin: 22px 0;
-}
-
-.option-list {
-    display: grid;
-    gap: 12px;
-}
-
-.option-btn {
-    text-align: left;
-    padding: 15px;
-    border: 1px solid var(--border);
-    background: white;
-    border-radius: 12px;
-    color: var(--text);
-    font-weight: 650;
-}
-
-.option-btn:hover:not(:disabled) {
-    border-color: var(--blue);
-    background: #f3f6ff;
-}
-
-.option-btn.correct {
-    background: #dcfce7;
-    border-color: #22c55e;
-    color: #166534;
-}
-
-.option-btn.incorrect {
-    background: #fee2e2;
-    border-color: #ef4444;
-    color: #991b1b;
-}
-
-.timer {
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--blue);
-}
-
-.timer.warning {
-    color: var(--red);
-}
-
-.progress-track {
-    height: 8px;
-    border-radius: 100px;
-    background: #e9edf5;
-    overflow: hidden;
-    margin: 15px 0;
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, var(--blue), var(--cyan));
-    transition: width 0.25s;
-}
-
-.lifeline-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 15px 0;
-}
-
-.lifeline {
-    border: 1px solid #d6dcff;
-    background: #eef2ff;
-    color: #263db7;
-    border-radius: 100px;
-    padding: 9px 13px;
-    font-size: 12px;
-    font-weight: 850;
-}
-
-.lifeline.used {
-    opacity: 0.4;
-    text-decoration: line-through;
-}
-
-.prize-list {
-    display: grid;
-    gap: 5px;
-}
-
-.prize-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 9px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 750;
-    background: #f1f4fb;
-}
-
-.prize-item.active {
-    background: var(--gold);
-    color: #332300;
-}
-
-.quiz-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 260px;
-    gap: 20px;
-}
-
-.explanation {
-    padding: 14px;
-    background: #eefaf4;
-    border: 1px solid #c7f1dc;
-    color: #145b3d;
-    border-radius: 12px;
-    line-height: 1.6;
-    margin-top: 15px;
-}
-
-.review-item {
-    border: 1px solid var(--border);
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-}
-
-.review-item h4 {
-    margin: 0 0 10px;
-    line-height: 1.5;
-}
-
-.footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    padding: 22px 10px;
-}
-
-@media (max-width: 850px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stat-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .quiz-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .prize-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 520px) {
-    .container {
-        width: 94%;
-        margin-top: 15px;
-    }
-
-    .card {
-        padding: 17px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stat-grid {
-        gap: 9px;
-    }
-
-    .stat-card {
-        padding: 14px;
-    }
-
-    .stat-value {
-        font-size: 19px;
-    }
-
-    .topbar {
-        padding: 17px 4%;
-    }
-
-    .brand {
-        font-size: 20px;
-    }
-}
-
-@media print {
-    .topbar,
-    .hero,
-    .no-print,
-    #homeScreen,
-    #kbcSetupScreen,
-    #schoolSetupScreen,
-    #competitiveSetupScreen,
-    #kbcQuizScreen,
-    #standardQuizScreen,
-    #resultScreen,
-    .footer {
-        display: none !important;
-    }
-
-    body {
-        background: white;
-    }
-
-    .container {
-        width: 100%;
-        margin: 0;
-    }
-
-    .card {
-        border: none;
-        box-shadow: none;
-        padding: 0;
-    }
-
-    .table-wrap {
-        overflow: visible;
-    }
-
-    table {
-        min-width: 0;
-    }
-
-    th, td {
-        padding: 8px;
-        font-size: 10px;
-    }
+:root{
+ --navy:#080d32;
+ --blue:#315efb;
+ --cyan:#16c7e8;
+ --gold:#ffc857;
+ --green:#13b981;
+ --red:#ff4d67;
+ --bg:#f1f5fc;
+ --text:#17213b;
+ --border:#e2e8f0;
+ --muted:#718096;
+ --shadow:0 10px 35px #10204415;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+button:disabled{opacity:.5;cursor:not-allowed}
+.hidden{display:none!important}
+.topbar{background:linear-gradient(120deg,var(--navy),#18265e);color:white;padding:17px;position:sticky;top:0;z-index:10}
+.topbar-inner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.topbar h1{font-size:19px}
+.topbar p{font-size:11px;color:#cbd5ff;margin-top:5px}
+.status{font-size:11px}
+.container{max-width:1200px;margin:25px auto;padding:0 15px 40px}
+.hero{padding:30px;background:linear-gradient(120deg,#101b4a,#315efb);color:white;border-radius:20px;margin-bottom:20px;box-shadow:var(--shadow)}
+.hero h2{font-size:clamp(25px,4vw,38px);margin-bottom:12px}
+.hero p{font-size:13px;line-height:1.9}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat,.card,.mode-card,.sidebar{background:white;border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--shadow);min-width:0}
+.stat strong{display:block;font-size:25px;margin:10px 0}
+.stat span,.muted{font-size:12px;color:var(--muted)}
+.mode-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:20px 0}
+.mode-card{cursor:pointer;transition:.2s}
+.mode-card:hover{transform:translateY(-3px);border-color:var(--blue)}
+.mode-card h3{margin:12px 0}
+.mode-card p{font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:16px}
+.mode-icon{font-size:35px}
+.kbc-mode{background:linear-gradient(145deg,#080d32,#1c2870);color:white;border-color:#ffc857}
+.kbc-mode p{color:#dbe4ff}
+.btn{padding:12px 16px;border-radius:9px;background:var(--blue);color:white;font-weight:bold;font-size:12px}
+.btn-green{background:var(--green)}
+.btn-gold{background:linear-gradient(120deg,#ffc857,#ff9f1c);color:#20143d}
+.btn-red{background:var(--red);color:white}
+.btn-light{background:#edf2ff;color:#2448d8}
+.btn-dark{background:var(--navy);color:white}
+.full{width:100%}
+.card{margin-bottom:18px}
+.card h3{margin-bottom:15px}
+.form-group{margin-bottom:17px}
+label{font-size:13px;font-weight:bold}
+input[type=text],select{display:block;width:100%;padding:13px;border:1px solid #d8dfeb;border-radius:10px;background:white;margin-top:8px;outline:none}
+input:focus,select:focus{border-color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.choice{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;font-size:12px;line-height:1.7}
+.choice input{margin-top:3px;accent-color:var(--blue)}
+.choice:has(input:checked){background:#edf2ff;border-color:var(--blue)}
+.chapter-group{border:1px solid var(--border);padding:13px;border-radius:11px;margin-bottom:12px}
+.chapter-group h4{margin-bottom:10px}
+.chapter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.info{padding:13px;background:#fff8e7;border:1px solid #f5dfa1;color:#875d05;border-radius:9px;font-size:12px;line-height:1.8;margin-bottom:15px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar button{padding:8px 10px;border-radius:7px;background:#edf2ff;color:#2448d8;font-size:11px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}
+.sidebar{margin-bottom:15px}
+.sidebar h3{font-size:14px;margin-bottom:12px}
+.sidebar p{font-size:12px;padding:9px 0;border-bottom:1px solid var(--border);line-height:1.7}
+.quiz-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.badge,.timer{padding:9px 12px;border-radius:8px;background:#edf2ff;color:var(--blue);font-size:12px;font-weight:bold}
+.timer{background:#fff0f0;color:#c52c37}
+.progress{height:7px;background:#e9edf5;border-radius:9px;overflow:hidden;margin:20px 0}
+.progress div{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0}
+.question{font-size:19px;line-height:1.8;margin:18px 0}
+.options{display:grid;gap:10px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:13px;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:13px;line-height:1.8}
+.option.selected{background:#edf2ff;border-color:var(--blue)}
+.option.correct{background:#d8f7e8;border-color:var(--green)}
+.option.wrong{background:#ffe3e3;border-color:var(--red)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.actions button{flex:1;min-width:100px;padding:12px;border-radius:9px;font-size:12px;font-weight:bold}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.palette button{aspect-ratio:1;border-radius:7px;background:#edf0f7}
+.palette button.answered{background:#d8f7e8}
+.palette button.current{outline:2px solid var(--blue)}
+.result-hero{text-align:center;padding:28px;background:linear-gradient(135deg,#142450,#315efb);color:white;border-radius:18px;margin-bottom:18px}
+.result-hero h2{margin-bottom:15px}
+.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.result-stat{text-align:center;background:#f6f8fc;padding:15px 5px;border-radius:10px}
+.result-stat strong{display:block;font-size:22px;margin-bottom:5px}
+.result-stat span{font-size:10px;color:var(--muted)}
+.review-item{padding:15px;border:1px solid var(--border);border-radius:12px;margin:12px 0;line-height:1.9;font-size:13px}
+.review-item .correct-answer{background:#d8f7e8}
+.review-item .wrong-answer{background:#ffe3e3}
+#kbcScreen{background:radial-gradient(ellipse at top,#273ca3,#11184b 45%,#050923);padding:18px;border-radius:22px;color:white}
+.kbc-header{text-align:center;padding:20px 10px}
+.kbc-logo{width:80px;height:80px;border-radius:50%;margin:auto auto 15px;display:grid;place-items:center;background:linear-gradient(135deg,#fff2b0,#ffc857);color:#1b1450;font-size:36px;font-weight:bold}
+.kbc-header h2{color:#fff2b0;font-size:clamp(22px,4vw,35px);margin-bottom:10px}
+.kbc-header p{font-size:12px;color:#d5ddff;line-height:1.8}
+.kbc-stage{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:15px}
+.kbc-status{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kbc-status div{padding:12px 5px;text-align:center;background:#ffffff0c;border:1px solid #7186ff50;border-radius:10px}
+.kbc-status span{display:block;font-size:10px;color:#bbc8ff;margin-bottom:7px}
+.kbc-status strong{color:#ffe29a;font-size:15px;overflow-wrap:anywhere}
+.kbc-question-box{background:linear-gradient(145deg,#18266b,#111a4c);border:2px solid #6478ff;padding:22px 15px;border-radius:18px;text-align:center;margin-bottom:14px}
+.kbc-question-label{display:inline-block;padding:7px 13px;border-radius:25px;background:#ffc85718;color:#ffe29a;margin-bottom:15px;font-size:11px}
+.kbc-question{font-size:clamp(17px,3vw,23px);line-height:1.9;font-weight:bold;overflow-wrap:anywhere}
+.kbc-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:15px}
+.kbc-option{min-width:0;min-height:65px;padding:13px;display:flex;align-items:center;gap:10px;border:2px solid #4d60ce;border-radius:13px;color:white;background:#17245f;font-size:12px;line-height:1.8;text-align:left;overflow-wrap:anywhere}
+.kbc-option:disabled{opacity:1}
+.kbc-option.correct{background:linear-gradient(120deg,#08784f,#13b981);border-color:#6dffc7}
+.kbc-option.wrong{background:linear-gradient(120deg,#a71936,#ff4d67);border-color:#ffadb9}
+.kbc-option .letter{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;color:#ffe29a;border:1px solid #ffc85765}
+.kbc-host{padding:15px;border:1px solid #6478ff55;border-radius:12px;background:#ffffff0c;color:#e5eaff;font-size:13px;line-height:1.9;text-align:center;margin-bottom:14px;white-space:pre-line}
+.kbc-host strong{color:#ffe29a}
+.kbc-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.kbc-actions button{padding:12px;border-radius:9px;font-size:12px;font-weight:bold}
+.kbc-side{background:#ffffff08;border:1px solid #7186ff45;border-radius:14px;padding:14px}
+.kbc-side h3{color:#ffe29a;font-size:14px;margin-bottom:13px}
+.prize-level{display:flex;justify-content:space-between;gap:8px;padding:8px;border:1px solid #ffffff14;background:#ffffff07;border-radius:7px;color:#d7deff;font-size:10px;margin-bottom:5px}
+.prize-level strong{text-align:right}
+.prize-level.current{background:linear-gradient(120deg,#ffca58,#ff9f1c);color:#17143d}
+.prize-level.won{border-color:#13b98170;color:#8fffd2}
+.kbc-result{padding:22px;border:2px solid #ffc857;border-radius:17px;text-align:center;margin-top:20px}
+.kbc-result h2{color:#ffe29a;margin-bottom:15px}
+.kbc-result strong{font-size:30px;color:#ffc857;display:block;margin:15px}
+.history-record{padding:15px;border:1px solid var(--border);border-radius:11px;margin:10px 0;background:#f8faff;line-height:1.9;overflow-wrap:anywhere}
+.history-record h4{margin-bottom:6px}
+.empty{text-align:center;padding:20px;border:1px dashed var(--border);border-radius:10px;color:var(--muted);font-size:12px;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#142450;color:white;padding:13px 18px;border-radius:10px;font-size:12px;z-index:100;max-width:90%;text-align:center}
+@media(max-width:850px){
+ .layout,.kbc-stage{grid-template-columns:1fr}
+ .kbc-side{max-width:none}
+}
+@media(max-width:600px){
+ .mode-grid,.grid{grid-template-columns:1fr}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .chapter-grid{grid-template-columns:1fr}
+ .result-grid{grid-template-columns:repeat(2,1fr)}
+ .kbc-options{grid-template-columns:1fr}
+ .kbc-status{grid-template-columns:1fr}
+ .kbc-actions{grid-template-columns:1fr 1fr}
+ .container{padding:0 10px 25px}
+ .hero{padding:22px 17px}
+ .card{padding:15px}
+}
+@media print{
+ .topbar,footer,.actions,.sidebar,#homeScreen,#schoolScreen,#competitiveScreen,#kbcSetupScreen,#kbcScreen{display:none!important}
 }
 </style>
 </head>
@@ -758,1964 +162,1725 @@ tbody tr:last-child td {
 <body>
 
 <header class="topbar">
-    <div>
-        <div class="brand">MCQ QUIZ <span>PRO ULTIMATE</span></div>
-        <div class="topbar-subtitle">Smart Learning. Competitive Practice. Ultimate Quiz.</div>
-    </div>
-
-    <div class="top-actions">
-        <button class="btn btn-gold" onclick="showKbcHistory()">🏆 KBC History</button>
-        <button class="btn btn-outline" onclick="showHome()">Home</button>
-    </div>
+ <div class="topbar-inner">
+  <div>
+   <h1>🎓 MCQ QUIZ PRO ULTIMATE</h1>
+   <p>School · Competitive · KBC Game Show</p>
+  </div>
+  <div id="status" class="status">● Loading</div>
+ </div>
 </header>
 
 <main class="container">
 
-    <!-- HOME SCREEN -->
-    <section id="homeScreen">
-        <div class="hero">
-            <span class="badge">ULTIMATE QUIZ EXPERIENCE</span>
-            <h1>Challenge Your Knowledge</h1>
-            <p>
-                Practice school subjects, prepare for competitive examinations,
-                and experience the excitement of a virtual quiz show.
-                Track your performance and compete for the top position.
-            </p>
-            <button class="btn btn-gold" onclick="showKbcSetup()">Start KBC Challenge →</button>
-        </div>
+<!-- HOME -->
+<section id="homeScreen">
+ <div class="hero">
+  <h2>Your Preparation, Your Test! 🚀</h2>
+  <p>Create school examinations, competitive practice tests and an exciting KBC-style quiz show. Select subjects, chapters and difficulty levels.</p>
+ </div>
 
-        <div class="grid">
-            <div class="game-card">
-                <div class="game-icon">🎓</div>
-                <h3>School Quiz</h3>
-                <p class="muted">Practice subject-wise questions for school examinations.</p>
-                <button class="btn btn-primary" onclick="showSchoolSetup()">Start School Quiz</button>
-            </div>
+ <div class="stats">
+  <div class="stat">📚<strong id="statQuestions">0</strong><span>Total Questions</span></div>
+  <div class="stat">🏫<strong id="statClasses">0</strong><span>School Classes</span></div>
+  <div class="stat">📖<strong id="statSubjects">0</strong><span>Subjects</span></div>
+  <div class="stat">🗂️<strong id="statChapters">0</strong><span>Chapters / Topics</span></div>
+ </div>
 
-            <div class="game-card">
-                <div class="game-icon">📚</div>
-                <h3>Competitive Exam</h3>
-                <p class="muted">Improve your knowledge with competitive examination practice.</p>
-                <button class="btn btn-primary" onclick="showCompetitiveSetup()">Start Practice Test</button>
-            </div>
+ <h2>Choose Your Experience</h2>
+ <div class="mode-grid">
+  <div class="mode-card" onclick="openSchool()">
+   <div class="mode-icon">🏫</div>
+   <h3>School Student</h3>
+   <p>Classes 6–12 के लिए class, subjects, chapters और difficulty के अनुसार test बनाइए।</p>
+   <button class="btn btn-green full">Open School Section →</button>
+  </div>
+  <div class="mode-card" onclick="openCompetitive()">
+   <div class="mode-icon">🎯</div>
+   <h3>Competitive Student</h3>
+   <p>BPSC, UPSC, SSC, Railway और अन्य competitive examinations की तैयारी कीजिए।</p>
+   <button class="btn full">Open Competitive Section →</button>
+  </div>
+  <div class="mode-card kbc-mode" onclick="openKBCSetup()">
+   <div class="mode-icon">🏆</div>
+   <h3>KBC Quiz Show</h3>
+   <p>सही जवाब दीजिए, Lifelines इस्तेमाल कीजिए और ₹100 करोड़ तक पहुँचिए।</p>
+   <button class="btn btn-gold full">Enter KBC Game Show →</button>
+  </div>
+ </div>
 
-            <div class="game-card">
-                <div class="game-icon">🏆</div>
-                <h3>KBC Challenge</h3>
-                <p class="muted">Answer questions, use lifelines, and climb the virtual prize ladder.</p>
-                <button class="btn btn-dark" onclick="showKbcSetup()">Play KBC</button>
-            </div>
-        </div>
+ <div class="card">
+  <h3>📡 Question Bank Status</h3>
+  <p id="dataInfo" class="muted" style="margin-bottom:14px">Loading questions...</p>
+  <button class="btn btn-light" id="reloadButton">↻ Reload Questions</button>
+ </div>
+</section>
 
-        <div class="card" style="margin-top:22px">
-            <div class="section-heading">
-                <div>
-                    <h2>Player Rankings</h2>
-                    <p class="muted">Discover the highest-earning KBC players.</p>
-                </div>
-                <button class="btn btn-outline" onclick="showKbcHistory()">View Full Rankings</button>
-            </div>
-            <div id="homeRankingPreview"></div>
-        </div>
-    </section>
+<!-- SCHOOL SETUP -->
+<section id="schoolScreen" class="hidden">
+ <button class="btn btn-light" onclick="showScreen('homeScreen')">← Home</button>
+ <div class="hero" style="margin-top:15px">
+  <h2>🏫 School Student</h2>
+  <p>Choose class, subjects, chapters and difficulty.</p>
+ </div>
+ <div class="card">
+  <h3>1. Select Class</h3>
+  <select id="classSelect"><option value="">-- Select Class --</option></select>
+ </div>
+ <div class="card">
+  <h3>2. Difficulty Level</h3>
+  <div class="grid">
+   <label class="choice"><input type="checkbox" name="schoolLevel" value="Easy">Easy</label>
+   <label class="choice"><input type="checkbox" name="schoolLevel" value="Moderate">Moderate</label>
+   <label class="choice"><input type="checkbox" name="schoolLevel" value="Tough">Tough</label>
+  </div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>3. Select Subjects</h3><button onclick="selectAll('schoolSubject')">Select All</button></div>
+  <div id="schoolSubjects" class="grid"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>4. Select Chapters</h3><button onclick="selectAll('schoolChapter')">Select All Chapters</button></div>
+  <div id="schoolChapters"></div>
+ </div>
+ <div class="card">
+  <h3>5. Test Settings</h3>
+  <label>Number of Questions</label>
+  <select id="schoolLimit">
+   <option value="10">10</option><option value="20">20</option>
+   <option value="30" selected>30</option><option value="50">50</option>
+   <option value="100">100</option><option value="all">All Available</option>
+  </select>
+  <label style="display:block;margin-top:15px">Time Limit</label>
+  <select id="schoolTime">
+   <option value="10">10 Minutes</option><option value="20">20 Minutes</option>
+   <option value="30" selected>30 Minutes</option><option value="60">60 Minutes</option>
+   <option value="0">No Time Limit</option>
+  </select>
+  <div id="schoolSummary" class="info" style="margin-top:15px">Select your test settings.</div>
+  <button class="btn btn-green full" onclick="startTest('school')">🚀 Start School Test</button>
+ </div>
+</section>
 
-    <!-- KBC SETUP -->
-    <section id="kbcSetupScreen" class="hidden">
-        <div class="card">
-            <div class="section-heading">
-                <div>
-                    <h2>🏆 KBC Challenge</h2>
-                    <p class="muted">Enter your name and configure your quiz.</p>
-                </div>
-                <button class="btn btn-outline" onclick="showHome()">← Back to Home</button>
-            </div>
+<!-- COMPETITIVE SETUP -->
+<section id="competitiveScreen" class="hidden">
+ <button class="btn btn-light" onclick="showScreen('homeScreen')">← Home</button>
+ <div class="hero" style="margin-top:15px">
+  <h2>🎯 Competitive Exam Preparation</h2>
+  <p>Practice for BPSC, UPSC, SSC, Railway and other competitive examinations.</p>
+ </div>
+ <div class="card">
+  <h3>1. Select Examination</h3>
+  <select id="examSelect">
+   <option>All Competitive Exams</option><option>BPSC</option>
+   <option>UPSC</option><option>SSC</option><option>Railway</option><option>Other</option>
+  </select>
+  <div class="info" style="margin-top:15px">Marking: +1 correct, −1/3 incorrect, 0 unanswered.</div>
+ </div>
+ <div class="card">
+  <h3>2. Difficulty Level</h3>
+  <div class="grid">
+   <label class="choice"><input type="checkbox" name="competitiveLevel" value="Easy">Easy</label>
+   <label class="choice"><input type="checkbox" name="competitiveLevel" value="Moderate">Moderate</label>
+   <label class="choice"><input type="checkbox" name="competitiveLevel" value="Tough">Tough</label>
+  </div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>3. Select Subjects</h3><button onclick="selectAll('competitiveSubject')">Select All</button></div>
+  <div id="competitiveSubjects" class="grid"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>4. Select Chapters</h3><button onclick="selectAll('competitiveChapter')">Select All Chapters</button></div>
+  <div id="competitiveChapters"></div>
+ </div>
+ <div class="card">
+  <h3>5. Test Settings</h3>
+  <label>Number of Questions</label>
+  <select id="competitiveLimit">
+   <option value="10">10</option><option value="20">20</option>
+   <option value="30" selected>30</option><option value="50">50</option>
+   <option value="100">100</option><option value="all">All Available</option>
+  </select>
+  <label style="display:block;margin-top:15px">Time Limit</label>
+  <select id="competitiveTime">
+   <option value="10">10 Minutes</option><option value="20">20 Minutes</option>
+   <option value="30" selected>30 Minutes</option><option value="60">60 Minutes</option>
+   <option value="120">120 Minutes</option><option value="0">No Time Limit</option>
+  </select>
+  <div id="competitiveSummary" class="info" style="margin-top:15px">Select your test settings.</div>
+  <button class="btn full" onclick="startTest('competitive')">🚀 Generate Competitive Test</button>
+ </div>
+</section>
 
-            <form id="kbcSetupForm">
-                <div class="form-grid">
-                    <div class="field">
-                        <label for="kbcPlayerName">Player Name</label>
-                        <input id="kbcPlayerName" maxlength="60" required
-                               placeholder="Enter your name">
-                        <small class="muted">You can play multiple games using the same name.</small>
-                    </div>
+<!-- KBC SETUP -->
+<section id="kbcSetupScreen" class="hidden">
+ <button class="btn btn-light" onclick="showScreen('homeScreen')">← Home</button>
+ <div class="hero" style="margin-top:15px;background:linear-gradient(120deg,#080d32,#263ca3);border:2px solid #ffc857">
+  <h2 style="color:#ffe29a">🎙️ कौन बनेगा Quiz Champion?</h2>
+  <p>Subject, topic और difficulty चुनिए। सही जवाब दीजिए और ₹100 करोड़ तक पहुँचिए!</p>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>1. Select Subjects</h3><button onclick="selectAll('kbcSubject')">Select All</button></div>
+  <div id="kbcSubjects" class="grid"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>2. Select Chapters / Topics</h3><button onclick="selectAll('kbcChapter')">Select All Topics</button></div>
+  <div id="kbcChapters"></div>
+ </div>
+ <div class="card">
+  <h3>3. Difficulty Level</h3>
+  <div class="grid">
+   <label class="choice"><input type="checkbox" name="kbcLevel" value="Easy">Easy</label>
+   <label class="choice"><input type="checkbox" name="kbcLevel" value="Moderate">Moderate</label>
+   <label class="choice"><input type="checkbox" name="kbcLevel" value="Tough">Tough</label>
+  </div>
+ </div>
+ <div class="card">
+  <h3>4. Game Settings</h3>
+  <label>Number of Questions</label>
+  <select id="kbcLimit">
+   <option value="5">5 Questions</option>
+   <option value="10" selected>10 Questions</option>
+   <option value="15">15 Questions</option>
+   <option value="20">20 Questions</option>
+   <option value="all">All Available Questions</option>
+  </select>
+  <label style="display:block;margin-top:15px">Time Per Question</label>
+  <select id="kbcTime">
+   <option value="15">15 Seconds</option>
+   <option value="30" selected>30 Seconds</option>
+   <option value="45">45 Seconds</option>
+   <option value="60">60 Seconds</option>
+   <option value="0">No Time Limit</option>
+  </select>
 
-                    <div class="field">
-                        <label for="kbcQuestionCount">Number of Questions</label>
-                        <select id="kbcQuestionCount">
-                            <option value="5">5 Questions</option>
-                            <option value="10">10 Questions</option>
-                            <option value="15">15 Questions</option>
-                            <option value="20">20 Questions</option>
-                            <option value="all">All Available Questions</option>
-                        </select>
-                    </div>
+  <label for="kbcPlayerName" style="display:block;margin-top:18px">👤 Player Name</label>
+  <input type="text" id="kbcPlayerName" maxlength="60" placeholder="Enter a unique player name" autocomplete="off">
 
-                    <div class="field">
-                        <label for="kbcTimerDuration">Time Per Question</label>
-                        <select id="kbcTimerDuration">
-                            <option value="30">30 Seconds</option>
-                            <option value="45">45 Seconds</option>
-                            <option value="60">60 Seconds</option>
-                            <option value="0">No Time Limit</option>
-                        </select>
-                    </div>
+  <div id="kbcSummary" class="info" style="margin-top:15px">Choose your subjects, topics and difficulty.</div>
 
-                    <div class="field">
-                        <label for="kbcQuestionCategory">Question Category</label>
-                        <select id="kbcQuestionCategory">
-                            <option value="all">All Categories</option>
-                            <option value="school">School Questions</option>
-                            <option value="competitive">Competitive Exam Questions</option>
-                        </select>
-                    </div>
-                </div>
+  <button class="btn btn-gold full" id="startKBC">🎵 Start KBC Game Show</button>
+  <button class="btn btn-dark full" id="kbcHistoryButton" style="margin-top:12px">📚 KBC PLAYER HISTORY</button>
 
-                <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">
-                    <button type="submit" class="btn btn-primary">Start KBC Game</button>
-                    <button type="button" class="btn btn-outline" onclick="showKbcHistory()">View Player Rankings</button>
-                </div>
-            </form>
+  <div id="kbcHistoryPanel" class="hidden" style="margin-top:20px">
+   <h3>📚 KBC Player History</h3>
+   <div id="kbcHistoryList"></div>
+   <button class="btn btn-light" id="kbcCloseHistory" style="margin-top:10px">Close History</button>
+  </div>
+ </div>
+</section>
 
-            <p id="kbcSetupMessage" class="muted" style="margin-top:15px"></p>
-        </div>
-    </section>
+<!-- STANDARD QUIZ -->
+<section id="quizScreen" class="hidden">
+ <button class="btn btn-light" id="exitQuiz">← Exit Test</button>
+ <div class="layout" style="margin-top:15px">
+  <div class="card">
+   <div class="quiz-top">
+    <span class="badge" id="quizBadge">MCQ TEST</span>
+    <span class="timer" id="timer">30:00</span>
+   </div>
+   <div class="progress"><div id="progress"></div></div>
+   <div class="toolbar">
+    <strong id="questionNumber">Question 1</strong>
+    <button class="btn btn-light" id="reviewToggle">⭐ Mark for Review</button>
+   </div>
+   <p class="muted" id="questionMeta"></p>
+   <div id="questionText" class="question"></div>
+   <div id="options" class="options"></div>
+   <div class="actions">
+    <button class="btn btn-light" id="previous">← Previous</button>
+    <button class="btn btn-light" id="clearAnswer">Clear</button>
+    <button class="btn" id="next">Next →</button>
+    <button class="btn btn-green" id="submit">Submit Test ✓</button>
+   </div>
+  </div>
+  <aside>
+   <div class="sidebar">
+    <h3>📋 Question Palette</h3>
+    <div id="palette" class="palette"></div>
+    <p>Green: Answered</p><p>Blue: Current</p>
+   </div>
+   <div class="sidebar">
+    <h3>📊 Test Progress</h3>
+    <p>Total: <strong id="liveTotal">0</strong></p>
+    <p>Answered: <strong id="liveAnswered">0</strong></p>
+    <p>Remaining: <strong id="liveRemaining">0</strong></p>
+    <p>Review: <strong id="liveReview">0</strong></p>
+   </div>
+  </aside>
+ </div>
+</section>
 
-    <!-- SCHOOL SETUP -->
-    <section id="schoolSetupScreen" class="hidden">
-        <div class="card">
-            <div class="section-heading">
-                <div>
-                    <h2>School Quiz Setup</h2>
-                    <p class="muted">Configure your school practice test.</p>
-                </div>
-                <button class="btn btn-outline" onclick="showHome()">← Back to Home</button>
-            </div>
+<!-- STANDARD RESULTS -->
+<section id="resultScreen" class="hidden">
+ <div class="result-hero">
+  <div style="font-size:40px">🏆</div>
+  <h2>Test Completed!</h2>
+  <h2 id="percentage">0%</h2>
+  <h3 id="performance">Keep Practicing!</h3>
+ </div>
+ <div class="card">
+  <div class="result-grid">
+   <div class="result-stat"><strong id="correctCount">0</strong><span>Correct</span></div>
+   <div class="result-stat"><strong id="wrongCount">0</strong><span>Incorrect</span></div>
+   <div class="result-stat"><strong id="skippedCount">0</strong><span>Skipped</span></div>
+   <div class="result-stat"><strong id="accuracy">0%</strong><span>Accuracy</span></div>
+  </div>
+  <div id="resultSummary" class="info" style="margin-top:15px"></div>
+  <p id="resultDetails" class="muted"></p>
+  <div class="actions">
+   <button class="btn" id="showReview">Answer Analysis</button>
+   <button class="btn btn-light" id="homeButton">Home</button>
+   <button class="btn btn-green" id="retryButton">Retry</button>
+   <button class="btn btn-dark" id="printButton">Print</button>
+  </div>
+ </div>
+ <div class="card" id="reviewCard">
+  <h3>📘 Detailed Answer Analysis</h3>
+  <div id="reviewList"></div>
+ </div>
+</section>
 
-            <form id="schoolSetupForm">
-                <div class="form-grid">
-                    <div class="field">
-                        <label for="schoolPlayerName">Student Name</label>
-                        <input id="schoolPlayerName" required maxlength="60" placeholder="Enter student name">
-                    </div>
-
-                    <div class="field">
-                        <label for="schoolClass">Class</label>
-                        <select id="schoolClass">
-                            <option value="all">All Classes</option>
-                            <option value="5">Class 5</option>
-                            <option value="6">Class 6</option>
-                            <option value="7">Class 7</option>
-                            <option value="8">Class 8</option>
-                            <option value="9">Class 9</option>
-                            <option value="10">Class 10</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label for="schoolSubject">Subject</label>
-                        <select id="schoolSubject">
-                            <option value="all">All Subjects</option>
-                            <option value="History">History</option>
-                            <option value="Geography">Geography</option>
-                            <option value="Civics">Civics</option>
-                            <option value="Economics">Economics</option>
-                            <option value="Science">Science</option>
-                            <option value="Social Science">Social Science</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label for="schoolQuestionCount">Number of Questions</label>
-                        <select id="schoolQuestionCount">
-                            <option value="10">10 Questions</option>
-                            <option value="20">20 Questions</option>
-                            <option value="30">30 Questions</option>
-                            <option value="all">All Available Questions</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" type="submit" style="margin-top:20px">Start School Quiz</button>
-                <p id="schoolSetupMessage" class="muted"></p>
-            </form>
-        </div>
-    </section>
-
-    <!-- COMPETITIVE SETUP -->
-    <section id="competitiveSetupScreen" class="hidden">
-        <div class="card">
-            <div class="section-heading">
-                <div>
-                    <h2>Competitive Exam Practice</h2>
-                    <p class="muted">Test your preparation with objective questions.</p>
-                </div>
-                <button class="btn btn-outline" onclick="showHome()">← Back to Home</button>
-            </div>
-
-            <form id="competitiveSetupForm">
-                <div class="form-grid">
-                    <div class="field">
-                        <label for="competitivePlayerName">Candidate Name</label>
-                        <input id="competitivePlayerName" required maxlength="60" placeholder="Enter candidate name">
-                    </div>
-
-                    <div class="field">
-                        <label for="competitiveSubject">Subject</label>
-                        <select id="competitiveSubject">
-                            <option value="all">All Subjects</option>
-                            <option value="History">History</option>
-                            <option value="Geography">Geography</option>
-                            <option value="Polity">Indian Polity</option>
-                            <option value="Economics">Economics</option>
-                            <option value="Science">General Science</option>
-                            <option value="Current Affairs">Current Affairs</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label for="competitiveQuestionCount">Number of Questions</label>
-                        <select id="competitiveQuestionCount">
-                            <option value="20">20 Questions</option>
-                            <option value="50">50 Questions</option>
-                            <option value="100">100 Questions</option>
-                            <option value="all">All Available Questions</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label for="competitiveTimer">Time Per Question</label>
-                        <select id="competitiveTimer">
-                            <option value="30">30 Seconds</option>
-                            <option value="60">60 Seconds</option>
-                            <option value="0">No Time Limit</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" type="submit" style="margin-top:20px">Start Practice Test</button>
-                <p id="competitiveSetupMessage" class="muted"></p>
-            </form>
-        </div>
-    </section>
-
-    <!-- KBC QUIZ SCREEN -->
-    <section id="kbcQuizScreen" class="hidden">
-        <div class="quiz-header">
-            <div>
-                <div class="muted" id="kbcPlayerLabel">Player</div>
-                <h2 id="kbcRoundTitle" style="margin:5px 0">Question 1</h2>
-            </div>
-            <div class="timer" id="kbcTimer">30s</div>
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-bar" id="kbcProgress"></div>
-        </div>
-
-        <div class="quiz-layout">
-            <div class="card">
-                <div class="lifeline-row">
-                    <button class="lifeline" id="fiftyFiftyBtn" onclick="useFiftyFifty()">50:50 Lifeline</button>
-                    <button class="lifeline" id="audienceBtn" onclick="useAudiencePoll()">Audience Poll</button>
-                </div>
-
-                <div id="kbcQuestionText" class="quiz-question"></div>
-                <div id="kbcOptions" class="option-list"></div>
-                <div id="kbcExplanation" class="explanation hidden"></div>
-
-                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
-                    <button class="btn btn-outline" id="kbcQuitBtn" onclick="quitKbcGame()">Quit Game</button>
-                    <button class="btn btn-primary hidden" id="kbcNextBtn" onclick="nextKbcQuestion()">Next Question →</button>
-                </div>
-            </div>
-
-            <aside class="card">
-                <h3>Prize Ladder</h3>
-                <p class="muted" style="font-size:12px">Virtual winnings only.</p>
-                <div class="prize-list" id="kbcPrizeList"></div>
-            </aside>
-        </div>
-    </section>
-
-    <!-- STANDARD QUIZ SCREEN -->
-    <section id="standardQuizScreen" class="hidden">
-        <div class="quiz-header">
-            <div>
-                <div class="muted" id="standardPlayerLabel">Candidate</div>
-                <h2 id="standardRoundTitle">Question 1</h2>
-            </div>
-            <div class="timer" id="standardTimer">30s</div>
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-bar" id="standardProgress"></div>
-        </div>
-
-        <div class="card">
-            <div id="standardQuestionText" class="quiz-question"></div>
-            <div id="standardOptions" class="option-list"></div>
-            <div id="standardExplanation" class="explanation hidden"></div>
-
-            <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
-                <button class="btn btn-outline" onclick="quitStandardGame()">Finish Test</button>
-                <button class="btn btn-primary hidden" id="standardNextBtn" onclick="nextStandardQuestion()">Next Question →</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- RESULT SCREEN -->
-    <section id="resultScreen" class="hidden">
-        <div class="card">
-            <div class="section-heading">
-                <div>
-                    <h2 id="resultTitle">Game Results</h2>
-                    <p class="muted" id="resultSubtitle"></p>
-                </div>
-                <button class="btn btn-outline" onclick="showHome()">Home</button>
-            </div>
-
-            <div class="stat-grid" id="resultStats"></div>
-
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px">
-                <button class="btn btn-primary" onclick="showKbcSetup()">Play Again</button>
-                <button class="btn btn-outline" onclick="showKbcHistory()">View Player Rankings</button>
-            </div>
-
-            <h3>Answer Review</h3>
-            <div id="resultReview"></div>
-        </div>
-    </section>
-
-    <!-- KBC HISTORY SCREEN -->
-    <section id="kbcHistoryScreen" class="hidden">
-
-        <div class="card">
-            <div class="section-heading">
-                <div>
-                    <span class="badge" style="background:#eef2ff;color:#263db7;border-color:#d6dcff">KBC PERFORMANCE CENTER</span>
-                    <h2>Player Rankings</h2>
-                    <p class="muted">Rankings are based on the combined winning amounts of each player's recorded games.</p>
-                </div>
-
-                <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap">
-                    <button class="btn btn-outline" onclick="showHome()">← Home</button>
-                    <button class="btn btn-primary" onclick="printRankings()">Print Rankings</button>
-                </div>
-            </div>
-
-            <div class="stat-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Total Games</div>
-                    <div class="stat-value" id="historyTotalGames">0</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-label">Unique Players</div>
-                    <div class="stat-value" id="historyUniquePlayers">0</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-label">Combined Winnings</div>
-                    <div class="stat-value" id="historyCombinedWinnings">₹0</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-label">Highest Single Win</div>
-                    <div class="stat-value" id="historyHighestWin">₹0</div>
-                </div>
-            </div>
-
-            <div class="toolbar no-print">
-                <input class="search-input" id="rankingSearch"
-                       placeholder="Search player by name..."
-                       oninput="renderRankings()">
-
-                <select class="search-input" id="rankingSort" onchange="renderRankings()">
-                    <option value="amount">Highest Total Winnings</option>
-                    <option value="games">Most Games Played</option>
-                    <option value="name">Player Name: A–Z</option>
-                </select>
-            </div>
-
-            <div class="section-heading">
-                <div>
-                    <h3 style="margin-bottom:5px">Overall Leaderboard</h3>
-                    <p class="muted">Select a player's name to view their complete game history.</p>
-                </div>
-                <span class="badge" id="rankingCountBadge">0 Players</span>
-            </div>
-
-            <div id="rankingTableContainer"></div>
-        </div>
-
-        <!-- SELECTED PLAYER DETAILS -->
-        <div class="card hidden" id="playerDetailPanel">
-            <div class="section-heading">
-                <div>
-                    <h2>Player Game History</h2>
-                    <p class="muted">Individual game records and performance details.</p>
-                </div>
-                <button class="btn btn-outline no-print" onclick="closePlayerDetails()">Close Details</button>
-            </div>
-
-            <div id="playerProfile"></div>
-
-            <div class="stat-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Overall Rank</div>
-                    <div class="stat-value" id="playerRankValue">—</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Total Winning Amount</div>
-                    <div class="stat-value" id="playerTotalWinnings">₹0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Games Played</div>
-                    <div class="stat-value" id="playerGamesPlayed">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Highest Single Win</div>
-                    <div class="stat-value" id="playerHighestWin">₹0</div>
-                </div>
-            </div>
-
-            <div class="toolbar no-print">
-                <input class="search-input" id="playerGameSearch"
-                       placeholder="Search this player's game records..."
-                       oninput="renderPlayerGames()">
-
-                <select class="search-input" id="playerGameFilter" onchange="renderPlayerGames()">
-                    <option value="all">All Game Results</option>
-                    <option value="completed">Completed Games</option>
-                    <option value="wrong">Wrong Answer</option>
-                    <option value="time">Time Expired</option>
-                    <option value="quit">Quit Games</option>
-                </select>
-
-                <select class="search-input" id="playerGameSort" onchange="renderPlayerGames()">
-                    <option value="newest">Newest First</option>
-                    <option value="oldest">Oldest First</option>
-                    <option value="highest">Highest Winning Amount</option>
-                    <option value="lowest">Lowest Winning Amount</option>
-                </select>
-            </div>
-
-            <div id="playerGameTableContainer"></div>
-        </div>
-
-        <!-- SINGLE GAME DETAIL -->
-        <div class="card hidden" id="singleGameDetailPanel">
-            <div class="section-heading">
-                <div>
-                    <h2>Game Record Details</h2>
-                    <p class="muted">Detailed information about the selected game.</p>
-                </div>
-                <button class="btn btn-outline no-print" onclick="closeSingleGameDetails()">Close</button>
-            </div>
-            <div id="singleGameDetailContent"></div>
-        </div>
-
-    </section>
+<!-- KBC GAME -->
+<section id="kbcScreen" class="hidden">
+ <button class="btn btn-light" id="kbcExit">← Exit KBC</button>
+ <div class="kbc-header">
+  <div class="kbc-logo">₹</div>
+  <h2>KAUN BANEGA QUIZ CHAMPION?</h2>
+  <p id="kbcWelcome">ज्ञान ही सबसे बड़ी जीत है!</p>
+ </div>
+ <div id="kbcGameArea">
+  <div class="kbc-stage">
+   <div>
+    <div class="kbc-status">
+     <div><span>PLAYER</span><strong id="kbcPlayerDisplay">Player</strong></div>
+     <div><span>QUESTION</span><strong id="kbcQuestionNo">1 / 10</strong></div>
+     <div><span>TIME LEFT</span><strong id="kbcTimer">00:30</strong></div>
+    </div>
+    <div class="kbc-status" style="margin-top:9px">
+     <div><span>YOUR WINNINGS</span><strong id="kbcMoney">₹0</strong></div>
+     <div><span>50:50</span><strong id="kbc5050Status">Available</strong></div>
+     <div><span>AUDIENCE POLL</span><strong id="kbcAudienceStatus">Available</strong></div>
+    </div>
+    <div class="progress"><div id="kbcProgress"></div></div>
+    <div class="kbc-question-box">
+     <div class="kbc-question-label" id="kbcQuestionLabel">प्रश्न 1</div>
+     <div class="kbc-question" id="kbcQuestionText">खेल शुरू करने के लिए तैयार हो जाइए!</div>
+    </div>
+    <div class="kbc-options" id="kbcOptions"></div>
+    <div class="kbc-host" id="kbcHost"><strong>कंप्यूटर महोदय:</strong><br>आपका स्वागत है!</div>
+    <div class="kbc-actions">
+     <button class="btn btn-gold" id="kbc5050">🎯 50:50 Lifeline</button>
+     <button class="btn btn-gold" id="kbcAudience">📊 Audience Poll</button>
+     <button class="btn btn-gold" id="kbcSoundToggle">🔊 Sound: ON</button>
+     <button class="btn btn-red" id="kbcQuit">🚪 Quit Game</button>
+    </div>
+   </div>
+   <aside class="kbc-side">
+    <h3>🏆 Prize Money Ladder</h3>
+    <div id="prizeLadder"></div>
+   </aside>
+  </div>
+ </div>
+ <div id="kbcEndPanel" class="kbc-result hidden">
+  <h2 id="kbcEndTitle">खेल समाप्त!</h2>
+  <p id="kbcEndMessage"></p>
+  <strong id="kbcFinalMoney">₹0</strong>
+  <p id="kbcFinalDetails"></p>
+  <div class="actions">
+   <button class="btn btn-gold" id="kbcPlayAgain">↻ Play Again</button>
+   <button class="btn btn-light" id="kbcHome">🏠 Home</button>
+   <button class="btn btn-dark" id="kbcViewHistory">📚 Player History</button>
+  </div>
+ </div>
+ <p style="text-align:center;font-size:10px;color:#cbd5ff;line-height:1.8;margin-top:18px">यह शैक्षणिक गेम है। दिखाई गई राशि वर्चुअल इनाम है; वास्तविक नकद भुगतान नहीं होता।</p>
+</section>
 
 </main>
 
-<footer class="footer">
-    MCQ Quiz Pro Ultimate · Educational Practice Platform · Virtual KBC Winnings
+<footer>
+ MCQ QUIZ PRO ULTIMATE · School, Competitive & KBC Quiz Show
 </footer>
+
+<div id="toast" class="toast hidden"></div>
 
 <script>
 "use strict";
 
-/* =========================================================
+/* =====================================================
    CONFIGURATION
-========================================================= */
+===================================================== */
 
-const QUESTION_URL =
-    "https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
+const QUESTION_FILE_URL =
+"https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
 
-const HISTORY_KEY = "mcqQuizProKbcHistoryV3";
+const OPTION_KEYS = ["A","B","C","D"];
+const MARKS_PER_CORRECT = 1;
+const NEGATIVE_MARKS = 1/3;
 
-const KBC_PRIZES = [
-    1000,
-    2000,
-    3000,
-    5000,
-    10000,
-    20000,
-    40000,
-    80000,
-    160000,
-    320000,
-    640000,
-    1250000,
-    2500000,
-    5000000,
-    10000000,
-    30000000,
-    50000000,
-    75000000,
-    1000000000
+const COMPETITIVE_SUBJECTS = [
+ "Ancient History","Medieval History","Modern History",
+ "Indian Geography","World Geography","Bihar Geography",
+ "Indian Polity","Indian Economy","General Science",
+ "Current Affairs","Bihar Special GK","General Knowledge",
+ "Environment & Ecology","Art and Culture","Indian Agriculture",
+ "Computer Awareness","Reasoning","Mathematics",
+ "International Relations","Government Schemes"
 ];
 
-const PRIZE_LABELS = KBC_PRIZES.map(formatMoney);
+const KBC_PRIZES = [
+ 10000,20000,30000,50000,100000,
+ 200000,400000,800000,1600000,3200000,
+ 6400000,12500000,25000000,50000000,100000000,
+ 200000000,300000000,500000000,750000000,1000000000
+];
+
+const KBC_HISTORY_KEY = "mcqQuizProKBCPlayerHistory";
 
 let allQuestions = [];
-let kbcState = null;
-let standardState = null;
-let activeTimer = null;
-let activeTimerDeadline = 0;
-let activeTimerRemaining = 0;
-let activeTimerDuration = 0;
+let quizQuestions = [];
+let currentIndex = 0;
+let answers = {};
+let reviewFlags = {};
+let timerInterval = null;
+let timeRemaining = 0;
+let quizFinished = false;
+let lastMode = "school";
+let currentExam = "";
+let currentLevels = [];
 
-let selectedPlayerName = null;
-let currentPlayerGames = [];
-let currentPlayerPage = 1;
-const PLAYER_PAGE_SIZE = 8;
+let kbcQuestions = [];
+let kbcIndex = 0;
+let kbcMoney = 0;
+let kbcTimerInterval = null;
+let kbcTimeRemaining = 30;
+let kbcTimeLimit = 30;
+let kbcFinished = false;
+let kbcAnswered = false;
+let kbcSoundOn = true;
+let kbc5050Used = false;
+let kbcAudienceUsed = false;
+let kbcPlayerName = "";
+let kbcCurrentRecordSaved = false;
 
-let currentResultType = "kbc";
+const $ = id => document.getElementById(id);
 
-/* =========================================================
-   GENERAL HELPERS
-========================================================= */
-
-function formatMoney(value) {
-    return "₹" + Number(value || 0).toLocaleString("en-IN");
+function norm(value){
+ return String(value ?? "").trim().toLowerCase().replace(/\s+/g," ");
 }
 
-function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    if (Number.isNaN(date.getTime())) return "Unknown Date";
-
-    return date.toLocaleString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
+function uniqueSorted(values){
+ const map = new Map();
+ values.forEach(value=>{
+  const text = String(value ?? "").trim();
+  if(text && !map.has(norm(text))) map.set(norm(text),text);
+ });
+ return [...map.values()].sort((a,b)=>a.localeCompare(b,"en",{numeric:true,sensitivity:"base"}));
 }
 
-function escapeHtml(value) {
-    return String(value ?? "").replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[character]);
+function shuffle(array){
+ const result = [...array];
+ for(let i=result.length-1;i>0;i--){
+  const j = Math.floor(Math.random()*(i+1));
+  [result[i],result[j]] = [result[j],result[i]];
+ }
+ return result;
 }
 
-function normalizeName(name) {
-    return String(name || "").trim().replace(/\s+/g, " ");
+function showToast(message){
+ $("toast").textContent = message;
+ $("toast").classList.remove("hidden");
+ clearTimeout(showToast.timeout);
+ showToast.timeout = setTimeout(()=>$("toast").classList.add("hidden"),3500);
 }
 
-function nameKey(name) {
-    return normalizeName(name).toLocaleLowerCase("en");
+function setStatus(message,good=true){
+ $("status").textContent = "● " + message;
+ $("status").style.color = good ? "#d5ffea" : "#ffd5d5";
 }
 
-function shuffle(items) {
-    const result = [...items];
-
-    for (let i = result.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [result[i], result[j]] = [result[j], result[i]];
-    }
-
-    return result;
+function showScreen(id){
+ document.querySelectorAll("main section").forEach(section=>{
+  section.classList.toggle("hidden",section.id!==id);
+ });
+ window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function showOnly(screenId) {
-    const screens = [
-        "homeScreen",
-        "kbcSetupScreen",
-        "schoolSetupScreen",
-        "competitiveSetupScreen",
-        "kbcQuizScreen",
-        "standardQuizScreen",
-        "resultScreen",
-        "kbcHistoryScreen"
-    ];
+/* =====================================================
+   QUESTION FILE PARSER
+===================================================== */
 
-    screens.forEach(id => {
-        document.getElementById(id).classList.toggle("hidden", id !== screenId);
-    });
+function parseQuestions(text){
+ const lines = text.replace(/^\uFEFF/,"").replace(/\r\n/g,"\n").replace(/\r/g,"\n").split("\n");
+ const blocks = [];
+ let block = [];
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+ for(const line of lines){
+  if(/^\s*Q\s*:/i.test(line)){
+   if(block.length) blocks.push(block);
+   block = [line];
+  }else if(block.length){
+   block.push(line);
+  }
+ }
+ if(block.length) blocks.push(block);
+
+ const result = [];
+
+ for(const questionLines of blocks){
+  const q = {
+   className:"",subject:"",chapter:"",level:"",
+   question:"",A:"",B:"",C:"",D:"",
+   answer:"",explanation:""
+  };
+
+  for(const line of questionLines){
+   const match = line.match(/^\s*(CLASS|SUBJECT|CHAPTER|LEVEL|Q|A|B|C|D|ANSWER|EXPLANATION)\s*:\s*(.*)$/i);
+   if(!match) continue;
+
+   const key = match[1].toUpperCase();
+   const value = match[2].trim();
+
+   if(key==="CLASS") q.className=value;
+   if(key==="SUBJECT") q.subject=value;
+   if(key==="CHAPTER") q.chapter=value;
+   if(key==="LEVEL") q.level=value;
+   if(key==="Q") q.question=value;
+   if(key==="A") q.A=value;
+   if(key==="B") q.B=value;
+   if(key==="C") q.C=value;
+   if(key==="D") q.D=value;
+   if(key==="ANSWER") q.answer=value.toUpperCase();
+   if(key==="EXPLANATION") q.explanation=value;
+  }
+
+  if(q.question && q.A && q.B && q.C && q.D && OPTION_KEYS.includes(q.answer)){
+   q.id = result.length+1;
+   result.push(q);
+  }
+ }
+ return result;
 }
 
-function showHome() {
-    stopTimer();
-    showOnly("homeScreen");
-    renderHomeRankingPreview();
+async function loadQuestions(){
+ setStatus("Loading...",false);
+ $("dataInfo").textContent = "Loading questions from GitHub...";
+
+ try{
+  const url = QUESTION_FILE_URL + "?t=" + Date.now();
+  const response = await fetch(url,{cache:"no-store"});
+  if(!response.ok) throw new Error("HTTP "+response.status);
+
+  allQuestions = parseQuestions(await response.text());
+
+  if(!allQuestions.length) throw new Error("No valid questions found.");
+
+  updateStats();
+  populateClasses();
+  renderSchoolSubjects();
+  renderCompetitiveSubjects();
+  renderKBCSubjects();
+
+  $("dataInfo").textContent = allQuestions.length + " questions loaded successfully.";
+  setStatus("Questions Loaded",true);
+ }catch(error){
+  console.error(error);
+  allQuestions = [];
+  updateStats();
+  populateClasses();
+  renderSchoolSubjects();
+  renderCompetitiveSubjects();
+  renderKBCSubjects();
+  $("dataInfo").textContent = "Unable to load questions: "+error.message;
+  setStatus("Load Error",false);
+ }
 }
 
-function showKbcSetup() {
-    stopTimer();
-    showOnly("kbcSetupScreen");
-    document.getElementById("kbcSetupMessage").textContent =
-        allQuestions.length
-            ? `${allQuestions.length} questions are available.`
-            : "The question bank is not loaded. Please check the question file.";
+function updateStats(){
+ $("statQuestions").textContent = allQuestions.length;
+ $("statClasses").textContent = uniqueSorted(allQuestions.filter(q=>norm(q.className)!=="competitive").map(q=>q.className)).length;
+ $("statSubjects").textContent = uniqueSorted(allQuestions.map(q=>q.subject)).length;
+ $("statChapters").textContent = uniqueSorted(allQuestions.map(q=>q.chapter)).length;
 }
 
-function showSchoolSetup() {
-    showOnly("schoolSetupScreen");
+$("reloadButton").addEventListener("click",loadQuestions);
+
+function openSchool(){
+ showScreen("schoolScreen");
+ renderSchoolSubjects();
 }
 
-function showCompetitiveSetup() {
-    showOnly("competitiveSetupScreen");
+function openCompetitive(){
+ showScreen("competitiveScreen");
+ renderCompetitiveSubjects();
 }
 
-/* =========================================================
-   HISTORY STORAGE
-========================================================= */
-
-function loadHistory() {
-    try {
-        const stored = localStorage.getItem(HISTORY_KEY);
-        if (!stored) return [];
-
-        const parsed = JSON.parse(stored);
-        return Array.isArray(parsed) ? parsed : [];
-    } catch (error) {
-        console.error("Unable to read history:", error);
-        return [];
-    }
+function openKBCSetup(){
+ showScreen("kbcSetupScreen");
+ renderKBCSubjects();
 }
 
-function saveHistory(history) {
-    try {
-        localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-        return true;
-    } catch (error) {
-        console.error("Unable to save history:", error);
-        alert("The game record could not be saved. Your browser storage may be full or unavailable.");
-        return false;
-    }
+/* =====================================================
+   COMMON SELECTION HELPERS
+===================================================== */
+
+function getSelectedLevels(mode){
+ const name = mode==="school" ? "schoolLevel" :
+              mode==="competitive" ? "competitiveLevel" : "kbcLevel";
+ return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(i=>i.value);
 }
 
-function addKbcHistory(record) {
-    const history = loadHistory();
-    history.push(record);
-    saveHistory(history);
+function filterByLevel(questions,levels){
+ if(!levels.length) return [];
+ return questions.filter(q=>levels.some(level=>norm(level)===norm(q.level)));
 }
 
-function getPlayerGroups() {
-    const history = loadHistory();
-    const groups = new Map();
+function selectAll(name){
+ document.querySelectorAll('input[name="'+name+'"]').forEach(i=>i.checked=true);
 
-    history.forEach(game => {
-        const displayName = normalizeName(game.playerName) || "Unknown Player";
-        const key = nameKey(displayName);
+ if(name==="schoolSubject") renderSchoolChapters();
+ if(name==="competitiveSubject") renderCompetitiveChapters();
+ if(name==="kbcSubject") renderKBCChapters();
 
-        if (!groups.has(key)) {
-            groups.set(key, {
-                key,
-                playerName: displayName,
-                totalWinnings: 0,
-                gamesPlayed: 0,
-                highestWin: 0,
-                lastPlayed: 0,
-                games: []
-            });
-        }
-
-        const group = groups.get(key);
-        const winnings = Math.max(0, Number(game.winnings) || 0);
-
-        group.totalWinnings += winnings;
-        group.gamesPlayed += 1;
-        group.highestWin = Math.max(group.highestWin, winnings);
-        group.lastPlayed = Math.max(
-            group.lastPlayed,
-            Number(game.timestamp) || 0
-        );
-        group.games.push(game);
-    });
-
-    return [...groups.values()];
+ if(name==="schoolChapter") updateSchoolSummary();
+ if(name==="competitiveChapter") updateCompetitiveSummary();
+ if(name==="kbcChapter") updateKBCSummary();
 }
 
-function getRankedPlayers() {
-    const groups = getPlayerGroups();
+/* =====================================================
+   GENERIC SUBJECT AND CHAPTER RENDERING
+===================================================== */
 
-    groups.sort((a, b) =>
-        b.totalWinnings - a.totalWinnings ||
-        b.highestWin - a.highestWin ||
-        a.playerName.localeCompare(b.playerName, "en")
-    );
+function renderSubjects(containerId,questions,name,callback){
+ const box = $(containerId);
+ box.innerHTML = "";
 
-    return groups;
+ const subjects = uniqueSorted(questions.map(q=>q.subject));
+
+ if(!subjects.length){
+  box.innerHTML = '<div class="empty">No subjects available.</div>';
+  return;
+ }
+
+ subjects.forEach(subject=>{
+  const count = questions.filter(q=>norm(q.subject)===norm(subject)).length;
+  const label = document.createElement("label");
+  label.className = "choice";
+
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  input.name = name;
+  input.value = subject;
+
+  const span = document.createElement("span");
+  span.textContent = subject + " (" + count + " questions)";
+
+  label.append(input,span);
+  box.appendChild(label);
+
+  input.addEventListener("change",()=>{
+   callback();
+  });
+ });
 }
 
-function getPlayerRank(key) {
-    const ranked = getRankedPlayers();
-    return ranked.findIndex(player => player.key === key) + 1;
+function renderChapters(containerId,subjectName,chapterName,questions,callback){
+ const box = $(containerId);
+ box.innerHTML = "";
+
+ const selected = [...document.querySelectorAll('input[name="'+subjectName+'"]:checked')].map(i=>i.value);
+
+ if(!selected.length){
+  box.innerHTML = '<div class="empty">Please select one or more subjects first.</div>';
+  callback();
+  return;
+ }
+
+ selected.forEach(subject=>{
+  const qs = questions.filter(q=>norm(q.subject)===norm(subject));
+  const chapters = uniqueSorted(qs.map(q=>q.chapter));
+
+  const group = document.createElement("div");
+  group.className = "chapter-group";
+
+  const title = document.createElement("h4");
+  title.textContent = subject + " — " + chapters.length + " Chapters";
+  group.appendChild(title);
+
+  const grid = document.createElement("div");
+  grid.className = "chapter-grid";
+
+  chapters.forEach(chapter=>{
+   const count = qs.filter(q=>norm(q.chapter)===norm(chapter)).length;
+   const label = document.createElement("label");
+   label.className = "choice";
+
+   const input = document.createElement("input");
+   input.type = "checkbox";
+   input.name = chapterName;
+   input.value = chapter;
+   input.dataset.subject = subject;
+
+   const span = document.createElement("span");
+   span.textContent = chapter + " ("+count+")";
+
+   label.append(input,span);
+   grid.appendChild(label);
+
+   input.addEventListener("change",callback);
+  });
+
+  group.appendChild(grid);
+  box.appendChild(group);
+ });
+
+ callback();
 }
 
-/* =========================================================
-   QUESTION BANK
-========================================================= */
-
-/*
-Expected questions.txt format:
-
-Q:
-CLASS: 10
-SUBJECT: History
-CHAPTER: Nationalism in India
-LEVEL: Easy
-Q: Who led the Salt March in 1930?
-A: Mahatma Gandhi
-B: Jawaharlal Nehru
-C: Sardar Patel
-D: Subhas Chandra Bose
-ANSWER: A
-EXPLANATION: Mahatma Gandhi led the Salt March in 1930.
-
-Repeat the same structure for each question.
-*/
-
-function parseQuestions(text) {
-    const blocks = text
-        .split(/(?=^\s*Q:\s*$)/mi)
-        .map(block => block.trim())
-        .filter(Boolean);
-
-    const parsed = [];
-
-    blocks.forEach(block => {
-        const getField = field => {
-            const regex = new RegExp(
-                "^" + field + ":\\s*(.*)$",
-                "im"
-            );
-            const match = block.match(regex);
-            return match ? match[1].trim() : "";
-        };
-
-        const questionText = getField("Q");
-        const options = [
-            getField("A"),
-            getField("B"),
-            getField("C"),
-            getField("D")
-        ];
-
-        const rawAnswer = getField("ANSWER").toUpperCase();
-        const answerIndex = ["A", "B", "C", "D"].indexOf(rawAnswer);
-
-        if (!questionText || options.some(option => !option) || answerIndex < 0) {
-            return;
-        }
-
-        parsed.push({
-            className: getField("CLASS"),
-            subject: getField("SUBJECT") || "General Knowledge",
-            chapter: getField("CHAPTER"),
-            level: getField("LEVEL") || "Medium",
-            question: questionText,
-            options,
-            answer: answerIndex,
-            explanation: getField("EXPLANATION")
-        });
-    });
-
-    return parsed;
+function getSelectedPairs(name){
+ return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(i=>({
+  subject:i.dataset.subject,
+  chapter:i.value
+ }));
 }
 
-async function loadQuestionBank() {
-    try {
-        const response = await fetch(QUESTION_URL, { cache: "no-store" });
+/* =====================================================
+   SCHOOL SETUP
+===================================================== */
 
-        if (!response.ok) {
-            throw new Error("HTTP " + response.status);
-        }
+function populateClasses(){
+ const select = $("classSelect");
+ select.innerHTML = '<option value="">-- Select Class --</option>';
 
-        const text = await response.text();
-        allQuestions = parseQuestions(text);
-
-        if (!allQuestions.length) {
-            throw new Error("No valid questions were found.");
-        }
-
-        document.getElementById("kbcSetupMessage").textContent =
-            `${allQuestions.length} questions loaded successfully.`;
-
-        document.getElementById("schoolSetupMessage").textContent =
-            `${allQuestions.length} questions loaded successfully.`;
-
-        document.getElementById("competitiveSetupMessage").textContent =
-            `${allQuestions.length} questions loaded successfully.`;
-
-        renderHomeRankingPreview();
-    } catch (error) {
-        console.error("Question bank loading failed:", error);
-        allQuestions = [];
-
-        const message =
-            "Unable to load the online question bank. Please verify the question file URL and its format.";
-
-        document.getElementById("kbcSetupMessage").textContent = message;
-        document.getElementById("schoolSetupMessage").textContent = message;
-        document.getElementById("competitiveSetupMessage").textContent = message;
-    }
+ uniqueSorted(allQuestions.filter(q=>norm(q.className)!=="competitive").map(q=>q.className)).forEach(name=>{
+  const option = document.createElement("option");
+  option.value = name;
+  option.textContent = name;
+  select.appendChild(option);
+ });
 }
 
-/* =========================================================
-   FILTERING QUESTIONS
-========================================================= */
+function getSchoolBase(){
+ const className = $("classSelect").value;
+ const pairs = getSelectedPairs("schoolChapter");
 
-function getFilteredQuestions(category, classValue, subjectValue) {
-    let questions = [...allQuestions];
-
-    if (category === "school") {
-        if (classValue && classValue !== "all") {
-            questions = questions.filter(q =>
-                String(q.className).trim() === String(classValue)
-            );
-        }
-
-        if (subjectValue && subjectValue !== "all") {
-            questions = questions.filter(q =>
-                q.subject.toLowerCase().includes(subjectValue.toLowerCase())
-            );
-        }
-    }
-
-    if (category === "competitive" && subjectValue && subjectValue !== "all") {
-        questions = questions.filter(q =>
-            q.subject.toLowerCase().includes(subjectValue.toLowerCase())
-        );
-    }
-
-    return questions;
+ return allQuestions.filter(q=>
+  norm(q.className)===norm(className) &&
+  pairs.some(p=>norm(p.subject)===norm(q.subject)&&norm(p.chapter)===norm(q.chapter))
+ );
 }
 
-function takeQuestionSet(questions, countValue) {
-    const shuffled = shuffle(questions);
-
-    if (countValue === "all") return shuffled;
-
-    const count = Math.max(1, Number(countValue) || 10);
-    return shuffled.slice(0, count);
+function getSchoolQuestions(){
+ return filterByLevel(getSchoolBase(),getSelectedLevels("school"));
 }
 
-/* =========================================================
-   TIMER
-========================================================= */
+function renderSchoolSubjects(){
+ const className = $("classSelect").value;
+ const qs = allQuestions.filter(q=>norm(q.className)===norm(className));
 
-function stopTimer() {
-    if (activeTimer) {
-        clearInterval(activeTimer);
-        activeTimer = null;
-    }
-
-    activeTimerDeadline = 0;
-    activeTimerRemaining = 0;
-    activeTimerDuration = 0;
+ renderSubjects("schoolSubjects",qs,"schoolSubject",renderSchoolChapters);
+ renderSchoolChapters();
 }
 
-function startTimer(seconds, elementId, onExpire) {
-    stopTimer();
+function renderSchoolChapters(){
+ const className = $("classSelect").value;
+ const selectedSubjects = [...document.querySelectorAll('input[name="schoolSubject"]:checked')].map(i=>i.value);
+ const qs = allQuestions.filter(q=>norm(q.className)===norm(className)&&selectedSubjects.some(s=>norm(s)===norm(q.subject)));
 
-    const element = document.getElementById(elementId);
-
-    if (!seconds || seconds <= 0) {
-        element.textContent = "No Time Limit";
-        element.classList.remove("warning");
-        return;
-    }
-
-    activeTimerDuration = seconds;
-    activeTimerRemaining = seconds;
-    activeTimerDeadline = Date.now() + seconds * 1000;
-
-    const tick = () => {
-        const remaining = Math.max(
-            0,
-            Math.ceil((activeTimerDeadline - Date.now()) / 1000)
-        );
-
-        activeTimerRemaining = remaining;
-        element.textContent = remaining + "s";
-        element.classList.toggle("warning", remaining <= 10);
-
-        if (remaining <= 0) {
-            stopTimer();
-            onExpire();
-        }
-    };
-
-    tick();
-
-    if (activeTimerDeadline > Date.now()) {
-        activeTimer = setInterval(tick, 250);
-    }
+ renderChapters("schoolChapters","schoolSubject","schoolChapter",qs,updateSchoolSummary);
+ updateSchoolSummary();
 }
 
-/* =========================================================
-   KBC GAME
-========================================================= */
+function updateSchoolSummary(){
+ if(!$("schoolSummary")) return;
+ const qs = getSchoolQuestions();
 
-function getPrizeForQuestionIndex(index) {
-    if (index < 0) return 0;
-
-    return KBC_PRIZES[Math.min(index, KBC_PRIZES.length - 1)];
+ $("schoolSummary").textContent =
+  "Class: "+($("classSelect").value||"Not selected")+
+  " | Subjects: "+document.querySelectorAll('input[name="schoolSubject"]:checked').length+
+  " | Chapters: "+getSelectedPairs("schoolChapter").length+
+  " | Difficulty: "+(getSelectedLevels("school").join(", ")||"Not selected")+
+  " | Matching Questions: "+qs.length;
 }
 
-function renderPrizeLadder() {
-    const container = document.getElementById("kbcPrizeList");
+$("classSelect").addEventListener("change",renderSchoolSubjects);
+document.querySelectorAll('input[name="schoolLevel"]').forEach(i=>i.addEventListener("change",updateSchoolSummary));
 
-    container.innerHTML = [...KBC_PRIZES]
-        .map((prize, index) => ({
-            prize,
-            index
-        }))
-        .reverse()
-        .map(item => {
-            const isActive =
-                kbcState && item.index === kbcState.currentIndex;
+/* =====================================================
+   COMPETITIVE SETUP
+===================================================== */
 
-            return `
-                <div class="prize-item ${isActive ? "active" : ""}">
-                    <span>Level ${item.index + 1}</span>
-                    <span>${formatMoney(item.prize)}</span>
-                </div>
-            `;
-        }).join("");
+function isCompetitive(q){
+ return norm(q.className)==="competitive";
 }
 
-document.getElementById("kbcSetupForm").addEventListener("submit", event => {
-    event.preventDefault();
+function getCompetitiveBase(){
+ const pairs = getSelectedPairs("competitiveChapter");
 
-    const playerName = normalizeName(
-        document.getElementById("kbcPlayerName").value
-    );
+ return allQuestions.filter(q=>
+  isCompetitive(q) &&
+  pairs.some(p=>norm(p.subject)===norm(q.subject)&&norm(p.chapter)===norm(q.chapter))
+ );
+}
 
-    if (!playerName) {
-        alert("Please enter your name.");
-        return;
-    }
+function getCompetitiveQuestions(){
+ return filterByLevel(getCompetitiveBase(),getSelectedLevels("competitive"));
+}
 
-    const category =
-        document.getElementById("kbcQuestionCategory").value;
+function renderCompetitiveSubjects(){
+ const qs = allQuestions.filter(isCompetitive);
+ renderSubjects("competitiveSubjects",qs,"competitiveSubject",renderCompetitiveChapters);
+ renderCompetitiveChapters();
+}
 
-    const questions = takeQuestionSet(
-        getFilteredQuestions(category, "all", "all"),
-        document.getElementById("kbcQuestionCount").value
-    );
+function renderCompetitiveChapters(){
+ const selectedSubjects = [...document.querySelectorAll('input[name="competitiveSubject"]:checked')].map(i=>i.value);
+ const qs = allQuestions.filter(q=>isCompetitive(q)&&selectedSubjects.some(s=>norm(s)===norm(q.subject)));
 
-    if (!questions.length) {
-        alert("No questions are available for the selected category.");
-        return;
-    }
+ renderChapters("competitiveChapters","competitiveSubject","competitiveChapter",qs,updateCompetitiveSummary);
+ updateCompetitiveSummary();
+}
 
-    kbcState = {
-        playerName,
-        questions,
-        currentIndex: 0,
-        correctAnswers: 0,
-        winnings: 0,
-        answers: [],
-        lifelines: {
-            fiftyFifty: false,
-            audience: false
-        },
-        endingReason: "",
-        timerSeconds: Number(
-            document.getElementById("kbcTimerDuration").value
-        ) || 0,
-        startedAt: Date.now()
-    };
+function updateCompetitiveSummary(){
+ if(!$("competitiveSummary")) return;
+ $("competitiveSummary").textContent =
+  "Exam: "+$("examSelect").value+
+  " | Subjects: "+document.querySelectorAll('input[name="competitiveSubject"]:checked').length+
+  " | Chapters: "+getSelectedPairs("competitiveChapter").length+
+  " | Difficulty: "+(getSelectedLevels("competitive").join(", ")||"Not selected")+
+  " | Available Questions: "+getCompetitiveQuestions().length+
+  " | Negative Marking: -1/3 per wrong answer";
+}
 
-    document.getElementById("kbcPlayerLabel").textContent =
-        "Player: " + playerName;
+document.querySelectorAll('input[name="competitiveLevel"]').forEach(i=>i.addEventListener("change",updateCompetitiveSummary));
+$("examSelect").addEventListener("change",updateCompetitiveSummary);
 
-    document.getElementById("fiftyFiftyBtn").classList.remove("used");
-    document.getElementById("audienceBtn").classList.remove("used");
+/* =====================================================
+   KBC SETUP
+===================================================== */
 
-    document.getElementById("fiftyFiftyBtn").disabled = false;
-    document.getElementById("audienceBtn").disabled = false;
+function getKBCBase(){
+ const subjects = [...document.querySelectorAll('input[name="kbcSubject"]:checked')].map(i=>i.value);
+ const pairs = getSelectedPairs("kbcChapter");
 
-    showOnly("kbcQuizScreen");
-    renderPrizeLadder();
-    renderKbcQuestion();
+ return allQuestions.filter(q=>
+  subjects.some(s=>norm(s)===norm(q.subject)) &&
+  pairs.some(p=>norm(p.subject)===norm(q.subject)&&norm(p.chapter)===norm(q.chapter))
+ );
+}
+
+function getKBCSetupQuestions(){
+ return filterByLevel(getKBCBase(),getSelectedLevels("kbc"));
+}
+
+function renderKBCSubjects(){
+ renderSubjects("kbcSubjects",allQuestions,"kbcSubject",renderKBCChapters);
+ renderKBCChapters();
+}
+
+function renderKBCChapters(){
+ const subjects = [...document.querySelectorAll('input[name="kbcSubject"]:checked')].map(i=>i.value);
+ const qs = allQuestions.filter(q=>subjects.some(s=>norm(s)===norm(q.subject)));
+
+ renderChapters("kbcChapters","kbcSubject","kbcChapter",qs,updateKBCSummary);
+ updateKBCSummary();
+}
+
+function updateKBCSummary(){
+ if(!$("kbcSummary")) return;
+ $("kbcSummary").textContent =
+  "Subjects: "+document.querySelectorAll('input[name="kbcSubject"]:checked').length+
+  " | Topics: "+getSelectedPairs("kbcChapter").length+
+  " | Difficulty: "+(getSelectedLevels("kbc").join(", ")||"Not selected")+
+  " | Matching Questions: "+getKBCSetupQuestions().length+
+  " | Wrong answer ends the game";
+}
+
+document.querySelectorAll('input[name="kbcLevel"]').forEach(i=>i.addEventListener("change",updateKBCSummary));
+$("kbcLimit").addEventListener("change",updateKBCSummary);
+$("kbcTime").addEventListener("change",updateKBCSummary);
+
+/* =====================================================
+   STANDARD QUIZ ENGINE
+===================================================== */
+
+function startTest(mode){
+ const school = mode==="school";
+ const levels = getSelectedLevels(mode);
+ const available = school ? getSchoolQuestions() : getCompetitiveQuestions();
+
+ if(!levels.length){
+  showToast("Please select at least one difficulty level.");
+  return;
+ }
+
+ if(!available.length){
+  showToast("No questions match your selections.");
+  return;
+ }
+
+ const limit = $(school?"schoolLimit":"competitiveLimit").value;
+ const minutes = Number($(school?"schoolTime":"competitiveTime").value);
+
+ quizQuestions = shuffle(available);
+ if(limit!=="all") quizQuestions = quizQuestions.slice(0,Number(limit));
+
+ lastMode = mode;
+ currentExam = school ? $("classSelect").value : $("examSelect").value;
+ currentLevels = levels;
+ currentIndex = 0;
+ answers = {};
+ reviewFlags = {};
+ quizFinished = false;
+ timeRemaining = minutes*60;
+
+ $("quizBadge").textContent = (school?"School":"Competitive")+" | "+currentExam;
+ $("liveTotal").textContent = quizQuestions.length;
+
+ stopTimer();
+ showScreen("quizScreen");
+ renderQuestion();
+ updateTimer();
+
+ if(minutes>0){
+  timerInterval = setInterval(()=>{
+   timeRemaining--;
+   updateTimer();
+   if(timeRemaining<=0) finishTest(true);
+  },1000);
+ }
+}
+
+function stopTimer(){
+ if(timerInterval){
+  clearInterval(timerInterval);
+  timerInterval = null;
+ }
+}
+
+function updateTimer(){
+ const minutes = Math.floor(Math.max(0,timeRemaining)/60);
+ const seconds = Math.max(0,timeRemaining)%60;
+ const noLimit = Number($(lastMode==="school"?"schoolTime":"competitiveTime").value)===0;
+
+ $("timer").textContent = noLimit ? "No Time Limit" :
+  String(minutes).padStart(2,"0")+":"+String(seconds).padStart(2,"0");
+}
+
+function renderQuestion(){
+ const q = quizQuestions[currentIndex];
+ if(!q) return;
+
+ $("questionNumber").textContent = "Question "+(currentIndex+1)+" / "+quizQuestions.length;
+ $("questionMeta").textContent = q.subject+" | "+q.chapter+" | "+q.level;
+ $("questionText").textContent = q.question;
+ $("progress").style.width = ((currentIndex+1)/quizQuestions.length*100)+"%";
+ $("previous").disabled = currentIndex===0;
+ $("next").disabled = currentIndex===quizQuestions.length-1;
+ $("reviewToggle").textContent = reviewFlags[currentIndex]?"⭐ Remove Review Mark":"⭐ Mark for Review";
+
+ const box = $("options");
+ box.innerHTML = "";
+
+ OPTION_KEYS.forEach(key=>{
+  const row = document.createElement("div");
+  row.className = "option";
+  if(answers[currentIndex]===key) row.classList.add("selected");
+
+  const letter = document.createElement("strong");
+  letter.textContent = key+". ";
+
+  const text = document.createElement("span");
+  text.textContent = q[key];
+
+  row.append(letter,text);
+  row.addEventListener("click",()=>{
+   answers[currentIndex] = key;
+   renderQuestion();
+  });
+
+  box.appendChild(row);
+ });
+
+ renderPalette();
+ updateLiveProgress();
+}
+
+function renderPalette(){
+ const box = $("palette");
+ box.innerHTML = "";
+
+ quizQuestions.forEach((q,index)=>{
+  const button = document.createElement("button");
+  button.textContent = index+1;
+  if(answers[index]) button.classList.add("answered");
+  if(index===currentIndex) button.classList.add("current");
+  button.addEventListener("click",()=>{
+   currentIndex=index;
+   renderQuestion();
+  });
+  box.appendChild(button);
+ });
+}
+
+function updateLiveProgress(){
+ const answered = Object.values(answers).filter(Boolean).length;
+ $("liveAnswered").textContent = answered;
+ $("liveRemaining").textContent = quizQuestions.length-answered;
+ $("liveReview").textContent = Object.values(reviewFlags).filter(Boolean).length;
+}
+
+$("previous").addEventListener("click",()=>{
+ if(currentIndex>0){currentIndex--;renderQuestion();}
 });
 
-function renderKbcQuestion() {
-    if (!kbcState) return;
-
-    const index = kbcState.currentIndex;
-    const question = kbcState.questions[index];
-
-    if (!question) {
-        finishKbcGame("completed");
-        return;
-    }
-
-    document.getElementById("kbcRoundTitle").textContent =
-        `Question ${index + 1} of ${kbcState.questions.length}`;
-
-    document.getElementById("kbcQuestionText").textContent =
-        question.question;
-
-    document.getElementById("kbcProgress").style.width =
-        ((index / kbcState.questions.length) * 100) + "%";
-
-    document.getElementById("kbcExplanation").classList.add("hidden");
-    document.getElementById("kbcNextBtn").classList.add("hidden");
-    document.getElementById("kbcQuitBtn").classList.remove("hidden");
-
-    const optionsContainer = document.getElementById("kbcOptions");
-    optionsContainer.innerHTML = "";
-
-    question.options.forEach((option, optionIndex) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "option-btn";
-        button.innerHTML =
-            `<strong>${String.fromCharCode(65 + optionIndex)}.</strong> ` +
-            escapeHtml(option);
-
-        button.addEventListener("click", () => chooseKbcAnswer(optionIndex, button));
-        optionsContainer.appendChild(button);
-    });
-
-    renderPrizeLadder();
-
-    startTimer(
-        kbcState.timerSeconds,
-        "kbcTimer",
-        () => finishKbcGame("time_expired")
-    );
-}
-
-function chooseKbcAnswer(selectedIndex, selectedButton) {
-    if (!kbcState) return;
-
-    const question = kbcState.questions[kbcState.currentIndex];
-    const buttons = [...document.querySelectorAll("#kbcOptions .option-btn")];
-
-    if (buttons.some(button => button.disabled)) return;
-
-    stopTimer();
-
-    buttons.forEach(button => button.disabled = true);
-
-    const isCorrect = selectedIndex === question.answer;
-
-    if (isCorrect) {
-        selectedButton.classList.add("correct");
-        kbcState.correctAnswers += 1;
-        kbcState.winnings = getPrizeForQuestionIndex(kbcState.currentIndex);
-    } else {
-        selectedButton.classList.add("incorrect");
-
-        if (buttons[question.answer]) {
-            buttons[question.answer].classList.add("correct");
-        }
-    }
-
-    kbcState.answers.push({
-        question: question.question,
-        options: [...question.options],
-        selectedIndex,
-        correctIndex: question.answer,
-        isCorrect,
-        explanation: question.explanation || ""
-    });
-
-    const explanation = document.getElementById("kbcExplanation");
-
-    explanation.textContent = question.explanation
-        ? "Explanation: " + question.explanation
-        : "Correct Answer: " + question.options[question.answer];
-
-    explanation.classList.remove("hidden");
-
-    document.getElementById("kbcProgress").style.width =
-        (((kbcState.currentIndex + 1) / kbcState.questions.length) * 100) + "%";
-
-    document.getElementById("kbcQuitBtn").classList.add("hidden");
-
-    const nextButton = document.getElementById("kbcNextBtn");
-    nextButton.classList.remove("hidden");
-
-    if (!isCorrect) {
-        kbcState.endingReason = "wrong_answer";
-        nextButton.textContent = "View Results";
-    } else if (kbcState.currentIndex === kbcState.questions.length - 1) {
-        nextButton.textContent = "Complete Game";
-    } else {
-        nextButton.textContent = "Next Question →";
-    }
-
-    renderPrizeLadder();
-}
-
-function nextKbcQuestion() {
-    if (!kbcState) return;
-
-    const lastAnswer = kbcState.answers[kbcState.answers.length - 1];
-
-    if (lastAnswer && !lastAnswer.isCorrect) {
-        finishKbcGame("wrong_answer");
-        return;
-    }
-
-    if (kbcState.currentIndex >= kbcState.questions.length - 1) {
-        finishKbcGame("completed");
-        return;
-    }
-
-    kbcState.currentIndex++;
-    renderKbcQuestion();
-}
-
-function useFiftyFifty() {
-    if (!kbcState || kbcState.lifelines.fiftyFifty) return;
-
-    const question = kbcState.questions[kbcState.currentIndex];
-    const buttons = [...document.querySelectorAll("#kbcOptions .option-btn")];
-
-    const wrongIndexes = shuffle(
-        buttons.map((_, index) => index).filter(index => index !== question.answer)
-    ).slice(0, 2);
-
-    wrongIndexes.forEach(index => {
-        buttons[index].disabled = true;
-        buttons[index].style.visibility = "hidden";
-    });
-
-    kbcState.lifelines.fiftyFifty = true;
-
-    const button = document.getElementById("fiftyFiftyBtn");
-    button.classList.add("used");
-    button.disabled = true;
-}
-
-function useAudiencePoll() {
-    if (!kbcState || kbcState.lifelines.audience) return;
-
-    const question = kbcState.questions[kbcState.currentIndex];
-    const percentages = [0, 0, 0, 0];
-
-    percentages[question.answer] = 40 + Math.floor(Math.random() * 41);
-
-    let remaining = 100 - percentages[question.answer];
-
-    const wrongIndexes = [0, 1, 2, 3].filter(index => index !== question.answer);
-
-    wrongIndexes.forEach((index, position) => {
-        if (position === wrongIndexes.length - 1) {
-            percentages[index] = remaining;
-        } else {
-            percentages[index] = Math.floor(
-                Math.random() * (remaining + 1)
-            );
-            remaining -= percentages[index];
-        }
-    });
-
-    const total = percentages.reduce((sum, value) => sum + value, 0);
-
-    if (total !== 100) {
-        percentages[question.answer] += 100 - total;
-    }
-
-    const lines = percentages.map((value, index) =>
-        `${String.fromCharCode(65 + index)}: ${value}%`
-    );
-
-    alert("Audience Poll\n\n" + lines.join("\n"));
-
-    kbcState.lifelines.audience = true;
-
-    const button = document.getElementById("audienceBtn");
-    button.classList.add("used");
-    button.disabled = true;
-}
-
-function quitKbcGame() {
-    if (!kbcState) return;
-
-    if (confirm("Are you sure you want to quit this game? Your current result will be saved.")) {
-        finishKbcGame("quit");
-    }
-}
-
-function finishKbcGame(reason) {
-    if (!kbcState) return;
-
-    stopTimer();
-
-    kbcState.endingReason = reason;
-
-    const game = {
-        id: "KBC-" + Date.now().toString(36).toUpperCase() +
-            "-" + Math.random().toString(36).slice(2, 7).toUpperCase(),
-
-        playerName: normalizeName(kbcState.playerName),
-        timestamp: Date.now(),
-        date: new Date().toISOString(),
-
-        winnings: Math.max(0, Number(kbcState.winnings) || 0),
-        totalQuestions: kbcState.questions.length,
-        answeredQuestions: kbcState.answers.length,
-        correctAnswers: kbcState.correctAnswers,
-
-        endingReason: reason,
-        lifelinesUsed: {
-            fiftyFifty: kbcState.lifelines.fiftyFifty,
-            audience: kbcState.lifelines.audience
-        },
-
-        answers: [...kbcState.answers]
-    };
-
-    addKbcHistory(game);
-
-    currentResultType = "kbc";
-
-    showResults({
-        title: reason === "completed" ? "Congratulations!" : "Game Over",
-        subtitle: `${game.playerName}, your KBC game has been recorded.`,
-        stats: [
-            ["Winning Amount", formatMoney(game.winnings)],
-            ["Correct Answers", `${game.correctAnswers} / ${game.totalQuestions}`],
-            ["Questions Answered", game.answeredQuestions],
-            ["Game Status", statusLabel(reason)]
-        ],
-        answers: game.answers
-    });
-
-    kbcState = null;
-    renderHomeRankingPreview();
-}
-
-/* =========================================================
-   SCHOOL AND COMPETITIVE QUIZZES
-========================================================= */
-
-document.getElementById("schoolSetupForm").addEventListener("submit", event => {
-    event.preventDefault();
-
-    const playerName = normalizeName(
-        document.getElementById("schoolPlayerName").value
-    );
-
-    const classValue = document.getElementById("schoolClass").value;
-    const subject = document.getElementById("schoolSubject").value;
-
-    const questions = takeQuestionSet(
-        getFilteredQuestions("school", classValue, subject),
-        document.getElementById("schoolQuestionCount").value
-    );
-
-    if (!questions.length) {
-        alert("No questions match the selected class and subject.");
-        return;
-    }
-
-    startStandardGame(playerName, questions, 0, "School Quiz");
+$("next").addEventListener("click",()=>{
+ if(currentIndex<quizQuestions.length-1){currentIndex++;renderQuestion();}
 });
 
-document.getElementById("competitiveSetupForm").addEventListener("submit", event => {
-    event.preventDefault();
-
-    const playerName = normalizeName(
-        document.getElementById("competitivePlayerName").value
-    );
-
-    const subject = document.getElementById("competitiveSubject").value;
-
-    const questions = takeQuestionSet(
-        getFilteredQuestions("competitive", "all", subject),
-        document.getElementById("competitiveQuestionCount").value
-    );
-
-    if (!questions.length) {
-        alert("No questions match the selected subject.");
-        return;
-    }
-
-    const timer = Number(
-        document.getElementById("competitiveTimer").value
-    ) || 0;
-
-    startStandardGame(playerName, questions, timer, "Competitive Exam");
+$("clearAnswer").addEventListener("click",()=>{
+ delete answers[currentIndex];
+ renderQuestion();
 });
 
-function startStandardGame(playerName, questions, timerSeconds, gameType) {
-    standardState = {
-        playerName,
-        questions,
-        currentIndex: 0,
-        correctAnswers: 0,
-        answers: [],
-        timerSeconds,
-        gameType
-    };
+$("reviewToggle").addEventListener("click",()=>{
+ reviewFlags[currentIndex]=!reviewFlags[currentIndex];
+ renderQuestion();
+});
 
-    document.getElementById("standardPlayerLabel").textContent =
-        `${gameType}: ${playerName}`;
+$("submit").addEventListener("click",()=>{
+ const unanswered = quizQuestions.length-Object.values(answers).filter(Boolean).length;
+ if(confirm(unanswered ? unanswered+" questions are unanswered. Submit anyway?" : "Submit test?")){
+  finishTest(false);
+ }
+});
 
-    showOnly("standardQuizScreen");
-    renderStandardQuestion();
+$("exitQuiz").addEventListener("click",()=>{
+ if(confirm("Exit the current test?")){
+  stopTimer();
+  showScreen(lastMode==="school"?"schoolScreen":"competitiveScreen");
+ }
+});
+
+function calculateResults(){
+ let correct=0,wrong=0,skipped=0;
+
+ quizQuestions.forEach((q,i)=>{
+  if(!answers[i]) skipped++;
+  else if(answers[i]===q.answer) correct++;
+  else wrong++;
+ });
+
+ const total = quizQuestions.length;
+ const attempted = correct+wrong;
+ const isComp = lastMode==="competitive";
+ const negativeMarks = isComp ? wrong*NEGATIVE_MARKS : 0;
+ const positiveMarks = correct*MARKS_PER_CORRECT;
+ const netScore = positiveMarks-negativeMarks;
+
+ return {
+  total,correct,wrong,skipped,attempted,
+  positiveMarks,negativeMarks,netScore,
+  percentage:total?netScore/total*100:0,
+  accuracy:attempted?correct/attempted*100:0,
+  isComp
+ };
 }
 
-function renderStandardQuestion() {
-    if (!standardState) return;
-
-    const index = standardState.currentIndex;
-    const question = standardState.questions[index];
-
-    document.getElementById("standardRoundTitle").textContent =
-        `Question ${index + 1} of ${standardState.questions.length}`;
-
-    document.getElementById("standardQuestionText").textContent =
-        question.question;
-
-    document.getElementById("standardProgress").style.width =
-        (index / standardState.questions.length * 100) + "%";
-
-    document.getElementById("standardExplanation").classList.add("hidden");
-    document.getElementById("standardNextBtn").classList.add("hidden");
-
-    const container = document.getElementById("standardOptions");
-    container.innerHTML = "";
-
-    question.options.forEach((option, optionIndex) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "option-btn";
-
-        button.innerHTML =
-            `<strong>${String.fromCharCode(65 + optionIndex)}.</strong> ` +
-            escapeHtml(option);
-
-        button.addEventListener("click", () =>
-            chooseStandardAnswer(optionIndex, button)
-        );
-
-        container.appendChild(button);
-    });
-
-    startTimer(
-        standardState.timerSeconds,
-        "standardTimer",
-        () => finishStandardGame("time_expired")
-    );
+function fmt(n){
+ return Number(n).toFixed(2);
 }
 
-function chooseStandardAnswer(selectedIndex, selectedButton) {
-    if (!standardState) return;
+function finishTest(autoSubmit){
+ if(quizFinished) return;
 
-    const question = standardState.questions[standardState.currentIndex];
-    const buttons = [...document.querySelectorAll("#standardOptions .option-btn")];
+ quizFinished = true;
+ stopTimer();
 
-    if (buttons.some(button => button.disabled)) return;
+ const r = calculateResults();
 
-    stopTimer();
-    buttons.forEach(button => button.disabled = true);
+ $("percentage").textContent = fmt(r.percentage)+"%";
+ $("correctCount").textContent = r.correct;
+ $("wrongCount").textContent = r.wrong;
+ $("skippedCount").textContent = r.skipped;
+ $("accuracy").textContent = fmt(r.accuracy)+"%";
 
-    const isCorrect = selectedIndex === question.answer;
+ $("performance").textContent =
+  r.percentage>=90 ? "🏆 Outstanding Performance!" :
+  r.percentage>=75 ? "🌟 Excellent Work!" :
+  r.percentage>=50 ? "👍 Good Effort!" : "💪 Keep Practicing!";
 
-    if (isCorrect) {
-        standardState.correctAnswers++;
-        selectedButton.classList.add("correct");
-    } else {
-        selectedButton.classList.add("incorrect");
+ $("resultSummary").textContent =
+  "Examination: "+currentExam+
+  " | Correct Marks: "+fmt(r.positiveMarks)+
+  " | Negative Marks: "+fmt(r.negativeMarks)+
+  " | Final Score: "+fmt(r.netScore)+" / "+r.total;
 
-        if (buttons[question.answer]) {
-            buttons[question.answer].classList.add("correct");
-        }
-    }
+ $("resultDetails").textContent =
+  "Difficulty: "+currentLevels.join(", ")+
+  " | Attempted: "+r.attempted+
+  " | Unanswered: "+r.skipped+
+  (autoSubmit?" | Automatically submitted when time expired.":"");
 
-    standardState.answers.push({
-        question: question.question,
-        options: [...question.options],
-        selectedIndex,
-        correctIndex: question.answer,
-        isCorrect,
-        explanation: question.explanation || ""
-    });
-
-    const explanation = document.getElementById("standardExplanation");
-
-    explanation.textContent = question.explanation
-        ? "Explanation: " + question.explanation
-        : "Correct Answer: " + question.options[question.answer];
-
-    explanation.classList.remove("hidden");
-
-    document.getElementById("standardProgress").style.width =
-        ((standardState.currentIndex + 1) / standardState.questions.length * 100) + "%";
-
-    const nextButton = document.getElementById("standardNextBtn");
-    nextButton.classList.remove("hidden");
-
-    nextButton.textContent =
-        standardState.currentIndex === standardState.questions.length - 1
-            ? "View Results"
-            : "Next Question →";
+ renderReview();
+ showScreen("resultScreen");
 }
 
-function nextStandardQuestion() {
-    if (!standardState) return;
+function renderReview(){
+ const box = $("reviewList");
+ box.innerHTML = "";
 
-    if (standardState.currentIndex >= standardState.questions.length - 1) {
-        finishStandardGame("completed");
-        return;
-    }
+ quizQuestions.forEach((q,i)=>{
+  const user = answers[i]||"";
+  const card = document.createElement("div");
+  card.className = "review-item";
 
-    standardState.currentIndex++;
-    renderStandardQuestion();
+  const title = document.createElement("h4");
+  title.textContent = "Question "+(i+1)+": "+q.question;
+  card.appendChild(title);
+
+  OPTION_KEYS.forEach(key=>{
+   const option = document.createElement("div");
+   option.style.padding = "8px";
+   option.style.borderRadius = "7px";
+   option.style.marginTop = "5px";
+
+   if(key===q.answer) option.classList.add("correct-answer");
+   else if(key===user) option.classList.add("wrong-answer");
+
+   option.textContent = key+". "+q[key]+
+    (key===q.answer?" ✓ Correct Answer":"")+
+    (key===user&&key!==q.answer?" ✗ Your Answer":"");
+
+   card.appendChild(option);
+  });
+
+  const explanation = document.createElement("p");
+  explanation.style.marginTop = "10px";
+  explanation.textContent = "Explanation: "+(q.explanation||"No explanation available.");
+  card.appendChild(explanation);
+
+  box.appendChild(card);
+ });
 }
 
-function quitStandardGame() {
-    if (!standardState) return;
+$("showReview").addEventListener("click",()=>{
+ $("reviewCard").scrollIntoView({behavior:"smooth"});
+});
 
-    if (confirm("Finish this test and view your current results?")) {
-        finishStandardGame("quit");
-    }
+$("homeButton").addEventListener("click",()=>showScreen("homeScreen"));
+
+$("retryButton").addEventListener("click",()=>{
+ showScreen(lastMode==="school"?"schoolScreen":"competitiveScreen");
+});
+
+$("printButton").addEventListener("click",()=>window.print());
+
+document.addEventListener("keydown",event=>{
+ if($("quizScreen").classList.contains("hidden")||quizFinished) return;
+ if(event.key==="ArrowRight"&&currentIndex<quizQuestions.length-1){currentIndex++;renderQuestion();}
+ if(event.key==="ArrowLeft"&&currentIndex>0){currentIndex--;renderQuestion();}
+ const map={"1":"A","2":"B","3":"C","4":"D"};
+ if(map[event.key]){answers[currentIndex]=map[event.key];renderQuestion();}
+});
+
+/* =====================================================
+   KBC HISTORY AND UNIQUE PLAYER NAMES
+===================================================== */
+
+function getKBCHistory(){
+ try{
+  const history = JSON.parse(localStorage.getItem(KBC_HISTORY_KEY)||"[]");
+  return Array.isArray(history) ? history : [];
+ }catch(error){
+  console.error(error);
+  return [];
+ }
 }
 
-function finishStandardGame(reason) {
-    if (!standardState) return;
-
-    stopTimer();
-
-    const state = standardState;
-    standardState = null;
-
-    showResults({
-        title: "Test Results",
-        subtitle: `${state.playerName}, your ${state.gameType} results are ready.`,
-        stats: [
-            ["Correct Answers", `${state.correctAnswers} / ${state.questions.length}`],
-            ["Questions Answered", state.answers.length],
-            ["Accuracy", Math.round(state.correctAnswers / Math.max(1, state.answers.length) * 100) + "%"],
-            ["Test Status", statusLabel(reason)]
-        ],
-        answers: state.answers
-    });
+function isKBCPlayerNameTaken(name){
+ const normalizedName = norm(name);
+ return getKBCHistory().some(record=>norm(record.playerName)===normalizedName);
 }
 
-/* =========================================================
-   RESULTS AND ANSWER REVIEW
-========================================================= */
+/* Names already saved in history cannot be reused. */
+function saveKBCResult(reason,q=null){
+ if(kbcCurrentRecordSaved) return;
 
-function statusLabel(reason) {
-    const labels = {
-        completed: "Completed",
-        wrong_answer: "Wrong Answer",
-        time_expired: "Time Expired",
-        quit: "Quit"
-    };
+ const history = getKBCHistory();
 
-    return labels[reason] || "Recorded";
+ const record = {
+  id: Date.now(),
+  playerName: kbcPlayerName,
+  date: new Date().toLocaleString("en-IN"),
+  timestamp: Date.now(),
+  winnings: kbcMoney,
+  totalQuestions: kbcQuestions.length,
+  correctAnswers: kbcIndex,
+  endingReason: reason,
+  lastQuestion: q ? q.question : "",
+  correctOption: q ? q.answer : "",
+  correctAnswer: q ? q[q.answer] : ""
+ };
+
+ history.unshift(record);
+
+ try{
+  localStorage.setItem(KBC_HISTORY_KEY,JSON.stringify(history));
+  kbcCurrentRecordSaved = true;
+ }catch(error){
+  console.error("Unable to save KBC history:",error);
+  showToast("Record save नहीं हो पाया। Browser storage उपलब्ध नहीं है।");
+ }
 }
 
-function statusClass(reason) {
-    const classes = {
-        completed: "status-completed",
-        wrong_answer: "status-wrong",
-        time_expired: "status-time",
-        quit: "status-quit"
-    };
+function renderKBCHistory(){
+ const box = $("kbcHistoryList");
+ const history = getKBCHistory();
+ box.innerHTML = "";
 
-    return classes[reason] || "status-other";
+ if(!history.length){
+  box.innerHTML = '<div class="empty">अभी तक कोई KBC गेम रिकॉर्ड सेव नहीं है। पहला गेम खेलकर अपना रिकॉर्ड बनाइए!</div>';
+  return;
+ }
+
+ history.forEach((record,index)=>{
+  const card = document.createElement("div");
+  card.className = "history-record";
+
+  const title = document.createElement("h4");
+  title.textContent = (index+1)+". "+record.playerName;
+
+  const details = document.createElement("p");
+  details.textContent =
+   "Date: "+record.date+
+   " | Winnings: ₹"+Number(record.winnings||0).toLocaleString("en-IN")+
+   " | Correct: "+record.correctAnswers+"/"+record.totalQuestions+
+   " | Status: "+record.endingReason;
+
+  card.append(title,details);
+  box.appendChild(card);
+ });
 }
 
-function showResults(result) {
-    document.getElementById("resultTitle").textContent = result.title;
-    document.getElementById("resultSubtitle").textContent = result.subtitle;
+$("kbcHistoryButton").addEventListener("click",()=>{
+ $("kbcHistoryPanel").classList.remove("hidden");
+ renderKBCHistory();
+ $("kbcHistoryPanel").scrollIntoView({behavior:"smooth",block:"start"});
+});
 
-    document.getElementById("resultStats").innerHTML =
-        result.stats.map(([label, value]) => `
-            <div class="stat-card">
-                <div class="stat-label">${escapeHtml(label)}</div>
-                <div class="stat-value">${escapeHtml(value)}</div>
-            </div>
-        `).join("");
+$("kbcCloseHistory").addEventListener("click",()=>{
+ $("kbcHistoryPanel").classList.add("hidden");
+});
 
-    const review = document.getElementById("resultReview");
+$("kbcViewHistory").addEventListener("click",()=>{
+ showScreen("kbcSetupScreen");
+ $("kbcHistoryPanel").classList.remove("hidden");
+ renderKBCHistory();
+ $("kbcHistoryPanel").scrollIntoView({behavior:"smooth",block:"start"});
+});
 
-    if (!result.answers.length) {
-        review.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">📝</div>
-                <h3>No Questions Answered</h3>
-                <p>Your game has been recorded with the current result.</p>
-            </div>
-        `;
-    } else {
-        review.innerHTML = result.answers.map((answer, index) => `
-            <div class="review-item">
-                <h4>${index + 1}. ${escapeHtml(answer.question)}</h4>
-                <p><strong>Your Answer:</strong>
-                    ${escapeHtml(answer.options[answer.selectedIndex] || "Not Answered")}
-                </p>
-                <p><strong>Correct Answer:</strong>
-                    ${escapeHtml(answer.options[answer.correctIndex])}
-                </p>
-                <span class="status ${answer.isCorrect ? "status-completed" : "status-wrong"}">
-                    ${answer.isCorrect ? "Correct" : "Incorrect"}
-                </span>
-                ${answer.explanation ? `<p class="muted">${escapeHtml(answer.explanation)}</p>` : ""}
-            </div>
-        `).join("");
-    }
+/* =====================================================
+   KBC AUDIO
+===================================================== */
 
-    showOnly("resultScreen");
+let audioContext = null;
+
+function getAudio(){
+ if(!audioContext){
+  const AudioCtx = window.AudioContext||window.webkitAudioContext;
+  if(AudioCtx) audioContext = new AudioCtx();
+ }
+ if(audioContext&&audioContext.state==="suspended") audioContext.resume();
+ return audioContext;
 }
 
-/* =========================================================
-   KBC HISTORY: DEFAULT RANKING TABLE
-========================================================= */
+function playTone(freq,duration,delay=0,type="sine",volume=.08){
+ if(!kbcSoundOn) return;
+ const ctx = getAudio();
+ if(!ctx) return;
 
-function showKbcHistory() {
-    stopTimer();
-    selectedPlayerName = null;
+ const osc = ctx.createOscillator();
+ const gain = ctx.createGain();
 
-    document.getElementById("playerDetailPanel").classList.add("hidden");
-    document.getElementById("singleGameDetailPanel").classList.add("hidden");
+ osc.type = type;
+ osc.frequency.setValueAtTime(freq,ctx.currentTime+delay);
+ gain.gain.setValueAtTime(.001,ctx.currentTime+delay);
+ gain.gain.exponentialRampToValueAtTime(volume,ctx.currentTime+delay+.02);
+ gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+delay+duration);
 
-    document.getElementById("rankingSearch").value = "";
-    document.getElementById("rankingSort").value = "amount";
-
-    showOnly("kbcHistoryScreen");
-
-    renderHistoryStats();
-    renderRankings();
+ osc.connect(gain);
+ gain.connect(ctx.destination);
+ osc.start(ctx.currentTime+delay);
+ osc.stop(ctx.currentTime+delay+duration+.03);
 }
 
-function renderHistoryStats() {
-    const history = loadHistory();
-    const players = getRankedPlayers();
-
-    const totalWinnings = history.reduce(
-        (sum, game) => sum + Math.max(0, Number(game.winnings) || 0),
-        0
-    );
-
-    const highestWin = history.reduce(
-        (highest, game) => Math.max(highest, Number(game.winnings) || 0),
-        0
-    );
-
-    document.getElementById("historyTotalGames").textContent =
-        history.length.toLocaleString("en-IN");
-
-    document.getElementById("historyUniquePlayers").textContent =
-        players.length.toLocaleString("en-IN");
-
-    document.getElementById("historyCombinedWinnings").textContent =
-        formatMoney(totalWinnings);
-
-    document.getElementById("historyHighestWin").textContent =
-        formatMoney(highestWin);
+function playWelcomeTune(){
+ [392,523,659,784,659,784,988,784].forEach((n,i)=>playTone(n,.22,i*.20));
 }
 
-function renderRankings() {
-    const search = normalizeName(
-        document.getElementById("rankingSearch").value
-    ).toLocaleLowerCase("en");
-
-    const sort = document.getElementById("rankingSort").value;
-
-    let players = getRankedPlayers();
-
-    if (search) {
-        players = players.filter(player =>
-            player.playerName.toLocaleLowerCase("en").includes(search)
-        );
-    }
-
-    if (sort === "games") {
-        players.sort((a, b) =>
-            b.gamesPlayed - a.gamesPlayed ||
-            b.totalWinnings - a.totalWinnings ||
-            a.playerName.localeCompare(b.playerName, "en")
-        );
-    } else if (sort === "name") {
-        players.sort((a, b) =>
-            a.playerName.localeCompare(b.playerName, "en")
-        );
-    } else {
-        players.sort((a, b) =>
-            b.totalWinnings - a.totalWinnings ||
-            b.highestWin - a.highestWin ||
-            a.playerName.localeCompare(b.playerName, "en")
-        );
-    }
-
-    document.getElementById("rankingCountBadge").textContent =
-        `${players.length} ${players.length === 1 ? "Player" : "Players"}`;
-
-    const container = document.getElementById("rankingTableContainer");
-
-    if (!players.length) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">🏆</div>
-                <h3>${search ? "No Matching Players" : "No Rankings Available"}</h3>
-                <p>${search
-                    ? "Try another player name."
-                    : "Complete a KBC game to create your first player ranking."}</p>
-                <button class="btn btn-primary no-print" onclick="showKbcSetup()">Start KBC Game</button>
-            </div>
-        `;
-        return;
-    }
-
-    const overallRanked = getRankedPlayers();
-
-    container.innerHTML = `
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sl. No.</th>
-                        <th>Player Name</th>
-                        <th>Total Winning Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${players.map(player => {
-                        const rank = overallRanked.findIndex(
-                            item => item.key === player.key
-                        ) + 1;
-
-                        let rankClass = "";
-
-                        if (rank === 1) rankClass = "rank-1";
-                        else if (rank === 2) rankClass = "rank-2";
-                        else if (rank === 3) rankClass = "rank-3";
-
-                        return `
-                            <tr>
-                                <td><span class="rank-badge ${rankClass}">${rank}</span></td>
-                                <td>
-                                    <button class="player-link"
-                                            onclick="openPlayerDetailsByKey('${escapeHtml(player.key)}')">
-                                        ${escapeHtml(player.playerName)}
-                                    </button>
-                                </td>
-                                <td class="amount">${formatMoney(player.totalWinnings)}</td>
-                            </tr>
-                        `;
-                    }).join("")}
-                </tbody>
-            </table>
-        </div>
-    `;
+function playCorrectTune(){
+ [523,659,784,1046].forEach((n,i)=>playTone(n,.25,i*.15,"triangle",.1));
 }
 
-function renderHomeRankingPreview() {
-    const container = document.getElementById("homeRankingPreview");
-    if (!container) return;
-
-    const players = getRankedPlayers().slice(0, 5);
-
-    if (!players.length) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">🏆</div>
-                <h3>No Player Rankings Yet</h3>
-                <p>Play a KBC game to appear on the leaderboard.</p>
-            </div>
-        `;
-        return;
-    }
-
-    container.innerHTML = `
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Player Name</th>
-                        <th>Total Winning Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${players.map((player, index) => `
-                        <tr>
-                            <td><span class="rank-badge ${index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : ""}">${index + 1}</span></td>
-                            <td>
-                                <button class="player-link" onclick="showKbcHistory();openPlayerDetailsByKey('${escapeHtml(player.key)}')">
-                                    ${escapeHtml(player.playerName)}
-                                </button>
-                            </td>
-                            <td class="amount">${formatMoney(player.totalWinnings)}</td>
-                        </tr>
-                    `).join("")}
-                </tbody>
-            </table>
-        </div>
-    `;
+function playWrongTune(){
+ [392,330,262,196].forEach((n,i)=>playTone(n,.3,i*.2,"sawtooth",.06));
 }
 
-/* =========================================================
-   PLAYER DETAILS
-========================================================= */
+function speakHindi(text){
+ if(!kbcSoundOn||!("speechSynthesis" in window)) return;
 
-function openPlayerDetailsByKey(key) {
-    const player = getPlayerGroups().find(group => group.key === key);
+ window.speechSynthesis.cancel();
 
-    if (!player) {
-        alert("Player record not found.");
-        return;
-    }
+ const utterance = new SpeechSynthesisUtterance(text);
+ utterance.lang = "hi-IN";
+ utterance.rate = .91;
+ utterance.pitch = .95;
 
-    selectedPlayerName = player.playerName;
-    currentPlayerGames = [...player.games].sort(
-        (a, b) => (Number(b.timestamp) || 0) - (Number(a.timestamp) || 0)
-    );
+ const voices = window.speechSynthesis.getVoices();
+ const hindiVoice = voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith("hi"));
+ if(hindiVoice) utterance.voice = hindiVoice;
 
-    currentPlayerPage = 1;
-
-    document.getElementById("playerGameSearch").value = "";
-    document.getElementById("playerGameFilter").value = "all";
-    document.getElementById("playerGameSort").value = "newest";
-
-    document.getElementById("singleGameDetailPanel").classList.add("hidden");
-    document.getElementById("playerDetailPanel").classList.remove("hidden");
-
-    const initials = player.playerName
-        .split(/\s+/)
-        .slice(0, 2)
-        .map(part => part.charAt(0).toUpperCase())
-        .join("");
-
-    document.getElementById("playerProfile").innerHTML = `
-        <div class="player-profile">
-            <div class="avatar">${escapeHtml(initials || "?")}</div>
-            <div class="profile-details">
-                <h3>${escapeHtml(player.playerName)}</h3>
-                <p>Player profile · ${player.gamesPlayed} recorded ${player.gamesPlayed === 1 ? "game" : "games"}</p>
-            </div>
-            <span class="badge" style="margin:0">KBC PLAYER</span>
-        </div>
-    `;
-
-    const rank = getPlayerRank(player.key);
-
-    document.getElementById("playerRankValue").textContent =
-        rank > 0 ? "#" + rank : "—";
-
-    document.getElementById("playerTotalWinnings").textContent =
-        formatMoney(player.totalWinnings);
-
-    document.getElementById("playerGamesPlayed").textContent =
-        player.gamesPlayed.toLocaleString("en-IN");
-
-    document.getElementById("playerHighestWin").textContent =
-        formatMoney(player.highestWin);
-
-    renderPlayerGames();
-
-    document.getElementById("playerDetailPanel").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+ window.speechSynthesis.speak(utterance);
 }
 
-function closePlayerDetails() {
-    selectedPlayerName = null;
-    document.getElementById("playerDetailPanel").classList.add("hidden");
-    document.getElementById("singleGameDetailPanel").classList.add("hidden");
+function kbcHost(message,shouldSpeak=false){
+ const host = $("kbcHost");
+ host.innerHTML = "";
+
+ const title = document.createElement("strong");
+ title.textContent = "कंप्यूटर महोदय:";
+
+ const body = document.createElement("div");
+ body.textContent = message;
+
+ host.append(title,body);
+
+ if(shouldSpeak) speakHindi(message);
 }
 
-function renderPlayerGames() {
-    if (!selectedPlayerName) return;
+/* =====================================================
+   KBC GAME ENGINE
+===================================================== */
 
-    const playerKey = nameKey(selectedPlayerName);
-    const search = normalizeName(
-        document.getElementById("playerGameSearch").value
-    ).toLowerCase();
-
-    const filter = document.getElementById("playerGameFilter").value;
-    const sort = document.getElementById("playerGameSort").value;
-
-    let games = loadHistory().filter(game =>
-        nameKey(game.playerName) === playerKey
-    );
-
-    if (filter !== "all") {
-        games = games.filter(game => game.endingReason === filter);
-    }
-
-    if (search) {
-        games = games.filter(game =>
-            String(game.id || "").toLowerCase().includes(search) ||
-            formatDate(game.timestamp).toLowerCase().includes(search) ||
-            statusLabel(game.endingReason).toLowerCase().includes(search)
-        );
-    }
-
-    if (sort === "oldest") {
-        games.sort((a, b) => a.timestamp - b.timestamp);
-    } else if (sort === "highest") {
-        games.sort((a, b) => b.winnings - a.winnings);
-    } else if (sort === "lowest") {
-        games.sort((a, b) => a.winnings - b.winnings);
-    } else {
-        games.sort((a, b) => b.timestamp - a.timestamp);
-    }
-
-    const container = document.getElementById("playerGameTableContainer");
-
-    if (!games.length) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">🔎</div>
-                <h3>No Game Records Found</h3>
-                <p>Try changing your search or filter settings.</p>
-            </div>
-        `;
-        return;
-    }
-
-    container.innerHTML = `
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sl. No.</th>
-                        <th>Game ID</th>
-                        <th>Date &amp; Time</th>
-                        <th>Winning Amount</th>
-                        <th>Correct Answers</th>
-                        <th>Game Status</th>
-                        <th class="no-print">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${games.map((game, index) => `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${escapeHtml(game.id || "N/A")}</td>
-                            <td>${escapeHtml(formatDate(game.timestamp))}</td>
-                            <td class="amount">${formatMoney(game.winnings)}</td>
-                            <td>${Number(game.correctAnswers || 0)} / ${Number(game.totalQuestions || 0)}</td>
-                            <td>
-                                <span class="status ${statusClass(game.endingReason)}">
-                                    ${escapeHtml(statusLabel(game.endingReason))}
-                                </span>
-                            </td>
-                            <td class="no-print">
-                                <button class="btn btn-outline btn-small"
-                                    onclick="viewSingleGame('${escapeHtml(game.id)}')">
-                                    View Details
-                                </button>
-                            </td>
-                        </tr>
-                    `).join("")}
-                </tbody>
-            </table>
-        </div>
-        <p class="muted" style="font-size:12px;margin-top:12px">
-            Showing ${games.length} matching game record${games.length === 1 ? "" : "s"}.
-        </p>
-    `;
+function kbcPrizeForIndex(index){
+ return KBC_PRIZES[Math.min(index,KBC_PRIZES.length-1)];
 }
 
-/* =========================================================
-   SINGLE GAME DETAILS
-========================================================= */
+function renderPrizeLadder(){
+ const box = $("prizeLadder");
+ box.innerHTML = "";
 
-function viewSingleGame(gameId) {
-    const game = loadHistory().find(item => item.id === gameId);
+ for(let i=kbcQuestions.length-1;i>=0;i--){
+  const row = document.createElement("div");
+  row.className = "prize-level";
 
-    if (!game) {
-        alert("This game record could not be found.");
-        return;
-    }
+  if(i===kbcIndex) row.classList.add("current");
+  if(i<kbcIndex) row.classList.add("won");
 
-    const answers = Array.isArray(game.answers) ? game.answers : [];
+  const level = document.createElement("span");
+  level.textContent = String(i+1).padStart(2,"0");
 
-    document.getElementById("singleGameDetailPanel").classList.remove("hidden");
+  const amount = document.createElement("strong");
+  amount.textContent = "₹"+kbcPrizeForIndex(i).toLocaleString("en-IN");
 
-    document.getElementById("singleGameDetailContent").innerHTML = `
-        <div class="stat-grid">
-            <div class="stat-card">
-                <div class="stat-label">Player Name</div>
-                <div class="stat-value" style="font-size:18px">${escapeHtml(game.playerName)}</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Winning Amount</div>
-                <div class="stat-value">${formatMoney(game.winnings)}</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Correct Answers</div>
-                <div class="stat-value">${Number(game.correctAnswers || 0)} / ${Number(game.totalQuestions || 0)}</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Game Status</div>
-                <div class="stat-value" style="font-size:18px">${escapeHtml(statusLabel(game.endingReason))}</div>
-            </div>
-        </div>
-
-        <p><strong>Game ID:</strong> ${escapeHtml(game.id)}</p>
-        <p><strong>Date &amp; Time:</strong> ${escapeHtml(formatDate(game.timestamp))}</p>
-        <p><strong>Questions Answered:</strong> ${Number(game.answeredQuestions || 0)}</p>
-        <p><strong>50:50 Lifeline Used:</strong> ${game.lifelinesUsed?.fiftyFifty ? "Yes" : "No"}</p>
-        <p><strong>Audience Poll Used:</strong> ${game.lifelinesUsed?.audience ? "Yes" : "No"}</p>
-
-        <h3 style="margin-top:25px">Answer Review</h3>
-
-        ${answers.length ? answers.map((answer, index) => `
-            <div class="review-item">
-                <h4>${index + 1}. ${escapeHtml(answer.question)}</h4>
-                <p><strong>Your Answer:</strong>
-                    ${escapeHtml(answer.options?.[answer.selectedIndex] || "Not Answered")}
-                </p>
-                <p><strong>Correct Answer:</strong>
-                    ${escapeHtml(answer.options?.[answer.correctIndex] || "Unavailable")}
-                </p>
-                <span class="status ${answer.isCorrect ? "status-completed" : "status-wrong"}">
-                    ${answer.isCorrect ? "Correct" : "Incorrect"}
-                </span>
-                ${answer.explanation ? `<p class="muted">${escapeHtml(answer.explanation)}</p>` : ""}
-            </div>
-        `).join("") : `
-            <div class="empty-state">
-                <p>No answer-level details were stored for this game.</p>
-            </div>
-        `}
-    `;
-
-    document.getElementById("singleGameDetailPanel").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+  row.append(level,amount);
+  box.appendChild(row);
+ }
 }
 
-function closeSingleGameDetails() {
-    document.getElementById("singleGameDetailPanel").classList.add("hidden");
+function startKBC(){
+ const name = $("kbcPlayerName").value.trim();
+
+ if(!name){
+  showToast("गेम शुरू करने से पहले अपना नाम लिखिए।");
+  $("kbcPlayerName").focus();
+  return;
+ }
+
+ if(isKBCPlayerNameTaken(name)){
+  alert(
+   "यह नाम पहले से KBC Player History में मौजूद है।\n\n"+
+   "कृपया कोई दूसरा नाम चुनें, ताकि खिलाड़ियों के रिकॉर्ड अलग रहें।"
+  );
+  $("kbcPlayerName").value = "";
+  $("kbcPlayerName").focus();
+  return;
+ }
+
+ const levels = getSelectedLevels("kbc");
+ const available = getKBCSetupQuestions();
+
+ if(!document.querySelector('input[name="kbcSubject"]:checked')){
+  showToast("कम से कम एक Subject चुनिए।");
+  return;
+ }
+
+ if(!getSelectedPairs("kbcChapter").length){
+  showToast("कम से कम एक Chapter/Topic चुनिए।");
+  return;
+ }
+
+ if(!levels.length){
+  showToast("कम से कम एक Difficulty Level चुनिए।");
+  return;
+ }
+
+ if(!available.length){
+  showToast("आपके चयन से मेल खाते सवाल नहीं मिले।");
+  return;
+ }
+
+ kbcPlayerName = name;
+
+ const limit = $("kbcLimit").value;
+ kbcQuestions = shuffle(available);
+ if(limit!=="all") kbcQuestions = kbcQuestions.slice(0,Number(limit));
+
+ kbcIndex = 0;
+ kbcMoney = 0;
+ kbcFinished = false;
+ kbcAnswered = false;
+ kbc5050Used = false;
+ kbcAudienceUsed = false;
+ kbcCurrentRecordSaved = false;
+ kbcTimeLimit = Number($("kbcTime").value);
+ kbcTimeRemaining = kbcTimeLimit;
+
+ $("kbcGameArea").classList.remove("hidden");
+ $("kbcEndPanel").classList.add("hidden");
+ $("kbcPlayerDisplay").textContent = kbcPlayerName;
+ $("kbcWelcome").textContent = "स्वागत है, "+kbcPlayerName+"! क्या आप तैयार हैं?";
+
+ $("kbc5050").disabled = false;
+ $("kbcAudience").disabled = false;
+ $("kbc5050").textContent = "🎯 50:50 Lifeline";
+ $("kbcAudience").textContent = "📊 Audience Poll";
+ $("kbc5050Status").textContent = "Available";
+ $("kbcAudienceStatus").textContent = "Available";
+
+ showScreen("kbcScreen");
+ renderPrizeLadder();
+ playWelcomeTune();
+ kbcHost("नमस्कार "+kbcPlayerName+"! KBC Quiz Show में आपका स्वागत है।",true);
+
+ setTimeout(renderKBCQuestion,900);
 }
 
-/* =========================================================
-   PRINT
-========================================================= */
+$("startKBC").addEventListener("click",startKBC);
 
-function printRankings() {
-    const previous = document.title;
-    document.title = "KBC Player Rankings";
-    window.print();
-    document.title = previous;
+function renderKBCQuestion(){
+ if(kbcFinished) return;
+
+ if(kbcIndex>=kbcQuestions.length){
+  endKBC("won");
+  return;
+ }
+
+ kbcAnswered = false;
+
+ const q = kbcQuestions[kbcIndex];
+
+ $("kbcQuestionNo").textContent = (kbcIndex+1)+" / "+kbcQuestions.length;
+ $("kbcMoney").textContent = "₹"+kbcMoney.toLocaleString("en-IN");
+ $("kbcQuestionLabel").textContent = "प्रश्न "+(kbcIndex+1);
+ $("kbcQuestionText").textContent = q.question;
+ $("kbcProgress").style.width = ((kbcIndex+1)/kbcQuestions.length*100)+"%";
+
+ renderPrizeLadder();
+
+ const box = $("kbcOptions");
+ box.innerHTML = "";
+
+ OPTION_KEYS.forEach(key=>{
+  const button = document.createElement("button");
+  button.className = "kbc-option";
+  button.dataset.key = key;
+
+  const letter = document.createElement("span");
+  letter.className = "letter";
+  letter.textContent = key;
+
+  const text = document.createElement("span");
+  text.textContent = q[key];
+
+  button.append(letter,text);
+  button.addEventListener("click",()=>checkKBCAnswer(key,button));
+  box.appendChild(button);
+ });
+
+ $("kbc5050").disabled = kbc5050Used;
+ $("kbcAudience").disabled = kbcAudienceUsed;
+
+ kbcHost("आपके सामने प्रश्न है। सही विकल्प चुनिए और अगली राशि जीतिए।",true);
+ startKBCTimer();
 }
 
-/* =========================================================
-   INITIALIZATION
-========================================================= */
+function stopKBCTimer(){
+ if(kbcTimerInterval){
+  clearInterval(kbcTimerInterval);
+  kbcTimerInterval = null;
+ }
+}
 
-renderHomeRankingPreview();
-loadQuestionBank();
+function updateKBCTimer(){
+ if(kbcTimeLimit<=0){
+  $("kbcTimer").textContent = "No Limit";
+  return;
+ }
+
+ const t = Math.max(0,kbcTimeRemaining);
+ $("kbcTimer").textContent =
+  String(Math.floor(t/60)).padStart(2,"0")+":"+
+  String(t%60).padStart(2,"0");
+}
+
+function startKBCTimer(){
+ stopKBCTimer();
+
+ kbcTimeRemaining = kbcTimeLimit;
+ updateKBCTimer();
+
+ if(kbcTimeLimit<=0) return;
+
+ kbcTimerInterval = setInterval(()=>{
+  if(kbcFinished||kbcAnswered) return;
+
+  kbcTimeRemaining--;
+  updateKBCTimer();
+
+  if(kbcTimeRemaining<=0){
+   stopKBCTimer();
+   kbcAnswered = true;
+   kbcHost("समय समाप्त हो गया है। आपका गेम यहीं समाप्त होता है।",true);
+   setTimeout(()=>endKBC("timeout"),1000);
+  }
+ },1000);
+}
+
+/* =====================================================
+   50:50 LIFELINE
+===================================================== */
+
+function useKBC5050(){
+ if(kbcFinished||kbcAnswered||kbc5050Used) return;
+
+ const q = kbcQuestions[kbcIndex];
+ const buttons = [...$("kbcOptions").querySelectorAll("button")];
+
+ const wrongKeys = shuffle(
+  OPTION_KEYS.filter(key=>key!==q.answer)
+ ).slice(0,2);
+
+ wrongKeys.forEach(key=>{
+  const button = buttons.find(b=>b.dataset.key===key);
+  if(button){
+   button.disabled = true;
+   button.style.display = "none";
+  }
+ });
+
+ kbc5050Used = true;
+ $("kbc5050").disabled = true;
+ $("kbc5050").textContent = "✓ 50:50 Used";
+ $("kbc5050Status").textContent = "Used";
+
+ kbcHost("50:50 Lifeline इस्तेमाल हो गई है। अब केवल दो विकल्प बचे हैं।",true);
+}
+
+$("kbc5050").addEventListener("click",useKBC5050);
+
+/* =====================================================
+   AUDIENCE POLL
+===================================================== */
+
+function useKBCAudiencePoll(){
+ if(kbcFinished||kbcAnswered||kbcAudienceUsed) return;
+
+ const q = kbcQuestions[kbcIndex];
+
+ const wrongKeys = shuffle(
+  OPTION_KEYS.filter(key=>key!==q.answer)
+ );
+
+ const correctPercent = 55+Math.floor(Math.random()*26);
+ const remaining = 100-correctPercent;
+
+ const weights = [
+  Math.random()+.1,
+  Math.random()+.1,
+  Math.random()+.1
+ ];
+
+ const weightTotal = weights.reduce((sum,w)=>sum+w,0);
+
+ const wrongPercent = weights.map(w=>Math.floor(remaining*w/weightTotal));
+
+ wrongPercent[0] += remaining-wrongPercent.reduce((sum,p)=>sum+p,0);
+
+ const percentages = {};
+
+ percentages[q.answer] = correctPercent;
+
+ wrongKeys.forEach((key,i)=>{
+  percentages[key] = wrongPercent[i];
+ });
+
+ const message = OPTION_KEYS.map(key=>
+  key+": "+percentages[key]+"%"
+ ).join("\n");
+
+ kbcAudienceUsed = true;
+ $("kbcAudience").disabled = true;
+ $("kbcAudience").textContent = "✓ Poll Used";
+ $("kbcAudienceStatus").textContent = "Used";
+
+ kbcHost("दर्शकों का अनुमानित पोल:\n"+message,true);
+}
+
+$("kbcAudience").addEventListener("click",useKBCAudiencePoll);
+
+/* =====================================================
+   CHECK ANSWER
+===================================================== */
+
+function checkKBCAnswer(key,button){
+ if(kbcFinished||kbcAnswered) return;
+
+ kbcAnswered = true;
+ stopKBCTimer();
+
+ const q = kbcQuestions[kbcIndex];
+ const buttons = [...$("kbcOptions").querySelectorAll("button")];
+
+ buttons.forEach(b=>b.disabled=true);
+
+ const correctButton = buttons.find(b=>b.dataset.key===q.answer);
+
+ if(key===q.answer){
+  button.classList.add("correct");
+
+  const prize = kbcPrizeForIndex(kbcIndex);
+  kbcMoney = prize;
+
+  $("kbcMoney").textContent = "₹"+kbcMoney.toLocaleString("en-IN");
+
+  playCorrectTune();
+  kbcHost("वाह! बिल्कुल सही जवाब! आप "+prize.toLocaleString("en-IN")+" रुपये के वर्चुअल इनाम वाले पड़ाव पर पहुँच गए हैं।",true);
+
+  renderPrizeLadder();
+
+  setTimeout(()=>{
+   kbcIndex++;
+
+   if(kbcIndex>=kbcQuestions.length){
+    endKBC("won");
+   }else{
+    renderKBCQuestion();
+   }
+  },1800);
+
+ }else{
+  button.classList.add("wrong");
+  if(correctButton) correctButton.classList.add("correct");
+
+  playWrongTune();
+
+  kbcHost("ओह! आपका जवाब गलत है। सही जवाब था "+q.answer+". "+q[q.answer]+".",true);
+
+  setTimeout(()=>endKBC("wrong",q),1800);
+ }
+}
+
+/* =====================================================
+   END KBC AND SAVE HISTORY
+===================================================== */
+
+function endKBC(reason,q=null){
+ if(kbcFinished) return;
+
+ kbcFinished = true;
+ stopKBCTimer();
+
+ if("speechSynthesis" in window) window.speechSynthesis.cancel();
+
+ saveKBCResult(reason,q);
+
+ $("kbcGameArea").classList.add("hidden");
+ $("kbcEndPanel").classList.remove("hidden");
+
+ let title = "";
+ let message = "";
+
+ if(reason==="won"){
+  title = "🏆 शानदार जीत!";
+  message = "बधाई हो! आपने चुने गए सभी सवालों के सही जवाब दिए।";
+  playCorrectTune();
+  speakHindi("बहुत बहुत बधाई! आपने सभी सवालों के सही जवाब दिए हैं।");
+ }else if(reason==="wrong"){
+  title = "❌ खेल समाप्त!";
+  message = "आपका जवाब गलत था। आपकी जीती हुई राशि नीचे दी गई है।";
+ }else if(reason==="timeout"){
+  title = "⏰ समय समाप्त!";
+  message = "इस सवाल का समय समाप्त हो गया। आपका गेम यहीं समाप्त होता है।";
+ }else{
+  title = "🚪 आपने खेल छोड़ दिया";
+  message = "आपने खेल बीच में छोड़ दिया। आपकी वर्तमान राशि नीचे दिखाई गई है।";
+ }
+
+ $("kbcEndTitle").textContent = title;
+ $("kbcEndMessage").textContent = message;
+ $("kbcFinalMoney").textContent = "₹"+kbcMoney.toLocaleString("en-IN");
+
+ $("kbcFinalDetails").textContent =
+  "Player: "+kbcPlayerName+
+  " | सही जवाब: "+kbcIndex+
+  " | कुल सवाल: "+kbcQuestions.length+
+  (q?" | सही उत्तर: "+q.answer+". "+q[q.answer]:"");
+
+ renderPrizeLadder();
+}
+
+$("kbcQuit").addEventListener("click",()=>{
+ if(confirm("क्या आप वाकई KBC गेम छोड़ना चाहते हैं?")){
+  endKBC("quit");
+ }
+});
+
+$("kbcExit").addEventListener("click",()=>{
+ if(confirm("क्या आप KBC से बाहर निकलना चाहते हैं?")){
+  endKBC("quit");
+ }
+});
+
+$("kbcPlayAgain").addEventListener("click",()=>{
+ stopKBCTimer();
+ showScreen("kbcSetupScreen");
+});
+
+$("kbcHome").addEventListener("click",()=>{
+ stopKBCTimer();
+ if("speechSynthesis" in window) window.speechSynthesis.cancel();
+ showScreen("homeScreen");
+});
+
+$("kbcSoundToggle").addEventListener("click",()=>{
+ kbcSoundOn = !kbcSoundOn;
+
+ $("kbcSoundToggle").textContent = kbcSoundOn ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+
+ if(!kbcSoundOn&&"speechSynthesis" in window){
+  window.speechSynthesis.cancel();
+ }
+
+ if(kbcSoundOn) speakHindi("आवाज चालू कर दी गई है।");
+});
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+loadQuestions();
 </script>
 
 </body>
