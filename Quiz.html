@@ -10,12 +10,12 @@
 <style>
 :root {
     --navy: #080d32;
-    --navy2: #18265e;
+    --navy-light: #17245b;
     --blue: #315efb;
     --cyan: #13c8f5;
     --gold: #ffc857;
-    --green: #16a34a;
-    --red: #dc2626;
+    --green: #18b981;
+    --red: #ef4444;
     --bg: #f3f6fc;
     --card: #ffffff;
     --text: #172033;
@@ -44,24 +44,25 @@ button {
 }
 
 button:disabled {
-    opacity: 0.55;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
 .topbar {
-    background: linear-gradient(120deg, var(--navy), var(--navy2));
+    background: linear-gradient(120deg, var(--navy), var(--navy-light));
     color: white;
     padding: 20px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
     flex-wrap: wrap;
 }
 
 .brand {
     font-size: 23px;
     font-weight: 900;
+    letter-spacing: 0.5px;
 }
 
 .brand span {
@@ -82,7 +83,7 @@ button:disabled {
 
 .container {
     width: min(1200px, 94%);
-    margin: 25px auto 45px;
+    margin: 25px auto 50px;
 }
 
 .card {
@@ -99,6 +100,8 @@ button:disabled {
     background: linear-gradient(130deg, #101947, #273d8e);
     color: white;
     border-radius: 22px;
+    position: relative;
+    overflow: hidden;
     margin-bottom: 22px;
 }
 
@@ -147,7 +150,7 @@ h2, h3 {
     transition: 0.2s;
 }
 
-.btn:hover:not(:disabled) {
+.btn:hover {
     transform: translateY(-1px);
 }
 
@@ -172,13 +175,20 @@ h2, h3 {
     color: var(--text);
 }
 
+.btn-danger {
+    background: #fff0f0;
+    color: #c62828;
+    border-color: #ffd1d1;
+}
+
+.btn-success {
+    background: var(--green);
+    color: white;
+}
+
 .btn-small {
     padding: 7px 11px;
     font-size: 12px;
-}
-
-.hidden {
-    display: none !important;
 }
 
 .grid {
@@ -203,6 +213,10 @@ h2, h3 {
 .game-icon {
     font-size: 32px;
     margin-bottom: 14px;
+}
+
+.game-card h3 {
+    margin-bottom: 8px;
 }
 
 .form-grid {
@@ -239,6 +253,10 @@ h2, h3 {
 .search-input:focus {
     border-color: var(--blue);
     box-shadow: 0 0 0 3px rgba(49, 94, 251, 0.1);
+}
+
+.hidden {
+    display: none !important;
 }
 
 .section-heading {
@@ -330,8 +348,8 @@ tbody tr:last-child td {
 
 .rank-badge {
     display: inline-flex;
-    min-width: 35px;
-    height: 35px;
+    min-width: 34px;
+    height: 34px;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
@@ -362,10 +380,17 @@ tbody tr:last-child td {
     color: #244be4;
     font-weight: 850;
     text-align: left;
+    text-decoration: none;
 }
 
 .player-link:hover {
     text-decoration: underline;
+}
+
+.amount {
+    color: #087f55;
+    font-weight: 900;
+    white-space: nowrap;
 }
 
 .toolbar {
@@ -377,6 +402,10 @@ tbody tr:last-child td {
 
 .toolbar > * {
     flex: 1 1 180px;
+}
+
+.toolbar button {
+    flex: 0 0 auto;
 }
 
 .empty-state {
@@ -461,6 +490,20 @@ tbody tr:last-child td {
 .status-other {
     background: #e0e7ff;
     color: #3730a3;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.pagination-buttons {
+    display: flex;
+    gap: 8px;
 }
 
 .quiz-header {
@@ -717,119 +760,83 @@ tbody tr:last-child td {
 <header class="topbar">
     <div>
         <div class="brand">MCQ QUIZ <span>PRO ULTIMATE</span></div>
-        <div class="topbar-subtitle">
-            Smart Learning. Competitive Practice. Ultimate Quiz.
-        </div>
+        <div class="topbar-subtitle">Smart Learning. Competitive Practice. Ultimate Quiz.</div>
     </div>
 
     <div class="top-actions">
-        <button class="btn btn-gold" onclick="showKbcHistory()">
-            🏆 KBC History
-        </button>
-        <button class="btn btn-outline" onclick="showHome()">
-            Home
-        </button>
+        <button class="btn btn-gold" onclick="showKbcHistory()">🏆 KBC History</button>
+        <button class="btn btn-outline" onclick="showHome()">Home</button>
     </div>
 </header>
 
 <main class="container">
 
-    <!-- HOME -->
+    <!-- HOME SCREEN -->
     <section id="homeScreen">
-
         <div class="hero">
             <span class="badge">ULTIMATE QUIZ EXPERIENCE</span>
             <h1>Challenge Your Knowledge</h1>
             <p>
                 Practice school subjects, prepare for competitive examinations,
                 and experience the excitement of a virtual quiz show.
-                Track your progress and compete for the top position.
+                Track your performance and compete for the top position.
             </p>
-            <button class="btn btn-gold" onclick="showKbcSetup()">
-                Start KBC Challenge →
-            </button>
+            <button class="btn btn-gold" onclick="showKbcSetup()">Start KBC Challenge →</button>
         </div>
 
         <div class="grid">
-
             <div class="game-card">
                 <div class="game-icon">🎓</div>
                 <h3>School Quiz</h3>
-                <p class="muted">
-                    Practice subject-wise questions for school examinations.
-                </p>
-                <button class="btn btn-primary" onclick="showSchoolSetup()">
-                    Start School Quiz
-                </button>
+                <p class="muted">Practice subject-wise questions for school examinations.</p>
+                <button class="btn btn-primary" onclick="showSchoolSetup()">Start School Quiz</button>
             </div>
 
             <div class="game-card">
                 <div class="game-icon">📚</div>
                 <h3>Competitive Exam</h3>
-                <p class="muted">
-                    Improve your knowledge with competitive examination practice.
-                </p>
-                <button class="btn btn-primary" onclick="showCompetitiveSetup()">
-                    Start Practice Test
-                </button>
+                <p class="muted">Improve your knowledge with competitive examination practice.</p>
+                <button class="btn btn-primary" onclick="showCompetitiveSetup()">Start Practice Test</button>
             </div>
 
             <div class="game-card">
                 <div class="game-icon">🏆</div>
                 <h3>KBC Challenge</h3>
-                <p class="muted">
-                    Answer questions, use lifelines, and climb the virtual prize ladder.
-                </p>
-                <button class="btn btn-dark" onclick="showKbcSetup()">
-                    Play KBC
-                </button>
+                <p class="muted">Answer questions, use lifelines, and climb the virtual prize ladder.</p>
+                <button class="btn btn-dark" onclick="showKbcSetup()">Play KBC</button>
             </div>
-
         </div>
 
         <div class="card" style="margin-top:22px">
             <div class="section-heading">
                 <div>
-                    <h2>Top Players</h2>
-                    <p class="muted">
-                        Rankings based on total correct answers across recorded KBC games.
-                    </p>
+                    <h2>Player Rankings</h2>
+                    <p class="muted">Discover the highest-earning KBC players.</p>
                 </div>
-                <button class="btn btn-outline" onclick="showKbcHistory()">
-                    View All Rankings
-                </button>
+                <button class="btn btn-outline" onclick="showKbcHistory()">View Full Rankings</button>
             </div>
             <div id="homeRankingPreview"></div>
         </div>
-
     </section>
 
     <!-- KBC SETUP -->
     <section id="kbcSetupScreen" class="hidden">
         <div class="card">
-
             <div class="section-heading">
                 <div>
                     <h2>🏆 KBC Challenge</h2>
-                    <p class="muted">
-                        Enter your name and configure your quiz.
-                    </p>
+                    <p class="muted">Enter your name and configure your quiz.</p>
                 </div>
-                <button class="btn btn-outline" onclick="showHome()">
-                    ← Back to Home
-                </button>
+                <button class="btn btn-outline" onclick="showHome()">← Back to Home</button>
             </div>
 
             <form id="kbcSetupForm">
                 <div class="form-grid">
-
                     <div class="field">
                         <label for="kbcPlayerName">Player Name</label>
                         <input id="kbcPlayerName" maxlength="60" required
                                placeholder="Enter your name">
-                        <small class="muted">
-                            You can play multiple games using the same name.
-                        </small>
+                        <small class="muted">You can play multiple games using the same name.</small>
                     </div>
 
                     <div class="field">
@@ -861,46 +868,34 @@ tbody tr:last-child td {
                             <option value="competitive">Competitive Exam Questions</option>
                         </select>
                     </div>
-
                 </div>
 
                 <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">
-                    <button type="submit" class="btn btn-primary">
-                        Start KBC Game
-                    </button>
-                    <button type="button" class="btn btn-outline"
-                            onclick="showKbcHistory()">
-                        View Player Rankings
-                    </button>
+                    <button type="submit" class="btn btn-primary">Start KBC Game</button>
+                    <button type="button" class="btn btn-outline" onclick="showKbcHistory()">View Player Rankings</button>
                 </div>
             </form>
 
             <p id="kbcSetupMessage" class="muted" style="margin-top:15px"></p>
-
         </div>
     </section>
 
     <!-- SCHOOL SETUP -->
     <section id="schoolSetupScreen" class="hidden">
         <div class="card">
-
             <div class="section-heading">
                 <div>
                     <h2>School Quiz Setup</h2>
                     <p class="muted">Configure your school practice test.</p>
                 </div>
-                <button class="btn btn-outline" onclick="showHome()">
-                    ← Back to Home
-                </button>
+                <button class="btn btn-outline" onclick="showHome()">← Back to Home</button>
             </div>
 
             <form id="schoolSetupForm">
                 <div class="form-grid">
-
                     <div class="field">
                         <label for="schoolPlayerName">Student Name</label>
-                        <input id="schoolPlayerName" required maxlength="60"
-                               placeholder="Enter student name">
+                        <input id="schoolPlayerName" required maxlength="60" placeholder="Enter student name">
                     </div>
 
                     <div class="field">
@@ -938,42 +933,30 @@ tbody tr:last-child td {
                             <option value="all">All Available Questions</option>
                         </select>
                     </div>
-
                 </div>
 
-                <button class="btn btn-primary" type="submit"
-                        style="margin-top:20px">
-                    Start School Quiz
-                </button>
+                <button class="btn btn-primary" type="submit" style="margin-top:20px">Start School Quiz</button>
                 <p id="schoolSetupMessage" class="muted"></p>
             </form>
-
         </div>
     </section>
 
     <!-- COMPETITIVE SETUP -->
     <section id="competitiveSetupScreen" class="hidden">
         <div class="card">
-
             <div class="section-heading">
                 <div>
                     <h2>Competitive Exam Practice</h2>
-                    <p class="muted">
-                        Test your preparation with objective questions.
-                    </p>
+                    <p class="muted">Test your preparation with objective questions.</p>
                 </div>
-                <button class="btn btn-outline" onclick="showHome()">
-                    ← Back to Home
-                </button>
+                <button class="btn btn-outline" onclick="showHome()">← Back to Home</button>
             </div>
 
             <form id="competitiveSetupForm">
                 <div class="form-grid">
-
                     <div class="field">
                         <label for="competitivePlayerName">Candidate Name</label>
-                        <input id="competitivePlayerName" required maxlength="60"
-                               placeholder="Enter candidate name">
+                        <input id="competitivePlayerName" required maxlength="60" placeholder="Enter candidate name">
                     </div>
 
                     <div class="field">
@@ -1007,26 +990,20 @@ tbody tr:last-child td {
                             <option value="0">No Time Limit</option>
                         </select>
                     </div>
-
                 </div>
 
-                <button class="btn btn-primary" type="submit"
-                        style="margin-top:20px">
-                    Start Practice Test
-                </button>
+                <button class="btn btn-primary" type="submit" style="margin-top:20px">Start Practice Test</button>
                 <p id="competitiveSetupMessage" class="muted"></p>
             </form>
-
         </div>
     </section>
 
-    <!-- KBC QUIZ -->
+    <!-- KBC QUIZ SCREEN -->
     <section id="kbcQuizScreen" class="hidden">
-
         <div class="quiz-header">
             <div>
                 <div class="muted" id="kbcPlayerLabel">Player</div>
-                <h2 id="kbcRoundTitle">Question 1</h2>
+                <h2 id="kbcRoundTitle" style="margin:5px 0">Question 1</h2>
             </div>
             <div class="timer" id="kbcTimer">30s</div>
         </div>
@@ -1036,19 +1013,10 @@ tbody tr:last-child td {
         </div>
 
         <div class="quiz-layout">
-
             <div class="card">
-
                 <div class="lifeline-row">
-                    <button class="lifeline" id="fiftyFiftyBtn"
-                            onclick="useFiftyFifty()">
-                        50:50 Lifeline
-                    </button>
-
-                    <button class="lifeline" id="audienceBtn"
-                            onclick="useAudiencePoll()">
-                        Audience Poll
-                    </button>
+                    <button class="lifeline" id="fiftyFiftyBtn" onclick="useFiftyFifty()">50:50 Lifeline</button>
+                    <button class="lifeline" id="audienceBtn" onclick="useAudiencePoll()">Audience Poll</button>
                 </div>
 
                 <div id="kbcQuestionText" class="quiz-question"></div>
@@ -1056,33 +1024,21 @@ tbody tr:last-child td {
                 <div id="kbcExplanation" class="explanation hidden"></div>
 
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
-                    <button class="btn btn-outline" id="kbcQuitBtn"
-                            onclick="quitKbcGame()">
-                        Quit Game
-                    </button>
-
-                    <button class="btn btn-primary hidden" id="kbcNextBtn"
-                            onclick="nextKbcQuestion()">
-                        Next Question →
-                    </button>
+                    <button class="btn btn-outline" id="kbcQuitBtn" onclick="quitKbcGame()">Quit Game</button>
+                    <button class="btn btn-primary hidden" id="kbcNextBtn" onclick="nextKbcQuestion()">Next Question →</button>
                 </div>
-
             </div>
 
             <aside class="card">
                 <h3>Prize Ladder</h3>
-                <p class="muted" style="font-size:12px">
-                    Virtual game points only.
-                </p>
+                <p class="muted" style="font-size:12px">Virtual winnings only.</p>
                 <div class="prize-list" id="kbcPrizeList"></div>
             </aside>
-
         </div>
     </section>
 
-    <!-- STANDARD QUIZ -->
+    <!-- STANDARD QUIZ SCREEN -->
     <section id="standardQuizScreen" class="hidden">
-
         <div class="quiz-header">
             <div>
                 <div class="muted" id="standardPlayerLabel">Candidate</div>
@@ -1101,76 +1057,49 @@ tbody tr:last-child td {
             <div id="standardExplanation" class="explanation hidden"></div>
 
             <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
-                <button class="btn btn-outline" onclick="quitStandardGame()">
-                    Finish Test
-                </button>
-
-                <button class="btn btn-primary hidden" id="standardNextBtn"
-                        onclick="nextStandardQuestion()">
-                    Next Question →
-                </button>
+                <button class="btn btn-outline" onclick="quitStandardGame()">Finish Test</button>
+                <button class="btn btn-primary hidden" id="standardNextBtn" onclick="nextStandardQuestion()">Next Question →</button>
             </div>
         </div>
-
     </section>
 
-    <!-- RESULTS -->
+    <!-- RESULT SCREEN -->
     <section id="resultScreen" class="hidden">
         <div class="card">
-
             <div class="section-heading">
                 <div>
                     <h2 id="resultTitle">Game Results</h2>
                     <p class="muted" id="resultSubtitle"></p>
                 </div>
-                <button class="btn btn-outline" onclick="showHome()">
-                    Home
-                </button>
+                <button class="btn btn-outline" onclick="showHome()">Home</button>
             </div>
 
             <div class="stat-grid" id="resultStats"></div>
 
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px">
-                <button class="btn btn-primary" onclick="showKbcSetup()">
-                    Play KBC Again
-                </button>
-                <button class="btn btn-outline" onclick="showKbcHistory()">
-                    View Player Rankings
-                </button>
+                <button class="btn btn-primary" onclick="showKbcSetup()">Play Again</button>
+                <button class="btn btn-outline" onclick="showKbcHistory()">View Player Rankings</button>
             </div>
 
             <h3>Answer Review</h3>
             <div id="resultReview"></div>
-
         </div>
     </section>
 
-    <!-- KBC HISTORY -->
+    <!-- KBC HISTORY SCREEN -->
     <section id="kbcHistoryScreen" class="hidden">
 
         <div class="card">
-
             <div class="section-heading">
                 <div>
-                    <span class="badge"
-                          style="background:#eef2ff;color:#263db7;border-color:#d6dcff">
-                        KBC PERFORMANCE CENTER
-                    </span>
-
+                    <span class="badge" style="background:#eef2ff;color:#263db7;border-color:#d6dcff">KBC PERFORMANCE CENTER</span>
                     <h2>Player Rankings</h2>
-
-                    <p class="muted">
-                        Players are ranked by their total correct answers across all recorded KBC games.
-                    </p>
+                    <p class="muted">Rankings are based on the combined winning amounts of each player's recorded games.</p>
                 </div>
 
                 <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap">
-                    <button class="btn btn-outline" onclick="showHome()">
-                        ← Home
-                    </button>
-                    <button class="btn btn-primary" onclick="printRankings()">
-                        Print Rankings
-                    </button>
+                    <button class="btn btn-outline" onclick="showHome()">← Home</button>
+                    <button class="btn btn-primary" onclick="printRankings()">Print Rankings</button>
                 </div>
             </div>
 
@@ -1181,18 +1110,18 @@ tbody tr:last-child td {
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-label">Registered Players</div>
+                    <div class="stat-label">Unique Players</div>
                     <div class="stat-value" id="historyUniquePlayers">0</div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-label">Total Correct Answers</div>
-                    <div class="stat-value" id="historyTotalCorrect">0</div>
+                    <div class="stat-label">Combined Winnings</div>
+                    <div class="stat-value" id="historyCombinedWinnings">₹0</div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-label">Highest Correct Answers in One Game</div>
-                    <div class="stat-value" id="historyHighestCorrect">0</div>
+                    <div class="stat-label">Highest Single Win</div>
+                    <div class="stat-value" id="historyHighestWin">₹0</div>
                 </div>
             </div>
 
@@ -1201,10 +1130,8 @@ tbody tr:last-child td {
                        placeholder="Search player by name..."
                        oninput="renderRankings()">
 
-                <select class="search-input" id="rankingSort"
-                        onchange="renderRankings()">
-                    <option value="correct">Most Correct Answers</option>
-                    <option value="accuracy">Highest Accuracy</option>
+                <select class="search-input" id="rankingSort" onchange="renderRankings()">
+                    <option value="amount">Highest Total Winnings</option>
                     <option value="games">Most Games Played</option>
                     <option value="name">Player Name: A–Z</option>
                 </select>
@@ -1213,33 +1140,22 @@ tbody tr:last-child td {
             <div class="section-heading">
                 <div>
                     <h3 style="margin-bottom:5px">Overall Leaderboard</h3>
-                    <p class="muted">
-                        Click any player name to view their complete game history.
-                    </p>
+                    <p class="muted">Select a player's name to view their complete game history.</p>
                 </div>
-
                 <span class="badge" id="rankingCountBadge">0 Players</span>
             </div>
 
             <div id="rankingTableContainer"></div>
-
         </div>
 
-        <!-- PLAYER RECORD PANEL -->
+        <!-- SELECTED PLAYER DETAILS -->
         <div class="card hidden" id="playerDetailPanel">
-
             <div class="section-heading">
                 <div>
                     <h2>Player Game History</h2>
-                    <p class="muted">
-                        Review individual games and answer-level details.
-                    </p>
+                    <p class="muted">Individual game records and performance details.</p>
                 </div>
-
-                <button class="btn btn-outline no-print"
-                        onclick="closePlayerDetails()">
-                    Close Details
-                </button>
+                <button class="btn btn-outline no-print" onclick="closePlayerDetails()">Close Details</button>
             </div>
 
             <div id="playerProfile"></div>
@@ -1249,69 +1165,54 @@ tbody tr:last-child td {
                     <div class="stat-label">Overall Rank</div>
                     <div class="stat-value" id="playerRankValue">—</div>
                 </div>
-
                 <div class="stat-card">
-                    <div class="stat-label">Total Correct Answers</div>
-                    <div class="stat-value" id="playerTotalCorrect">0</div>
+                    <div class="stat-label">Total Winning Amount</div>
+                    <div class="stat-value" id="playerTotalWinnings">₹0</div>
                 </div>
-
                 <div class="stat-card">
                     <div class="stat-label">Games Played</div>
                     <div class="stat-value" id="playerGamesPlayed">0</div>
                 </div>
-
                 <div class="stat-card">
-                    <div class="stat-label">Average Accuracy</div>
-                    <div class="stat-value" id="playerAverageAccuracy">0%</div>
+                    <div class="stat-label">Highest Single Win</div>
+                    <div class="stat-value" id="playerHighestWin">₹0</div>
                 </div>
             </div>
 
             <div class="toolbar no-print">
                 <input class="search-input" id="playerGameSearch"
-                       placeholder="Search by game ID, date, or status..."
+                       placeholder="Search this player's game records..."
                        oninput="renderPlayerGames()">
 
-                <select class="search-input" id="playerGameFilter"
-                        onchange="renderPlayerGames()">
+                <select class="search-input" id="playerGameFilter" onchange="renderPlayerGames()">
                     <option value="all">All Game Results</option>
                     <option value="completed">Completed Games</option>
-                    <option value="wrong_answer">Wrong Answer</option>
-                    <option value="time_expired">Time Expired</option>
+                    <option value="wrong">Wrong Answer</option>
+                    <option value="time">Time Expired</option>
                     <option value="quit">Quit Games</option>
                 </select>
 
-                <select class="search-input" id="playerGameSort"
-                        onchange="renderPlayerGames()">
+                <select class="search-input" id="playerGameSort" onchange="renderPlayerGames()">
                     <option value="newest">Newest First</option>
                     <option value="oldest">Oldest First</option>
-                    <option value="correct">Most Correct Answers</option>
-                    <option value="accuracy">Highest Accuracy</option>
+                    <option value="highest">Highest Winning Amount</option>
+                    <option value="lowest">Lowest Winning Amount</option>
                 </select>
             </div>
 
             <div id="playerGameTableContainer"></div>
-
         </div>
 
         <!-- SINGLE GAME DETAIL -->
         <div class="card hidden" id="singleGameDetailPanel">
-
             <div class="section-heading">
                 <div>
                     <h2>Game Record Details</h2>
-                    <p class="muted">
-                        Detailed information about the selected game.
-                    </p>
+                    <p class="muted">Detailed information about the selected game.</p>
                 </div>
-
-                <button class="btn btn-outline no-print"
-                        onclick="closeSingleGameDetails()">
-                    Close
-                </button>
+                <button class="btn btn-outline no-print" onclick="closeSingleGameDetails()">Close</button>
             </div>
-
             <div id="singleGameDetailContent"></div>
-
         </div>
 
     </section>
@@ -1319,7 +1220,7 @@ tbody tr:last-child td {
 </main>
 
 <footer class="footer">
-    MCQ Quiz Pro Ultimate · Educational Practice Platform
+    MCQ Quiz Pro Ultimate · Educational Practice Platform · Virtual KBC Winnings
 </footer>
 
 <script>
@@ -1335,22 +1236,43 @@ const QUESTION_URL =
 const HISTORY_KEY = "mcqQuizProKbcHistoryV3";
 
 const KBC_PRIZES = [
-    1000, 2000, 3000, 5000, 10000,
-    20000, 40000, 80000, 160000, 320000,
-    640000, 1250000, 2500000, 5000000, 10000000,
-    30000000, 50000000, 75000000, 1000000000
+    1000,
+    2000,
+    3000,
+    5000,
+    10000,
+    20000,
+    40000,
+    80000,
+    160000,
+    320000,
+    640000,
+    1250000,
+    2500000,
+    5000000,
+    10000000,
+    30000000,
+    50000000,
+    75000000,
+    1000000000
 ];
+
+const PRIZE_LABELS = KBC_PRIZES.map(formatMoney);
 
 let allQuestions = [];
 let kbcState = null;
 let standardState = null;
-
 let activeTimer = null;
 let activeTimerDeadline = 0;
+let activeTimerRemaining = 0;
+let activeTimerDuration = 0;
 
 let selectedPlayerName = null;
+let currentPlayerGames = [];
+let currentPlayerPage = 1;
+const PLAYER_PAGE_SIZE = 8;
 
-let questionSequence = 0;
+let currentResultType = "kbc";
 
 /* =========================================================
    GENERAL HELPERS
@@ -1362,10 +1284,7 @@ function formatMoney(value) {
 
 function formatDate(timestamp) {
     const date = new Date(timestamp);
-
-    if (Number.isNaN(date.getTime())) {
-        return "Unknown Date";
-    }
+    if (Number.isNaN(date.getTime())) return "Unknown Date";
 
     return date.toLocaleString("en-IN", {
         day: "2-digit",
@@ -1418,10 +1337,7 @@ function showOnly(screenId) {
     ];
 
     screens.forEach(id => {
-        document.getElementById(id).classList.toggle(
-            "hidden",
-            id !== screenId
-        );
+        document.getElementById(id).classList.toggle("hidden", id !== screenId);
     });
 
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1436,7 +1352,6 @@ function showHome() {
 function showKbcSetup() {
     stopTimer();
     showOnly("kbcSetupScreen");
-
     document.getElementById("kbcSetupMessage").textContent =
         allQuestions.length
             ? `${allQuestions.length} questions are available.`
@@ -1452,20 +1367,18 @@ function showCompetitiveSetup() {
 }
 
 /* =========================================================
-   LOCAL STORAGE
+   HISTORY STORAGE
 ========================================================= */
 
 function loadHistory() {
     try {
         const stored = localStorage.getItem(HISTORY_KEY);
-
         if (!stored) return [];
 
         const parsed = JSON.parse(stored);
-
         return Array.isArray(parsed) ? parsed : [];
     } catch (error) {
-        console.error("Unable to read game history:", error);
+        console.error("Unable to read history:", error);
         return [];
     }
 }
@@ -1475,13 +1388,8 @@ function saveHistory(history) {
         localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
         return true;
     } catch (error) {
-        console.error("Unable to save game history:", error);
-
-        alert(
-            "The game record could not be saved. " +
-            "Your browser storage may be unavailable or full."
-        );
-
+        console.error("Unable to save history:", error);
+        alert("The game record could not be saved. Your browser storage may be full or unavailable.");
         return false;
     }
 }
@@ -1489,7 +1397,60 @@ function saveHistory(history) {
 function addKbcHistory(record) {
     const history = loadHistory();
     history.push(record);
-    return saveHistory(history);
+    saveHistory(history);
+}
+
+function getPlayerGroups() {
+    const history = loadHistory();
+    const groups = new Map();
+
+    history.forEach(game => {
+        const displayName = normalizeName(game.playerName) || "Unknown Player";
+        const key = nameKey(displayName);
+
+        if (!groups.has(key)) {
+            groups.set(key, {
+                key,
+                playerName: displayName,
+                totalWinnings: 0,
+                gamesPlayed: 0,
+                highestWin: 0,
+                lastPlayed: 0,
+                games: []
+            });
+        }
+
+        const group = groups.get(key);
+        const winnings = Math.max(0, Number(game.winnings) || 0);
+
+        group.totalWinnings += winnings;
+        group.gamesPlayed += 1;
+        group.highestWin = Math.max(group.highestWin, winnings);
+        group.lastPlayed = Math.max(
+            group.lastPlayed,
+            Number(game.timestamp) || 0
+        );
+        group.games.push(game);
+    });
+
+    return [...groups.values()];
+}
+
+function getRankedPlayers() {
+    const groups = getPlayerGroups();
+
+    groups.sort((a, b) =>
+        b.totalWinnings - a.totalWinnings ||
+        b.highestWin - a.highestWin ||
+        a.playerName.localeCompare(b.playerName, "en")
+    );
+
+    return groups;
+}
+
+function getPlayerRank(key) {
+    const ranked = getRankedPlayers();
+    return ranked.findIndex(player => player.key === key) + 1;
 }
 
 /* =========================================================
@@ -1512,7 +1473,7 @@ D: Subhas Chandra Bose
 ANSWER: A
 EXPLANATION: Mahatma Gandhi led the Salt March in 1930.
 
-Repeat this structure for each question.
+Repeat the same structure for each question.
 */
 
 function parseQuestions(text) {
@@ -1529,14 +1490,11 @@ function parseQuestions(text) {
                 "^" + field + ":\\s*(.*)$",
                 "im"
             );
-
             const match = block.match(regex);
-
             return match ? match[1].trim() : "";
         };
 
         const questionText = getField("Q");
-
         const options = [
             getField("A"),
             getField("B"),
@@ -1545,14 +1503,9 @@ function parseQuestions(text) {
         ];
 
         const rawAnswer = getField("ANSWER").toUpperCase();
-
         const answerIndex = ["A", "B", "C", "D"].indexOf(rawAnswer);
 
-        if (
-            !questionText ||
-            options.some(option => !option) ||
-            answerIndex < 0
-        ) {
+        if (!questionText || options.some(option => !option) || answerIndex < 0) {
             return;
         }
 
@@ -1573,39 +1526,35 @@ function parseQuestions(text) {
 
 async function loadQuestionBank() {
     try {
-        const response = await fetch(QUESTION_URL, {
-            cache: "no-store"
-        });
+        const response = await fetch(QUESTION_URL, { cache: "no-store" });
 
         if (!response.ok) {
             throw new Error("HTTP " + response.status);
         }
 
         const text = await response.text();
-
         allQuestions = parseQuestions(text);
 
         if (!allQuestions.length) {
-            throw new Error("No valid questions found.");
+            throw new Error("No valid questions were found.");
         }
 
-        const message =
+        document.getElementById("kbcSetupMessage").textContent =
             `${allQuestions.length} questions loaded successfully.`;
 
-        document.getElementById("kbcSetupMessage").textContent = message;
-        document.getElementById("schoolSetupMessage").textContent = message;
-        document.getElementById("competitiveSetupMessage").textContent = message;
+        document.getElementById("schoolSetupMessage").textContent =
+            `${allQuestions.length} questions loaded successfully.`;
+
+        document.getElementById("competitiveSetupMessage").textContent =
+            `${allQuestions.length} questions loaded successfully.`;
 
         renderHomeRankingPreview();
-
     } catch (error) {
         console.error("Question bank loading failed:", error);
-
         allQuestions = [];
 
         const message =
-            "Unable to load the online question bank. " +
-            "Please verify the question file URL and format.";
+            "Unable to load the online question bank. Please verify the question file URL and its format.";
 
         document.getElementById("kbcSetupMessage").textContent = message;
         document.getElementById("schoolSetupMessage").textContent = message;
@@ -1614,7 +1563,7 @@ async function loadQuestionBank() {
 }
 
 /* =========================================================
-   QUESTION FILTERING
+   FILTERING QUESTIONS
 ========================================================= */
 
 function getFilteredQuestions(category, classValue, subjectValue) {
@@ -1622,28 +1571,21 @@ function getFilteredQuestions(category, classValue, subjectValue) {
 
     if (category === "school") {
         if (classValue && classValue !== "all") {
-            questions = questions.filter(question =>
-                String(question.className).trim() === String(classValue)
+            questions = questions.filter(q =>
+                String(q.className).trim() === String(classValue)
             );
         }
 
         if (subjectValue && subjectValue !== "all") {
-            questions = questions.filter(question =>
-                question.subject.toLowerCase().includes(
-                    subjectValue.toLowerCase()
-                )
+            questions = questions.filter(q =>
+                q.subject.toLowerCase().includes(subjectValue.toLowerCase())
             );
         }
     }
 
-    if (category === "competitive" &&
-        subjectValue &&
-        subjectValue !== "all") {
-
-        questions = questions.filter(question =>
-            question.subject.toLowerCase().includes(
-                subjectValue.toLowerCase()
-            )
+    if (category === "competitive" && subjectValue && subjectValue !== "all") {
+        questions = questions.filter(q =>
+            q.subject.toLowerCase().includes(subjectValue.toLowerCase())
         );
     }
 
@@ -1653,11 +1595,10 @@ function getFilteredQuestions(category, classValue, subjectValue) {
 function takeQuestionSet(questions, countValue) {
     const shuffled = shuffle(questions);
 
-    if (countValue === "all") {
-        return shuffled;
-    }
+    if (countValue === "all") return shuffled;
 
-    return shuffled.slice(0, Math.max(1, Number(countValue) || 10));
+    const count = Math.max(1, Number(countValue) || 10);
+    return shuffled.slice(0, count);
 }
 
 /* =========================================================
@@ -1671,6 +1612,8 @@ function stopTimer() {
     }
 
     activeTimerDeadline = 0;
+    activeTimerRemaining = 0;
+    activeTimerDuration = 0;
 }
 
 function startTimer(seconds, elementId, onExpire) {
@@ -1684,6 +1627,8 @@ function startTimer(seconds, elementId, onExpire) {
         return;
     }
 
+    activeTimerDuration = seconds;
+    activeTimerRemaining = seconds;
     activeTimerDeadline = Date.now() + seconds * 1000;
 
     const tick = () => {
@@ -1692,6 +1637,7 @@ function startTimer(seconds, elementId, onExpire) {
             Math.ceil((activeTimerDeadline - Date.now()) / 1000)
         );
 
+        activeTimerRemaining = remaining;
         element.textContent = remaining + "s";
         element.classList.toggle("warning", remaining <= 10);
 
@@ -1703,7 +1649,9 @@ function startTimer(seconds, elementId, onExpire) {
 
     tick();
 
-    activeTimer = setInterval(tick, 250);
+    if (activeTimerDeadline > Date.now()) {
+        activeTimer = setInterval(tick, 250);
+    }
 }
 
 /* =========================================================
@@ -1711,89 +1659,89 @@ function startTimer(seconds, elementId, onExpire) {
 ========================================================= */
 
 function getPrizeForQuestionIndex(index) {
-    return KBC_PRIZES[
-        Math.min(index, KBC_PRIZES.length - 1)
-    ] || 0;
+    if (index < 0) return 0;
+
+    return KBC_PRIZES[Math.min(index, KBC_PRIZES.length - 1)];
 }
 
 function renderPrizeLadder() {
     const container = document.getElementById("kbcPrizeList");
 
     container.innerHTML = [...KBC_PRIZES]
-        .map((prize, index) => ({ prize, index }))
+        .map((prize, index) => ({
+            prize,
+            index
+        }))
         .reverse()
-        .map(item => `
-            <div class="prize-item ${
-                kbcState && item.index === kbcState.currentIndex
-                    ? "active"
-                    : ""
-            }">
-                <span>Level ${item.index + 1}</span>
-                <span>${formatMoney(item.prize)}</span>
-            </div>
-        `).join("");
+        .map(item => {
+            const isActive =
+                kbcState && item.index === kbcState.currentIndex;
+
+            return `
+                <div class="prize-item ${isActive ? "active" : ""}">
+                    <span>Level ${item.index + 1}</span>
+                    <span>${formatMoney(item.prize)}</span>
+                </div>
+            `;
+        }).join("");
 }
 
-document.getElementById("kbcSetupForm").addEventListener(
-    "submit",
-    event => {
-        event.preventDefault();
+document.getElementById("kbcSetupForm").addEventListener("submit", event => {
+    event.preventDefault();
 
-        const playerName = normalizeName(
-            document.getElementById("kbcPlayerName").value
-        );
+    const playerName = normalizeName(
+        document.getElementById("kbcPlayerName").value
+    );
 
-        if (!playerName) {
-            alert("Please enter your name.");
-            return;
-        }
-
-        const category =
-            document.getElementById("kbcQuestionCategory").value;
-
-        const questions = takeQuestionSet(
-            getFilteredQuestions(category, "all", "all"),
-            document.getElementById("kbcQuestionCount").value
-        );
-
-        if (!questions.length) {
-            alert("No questions are available for this category.");
-            return;
-        }
-
-        kbcState = {
-            playerName,
-            questions,
-            currentIndex: 0,
-            correctAnswers: 0,
-            winnings: 0,
-            answers: [],
-            lifelines: {
-                fiftyFifty: false,
-                audience: false
-            },
-            endingReason: "",
-            timerSeconds: Number(
-                document.getElementById("kbcTimerDuration").value
-            ) || 0,
-            startedAt: Date.now()
-        };
-
-        document.getElementById("kbcPlayerLabel").textContent =
-            "Player: " + playerName;
-
-        document.getElementById("fiftyFiftyBtn").classList.remove("used");
-        document.getElementById("audienceBtn").classList.remove("used");
-
-        document.getElementById("fiftyFiftyBtn").disabled = false;
-        document.getElementById("audienceBtn").disabled = false;
-
-        showOnly("kbcQuizScreen");
-
-        renderPrizeLadder();
-        renderKbcQuestion();
+    if (!playerName) {
+        alert("Please enter your name.");
+        return;
     }
-);
+
+    const category =
+        document.getElementById("kbcQuestionCategory").value;
+
+    const questions = takeQuestionSet(
+        getFilteredQuestions(category, "all", "all"),
+        document.getElementById("kbcQuestionCount").value
+    );
+
+    if (!questions.length) {
+        alert("No questions are available for the selected category.");
+        return;
+    }
+
+    kbcState = {
+        playerName,
+        questions,
+        currentIndex: 0,
+        correctAnswers: 0,
+        winnings: 0,
+        answers: [],
+        lifelines: {
+            fiftyFifty: false,
+            audience: false
+        },
+        endingReason: "",
+        timerSeconds: Number(
+            document.getElementById("kbcTimerDuration").value
+        ) || 0,
+        startedAt: Date.now()
+    };
+
+    document.getElementById("kbcPlayerLabel").textContent =
+        "Player: " + playerName;
+
+    document.getElementById("fiftyFiftyBtn").classList.remove("used");
+    document.getElementById("audienceBtn").classList.remove("used");
+
+    document.getElementById("fiftyFiftyBtn").disabled = false;
+    document.getElementById("audienceBtn").disabled = false;
+
+    showOnly("kbcQuizScreen");
+    renderPrizeLadder();
+    renderKbcQuestion();
+});
 
 function renderKbcQuestion() {
     if (!kbcState) return;
@@ -1813,30 +1761,24 @@ function renderKbcQuestion() {
         question.question;
 
     document.getElementById("kbcProgress").style.width =
-        (index / kbcState.questions.length * 100) + "%";
+        ((index / kbcState.questions.length) * 100) + "%";
 
     document.getElementById("kbcExplanation").classList.add("hidden");
     document.getElementById("kbcNextBtn").classList.add("hidden");
     document.getElementById("kbcQuitBtn").classList.remove("hidden");
 
     const optionsContainer = document.getElementById("kbcOptions");
-
     optionsContainer.innerHTML = "";
 
     question.options.forEach((option, optionIndex) => {
         const button = document.createElement("button");
-
         button.type = "button";
         button.className = "option-btn";
-
         button.innerHTML =
             `<strong>${String.fromCharCode(65 + optionIndex)}.</strong> ` +
             escapeHtml(option);
 
-        button.addEventListener("click", () =>
-            chooseKbcAnswer(optionIndex, button)
-        );
-
+        button.addEventListener("click", () => chooseKbcAnswer(optionIndex, button));
         optionsContainer.appendChild(button);
     });
 
@@ -1853,29 +1795,20 @@ function chooseKbcAnswer(selectedIndex, selectedButton) {
     if (!kbcState) return;
 
     const question = kbcState.questions[kbcState.currentIndex];
-
-    const buttons = [
-        ...document.querySelectorAll("#kbcOptions .option-btn")
-    ];
+    const buttons = [...document.querySelectorAll("#kbcOptions .option-btn")];
 
     if (buttons.some(button => button.disabled)) return;
 
     stopTimer();
 
-    buttons.forEach(button => {
-        button.disabled = true;
-    });
+    buttons.forEach(button => button.disabled = true);
 
     const isCorrect = selectedIndex === question.answer;
 
     if (isCorrect) {
         selectedButton.classList.add("correct");
-
-        kbcState.correctAnswers++;
-
-        kbcState.winnings = getPrizeForQuestionIndex(
-            kbcState.currentIndex
-        );
+        kbcState.correctAnswers += 1;
+        kbcState.winnings = getPrizeForQuestionIndex(kbcState.currentIndex);
     } else {
         selectedButton.classList.add("incorrect");
 
@@ -1902,20 +1835,17 @@ function chooseKbcAnswer(selectedIndex, selectedButton) {
     explanation.classList.remove("hidden");
 
     document.getElementById("kbcProgress").style.width =
-        ((kbcState.currentIndex + 1) / kbcState.questions.length * 100) + "%";
+        (((kbcState.currentIndex + 1) / kbcState.questions.length) * 100) + "%";
 
     document.getElementById("kbcQuitBtn").classList.add("hidden");
 
     const nextButton = document.getElementById("kbcNextBtn");
-
     nextButton.classList.remove("hidden");
 
     if (!isCorrect) {
         kbcState.endingReason = "wrong_answer";
         nextButton.textContent = "View Results";
-    } else if (
-        kbcState.currentIndex === kbcState.questions.length - 1
-    ) {
+    } else if (kbcState.currentIndex === kbcState.questions.length - 1) {
         nextButton.textContent = "Complete Game";
     } else {
         nextButton.textContent = "Next Question →";
@@ -1927,9 +1857,7 @@ function chooseKbcAnswer(selectedIndex, selectedButton) {
 function nextKbcQuestion() {
     if (!kbcState) return;
 
-    const lastAnswer = kbcState.answers[
-        kbcState.answers.length - 1
-    ];
+    const lastAnswer = kbcState.answers[kbcState.answers.length - 1];
 
     if (lastAnswer && !lastAnswer.isCorrect) {
         finishKbcGame("wrong_answer");
@@ -1942,7 +1870,6 @@ function nextKbcQuestion() {
     }
 
     kbcState.currentIndex++;
-
     renderKbcQuestion();
 }
 
@@ -1950,14 +1877,10 @@ function useFiftyFifty() {
     if (!kbcState || kbcState.lifelines.fiftyFifty) return;
 
     const question = kbcState.questions[kbcState.currentIndex];
-
-    const buttons = [
-        ...document.querySelectorAll("#kbcOptions .option-btn")
-    ];
+    const buttons = [...document.querySelectorAll("#kbcOptions .option-btn")];
 
     const wrongIndexes = shuffle(
-        buttons.map((_, index) => index)
-            .filter(index => index !== question.answer)
+        buttons.map((_, index) => index).filter(index => index !== question.answer)
     ).slice(0, 2);
 
     wrongIndexes.forEach(index => {
@@ -1968,7 +1891,6 @@ function useFiftyFifty() {
     kbcState.lifelines.fiftyFifty = true;
 
     const button = document.getElementById("fiftyFiftyBtn");
-
     button.classList.add("used");
     button.disabled = true;
 }
@@ -1977,17 +1899,13 @@ function useAudiencePoll() {
     if (!kbcState || kbcState.lifelines.audience) return;
 
     const question = kbcState.questions[kbcState.currentIndex];
-
     const percentages = [0, 0, 0, 0];
 
-    percentages[question.answer] =
-        40 + Math.floor(Math.random() * 41);
+    percentages[question.answer] = 40 + Math.floor(Math.random() * 41);
 
     let remaining = 100 - percentages[question.answer];
 
-    const wrongIndexes = [0, 1, 2, 3].filter(
-        index => index !== question.answer
-    );
+    const wrongIndexes = [0, 1, 2, 3].filter(index => index !== question.answer);
 
     wrongIndexes.forEach((index, position) => {
         if (position === wrongIndexes.length - 1) {
@@ -1996,7 +1914,6 @@ function useAudiencePoll() {
             percentages[index] = Math.floor(
                 Math.random() * (remaining + 1)
             );
-
             remaining -= percentages[index];
         }
     });
@@ -2016,7 +1933,6 @@ function useAudiencePoll() {
     kbcState.lifelines.audience = true;
 
     const button = document.getElementById("audienceBtn");
-
     button.classList.add("used");
     button.disabled = true;
 }
@@ -2024,9 +1940,7 @@ function useAudiencePoll() {
 function quitKbcGame() {
     if (!kbcState) return;
 
-    if (confirm(
-        "Are you sure you want to quit this game? Your current result will be saved."
-    )) {
+    if (confirm("Are you sure you want to quit this game? Your current result will be saved.")) {
         finishKbcGame("quit");
     }
 }
@@ -2039,23 +1953,19 @@ function finishKbcGame(reason) {
     kbcState.endingReason = reason;
 
     const game = {
-        id: "KBC-" +
-            Date.now().toString(36).toUpperCase() +
-            "-" +
-            Math.random().toString(36).slice(2, 7).toUpperCase(),
+        id: "KBC-" + Date.now().toString(36).toUpperCase() +
+            "-" + Math.random().toString(36).slice(2, 7).toUpperCase(),
 
         playerName: normalizeName(kbcState.playerName),
         timestamp: Date.now(),
         date: new Date().toISOString(),
 
         winnings: Math.max(0, Number(kbcState.winnings) || 0),
-
         totalQuestions: kbcState.questions.length,
         answeredQuestions: kbcState.answers.length,
         correctAnswers: kbcState.correctAnswers,
 
         endingReason: reason,
-
         lifelinesUsed: {
             fiftyFifty: kbcState.lifelines.fiftyFifty,
             audience: kbcState.lifelines.audience
@@ -2066,38 +1976,21 @@ function finishKbcGame(reason) {
 
     addKbcHistory(game);
 
+    currentResultType = "kbc";
+
     showResults({
-        title: reason === "completed"
-            ? "Congratulations!"
-            : "Game Over",
-
-        subtitle:
-            `${game.playerName}, your KBC game has been recorded.`,
-
+        title: reason === "completed" ? "Congratulations!" : "Game Over",
+        subtitle: `${game.playerName}, your KBC game has been recorded.`,
         stats: [
-            [
-                "Correct Answers",
-                `${game.correctAnswers} / ${game.totalQuestions}`
-            ],
-            [
-                "Questions Answered",
-                game.answeredQuestions
-            ],
-            [
-                "Accuracy",
-                calculateAccuracy(game.correctAnswers, game.answeredQuestions) + "%"
-            ],
-            [
-                "Game Status",
-                statusLabel(reason)
-            ]
+            ["Winning Amount", formatMoney(game.winnings)],
+            ["Correct Answers", `${game.correctAnswers} / ${game.totalQuestions}`],
+            ["Questions Answered", game.answeredQuestions],
+            ["Game Status", statusLabel(reason)]
         ],
-
         answers: game.answers
     });
 
     kbcState = null;
-
     renderHomeRankingPreview();
 }
 
@@ -2105,81 +1998,56 @@ function finishKbcGame(reason) {
    SCHOOL AND COMPETITIVE QUIZZES
 ========================================================= */
 
-document.getElementById("schoolSetupForm").addEventListener(
-    "submit",
-    event => {
-        event.preventDefault();
+document.getElementById("schoolSetupForm").addEventListener("submit", event => {
+    event.preventDefault();
 
-        const playerName = normalizeName(
-            document.getElementById("schoolPlayerName").value
-        );
+    const playerName = normalizeName(
+        document.getElementById("schoolPlayerName").value
+    );
 
-        const classValue =
-            document.getElementById("schoolClass").value;
+    const classValue = document.getElementById("schoolClass").value;
+    const subject = document.getElementById("schoolSubject").value;
 
-        const subject =
-            document.getElementById("schoolSubject").value;
+    const questions = takeQuestionSet(
+        getFilteredQuestions("school", classValue, subject),
+        document.getElementById("schoolQuestionCount").value
+    );
 
-        const questions = takeQuestionSet(
-            getFilteredQuestions("school", classValue, subject),
-            document.getElementById("schoolQuestionCount").value
-        );
-
-        if (!questions.length) {
-            alert("No questions match the selected class and subject.");
-            return;
-        }
-
-        startStandardGame(
-            playerName,
-            questions,
-            0,
-            "School Quiz"
-        );
+    if (!questions.length) {
+        alert("No questions match the selected class and subject.");
+        return;
     }
-);
 
-document.getElementById("competitiveSetupForm").addEventListener(
-    "submit",
-    event => {
-        event.preventDefault();
+    startStandardGame(playerName, questions, 0, "School Quiz");
+});
 
-        const playerName = normalizeName(
-            document.getElementById("competitivePlayerName").value
-        );
+document.getElementById("competitiveSetupForm").addEventListener("submit", event => {
+    event.preventDefault();
 
-        const subject =
-            document.getElementById("competitiveSubject").value;
+    const playerName = normalizeName(
+        document.getElementById("competitivePlayerName").value
+    );
 
-        const questions = takeQuestionSet(
-            getFilteredQuestions("competitive", "all", subject),
-            document.getElementById("competitiveQuestionCount").value
-        );
+    const subject = document.getElementById("competitiveSubject").value;
 
-        if (!questions.length) {
-            alert("No questions match the selected subject.");
-            return;
-        }
+    const questions = takeQuestionSet(
+        getFilteredQuestions("competitive", "all", subject),
+        document.getElementById("competitiveQuestionCount").value
+    );
 
-        const timer = Number(
-            document.getElementById("competitiveTimer").value
-        ) || 0;
-
-        startStandardGame(
-            playerName,
-            questions,
-            timer,
-            "Competitive Exam"
-        );
+    if (!questions.length) {
+        alert("No questions match the selected subject.");
+        return;
     }
-);
 
-function startStandardGame(
-    playerName,
-    questions,
-    timerSeconds,
-    gameType
-) {
+    const timer = Number(
+        document.getElementById("competitiveTimer").value
+    ) || 0;
+
+    startStandardGame(playerName, questions, timer, "Competitive Exam");
+});
+
+function startStandardGame(playerName, questions, timerSeconds, gameType) {
     standardState = {
         playerName,
         questions,
@@ -2194,7 +2062,6 @@ function startStandardGame(
         `${gameType}: ${playerName}`;
 
     showOnly("standardQuizScreen");
-
     renderStandardQuestion();
 }
 
@@ -2217,12 +2084,10 @@ function renderStandardQuestion() {
     document.getElementById("standardNextBtn").classList.add("hidden");
 
     const container = document.getElementById("standardOptions");
-
     container.innerHTML = "";
 
     question.options.forEach((option, optionIndex) => {
         const button = document.createElement("button");
-
         button.type = "button";
         button.className = "option-btn";
 
@@ -2247,20 +2112,13 @@ function renderStandardQuestion() {
 function chooseStandardAnswer(selectedIndex, selectedButton) {
     if (!standardState) return;
 
-    const question =
-        standardState.questions[standardState.currentIndex];
-
-    const buttons = [
-        ...document.querySelectorAll("#standardOptions .option-btn")
-    ];
+    const question = standardState.questions[standardState.currentIndex];
+    const buttons = [...document.querySelectorAll("#standardOptions .option-btn")];
 
     if (buttons.some(button => button.disabled)) return;
 
     stopTimer();
-
-    buttons.forEach(button => {
-        button.disabled = true;
-    });
+    buttons.forEach(button => button.disabled = true);
 
     const isCorrect = selectedIndex === question.answer;
 
@@ -2284,8 +2142,7 @@ function chooseStandardAnswer(selectedIndex, selectedButton) {
         explanation: question.explanation || ""
     });
 
-    const explanation =
-        document.getElementById("standardExplanation");
+    const explanation = document.getElementById("standardExplanation");
 
     explanation.textContent = question.explanation
         ? "Explanation: " + question.explanation
@@ -2294,12 +2151,9 @@ function chooseStandardAnswer(selectedIndex, selectedButton) {
     explanation.classList.remove("hidden");
 
     document.getElementById("standardProgress").style.width =
-        ((standardState.currentIndex + 1) /
-            standardState.questions.length * 100) + "%";
+        ((standardState.currentIndex + 1) / standardState.questions.length * 100) + "%";
 
-    const nextButton =
-        document.getElementById("standardNextBtn");
-
+    const nextButton = document.getElementById("standardNextBtn");
     nextButton.classList.remove("hidden");
 
     nextButton.textContent =
@@ -2311,16 +2165,12 @@ function chooseStandardAnswer(selectedIndex, selectedButton) {
 function nextStandardQuestion() {
     if (!standardState) return;
 
-    if (
-        standardState.currentIndex >=
-        standardState.questions.length - 1
-    ) {
+    if (standardState.currentIndex >= standardState.questions.length - 1) {
         finishStandardGame("completed");
         return;
     }
 
     standardState.currentIndex++;
-
     renderStandardQuestion();
 }
 
@@ -2338,47 +2188,24 @@ function finishStandardGame(reason) {
     stopTimer();
 
     const state = standardState;
-
     standardState = null;
 
     showResults({
         title: "Test Results",
-
-        subtitle:
-            `${state.playerName}, your ${state.gameType} results are ready.`,
-
+        subtitle: `${state.playerName}, your ${state.gameType} results are ready.`,
         stats: [
-            [
-                "Correct Answers",
-                `${state.correctAnswers} / ${state.questions.length}`
-            ],
-            [
-                "Questions Answered",
-                state.answers.length
-            ],
-            [
-                "Accuracy",
-                calculateAccuracy(state.correctAnswers, state.answers.length) + "%"
-            ],
-            [
-                "Test Status",
-                statusLabel(reason)
-            ]
+            ["Correct Answers", `${state.correctAnswers} / ${state.questions.length}`],
+            ["Questions Answered", state.answers.length],
+            ["Accuracy", Math.round(state.correctAnswers / Math.max(1, state.answers.length) * 100) + "%"],
+            ["Test Status", statusLabel(reason)]
         ],
-
         answers: state.answers
     });
 }
 
 /* =========================================================
-   RESULT HELPERS
+   RESULTS AND ANSWER REVIEW
 ========================================================= */
-
-function calculateAccuracy(correct, total) {
-    if (!total) return 0;
-
-    return Math.round((correct / total) * 100);
-}
 
 function statusLabel(reason) {
     const labels = {
@@ -2403,11 +2230,8 @@ function statusClass(reason) {
 }
 
 function showResults(result) {
-    document.getElementById("resultTitle").textContent =
-        result.title;
-
-    document.getElementById("resultSubtitle").textContent =
-        result.subtitle;
+    document.getElementById("resultTitle").textContent = result.title;
+    document.getElementById("resultSubtitle").textContent = result.subtitle;
 
     document.getElementById("resultStats").innerHTML =
         result.stats.map(([label, value]) => `
@@ -2431,33 +2255,16 @@ function showResults(result) {
         review.innerHTML = result.answers.map((answer, index) => `
             <div class="review-item">
                 <h4>${index + 1}. ${escapeHtml(answer.question)}</h4>
-
-                <p>
-                    <strong>Your Answer:</strong>
-                    ${escapeHtml(
-                        answer.options[answer.selectedIndex] ||
-                        "Not Answered"
-                    )}
+                <p><strong>Your Answer:</strong>
+                    ${escapeHtml(answer.options[answer.selectedIndex] || "Not Answered")}
                 </p>
-
-                <p>
-                    <strong>Correct Answer:</strong>
+                <p><strong>Correct Answer:</strong>
                     ${escapeHtml(answer.options[answer.correctIndex])}
                 </p>
-
-                <span class="status ${
-                    answer.isCorrect
-                        ? "status-completed"
-                        : "status-wrong"
-                }">
+                <span class="status ${answer.isCorrect ? "status-completed" : "status-wrong"}">
                     ${answer.isCorrect ? "Correct" : "Incorrect"}
                 </span>
-
-                ${
-                    answer.explanation
-                        ? `<p class="muted">${escapeHtml(answer.explanation)}</p>`
-                        : ""
-                }
+                ${answer.explanation ? `<p class="muted">${escapeHtml(answer.explanation)}</p>` : ""}
             </div>
         `).join("");
     }
@@ -2466,112 +2273,18 @@ function showResults(result) {
 }
 
 /* =========================================================
-   PLAYER AGGREGATION AND RANKINGS
-========================================================= */
-
-function getPlayerGroups() {
-    const history = loadHistory();
-
-    const groups = new Map();
-
-    history.forEach(game => {
-        const playerName =
-            normalizeName(game.playerName) || "Unknown Player";
-
-        const key = nameKey(playerName);
-
-        if (!groups.has(key)) {
-            groups.set(key, {
-                key,
-                playerName,
-                totalCorrect: 0,
-                totalAnswered: 0,
-                totalQuestions: 0,
-                gamesPlayed: 0,
-                highestCorrect: 0,
-                lastPlayed: 0,
-                games: []
-            });
-        }
-
-        const player = groups.get(key);
-
-        const correct = Math.max(
-            0,
-            Number(game.correctAnswers) || 0
-        );
-
-        const answered = Math.max(
-            0,
-            Number(game.answeredQuestions) || 0
-        );
-
-        const totalQuestions = Math.max(
-            0,
-            Number(game.totalQuestions) || 0
-        );
-
-        player.totalCorrect += correct;
-        player.totalAnswered += answered;
-        player.totalQuestions += totalQuestions;
-        player.gamesPlayed++;
-        player.highestCorrect = Math.max(
-            player.highestCorrect,
-            correct
-        );
-
-        player.lastPlayed = Math.max(
-            player.lastPlayed,
-            Number(game.timestamp) || 0
-        );
-
-        player.games.push(game);
-    });
-
-    return [...groups.values()].map(player => ({
-        ...player,
-        accuracy: calculateAccuracy(
-            player.totalCorrect,
-            player.totalAnswered
-        )
-    }));
-}
-
-function comparePlayers(a, b) {
-    return (
-        b.totalCorrect - a.totalCorrect ||
-        b.accuracy - a.accuracy ||
-        a.playerName.localeCompare(b.playerName, "en")
-    );
-}
-
-function getRankedPlayers() {
-    return getPlayerGroups().sort(comparePlayers);
-}
-
-function getPlayerRank(key) {
-    const players = getRankedPlayers();
-
-    return players.findIndex(player => player.key === key) + 1;
-}
-
-/* =========================================================
-   KBC HISTORY SCREEN
+   KBC HISTORY: DEFAULT RANKING TABLE
 ========================================================= */
 
 function showKbcHistory() {
     stopTimer();
-
     selectedPlayerName = null;
 
-    document.getElementById("playerDetailPanel")
-        .classList.add("hidden");
-
-    document.getElementById("singleGameDetailPanel")
-        .classList.add("hidden");
+    document.getElementById("playerDetailPanel").classList.add("hidden");
+    document.getElementById("singleGameDetailPanel").classList.add("hidden");
 
     document.getElementById("rankingSearch").value = "";
-    document.getElementById("rankingSort").value = "correct";
+    document.getElementById("rankingSort").value = "amount";
 
     showOnly("kbcHistoryScreen");
 
@@ -2581,22 +2294,15 @@ function showKbcHistory() {
 
 function renderHistoryStats() {
     const history = loadHistory();
-
     const players = getRankedPlayers();
 
-    const totalCorrect = history.reduce(
-        (sum, game) => sum + Math.max(
-            0,
-            Number(game.correctAnswers) || 0
-        ),
+    const totalWinnings = history.reduce(
+        (sum, game) => sum + Math.max(0, Number(game.winnings) || 0),
         0
     );
 
-    const highestCorrect = history.reduce(
-        (highest, game) => Math.max(
-            highest,
-            Number(game.correctAnswers) || 0
-        ),
+    const highestWin = history.reduce(
+        (highest, game) => Math.max(highest, Number(game.winnings) || 0),
         0
     );
 
@@ -2606,11 +2312,11 @@ function renderHistoryStats() {
     document.getElementById("historyUniquePlayers").textContent =
         players.length.toLocaleString("en-IN");
 
-    document.getElementById("historyTotalCorrect").textContent =
-        totalCorrect.toLocaleString("en-IN");
+    document.getElementById("historyCombinedWinnings").textContent =
+        formatMoney(totalWinnings);
 
-    document.getElementById("historyHighestCorrect").textContent =
-        highestCorrect.toLocaleString("en-IN");
+    document.getElementById("historyHighestWin").textContent =
+        formatMoney(highestWin);
 }
 
 function renderRankings() {
@@ -2620,9 +2326,7 @@ function renderRankings() {
 
     const sort = document.getElementById("rankingSort").value;
 
-    const allRankedPlayers = getRankedPlayers();
-
-    let players = [...allRankedPlayers];
+    let players = getRankedPlayers();
 
     if (search) {
         players = players.filter(player =>
@@ -2630,16 +2334,10 @@ function renderRankings() {
         );
     }
 
-    if (sort === "accuracy") {
-        players.sort((a, b) =>
-            b.accuracy - a.accuracy ||
-            b.totalCorrect - a.totalCorrect ||
-            a.playerName.localeCompare(b.playerName, "en")
-        );
-    } else if (sort === "games") {
+    if (sort === "games") {
         players.sort((a, b) =>
             b.gamesPlayed - a.gamesPlayed ||
-            b.totalCorrect - a.totalCorrect ||
+            b.totalWinnings - a.totalWinnings ||
             a.playerName.localeCompare(b.playerName, "en")
         );
     } else if (sort === "name") {
@@ -2647,54 +2345,47 @@ function renderRankings() {
             a.playerName.localeCompare(b.playerName, "en")
         );
     } else {
-        players.sort(comparePlayers);
+        players.sort((a, b) =>
+            b.totalWinnings - a.totalWinnings ||
+            b.highestWin - a.highestWin ||
+            a.playerName.localeCompare(b.playerName, "en")
+        );
     }
 
     document.getElementById("rankingCountBadge").textContent =
         `${players.length} ${players.length === 1 ? "Player" : "Players"}`;
 
-    const container =
-        document.getElementById("rankingTableContainer");
+    const container = document.getElementById("rankingTableContainer");
 
     if (!players.length) {
         container.innerHTML = `
             <div class="empty-state">
                 <div class="empty-icon">🏆</div>
-
-                <h3>${search
-                    ? "No Matching Players"
-                    : "No Rankings Available"}</h3>
-
+                <h3>${search ? "No Matching Players" : "No Rankings Available"}</h3>
                 <p>${search
                     ? "Try another player name."
-                    : "Complete a KBC game to create the first ranking."}</p>
-
-                <button class="btn btn-primary no-print"
-                        onclick="showKbcSetup()">
-                    Start KBC Game
-                </button>
+                    : "Complete a KBC game to create your first player ranking."}</p>
+                <button class="btn btn-primary no-print" onclick="showKbcSetup()">Start KBC Game</button>
             </div>
         `;
-
         return;
     }
+
+    const overallRanked = getRankedPlayers();
 
     container.innerHTML = `
         <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
-                        <th>Rank</th>
+                        <th>Sl. No.</th>
                         <th>Player Name</th>
-                        <th>Total Correct Answers</th>
-                        <th>Games Played</th>
-                        <th>Accuracy</th>
+                        <th>Total Winning Amount</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     ${players.map(player => {
-                        const rank = allRankedPlayers.findIndex(
+                        const rank = overallRanked.findIndex(
                             item => item.key === player.key
                         ) + 1;
 
@@ -2706,26 +2397,14 @@ function renderRankings() {
 
                         return `
                             <tr>
+                                <td><span class="rank-badge ${rankClass}">${rank}</span></td>
                                 <td>
-                                    <span class="rank-badge ${rankClass}">
-                                        ${rank}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        class="player-link"
-                                        data-player-key="${escapeHtml(player.key)}"
-                                        onclick="openPlayerDetailsByKey(this.dataset.playerKey)">
+                                    <button class="player-link"
+                                            onclick="openPlayerDetailsByKey('${escapeHtml(player.key)}')">
                                         ${escapeHtml(player.playerName)}
                                     </button>
                                 </td>
-
-                                <td><strong>${player.totalCorrect}</strong></td>
-
-                                <td>${player.gamesPlayed}</td>
-
-                                <td>${player.accuracy}%</td>
+                                <td class="amount">${formatMoney(player.totalWinnings)}</td>
                             </tr>
                         `;
                     }).join("")}
@@ -2735,14 +2414,8 @@ function renderRankings() {
     `;
 }
 
-/* =========================================================
-   HOME LEADERBOARD PREVIEW
-========================================================= */
-
 function renderHomeRankingPreview() {
-    const container =
-        document.getElementById("homeRankingPreview");
-
+    const container = document.getElementById("homeRankingPreview");
     if (!container) return;
 
     const players = getRankedPlayers().slice(0, 5);
@@ -2755,7 +2428,6 @@ function renderHomeRankingPreview() {
                 <p>Play a KBC game to appear on the leaderboard.</p>
             </div>
         `;
-
         return;
     }
 
@@ -2766,35 +2438,19 @@ function renderHomeRankingPreview() {
                     <tr>
                         <th>Rank</th>
                         <th>Player Name</th>
-                        <th>Total Correct Answers</th>
-                        <th>Games Played</th>
+                        <th>Total Winning Amount</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     ${players.map((player, index) => `
                         <tr>
+                            <td><span class="rank-badge ${index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : ""}">${index + 1}</span></td>
                             <td>
-                                <span class="rank-badge ${
-                                    index === 0 ? "rank-1" :
-                                    index === 1 ? "rank-2" :
-                                    index === 2 ? "rank-3" : ""
-                                }">
-                                    ${index + 1}
-                                </span>
-                            </td>
-
-                            <td>
-                                <button class="player-link"
-                                    data-player-key="${escapeHtml(player.key)}"
-                                    onclick="showKbcHistory();openPlayerDetailsByKey(this.dataset.playerKey)">
+                                <button class="player-link" onclick="showKbcHistory();openPlayerDetailsByKey('${escapeHtml(player.key)}')">
                                     ${escapeHtml(player.playerName)}
                                 </button>
                             </td>
-
-                            <td><strong>${player.totalCorrect}</strong></td>
-
-                            <td>${player.gamesPlayed}</td>
+                            <td class="amount">${formatMoney(player.totalWinnings)}</td>
                         </tr>
                     `).join("")}
                 </tbody>
@@ -2804,13 +2460,11 @@ function renderHomeRankingPreview() {
 }
 
 /* =========================================================
-   PLAYER RECORD PANEL
+   PLAYER DETAILS
 ========================================================= */
 
 function openPlayerDetailsByKey(key) {
-    const player = getPlayerGroups().find(
-        group => group.key === key
-    );
+    const player = getPlayerGroups().find(group => group.key === key);
 
     if (!player) {
         alert("Player record not found.");
@@ -2818,16 +2472,18 @@ function openPlayerDetailsByKey(key) {
     }
 
     selectedPlayerName = player.playerName;
+    currentPlayerGames = [...player.games].sort(
+        (a, b) => (Number(b.timestamp) || 0) - (Number(a.timestamp) || 0)
+    );
+
+    currentPlayerPage = 1;
 
     document.getElementById("playerGameSearch").value = "";
     document.getElementById("playerGameFilter").value = "all";
     document.getElementById("playerGameSort").value = "newest";
 
-    document.getElementById("singleGameDetailPanel")
-        .classList.add("hidden");
-
-    document.getElementById("playerDetailPanel")
-        .classList.remove("hidden");
+    document.getElementById("singleGameDetailPanel").classList.add("hidden");
+    document.getElementById("playerDetailPanel").classList.remove("hidden");
 
     const initials = player.playerName
         .split(/\s+/)
@@ -2837,38 +2493,28 @@ function openPlayerDetailsByKey(key) {
 
     document.getElementById("playerProfile").innerHTML = `
         <div class="player-profile">
-
-            <div class="avatar">
-                ${escapeHtml(initials || "?")}
-            </div>
-
+            <div class="avatar">${escapeHtml(initials || "?")}</div>
             <div class="profile-details">
                 <h3>${escapeHtml(player.playerName)}</h3>
-                <p>
-                    Player Profile ·
-                    ${player.gamesPlayed}
-                    Recorded ${player.gamesPlayed === 1 ? "Game" : "Games"}
-                </p>
+                <p>Player profile · ${player.gamesPlayed} recorded ${player.gamesPlayed === 1 ? "game" : "games"}</p>
             </div>
-
-            <span class="badge" style="margin:0">
-                KBC PLAYER
-            </span>
-
+            <span class="badge" style="margin:0">KBC PLAYER</span>
         </div>
     `;
 
-    document.getElementById("playerRankValue").textContent =
-        "#" + getPlayerRank(player.key);
+    const rank = getPlayerRank(player.key);
 
-    document.getElementById("playerTotalCorrect").textContent =
-        player.totalCorrect.toLocaleString("en-IN");
+    document.getElementById("playerRankValue").textContent =
+        rank > 0 ? "#" + rank : "—";
+
+    document.getElementById("playerTotalWinnings").textContent =
+        formatMoney(player.totalWinnings);
 
     document.getElementById("playerGamesPlayed").textContent =
         player.gamesPlayed.toLocaleString("en-IN");
 
-    document.getElementById("playerAverageAccuracy").textContent =
-        player.accuracy + "%";
+    document.getElementById("playerHighestWin").textContent =
+        formatMoney(player.highestWin);
 
     renderPlayerGames();
 
@@ -2880,41 +2526,27 @@ function openPlayerDetailsByKey(key) {
 
 function closePlayerDetails() {
     selectedPlayerName = null;
-
-    document.getElementById("playerDetailPanel")
-        .classList.add("hidden");
-
-    document.getElementById("singleGameDetailPanel")
-        .classList.add("hidden");
+    document.getElementById("playerDetailPanel").classList.add("hidden");
+    document.getElementById("singleGameDetailPanel").classList.add("hidden");
 }
-
-/* =========================================================
-   INDIVIDUAL PLAYER GAME TABLE
-========================================================= */
 
 function renderPlayerGames() {
     if (!selectedPlayerName) return;
 
-    const key = nameKey(selectedPlayerName);
-
+    const playerKey = nameKey(selectedPlayerName);
     const search = normalizeName(
         document.getElementById("playerGameSearch").value
     ).toLowerCase();
 
-    const filter =
-        document.getElementById("playerGameFilter").value;
-
-    const sort =
-        document.getElementById("playerGameSort").value;
+    const filter = document.getElementById("playerGameFilter").value;
+    const sort = document.getElementById("playerGameSort").value;
 
     let games = loadHistory().filter(game =>
-        nameKey(game.playerName) === key
+        nameKey(game.playerName) === playerKey
     );
 
     if (filter !== "all") {
-        games = games.filter(game =>
-            game.endingReason === filter
-        );
+        games = games.filter(game => game.endingReason === filter);
     }
 
     if (search) {
@@ -2927,21 +2559,15 @@ function renderPlayerGames() {
 
     if (sort === "oldest") {
         games.sort((a, b) => a.timestamp - b.timestamp);
-    } else if (sort === "correct") {
-        games.sort((a, b) =>
-            b.correctAnswers - a.correctAnswers
-        );
-    } else if (sort === "accuracy") {
-        games.sort((a, b) =>
-            calculateAccuracy(b.correctAnswers, b.answeredQuestions) -
-            calculateAccuracy(a.correctAnswers, a.answeredQuestions)
-        );
+    } else if (sort === "highest") {
+        games.sort((a, b) => b.winnings - a.winnings);
+    } else if (sort === "lowest") {
+        games.sort((a, b) => a.winnings - b.winnings);
     } else {
         games.sort((a, b) => b.timestamp - a.timestamp);
     }
 
-    const container =
-        document.getElementById("playerGameTableContainer");
+    const container = document.getElementById("playerGameTableContainer");
 
     if (!games.length) {
         container.innerHTML = `
@@ -2951,7 +2577,6 @@ function renderPlayerGames() {
                 <p>Try changing your search or filter settings.</p>
             </div>
         `;
-
         return;
     }
 
@@ -2963,46 +2588,28 @@ function renderPlayerGames() {
                         <th>Sl. No.</th>
                         <th>Game ID</th>
                         <th>Date &amp; Time</th>
+                        <th>Winning Amount</th>
                         <th>Correct Answers</th>
-                        <th>Total Questions</th>
-                        <th>Accuracy</th>
                         <th>Game Status</th>
                         <th class="no-print">Action</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     ${games.map((game, index) => `
                         <tr>
                             <td>${index + 1}</td>
-
                             <td>${escapeHtml(game.id || "N/A")}</td>
-
                             <td>${escapeHtml(formatDate(game.timestamp))}</td>
-
-                            <td>
-                                <strong>${Number(game.correctAnswers || 0)}</strong>
-                            </td>
-
-                            <td>${Number(game.totalQuestions || 0)}</td>
-
-                            <td>
-                                ${calculateAccuracy(
-                                    game.correctAnswers,
-                                    game.answeredQuestions
-                                )}%
-                            </td>
-
+                            <td class="amount">${formatMoney(game.winnings)}</td>
+                            <td>${Number(game.correctAnswers || 0)} / ${Number(game.totalQuestions || 0)}</td>
                             <td>
                                 <span class="status ${statusClass(game.endingReason)}">
                                     ${escapeHtml(statusLabel(game.endingReason))}
                                 </span>
                             </td>
-
                             <td class="no-print">
                                 <button class="btn btn-outline btn-small"
-                                    data-game-id="${escapeHtml(game.id)}"
-                                    onclick="viewSingleGame(this.dataset.gameId)">
+                                    onclick="viewSingleGame('${escapeHtml(game.id)}')">
                                     View Details
                                 </button>
                             </td>
@@ -3011,10 +2618,8 @@ function renderPlayerGames() {
                 </tbody>
             </table>
         </div>
-
         <p class="muted" style="font-size:12px;margin-top:12px">
-            Showing ${games.length}
-            matching ${games.length === 1 ? "game record" : "game records"}.
+            Showing ${games.length} matching game record${games.length === 1 ? "" : "s"}.
         </p>
     `;
 }
@@ -3024,138 +2629,64 @@ function renderPlayerGames() {
 ========================================================= */
 
 function viewSingleGame(gameId) {
-    const game = loadHistory().find(
-        item => item.id === gameId
-    );
+    const game = loadHistory().find(item => item.id === gameId);
 
     if (!game) {
         alert("This game record could not be found.");
         return;
     }
 
-    const answers = Array.isArray(game.answers)
-        ? game.answers
-        : [];
+    const answers = Array.isArray(game.answers) ? game.answers : [];
 
-    document.getElementById("singleGameDetailPanel")
-        .classList.remove("hidden");
+    document.getElementById("singleGameDetailPanel").classList.remove("hidden");
 
     document.getElementById("singleGameDetailContent").innerHTML = `
         <div class="stat-grid">
-
             <div class="stat-card">
                 <div class="stat-label">Player Name</div>
-                <div class="stat-value" style="font-size:18px">
-                    ${escapeHtml(game.playerName)}
-                </div>
+                <div class="stat-value" style="font-size:18px">${escapeHtml(game.playerName)}</div>
             </div>
-
+            <div class="stat-card">
+                <div class="stat-label">Winning Amount</div>
+                <div class="stat-value">${formatMoney(game.winnings)}</div>
+            </div>
             <div class="stat-card">
                 <div class="stat-label">Correct Answers</div>
-                <div class="stat-value">
-                    ${Number(game.correctAnswers || 0)}
-                </div>
+                <div class="stat-value">${Number(game.correctAnswers || 0)} / ${Number(game.totalQuestions || 0)}</div>
             </div>
-
             <div class="stat-card">
-                <div class="stat-label">Total Questions</div>
-                <div class="stat-value">
-                    ${Number(game.totalQuestions || 0)}
-                </div>
+                <div class="stat-label">Game Status</div>
+                <div class="stat-value" style="font-size:18px">${escapeHtml(statusLabel(game.endingReason))}</div>
             </div>
-
-            <div class="stat-card">
-                <div class="stat-label">Accuracy</div>
-                <div class="stat-value">
-                    ${calculateAccuracy(
-                        game.correctAnswers,
-                        game.answeredQuestions
-                    )}%
-                </div>
-            </div>
-
         </div>
 
-        <p>
-            <strong>Game ID:</strong>
-            ${escapeHtml(game.id)}
-        </p>
-
-        <p>
-            <strong>Date &amp; Time:</strong>
-            ${escapeHtml(formatDate(game.timestamp))}
-        </p>
-
-        <p>
-            <strong>Questions Answered:</strong>
-            ${Number(game.answeredQuestions || 0)}
-        </p>
-
-        <p>
-            <strong>Game Status:</strong>
-            ${escapeHtml(statusLabel(game.endingReason))}
-        </p>
-
-        <p>
-            <strong>50:50 Lifeline Used:</strong>
-            ${game.lifelinesUsed?.fiftyFifty ? "Yes" : "No"}
-        </p>
-
-        <p>
-            <strong>Audience Poll Used:</strong>
-            ${game.lifelinesUsed?.audience ? "Yes" : "No"}
-        </p>
+        <p><strong>Game ID:</strong> ${escapeHtml(game.id)}</p>
+        <p><strong>Date &amp; Time:</strong> ${escapeHtml(formatDate(game.timestamp))}</p>
+        <p><strong>Questions Answered:</strong> ${Number(game.answeredQuestions || 0)}</p>
+        <p><strong>50:50 Lifeline Used:</strong> ${game.lifelinesUsed?.fiftyFifty ? "Yes" : "No"}</p>
+        <p><strong>Audience Poll Used:</strong> ${game.lifelinesUsed?.audience ? "Yes" : "No"}</p>
 
         <h3 style="margin-top:25px">Answer Review</h3>
 
-        ${
-            answers.length
-                ? answers.map((answer, index) => `
-                    <div class="review-item">
-                        <h4>
-                            ${index + 1}.
-                            ${escapeHtml(answer.question)}
-                        </h4>
-
-                        <p>
-                            <strong>Your Answer:</strong>
-                            ${escapeHtml(
-                                answer.options?.[answer.selectedIndex] ||
-                                "Not Answered"
-                            )}
-                        </p>
-
-                        <p>
-                            <strong>Correct Answer:</strong>
-                            ${escapeHtml(
-                                answer.options?.[answer.correctIndex] ||
-                                "Unavailable"
-                            )}
-                        </p>
-
-                        <span class="status ${
-                            answer.isCorrect
-                                ? "status-completed"
-                                : "status-wrong"
-                        }">
-                            ${answer.isCorrect ? "Correct" : "Incorrect"}
-                        </span>
-
-                        ${
-                            answer.explanation
-                                ? `<p class="muted">${escapeHtml(answer.explanation)}</p>`
-                                : ""
-                        }
-                    </div>
-                `).join("")
-                : `
-                    <div class="empty-state">
-                        <p>
-                            No answer-level details were stored for this game.
-                        </p>
-                    </div>
-                `
-        }
+        ${answers.length ? answers.map((answer, index) => `
+            <div class="review-item">
+                <h4>${index + 1}. ${escapeHtml(answer.question)}</h4>
+                <p><strong>Your Answer:</strong>
+                    ${escapeHtml(answer.options?.[answer.selectedIndex] || "Not Answered")}
+                </p>
+                <p><strong>Correct Answer:</strong>
+                    ${escapeHtml(answer.options?.[answer.correctIndex] || "Unavailable")}
+                </p>
+                <span class="status ${answer.isCorrect ? "status-completed" : "status-wrong"}">
+                    ${answer.isCorrect ? "Correct" : "Incorrect"}
+                </span>
+                ${answer.explanation ? `<p class="muted">${escapeHtml(answer.explanation)}</p>` : ""}
+            </div>
+        `).join("") : `
+            <div class="empty-state">
+                <p>No answer-level details were stored for this game.</p>
+            </div>
+        `}
     `;
 
     document.getElementById("singleGameDetailPanel").scrollIntoView({
@@ -3165,8 +2696,7 @@ function viewSingleGame(gameId) {
 }
 
 function closeSingleGameDetails() {
-    document.getElementById("singleGameDetailPanel")
-        .classList.add("hidden");
+    document.getElementById("singleGameDetailPanel").classList.add("hidden");
 }
 
 /* =========================================================
@@ -3174,13 +2704,10 @@ function closeSingleGameDetails() {
 ========================================================= */
 
 function printRankings() {
-    const oldTitle = document.title;
-
+    const previous = document.title;
     document.title = "KBC Player Rankings";
-
     window.print();
-
-    document.title = oldTitle;
+    document.title = previous;
 }
 
 /* =========================================================
@@ -3189,7 +2716,6 @@ function printRankings() {
 
 renderHomeRankingPreview();
 loadQuestionBank();
-
 </script>
 
 </body>
