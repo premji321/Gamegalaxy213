@@ -3,1608 +3,925 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d32">
 <title>MCQ QUIZ PRO ULTIMATE</title>
-
 <style>
 :root{
-  --bg:#0b1020;
-  --panel:#151e35;
-  --panel2:#1d2945;
-  --text:#f4f7ff;
-  --muted:#aab6d3;
-  --primary:#6c8cff;
-  --green:#20c997;
-  --red:#ff5d73;
-  --gold:#ffc857;
+ --navy:#080d32;--blue:#315efb;--cyan:#16c7e8;--gold:#ffc857;
+ --green:#13b981;--red:#ff4d67;--bg:#f1f5fc;--text:#17213b;
+ --border:#e2e8f0;--muted:#718096;--shadow:0 10px 35px #10204415
 }
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:linear-gradient(135deg,#080d1a,#111b35);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-  min-height:100vh;
-}
-button,input,select{font:inherit}
-button{
-  border:0;
-  border-radius:10px;
-  padding:12px 17px;
-  cursor:pointer;
-  font-weight:bold;
-  transition:.2s;
-}
-button:hover{filter:brightness(1.12);transform:translateY(-1px)}
-button:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.primary{background:var(--primary);color:white}
-.success{background:var(--green);color:#061b16}
-.danger{background:var(--red);color:white}
-.gold{background:var(--gold);color:#261900}
-.secondary{background:#344362;color:white}
-.full{width:100%}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;border:0}
+button:disabled{opacity:.5;cursor:not-allowed}
 .hidden{display:none!important}
-.container{width:min(1100px,94%);margin:auto;padding:22px 0}
-header{
-  background:#101a30;
-  border-bottom:1px solid #2b3857;
-  padding:15px 4%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.brand{font-size:21px;font-weight:900;letter-spacing:1px}
-.brand span{color:var(--gold)}
-.card{
-  background:var(--panel);
-  border:1px solid #2c3a5b;
-  border-radius:16px;
-  padding:22px;
-  margin:15px 0;
-  box-shadow:0 10px 30px #0003;
-}
-h1,h2,h3{margin-top:0}
-.muted{color:var(--muted)}
-.small{font-size:13px}
-.center{text-align:center}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-}
-input,select{
-  width:100%;
-  background:#0d162b;
-  color:white;
-  border:1px solid #3b4c70;
-  border-radius:9px;
-  padding:13px;
-  margin:7px 0 14px;
-  outline:none;
-}
-input:focus,select:focus{border-color:var(--primary)}
-label{display:block;font-size:14px;color:var(--muted)}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap}
-.stat{
-  background:#202e4c;
-  border-radius:12px;
-  padding:15px;
-}
-.stat strong{font-size:25px;display:block;color:var(--gold)}
-.mode-card{
-  background:linear-gradient(145deg,#202e4c,#151e35);
-  border:1px solid #39496e;
-  padding:22px;
-  border-radius:15px;
-}
-.mode-card h3{color:var(--gold)}
-.question{
-  font-size:20px;
-  line-height:1.5;
-  margin:20px 0;
-}
-.option{
-  display:block;
-  width:100%;
-  text-align:left;
-  margin:10px 0;
-  background:#263654;
-  color:white;
-  border:1px solid #405275;
-  padding:15px;
-  border-radius:10px;
-}
-.option.selected{border:2px solid var(--gold);background:#3a3b48}
-.option.correct{background:#126b50;border-color:#20c997}
-.option.wrong{background:#812f43;border-color:#ff5d73}
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.timer{
-  color:var(--gold);
-  font-size:22px;
-  font-weight:bold;
-}
-.palette{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(40px,1fr));
-  gap:7px;
-  margin-top:15px;
-}
-.palette button{
-  padding:10px 4px;
-  background:#344362;
-  color:white;
-}
-.palette button.answered{background:#14795b}
-.palette button.flagged{outline:2px solid var(--gold)}
-.palette button.current{background:var(--primary)}
-.progress{
-  height:8px;background:#33415e;border-radius:20px;overflow:hidden;
-}
-.progress div{height:100%;background:var(--green);width:0}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:500px}
-th,td{padding:12px;border-bottom:1px solid #344362;text-align:left}
-th{color:var(--gold)}
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  background:#344362;
-  font-size:12px;
-}
-.prize-ladder{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:6px;
-}
-.prize{
-  padding:8px;
-  background:#263654;
-  border-radius:7px;
-  text-align:center;
-  font-size:13px;
-}
-.prize.active{background:#b17b16;color:#160f00;font-weight:bold}
-.kbc-option{
-  background:#182b55;
-  border:1px solid #526ca3;
-  color:white;
-  border-radius:25px;
-  padding:14px;
-  text-align:left;
-  width:100%;
-  margin:7px 0;
-}
-.kbc-option.correct{background:#126b50}
-.kbc-option.wrong{background:#812f43}
-.toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#263654;
-  border:1px solid #60739c;
-  padding:13px 20px;
-  border-radius:12px;
-  z-index:1000;
-  display:none;
-}
-footer{text-align:center;color:var(--muted);padding:25px}
+.topbar{background:linear-gradient(120deg,var(--navy),#18265e);color:white;padding:17px;position:sticky;top:0;z-index:10}
+.topbar-inner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.topbar h1{font-size:19px}.topbar p{font-size:11px;color:#cbd5ff;margin-top:5px}
+.status{font-size:11px}
+.container{max-width:1200px;margin:25px auto;padding:0 15px 40px}
+.hero{padding:30px;background:linear-gradient(120deg,#101b4a,#315efb);color:white;border-radius:20px;margin-bottom:20px;box-shadow:var(--shadow)}
+.hero h2{font-size:clamp(25px,4vw,38px);margin-bottom:12px}
+.hero p{font-size:13px;line-height:1.9}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat,.card,.mode-card,.sidebar{background:white;border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--shadow);min-width:0}
+.stat strong{display:block;font-size:25px;margin:10px 0}
+.stat span,.muted{font-size:12px;color:var(--muted)}
+.mode-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:20px 0}
+.mode-card{cursor:pointer;transition:.2s}.mode-card:hover{transform:translateY(-3px);border-color:var(--blue)}
+.mode-card h3{margin:12px 0}.mode-card p{font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:16px}
+.mode-icon{font-size:35px}.kbc-mode{background:linear-gradient(145deg,#080d32,#1c2870);color:white;border-color:#ffc857}
+.kbc-mode p{color:#dbe4ff}
+.btn{padding:12px 16px;border-radius:9px;background:var(--blue);color:white;font-weight:bold;font-size:12px}
+.btn-green{background:var(--green)}.btn-gold{background:linear-gradient(120deg,#ffc857,#ff9f1c);color:#20143d}
+.btn-red{background:var(--red);color:white}.btn-light{background:#edf2ff;color:#2448d8}
+.btn-dark{background:var(--navy);color:white}.full{width:100%}
+.card{margin-bottom:18px}.card h3{margin-bottom:15px}
+.form-group{margin-bottom:17px}label{font-size:13px;font-weight:bold}
+input[type=text],select{display:block;width:100%;padding:13px;border:1px solid #d8dfeb;border-radius:10px;background:white;margin-top:8px;outline:none}
+input:focus,select:focus{border-color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.choice{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;font-size:12px;line-height:1.7}
+.choice input{margin-top:3px;accent-color:var(--blue);width:16px;height:16px;flex-shrink:0}
+.choice:has(input:checked){background:#edf2ff;border-color:var(--blue)}
+.chapter-group{border:1px solid var(--border);padding:13px;border-radius:11px;margin-bottom:12px}
+.chapter-group h4{margin-bottom:10px}.chapter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.info{padding:13px;background:#fff8e7;border:1px solid #f5dfa1;color:#875d05;border-radius:9px;font-size:12px;line-height:1.8;margin-bottom:15px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar button{padding:8px 10px;border-radius:7px;background:#edf2ff;color:#2448d8;font-size:11px}
+.selection-tools{display:flex;gap:7px;flex-wrap:wrap}
+.selection-tools button{padding:7px 10px;border-radius:7px;background:#edf2ff;color:#2448d8;font-size:11px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}
+.sidebar{margin-bottom:15px}.sidebar h3{font-size:14px;margin-bottom:12px}
+.sidebar p{font-size:12px;padding:9px 0;border-bottom:1px solid var(--border);line-height:1.7}
+.quiz-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.badge,.timer{padding:9px 12px;border-radius:8px;background:#edf2ff;color:var(--blue);font-size:12px;font-weight:bold}
+.timer{background:#fff0f0;color:#c52c37}
+.progress{height:7px;background:#e9edf5;border-radius:9px;overflow:hidden;margin:20px 0}
+.progress div{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0}
+.question{font-size:19px;line-height:1.8;margin:18px 0}
+.options{display:grid;gap:10px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:13px;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:13px;line-height:1.8}
+.option.selected{background:#edf2ff;border-color:var(--blue)}
+.option.correct{background:#d8f7e8;border-color:var(--green)}
+.option.wrong{background:#ffe3e3;border-color:var(--red)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.actions button{flex:1;min-width:100px;padding:12px;border-radius:9px;font-size:12px;font-weight:bold}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.palette button{aspect-ratio:1;border-radius:7px;background:#edf0f7}
+.palette button.answered{background:#d8f7e8}.palette button.current{outline:2px solid var(--blue)}
+.result-hero{text-align:center;padding:28px;background:linear-gradient(135deg,#142450,#315efb);color:white;border-radius:18px;margin-bottom:18px}
+.result-hero h2{margin-bottom:15px}
+.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.result-stat{text-align:center;background:#f6f8fc;padding:15px 5px;border-radius:10px}
+.result-stat strong{display:block;font-size:22px;margin-bottom:5px}
+.result-stat span{font-size:10px;color:var(--muted)}
+.review-item{padding:15px;border:1px solid var(--border);border-radius:12px;margin:12px 0;line-height:1.9;font-size:13px}
+.review-item .correct-answer{background:#d8f7e8}.review-item .wrong-answer{background:#ffe3e3}
+#kbcScreen{background:radial-gradient(ellipse at top,#273ca3,#11184b 45%,#050923);padding:18px;border-radius:22px;color:white}
+.kbc-header{text-align:center;padding:20px 10px}
+.kbc-logo{width:80px;height:80px;border-radius:50%;margin:auto auto 15px;display:grid;place-items:center;background:linear-gradient(135deg,#fff2b0,#ffc857);color:#1b1450;font-size:36px;font-weight:bold}
+.kbc-header h2{color:#fff2b0;font-size:clamp(22px,4vw,35px);margin-bottom:10px}
+.kbc-header p{font-size:12px;color:#d5ddff;line-height:1.8}
+.kbc-stage{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:15px}
+.kbc-status{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kbc-status div{padding:12px 5px;text-align:center;background:#ffffff0c;border:1px solid #7186ff50;border-radius:10px}
+.kbc-status span{display:block;font-size:10px;color:#bbc8ff;margin-bottom:7px}
+.kbc-status strong{color:#ffe29a;font-size:15px;overflow-wrap:anywhere}
+.kbc-question-box{background:linear-gradient(145deg,#18266b,#111a4c);border:2px solid #6478ff;padding:22px 15px;border-radius:18px;text-align:center;margin-bottom:14px}
+.kbc-question-label{display:inline-block;padding:7px 13px;border-radius:25px;background:#ffc85718;color:#ffe29a;margin-bottom:15px;font-size:11px}
+.kbc-question{font-size:clamp(17px,3vw,23px);line-height:1.9;font-weight:bold;overflow-wrap:anywhere}
+.kbc-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:15px}
+.kbc-option{min-width:0;min-height:65px;padding:13px;display:flex;align-items:center;gap:10px;border:2px solid #4d60ce;border-radius:13px;color:white;background:#17245f;font-size:12px;line-height:1.8;text-align:left;overflow-wrap:anywhere}
+.kbc-option:disabled{opacity:1}
+.kbc-option.correct{background:linear-gradient(120deg,#08784f,#13b981);border-color:#6dffc7}
+.kbc-option.wrong{background:linear-gradient(120deg,#a71936,#ff4d67);border-color:#ffadb9}
+.kbc-option .letter{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;color:#ffe29a;border:1px solid #ffc85765}
+.kbc-host{padding:15px;border:1px solid #6478ff55;border-radius:12px;background:#ffffff0c;color:#e5eaff;font-size:13px;line-height:1.9;text-align:center;margin-bottom:14px;white-space:pre-line}
+.kbc-host strong{color:#ffe29a}
+.kbc-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.kbc-actions button{padding:12px;border-radius:9px;font-size:12px;font-weight:bold}
+.kbc-side{background:#ffffff08;border:1px solid #7186ff45;border-radius:14px;padding:14px}
+.kbc-side h3{color:#ffe29a;font-size:14px;margin-bottom:13px}
+.prize-level{display:flex;justify-content:space-between;gap:8px;padding:8px;border:1px solid #ffffff14;background:#ffffff07;border-radius:7px;color:#d7deff;font-size:10px;margin-bottom:5px}
+.prize-level strong{text-align:right}
+.prize-level.current{background:linear-gradient(120deg,#ffca58,#ff9f1c);color:#17143d}
+.prize-level.won{border-color:#13b98170;color:#8fffd2}
+.kbc-result{padding:22px;border:2px solid #ffc857;border-radius:17px;text-align:center;margin-top:20px}
+.kbc-result h2{color:#ffe29a;margin-bottom:15px}
+.kbc-result strong{font-size:30px;color:#ffc857;display:block;margin:15px}
+.history-record{padding:15px;border:1px solid var(--border);border-radius:11px;margin:10px 0;background:#f8faff;line-height:1.9;overflow-wrap:anywhere}
+.history-record h4{margin-bottom:6px}
+.empty{text-align:center;padding:20px;border:1px dashed var(--border);border-radius:10px;color:var(--muted);font-size:12px;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#142450;color:white;padding:13px 18px;border-radius:10px;font-size:12px;z-index:100;max-width:90%;text-align:center}
+@media(max-width:850px){.layout,.kbc-stage{grid-template-columns:1fr}.kbc-side{max-width:none}}
 @media(max-width:600px){
-  .container{width:92%;padding:12px 0}
-  .card{padding:16px}
-  .brand{font-size:17px}
-  .question{font-size:18px}
+ .mode-grid,.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}
+ .chapter-grid{grid-template-columns:1fr}.result-grid{grid-template-columns:repeat(2,1fr)}
+ .kbc-options{grid-template-columns:1fr}.kbc-status{grid-template-columns:1fr}
+ .kbc-actions{grid-template-columns:1fr 1fr}.container{padding:0 10px 25px}
+ .hero{padding:22px 17px}.card{padding:15px}
+}
+@media print{
+ .topbar,footer,.actions,.sidebar,#homeScreen,#schoolScreen,#competitiveScreen,#kbcSetupScreen,#kbcScreen{display:none!important}
 }
 </style>
 </head>
-
 <body>
 
-<header>
-  <div class="brand">MCQ QUIZ <span>PRO ULTIMATE</span></div>
-  <div id="headerUser" class="small muted">Please login</div>
+<header class="topbar">
+ <div class="topbar-inner">
+  <div><h1>🎓 MCQ QUIZ PRO ULTIMATE</h1><p>School · Competitive · KBC Game Show</p></div>
+  <div id="status" class="status">● Loading</div>
+ </div>
 </header>
 
 <main class="container">
 
-<!-- LOGIN SCREEN -->
-<section id="authScreen">
-  <div class="card" style="max-width:480px;margin:35px auto">
-    <div class="center">
-      <h1>MCQ QUIZ PRO</h1>
-      <p class="muted">Your personal learning and quiz platform</p>
-    </div>
-
-    <div id="loginPanel">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <label>Username</label>
-        <input id="loginName" type="text" placeholder="Enter your name" required>
-
-        <label>Password</label>
-        <input id="loginPassword" type="password" placeholder="Enter password" required>
-
-        <button class="primary full" type="submit">LOGIN →</button>
-      </form>
-      <p class="center muted">New user?
-        <a href="#" onclick="showRegister();return false" style="color:#8ea9ff">Create an account</a>
-      </p>
-    </div>
-
-    <div id="registerPanel" class="hidden">
-      <h2>Create Account</h2>
-      <form id="registerForm">
-        <label>Full Name</label>
-        <input id="registerName" type="text" placeholder="Enter your name" required>
-
-        <label>Mobile Number</label>
-        <input id="registerMobile" type="tel" inputmode="numeric"
-          maxlength="10" placeholder="10 digit mobile number" required>
-
-        <label>Password</label>
-        <input id="registerPassword" type="password"
-          minlength="4" placeholder="Create password" required>
-
-        <label>Confirm Password</label>
-        <input id="confirmPassword" type="password"
-          minlength="4" placeholder="Confirm password" required>
-
-        <button class="success full" type="submit">REGISTER</button>
-      </form>
-      <p class="center muted">Already registered?
-        <a href="#" onclick="showLogin();return false" style="color:#8ea9ff">Login here</a>
-      </p>
-    </div>
+<section id="homeScreen">
+ <div class="hero">
+  <h2>Your Preparation, Your Test! 🚀</h2>
+  <p>Create school examinations, competitive practice tests and an exciting KBC-style quiz show. Select subjects, chapters and difficulty levels.</p>
+ </div>
+ <div class="stats">
+  <div class="stat">📚<strong id="statQuestions">0</strong><span>Total Questions</span></div>
+  <div class="stat">🏫<strong id="statClasses">0</strong><span>School Classes</span></div>
+  <div class="stat">📖<strong id="statSubjects">0</strong><span>Subjects</span></div>
+  <div class="stat">🗂️<strong id="statChapters">0</strong><span>Chapters / Topics</span></div>
+ </div>
+ <h2>Choose Your Experience</h2>
+ <div class="mode-grid">
+  <div class="mode-card" onclick="openSchool()">
+   <div class="mode-icon">🏫</div><h3>School Student</h3>
+   <p>Classes 6–12 के लिए class, subjects, chapters और difficulty के अनुसार test बनाइए।</p>
+   <button class="btn btn-green full">Open School Section →</button>
   </div>
+  <div class="mode-card" onclick="openCompetitive()">
+   <div class="mode-icon">🎯</div><h3>Competitive Student</h3>
+   <p>BPSC, UPSC, SSC, Railway और अन्य competitive examinations की तैयारी कीजिए।</p>
+   <button class="btn full">Open Competitive Section →</button>
+  </div>
+  <div class="mode-card kbc-mode" onclick="openKBCSetup()">
+   <div class="mode-icon">🏆</div><h3>KBC Quiz Show</h3>
+   <p>सही जवाब दीजिए, Lifelines इस्तेमाल कीजिए और ₹100 करोड़ तक पहुँचिए।</p>
+   <button class="btn btn-gold full">Enter KBC Game Show →</button>
+  </div>
+ </div>
+ <div class="card">
+  <h3>📡 Question Bank Status</h3>
+  <p id="dataInfo" class="muted" style="margin-bottom:14px">Loading questions...</p>
+  <button class="btn btn-light" id="reloadButton">↻ Reload Questions</button>
+ </div>
 </section>
 
-<!-- HOME DASHBOARD -->
-<section id="homeScreen" class="hidden">
-  <div class="card">
-    <div class="topbar">
-      <div>
-        <h2 id="homeWelcome">Welcome!</h2>
-        <p class="muted">Select your quiz mode and start learning.</p>
-      </div>
-      <button class="danger" onclick="logout()">Logout</button>
-    </div>
-  </div>
-
-  <div class="grid">
-    <div class="mode-card">
-      <h3>🏫 School Quiz</h3>
-      <p class="muted">Class-wise, subject-wise and chapter-wise practice.</p>
-      <button class="primary full" onclick="openSetup('school')">Start School Quiz</button>
-      <button class="secondary full" style="margin-top:8px" onclick="openHistory('school')">School History</button>
-    </div>
-
-    <div class="mode-card">
-      <h3>🎯 Competitive Quiz</h3>
-      <p class="muted">Practice for competitive examinations with negative marking.</p>
-      <button class="primary full" onclick="openSetup('competitive')">Start Competitive Quiz</button>
-      <button class="secondary full" style="margin-top:8px" onclick="openHistory('competitive')">Competitive History</button>
-    </div>
-
-    <div class="mode-card">
-      <h3>🎤 KBC Game</h3>
-      <p class="muted">Play the quiz game with lifelines and a prize ladder.</p>
-      <button class="gold full" onclick="openSetup('kbc')">Play KBC</button>
-      <button class="secondary full" style="margin-top:8px" onclick="openHistory('kbc')">KBC History</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>My Dashboard</h3>
-    <div class="grid">
-      <div class="stat"><strong id="totalTests">0</strong><span class="muted">Total Tests</span></div>
-      <div class="stat"><strong id="bestScore">0</strong><span class="muted">Best Score</span></div>
-      <div class="stat"><strong id="totalKBC">0</strong><span class="muted">KBC Games</span></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>Player Ranking</h3>
-    <p class="muted small">Ranking is based on the highest KBC prize level reached.</p>
-    <div id="rankingPreview"></div>
-  </div>
+<section id="schoolScreen" class="hidden">
+ <button class="btn btn-light" onclick="showScreen('homeScreen')">← Home</button>
+ <div class="hero" style="margin-top:15px"><h2>🏫 School Student</h2><p>Choose class, subjects, chapters and difficulty.</p></div>
+ <div class="card"><h3>1. Select Class</h3><select id="classSelect"><option value="">-- Select Class --</option></select></div>
+ <div class="card">
+  <div class="toolbar"><h3>2. Difficulty Level</h3><div class="selection-tools"><button onclick="selectAll('schoolLevel',true)">Select All</button><button onclick="selectAll('schoolLevel',false)">Deselect All</button></div></div>
+  <div id="schoolLevels" class="grid"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>3. Select Subjects</h3><div class="selection-tools"><button onclick="selectAll('schoolSubject',true)">Select All</button><button onclick="selectAll('schoolSubject',false)">Deselect All</button></div></div>
+  <div id="schoolSubjects" class="grid"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>4. Select Chapters</h3><div class="selection-tools"><button onclick="selectAll('schoolChapter',true)">Select All</button><button onclick="selectAll('schoolChapter',false)">Deselect All</button></div></div>
+  <div id="schoolChapters"></div>
+ </div>
+ <div class="card">
+  <h3>5. Test Settings</h3>
+  <label>Number of Questions</label>
+  <select id="schoolLimit"><option value="10">10</option><option value="20">20</option><option value="30" selected>30</option><option value="50">50</option><option value="100">100</option><option value="all">All Available</option></select>
+  <label style="display:block;margin-top:15px">Time Limit</label>
+  <select id="schoolTime"><option value="10">10 Minutes</option><option value="20">20 Minutes</option><option value="30" selected>30 Minutes</option><option value="60">60 Minutes</option><option value="120">120 Minutes</option><option value="0">No Time Limit</option></select>
+  <div id="schoolSummary" class="info" style="margin-top:15px">Select your test settings.</div>
+  <button class="btn btn-green full" onclick="startTest('school')">🚀 Start School Test</button>
+ </div>
 </section>
 
-<!-- QUIZ SETUP -->
-<section id="setupScreen" class="hidden">
-  <div class="card">
-    <div class="topbar">
-      <h2 id="setupTitle">Quiz Setup</h2>
-      <button class="secondary" onclick="goHome()">← Dashboard</button>
-    </div>
-
-    <div class="grid">
-      <div id="classField">
-        <label>Class</label>
-        <select id="classSelect">
-          <option value="all">All Classes</option>
-        </select>
-      </div>
-
-      <div id="subjectField">
-        <label>Subject</label>
-        <select id="subjectSelect">
-          <option value="all">All Subjects</option>
-        </select>
-      </div>
-
-      <div id="chapterField">
-        <label>Chapter</label>
-        <select id="chapterSelect">
-          <option value="all">All Chapters</option>
-        </select>
-      </div>
-
-      <div id="levelField">
-        <label>Difficulty Level</label>
-        <select id="levelSelect">
-          <option value="all">All Levels</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-      </div>
-
-      <div>
-        <label>Number of Questions</label>
-        <select id="countSelect">
-          <option value="10">10 Questions</option>
-          <option value="20">20 Questions</option>
-          <option value="30">30 Questions</option>
-          <option value="40">40 Questions</option>
-          <option value="50">50 Questions</option>
-          <option value="all">All Available</option>
-        </select>
-      </div>
-
-      <div id="timerField">
-        <label>Time Limit</label>
-        <select id="timerSelect">
-          <option value="0">No Timer</option>
-          <option value="10">10 Minutes</option>
-          <option value="20" selected>20 Minutes</option>
-          <option value="30">30 Minutes</option>
-          <option value="60">60 Minutes</option>
-        </select>
-      </div>
-    </div>
-
-    <div id="availableInfo" class="muted small"></div>
-    <button id="startQuizBtn" class="primary full" onclick="startSelectedQuiz()">START QUIZ</button>
-  </div>
+<section id="competitiveScreen" class="hidden">
+ <button class="btn btn-light" onclick="showScreen('homeScreen')">← Home</button>
+ <div class="hero" style="margin-top:15px"><h2>🎯 Competitive Exam Preparation</h2><p>Practice for BPSC, UPSC, SSC, Railway and other competitive examinations.</p></div>
+ <div class="card">
+  <h3>1. Select Examination</h3>
+  <select id="examSelect"><option>All Competitive Exams</option><option>BPSC</option><option>UPSC</option><option>SSC</option><option>Railway</option><option>Other</option></select>
+  <div class="info" style="margin-top:15px">Marking: +1 correct, −1/3 incorrect, 0 unanswered.</div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>2. Difficulty Level</h3><div class="selection-tools"><button onclick="selectAll('competitiveLevel',true)">Select All</button><button onclick="selectAll('competitiveLevel',false)">Deselect All</button></div></div>
+  <div id="competitiveLevels" class="grid"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>3. Select Subjects</h3><div class="selection-tools"><button onclick="selectAll('competitiveSubject',true)">Select All</button><button onclick="selectAll('competitiveSubject',false)">Deselect All</button></div></div>
+  <div id="competitiveSubjects" class="grid"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>4. Select Chapters</h3><div class="selection-tools"><button onclick="selectAll('competitiveChapter',true)">Select All</button><button onclick="selectAll('competitiveChapter',false)">Deselect All</button></div></div>
+  <div id="competitiveChapters"></div>
+ </div>
+ <div class="card">
+  <h3>5. Test Settings</h3>
+  <label>Number of Questions</label>
+  <select id="competitiveLimit"><option value="10">10</option><option value="20">20</option><option value="30" selected>30</option><option value="50">50</option><option value="100">100</option><option value="all">All Available</option></select>
+  <label style="display:block;margin-top:15px">Time Limit</label>
+  <select id="competitiveTime"><option value="10">10 Minutes</option><option value="20">20 Minutes</option><option value="30" selected>30 Minutes</option><option value="60">60 Minutes</option><option value="120">120 Minutes</option><option value="0">No Time Limit</option></select>
+  <div id="competitiveSummary" class="info" style="margin-top:15px">Select your test settings.</div>
+  <button class="btn full" onclick="startTest('competitive')">🚀 Generate Competitive Test</button>
+ </div>
 </section>
 
-<!-- STANDARD QUIZ -->
+<section id="kbcSetupScreen" class="hidden">
+ <button class="btn btn-light" onclick="showScreen('homeScreen')">← Home</button>
+ <div class="hero" style="margin-top:15px;background:linear-gradient(120deg,#080d32,#263ca3);border:2px solid #ffc857">
+  <h2 style="color:#ffe29a">🎙️ कौन बनेगा Quiz Champion?</h2><p>Subject, topic और difficulty चुनिए। सही जवाब दीजिए और ₹100 करोड़ तक पहुँचिए!</p>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>1. Select Subjects</h3><div class="selection-tools"><button onclick="selectAll('kbcSubject',true)">Select All</button><button onclick="selectAll('kbcSubject',false)">Deselect All</button></div></div>
+  <div id="kbcSubjects" class="grid"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>2. Select Chapters / Topics</h3><div class="selection-tools"><button onclick="selectAll('kbcChapter',true)">Select All</button><button onclick="selectAll('kbcChapter',false)">Deselect All</button></div></div>
+  <div id="kbcChapters"></div>
+ </div>
+ <div class="card">
+  <div class="toolbar"><h3>3. Difficulty Level</h3><div class="selection-tools"><button onclick="selectAll('kbcLevel',true)">Select All</button><button onclick="selectAll('kbcLevel',false)">Deselect All</button></div></div>
+  <div id="kbcLevels" class="grid"></div>
+ </div>
+ <div class="card">
+  <h3>4. Game Settings</h3>
+  <label>Number of Questions</label>
+  <select id="kbcLimit"><option value="5">5 Questions</option><option value="10" selected>10 Questions</option><option value="15">15 Questions</option><option value="20">20 Questions</option><option value="all">All Available Questions (Maximum 20)</option></select>
+  <label style="display:block;margin-top:15px">Time Per Question</label>
+  <select id="kbcTime"><option value="15">15 Seconds</option><option value="30" selected>30 Seconds</option><option value="45">45 Seconds</option><option value="60">60 Seconds</option><option value="0">No Time Limit</option></select>
+  <label for="kbcPlayerName" style="display:block;margin-top:18px">👤 Player Name</label>
+  <input type="text" id="kbcPlayerName" maxlength="60" placeholder="Enter a unique player name" autocomplete="off">
+  <div id="kbcSummary" class="info" style="margin-top:15px">Choose your subjects, topics and difficulty.</div>
+  <button class="btn btn-gold full" id="startKBC">🎵 Start KBC Game Show</button>
+  <button class="btn btn-dark full" id="kbcHistoryButton" style="margin-top:12px">📚 KBC PLAYER HISTORY</button>
+  <div id="kbcHistoryPanel" class="hidden" style="margin-top:20px">
+   <h3>📚 KBC Player History</h3><div id="kbcHistoryList"></div>
+   <button class="btn btn-light" id="kbcCloseHistory" style="margin-top:10px">Close History</button>
+  </div>
+ </div>
+</section>
+
 <section id="quizScreen" class="hidden">
+ <button class="btn btn-light" id="exitQuiz">← Exit Test</button>
+ <div class="layout" style="margin-top:15px">
   <div class="card">
-    <div class="topbar">
-      <div>
-        <span id="quizModeBadge" class="badge">School Quiz</span>
-        <h3 id="quizCounter">Question 1</h3>
-      </div>
-      <div class="timer" id="quizTimer">--:--</div>
-    </div>
-
-    <div class="progress"><div id="quizProgress"></div></div>
-    <div class="question" id="questionText"></div>
-    <div id="optionsBox"></div>
-
-    <div class="btn-row" style="margin-top:20px">
-      <button class="secondary" onclick="previousQuestion()">← Previous</button>
-      <button class="gold" onclick="toggleFlag()">⚑ Mark for Review</button>
-      <button class="primary" onclick="nextQuestion()">Next →</button>
-      <button class="danger" onclick="finishQuiz()">Submit Test</button>
-    </div>
+   <div class="quiz-top"><span class="badge" id="quizBadge">MCQ TEST</span><span class="timer" id="timer">30:00</span></div>
+   <div class="progress"><div id="progress"></div></div>
+   <div class="toolbar"><strong id="questionNumber">Question 1</strong><button class="btn btn-light" id="reviewToggle">⭐ Mark for Review</button></div>
+   <p class="muted" id="questionMeta"></p><div id="questionText" class="question"></div>
+   <div id="options" class="options"></div>
+   <div class="actions">
+    <button class="btn btn-light" id="previous">← Previous</button><button class="btn btn-light" id="clearAnswer">Clear</button>
+    <button class="btn" id="next">Next →</button><button class="btn btn-green" id="submit">Submit Test ✓</button>
+   </div>
   </div>
-
-  <div class="card">
-    <h3>Question Palette</h3>
-    <div id="questionPalette" class="palette"></div>
-    <p class="muted small">Green = Answered | Yellow outline = Marked for review</p>
-  </div>
+  <aside>
+   <div class="sidebar"><h3>📋 Question Palette</h3><div id="palette" class="palette"></div><p>Green: Answered</p><p>Blue: Current</p></div>
+   <div class="sidebar"><h3>📊 Test Progress</h3><p>Total: <strong id="liveTotal">0</strong></p><p>Answered: <strong id="liveAnswered">0</strong></p><p>Remaining: <strong id="liveRemaining">0</strong></p><p>Review: <strong id="liveReview">0</strong></p></div>
+  </aside>
+ </div>
 </section>
 
-<!-- RESULT SCREEN -->
 <section id="resultScreen" class="hidden">
-  <div class="card center">
-    <h1>Test Completed!</h1>
-    <h2 id="resultScore" style="color:var(--gold)">0 / 0</h2>
-    <p id="resultPercent" class="muted"></p>
-    <div class="grid">
-      <div class="stat"><strong id="resultCorrect">0</strong>Correct</div>
-      <div class="stat"><strong id="resultWrong">0</strong>Wrong</div>
-      <div class="stat"><strong id="resultSkipped">0</strong>Skipped</div>
-    </div>
-    <div class="btn-row" style="justify-content:center;margin-top:20px">
-      <button class="primary" onclick="showDetailedReview()">View Answers</button>
-      <button class="secondary" onclick="goHome()">Dashboard</button>
-    </div>
+ <div class="result-hero"><div style="font-size:40px">🏆</div><h2>Test Completed!</h2><h2 id="percentage">0%</h2><h3 id="performance">Keep Practicing!</h3></div>
+ <div class="card">
+  <div class="result-grid">
+   <div class="result-stat"><strong id="correctCount">0</strong><span>Correct</span></div>
+   <div class="result-stat"><strong id="wrongCount">0</strong><span>Incorrect</span></div>
+   <div class="result-stat"><strong id="skippedCount">0</strong><span>Skipped</span></div>
+   <div class="result-stat"><strong id="accuracy">0%</strong><span>Accuracy</span></div>
   </div>
-  <div id="reviewPanel" class="card hidden">
-    <h2>Detailed Answer Review</h2>
-    <div id="reviewContent"></div>
-  </div>
+  <div id="resultSummary" class="info" style="margin-top:15px"></div><p id="resultDetails" class="muted"></p>
+  <div class="actions"><button class="btn" id="showReview">Answer Analysis</button><button class="btn btn-light" id="homeButton">Home</button><button class="btn btn-green" id="retryButton">Retry</button><button class="btn btn-dark" id="printButton">Print</button></div>
+ </div>
+ <div class="card" id="reviewCard"><h3>📘 Detailed Answer Analysis</h3><div id="reviewList"></div></div>
 </section>
 
-<!-- HISTORY SCREEN -->
-<section id="historyScreen" class="hidden">
-  <div class="card">
-    <div class="topbar">
-      <h2 id="historyTitle">History</h2>
-      <button class="secondary" onclick="goHome()">← Dashboard</button>
-    </div>
-    <div id="historyContent"></div>
-  </div>
-</section>
-
-<!-- KBC GAME -->
 <section id="kbcScreen" class="hidden">
-  <div class="card">
-    <div class="topbar">
-      <div>
-        <span class="badge">KBC GAME</span>
-        <h2 id="kbcCounter">Question 1 / 15</h2>
-      </div>
-      <div class="timer" id="kbcTimer">30</div>
+ <button class="btn btn-light" id="kbcExit">← Exit KBC</button>
+ <div class="kbc-header"><div class="kbc-logo">₹</div><h2>KAUN BANEGA QUIZ CHAMPION?</h2><p id="kbcWelcome">ज्ञान ही सबसे बड़ी जीत है!</p></div>
+ <div id="kbcGameArea">
+  <div class="kbc-stage">
+   <div>
+    <div class="kbc-status">
+     <div><span>PLAYER</span><strong id="kbcPlayerDisplay">Player</strong></div>
+     <div><span>QUESTION</span><strong id="kbcQuestionNo">1 / 10</strong></div>
+     <div><span>TIME LEFT</span><strong id="kbcTimer">00:30</strong></div>
     </div>
-
+    <div class="kbc-status" style="margin-top:9px">
+     <div><span>YOUR WINNINGS</span><strong id="kbcMoney">₹0</strong></div>
+     <div><span>50:50</span><strong id="kbc5050Status">Available</strong></div>
+     <div><span>AUDIENCE POLL</span><strong id="kbcAudienceStatus">Available</strong></div>
+    </div>
     <div class="progress"><div id="kbcProgress"></div></div>
-    <div class="question" id="kbcQuestion"></div>
-    <div id="kbcOptions"></div>
-
-    <div class="btn-row" style="margin-top:18px">
-      <button class="gold" id="fiftyBtn" onclick="useFifty()">50:50</button>
-      <button class="gold" id="audienceBtn" onclick="useAudience()">Audience Poll</button>
-      <button class="secondary" onclick="quitKBC()">Quit Game</button>
+    <div class="kbc-question-box"><div class="kbc-question-label" id="kbcQuestionLabel">प्रश्न 1</div><div class="kbc-question" id="kbcQuestionText">खेल शुरू करने के लिए तैयार हो जाइए!</div></div>
+    <div class="kbc-options" id="kbcOptions"></div>
+    <div class="kbc-host" id="kbcHost"><strong>कंप्यूटर महोदय:</strong><br>आपका स्वागत है!</div>
+    <div class="kbc-actions">
+     <button class="btn btn-gold" id="kbc5050">🎯 50:50 Lifeline</button><button class="btn btn-gold" id="kbcAudience">📊 Audience Poll</button>
+     <button class="btn btn-gold" id="kbcSoundToggle">🔊 Sound: ON</button><button class="btn btn-red" id="kbcQuit">🚪 Quit Game</button>
     </div>
-    <div id="audienceResult" class="muted"></div>
+   </div>
+   <aside class="kbc-side"><h3>🏆 Prize Money Ladder</h3><div id="prizeLadder"></div></aside>
   </div>
-
-  <div class="card">
-    <h3>🏆 Prize Ladder</h3>
-    <div id="prizeLadder" class="prize-ladder"></div>
-  </div>
+ </div>
+ <div id="kbcEndPanel" class="kbc-result hidden">
+  <h2 id="kbcEndTitle">खेल समाप्त!</h2><p id="kbcEndMessage"></p><strong id="kbcFinalMoney">₹0</strong><p id="kbcFinalDetails"></p>
+  <div class="actions"><button class="btn btn-gold" id="kbcPlayAgain">↻ Play Again</button><button class="btn btn-light" id="kbcHome">🏠 Home</button><button class="btn btn-dark" id="kbcViewHistory">📚 Player History</button></div>
+ </div>
+ <p style="text-align:center;font-size:10px;color:#cbd5ff;line-height:1.8;margin-top:18px">यह शैक्षणिक गेम है। दिखाई गई राशि वर्चुअल इनाम है; वास्तविक नकद भुगतान नहीं होता।</p>
 </section>
-
-<!-- KBC RESULT -->
-<section id="kbcResultScreen" class="hidden">
-  <div class="card center">
-    <h1>Game Over</h1>
-    <h2 id="kbcFinalPrize" style="color:var(--gold)">₹0</h2>
-    <p id="kbcFinalMessage" class="muted"></p>
-    <div class="btn-row" style="justify-content:center">
-      <button class="gold" onclick="openSetup('kbc')">Play Again</button>
-      <button class="secondary" onclick="goHome()">Dashboard</button>
-      <button class="primary" onclick="openHistory('kbc')">View History</button>
-    </div>
-  </div>
-</section>
-
 </main>
 
-<footer>MCQ QUIZ PRO ULTIMATE | Learn • Practice • Improve</footer>
-<div id="toast" class="toast"></div>
+<footer>MCQ QUIZ PRO ULTIMATE · School, Competitive & KBC Quiz Show</footer>
+<div id="toast" class="toast hidden"></div>
 
 <script>
 "use strict";
 
-/* =========================================
-   CONFIGURATION
-========================================= */
+const QUESTION_FILE_URL="https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
+const OPTION_KEYS=["A","B","C","D"];
+const KBC_HISTORY_KEY="mcqQuizProKBCPlayerHistory";
+const KBC_PRIZES=[10000,20000,30000,50000,100000,200000,400000,800000,1600000,3200000,6400000,12500000,25000000,50000000,100000000,200000000,300000000,500000000,750000000,1000000000];
 
-const QUESTION_URL =
-"https://raw.githubusercontent.com/premji321/Gamegalaxy213/refs/heads/main/questions.txt";
+let allQuestions=[],quizQuestions=[],currentIndex=0,answers={},reviewFlags={};
+let timerInterval=null,timeRemaining=0,quizFinished=false,lastMode="school";
+let currentExam="",currentLevels=[];
+let kbcQuestions=[],kbcIndex=0,kbcMoney=0,kbcTimerInterval=null;
+let kbcTimeRemaining=30,kbcTimeLimit=30,kbcFinished=false,kbcAnswered=false;
+let kbcSoundOn=true,kbc5050Used=false,kbcAudienceUsed=false;
+let kbcPlayerName="",kbcCurrentRecordSaved=false;
+const $=id=>document.getElementById(id);
 
-const USERS_KEY = "mcqQuizProRegisteredUsers";
-const SESSION_KEY = "mcqQuizProCurrentUser";
-const HISTORY_PREFIX = "mcqQuizProHistory_";
-
-const $ = id => document.getElementById(id);
-
-let currentUser = null;
-let allQuestions = [];
-let filteredQuestions = [];
-let currentMode = "school";
-
-let quizQuestions = [];
-let quizAnswers = [];
-let quizFlags = [];
-let quizIndex = 0;
-let quizInterval = null;
-let quizSeconds = 0;
-let quizFinished = false;
-
-let kbcQuestions = [];
-let kbcIndex = 0;
-let kbcTimer = 30;
-let kbcInterval = null;
-let kbcUsedFifty = false;
-let kbcUsedAudience = false;
-let kbcFinished = false;
-
-const PRIZES = [
-  "₹7,000 Crore",
-  "₹1,00,00,00,000",
-  "₹50,00,00,000",
-  "₹25,00,00,000",
-  "₹12,50,00,000",
-  "₹6,25,00,000",
-  "₹3,12,50,000",
-  "₹1,56,25,000",
-  "₹78,12,500",
-  "₹39,06,250",
-  "₹19,53,125",
-  "₹9,76,562",
-  "₹4,88,281",
-  "₹2,44,140",
-  "₹1,22,070"
-];
-
-/* =========================================
-   COMMON HELPERS
-========================================= */
-
-function escapeHTML(value){
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  })[char]);
+function norm(value){return String(value??"").trim().toLowerCase().replace(/\s+/g," ")}
+function uniqueSorted(values){
+ const map=new Map();
+ values.forEach(v=>{const t=String(v??"").trim();if(t&&!map.has(norm(t)))map.set(norm(t),t)});
+ return [...map.values()].sort((a,b)=>a.localeCompare(b,"en",{numeric:true,sensitivity:"base"}));
 }
-
-function normalise(value){
-  return String(value || "").trim().toLowerCase();
-}
-
-function toast(message){
-  const el = $("toast");
-  el.textContent = message;
-  el.style.display = "block";
-  clearTimeout(toast.timeout);
-  toast.timeout = setTimeout(()=>el.style.display="none",2800);
-}
-
-function getUsers(){
-  try{
-    const data = JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
-    return Array.isArray(data) ? data : [];
-  }catch(error){
-    return [];
-  }
-}
-
-function saveUsers(users){
-  localStorage.setItem(USERS_KEY,JSON.stringify(users));
-}
-
-function getHistoryKey(){
-  if(!currentUser) return "";
-  return HISTORY_PREFIX + normalise(currentUser.name);
-}
-
-function getHistory(){
-  if(!currentUser) return [];
-  try{
-    const data = JSON.parse(localStorage.getItem(getHistoryKey()) || "[]");
-    return Array.isArray(data) ? data : [];
-  }catch(error){
-    return [];
-  }
-}
-
-function saveHistory(record){
-  if(!currentUser) return;
-  const history = getHistory();
-  history.unshift(record);
-  localStorage.setItem(getHistoryKey(),JSON.stringify(history));
-}
-
-function showScreen(id){
-  const sections = [
-    "authScreen","homeScreen","setupScreen","quizScreen",
-    "resultScreen","historyScreen","kbcScreen","kbcResultScreen"
-  ];
-
-  sections.forEach(sectionId=>{
-    $(sectionId).classList.toggle("hidden",sectionId !== id);
-  });
-
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function stopTimers(){
-  clearInterval(quizInterval);
-  clearInterval(kbcInterval);
-  quizInterval = null;
-  kbcInterval = null;
-}
-
-function setLoggedInUI(){
-  $("headerUser").textContent = currentUser
-    ? "Logged in: " + currentUser.name
-    : "Please login";
-}
-
-/* =========================================
-   AUTHENTICATION
-========================================= */
-
-function showRegister(){
-  $("loginPanel").classList.add("hidden");
-  $("registerPanel").classList.remove("hidden");
-}
-
-function showLogin(){
-  $("registerPanel").classList.add("hidden");
-  $("loginPanel").classList.remove("hidden");
-}
-
-$("registerForm").addEventListener("submit",function(event){
-  event.preventDefault();
-
-  const name = $("registerName").value.trim();
-  const mobile = $("registerMobile").value.trim();
-  const password = $("registerPassword").value;
-  const confirm = $("confirmPassword").value;
-
-  if(name.length < 2){
-    alert("Please enter a valid name.");
-    return;
-  }
-
-  if(!/^[0-9]{10}$/.test(mobile)){
-    alert("Please enter a valid 10 digit mobile number.");
-    return;
-  }
-
-  if(password.length < 4){
-    alert("Password must contain at least 4 characters.");
-    return;
-  }
-
-  if(password !== confirm){
-    alert("Passwords do not match.");
-    return;
-  }
-
-  const users = getUsers();
-
-  if(users.some(user=>normalise(user.name) === normalise(name))){
-    alert("This username is already registered. Please login.");
-    return;
-  }
-
-  users.push({
-    name,
-    mobile,
-    password,
-    createdAt:new Date().toISOString()
-  });
-
-  saveUsers(users);
-
-  $("registerForm").reset();
-  showLogin();
-  $("loginName").value = name;
-
-  toast("Registration successful. Please login.");
-});
-
-$("loginForm").addEventListener("submit",function(event){
-  event.preventDefault();
-  loginUser();
-});
-
-function loginUser(){
-  const name = $("loginName").value.trim();
-  const password = $("loginPassword").value;
-
-  if(!name || !password){
-    alert("Please enter username and password.");
-    return;
-  }
-
-  const users = getUsers();
-
-  const user = users.find(item =>
-    normalise(item.name) === normalise(name) &&
-    item.password === password
-  );
-
-  if(!user){
-    alert("Incorrect username or password!");
-    $("loginPassword").value = "";
-    return;
-  }
-
-  currentUser = {
-    name:user.name,
-    mobile:user.mobile
-  };
-
-  localStorage.setItem(SESSION_KEY,normalise(user.name));
-
-  $("homeWelcome").textContent = "Welcome, " + user.name + "! 🚀";
-
-  setLoggedInUI();
-  updateDashboard();
-  showScreen("homeScreen");
-  toast("Login successful. Welcome " + user.name);
-}
-
-function logout(){
-  stopTimers();
-  currentUser = null;
-  localStorage.removeItem(SESSION_KEY);
-  setLoggedInUI();
-  showLogin();
-  showScreen("authScreen");
-  toast("You have logged out.");
-}
-
-function restoreSession(){
-  const saved = localStorage.getItem(SESSION_KEY);
-
-  if(!saved) return false;
-
-  const user = getUsers().find(item=>normalise(item.name) === saved);
-
-  if(!user){
-    localStorage.removeItem(SESSION_KEY);
-    return false;
-  }
-
-  currentUser = {name:user.name,mobile:user.mobile};
-  $("homeWelcome").textContent = "Welcome, " + user.name + "! 🚀";
-  setLoggedInUI();
-  return true;
-}
-
-/* =========================================
-   QUESTION BANK LOADER AND PARSER
-========================================= */
-
-function parseQuestionFile(rawText){
-  const lines = rawText.replace(/\r/g,"").split("\n");
-  const questions = [];
-  let current = {};
-
-  function saveCurrent(){
-    if(
-      current.Q &&
-      current.A &&
-      current.B &&
-      current.C &&
-      current.D &&
-      current.ANSWER
-    ){
-      const answerText = String(current.ANSWER).trim().toUpperCase();
-
-      let answer = answerText;
-
-      if(["A","B","C","D"].includes(answerText)){
-        answer = answerText;
-      }else{
-        const match = answerText.match(/^([ABCD])[\).:\s]/);
-        if(match) answer = match[1];
-        else{
-          const options = ["A","B","C","D"];
-          const found = options.find(letter=>
-            normalise(current[letter]) === normalise(current.ANSWER)
-          );
-          answer = found || "A";
-        }
-      }
-
-      questions.push({
-        className:current.CLASS || "General",
-        subject:current.SUBJECT || "General",
-        chapter:current.CHAPTER || "General",
-        level:normalise(current.LEVEL || "medium"),
-        question:current.Q,
-        options:{
-          A:current.A,
-          B:current.B,
-          C:current.C,
-          D:current.D
-        },
-        answer,
-        explanation:current.EXPLANATION || ""
-      });
-    }
-
-    current = {};
-  }
-
-  for(const line of lines){
-    const trimmed = line.trim();
-    if(!trimmed) continue;
-
-    const match = trimmed.match(
-      /^(CLASS|SUBJECT|CHAPTER|LEVEL|Q|A|B|C|D|ANSWER|EXPLANATION)\s*:\s*(.*)$/i
-    );
-
-    if(match){
-      const key = match[1].toUpperCase();
-
-      if(key === "CLASS" && current.Q){
-        saveCurrent();
-      }
-
-      if(key === "Q" && current.Q){
-        saveCurrent();
-      }
-
-      current[key] = match[2].trim();
-    }else if(current.Q){
-      const lastKey = Object.keys(current).pop();
-      if(lastKey){
-        current[lastKey] += "\n" + trimmed;
-      }
-    }
-  }
-
-  saveCurrent();
-  return questions;
-}
-
-async function loadQuestions(){
-  $("availableInfo").textContent = "Loading question bank...";
-
-  try{
-    const response = await fetch(QUESTION_URL,{cache:"no-store"});
-
-    if(!response.ok){
-      throw new Error("Question file could not be loaded.");
-    }
-
-    const text = await response.text();
-    allQuestions = parseQuestionFile(text);
-
-    if(!allQuestions.length){
-      throw new Error("No valid questions found. Please check questions.txt format.");
-    }
-
-    populateFilters();
-    updateAvailableCount();
-
-    $("availableInfo").textContent =
-      allQuestions.length + " questions loaded successfully.";
-  }catch(error){
-    allQuestions = [];
-    $("availableInfo").textContent = error.message;
-    toast("Question bank loading failed.");
-  }
-}
-
-/* =========================================
-   DASHBOARD
-========================================= */
-
-function updateDashboard(){
-  const history = getHistory();
-
-  const tests = history.filter(item=>item.type === "school" || item.type === "competitive");
-  const games = history.filter(item=>item.type === "kbc");
-
-  $("totalTests").textContent = tests.length;
-  $("totalKBC").textContent = games.length;
-
-  const best = tests.reduce((max,item)=>Math.max(max,Number(item.percentage)||0),0);
-  $("bestScore").textContent = best.toFixed(1) + "%";
-
-  renderRankingPreview();
-}
-
-function getAllPlayerRecords(){
-  const users = getUsers();
-  const records = [];
-
-  users.forEach(user=>{
-    const key = HISTORY_PREFIX + normalise(user.name);
-    let history = [];
-
-    try{
-      history = JSON.parse(localStorage.getItem(key) || "[]");
-    }catch(error){}
-
-    const games = history.filter(item=>item.type === "kbc");
-
-    if(games.length){
-      const best = Math.max(...games.map(game=>Number(game.level)||0));
-      records.push({
-        name:user.name,
-        games:games.length,
-        best
-      });
-    }
-  });
-
-  return records.sort((a,b)=>b.best-a.best || b.games-a.games);
-}
-
-function renderRankingPreview(){
-  const records = getAllPlayerRecords();
-
-  if(!records.length){
-    $("rankingPreview").innerHTML = '<p class="muted">No KBC records yet.</p>';
-    return;
-  }
-
-  $("rankingPreview").innerHTML = `
-    <div class="table-wrap">
-    <table>
-      <thead><tr><th>Rank</th><th>Player</th><th>Games</th><th>Best Level</th></tr></thead>
-      <tbody>
-        ${records.slice(0,5).map((r,i)=>`
-          <tr>
-            <td>${i+1}</td>
-            <td>${escapeHTML(r.name)}</td>
-            <td>${r.games}</td>
-            <td>${r.best}</td>
-          </tr>`).join("")}
-      </tbody>
-    </table>
-    </div>`;
-}
-
-/* =========================================
-   SETUP AND FILTERS
-========================================= */
-
-function openSetup(mode){
-  currentMode = mode;
-  stopTimers();
-
-  $("setupTitle").textContent =
-    mode === "school" ? "School Quiz Setup" :
-    mode === "competitive" ? "Competitive Quiz Setup" :
-    "KBC Game Setup";
-
-  const isKBC = mode === "kbc";
-  const isCompetitive = mode === "competitive";
-
-  $("classField").classList.toggle("hidden",isCompetitive || isKBC);
-  $("subjectField").classList.toggle("hidden",isKBC);
-  $("chapterField").classList.toggle("hidden",isKBC);
-  $("levelField").classList.toggle("hidden",isKBC);
-  $("timerField").classList.toggle("hidden",isKBC);
-
-  $("countSelect").value = isKBC ? "15" : "10";
-
-  if(isKBC){
-    $("countSelect").value = "15";
-  }
-
-  populateFilters();
-  updateAvailableCount();
-  showScreen("setupScreen");
-}
-
-function uniqueValues(key,source){
-  return [...new Set(source.map(q=>q[key]).filter(Boolean))]
-    .sort((a,b)=>String(a).localeCompare(String(b)));
-}
-
-function fillSelect(selectId,values,allLabel){
-  const select = $(selectId);
-  const oldValue = select.value;
-
-  select.innerHTML = `<option value="all">${allLabel}</option>` +
-    values.map(value=>`<option value="${escapeHTML(value)}">${escapeHTML(value)}</option>`).join("");
-
-  if(values.includes(oldValue)) select.value = oldValue;
-}
-
-function populateFilters(){
-  if(!allQuestions.length) return;
-
-  fillSelect("classSelect",uniqueValues("className",allQuestions),"All Classes");
-  fillSelect("subjectSelect",uniqueValues("subject",allQuestions),"All Subjects");
-  fillSelect("chapterSelect",uniqueValues("chapter",allQuestions),"All Chapters");
-}
-
-function getSetupQuestions(){
-  let list = [...allQuestions];
-
-  if(currentMode === "school"){
-    const cls = $("classSelect").value;
-    if(cls !== "all"){
-      list = list.filter(q=>normalise(q.className)===normalise(cls));
-    }
-  }
-
-  if(currentMode !== "kbc"){
-    const subject = $("subjectSelect").value;
-    const chapter = $("chapterSelect").value;
-    const level = $("levelSelect").value;
-
-    if(subject !== "all"){
-      list = list.filter(q=>normalise(q.subject)===normalise(subject));
-    }
-
-    if(chapter !== "all"){
-      list = list.filter(q=>normalise(q.chapter)===normalise(chapter));
-    }
-
-    if(level !== "all"){
-      list = list.filter(q=>normalise(q.level)===normalise(level));
-    }
-  }
-
-  return list;
-}
-
-function updateAvailableCount(){
-  if(!allQuestions.length) return;
-
-  const list = getSetupQuestions();
-  $("availableInfo").textContent = list.length + " matching questions available.";
-  $("startQuizBtn").disabled = list.length === 0;
-}
-
-["classSelect","subjectSelect","chapterSelect","levelSelect"].forEach(id=>{
-  $(id).addEventListener("change",updateAvailableCount);
-});
-
 function shuffle(array){
-  const copy = [...array];
+ const a=[...array];
+ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+ return a;
+}
+function showToast(message){
+ $("toast").textContent=message;$("toast").classList.remove("hidden");
+ clearTimeout(showToast.timeout);showToast.timeout=setTimeout(()=>$("toast").classList.add("hidden"),3500);
+}
+function setStatus(message,good=true){$("status").textContent="● "+message;$("status").style.color=good?"#d5ffea":"#ffd5d5"}
+function showScreen(id){
+ document.querySelectorAll("main section").forEach(s=>s.classList.toggle("hidden",s.id!==id));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
 
-  for(let i=copy.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [copy[i],copy[j]] = [copy[j],copy[i]];
+/* QUESTION FILE PARSER */
+function parseQuestions(text){
+ const lines=text.replace(/^\uFEFF/,"").replace(/\r\n/g,"\n").replace(/\r/g,"\n").split("\n");
+ const blocks=[];let block=[];
+ for(const line of lines){
+  if(/^\s*Q\s*:/i.test(line)){if(block.length)blocks.push(block);block=[line]}
+  else if(block.length)block.push(line);
+ }
+ if(block.length)blocks.push(block);
+ const result=[];
+ for(const linesOfQuestion of blocks){
+  const q={className:"",subject:"",chapter:"",level:"",question:"",A:"",B:"",C:"",D:"",answer:"",explanation:""};
+  for(const line of linesOfQuestion){
+   const m=line.match(/^\s*(CLASS|SUBJECT|CHAPTER|LEVEL|Q|A|B|C|D|ANSWER|EXPLANATION)\s*:\s*(.*)$/i);
+   if(!m)continue;
+   const k=m[1].toUpperCase(),v=m[2].trim();
+   if(k==="CLASS")q.className=v;
+   if(k==="SUBJECT")q.subject=v;
+   if(k==="CHAPTER")q.chapter=v;
+   if(k==="LEVEL")q.level=v;
+   if(k==="Q")q.question=v;
+   if(["A","B","C","D"].includes(k))q[k]=v;
+   if(k==="ANSWER")q.answer=v.toUpperCase();
+   if(k==="EXPLANATION")q.explanation=v;
   }
-
-  return copy;
-}
-
-function startSelectedQuiz(){
-  const list = getSetupQuestions();
-
-  if(!list.length){
-    alert("No questions available for this selection.");
-    return;
+  if(q.question&&q.A&&q.B&&q.C&&q.D&&OPTION_KEYS.includes(q.answer)){
+   q.id=result.length+1;result.push(q);
   }
-
-  const count = $("countSelect").value;
-  const selected = count === "all"
-    ? shuffle(list)
-    : shuffle(list).slice(0,Number(count));
-
-  if(currentMode === "kbc"){
-    startKBC(selected);
-  }else{
-    startStandardQuiz(selected);
-  }
+ }
+ return result;
 }
-
-/* =========================================
-   STANDARD QUIZ ENGINE
-========================================= */
-
-function startStandardQuiz(questions){
-  stopTimers();
-
-  quizQuestions = questions;
-  quizAnswers = new Array(questions.length).fill(null);
-  quizFlags = new Array(questions.length).fill(false);
-  quizIndex = 0;
-  quizFinished = false;
-
-  const minutes = Number($("timerSelect").value);
-  quizSeconds = minutes * 60;
-
-  $("quizModeBadge").textContent =
-    currentMode === "school" ? "School Quiz" : "Competitive Quiz";
-
-  showScreen("quizScreen");
-  renderQuestion();
-  renderPalette();
-
-  if(quizSeconds > 0){
-    updateQuizTimer();
-
-    quizInterval = setInterval(()=>{
-      quizSeconds--;
-      updateQuizTimer();
-
-      if(quizSeconds <= 0){
-        finishQuiz(true);
-      }
-    },1000);
-  }else{
-    $("quizTimer").textContent = "No Timer";
-  }
+async function loadQuestions(){
+ setStatus("Loading...",false);$("dataInfo").textContent="Loading questions from GitHub...";
+ try{
+  const response=await fetch(QUESTION_FILE_URL+"?t="+Date.now(),{cache:"no-store"});
+  if(!response.ok)throw new Error("HTTP "+response.status);
+  allQuestions=parseQuestions(await response.text());
+  if(!allQuestions.length)throw new Error("No valid questions found.");
+  updateStats();populateClasses();renderSchoolSubjects();renderCompetitiveSubjects();renderKBCSubjects();
+  $("dataInfo").textContent=allQuestions.length+" questions loaded successfully.";setStatus("Questions Loaded",true);
+ }catch(error){
+  console.error(error);allQuestions=[];updateStats();populateClasses();
+  renderSchoolSubjects();renderCompetitiveSubjects();renderKBCSubjects();
+  $("dataInfo").textContent="Unable to load questions: "+error.message;setStatus("Load Error",false);
+ }
 }
-
-function updateQuizTimer(){
-  const mins = Math.floor(quizSeconds/60);
-  const secs = quizSeconds%60;
-  $("quizTimer").textContent =
-    String(mins).padStart(2,"0") + ":" + String(secs).padStart(2,"0");
+function updateStats(){
+ $("statQuestions").textContent=allQuestions.length;
+ $("statClasses").textContent=uniqueSorted(allQuestions.filter(q=>norm(q.className)!=="competitive").map(q=>q.className)).length;
+ $("statSubjects").textContent=uniqueSorted(allQuestions.map(q=>q.subject)).length;
+ $("statChapters").textContent=uniqueSorted(allQuestions.map(q=>q.chapter)).length;
 }
+$("reloadButton").addEventListener("click",loadQuestions);
 
-function renderQuestion(){
-  const q = quizQuestions[quizIndex];
+function openSchool(){showScreen("schoolScreen");renderSchoolSubjects()}
+function openCompetitive(){showScreen("competitiveScreen");renderCompetitiveSubjects()}
+function openKBCSetup(){showScreen("kbcSetupScreen");renderKBCSubjects()}
 
-  $("quizCounter").textContent =
-    `Question ${quizIndex+1} of ${quizQuestions.length}`;
-
-  $("questionText").textContent = q.question;
-
-  $("quizProgress").style.width =
-    ((quizIndex+1)/quizQuestions.length*100) + "%";
-
-  const letters = ["A","B","C","D"];
-
-  $("optionsBox").innerHTML = letters.map(letter=>`
-    <button class="option ${quizAnswers[quizIndex]===letter?"selected":""}"
-      onclick="selectAnswer('${letter}')">
-      <strong>${letter}.</strong> ${escapeHTML(q.options[letter])}
-    </button>
-  `).join("");
-
-  renderPalette();
+/* CHECKBOX HELPERS */
+function renderLevelChoices(containerId,name,levels){
+ const box=$(containerId);box.innerHTML="";
+ levels.forEach(level=>{
+  const label=document.createElement("label");label.className="choice";
+  const input=document.createElement("input");input.type="checkbox";input.name=name;input.value=level;
+  const span=document.createElement("span");span.textContent=level;
+  label.append(input,span);box.appendChild(label);
+  input.addEventListener("change",()=>updateAllSummaries());
+ });
 }
-
-function selectAnswer(letter){
-  if(quizFinished) return;
-  quizAnswers[quizIndex] = letter;
-  renderQuestion();
+function getSelectedLevels(mode){
+ const name=mode==="school"?"schoolLevel":mode==="competitive"?"competitiveLevel":"kbcLevel";
+ return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(i=>i.value);
 }
-
-function renderPalette(){
-  $("questionPalette").innerHTML = quizQuestions.map((q,i)=>`
-    <button
-      class="${quizAnswers[i]?"answered":""} ${quizFlags[i]?"flagged":""} ${i===quizIndex?"current":""}"
-      onclick="jumpQuestion(${i})">
-      ${i+1}
-    </button>
-  `).join("");
+function filterByLevel(questions,levels){
+ if(!levels.length)return [];
+ return questions.filter(q=>levels.some(level=>norm(level)===norm(q.level)));
 }
-
-function jumpQuestion(index){
-  quizIndex = index;
-  renderQuestion();
+function selectAll(name,checked=true){
+ document.querySelectorAll('input[name="'+name+'"]').forEach(i=>i.checked=checked);
+ if(name==="schoolSubject"||name==="schoolChapter")renderSchoolChapters();
+ if(name==="competitiveSubject"||name==="competitiveChapter")renderCompetitiveChapters();
+ if(name==="kbcSubject"||name==="kbcChapter")renderKBCChapters();
+ updateAllSummaries();
 }
-
-function nextQuestion(){
-  if(quizIndex < quizQuestions.length-1){
-    quizIndex++;
-    renderQuestion();
-  }else{
-    toast("This is the last question.");
-  }
+function renderSubjects(containerId,questions,name,callback){
+ const box=$(containerId);box.innerHTML="";
+ const subjects=uniqueSorted(questions.map(q=>q.subject));
+ if(!subjects.length){box.innerHTML='<div class="empty">No subjects available.</div>';return}
+ subjects.forEach(subject=>{
+  const count=questions.filter(q=>norm(q.subject)===norm(subject)).length;
+  const label=document.createElement("label");label.className="choice";
+  const input=document.createElement("input");input.type="checkbox";input.name=name;input.value=subject;
+  const span=document.createElement("span");span.textContent=subject+" ("+count+" questions)";
+  label.append(input,span);box.appendChild(label);
+  input.addEventListener("change",callback);
+ });
 }
-
-function previousQuestion(){
-  if(quizIndex > 0){
-    quizIndex--;
-    renderQuestion();
-  }
-}
-
-function toggleFlag(){
-  quizFlags[quizIndex] = !quizFlags[quizIndex];
-  renderPalette();
-  toast(quizFlags[quizIndex] ? "Marked for review." : "Review mark removed.");
-}
-
-function finishQuiz(autoSubmit=false){
-  if(quizFinished) return;
-
-  if(!autoSubmit && !confirm("Are you sure you want to submit the test?")){
-    return;
-  }
-
-  quizFinished = true;
-  clearInterval(quizInterval);
-
-  let correct = 0;
-  let wrong = 0;
-  let skipped = 0;
-  let score = 0;
-
-  quizQuestions.forEach((q,i)=>{
-    if(!quizAnswers[i]){
-      skipped++;
-    }else if(quizAnswers[i] === q.answer){
-      correct++;
-      score += 1;
-    }else{
-      wrong++;
-      if(currentMode === "competitive"){
-        score -= 1/3;
-      }
-    }
+function renderChapters(containerId,subjectName,chapterName,questions,callback){
+ const box=$(containerId);box.innerHTML="";
+ const selected=[...document.querySelectorAll('input[name="'+subjectName+'"]:checked')].map(i=>i.value);
+ if(!selected.length){box.innerHTML='<div class="empty">Please select one or more subjects first.</div>';callback();return}
+ selected.forEach(subject=>{
+  const qs=questions.filter(q=>norm(q.subject)===norm(subject));
+  const chapters=uniqueSorted(qs.map(q=>q.chapter));
+  const group=document.createElement("div");group.className="chapter-group";
+  const title=document.createElement("h4");title.textContent=subject+" — "+chapters.length+" Chapters";group.appendChild(title);
+  const grid=document.createElement("div");grid.className="chapter-grid";
+  chapters.forEach(chapter=>{
+   const count=qs.filter(q=>norm(q.chapter)===norm(chapter)).length;
+   const label=document.createElement("label");label.className="choice";
+   const input=document.createElement("input");input.type="checkbox";input.name=chapterName;input.value=chapter;input.dataset.subject=subject;
+   const span=document.createElement("span");span.textContent=chapter+" ("+count+")";
+   label.append(input,span);grid.appendChild(label);input.addEventListener("change",callback);
   });
+  group.appendChild(grid);box.appendChild(group);
+ });
+ callback();
+}
+function getSelectedPairs(name){
+ return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(i=>({subject:i.dataset.subject,chapter:i.value}));
+}
+function updateAllSummaries(){updateSchoolSummary();updateCompetitiveSummary();updateKBCSummary()}
 
-  const percentage = quizQuestions.length
-    ? (correct/quizQuestions.length)*100
-    : 0;
+/* SCHOOL SETUP */
+function populateClasses(){
+ const select=$("classSelect");select.innerHTML='<option value="">-- Select Class --</option>';
+ uniqueSorted(allQuestions.filter(q=>norm(q.className)!=="competitive").map(q=>q.className)).forEach(name=>{
+  const o=document.createElement("option");o.value=name;o.textContent=name;select.appendChild(o);
+ });
+}
+function getSchoolBase(){
+ const className=$("classSelect").value,pairs=getSelectedPairs("schoolChapter");
+ return allQuestions.filter(q=>norm(q.className)===norm(className)&&pairs.some(p=>norm(p.subject)===norm(q.subject)&&norm(p.chapter)===norm(q.chapter)));
+}
+function getSchoolQuestions(){return filterByLevel(getSchoolBase(),getSelectedLevels("school"))}
+function renderSchoolSubjects(){
+ const className=$("classSelect").value;
+ const qs=allQuestions.filter(q=>norm(q.className)===norm(className));
+ renderSubjects("schoolSubjects",qs,"schoolSubject",renderSchoolChapters);
+ renderSchoolChapters();
+}
+function renderSchoolChapters(){
+ const className=$("classSelect").value;
+ const selected=[...document.querySelectorAll('input[name="schoolSubject"]:checked')].map(i=>i.value);
+ const qs=allQuestions.filter(q=>norm(q.className)===norm(className)&&selected.some(s=>norm(s)===norm(q.subject)));
+ renderChapters("schoolChapters","schoolSubject","schoolChapter",qs,updateSchoolSummary);
+}
+function updateSchoolSummary(){
+ if(!$("schoolSummary"))return;
+ $("schoolSummary").textContent="Class: "+($("classSelect").value||"Not selected")+
+ " | Subjects: "+document.querySelectorAll('input[name="schoolSubject"]:checked').length+
+ " | Chapters: "+getSelectedPairs("schoolChapter").length+
+ " | Difficulty: "+(getSelectedLevels("school").join(", ")||"Not selected")+
+ " | Matching Questions: "+getSchoolQuestions().length;
+}
+$("classSelect").addEventListener("change",renderSchoolSubjects);
+renderLevelChoices("schoolLevels","schoolLevel",["Easy","Moderate","Tough"]);
 
-  const record = {
-    id:Date.now(),
-    type:currentMode,
-    date:new Date().toLocaleString(),
-    total:quizQuestions.length,
-    correct,
-    wrong,
-    skipped,
-    score:Number(score.toFixed(2)),
-    percentage:Number(percentage.toFixed(2)),
-    answers:quizAnswers,
-    questions:quizQuestions
-  };
+/* COMPETITIVE SETUP */
+function isCompetitive(q){return norm(q.className)==="competitive"}
+function getCompetitiveBase(){
+ const pairs=getSelectedPairs("competitiveChapter");
+ return allQuestions.filter(q=>isCompetitive(q)&&pairs.some(p=>norm(p.subject)===norm(q.subject)&&norm(p.chapter)===norm(q.chapter)));
+}
+function getCompetitiveQuestions(){return filterByLevel(getCompetitiveBase(),getSelectedLevels("competitive"))}
+function renderCompetitiveSubjects(){
+ const qs=allQuestions.filter(isCompetitive);
+ renderSubjects("competitiveSubjects",qs,"competitiveSubject",renderCompetitiveChapters);
+ renderCompetitiveChapters();
+}
+function renderCompetitiveChapters(){
+ const selected=[...document.querySelectorAll('input[name="competitiveSubject"]:checked')].map(i=>i.value);
+ const qs=allQuestions.filter(q=>isCompetitive(q)&&selected.some(s=>norm(s)===norm(q.subject)));
+ renderChapters("competitiveChapters","competitiveSubject","competitiveChapter",qs,updateCompetitiveSummary);
+}
+function updateCompetitiveSummary(){
+ if(!$("competitiveSummary"))return;
+ $("competitiveSummary").textContent="Exam: "+$("examSelect").value+
+ " | Subjects: "+document.querySelectorAll('input[name="competitiveSubject"]:checked').length+
+ " | Chapters: "+getSelectedPairs("competitiveChapter").length+
+ " | Difficulty: "+(getSelectedLevels("competitive").join(", ")||"Not selected")+
+ " | Available Questions: "+getCompetitiveQuestions().length+
+ " | Negative Marking: -1/3 per wrong answer";
+}
+$("examSelect").addEventListener("change",updateCompetitiveSummary);
+renderLevelChoices("competitiveLevels","competitiveLevel",["Easy","Moderate","Tough"]);
 
-  saveHistory(record);
+/* KBC SETUP */
+function getKBCBase(){
+ const subjects=[...document.querySelectorAll('input[name="kbcSubject"]:checked')].map(i=>i.value);
+ const pairs=getSelectedPairs("kbcChapter");
+ return allQuestions.filter(q=>subjects.some(s=>norm(s)===norm(q.subject))&&pairs.some(p=>norm(p.subject)===norm(q.subject)&&norm(p.chapter)===norm(q.chapter)));
+}
+function getKBCSetupQuestions(){return filterByLevel(getKBCBase(),getSelectedLevels("kbc"))}
+function renderKBCSubjects(){
+ renderSubjects("kbcSubjects",allQuestions,"kbcSubject",renderKBCChapters);
+ renderKBCChapters();
+}
+function renderKBCChapters(){
+ const subjects=[...document.querySelectorAll('input[name="kbcSubject"]:checked')].map(i=>i.value);
+ const qs=allQuestions.filter(q=>subjects.some(s=>norm(s)===norm(q.subject)));
+ renderChapters("kbcChapters","kbcSubject","kbcChapter",qs,updateKBCSummary);
+}
+function updateKBCSummary(){
+ if(!$("kbcSummary"))return;
+ $("kbcSummary").textContent="Subjects: "+document.querySelectorAll('input[name="kbcSubject"]:checked').length+
+ " | Topics: "+getSelectedPairs("kbcChapter").length+
+ " | Difficulty: "+(getSelectedLevels("kbc").join(", ")||"Not selected")+
+ " | Matching Questions: "+getKBCSetupQuestions().length+" | Wrong answer ends the game";
+}
+$("kbcLimit").addEventListener("change",updateKBCSummary);
+$("kbcTime").addEventListener("change",updateKBCSummary);
+renderLevelChoices("kbcLevels","kbcLevel",["Easy","Moderate","Tough"]);
 
-  $("resultScore").textContent =
-    score.toFixed(2) + " / " + quizQuestions.length;
+/* STANDARD QUIZ ENGINE */
+function startTest(mode){
+ const school=mode==="school",levels=getSelectedLevels(mode);
+ const available=school?getSchoolQuestions():getCompetitiveQuestions();
+ if(school&&!$("classSelect").value){showToast("Please select a class.");return}
+ if(!document.querySelector('input[name="'+(school?"schoolSubject":"competitiveSubject")+'"]:checked')){showToast("Please select at least one subject.");return}
+ if(!(school?getSelectedPairs("schoolChapter"):getSelectedPairs("competitiveChapter")).length){showToast("Please select at least one chapter.");return}
+ if(!levels.length){showToast("Please select at least one difficulty level.");return}
+ if(!available.length){showToast("No questions match your selections.");return}
+ const limit=$(school?"schoolLimit":"competitiveLimit").value;
+ const minutes=Number($(school?"schoolTime":"competitiveTime").value);
+ quizQuestions=shuffle(available);if(limit!=="all")quizQuestions=quizQuestions.slice(0,Number(limit));
+ lastMode=mode;currentExam=school?$("classSelect").value:$("examSelect").value;currentLevels=levels;
+ currentIndex=0;answers={};reviewFlags={};quizFinished=false;timeRemaining=minutes*60;
+ $("quizBadge").textContent=(school?"School":"Competitive")+" | "+currentExam;
+ $("liveTotal").textContent=quizQuestions.length;stopTimer();showScreen("quizScreen");renderQuestion();updateTimer();
+ if(minutes>0)timerInterval=setInterval(()=>{timeRemaining--;updateTimer();if(timeRemaining<=0)finishTest(true)},1000);
+}
+function stopTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null}}
+function updateTimer(){
+ const m=Math.floor(Math.max(0,timeRemaining)/60),s=Math.max(0,timeRemaining)%60;
+ const noLimit=Number($(lastMode==="school"?"schoolTime":"competitiveTime").value)===0;
+ $("timer").textContent=noLimit?"No Time Limit":String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+function renderQuestion(){
+ const q=quizQuestions[currentIndex];if(!q)return;
+ $("questionNumber").textContent="Question "+(currentIndex+1)+" / "+quizQuestions.length;
+ $("questionMeta").textContent=q.subject+" | "+q.chapter+" | "+q.level;
+ $("questionText").textContent=q.question;
+ $("progress").style.width=((currentIndex+1)/quizQuestions.length*100)+"%";
+ $("previous").disabled=currentIndex===0;$("next").disabled=currentIndex===quizQuestions.length-1;
+ $("reviewToggle").textContent=reviewFlags[currentIndex]?"⭐ Remove Review Mark":"⭐ Mark for Review";
+ const box=$("options");box.innerHTML="";
+ OPTION_KEYS.forEach(key=>{
+  const row=document.createElement("div");row.className="option";
+  if(answers[currentIndex]===key)row.classList.add("selected");
+  const letter=document.createElement("strong");letter.textContent=key+". ";
+  const text=document.createElement("span");text.textContent=q[key];
+  row.append(letter,text);row.addEventListener("click",()=>{answers[currentIndex]=key;renderQuestion()});
+  box.appendChild(row);
+ });
+ renderPalette();updateLiveProgress();
+}
+function renderPalette(){
+ const box=$("palette");box.innerHTML="";
+ quizQuestions.forEach((q,index)=>{
+  const b=document.createElement("button");b.textContent=index+1;
+  if(answers[index])b.classList.add("answered");if(index===currentIndex)b.classList.add("current");
+  b.addEventListener("click",()=>{currentIndex=index;renderQuestion()});box.appendChild(b);
+ });
+}
+function updateLiveProgress(){
+ const answered=Object.values(answers).filter(Boolean).length;
+ $("liveAnswered").textContent=answered;$("liveRemaining").textContent=quizQuestions.length-answered;
+ $("liveReview").textContent=Object.values(reviewFlags).filter(Boolean).length;
+}
+$("previous").addEventListener("click",()=>{if(currentIndex>0){currentIndex--;renderQuestion()}});
+$("next").addEventListener("click",()=>{if(currentIndex<quizQuestions.length-1){currentIndex++;renderQuestion()}});
+$("clearAnswer").addEventListener("click",()=>{delete answers[currentIndex];renderQuestion()});
+$("reviewToggle").addEventListener("click",()=>{reviewFlags[currentIndex]=!reviewFlags[currentIndex];renderQuestion()});
+$("submit").addEventListener("click",()=>{
+ const unanswered=quizQuestions.length-Object.values(answers).filter(Boolean).length;
+ if(confirm(unanswered?unanswered+" questions are unanswered. Submit anyway?":"Submit test?"))finishTest(false);
+});
+$("exitQuiz").addEventListener("click",()=>{
+ if(confirm("Exit the current test?")){stopTimer();showScreen(lastMode==="school"?"schoolScreen":"competitiveScreen")}
+});
+function calculateResults(){
+ let correct=0,wrong=0,skipped=0;
+ quizQuestions.forEach((q,i)=>{if(!answers[i])skipped++;else if(answers[i]===q.answer)correct++;else wrong++});
+ const total=quizQuestions.length,attempted=correct+wrong,isComp=lastMode==="competitive";
+ const negativeMarks=isComp?wrong/3:0,positiveMarks=correct,netScore=positiveMarks-negativeMarks;
+ return {total,correct,wrong,skipped,attempted,positiveMarks,negativeMarks,netScore,percentage:total?netScore/total*100:0,accuracy:attempted?correct/attempted*100:0};
+}
+function fmt(n){return Number(n).toFixed(2)}
+function finishTest(autoSubmit){
+ if(quizFinished)return;quizFinished=true;stopTimer();
+ const r=calculateResults();
+ $("percentage").textContent=fmt(r.percentage)+"%";
+ $("correctCount").textContent=r.correct;$("wrongCount").textContent=r.wrong;
+ $("skippedCount").textContent=r.skipped;$("accuracy").textContent=fmt(r.accuracy)+"%";
+ $("performance").textContent=r.percentage>=90?"🏆 Outstanding Performance!":r.percentage>=75?"🌟 Excellent Work!":r.percentage>=50?"👍 Good Effort!":"💪 Keep Practicing!";
+ $("resultSummary").textContent="Examination: "+currentExam+" | Correct Marks: "+fmt(r.positiveMarks)+" | Negative Marks: "+fmt(r.negativeMarks)+" | Final Score: "+fmt(r.netScore)+" / "+r.total;
+ $("resultDetails").textContent="Difficulty: "+currentLevels.join(", ")+" | Attempted: "+r.attempted+" | Unanswered: "+r.skipped+(autoSubmit?" | Automatically submitted when time expired.":"");
+ renderReview();showScreen("resultScreen");
+}
+function renderReview(){
+ const box=$("reviewList");box.innerHTML="";
+ quizQuestions.forEach((q,i)=>{
+  const user=answers[i]||"",card=document.createElement("div");card.className="review-item";
+  const title=document.createElement("h4");title.textContent="Question "+(i+1)+": "+q.question;card.appendChild(title);
+  OPTION_KEYS.forEach(key=>{
+   const option=document.createElement("div");option.style.padding="8px";option.style.borderRadius="7px";option.style.marginTop="5px";
+   if(key===q.answer)option.classList.add("correct-answer");else if(key===user)option.classList.add("wrong-answer");
+   option.textContent=key+". "+q[key]+(key===q.answer?" ✓ Correct Answer":"")+(key===user&&key!==q.answer?" ✗ Your Answer":"");
+   card.appendChild(option);
+  });
+  const explanation=document.createElement("p");explanation.style.marginTop="10px";
+  explanation.textContent="Explanation: "+(q.explanation||"No explanation available.");card.appendChild(explanation);box.appendChild(card);
+ });
+}
+$("showReview").addEventListener("click",()=>$("reviewCard").scrollIntoView({behavior:"smooth"}));
+$("homeButton").addEventListener("click",()=>showScreen("homeScreen"));
+$("retryButton").addEventListener("click",()=>showScreen(lastMode==="school"?"schoolScreen":"competitiveScreen"));
+$("printButton").addEventListener("click",()=>window.print());
+document.addEventListener("keydown",event=>{
+ if($("quizScreen").classList.contains("hidden")||quizFinished)return;
+ if(event.key==="ArrowRight"&&currentIndex<quizQuestions.length-1){currentIndex++;renderQuestion()}
+ if(event.key==="ArrowLeft"&&currentIndex>0){currentIndex--;renderQuestion()}
+ const map={"1":"A","2":"B","3":"C","4":"D"};if(map[event.key]){answers[currentIndex]=map[event.key];renderQuestion()}
+});
 
-  $("resultPercent").textContent =
-    "Accuracy: " + percentage.toFixed(1) + "%";
+/* KBC HISTORY */
+function getKBCHistory(){
+ try{const h=JSON.parse(localStorage.getItem(KBC_HISTORY_KEY)||"[]");return Array.isArray(h)?h:[]}catch(e){return []}
+}
+function isKBCPlayerNameTaken(name){return getKBCHistory().some(r=>norm(r.playerName)===norm(name))}
+function saveKBCResult(reason,q=null){
+ if(kbcCurrentRecordSaved)return;
+ const history=getKBCHistory();
+ history.unshift({
+  id:Date.now(),playerName:kbcPlayerName,date:new Date().toLocaleString("en-IN"),
+  timestamp:Date.now(),winnings:kbcMoney,totalQuestions:kbcQuestions.length,
+  correctAnswers:kbcIndex,endingReason:reason,lastQuestion:q?q.question:"",
+  correctOption:q?q.answer:"",correctAnswer:q?q[q.answer]:""
+ });
+ try{localStorage.setItem(KBC_HISTORY_KEY,JSON.stringify(history));kbcCurrentRecordSaved=true}
+ catch(e){console.error(e);showToast("Record save नहीं हो पाया। Browser storage उपलब्ध नहीं है।")}
+}
+function renderKBCHistory(){
+ const box=$("kbcHistoryList"),history=getKBCHistory();box.innerHTML="";
+ if(!history.length){box.innerHTML='<div class="empty">अभी तक कोई KBC गेम रिकॉर्ड सेव नहीं है। पहला गेम खेलकर अपना रिकॉर्ड बनाइए!</div>';return}
+ history.forEach((r,i)=>{
+  const card=document.createElement("div");card.className="history-record";
+  const title=document.createElement("h4");title.textContent=(i+1)+". "+r.playerName;
+  const details=document.createElement("p");
+  details.textContent="Date: "+r.date+" | Winnings: ₹"+Number(r.winnings||0).toLocaleString("en-IN")+" | Correct: "+r.correctAnswers+"/"+r.totalQuestions+" | Status: "+r.endingReason;
+  card.append(title,details);box.appendChild(card);
+ });
+}
+$("kbcHistoryButton").addEventListener("click",()=>{
+ $("kbcHistoryPanel").classList.remove("hidden");renderKBCHistory();
+ $("kbcHistoryPanel").scrollIntoView({behavior:"smooth",block:"start"});
+});
+$("kbcCloseHistory").addEventListener("click",()=>$("kbcHistoryPanel").classList.add("hidden"));
+$("kbcViewHistory").addEventListener("click",()=>{
+ showScreen("kbcSetupScreen");$("kbcHistoryPanel").classList.remove("hidden");renderKBCHistory();
+ $("kbcHistoryPanel").scrollIntoView({behavior:"smooth",block:"start"});
+});
 
-  $("resultCorrect").textContent = correct;
-  $("resultWrong").textContent = wrong;
-  $("resultSkipped").textContent = skipped;
-
-  $("reviewPanel").classList.add("hidden");
-
-  updateDashboard();
-  showScreen("resultScreen");
-
-  if(autoSubmit) toast("Time is over. Test submitted automatically.");
+/* KBC SOUND */
+let audioContext=null;
+function getAudio(){
+ if(!audioContext){const C=window.AudioContext||window.webkitAudioContext;if(C)audioContext=new C()}
+ if(audioContext&&audioContext.state==="suspended")audioContext.resume();return audioContext;
+}
+function playTone(freq,duration,delay=0,type="sine",volume=.08){
+ if(!kbcSoundOn)return;const ctx=getAudio();if(!ctx)return;
+ const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type;
+ osc.frequency.setValueAtTime(freq,ctx.currentTime+delay);
+ gain.gain.setValueAtTime(.001,ctx.currentTime+delay);
+ gain.gain.exponentialRampToValueAtTime(volume,ctx.currentTime+delay+.02);
+ gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+delay+duration);
+ osc.connect(gain);gain.connect(ctx.destination);osc.start(ctx.currentTime+delay);osc.stop(ctx.currentTime+delay+duration+.03);
+}
+function playWelcomeTune(){[392,523,659,784,659,784,988,784].forEach((n,i)=>playTone(n,.22,i*.20))}
+function playCorrectTune(){[523,659,784,1046].forEach((n,i)=>playTone(n,.25,i*.15,"triangle",.1))}
+function playWrongTune(){[392,330,262,196].forEach((n,i)=>playTone(n,.3,i*.2,"sawtooth",.06))}
+function speakHindi(text){
+ if(!kbcSoundOn||!("speechSynthesis"in window))return;
+ window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="hi-IN";u.rate=.91;u.pitch=.95;
+ const voice=window.speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith("hi"));
+ if(voice)u.voice=voice;window.speechSynthesis.speak(u);
+}
+function kbcHost(message,shouldSpeak=false){
+ const host=$("kbcHost");host.innerHTML="";
+ const title=document.createElement("strong");title.textContent="कंप्यूटर महोदय:";
+ const body=document.createElement("div");body.textContent=message;host.append(title,body);
+ if(shouldSpeak)speakHindi(message);
 }
 
-function showDetailedReview(){
-  const record = getHistory()[0];
-
-  if(!record || !record.questions){
-    alert("Review data not found.");
-    return;
-  }
-
-  $("reviewPanel").classList.remove("hidden");
-
-  $("reviewContent").innerHTML = record.questions.map((q,i)=>{
-    const selected = record.answers[i];
-    const correct = q.answer;
-
-    return `
-      <div class="card">
-        <h3>Q${i+1}. ${escapeHTML(q.question)}</h3>
-        <p>Your Answer:
-          <strong style="color:${selected===correct?"#20c997":"#ff5d73"}">
-            ${selected ? selected + ". " + escapeHTML(q.options[selected]) : "Not Answered"}
-          </strong>
-        </p>
-        <p>Correct Answer:
-          <strong style="color:#20c997">
-            ${correct}. ${escapeHTML(q.options[correct])}
-          </strong>
-        </p>
-        ${q.explanation ? `<p class="muted">Explanation: ${escapeHTML(q.explanation)}</p>`:""}
-      </div>
-    `;
-  }).join("");
-
-  $("reviewPanel").scrollIntoView({behavior:"smooth"});
-}
-
-/* =========================================
-   HISTORY SYSTEM
-========================================= */
-
-function openHistory(type){
-  const history = getHistory().filter(item=>item.type===type);
-
-  $("historyTitle").textContent =
-    type === "school" ? "School Quiz History" :
-    type === "competitive" ? "Competitive Quiz History" :
-    "KBC Game History";
-
-  if(!history.length){
-    $("historyContent").innerHTML =
-      '<p class="muted">No records found yet. Complete a quiz or game to see your history here.</p>';
-  }else if(type === "kbc"){
-    $("historyContent").innerHTML = `
-      <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Date</th><th>Player</th><th>Level</th><th>Prize</th><th>Result</th></tr>
-        </thead>
-        <tbody>
-          ${history.map(item=>`
-            <tr>
-              <td>${escapeHTML(item.date)}</td>
-              <td>${escapeHTML(currentUser.name)}</td>
-              <td>${item.level || 0}</td>
-              <td>${escapeHTML(item.prize || "₹0")}</td>
-              <td>${escapeHTML(item.result || "Completed")}</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-      </div>`;
-  }else{
-    $("historyContent").innerHTML = `
-      <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Date</th><th>Questions</th><th>Correct</th><th>Wrong</th><th>Score</th><th>Accuracy</th></tr>
-        </thead>
-        <tbody>
-          ${history.map(item=>`
-            <tr>
-              <td>${escapeHTML(item.date)}</td>
-              <td>${item.total}</td>
-              <td>${item.correct}</td>
-              <td>${item.wrong}</td>
-              <td>${item.score}</td>
-              <td>${item.percentage}%</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-      </div>`;
-  }
-
-  showScreen("historyScreen");
-}
-
-/* =========================================
-   KBC GAME ENGINE
-========================================= */
-
+/* KBC GAME */
+function kbcPrizeForIndex(index){return KBC_PRIZES[Math.min(index,KBC_PRIZES.length-1)]}
 function renderPrizeLadder(){
-  $("prizeLadder").innerHTML = PRIZES.map((prize,i)=>`
-    <div class="prize ${i===kbcIndex?"active":""}">
-      ${15-i}. ${prize}
-    </div>
-  `).join("");
+ const box=$("prizeLadder");box.innerHTML="";
+ for(let i=kbcQuestions.length-1;i>=0;i--){
+  const row=document.createElement("div");row.className="prize-level";
+  if(i===kbcIndex)row.classList.add("current");if(i<kbcIndex)row.classList.add("won");
+  const level=document.createElement("span");level.textContent=String(i+1).padStart(2,"0");
+  const amount=document.createElement("strong");amount.textContent="₹"+kbcPrizeForIndex(i).toLocaleString("en-IN");
+  row.append(level,amount);box.appendChild(row);
+ }
 }
-
-function startKBC(questions){
-  stopTimers();
-
-  kbcQuestions = questions.slice(0,15);
-  kbcIndex = 0;
-  kbcUsedFifty = false;
-  kbcUsedAudience = false;
-  kbcFinished = false;
-
-  $("fiftyBtn").disabled = false;
-  $("audienceBtn").disabled = false;
-  $("audienceResult").textContent = "";
-
-  showScreen("kbcScreen");
-  renderPrizeLadder();
-  renderKBCQuestion();
+function startKBC(){
+ const name=$("kbcPlayerName").value.trim();
+ if(!name){showToast("गेम शुरू करने से पहले अपना नाम लिखिए।");$("kbcPlayerName").focus();return}
+ if(isKBCPlayerNameTaken(name)){
+  alert("यह नाम पहले से KBC Player History में मौजूद है। कृपया कोई दूसरा नाम चुनें।");
+  $("kbcPlayerName").value="";$("kbcPlayerName").focus();return;
+ }
+ const levels=getSelectedLevels("kbc"),available=getKBCSetupQuestions();
+ if(!document.querySelector('input[name="kbcSubject"]:checked')){showToast("कम से कम एक Subject चुनिए।");return}
+ if(!getSelectedPairs("kbcChapter").length){showToast("कम से कम एक Chapter/Topic चुनिए।");return}
+ if(!levels.length){showToast("कम से कम एक Difficulty Level चुनिए।");return}
+ if(!available.length){showToast("आपके चयन से मेल खाते सवाल नहीं मिले।");return}
+ kbcPlayerName=name;
+ const limit=$("kbcLimit").value;kbcQuestions=shuffle(available);
+ if(limit!=="all")kbcQuestions=kbcQuestions.slice(0,Number(limit));
+ kbcQuestions=kbcQuestions.slice(0,20);
+ kbcIndex=0;kbcMoney=0;kbcFinished=false;kbcAnswered=false;
+ kbc5050Used=false;kbcAudienceUsed=false;kbcCurrentRecordSaved=false;
+ kbcTimeLimit=Number($("kbcTime").value);kbcTimeRemaining=kbcTimeLimit;
+ $("kbcGameArea").classList.remove("hidden");$("kbcEndPanel").classList.add("hidden");
+ $("kbcPlayerDisplay").textContent=kbcPlayerName;
+ $("kbcWelcome").textContent="स्वागत है, "+kbcPlayerName+"! क्या आप तैयार हैं?";
+ $("kbc5050").disabled=false;$("kbcAudience").disabled=false;
+ $("kbc5050").textContent="🎯 50:50 Lifeline";$("kbcAudience").textContent="📊 Audience Poll";
+ $("kbc5050Status").textContent="Available";$("kbcAudienceStatus").textContent="Available";
+ showScreen("kbcScreen");renderPrizeLadder();playWelcomeTune();
+ kbcHost("नमस्कार "+kbcPlayerName+"! KBC Quiz Show में आपका स्वागत है।",true);
+ setTimeout(renderKBCQuestion,900);
 }
+$("startKBC").addEventListener("click",startKBC);
 
 function renderKBCQuestion(){
-  if(kbcIndex >= kbcQuestions.length){
-    endKBC("Completed");
-    return;
-  }
-
-  const q = kbcQuestions[kbcIndex];
-
-  $("kbcCounter").textContent =
-    `Question ${kbcIndex+1} / ${kbcQuestions.length}`;
-
-  $("kbcQuestion").textContent = q.question;
-
-  $("kbcProgress").style.width =
-    ((kbcIndex+1)/kbcQuestions.length*100)+"%";
-
-  $("kbcOptions").innerHTML = ["A","B","C","D"].map(letter=>`
-    <button class="kbc-option" id="kbc${letter}"
-      onclick="checkKBCAnswer('${letter}')">
-      ${letter}. ${escapeHTML(q.options[letter])}
-    </button>
-  `).join("");
-
-  $("audienceResult").textContent = "";
-
-  renderPrizeLadder();
-  startKBCTimer();
+ if(kbcFinished)return;if(kbcIndex>=kbcQuestions.length){endKBC("won");return}
+ kbcAnswered=false;const q=kbcQuestions[kbcIndex];
+ $("kbcQuestionNo").textContent=(kbcIndex+1)+" / "+kbcQuestions.length;
+ $("kbcMoney").textContent="₹"+kbcMoney.toLocaleString("en-IN");
+ $("kbcQuestionLabel").textContent="प्रश्न "+(kbcIndex+1);$("kbcQuestionText").textContent=q.question;
+ $("kbcProgress").style.width=((kbcIndex+1)/kbcQuestions.length*100)+"%";renderPrizeLadder();
+ const box=$("kbcOptions");box.innerHTML="";
+ OPTION_KEYS.forEach(key=>{
+  const button=document.createElement("button");button.className="kbc-option";button.dataset.key=key;
+  const letter=document.createElement("span");letter.className="letter";letter.textContent=key;
+  const text=document.createElement("span");text.textContent=q[key];
+  button.append(letter,text);button.addEventListener("click",()=>checkKBCAnswer(key,button));box.appendChild(button);
+ });
+ $("kbc5050").disabled=kbc5050Used;$("kbcAudience").disabled=kbcAudienceUsed;
+ kbcHost("आपके सामने प्रश्न है। सही विकल्प चुनिए और अगली राशि जीतिए।",true);startKBCTimer();
 }
-
+function stopKBCTimer(){if(kbcTimerInterval){clearInterval(kbcTimerInterval);kbcTimerInterval=null}}
+function updateKBCTimer(){
+ if(kbcTimeLimit<=0){$("kbcTimer").textContent="No Limit";return}
+ const t=Math.max(0,kbcTimeRemaining);
+ $("kbcTimer").textContent=String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0");
+}
 function startKBCTimer(){
-  clearInterval(kbcInterval);
-  kbcTimer = 30;
-  $("kbcTimer").textContent = kbcTimer;
-
-  kbcInterval = setInterval(()=>{
-    kbcTimer--;
-    $("kbcTimer").textContent = kbcTimer;
-
-    if(kbcTimer <= 0){
-      clearInterval(kbcInterval);
-      endKBC("Time Out");
-    }
-  },1000);
-}
-
-function checkKBCAnswer(letter){
-  if(kbcFinished) return;
-
-  clearInterval(kbcInterval);
-
-  const q = kbcQuestions[kbcIndex];
-  const buttons = ["A","B","C","D"];
-
-  buttons.forEach(option=>{
-    const button = $("kbc"+option);
-    button.disabled = true;
-
-    if(option === q.answer){
-      button.classList.add("correct");
-    }
-  });
-
-  if(letter !== q.answer){
-    $("kbc"+letter).classList.add("wrong");
-
-    setTimeout(()=>endKBC("Wrong Answer"),1400);
-    return;
+ stopKBCTimer();kbcTimeRemaining=kbcTimeLimit;updateKBCTimer();if(kbcTimeLimit<=0)return;
+ kbcTimerInterval=setInterval(()=>{
+  if(kbcFinished||kbcAnswered)return;
+  kbcTimeRemaining--;updateKBCTimer();
+  if(kbcTimeRemaining<=0){
+   stopKBCTimer();kbcAnswered=true;kbcHost("समय समाप्त हो गया है। आपका गेम यहीं समाप्त होता है।",true);
+   setTimeout(()=>endKBC("timeout"),1000);
   }
-
-  $("kbc"+letter).classList.add("correct");
-
-  setTimeout(()=>{
-    kbcIndex++;
-
-    if(kbcIndex >= kbcQuestions.length){
-      endKBC("Completed");
-    }else{
-      renderKBCQuestion();
-    }
-  },1000);
+ },1000);
 }
-
-function useFifty(){
-  if(kbcUsedFifty || kbcFinished) return;
-
-  const q = kbcQuestions[kbcIndex];
-  const wrongOptions = shuffle(["A","B","C","D"].filter(x=>x!==q.answer)).slice(0,2);
-
-  wrongOptions.forEach(letter=>{
-    const button = $("kbc"+letter);
-    button.disabled = true;
-    button.style.visibility = "hidden";
-  });
-
-  kbcUsedFifty = true;
-  $("fiftyBtn").disabled = true;
-  toast("50:50 lifeline used.");
+function useKBC5050(){
+ if(kbcFinished||kbcAnswered||kbc5050Used)return;
+ const q=kbcQuestions[kbcIndex],buttons=[...$("kbcOptions").querySelectorAll("button")];
+ shuffle(OPTION_KEYS.filter(k=>k!==q.answer)).slice(0,2).forEach(key=>{
+  const b=buttons.find(x=>x.dataset.key===key);if(b){b.disabled=true;b.style.display="none"}
+ });
+ kbc5050Used=true;$("kbc5050").disabled=true;$("kbc5050").textContent="✓ 50:50 Used";
+ $("kbc5050Status").textContent="Used";kbcHost("50:50 Lifeline इस्तेमाल हो गई है। अब केवल दो विकल्प बचे हैं।",true);
 }
-
-function useAudience(){
-  if(kbcUsedAudience || kbcFinished) return;
-
-  const q = kbcQuestions[kbcIndex];
-  const correct = Math.floor(45 + Math.random()*36);
-  let remaining = 100-correct;
-
-  const percentages = {A:0,B:0,C:0,D:0};
-  percentages[q.answer] = correct;
-
-  const wrong = shuffle(["A","B","C","D"].filter(x=>x!==q.answer));
-
-  wrong.forEach((letter,index)=>{
-    if(index === 2){
-      percentages[letter] = remaining;
-    }else{
-      const value = Math.floor(Math.random()*(remaining+1));
-      percentages[letter] = value;
-      remaining -= value;
-    }
-  });
-
-  $("audienceResult").innerHTML =
-    "Audience Poll: " +
-    ["A","B","C","D"].map(letter=>
-      `${letter}: ${percentages[letter]}%`
-    ).join(" | ");
-
-  kbcUsedAudience = true;
-  $("audienceBtn").disabled = true;
+$("kbc5050").addEventListener("click",useKBC5050);
+function useKBCAudiencePoll(){
+ if(kbcFinished||kbcAnswered||kbcAudienceUsed)return;
+ const q=kbcQuestions[kbcIndex],wrongKeys=shuffle(OPTION_KEYS.filter(k=>k!==q.answer));
+ const correctPercent=55+Math.floor(Math.random()*26),remaining=100-correctPercent;
+ const weights=[Math.random()+.1,Math.random()+.1,Math.random()+.1],sum=weights.reduce((a,b)=>a+b,0);
+ const wrongPercent=weights.map(w=>Math.floor(remaining*w/sum));
+ wrongPercent[0]+=remaining-wrongPercent.reduce((a,b)=>a+b,0);
+ const percentages={[q.answer]:correctPercent};wrongKeys.forEach((k,i)=>percentages[k]=wrongPercent[i]);
+ const message=OPTION_KEYS.map(k=>k+": "+percentages[k]+"%").join("\n");
+ kbcAudienceUsed=true;$("kbcAudience").disabled=true;$("kbcAudience").textContent="✓ Poll Used";
+ $("kbcAudienceStatus").textContent="Used";kbcHost("दर्शकों का अनुमानित पोल:\n"+message,true);
 }
-
-function quitKBC(){
-  if(confirm("Are you sure you want to quit the KBC game?")){
-    endKBC("Quit");
-  }
+$("kbcAudience").addEventListener("click",useKBCAudiencePoll);
+function checkKBCAnswer(key,button){
+ if(kbcFinished||kbcAnswered)return;kbcAnswered=true;stopKBCTimer();
+ const q=kbcQuestions[kbcIndex],buttons=[...$("kbcOptions").querySelectorAll("button")];
+ buttons.forEach(b=>b.disabled=true);const correctButton=buttons.find(b=>b.dataset.key===q.answer);
+ if(key===q.answer){
+  button.classList.add("correct");kbcMoney=kbcPrizeForIndex(kbcIndex);
+  $("kbcMoney").textContent="₹"+kbcMoney.toLocaleString("en-IN");playCorrectTune();
+  kbcHost("वाह! बिल्कुल सही जवाब! आप "+kbcMoney.toLocaleString("en-IN")+" रुपये के वर्चुअल इनाम वाले पड़ाव पर पहुँच गए हैं।",true);
+  renderPrizeLadder();
+  setTimeout(()=>{kbcIndex++;if(kbcIndex>=kbcQuestions.length)endKBC("won");else renderKBCQuestion()},1800);
+ }else{
+  button.classList.add("wrong");if(correctButton)correctButton.classList.add("correct");
+  playWrongTune();kbcHost("ओह! आपका जवाब गलत है। सही जवाब था "+q.answer+". "+q[q.answer]+".",true);
+  setTimeout(()=>endKBC("wrong",q),1800);
+ }
 }
-
-function endKBC(reason){
-  if(kbcFinished) return;
-
-  kbcFinished = true;
-  clearInterval(kbcInterval);
-
-  const reached = Math.max(0,kbcIndex);
-  const prizeIndex = Math.min(reached,PRIZES.length-1);
-  const prize = reached > 0 ? PRIZES[prizeIndex] : "₹0";
-
-  const record = {
-    id:Date.now(),
-    type:"kbc",
-    date:new Date().toLocaleString(),
-    level:reached,
-    prize,
-    result:reason,
-    usedFifty:kbcUsedFifty,
-    usedAudience:kbcUsedAudience
-  };
-
-  saveHistory(record);
-
-  $("kbcFinalPrize").textContent = prize;
-  $("kbcFinalMessage").textContent =
-    reason === "Completed"
-      ? "Congratulations! You completed the game."
-      : reason === "Wrong Answer"
-        ? "Game ended because of an incorrect answer."
-        : reason === "Time Out"
-          ? "Time is over. Better luck next time!"
-          : "You left the game.";
-
-  updateDashboard();
-  showScreen("kbcResultScreen");
+function endKBC(reason,q=null){
+ if(kbcFinished)return;kbcFinished=true;stopKBCTimer();
+ if("speechSynthesis"in window)window.speechSynthesis.cancel();
+ saveKBCResult(reason,q);$("kbcGameArea").classList.add("hidden");$("kbcEndPanel").classList.remove("hidden");
+ let title="",message="";
+ if(reason==="won"){title="🏆 शानदार जीत!";message="बधाई हो! आपने चुने गए सभी सवालों के सही जवाब दिए।";playCorrectTune();speakHindi("बहुत बहुत बधाई! आपने सभी सवालों के सही जवाब दिए हैं।")}
+ else if(reason==="wrong"){title="❌ खेल समाप्त!";message="आपका जवाब गलत था। आपकी जीती हुई राशि नीचे दी गई है।"}
+ else if(reason==="timeout"){title="⏰ समय समाप्त!";message="इस सवाल का समय समाप्त हो गया। आपका गेम यहीं समाप्त होता है।"}
+ else{title="🚪 आपने खेल छोड़ दिया";message="आपने खेल बीच में छोड़ दिया। आपकी वर्तमान राशि नीचे दिखाई गई है।"}
+ $("kbcEndTitle").textContent=title;$("kbcEndMessage").textContent=message;
+ $("kbcFinalMoney").textContent="₹"+kbcMoney.toLocaleString("en-IN");
+ $("kbcFinalDetails").textContent="Player: "+kbcPlayerName+" | सही जवाब: "+kbcIndex+" | कुल सवाल: "+kbcQuestions.length+(q?" | सही उत्तर: "+q.answer+". "+q[q.answer]:"");
+ renderPrizeLadder();
 }
+$("kbcQuit").addEventListener("click",()=>{if(confirm("क्या आप वाकई KBC गेम छोड़ना चाहते हैं?"))endKBC("quit")});
+$("kbcExit").addEventListener("click",()=>{if(confirm("क्या आप KBC से बाहर निकलना चाहते हैं?"))endKBC("quit")});
+$("kbcPlayAgain").addEventListener("click",()=>{stopKBCTimer();showScreen("kbcSetupScreen")});
+$("kbcHome").addEventListener("click",()=>{
+ stopKBCTimer();if("speechSynthesis"in window)window.speechSynthesis.cancel();showScreen("homeScreen");
+});
+$("kbcSoundToggle").addEventListener("click",()=>{
+ kbcSoundOn=!kbcSoundOn;$("kbcSoundToggle").textContent=kbcSoundOn?"🔊 Sound: ON":"🔇 Sound: OFF";
+ if(!kbcSoundOn&&"speechSynthesis"in window)window.speechSynthesis.cancel();
+ if(kbcSoundOn)speakHindi("आवाज चालू कर दी गई है।");
+});
 
-/* =========================================
-   NAVIGATION
-========================================= */
-
-function goHome(){
-  stopTimers();
-
-  if(!currentUser){
-    showScreen("authScreen");
-    return;
-  }
-
-  updateDashboard();
-  showScreen("homeScreen");
-}
-
-/* =========================================
-   INITIALIZATION
-========================================= */
-
-async function initializeApp(){
-  if(restoreSession()){
-    showScreen("homeScreen");
-    updateDashboard();
-  }else{
-    showScreen("authScreen");
-  }
-
-  await loadQuestions();
-}
-
-initializeApp();
-
+/* INITIALIZE */
+loadQuestions();
 </script>
 </body>
 </html>
