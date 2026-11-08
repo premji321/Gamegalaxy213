@@ -1,303 +1,487 @@
 
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Video Editing Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Video Editor Pro</title>
 
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#101522;
- color:#fff;
+ margin:0;background:#10141d;color:#eee;
+ font-family:Arial,sans-serif;font-size:14px
 }
-header{
- background:#202b40;
- padding:16px;
- text-align:center;
- font-size:23px;
- font-weight:bold;
-}
-.container{
- display:grid;
- grid-template-columns:340px 1fr;
- gap:18px;
- padding:18px;
-}
-.panel{
- background:#1b2639;
- border-radius:12px;
- padding:17px;
- margin-bottom:15px;
-}
-h3{
- color:#65d5ff;
- border-bottom:1px solid #40516b;
- padding-bottom:9px;
-}
-label{
- display:block;
- margin-top:12px;
- font-size:14px;
- color:#d6e0f0;
-}
-input,select,textarea,button{
- width:100%;
- padding:10px;
- margin-top:6px;
- border-radius:6px;
- border:1px solid #465873;
- background:#101a2b;
- color:white;
-}
-textarea{resize:vertical}
+button,input,select,textarea{font:inherit}
 button{
- background:#167bd1;
- border:none;
- cursor:pointer;
- font-weight:bold;
+ background:#26364d;color:white;border:1px solid #40536e;
+ border-radius:5px;padding:9px 12px;cursor:pointer
 }
-button:hover{background:#2699f3}
-button.danger{background:#c43d4d}
-button.success{background:#148d64}
-button:disabled{opacity:.5;cursor:not-allowed}
-.preview-area{
- display:flex;
- flex-direction:column;
- align-items:center;
+button:hover{background:#365273}
+button.primary{background:#167bd1}
+button.danger{background:#a83243}
+button.green{background:#13845d}
+button:disabled{opacity:.4;cursor:not-allowed}
+input,select,textarea{
+ background:#151e2d;color:white;border:1px solid #40516b;
+ border-radius:5px;padding:8px;width:100%;margin-top:5px
 }
-.preview-box{
- background:#050505;
- width:min(100%,700px);
- border:2px solid #34455f;
- border-radius:10px;
- overflow:hidden;
+input[type=range]{padding:0}
+input[type=color]{height:36px;padding:2px}
+label{display:block;color:#bdc9d9;margin:10px 0 3px}
+header{
+ height:58px;background:#1b2638;border-bottom:1px solid #34445a;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:0 15px;gap:10px
 }
-canvas{
- display:block;
- width:100%;
- height:auto;
- background:white;
+.logo{font-size:19px;font-weight:bold;color:#65c9ff}
+.header-actions{display:flex;gap:6px;flex-wrap:wrap}
+.workspace{
+ display:grid;grid-template-columns:230px minmax(300px,1fr) 260px;
+ height:calc(100vh - 58px);min-height:650px
 }
-.preview-controls{
- display:flex;
- gap:10px;
- width:100%;
- max-width:700px;
- margin-top:12px;
+.left,.right{
+ background:#192333;overflow:auto;padding:12px;
+ border-right:1px solid #35445a
 }
-.preview-controls button{flex:1}
-.cut-item{
- background:#29374d;
- padding:10px;
- border-radius:7px;
- margin-top:8px;
- font-size:13px;
+.right{border-right:0;border-left:1px solid #35445a}
+.section{
+ background:#202d40;border-radius:7px;padding:11px;
+ margin-bottom:12px
 }
-.cut-item button{margin-top:6px}
-small{color:#aebdd0}
-#status{
- margin-top:12px;
- color:#6fe2a8;
- text-align:center;
+.section h3{
+ font-size:14px;color:#66caff;margin:0 0 10px;
+ border-bottom:1px solid #40516b;padding-bottom:8px
 }
-#videoInfo{
- font-size:13px;
- color:#b6c5d9;
- margin-top:8px;
+.main{
+ min-width:0;display:flex;flex-direction:column;
+ background:#101722;overflow:hidden
 }
-@media(max-width:850px){
- .container{grid-template-columns:1fr;padding:10px}
- header{font-size:19px}
+.preview-top{
+ flex:1;min-height:250px;display:flex;
+ justify-content:center;align-items:center;
+ padding:12px;overflow:auto
+}
+.preview-frame{
+ background:#050505;max-height:100%;max-width:100%;
+ box-shadow:0 5px 30px #0009;
+ display:flex;align-items:center;justify-content:center
+}
+canvas{display:block;max-width:100%;max-height:100%;width:auto;height:auto}
+.transport{
+ display:flex;justify-content:center;align-items:center;
+ gap:8px;padding:10px;border-top:1px solid #34445a;
+ background:#192333;flex-wrap:wrap
+}
+.transport button{min-width:55px}
+.timecode{font-family:monospace;color:#7ed4ff}
+.timeline-area{
+ height:340px;min-height:260px;background:#151e2c;
+ border-top:2px solid #3b4e68;display:flex;flex-direction:column
+}
+.timeline-toolbar{
+ display:flex;gap:6px;align-items:center;padding:8px;
+ overflow-x:auto;flex-wrap:wrap;border-bottom:1px solid #35445a
+}
+.timeline-scroll{overflow:auto;flex:1;position:relative}
+.ruler{
+ height:28px;background:#202d40;position:sticky;top:0;
+ z-index:4;display:flex;min-width:100%;width:max-content
+}
+.ruler-label{
+ border-left:1px solid #596a80;height:28px;
+ padding:6px;font-size:11px;color:#bdc9d9;
+ flex-shrink:0
+}
+.track{
+ display:flex;align-items:center;height:56px;
+ border-bottom:1px solid #35445a;position:relative;
+ min-width:100%;width:max-content
+}
+.track-name{
+ position:sticky;left:0;width:105px;min-width:105px;
+ height:100%;background:#25344a;z-index:3;
+ display:flex;align-items:center;padding:6px;
+ font-size:11px;font-weight:bold;border-right:1px solid #52657e
+}
+.track-content{
+ position:relative;height:100%;flex:1;
+ min-width:100px
+}
+.clip{
+ position:absolute;top:7px;height:41px;
+ border:1px solid #9cb4d0;border-radius:5px;
+ display:flex;align-items:center;justify-content:center;
+ overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+ padding:4px;color:white;font-size:11px;
+ cursor:grab;user-select:none;min-width:5px
+}
+.clip.selected{outline:2px solid #fff;z-index:2}
+.clip.video{background:#17659b}
+.clip.image{background:#7950a0}
+.clip.audio{background:#24784d}
+.clip.text{background:#ad7025}
+.clip.effect{background:#a44359}
+.playhead{
+ position:absolute;top:0;bottom:0;width:2px;
+ background:#ff5252;z-index:5;pointer-events:none
+}
+.playhead:before{
+ content:"▼";position:absolute;top:0;left:-6px;
+ color:#ff5252;font-size:12px
+}
+.small{font-size:11px;color:#aabbd0}
+.row{display:flex;gap:6px}
+.row>*{flex:1;min-width:0}
+.asset{
+ padding:8px;background:#293950;border-radius:5px;
+ margin-top:6px;cursor:pointer;font-size:12px;
+ display:flex;justify-content:space-between;gap:5px
+}
+.asset:hover{background:#38516f}
+#progressWrap{
+ background:#111a27;border-radius:5px;height:14px;
+ overflow:hidden;margin:10px 0
+}
+#progressBar{
+ height:100%;width:0%;background:#24b881;
+ transition:width .1s
+}
+#progressText{color:#68d9ad;font-weight:bold}
+.hidden{display:none!important}
+@media(max-width:950px){
+ .workspace{grid-template-columns:180px minmax(250px,1fr)}
+ .right{grid-column:1/-1;height:250px;border-top:1px solid #40516b}
+}
+@media(max-width:650px){
+ header{height:auto;min-height:58px;flex-wrap:wrap;padding:10px}
+ .workspace{display:flex;flex-direction:column;height:auto}
+ .left{order:2;max-height:400px}
+ .main{order:1;min-height:650px}
+ .right{order:3;height:auto}
+ .preview-top{height:390px;flex:none}
+ .timeline-area{height:330px}
 }
 </style>
 </head>
 
 <body>
 
-<header>🎬 MY VIDEO EDITING STUDIO</header>
+<header>
+ <div class="logo">🎬 MY VIDEO EDITOR PRO</div>
+ <div class="header-actions">
+  <button onclick="saveProject()">Save Project</button>
+  <button onclick="loadProject()">Load Project</button>
+  <button class="green" onclick="exportVideo()">Export Video</button>
+ </div>
+</header>
 
-<div class="container">
+<div class="workspace">
 
-<!-- LEFT EDITING PANEL -->
+<!-- LEFT PANEL -->
 
-<div>
+<aside class="left">
 
-<div class="panel">
-<h3>1. Upload Video</h3>
+ <div class="section">
+  <h3>📁 MEDIA LIBRARY</h3>
+  <input type="file" id="mediaInput" multiple
+   accept="video/*,image/*,audio/*">
+  <p class="small">Select multiple videos, images and audio files.</p>
+  <div id="mediaLibrary"></div>
+ </div>
 
-<label>Select Your Video</label>
-<input type="file" id="videoFile" accept="video/*">
+ <div class="section">
+  <h3>➕ ADD ELEMENTS</h3>
+  <button onclick="addText()" style="width:100%">+ Add Text</button>
+  <button onclick="addImagePrompt()" style="width:100%;margin-top:7px">
+   + Add Image
+  </button>
+  <button onclick="addEffect()" style="width:100%;margin-top:7px">
+   + Add Effect Layer
+  </button>
+  <button onclick="addBackground()" style="width:100%;margin-top:7px">
+   + Add Background
+  </button>
+ </div>
 
-<div id="videoInfo">No video selected</div>
+ <div class="section">
+  <h3>📐 PROJECT SETTINGS</h3>
+  <label>Video Format</label>
+  <select id="projectFormat" onchange="changeFormat()">
+   <option value="shorts">YouTube Shorts 9:16</option>
+   <option value="a4p">A4 Portrait</option>
+   <option value="a4l">A4 Landscape</option>
+   <option value="landscape">Landscape 16:9</option>
+   <option value="square">Square 1:1</option>
+  </select>
+
+  <label>Frame Rate</label>
+  <select id="fps">
+   <option value="24">24 FPS</option>
+   <option value="30" selected>30 FPS</option>
+   <option value="60">60 FPS</option>
+  </select>
+
+  <label>Project Background</label>
+  <input type="color" id="projectBg" value="#111111"
+   oninput="render()">
+ </div>
+
+ <div class="section">
+  <h3>🎵 QUICK AUDIO</h3>
+  <button onclick="addMusic()" style="width:100%">
+   + Add Music Track
+  </button>
+  <p class="small">Choose an audio file from your media library.</p>
+ </div>
+
+ <div class="section">
+  <h3>📌 SHORTCUTS</h3>
+  <button onclick="splitClip()" style="width:100%">Split (S)</button>
+  <button onclick="deleteSelected()" class="danger"
+   style="width:100%;margin-top:6px">Delete (Delete)</button>
+  <button onclick="undo()" style="width:100%;margin-top:6px">Undo</button>
+ </div>
+
+</aside>
+
+<!-- MAIN EDITOR -->
+
+<main class="main">
+
+ <div class="preview-top">
+  <div class="preview-frame" id="previewFrame">
+   <canvas id="preview" width="1080" height="1920"></canvas>
+  </div>
+ </div>
+
+ <div class="transport">
+  <button onclick="goStart()">|◀</button>
+  <button onclick="stepBackward()">◀</button>
+  <button class="primary" id="playBtn" onclick="togglePlay()">▶</button>
+  <button onclick="stepForward()">▶</button>
+  <button onclick="goEnd()">▶|</button>
+  <span class="timecode" id="clock">00:00.00 / 00:00.00</span>
+ </div>
+
+ <div class="timeline-area">
+
+  <div class="timeline-toolbar">
+   <button onclick="splitClip()">✂ Split</button>
+   <button onclick="deleteSelected()" class="danger">Delete</button>
+   <button onclick="duplicateClip()">Duplicate</button>
+   <button onclick="zoom(-1)">−</button>
+   <span id="zoomValue" class="small">Zoom 50px/s</span>
+   <button onclick="zoom(1)">+</button>
+   <button onclick="addTrack()">+ Track</button>
+   <button onclick="toggleSnap()" id="snapBtn">Snap: ON</button>
+  </div>
+
+  <div class="timeline-scroll" id="timelineScroll">
+   <div id="timelineInner">
+    <div class="ruler" id="ruler"></div>
+    <div id="tracks"></div>
+    <div class="playhead" id="playhead"></div>
+   </div>
+  </div>
+
+ </div>
+
+</main>
+
+<!-- RIGHT PROPERTIES PANEL -->
+
+<aside class="right">
+
+ <div class="section">
+  <h3>⚙ CLIP PROPERTIES</h3>
+  <div id="noSelection" class="small">
+   Select any clip from the timeline to edit its properties.
+  </div>
+
+  <div id="properties" class="hidden">
+
+   <div id="clipTitle" style="color:#70d0ff;font-weight:bold"></div>
+
+   <label>Track</label>
+   <select id="clipTrack" onchange="changeTrack()">
+    <option value="video">Video</option>
+    <option value="image">Image</option>
+    <option value="text">Text</option>
+    <option value="audio">Audio</option>
+    <option value="effects">Effects</option>
+   </select>
+
+   <label>Timeline Start (seconds)</label>
+   <input type="number" id="clipStart" step=".1" min="0"
+    onchange="updateProperty('start',this.value)">
+
+   <label>Duration (seconds)</label>
+   <input type="number" id="clipDuration" step=".1" min=".1"
+    onchange="updateProperty('duration',this.value)">
+
+   <label>Source In (seconds)</label>
+   <input type="number" id="clipIn" step=".1" min="0"
+    onchange="updateProperty('in',this.value)">
+
+   <label>Playback Speed</label>
+   <select id="clipSpeed" onchange="updateProperty('speed',this.value)">
+    <option value=".25">0.25x</option>
+    <option value=".5">0.5x</option>
+    <option value="1" selected>1x</option>
+    <option value="1.5">1.5x</option>
+    <option value="2">2x</option>
+   </select>
+
+   <div id="textProperties">
+    <label>Text Content</label>
+    <textarea id="clipText" rows="3"
+     oninput="updateProperty('text',this.value)"></textarea>
+    <label>Font Size</label>
+    <input type="range" id="fontSize" min="15" max="150"
+     value="60" oninput="updateProperty('fontSize',this.value)">
+    <label>Text Color</label>
+    <input type="color" id="textColor" value="#ffffff"
+     oninput="updateProperty('textColor',this.value)">
+    <label>Text Background</label>
+    <input type="color" id="textBg" value="#000000"
+     oninput="updateProperty('textBg',this.value)">
+   </div>
+
+   <div id="visualProperties">
+    <label>Horizontal Position (%)</label>
+    <input type="range" id="posX" min="0" max="100" value="50"
+     oninput="updateProperty('x',this.value)">
+    <label>Vertical Position (%)</label>
+    <input type="range" id="posY" min="0" max="100" value="50"
+     oninput="updateProperty('y',this.value)">
+    <label>Scale (%)</label>
+    <input type="range" id="scale" min="10" max="200" value="100"
+     oninput="updateProperty('scale',this.value)">
+    <label>Opacity (%)</label>
+    <input type="range" id="opacity" min="0" max="100" value="100"
+     oninput="updateProperty('opacity',this.value)">
+   </div>
+
+   <div id="effectProperties">
+    <label>Effect</label>
+    <select id="effectType"
+     onchange="updateProperty('effect',this.value)">
+     <option value="none">None</option>
+     <option value="brightness">Brightness</option>
+     <option value="contrast">Contrast</option>
+     <option value="saturate">Saturation</option>
+     <option value="grayscale">Black & White</option>
+     <option value="sepia">Sepia</option>
+     <option value="blur">Blur</option>
+     <option value="invert">Invert</option>
+    </select>
+    <label>Effect Intensity</label>
+    <input type="range" id="effectValue" min="0" max="200"
+     value="100" oninput="updateProperty('effectValue',this.value)">
+   </div>
+
+   <button class="danger" onclick="deleteSelected()"
+    style="width:100%;margin-top:15px">Delete Selected Clip</button>
+
+  </div>
+ </div>
+
+ <div class="section">
+  <h3>🎨 QUICK EFFECTS</h3>
+  <button style="width:100%" onclick="quickEffect('grayscale')">Black & White</button>
+  <button style="width:100%;margin-top:6px" onclick="quickEffect('sepia')">Sepia</button>
+  <button style="width:100%;margin-top:6px" onclick="quickEffect('brightness')">Brightness</button>
+  <button style="width:100%;margin-top:6px" onclick="quickEffect('blur')">Blur</button>
+  <button style="width:100%;margin-top:6px" onclick="quickEffect('invert')">Invert</button>
+ </div>
+
+ <div class="section">
+  <h3>📤 EXPORT SETTINGS</h3>
+  <label>Quality</label>
+  <select id="exportQuality">
+   <option value="3000000">720p / Standard</option>
+   <option value="6000000" selected>1080p / High</option>
+   <option value="12000000">High Bitrate</option>
+  </select>
+  <label>Format</label>
+  <select id="exportFormat">
+   <option value="webm">WebM</option>
+  </select>
+  <button class="green" onclick="exportVideo()"
+   style="width:100%;margin-top:12px">Export Final Video</button>
+  <div id="progressWrap"><div id="progressBar"></div></div>
+  <div id="progressText">0% Complete</div>
+  <div id="exportStatus" class="small">Ready to export</div>
+ </div>
+
+</aside>
 </div>
-
-<div class="panel">
-<h3>2. Video Format</h3>
-
-<label>Select Layout</label>
-<select id="format">
-<option value="shorts">YouTube Shorts (9:16)</option>
-<option value="a4p">A4 Portrait</option>
-<option value="a4l">A4 Landscape</option>
-<option value="landscape">YouTube Landscape (16:9)</option>
-<option value="square">Square (1:1)</option>
-</select>
-
-<label>Background Color</label>
-<input type="color" id="bgColor" value="#ffffff">
-
-<label>Video Display Mode</label>
-<select id="fit">
-<option value="contain">Full Video (No Crop)</option>
-<option value="cover">Fill Frame (Crop)</option>
-</select>
-</div>
-
-<div class="panel">
-<h3>3. Top Heading</h3>
-
-<label>Enter Top Text</label>
-<textarea id="topText" rows="3"
-placeholder="यहाँ अपना Heading लिखें..."></textarea>
-
-<label>Heading Font Size</label>
-<input type="range" id="topSize" min="15" max="100" value="48">
-
-<label>Heading Color</label>
-<input type="color" id="topColor" value="#000000">
-
-<label>Heading Background</label>
-<input type="color" id="topBg" value="#ffffff">
-
-<label>Heading Height (%)</label>
-<input type="range" id="topHeight" min="10" max="40" value="25">
-</div>
-
-<div class="panel">
-<h3>4. Bottom Description</h3>
-
-<label>Enter Bottom Text</label>
-<textarea id="bottomText" rows="3"
-placeholder="यहाँ अपना Description लिखें..."></textarea>
-
-<label>Text Size</label>
-<input type="range" id="bottomSize" min="15" max="100" value="40">
-
-<label>Text Color</label>
-<input type="color" id="bottomColor" value="#000000">
-
-<label>Background Color</label>
-<input type="color" id="bottomBg" value="#ffffff">
-
-<label>Bottom Area Height (%)</label>
-<input type="range" id="bottomHeight" min="10" max="40" value="25">
-</div>
-
-<div class="panel">
-<h3>5. Video Cutting / Trimming</h3>
-
-<small>
-जिस हिस्से को हटाना है उसका Start और End Time डालें।
-एक से अधिक हिस्से भी हटाए जा सकते हैं।
-</small>
-
-<label>Cut Start Time (Seconds)</label>
-<input type="number" id="cutStart" min="0" step="0.1" value="0">
-
-<label>Cut End Time (Seconds)</label>
-<input type="number" id="cutEnd" min="0" step="0.1" value="5">
-
-<button onclick="addCut()">+ Add Cut Section</button>
-
-<div id="cutList"></div>
-
-<button class="danger" onclick="clearCuts()">Clear All Cuts</button>
-</div>
-
-<div class="panel">
-<h3>6. Export Video</h3>
-
-<label>Export Quality</label>
-<select id="quality">
-<option value="8">High Quality</option>
-<option value="5">Medium Quality</option>
-<option value="3">Low Quality</option>
-</select>
-
-<button class="success" id="exportBtn" onclick="exportVideo()">
-⬇ Export Final Video
-</button>
-
-<div id="status"></div>
-</div>
-
-</div>
-
-<!-- RIGHT PREVIEW PANEL -->
-
-<div class="preview-area">
-
-<div class="panel" style="width:100%">
-<h3>🎥 Live Video Preview</h3>
-
-<div class="preview-box">
-<canvas id="canvas" width="1080" height="1920"></canvas>
-</div>
-
-<div class="preview-controls">
-<button onclick="playVideo()">▶ Play</button>
-<button onclick="pauseVideo()">⏸ Pause</button>
-<button onclick="restartVideo()">↺ Restart</button>
-</div>
-
-<label>Video Timeline</label>
-<input type="range" id="timeline" min="0" max="100" value="0">
-
-<div id="timeInfo">00:00 / 00:00</div>
-</div>
-
-<div class="panel" style="width:100%">
-<h3>📌 Editing Instructions</h3>
-<p>• पहले वीडियो Upload करें।</p>
-<p>• अपनी जरूरत के अनुसार Layout चुनें।</p>
-<p>• ऊपर और नीचे Heading तथा Description लिखें।</p>
-<p>• जिस हिस्से को हटाना है उसका समय निर्धारित करें।</p>
-<p>• एक से अधिक Cut Section जोड़ सकते हैं।</p>
-<p>• Preview देखकर Export करें।</p>
-</div>
-
-</div>
-</div>
-
-<!-- Hidden video element -->
-
-<video id="video" playsinline preload="auto"
-style="display:none"></video>
 
 <script>
 
-const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+// =============================================
+//  MY VIDEO EDITOR PRO - EDITING ENGINE
+// =============================================
 
-let videoURL = null;
-let cuts = [];
-let animationFrame = null;
-let exporting = false;
+const canvas=document.getElementById("preview");
+const ctx=canvas.getContext("2d");
+const $=id=>document.getElementById(id);
 
-const $ = id => document.getElementById(id);
+let clips=[];
+let assets=[];
+let tracks=[
+ {id:"video",name:"VIDEO 1",type:"video"},
+ {id:"video2",name:"VIDEO 2",type:"video"},
+ {id:"image",name:"IMAGE",type:"image"},
+ {id:"text",name:"TEXT",type:"text"},
+ {id:"audio",name:"AUDIO 1",type:"audio"},
+ {id:"audio2",name:"AUDIO 2",type:"audio"},
+ {id:"effects",name:"EFFECTS",type:"effects"}
+];
 
-// FORMAT SETTINGS
+let selectedId=null;
+let playhead=0;
+let duration=0;
+let pxPerSecond=50;
+let isPlaying=false;
+let timer=null;
+let snap=true;
+let exporting=false;
+let exportStart=0;
+let exportDuration=0;
+let history=[];
+let audioContext=null;
+let audioDestination=null;
 
-function setFormat(){
+const mediaElements=new Map();
+const objectURLs=[];
 
- const format = $("format").value;
+function uid(){
+ return "clip_"+Math.random().toString(36).slice(2,11);
+}
 
- const sizes = {
+function snapshot(){
+ history.push(JSON.stringify({
+  clips:clips.map(c=>({...c,el:undefined,asset:undefined})),
+  duration
+ }));
+ if(history.length>30)history.shift();
+}
+
+function undo(){
+ if(!history.length)return;
+ const old=JSON.parse(history.pop());
+ clips=old.clips;
+ duration=old.duration;
+ renderTimeline();
+ renderProperties();
+ render();
+}
+
+function changeFormat(){
+
+ const sizes={
   shorts:[1080,1920],
   a4p:[1240,1754],
   a4l:[1754,1240],
@@ -305,528 +489,1094 @@ function setFormat(){
   square:[1080,1080]
  };
 
- [canvas.width,canvas.height] = sizes[format];
+ const s=sizes[$("projectFormat").value];
+ canvas.width=s[0];
+ canvas.height=s[1];
 
- drawFrame();
+ $("previewFrame").style.aspectRatio=s[0]+"/"+s[1];
+
+ render();
 }
 
-$("format").addEventListener("change",setFormat);
-
-// UPLOAD VIDEO
-
-$("videoFile").addEventListener("change",function(){
-
- const file=this.files[0];
- if(!file)return;
-
- if(videoURL) URL.revokeObjectURL(videoURL);
-
- videoURL=URL.createObjectURL(file);
-
- video.src=videoURL;
- video.load();
-
- video.onloadedmetadata=function(){
-
-  $("videoInfo").innerHTML=
-  "Duration: "+formatTime(video.duration)+
-  "<br>Resolution: "+video.videoWidth+" × "+video.videoHeight;
-
-  $("cutStart").max=video.duration;
-  $("cutEnd").max=video.duration;
-  $("cutEnd").value=Math.min(5,video.duration);
-
-  $("timeline").max=video.duration;
-  $("timeline").value=0;
-
-  drawFrame();
- };
-
-});
-
-// FORMAT TIME
-
-function formatTime(seconds){
-
- if(!Number.isFinite(seconds))return "00:00";
-
- let m=Math.floor(seconds/60);
- let s=Math.floor(seconds%60);
-
- return String(m).padStart(2,"0")+":"+
- String(s).padStart(2,"0");
+function getAsset(id){
+ return assets.find(a=>a.id===id);
 }
 
-// VIDEO PLAYBACK
+// =============================================
+// MEDIA LIBRARY
+// =============================================
 
-function playVideo(){
- if(video.src)video.play().catch(()=>{});
-}
+$("mediaInput").addEventListener("change",function(){
 
-function pauseVideo(){
- video.pause();
-}
+ [...this.files].forEach(file=>{
 
-function restartVideo(){
- if(video.src){
-  video.currentTime=0;
-  video.play().catch(()=>{});
- }
-}
+  let type=file.type.startsWith("video")?"video":
+           file.type.startsWith("image")?"image":
+           file.type.startsWith("audio")?"audio":null;
 
-// TIMELINE
+  if(!type)return;
 
-$("timeline").addEventListener("input",function(){
- if(video.duration){
-  video.currentTime=Number(this.value);
-  drawFrame();
- }
-});
+  const url=URL.createObjectURL(file);
+  objectURLs.push(url);
 
-video.addEventListener("timeupdate",function(){
-
- $("timeline").value=video.currentTime;
-
- $("timeInfo").textContent=
- formatTime(video.currentTime)+" / "+
- formatTime(video.duration);
-
-});
-
-// ADD CUT RANGE
-
-function addCut(){
-
- if(!video.duration){
-  alert("Please upload a video first.");
-  return;
- }
-
- let start=Number($("cutStart").value);
- let end=Number($("cutEnd").value);
-
- if(start<0 || end>video.duration || start>=end){
-  alert("Please enter a valid Start and End time.");
-  return;
- }
-
- cuts.push({start,end});
-
- cuts.sort((a,b)=>a.start-b.start);
-
- renderCuts();
-}
-
-// DISPLAY CUTS
-
-function renderCuts(){
-
- $("cutList").innerHTML="";
-
- cuts.forEach((cut,index)=>{
-
-  let div=document.createElement("div");
-  div.className="cut-item";
-
-  let info=document.createElement("div");
-  info.textContent=
-  "Cut "+(index+1)+": "+
-  cut.start.toFixed(2)+"s - "+
-  cut.end.toFixed(2)+"s";
-
-  let btn=document.createElement("button");
-  btn.className="danger";
-  btn.textContent="Remove This Cut";
-
-  btn.onclick=function(){
-   cuts.splice(index,1);
-   renderCuts();
+  const asset={
+   id:uid(),
+   name:file.name,
+   type,
+   url,
+   file,
+   duration:5
   };
 
-  div.append(info,btn);
-  $("cutList").appendChild(div);
-
- });
-
-}
-
-function clearCuts(){
- cuts=[];
- renderCuts();
-}
-
-// DRAW TEXT WITH WRAPPING
-
-function drawText(text,x,y,maxWidth,lineHeight,size,color){
-
- ctx.fillStyle=color;
- ctx.font="bold "+size+"px Arial";
- ctx.textAlign="center";
- ctx.textBaseline="middle";
-
- const words=text.split(/\s+/);
- let lines=[];
- let line="";
-
- words.forEach(word=>{
-
-  let test=line ? line+" "+word : word;
-
-  if(ctx.measureText(test).width>maxWidth && line){
-   lines.push(line);
-   line=word;
-  }else{
-   line=test;
+  if(type==="image"){
+   const img=new Image();
+   img.src=url;
+   asset.element=img;
   }
 
+  if(type==="video"){
+   const v=document.createElement("video");
+   v.src=url;
+   v.preload="auto";
+   v.muted=true;
+   v.playsInline=true;
+   v.onloadedmetadata=()=>{
+    asset.duration=v.duration||5;
+   };
+   asset.element=v;
+  }
+
+  if(type==="audio"){
+   const a=document.createElement("audio");
+   a.src=url;
+   a.preload="auto";
+   a.onloadedmetadata=()=>{
+    asset.duration=a.duration||5;
+   };
+   asset.element=a;
+  }
+
+  assets.push(asset);
+  renderLibrary();
+
  });
 
- if(line)lines.push(line);
+ this.value="";
+});
 
- const totalHeight=lines.length*lineHeight;
- let startY=y-totalHeight/2+lineHeight/2;
+function renderLibrary(){
 
- lines.forEach((item,i)=>{
-  ctx.fillText(item,x,startY+i*lineHeight,maxWidth);
+ const box=$("mediaLibrary");
+ box.innerHTML="";
+
+ assets.forEach(asset=>{
+
+  const div=document.createElement("div");
+  div.className="asset";
+
+  const name=document.createElement("span");
+  name.textContent=asset.name;
+
+  const type=document.createElement("span");
+  type.textContent=asset.type.toUpperCase();
+
+  div.append(name,type);
+
+  div.onclick=()=>addAssetToTimeline(asset.id);
+
+  box.appendChild(div);
+
  });
 
 }
 
-// DRAW VIDEO FRAME
+function addAssetToTimeline(id){
 
-function drawFrame(){
+ const asset=getAsset(id);
+ if(!asset)return;
 
- const W=canvas.width;
- const H=canvas.height;
+ let track=asset.type;
 
- const topPercent=Number($("topHeight").value)/100;
- const bottomPercent=Number($("bottomHeight").value)/100;
+ if(asset.type==="video"){
+  track=tracks.some(t=>t.id==="video")?"video":"video2";
+  if(clips.some(c=>c.track==="video" && c.start===playhead))
+   track="video2";
+ }
 
- const topH=H*topPercent;
- const bottomH=H*bottomPercent;
+ if(asset.type==="audio"){
+  track=clips.some(c=>c.track==="audio" && c.start===playhead)
+   ?"audio2":"audio";
+ }
 
- const middleY=topH;
- const middleH=H-topH-bottomH;
+ createClip(asset,track);
+}
 
- // BACKGROUND
+// =============================================
+// CLIP CREATION
+// =============================================
 
- ctx.fillStyle=$("bgColor").value;
- ctx.fillRect(0,0,W,H);
+function createClip(asset,track,extra={}){
 
- // TOP AREA
+ snapshot();
 
- ctx.fillStyle=$("topBg").value;
- ctx.fillRect(0,0,W,topH);
+ const c={
+  id:uid(),
+  assetId:asset?.id||null,
+  name:asset?.name||extra.name||"New Clip",
+  type:extra.type||asset?.type||"text",
+  track,
+  start:playhead,
+  duration:asset?.duration||5,
+  in:0,
+  speed:1,
+  x:50,y:50,scale:100,opacity:100,
+  text:extra.text||"",
+  fontSize:60,
+  textColor:"#ffffff",
+  textBg:"#000000",
+  effect:"none",
+  effectValue:100,
+  el:asset?.element||null
+ };
 
- // BOTTOM AREA
+ if(c.type==="video" || c.type==="audio"){
+  c.duration=asset?.duration||5;
+ }
 
- ctx.fillStyle=$("bottomBg").value;
- ctx.fillRect(0,H-bottomH,W,bottomH);
+ Object.assign(c,extra);
 
- // VIDEO AREA
+ clips.push(c);
+ selectedId=c.id;
 
- if(video.readyState>=2 && video.videoWidth){
+ updateDuration();
+ renderTimeline();
+ renderProperties();
+ render();
 
-  let vw=video.videoWidth;
-  let vh=video.videoHeight;
+}
 
-  let scale=$("fit").value==="cover"
-   ? Math.max(W/vw,middleH/vh)
-   : Math.min(W/vw,middleH/vh);
+function addText(){
 
-  let dw=vw*scale;
-  let dh=vh*scale;
+ createClip(null,"text",{
+  type:"text",
+  name:"Text Layer",
+  text:"Your Text Here",
+  duration:5,
+  fontSize:65,
+  textColor:"#ffffff",
+  textBg:"#000000"
+ });
 
-  let dx=(W-dw)/2;
-  let dy=middleY+(middleH-dh)/2;
+}
+
+function addImagePrompt(){
+
+ const asset=assets.filter(a=>a.type==="image");
+
+ if(!asset.length){
+  alert("Please upload an image first.");
+  return;
+ }
+
+ addAssetToTimeline(asset[asset.length-1].id);
+}
+
+function addMusic(){
+
+ const asset=assets.filter(a=>a.type==="audio");
+
+ if(!asset.length){
+  alert("Please upload an audio file first.");
+  return;
+ }
+
+ addAssetToTimeline(asset[asset.length-1].id);
+}
+
+function addEffect(){
+
+ createClip(null,"effects",{
+  type:"effect",
+  name:"Effect Layer",
+  effect:"brightness",
+  effectValue:120,
+  duration:5
+ });
+
+}
+
+function addBackground(){
+
+ createClip(null,"image",{
+  type:"background",
+  name:"Background Layer",
+  duration:5,
+  color:"#1c2e45"
+ });
+
+}
+
+function addTrack(){
+
+ const count=tracks.length+1;
+ tracks.push({
+  id:"extra"+count,
+  name:"CUSTOM "+count,
+  type:"video"
+ });
+ renderTimeline();
+}
+
+// =============================================
+// PROJECT DURATION
+// =============================================
+
+function updateDuration(){
+
+ duration=0;
+
+ clips.forEach(c=>{
+  duration=Math.max(duration,c.start+c.duration);
+ });
+
+ duration=Math.max(duration,1);
+}
+
+// =============================================
+// TIMELINE RENDERING
+// =============================================
+
+function renderTimeline(){
+
+ updateDuration();
+
+ const totalWidth=Math.max(
+  $("timelineScroll").clientWidth-105,
+  (duration+15)*pxPerSecond
+ );
+
+ $("timelineInner").style.width=(105+totalWidth)+"px";
+
+ const ruler=$("ruler");
+ ruler.innerHTML="";
+ ruler.style.width=totalWidth+"px";
+
+ for(let i=0;i<=Math.ceil(totalWidth/pxPerSecond);i++){
+
+  const div=document.createElement("div");
+  div.className="ruler-label";
+  div.style.width=pxPerSecond+"px";
+  div.textContent=formatTime(i);
+  ruler.appendChild(div);
+
+ }
+
+ const tracksBox=$("tracks");
+ tracksBox.innerHTML="";
+
+ tracks.forEach(track=>{
+
+  const row=document.createElement("div");
+  row.className="track";
+  row.style.width=(105+totalWidth)+"px";
+
+  const name=document.createElement("div");
+  name.className="track-name";
+  name.textContent=track.name;
+
+  const content=document.createElement("div");
+  content.className="track-content";
+  content.style.width=totalWidth+"px";
+
+  content.addEventListener("click",e=>{
+   if(e.target!==content)return;
+   const rect=content.getBoundingClientRect();
+   playhead=Math.max(0,(e.clientX-rect.left)/pxPerSecond);
+   render();
+   updatePlayhead();
+  });
+
+  clips.filter(c=>c.track===track.id).forEach(c=>{
+
+   const el=document.createElement("div");
+   el.className="clip "+c.type+
+    (c.id===selectedId?" selected":"");
+
+   el.style.left=(c.start*pxPerSecond)+"px";
+   el.style.width=Math.max(5,c.duration*pxPerSecond)+"px";
+
+   el.textContent=c.name;
+
+   el.addEventListener("click",e=>{
+    e.stopPropagation();
+    selectClip(c.id);
+   });
+
+   // Drag clip along the timeline
+
+   let dragStart=0;
+   let originalStart=0;
+   let moved=false;
+
+   el.addEventListener("pointerdown",e=>{
+
+    e.stopPropagation();
+
+    dragStart=e.clientX;
+    originalStart=c.start;
+    moved=false;
+
+    el.setPointerCapture(e.pointerId);
+
+   });
+
+   el.addEventListener("pointermove",e=>{
+
+    if(!el.hasPointerCapture(e.pointerId))return;
+
+    const diff=(e.clientX-dragStart)/pxPerSecond;
+
+    if(Math.abs(diff)>.03)moved=true;
+
+    if(moved){
+     c.start=Math.max(0,originalStart+diff);
+     if(snap)c.start=Math.round(c.start*10)/10;
+     el.style.left=(c.start*pxPerSecond)+"px";
+     updateDuration();
+     updatePlayhead();
+    }
+
+   });
+
+   el.addEventListener("pointerup",e=>{
+    if(moved){
+     snapshot();
+     renderTimeline();
+     renderProperties();
+    }
+   });
+
+   content.appendChild(el);
+
+  });
+
+  row.append(name,content);
+  tracksBox.appendChild(row);
+
+ });
+
+ updatePlayhead();
+
+}
+
+function updatePlayhead(){
+
+ const ph=$("playhead");
+ ph.style.left=(105+playhead*pxPerSecond)+"px";
+
+ $("clock").textContent=
+  formatTime(playhead)+ " / "+formatTime(duration);
+
+}
+
+// =============================================
+// SELECT CLIP AND PROPERTIES
+// =============================================
+
+function selectClip(id){
+
+ selectedId=id;
+ renderTimeline();
+ renderProperties();
+
+}
+
+function selectedClip(){
+ return clips.find(c=>c.id===selectedId);
+}
+
+function renderProperties(){
+
+ const c=selectedClip();
+
+ $("noSelection").classList.toggle("hidden",!!c);
+ $("properties").classList.toggle("hidden",!c);
+
+ if(!c)return;
+
+ $("clipTitle").textContent=c.name;
+ $("clipTrack").value=c.track;
+ $("clipStart").value=c.start.toFixed(2);
+ $("clipDuration").value=c.duration.toFixed(2);
+ $("clipIn").value=c.in||0;
+ $("clipSpeed").value=c.speed||1;
+
+ $("clipText").value=c.text||"";
+ $("fontSize").value=c.fontSize||60;
+ $("textColor").value=c.textColor||"#ffffff";
+ $("textBg").value=c.textBg||"#000000";
+
+ $("posX").value=c.x??50;
+ $("posY").value=c.y??50;
+ $("scale").value=c.scale??100;
+ $("opacity").value=c.opacity??100;
+
+ $("effectType").value=c.effect||"none";
+ $("effectValue").value=c.effectValue||100;
+
+ $("textProperties").classList.toggle("hidden",c.type!=="text");
+ $("visualProperties").classList.toggle("hidden",
+  !["video","image","background"].includes(c.type)
+ );
+ $("effectProperties").classList.toggle("hidden",
+  !["effect","effects"].includes(c.type)
+ );
+
+}
+
+function updateProperty(key,value){
+
+ const c=selectedClip();
+ if(!c)return;
+
+ snapshot();
+
+ if(["start","duration","in","speed","fontSize","x","y",
+     "scale","opacity","effectValue"].includes(key)){
+  value=Number(value);
+ }
+
+ c[key]=value;
+
+ if(key==="start")c.start=Math.max(0,c.start);
+ if(key==="duration")c.duration=Math.max(.1,c.duration);
+
+ updateDuration();
+ renderTimeline();
+ render();
+
+}
+
+function changeTrack(){
+
+ const c=selectedClip();
+ if(!c)return;
+
+ snapshot();
+ c.track=$("clipTrack").value;
+ renderTimeline();
+
+}
+
+// =============================================
+// SPLIT, DELETE, DUPLICATE
+// =============================================
+
+function splitClip(){
+
+ const c=selectedClip();
+
+ if(!c){
+  alert("Select a clip first.");
+  return;
+ }
+
+ const local=playhead-c.start;
+
+ if(local<=.05 || local>=c.duration-.05){
+  alert("Move playhead inside the selected clip.");
+  return;
+ }
+
+ snapshot();
+
+ const second={
+  ...c,
+  id:uid(),
+  start:playhead,
+  duration:c.duration-local,
+  in:(c.in||0)+local*(c.speed||1)
+ };
+
+ c.duration=local;
+
+ clips.push(second);
+ selectedId=second.id;
+
+ renderTimeline();
+ renderProperties();
+ render();
+
+}
+
+function deleteSelected(){
+
+ if(!selectedId)return;
+
+ snapshot();
+ clips=clips.filter(c=>c.id!==selectedId);
+ selectedId=null;
+
+ renderTimeline();
+ renderProperties();
+ render();
+
+}
+
+function duplicateClip(){
+
+ const c=selectedClip();
+ if(!c)return;
+
+ snapshot();
+
+ const copy={
+  ...c,
+  id:uid(),
+  start:c.start+c.duration,
+  name:c.name+" Copy"
+ };
+
+ clips.push(copy);
+ selectedId=copy.id;
+
+ renderTimeline();
+ renderProperties();
+
+}
+
+// =============================================
+// EFFECTS
+// =============================================
+
+function quickEffect(effect){
+
+ const c=selectedClip();
+
+ if(!c){
+  alert("Select a clip first.");
+  return;
+ }
+
+ if(c.type==="audio"){
+  alert("Visual effects cannot be applied to an audio clip.");
+  return;
+ }
+
+ snapshot();
+
+ c.effect=effect;
+ c.effectValue=effect==="brightness"?125:100;
+
+ renderProperties();
+ render();
+
+}
+
+// =============================================
+// CANVAS VIDEO COMPOSITING
+// =============================================
+
+function formatTime(t){
+
+ const m=Math.floor(t/60);
+ const s=Math.floor(t%60);
+ const ms=Math.floor((t%1)*100);
+
+ return String(m).padStart(2,"0")+":"+
+ String(s).padStart(2,"0")+"."+
+ String(ms).padStart(2,"0");
+
+}
+
+function activeClips(type){
+
+ return clips.filter(c=>
+  (!type||c.type===type) &&
+  playhead>=c.start &&
+  playhead<c.start+c.duration
+ );
+
+}
+
+function getFilter(c){
+
+ if(!c.effect||c.effect==="none")return "none";
+
+ const v=(c.effectValue||100)/100;
+
+ switch(c.effect){
+  case "brightness":return `brightness(${v})`;
+  case "contrast":return `contrast(${v})`;
+  case "saturate":return `saturate(${v})`;
+  case "grayscale":return "grayscale(1)";
+  case "sepia":return "sepia(1)";
+  case "blur":return `blur(${Math.max(0,v*8)}px)`;
+  case "invert":return "invert(1)";
+  default:return "none";
+ }
+
+}
+
+function drawMedia(c){
+
+ const asset=getAsset(c.assetId);
+
+ if(!asset)return;
+
+ const el=asset.element;
+ if(!el)return;
+
+ if(c.type==="video"){
+
+  if(el.readyState<2)return;
+
+  const sourceTime=(c.in||0)+(playhead-c.start)*(c.speed||1);
+
+  if(Math.abs(el.currentTime-sourceTime)>.25 && !isPlaying){
+   try{el.currentTime=sourceTime}catch(e){}
+  }
+
+  if(isPlaying && el.paused){
+   el.play().catch(()=>{});
+  }
+
+  if(!isPlaying && !el.paused){
+   el.pause();
+  }
+
+ }
+
+ if(c.type==="audio")return;
+
+ if(c.type==="image" && !el.complete)return;
+
+ if(c.type==="video" || c.type==="image"){
+
+  const sw=c.type==="video"?el.videoWidth:el.naturalWidth;
+  const sh=c.type==="video"?el.videoHeight:el.naturalHeight;
+
+  if(!sw||!sh)return;
+
+  const scale=Math.min(canvas.width/sw,canvas.height/sh)*
+   (c.scale||100)/100;
+
+  const w=sw*scale;
+  const h=sh*scale;
+
+  const x=canvas.width*(c.x??50)/100-w/2;
+  const y=canvas.height*(c.y??50)/100-h/2;
 
   ctx.save();
-  ctx.beginPath();
-  ctx.rect(0,middleY,W,middleH);
-  ctx.clip();
+  ctx.globalAlpha=(c.opacity??100)/100;
+  ctx.filter=getFilter(c);
 
-  ctx.drawImage(video,dx,dy,dw,dh);
+  ctx.drawImage(el,x,y,w,h);
 
   ctx.restore();
 
  }
 
- // TOP TEXT
+}
 
- const topText=$("topText").value;
+function drawTextClip(c){
 
- if(topText){
-  drawText(
-   topText,W/2,topH/2,
-   W-80,
-   Number($("topSize").value)*1.35,
-   Number($("topSize").value),
-   $("topColor").value
-  );
+ const text=c.text||"";
+ if(!text)return;
+
+ const x=canvas.width*(c.x??50)/100;
+ const y=canvas.height*(c.y??50)/100;
+
+ const size=c.fontSize||60;
+
+ ctx.save();
+ ctx.textAlign="center";
+ ctx.textBaseline="middle";
+ ctx.font="bold "+size+"px Arial";
+
+ const lines=text.split("\n");
+ const lineHeight=size*1.35;
+ const maxWidth=canvas.width*.85;
+
+ let wrapped=[];
+
+ lines.forEach(line=>{
+
+  const words=line.split(" ");
+  let current="";
+
+  words.forEach(word=>{
+
+   const test=current?current+" "+word:word;
+
+   if(ctx.measureText(test).width>maxWidth && current){
+    wrapped.push(current);
+    current=word;
+   }else current=test;
+
+  });
+
+  wrapped.push(current);
+
+ });
+
+ const total=wrapped.length*lineHeight;
+ const maxLine=Math.max(...wrapped.map(l=>ctx.measureText(l).width));
+
+ if(c.textBg && c.textBg!=="transparent"){
+
+  ctx.fillStyle=c.textBg;
+  ctx.globalAlpha=(c.opacity??100)/100;
+  ctx.fillRect(x-maxLine/2-20,y-total/2-10,maxLine+40,total+20);
+
  }
 
- // BOTTOM TEXT
+ ctx.fillStyle=c.textColor||"#ffffff";
+ ctx.globalAlpha=(c.opacity??100)/100;
 
- const bottomText=$("bottomText").value;
+ wrapped.forEach((line,i)=>{
+  ctx.fillText(line,x,y-total/2+lineHeight*(i+.5),maxWidth);
+ });
 
- if(bottomText){
-  drawText(
-   bottomText,W/2,H-bottomH/2,
-   W-80,
-   Number($("bottomSize").value)*1.35,
-   Number($("bottomSize").value),
-   $("bottomColor").value
-  );
- }
+ ctx.restore();
 
 }
 
-// LIVE PREVIEW UPDATE
+function render(){
 
-const settings=[
- "topText","bottomText","topSize","bottomSize",
- "topColor","bottomColor","topBg","bottomBg",
- "bgColor","topHeight","bottomHeight","fit"
-];
+ const W=canvas.width,H=canvas.height;
 
-settings.forEach(id=>{
- $(id).addEventListener("input",drawFrame);
- $(id).addEventListener("change",drawFrame);
-});
+ ctx.clearRect(0,0,W,H);
+ ctx.fillStyle=$("projectBg").value;
+ ctx.fillRect(0,0,W,H);
 
-function renderLoop(){
+ // Draw image and video tracks from bottom to top.
 
- drawFrame();
+ clips
+ .filter(c=>["background","image","video"].includes(c.type))
+ .filter(c=>playhead>=c.start && playhead<c.start+c.duration)
+ .sort((a,b)=>tracks.findIndex(t=>t.id===a.track)-
+              tracks.findIndex(t=>t.id===b.track))
+ .forEach(c=>{
 
- if(!video.paused && !video.ended){
-  animationFrame=requestAnimationFrame(renderLoop);
- }
+  if(c.type==="background"){
+   ctx.fillStyle=c.color||"#111111";
+   ctx.fillRect(0,0,W,H);
+  }else drawMedia(c);
+
+ });
+
+ // Draw text layers
+
+ activeClips("text").forEach(drawTextClip);
+
+ // Draw effects over the entire frame
+
+ activeClips("effect").forEach(c=>{
+
+  const f=getFilter(c);
+  if(f!=="none"){
+   const temp=document.createElement("canvas");
+   temp.width=W;
+   temp.height=H;
+
+   const tc=temp.getContext("2d");
+   tc.drawImage(canvas,0,0);
+
+   ctx.save();
+   ctx.filter=f;
+   ctx.clearRect(0,0,W,H);
+   ctx.drawImage(temp,0,0);
+   ctx.restore();
+  }
+
+ });
+
+ updatePlayhead();
+
 }
 
-video.addEventListener("play",renderLoop);
+// =============================================
+// PLAYBACK ENGINE
+// =============================================
 
-video.addEventListener("pause",()=>{
- cancelAnimationFrame(animationFrame);
- drawFrame();
-});
+function togglePlay(){
 
-// CALCULATE REMAINING VIDEO SEGMENTS
+ if(isPlaying)pause();
+ else play();
 
-function getKeepSegments(){
+}
 
- let duration=video.duration;
+function play(){
 
- let sorted=[...cuts].sort((a,b)=>a.start-b.start);
+ if(playhead>=duration)playhead=0;
 
- let merged=[];
+ isPlaying=true;
+ $("playBtn").textContent="⏸";
 
- sorted.forEach(c=>{
+ syncMedia();
+ render();
 
-  let last=merged[merged.length-1];
+ timer=setInterval(()=>{
 
-  if(last && c.start<=last.end){
-   last.end=Math.max(last.end,c.end);
+  playhead+=.05;
+
+  if(playhead>=duration){
+   playhead=duration;
+   pause();
+  }
+
+  syncMedia();
+  render();
+
+ },50);
+
+}
+
+function pause(){
+
+ isPlaying=false;
+ $("playBtn").textContent="▶";
+
+ clearInterval(timer);
+
+ mediaElements.forEach(el=>{
+  if(el.pause)el.pause();
+ });
+
+ render();
+
+}
+
+function syncMedia(){
+
+ clips.filter(c=>c.type==="audio").forEach(c=>{
+
+  const asset=getAsset(c.assetId);
+  if(!asset)return;
+
+  const el=asset.element;
+  const active=playhead>=c.start&&playhead<c.start+c.duration;
+
+  if(active){
+
+   const t=(c.in||0)+(playhead-c.start)*(c.speed||1);
+
+   if(Math.abs(el.currentTime-t)>.4){
+    try{el.currentTime=t}catch(e){}
+   }
+
+   if(isPlaying){
+    el.playbackRate=c.speed||1;
+    el.play().catch(()=>{});
+   }
+
   }else{
-   merged.push({...c});
+   el.pause();
   }
-
- });
-
- let segments=[];
- let cursor=0;
-
- merged.forEach(c=>{
-
-  if(c.start>cursor){
-   segments.push({start:cursor,end:c.start});
-  }
-
-  cursor=Math.max(cursor,c.end);
-
- });
-
- if(cursor<duration){
-  segments.push({start:cursor,end:duration});
- }
-
- return segments.filter(s=>s.end-s.start>0.03);
-
-}
-
-// SEEK VIDEO
-
-function seekTo(time){
-
- return new Promise((resolve,reject)=>{
-
-  const done=()=>resolve();
-
-  video.addEventListener("seeked",done,{once:true});
-
-  video.currentTime=time;
-
-  setTimeout(()=>{
-   video.removeEventListener("seeked",done);
-   reject(new Error("Video seeking timeout"));
-  },10000);
 
  });
 
 }
 
-// EXPORT VIDEO
+function goStart(){
+ pause();playhead=0;render();
+}
+
+function goEnd(){
+ pause();playhead=duration;render();
+}
+
+function stepForward(){
+ pause();playhead=Math.min(duration,playhead+1/Number($("fps").value));render();
+}
+
+function stepBackward(){
+ pause();playhead=Math.max(0,playhead-1/Number($("fps").value));render();
+}
+
+// =============================================
+// TIMELINE ZOOM AND SNAP
+// =============================================
+
+function zoom(dir){
+
+ pxPerSecond=Math.max(10,Math.min(200,pxPerSecond+dir*10));
+
+ $("zoomValue").textContent="Zoom "+pxPerSecond+"px/s";
+ renderTimeline();
+
+}
+
+function toggleSnap(){
+
+ snap=!snap;
+ $("snapBtn").textContent="Snap: "+(snap?"ON":"OFF");
+
+}
+
+// =============================================
+// EXPORT ENGINE WITH REAL-TIME PROGRESS
+// =============================================
 
 async function exportVideo(){
 
- if(!video.src || !video.duration){
-  alert("Please upload a video first.");
-  return;
- }
-
  if(exporting)return;
 
- const segments=getKeepSegments();
-
- if(!segments.length){
-  alert("No video remains after cutting.");
+ if(!clips.length){
+  alert("Add some clips before exporting.");
   return;
  }
 
- const btn=$("exportBtn");
- const status=$("status");
+ pause();
+
+ const maxEnd=Math.max(...clips.map(c=>c.start+c.duration));
+ if(maxEnd<=0)return;
+
+ if(!canvas.captureStream||!window.MediaRecorder){
+  alert("Your browser does not support video export.");
+  return;
+ }
 
  exporting=true;
- btn.disabled=true;
- status.textContent="Preparing video...";
+
+ const status=$("exportStatus");
+ const bar=$("progressBar");
+ const progress=$("progressText");
+
+ status.textContent="Preparing rendering...";
+ bar.style.width="0%";
+ progress.textContent="0% Complete";
+
+ const fps=Number($("fps").value);
+ const stream=canvas.captureStream(fps);
+
+ let recorder;
+ let audioContext;
 
  try{
 
-  pauseVideo();
+  const AudioContextClass=window.AudioContext||window.webkitAudioContext;
 
-  const stream=canvas.captureStream(30);
-
-  let audioContext=null;
-  let audioDestination=null;
-  let audioSource=null;
-
-  try{
-
-   const AudioContextClass=
-    window.AudioContext || window.webkitAudioContext;
+  if(AudioContextClass){
 
    audioContext=new AudioContextClass();
-
    await audioContext.resume();
 
    audioDestination=audioContext.createMediaStreamDestination();
 
-   audioSource=audioContext.createMediaElementSource(video);
+   const audioAssets=clips
+    .filter(c=>c.type==="audio")
+    .map(c=>getAsset(c.assetId))
+    .filter(Boolean);
 
-   audioSource.connect(audioDestination);
+   audioAssets.forEach(asset=>{
 
-   // Do not route the audio to speakers.
-   audioSource.connect(audioContext.destination);
+    if(!asset.element._audioSource){
 
-   audioDestination.stream.getAudioTracks().forEach(track=>{
-    stream.addTrack(track);
+     const source=audioContext.createMediaElementSource(asset.element);
+
+     source.connect(audioDestination);
+     asset.element._audioSource=source;
+
+    }else{
+     asset.element._audioSource.connect(audioDestination);
+    }
+
    });
 
-  }catch(e){
-   console.warn("Audio capture unavailable:",e);
+   audioDestination.stream.getAudioTracks().forEach(t=>{
+    stream.addTrack(t);
+   });
+
   }
 
-  const mimeTypes=[
+  const types=[
    "video/webm;codecs=vp9,opus",
    "video/webm;codecs=vp8,opus",
    "video/webm"
   ];
 
-  const mimeType=mimeTypes.find(type=>
-   MediaRecorder.isTypeSupported(type)
-  );
+  const mime=types.find(t=>MediaRecorder.isTypeSupported(t));
 
-  if(!mimeType){
-   throw new Error("WebM recording is not supported in this browser.");
-  }
+  if(!mime)throw new Error("WebM export not supported.");
 
-  const recorder=new MediaRecorder(stream,{
-   mimeType,
-   videoBitsPerSecond:
-    Number($("quality").value)*1000000
+  recorder=new MediaRecorder(stream,{
+   mimeType:mime,
+   videoBitsPerSecond:Number($("exportQuality").value)
   });
 
   const chunks=[];
 
   recorder.ondataavailable=e=>{
-   if(e.data.size>0)chunks.push(e.data);
+   if(e.data.size)chunks.push(e.data);
   };
 
   const finished=new Promise((resolve,reject)=>{
-   recorder.onstop=()=>resolve();
+   recorder.onstop=resolve;
    recorder.onerror=()=>reject(new Error("Recording failed."));
   });
 
-  recorder.start(1000);
+  exportDuration=maxEnd;
+  exportStart=performance.now();
 
-  for(let i=0;i<segments.length;i++){
+  playhead=0;
+  isPlaying=true;
+  syncMedia();
+  render();
 
-   const seg=segments[i];
+  recorder.start(500);
 
-   status.textContent=
-    "Exporting section "+(i+1)+" of "+segments.length;
+  status.textContent="Rendering video in real time...";
 
-   await seekTo(seg.start);
+  const frameMs=1000/fps;
+  let lastFrame=performance.now();
 
-   await new Promise((resolve,reject)=>{
+  await new Promise((resolve,reject)=>{
 
-    let timer;
+   function renderExport(now){
 
-    const cleanup=()=>{
-     clearInterval(timer);
-     video.removeEventListener("error",onError);
-    };
+    const elapsed=(now-exportStart)/1000;
 
-    const onError=()=>{
-     cleanup();
-     reject(new Error("Video playback failed."));
-    };
+    playhead=Math.min(exportDuration,elapsed);
 
-    video.addEventListener("error",onError,{once:true});
+    syncMedia();
+    render();
 
-    video.play().then(()=>{
+    const percent=Math.min(100,elapsed/exportDuration*100);
 
-     timer=setInterval(()=>{
+    bar.style.width=percent+"%";
+    progress.textContent=Math.floor(percent)+"% Complete";
 
-      if(video.currentTime>=seg.end){
+    if(elapsed>=exportDuration){
+     resolve();
+     return;
+    }
 
-       video.pause();
-       cleanup();
-       resolve();
+    const wait=Math.max(0,frameMs-(now-lastFrame));
+    lastFrame=now;
 
-      }
+    setTimeout(()=>{
+     requestAnimationFrame(renderExport);
+    },wait);
 
-     },30);
+   }
 
-    }).catch(error=>{
-     cleanup();
-     reject(error);
-    });
+   requestAnimationFrame(renderExport);
 
-   });
+  });
 
-  }
+  pause();
 
   recorder.stop();
-
   await finished;
 
-  const blob=new Blob(chunks,{type:"video/webm"});
-
+  const blob=new Blob(chunks,{type:mime});
   const url=URL.createObjectURL(blob);
 
   const a=document.createElement("a");
   a.href=url;
-  a.download="My_Edited_Video.webm";
+  a.download="My_Video_Editor_Export.webm";
 
   document.body.appendChild(a);
   a.click();
@@ -834,10 +1584,9 @@ async function exportVideo(){
 
   setTimeout(()=>URL.revokeObjectURL(url),60000);
 
-  status.textContent=
-   "✓ Video exported successfully!";
-
-  if(audioContext)await audioContext.close();
+  bar.style.width="100%";
+  progress.textContent="100% Complete";
+  status.textContent="✓ Export Completed Successfully";
 
   stream.getTracks().forEach(t=>t.stop());
 
@@ -845,26 +1594,144 @@ async function exportVideo(){
 
   console.error(error);
 
-  status.textContent="Error: "+error.message;
+  if(recorder&&recorder.state!=="inactive"){
+   recorder.stop();
+  }
 
-  alert("Export Error: "+error.message);
+  status.textContent="Export Error: "+error.message;
+  alert(error.message);
 
  }finally{
 
   exporting=false;
-  btn.disabled=false;
-  drawFrame();
+  pause();
+  render();
+
+  if(audioContext){
+   try{await audioContext.close()}catch(e){}
+  }
 
  }
 
 }
 
-// INITIALIZE
+// =============================================
+// SAVE AND LOAD PROJECT
+// =============================================
 
-setFormat();
-drawFrame();
+function saveProject(){
+
+ const project={
+  format:$("projectFormat").value,
+  background:$("projectBg").value,
+  clips:clips.map(c=>{
+   const copy={...c,el:undefined};
+   return copy;
+  }),
+  tracks,
+  duration
+ };
+
+ const blob=new Blob([JSON.stringify(project,null,2)],{
+  type:"application/json"
+ });
+
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="My_Video_Project.json";
+ a.click();
+
+ URL.revokeObjectURL(url);
+
+}
+
+function loadProject(){
+
+ const input=document.createElement("input");
+ input.type="file";
+ input.accept=".json,application/json";
+
+ input.onchange=async()=>{
+
+  const file=input.files[0];
+  if(!file)return;
+
+  try{
+
+   const project=JSON.parse(await file.text());
+
+   $("projectFormat").value=project.format||"shorts";
+   $("projectBg").value=project.background||"#111111";
+
+   tracks=project.tracks||tracks;
+
+   clips=(project.clips||[]).map(c=>{
+
+    const asset=getAsset(c.assetId);
+
+    return {...c,el:asset?.element||null};
+
+   });
+
+   selectedId=null;
+   playhead=0;
+
+   changeFormat();
+   renderTimeline();
+   renderProperties();
+   render();
+
+   alert("Project loaded. Upload the original media files again if they are not already in the Media Library.");
+
+  }catch(e){
+   alert("Invalid project file.");
+  }
+
+ };
+
+ input.click();
+
+}
+
+// =============================================
+// KEYBOARD SHORTCUTS
+// =============================================
+
+document.addEventListener("keydown",e=>{
+
+ if(["INPUT","TEXTAREA","SELECT"].includes(
+  document.activeElement.tagName
+ ))return;
+
+ if(e.code==="Space"){
+  e.preventDefault();
+  togglePlay();
+ }
+
+ if(e.key.toLowerCase()==="s"){
+  splitClip();
+ }
+
+ if(e.key==="Delete"||e.key==="Backspace"){
+  deleteSelected();
+ }
+
+ if(e.ctrlKey&&e.key.toLowerCase()==="z"){
+  undo();
+ }
+
+});
+
+// =============================================
+// INITIALIZE
+// =============================================
+
+changeFormat();
+renderTimeline();
+renderProperties();
+render();
 
 </script>
-
 </body>
 </html>
