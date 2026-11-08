@@ -1,0 +1,870 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Video Editing Studio</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#101522;
+ color:#fff;
+}
+header{
+ background:#202b40;
+ padding:16px;
+ text-align:center;
+ font-size:23px;
+ font-weight:bold;
+}
+.container{
+ display:grid;
+ grid-template-columns:340px 1fr;
+ gap:18px;
+ padding:18px;
+}
+.panel{
+ background:#1b2639;
+ border-radius:12px;
+ padding:17px;
+ margin-bottom:15px;
+}
+h3{
+ color:#65d5ff;
+ border-bottom:1px solid #40516b;
+ padding-bottom:9px;
+}
+label{
+ display:block;
+ margin-top:12px;
+ font-size:14px;
+ color:#d6e0f0;
+}
+input,select,textarea,button{
+ width:100%;
+ padding:10px;
+ margin-top:6px;
+ border-radius:6px;
+ border:1px solid #465873;
+ background:#101a2b;
+ color:white;
+}
+textarea{resize:vertical}
+button{
+ background:#167bd1;
+ border:none;
+ cursor:pointer;
+ font-weight:bold;
+}
+button:hover{background:#2699f3}
+button.danger{background:#c43d4d}
+button.success{background:#148d64}
+button:disabled{opacity:.5;cursor:not-allowed}
+.preview-area{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+}
+.preview-box{
+ background:#050505;
+ width:min(100%,700px);
+ border:2px solid #34455f;
+ border-radius:10px;
+ overflow:hidden;
+}
+canvas{
+ display:block;
+ width:100%;
+ height:auto;
+ background:white;
+}
+.preview-controls{
+ display:flex;
+ gap:10px;
+ width:100%;
+ max-width:700px;
+ margin-top:12px;
+}
+.preview-controls button{flex:1}
+.cut-item{
+ background:#29374d;
+ padding:10px;
+ border-radius:7px;
+ margin-top:8px;
+ font-size:13px;
+}
+.cut-item button{margin-top:6px}
+small{color:#aebdd0}
+#status{
+ margin-top:12px;
+ color:#6fe2a8;
+ text-align:center;
+}
+#videoInfo{
+ font-size:13px;
+ color:#b6c5d9;
+ margin-top:8px;
+}
+@media(max-width:850px){
+ .container{grid-template-columns:1fr;padding:10px}
+ header{font-size:19px}
+}
+</style>
+</head>
+
+<body>
+
+<header>🎬 MY VIDEO EDITING STUDIO</header>
+
+<div class="container">
+
+<!-- LEFT EDITING PANEL -->
+
+<div>
+
+<div class="panel">
+<h3>1. Upload Video</h3>
+
+<label>Select Your Video</label>
+<input type="file" id="videoFile" accept="video/*">
+
+<div id="videoInfo">No video selected</div>
+</div>
+
+<div class="panel">
+<h3>2. Video Format</h3>
+
+<label>Select Layout</label>
+<select id="format">
+<option value="shorts">YouTube Shorts (9:16)</option>
+<option value="a4p">A4 Portrait</option>
+<option value="a4l">A4 Landscape</option>
+<option value="landscape">YouTube Landscape (16:9)</option>
+<option value="square">Square (1:1)</option>
+</select>
+
+<label>Background Color</label>
+<input type="color" id="bgColor" value="#ffffff">
+
+<label>Video Display Mode</label>
+<select id="fit">
+<option value="contain">Full Video (No Crop)</option>
+<option value="cover">Fill Frame (Crop)</option>
+</select>
+</div>
+
+<div class="panel">
+<h3>3. Top Heading</h3>
+
+<label>Enter Top Text</label>
+<textarea id="topText" rows="3"
+placeholder="यहाँ अपना Heading लिखें..."></textarea>
+
+<label>Heading Font Size</label>
+<input type="range" id="topSize" min="15" max="100" value="48">
+
+<label>Heading Color</label>
+<input type="color" id="topColor" value="#000000">
+
+<label>Heading Background</label>
+<input type="color" id="topBg" value="#ffffff">
+
+<label>Heading Height (%)</label>
+<input type="range" id="topHeight" min="10" max="40" value="25">
+</div>
+
+<div class="panel">
+<h3>4. Bottom Description</h3>
+
+<label>Enter Bottom Text</label>
+<textarea id="bottomText" rows="3"
+placeholder="यहाँ अपना Description लिखें..."></textarea>
+
+<label>Text Size</label>
+<input type="range" id="bottomSize" min="15" max="100" value="40">
+
+<label>Text Color</label>
+<input type="color" id="bottomColor" value="#000000">
+
+<label>Background Color</label>
+<input type="color" id="bottomBg" value="#ffffff">
+
+<label>Bottom Area Height (%)</label>
+<input type="range" id="bottomHeight" min="10" max="40" value="25">
+</div>
+
+<div class="panel">
+<h3>5. Video Cutting / Trimming</h3>
+
+<small>
+जिस हिस्से को हटाना है उसका Start और End Time डालें।
+एक से अधिक हिस्से भी हटाए जा सकते हैं।
+</small>
+
+<label>Cut Start Time (Seconds)</label>
+<input type="number" id="cutStart" min="0" step="0.1" value="0">
+
+<label>Cut End Time (Seconds)</label>
+<input type="number" id="cutEnd" min="0" step="0.1" value="5">
+
+<button onclick="addCut()">+ Add Cut Section</button>
+
+<div id="cutList"></div>
+
+<button class="danger" onclick="clearCuts()">Clear All Cuts</button>
+</div>
+
+<div class="panel">
+<h3>6. Export Video</h3>
+
+<label>Export Quality</label>
+<select id="quality">
+<option value="8">High Quality</option>
+<option value="5">Medium Quality</option>
+<option value="3">Low Quality</option>
+</select>
+
+<button class="success" id="exportBtn" onclick="exportVideo()">
+⬇ Export Final Video
+</button>
+
+<div id="status"></div>
+</div>
+
+</div>
+
+<!-- RIGHT PREVIEW PANEL -->
+
+<div class="preview-area">
+
+<div class="panel" style="width:100%">
+<h3>🎥 Live Video Preview</h3>
+
+<div class="preview-box">
+<canvas id="canvas" width="1080" height="1920"></canvas>
+</div>
+
+<div class="preview-controls">
+<button onclick="playVideo()">▶ Play</button>
+<button onclick="pauseVideo()">⏸ Pause</button>
+<button onclick="restartVideo()">↺ Restart</button>
+</div>
+
+<label>Video Timeline</label>
+<input type="range" id="timeline" min="0" max="100" value="0">
+
+<div id="timeInfo">00:00 / 00:00</div>
+</div>
+
+<div class="panel" style="width:100%">
+<h3>📌 Editing Instructions</h3>
+<p>• पहले वीडियो Upload करें।</p>
+<p>• अपनी जरूरत के अनुसार Layout चुनें।</p>
+<p>• ऊपर और नीचे Heading तथा Description लिखें।</p>
+<p>• जिस हिस्से को हटाना है उसका समय निर्धारित करें।</p>
+<p>• एक से अधिक Cut Section जोड़ सकते हैं।</p>
+<p>• Preview देखकर Export करें।</p>
+</div>
+
+</div>
+</div>
+
+<!-- Hidden video element -->
+
+<video id="video" playsinline preload="auto"
+style="display:none"></video>
+
+<script>
+
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let videoURL = null;
+let cuts = [];
+let animationFrame = null;
+let exporting = false;
+
+const $ = id => document.getElementById(id);
+
+// FORMAT SETTINGS
+
+function setFormat(){
+
+ const format = $("format").value;
+
+ const sizes = {
+  shorts:[1080,1920],
+  a4p:[1240,1754],
+  a4l:[1754,1240],
+  landscape:[1920,1080],
+  square:[1080,1080]
+ };
+
+ [canvas.width,canvas.height] = sizes[format];
+
+ drawFrame();
+}
+
+$("format").addEventListener("change",setFormat);
+
+// UPLOAD VIDEO
+
+$("videoFile").addEventListener("change",function(){
+
+ const file=this.files[0];
+ if(!file)return;
+
+ if(videoURL) URL.revokeObjectURL(videoURL);
+
+ videoURL=URL.createObjectURL(file);
+
+ video.src=videoURL;
+ video.load();
+
+ video.onloadedmetadata=function(){
+
+  $("videoInfo").innerHTML=
+  "Duration: "+formatTime(video.duration)+
+  "<br>Resolution: "+video.videoWidth+" × "+video.videoHeight;
+
+  $("cutStart").max=video.duration;
+  $("cutEnd").max=video.duration;
+  $("cutEnd").value=Math.min(5,video.duration);
+
+  $("timeline").max=video.duration;
+  $("timeline").value=0;
+
+  drawFrame();
+ };
+
+});
+
+// FORMAT TIME
+
+function formatTime(seconds){
+
+ if(!Number.isFinite(seconds))return "00:00";
+
+ let m=Math.floor(seconds/60);
+ let s=Math.floor(seconds%60);
+
+ return String(m).padStart(2,"0")+":"+
+ String(s).padStart(2,"0");
+}
+
+// VIDEO PLAYBACK
+
+function playVideo(){
+ if(video.src)video.play().catch(()=>{});
+}
+
+function pauseVideo(){
+ video.pause();
+}
+
+function restartVideo(){
+ if(video.src){
+  video.currentTime=0;
+  video.play().catch(()=>{});
+ }
+}
+
+// TIMELINE
+
+$("timeline").addEventListener("input",function(){
+ if(video.duration){
+  video.currentTime=Number(this.value);
+  drawFrame();
+ }
+});
+
+video.addEventListener("timeupdate",function(){
+
+ $("timeline").value=video.currentTime;
+
+ $("timeInfo").textContent=
+ formatTime(video.currentTime)+" / "+
+ formatTime(video.duration);
+
+});
+
+// ADD CUT RANGE
+
+function addCut(){
+
+ if(!video.duration){
+  alert("Please upload a video first.");
+  return;
+ }
+
+ let start=Number($("cutStart").value);
+ let end=Number($("cutEnd").value);
+
+ if(start<0 || end>video.duration || start>=end){
+  alert("Please enter a valid Start and End time.");
+  return;
+ }
+
+ cuts.push({start,end});
+
+ cuts.sort((a,b)=>a.start-b.start);
+
+ renderCuts();
+}
+
+// DISPLAY CUTS
+
+function renderCuts(){
+
+ $("cutList").innerHTML="";
+
+ cuts.forEach((cut,index)=>{
+
+  let div=document.createElement("div");
+  div.className="cut-item";
+
+  let info=document.createElement("div");
+  info.textContent=
+  "Cut "+(index+1)+": "+
+  cut.start.toFixed(2)+"s - "+
+  cut.end.toFixed(2)+"s";
+
+  let btn=document.createElement("button");
+  btn.className="danger";
+  btn.textContent="Remove This Cut";
+
+  btn.onclick=function(){
+   cuts.splice(index,1);
+   renderCuts();
+  };
+
+  div.append(info,btn);
+  $("cutList").appendChild(div);
+
+ });
+
+}
+
+function clearCuts(){
+ cuts=[];
+ renderCuts();
+}
+
+// DRAW TEXT WITH WRAPPING
+
+function drawText(text,x,y,maxWidth,lineHeight,size,color){
+
+ ctx.fillStyle=color;
+ ctx.font="bold "+size+"px Arial";
+ ctx.textAlign="center";
+ ctx.textBaseline="middle";
+
+ const words=text.split(/\s+/);
+ let lines=[];
+ let line="";
+
+ words.forEach(word=>{
+
+  let test=line ? line+" "+word : word;
+
+  if(ctx.measureText(test).width>maxWidth && line){
+   lines.push(line);
+   line=word;
+  }else{
+   line=test;
+  }
+
+ });
+
+ if(line)lines.push(line);
+
+ const totalHeight=lines.length*lineHeight;
+ let startY=y-totalHeight/2+lineHeight/2;
+
+ lines.forEach((item,i)=>{
+  ctx.fillText(item,x,startY+i*lineHeight,maxWidth);
+ });
+
+}
+
+// DRAW VIDEO FRAME
+
+function drawFrame(){
+
+ const W=canvas.width;
+ const H=canvas.height;
+
+ const topPercent=Number($("topHeight").value)/100;
+ const bottomPercent=Number($("bottomHeight").value)/100;
+
+ const topH=H*topPercent;
+ const bottomH=H*bottomPercent;
+
+ const middleY=topH;
+ const middleH=H-topH-bottomH;
+
+ // BACKGROUND
+
+ ctx.fillStyle=$("bgColor").value;
+ ctx.fillRect(0,0,W,H);
+
+ // TOP AREA
+
+ ctx.fillStyle=$("topBg").value;
+ ctx.fillRect(0,0,W,topH);
+
+ // BOTTOM AREA
+
+ ctx.fillStyle=$("bottomBg").value;
+ ctx.fillRect(0,H-bottomH,W,bottomH);
+
+ // VIDEO AREA
+
+ if(video.readyState>=2 && video.videoWidth){
+
+  let vw=video.videoWidth;
+  let vh=video.videoHeight;
+
+  let scale=$("fit").value==="cover"
+   ? Math.max(W/vw,middleH/vh)
+   : Math.min(W/vw,middleH/vh);
+
+  let dw=vw*scale;
+  let dh=vh*scale;
+
+  let dx=(W-dw)/2;
+  let dy=middleY+(middleH-dh)/2;
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0,middleY,W,middleH);
+  ctx.clip();
+
+  ctx.drawImage(video,dx,dy,dw,dh);
+
+  ctx.restore();
+
+ }
+
+ // TOP TEXT
+
+ const topText=$("topText").value;
+
+ if(topText){
+  drawText(
+   topText,W/2,topH/2,
+   W-80,
+   Number($("topSize").value)*1.35,
+   Number($("topSize").value),
+   $("topColor").value
+  );
+ }
+
+ // BOTTOM TEXT
+
+ const bottomText=$("bottomText").value;
+
+ if(bottomText){
+  drawText(
+   bottomText,W/2,H-bottomH/2,
+   W-80,
+   Number($("bottomSize").value)*1.35,
+   Number($("bottomSize").value),
+   $("bottomColor").value
+  );
+ }
+
+}
+
+// LIVE PREVIEW UPDATE
+
+const settings=[
+ "topText","bottomText","topSize","bottomSize",
+ "topColor","bottomColor","topBg","bottomBg",
+ "bgColor","topHeight","bottomHeight","fit"
+];
+
+settings.forEach(id=>{
+ $(id).addEventListener("input",drawFrame);
+ $(id).addEventListener("change",drawFrame);
+});
+
+function renderLoop(){
+
+ drawFrame();
+
+ if(!video.paused && !video.ended){
+  animationFrame=requestAnimationFrame(renderLoop);
+ }
+}
+
+video.addEventListener("play",renderLoop);
+
+video.addEventListener("pause",()=>{
+ cancelAnimationFrame(animationFrame);
+ drawFrame();
+});
+
+// CALCULATE REMAINING VIDEO SEGMENTS
+
+function getKeepSegments(){
+
+ let duration=video.duration;
+
+ let sorted=[...cuts].sort((a,b)=>a.start-b.start);
+
+ let merged=[];
+
+ sorted.forEach(c=>{
+
+  let last=merged[merged.length-1];
+
+  if(last && c.start<=last.end){
+   last.end=Math.max(last.end,c.end);
+  }else{
+   merged.push({...c});
+  }
+
+ });
+
+ let segments=[];
+ let cursor=0;
+
+ merged.forEach(c=>{
+
+  if(c.start>cursor){
+   segments.push({start:cursor,end:c.start});
+  }
+
+  cursor=Math.max(cursor,c.end);
+
+ });
+
+ if(cursor<duration){
+  segments.push({start:cursor,end:duration});
+ }
+
+ return segments.filter(s=>s.end-s.start>0.03);
+
+}
+
+// SEEK VIDEO
+
+function seekTo(time){
+
+ return new Promise((resolve,reject)=>{
+
+  const done=()=>resolve();
+
+  video.addEventListener("seeked",done,{once:true});
+
+  video.currentTime=time;
+
+  setTimeout(()=>{
+   video.removeEventListener("seeked",done);
+   reject(new Error("Video seeking timeout"));
+  },10000);
+
+ });
+
+}
+
+// EXPORT VIDEO
+
+async function exportVideo(){
+
+ if(!video.src || !video.duration){
+  alert("Please upload a video first.");
+  return;
+ }
+
+ if(exporting)return;
+
+ const segments=getKeepSegments();
+
+ if(!segments.length){
+  alert("No video remains after cutting.");
+  return;
+ }
+
+ const btn=$("exportBtn");
+ const status=$("status");
+
+ exporting=true;
+ btn.disabled=true;
+ status.textContent="Preparing video...";
+
+ try{
+
+  pauseVideo();
+
+  const stream=canvas.captureStream(30);
+
+  let audioContext=null;
+  let audioDestination=null;
+  let audioSource=null;
+
+  try{
+
+   const AudioContextClass=
+    window.AudioContext || window.webkitAudioContext;
+
+   audioContext=new AudioContextClass();
+
+   await audioContext.resume();
+
+   audioDestination=audioContext.createMediaStreamDestination();
+
+   audioSource=audioContext.createMediaElementSource(video);
+
+   audioSource.connect(audioDestination);
+
+   // Do not route the audio to speakers.
+   audioSource.connect(audioContext.destination);
+
+   audioDestination.stream.getAudioTracks().forEach(track=>{
+    stream.addTrack(track);
+   });
+
+  }catch(e){
+   console.warn("Audio capture unavailable:",e);
+  }
+
+  const mimeTypes=[
+   "video/webm;codecs=vp9,opus",
+   "video/webm;codecs=vp8,opus",
+   "video/webm"
+  ];
+
+  const mimeType=mimeTypes.find(type=>
+   MediaRecorder.isTypeSupported(type)
+  );
+
+  if(!mimeType){
+   throw new Error("WebM recording is not supported in this browser.");
+  }
+
+  const recorder=new MediaRecorder(stream,{
+   mimeType,
+   videoBitsPerSecond:
+    Number($("quality").value)*1000000
+  });
+
+  const chunks=[];
+
+  recorder.ondataavailable=e=>{
+   if(e.data.size>0)chunks.push(e.data);
+  };
+
+  const finished=new Promise((resolve,reject)=>{
+   recorder.onstop=()=>resolve();
+   recorder.onerror=()=>reject(new Error("Recording failed."));
+  });
+
+  recorder.start(1000);
+
+  for(let i=0;i<segments.length;i++){
+
+   const seg=segments[i];
+
+   status.textContent=
+    "Exporting section "+(i+1)+" of "+segments.length;
+
+   await seekTo(seg.start);
+
+   await new Promise((resolve,reject)=>{
+
+    let timer;
+
+    const cleanup=()=>{
+     clearInterval(timer);
+     video.removeEventListener("error",onError);
+    };
+
+    const onError=()=>{
+     cleanup();
+     reject(new Error("Video playback failed."));
+    };
+
+    video.addEventListener("error",onError,{once:true});
+
+    video.play().then(()=>{
+
+     timer=setInterval(()=>{
+
+      if(video.currentTime>=seg.end){
+
+       video.pause();
+       cleanup();
+       resolve();
+
+      }
+
+     },30);
+
+    }).catch(error=>{
+     cleanup();
+     reject(error);
+    });
+
+   });
+
+  }
+
+  recorder.stop();
+
+  await finished;
+
+  const blob=new Blob(chunks,{type:"video/webm"});
+
+  const url=URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+  a.href=url;
+  a.download="My_Edited_Video.webm";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+
+  status.textContent=
+   "✓ Video exported successfully!";
+
+  if(audioContext)await audioContext.close();
+
+  stream.getTracks().forEach(t=>t.stop());
+
+ }catch(error){
+
+  console.error(error);
+
+  status.textContent="Error: "+error.message;
+
+  alert("Export Error: "+error.message);
+
+ }finally{
+
+  exporting=false;
+  btn.disabled=false;
+  drawFrame();
+
+ }
+
+}
+
+// INITIALIZE
+
+setFormat();
+drawFrame();
+
+</script>
+
+</body>
+</html>
