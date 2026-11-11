@@ -1,390 +1,119 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10264b">
-
-<title>NCERT MCQ Paper Generator</title>
+<title>Professional Video Studio</title>
 
 <style>
-:root {
-    --navy: #10264b;
-    --blue: #2459c4;
-    --light: #edf4ff;
-    --white: #ffffff;
-    --text: #1e293b;
-    --muted: #64748b;
-    --border: #dbe4f0;
-    --green: #15803d;
-    --red: #dc2626;
-    --orange: #d97706;
-    --shadow: 0 12px 35px rgba(16,38,75,.10);
+:root{
+ --bg:#0b1020;
+ --panel:#151d30;
+ --panel2:#1c2940;
+ --border:#30415c;
+ --blue:#16a9ed;
+ --text:#f1f5ff;
+ --muted:#9aabc4;
+ --green:#22c58b;
+ --red:#ed5265;
 }
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;
 }
-
-body {
-    font-family: Arial, "Noto Sans Devanagari", sans-serif;
-    background: #f3f6fc;
-    color: var(--text);
-    line-height: 1.65;
+header{
+ background:#111a2c;padding:18px 12px;
+ border-bottom:1px solid var(--border);
+ text-align:center;
 }
-
-header {
-    background: linear-gradient(135deg, #10264b, #2459c4);
-    color: white;
-    text-align: center;
-    padding: 28px 15px;
+header h1{font-size:23px;margin:0;color:#52c9ff}
+header p{color:var(--muted);font-size:12px;margin:7px 0 0}
+.container{max-width:1250px;margin:auto;padding:15px}
+.panel{
+ background:var(--panel);border:1px solid var(--border);
+ padding:16px;border-radius:12px;margin-bottom:15px;
 }
-
-header h1 {
-    font-size: clamp(23px, 4vw, 34px);
+h3{font-size:16px;margin:0 0 13px;color:#69ccff}
+button,.upload{
+ border:0;border-radius:7px;padding:10px 15px;
+ background:#087fca;color:white;cursor:pointer;
+ font-weight:bold;margin:3px;
 }
-
-header p {
-    font-size: 14px;
-    opacity: .9;
-    margin-top: 6px;
+button:hover,.upload:hover{background:#08639e}
+button:disabled{opacity:.45;cursor:not-allowed}
+.secondary{background:#35435d}
+.danger{background:#a93247}
+.success{background:#087b58}
+input,select,textarea{
+ background:#0c1425;color:white;border:1px solid #40516d;
+ border-radius:6px;padding:9px;
 }
-
-.container {
-    width: min(1100px, 94%);
-    margin: 25px auto;
+input[type=file]{display:none}
+input[type=range]{accent-color:var(--blue)}
+textarea{width:100%;min-height:100px;resize:vertical}
+label{font-size:13px;color:#c4d1e4}
+.row{
+ display:flex;gap:10px;flex-wrap:wrap;
+ align-items:center;
 }
-
-.card {
-    background: white;
-    padding: 24px;
-    border-radius: 16px;
-    margin-bottom: 22px;
-    box-shadow: var(--shadow);
+.small{font-size:12px;color:var(--muted)}
+.preview{
+ background:#000;border-radius:10px;
+ overflow:hidden;position:relative;
 }
-
-.section-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--navy);
-    font-size: 21px;
-    margin-bottom: 16px;
+canvas{width:100%;height:auto;display:block}
+.preview-info{
+ display:flex;justify-content:space-between;
+ color:var(--muted);font-size:12px;margin-top:8px;
 }
-
-.number {
-    background: var(--blue);
-    color: white;
-    width: 36px;
-    height: 36px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    flex-shrink: 0;
+.timeline{
+ display:flex;gap:9px;overflow-x:auto;
+ padding:12px 3px;min-height:155px;
 }
-
-.description {
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 16px;
+.photo{
+ width:145px;min-width:145px;
+ background:#0c1527;border:2px solid #30415a;
+ border-radius:9px;padding:7px;
+ cursor:grab;
 }
-
-.checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-    gap: 10px;
+.photo.active{border-color:#19baff}
+.photo.dragging{opacity:.4}
+.photo img{
+ width:100%;height:76px;object-fit:cover;
+ border-radius:5px;
 }
-
-.option {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 11px;
-    display: flex;
-    gap: 9px;
-    align-items: center;
-    cursor: pointer;
-    background: white;
+.photo .filename{
+ font-size:11px;white-space:nowrap;
+ overflow:hidden;text-overflow:ellipsis;
+ margin:5px 0;color:#d5e3f5;
 }
-
-.option:has(input:checked) {
-    border-color: var(--blue);
-    background: #e8f0ff;
-    font-weight: bold;
+.photo input{width:100%;margin-top:5px}
+.photo button{padding:5px 7px;font-size:11px}
+.track{
+ padding:12px;background:#0d1628;
+ border:1px solid #2b3b56;border-radius:8px;
+ margin-top:10px;
 }
-
-.option input {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--blue);
-    flex-shrink: 0;
+.track-title{font-size:13px;color:#62caff;font-weight:bold}
+.track-content{
+ min-height:36px;margin-top:9px;padding:10px;
+ background:#20334d;border-radius:5px;
+ color:#b8d9f5;font-size:12px;
+ overflow-wrap:anywhere;
 }
-
-.group {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 15px;
+#progress{width:100%}
+.status{color:#67d4ff;font-size:12px;margin-top:10px}
+.export-box{
+ border:1px dashed #45617f;padding:15px;
+ border-radius:8px;text-align:center;
 }
-
-.group h3 {
-    color: var(--navy);
-    margin-bottom: 12px;
-    font-size: 17px;
-}
-
-.empty {
-    padding: 16px;
-    text-align: center;
-    color: var(--muted);
-    background: #f8fafc;
-    border-radius: 10px;
-    border: 1px dashed var(--border);
-}
-
-.button-row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-button {
-    padding: 12px 19px;
-    border: none;
-    border-radius: 9px;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-button:disabled {
-    opacity: .5;
-    cursor: not-allowed;
-}
-
-.primary {
-    background: var(--blue);
-    color: white;
-}
-
-.secondary {
-    background: #e2e8f0;
-    color: var(--navy);
-}
-
-.success {
-    background: var(--green);
-    color: white;
-}
-
-.danger {
-    background: var(--red);
-    color: white;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.badge {
-    display: inline-block;
-    background: #e8f0ff;
-    color: #1745a0;
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin: 3px;
-    font-size: 12px;
-}
-
-.question {
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    padding: 19px;
-    margin-bottom: 17px;
-    background: white;
-    break-inside: avoid;
-}
-
-.question h3 {
-    font-size: 16px;
-    margin-bottom: 14px;
-}
-
-.question-meta {
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 7px;
-}
-
-.answers {
-    display: grid;
-    gap: 9px;
-}
-
-.answer {
-    display: flex;
-    gap: 10px;
-    padding: 11px;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    cursor: pointer;
-    align-items: flex-start;
-}
-
-.answer input {
-    margin-top: 5px;
-    accent-color: var(--blue);
-}
-
-.answer.selected {
-    background: #e8f0ff;
-    border-color: var(--blue);
-}
-
-.answer.correct {
-    background: #dcfce7;
-    border-color: #16a34a;
-}
-
-.answer.wrong {
-    background: #fee2e2;
-    border-color: #dc2626;
-}
-
-.explanation {
-    display: none;
-    margin-top: 14px;
-    padding: 13px;
-    background: #f1f5f9;
-    border-radius: 9px;
-    font-size: 14px;
-}
-
-.explanation.show {
-    display: block;
-}
-
-.result-box {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-.result-number {
-    font-size: 34px;
-    color: var(--navy);
-    font-weight: bold;
-}
-
-.progress-wrap {
-    height: 10px;
-    background: #e2e8f0;
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 15px 0;
-}
-
-.progress {
-    height: 100%;
-    background: var(--green);
-    width: 0;
-    transition: width .3s;
-}
-
-.alert {
-    background: #fffbeb;
-    border: 1px solid #fcd34d;
-    padding: 13px;
-    border-radius: 9px;
-    margin-top: 14px;
-    color: #92400e;
-    font-size: 13px;
-}
-
-#paperHeader {
-    text-align: center;
-    border-bottom: 2px solid var(--navy);
-    padding-bottom: 18px;
-    margin-bottom: 22px;
-}
-
-#paperHeader h2 {
-    color: var(--navy);
-}
-
-#timer {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--red);
-}
-
-footer {
-    text-align: center;
-    color: var(--muted);
-    padding: 25px;
-    font-size: 13px;
-}
-
-@media(max-width:600px) {
-    .card {
-        padding: 16px;
-    }
-
-    .checkbox-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .button-row button {
-        width: 100%;
-    }
-
-    .question {
-        padding: 14px;
-    }
-}
-
-@media print {
-    body {
-        background: white;
-        color: black;
-    }
-
-    header, footer, .no-print, #setupPage, #resultActions {
-        display: none !important;
-    }
-
-    .container {
-        width: 100%;
-        margin: 0;
-    }
-
-    .card {
-        box-shadow: none;
-        padding: 0;
-    }
-
-    .question {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
-
-    .answer {
-        border: none;
-        padding: 3px;
-    }
-
-    .explanation {
-        display: block !important;
-    }
-
-    #resultPage {
-        display: none !important;
-    }
+footer{text-align:center;color:#77849b;padding:20px}
+@media(max-width:600px){
+ .container{padding:8px}
+ .panel{padding:12px}
+ header h1{font-size:19px}
 }
 </style>
 </head>
@@ -392,1590 +121,1084 @@ footer {
 <body>
 
 <header>
-    <h1>NCERT MCQ Paper Generator</h1>
-    <p>अपनी कक्षा, विषय, अध्याय और कठिनाई स्तर चुनकर प्रश्नपत्र तैयार करें।</p>
+<h1>🎬 PROFESSIONAL VIDEO STUDIO</h1>
+<p>PHOTO • AUDIO • TEXT • ANIMATION • VIDEO EDITOR</p>
 </header>
 
-<main class="container">
+<div class="container">
 
-<!-- ================= SETUP PAGE ================= -->
+<!-- SECTION 1 -->
+<div class="panel">
+<h3>01. Media Library - Upload Photos</h3>
 
-<section id="setupPage">
-
-<div class="card">
-    <div class="section-title">
-        <span class="number">1</span>
-        <h2>कक्षा चुनें</h2>
-    </div>
-
-    <p class="description">एक या एक से अधिक कक्षाएँ चुन सकते हैं।</p>
-
-    <div class="checkbox-grid" id="classOptions"></div>
-
-    <div class="button-row">
-        <button class="secondary" onclick="selectAllClasses()">सभी कक्षाएँ</button>
-        <button class="secondary" onclick="clearClasses()">कक्षा हटाएँ</button>
-    </div>
+<div class="row">
+<label class="upload" for="photoInput">📷 Add Multiple Photos</label>
+<input id="photoInput" type="file" accept="image/*" multiple>
+<button class="secondary" onclick="clearPhotos()">Clear All</button>
 </div>
 
-<div class="card">
-    <div class="section-title">
-        <span class="number">2</span>
-        <h2>विषय चुनें</h2>
-    </div>
+<p class="small" id="photoCount">No photos added</p>
 
-    <p class="description">चुनी गई कक्षाओं के अनुसार विषय चुनें।</p>
-
-    <div id="subjectContainer">
-        <div class="empty">पहले कक्षा चुनें।</div>
-    </div>
-
-    <div class="button-row">
-        <button class="secondary" onclick="selectAllSubjects()">सभी विषय</button>
-        <button class="secondary" onclick="clearSubjects()">विषय हटाएँ</button>
-    </div>
+<div class="track">
+<div class="track-title">🖼 PHOTO TIMELINE</div>
+<div class="timeline" id="photoTimeline">
+<span class="small">Upload photos to create your timeline.</span>
+</div>
+<p class="small">Tip: Photos को Drag & Drop करके उनका क्रम बदल सकते हैं।</p>
+</div>
 </div>
 
-<div class="card">
-    <div class="section-title">
-        <span class="number">3</span>
-        <h2>अध्याय चुनें</h2>
-    </div>
+<!-- SECTION 2 -->
+<div class="panel">
+<h3>02. Video Preview Monitor</h3>
 
-    <p class="description">आप एक या एक से अधिक अध्याय चुन सकते हैं।</p>
-
-    <div id="chapterContainer">
-        <div class="empty">पहले विषय चुनें।</div>
-    </div>
-
-    <div class="button-row">
-        <button class="secondary" onclick="selectAllChapters()">सभी अध्याय</button>
-        <button class="secondary" onclick="clearChapters()">अध्याय हटाएँ</button>
-    </div>
+<div class="preview">
+<canvas id="canvas" width="1280" height="720"></canvas>
 </div>
 
-<div class="card">
-    <div class="section-title">
-        <span class="number">4</span>
-        <h2>प्रश्नपत्र का स्तर</h2>
-    </div>
-
-    <div class="checkbox-grid">
-
-        <label class="option">
-            <input type="checkbox" name="level" value="Easy">
-            <span>Easy — आसान</span>
-        </label>
-
-        <label class="option">
-            <input type="checkbox" name="level" value="Moderate">
-            <span>Moderate — मध्यम</span>
-        </label>
-
-        <label class="option">
-            <input type="checkbox" name="level" value="Hard">
-            <span>Hard — कठिन</span>
-        </label>
-
-    </div>
+<div class="preview-info">
+<span id="currentInfo">Ready</span>
+<span id="timeInfo">00:00 / 00:00</span>
 </div>
 
-<div class="card">
-    <div class="section-title">
-        <span class="number">5</span>
-        <h2>पेपर सेटिंग</h2>
-    </div>
-
-    <label for="questionCount">प्रश्नों की संख्या</label>
-
-    <select id="questionCount"
-            style="width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:9px;margin:8px 0 18px;">
-        <option value="30" selected>30 MCQ</option>
-    </select>
-
-    <label for="language">प्रश्नपत्र की भाषा</label>
-
-    <select id="language"
-            style="width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:9px;margin:8px 0 18px;">
-        <option value="hi">हिंदी</option>
-        <option value="en">English</option>
-    </select>
-
-    <label for="marks">प्रत्येक सही उत्तर के अंक</label>
-
-    <select id="marks"
-            style="width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:9px;margin:8px 0 18px;">
-        <option value="1">1 अंक</option>
-        <option value="2">2 अंक</option>
-        <option value="4">4 अंक</option>
-    </select>
-
-    <label for="negative">
-        <input type="checkbox" id="negative">
-        गलत उत्तर पर 1/3 अंक काटें
-    </label>
-
-    <div class="alert">
-        नोट: प्रश्नों की गुणवत्ता आपके प्रश्न बैंक पर निर्भर करेगी।
-        NCERT पुस्तक के किसी अध्याय की पूर्ण कवरेज के लिए अध्याय-वार
-        सत्यापित प्रश्न सामग्री आवश्यक है।
-    </div>
-
-    <p id="errorMessage" style="color:#dc2626;margin-top:15px;" role="alert"></p>
-
-    <div class="button-row">
-        <button class="primary" style="flex:1" onclick="generatePaper()">
-            Continue — प्रश्नपत्र बनाएँ →
-        </button>
-
-        <button class="secondary" onclick="resetAll()">
-            Reset All
-        </button>
-    </div>
+<div class="row" style="margin-top:14px">
+<button class="success" onclick="playVideo()">▶ PLAY</button>
+<button class="secondary" onclick="pauseVideo()">Ⅱ PAUSE</button>
+<button class="danger" onclick="stopVideo()">■ STOP</button>
+<button class="secondary" onclick="previous()">⏮ PREVIOUS</button>
+<button class="secondary" onclick="next()">NEXT ⏭</button>
 </div>
 
-</section>
-
-
-<!-- ================= PAPER PAGE ================= -->
-
-<section id="paperPage" class="hidden">
-
-<div class="card">
-
-    <div id="paperHeader">
-        <h2 id="paperTitle">NCERT MCQ QUESTION PAPER</h2>
-        <p id="paperSubtitle"></p>
-        <p>कुल प्रश्न: <strong id="totalQuestions">30</strong></p>
-        <p>पूर्णांक: <strong id="totalMarks">30</strong></p>
-        <p class="no-print">प्रयास किए गए प्रश्न: <strong id="attempted">0</strong></p>
-    </div>
-
-    <div class="no-print">
-        <div class="progress-wrap">
-            <div class="progress" id="progressBar"></div>
-        </div>
-
-        <p id="timer">समय: लागू नहीं</p>
-    </div>
-
-    <div id="questionContainer"></div>
-
-    <div class="button-row no-print">
-        <button class="success" style="flex:1" onclick="submitTest()">
-            Submit Test
-        </button>
-
-        <button class="secondary" onclick="window.print()">
-            Print Question Paper
-        </button>
-
-        <button class="secondary" onclick="backToSetup()">
-            वापस जाएँ
-        </button>
-    </div>
-
+<div style="margin-top:12px">
+<input id="seek" type="range" min="0" max="100" value="0">
 </div>
 
-</section>
+<div class="row">
+<label>Transition
+<select id="transition">
+<option value="fade">Fade</option>
+<option value="slide">Slide</option>
+<option value="none">None</option>
+</select>
+</label>
 
+<label>Transition Duration
+<select id="transitionTime">
+<option value="0.5">0.5 Second</option>
+<option value="1" selected>1 Second</option>
+<option value="1.5">1.5 Seconds</option>
+<option value="2">2 Seconds</option>
+</select>
+</label>
 
-<!-- ================= RESULT PAGE ================= -->
+<label>Video Ratio
+<select id="ratio">
+<option value="16:9">16:9 Landscape</option>
+<option value="9:16">9:16 Portrait</option>
+<option value="1:1">1:1 Square</option>
+</select>
+</label>
+</div>
+</div>
 
-<section id="resultPage" class="hidden">
+<!-- SECTION 3 -->
+<div class="panel">
+<h3>03. Audio Studio</h3>
 
-<div class="card">
+<div class="row">
+<label class="upload" for="audioInput">🎵 Upload Audio</label>
+<input type="file" id="audioInput" accept="audio/*">
+<button class="secondary" onclick="removeAudio()">Remove Audio</button>
+</div>
 
-    <div class="section-title">
-        <span class="number">✓</span>
-        <h2>आपका परिणाम</h2>
-    </div>
+<div class="track">
+<div class="track-title">🎧 AUDIO TIMELINE</div>
+<div class="track-content" id="audioTimeline">
+No audio selected
+</div>
+<p class="small" id="audioDuration">Audio duration: --</p>
 
-    <div class="result-box">
-        <p>आपके अंक</p>
-        <div class="result-number" id="resultScore">0 / 30</div>
-        <p id="resultPercentage"></p>
-        <p id="resultGrade"></p>
-    </div>
+<audio id="audioPlayer" controls style="width:100%;margin-top:8px"></audio>
 
-    <div class="checkbox-grid">
-        <div class="group">
-            <p>सही उत्तर</p>
-            <h2 id="correctCount" style="color:#15803d">0</h2>
-        </div>
+<div class="row">
+<label>Volume
+<input type="range" id="volume" min="0" max="100" value="80">
+</label>
+<label>
+<input type="checkbox" id="loopAudio">
+Loop Audio
+</label>
+</div>
+</div>
+</div>
 
-        <div class="group">
-            <p>गलत उत्तर</p>
-            <h2 id="wrongCount" style="color:#dc2626">0</h2>
-        </div>
+<!-- SECTION 4 -->
+<div class="panel">
+<h3>04. Text & Narration Studio</h3>
 
-        <div class="group">
-            <p>छोड़े गए प्रश्न</p>
-            <h2 id="skippedCount">0</h2>
-        </div>
-    </div>
+<div class="row">
+<label>
+<input type="radio" name="soundMode" value="audio" checked>
+Background Audio
+</label>
 
-    <h3 style="margin:22px 0 12px;color:#10264b;">
-        उत्तरमाला और विस्तृत समाधान
-    </h3>
+<label>
+<input type="radio" name="soundMode" value="text">
+Text Narration
+</label>
 
-    <div id="answerReview"></div>
+<label>
+<input type="radio" name="soundMode" value="none">
+Mute
+</label>
+</div>
 
-    <div class="button-row no-print" id="resultActions">
-        <button class="primary" onclick="window.print()">Print Result</button>
-        <button class="secondary" onclick="backToSetup()">नया पेपर बनाएँ</button>
-    </div>
+<div class="track">
+<div class="track-title">📝 TEXT TIMELINE</div>
+
+<textarea id="narration"
+placeholder="अपना टेक्स्ट यहां लिखें..."></textarea>
+
+<div class="row">
+<label>Text Size
+<input type="number" id="textSize" value="30" min="12" max="80">
+</label>
+
+<label>Text Position
+<select id="textPosition">
+<option value="bottom">Bottom</option>
+<option value="center">Center</option>
+<option value="top">Top</option>
+</select>
+</label>
+
+<label>Text Color
+<input type="color" id="textColor" value="#ffffff">
+</label>
+</div>
+
+<div class="row">
+<button onclick="listenText()">🔊 Listen Text</button>
+<button class="secondary" onclick="stopVoice()">Stop Voice</button>
+</div>
+
+<p class="small">
+Text preview में दिखाई देगा। Browser की Speech Synthesis आवाज सीधे Video Export में रिकॉर्ड नहीं होती। आवाज शामिल करने के लिए उसी narration की audio file Upload करें।
+</p>
+</div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="panel">
+<h3>05. Video Export Studio</h3>
+
+<div class="export-box">
+<p>🎥 आपका Slideshow Video तैयार करें</p>
+
+<div class="row" style="justify-content:center">
+<label>Export Quality
+<select id="quality">
+<option value="5000000">High Quality</option>
+<option value="8000000">Very High Quality</option>
+<option value="2500000">Standard Quality</option>
+</select>
+</label>
+</div>
+
+<button class="success" id="exportBtn" onclick="exportVideo()">
+🎬 EXPORT VIDEO
+</button>
+
+<button class="secondary" id="downloadBtn" disabled onclick="downloadVideo()">
+⬇ DOWNLOAD VIDEO
+</button>
+
+<p class="status" id="exportStatus">
+Ready for export
+</p>
+</div>
+</div>
 
 </div>
 
-</section>
-
-</main>
-
-<footer>
-    NCERT MCQ Paper Generator
-</footer>
-
+<footer>Professional Video Studio | HTML5 Video Editor</footer>
 
 <script>
 
-/* =================================================
-   SUBJECT DATABASE
-================================================= */
+// ======================================
+// 1. GLOBAL VARIABLES
+// ======================================
 
-const subjectDB = {
-    6: ["History","Geography","Civics","Social Science","Science","Mathematics","English","Hindi"],
-    7: ["History","Geography","Civics","Social Science","Science","Mathematics","English","Hindi"],
-    8: ["History","Geography","Civics","Social Science","Science","Mathematics","English","Hindi"],
-    9: ["History","Geography","Civics","Economics","Science","Mathematics","English","Hindi"],
-    10:["History","Geography","Civics","Economics","Science","Mathematics","English","Hindi"],
-    11:["History","Geography","Political Science","Economics","Physics","Chemistry","Biology","Mathematics","English","Hindi"],
-    12:["History","Geography","Political Science","Economics","Physics","Chemistry","Biology","Mathematics","English","Hindi"]
-};
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
 
+const photoInput=document.getElementById("photoInput");
+const photoTimeline=document.getElementById("photoTimeline");
+const audio=document.getElementById("audioPlayer");
 
-/* =================================================
-   SAMPLE CHAPTER DATABASE
-   Add complete chapter lists here.
-================================================= */
+let photos=[];
+let currentIndex=0;
+let playing=false;
+let startTime=0;
+let pausedTime=0;
+let animationFrame=null;
 
-const chapterDB = {
-6:{
-History:[
-"What, Where, How and When?",
-"From Hunting-Gathering to Growing Food",
-"In the Earliest Cities",
-"What Books and Burials Tell Us"
-],
-Geography:[
-"The Earth in the Solar System",
-"Globe: Latitudes and Longitudes",
-"Motions of the Earth",
-"Maps"
-],
-Civics:[
-"Understanding Diversity",
-"Diversity and Discrimination",
-"What is Government?"
-],
-Science:[
-"The Wonderful World of Science",
-"Diversity in the Living World",
-"Mindful Eating",
-"Materials Around Us"
-],
-Mathematics:[
-"Patterns in Mathematics",
-"Lines and Angles",
-"Number Play"
-],
-"Social Science":[
-"History: Early Humans",
-"Geography: The Earth",
-"Civics: Understanding Diversity"
-]
-},
+let videoBlob=null;
+let videoURL=null;
+let recorder=null;
+let audioURL=null;
+let audioContext=null;
+let audioSource=null;
+let audioDestination=null;
 
-7:{
-History:[
-"Tracing Changes Through a Thousand Years",
-"New Kings and Kingdoms",
-"The Delhi Sultans",
-"The Mughal Empire"
-],
-Geography:[
-"Environment",
-"Inside Our Earth",
-"Our Changing Earth",
-"Air",
-"Water"
-],
-Civics:[
-"On Equality",
-"Role of the Government in Health",
-"How the State Government Works"
-],
-Science:[
-"Nutrition in Plants",
-"Nutrition in Animals",
-"Heat",
-"Acids, Bases and Salts"
-],
-Mathematics:[
-"Integers",
-"Fractions and Decimals",
-"Data Handling",
-"Simple Equations"
-]
-},
+let dragIndex=null;
+let lastPhoto=-1;
 
-8:{
-History:[
-"How, When and Where",
-"From Trade to Territory",
-"Ruling the Countryside",
-"When People Rebel"
-],
-Geography:[
-"Resources",
-"Land, Soil, Water, Natural Vegetation and Wildlife",
-"Mineral and Power Resources",
-"Agriculture"
-],
-Civics:[
-"The Indian Constitution",
-"Understanding Secularism",
-"Why Do We Need a Parliament?",
-"Understanding Laws"
-],
-Science:[
-"Crop Production and Management",
-"Microorganisms: Friend and Foe",
-"Coal and Petroleum"
-]
-},
+// ======================================
+// 2. CANVAS INITIALIZATION
+// ======================================
 
-9:{
-History:[
-"The French Revolution",
-"Socialism in Europe and the Russian Revolution",
-"Nazism and the Rise of Hitler"
-],
-Geography:[
-"India: Size and Location",
-"Physical Features of India",
-"Drainage",
-"Climate",
-"Population"
-],
-Civics:[
-"What is Democracy? Why Democracy?",
-"Constitutional Design",
-"Electoral Politics",
-"Working of Institutions"
-],
-Economics:[
-"The Story of Village Palampur",
-"People as Resource",
-"Poverty as a Challenge",
-"Food Security in India"
-],
-Science:[
-"Matter in Our Surroundings",
-"Is Matter Around Us Pure?",
-"Atoms and Molecules",
-"Structure of the Atom"
-],
-Mathematics:[
-"Number Systems",
-"Polynomials",
-"Coordinate Geometry",
-"Linear Equations in Two Variables"
-]
-},
+function clearCanvas(){
+ ctx.fillStyle="#000";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
 
-10:{
-History:[
-"The Rise of Nationalism in Europe",
-"Nationalism in India",
-"The Making of a Global World",
-"The Age of Industrialisation",
-"Print Culture and the Modern World"
-],
-Geography:[
-"Resources and Development",
-"Forest and Wildlife Resources",
-"Water Resources",
-"Agriculture",
-"Minerals and Energy Resources",
-"Manufacturing Industries"
-],
-Civics:[
-"Power Sharing",
-"Federalism",
-"Gender, Religion and Caste",
-"Political Parties",
-"Outcomes of Democracy"
-],
-Economics:[
-"Development",
-"Sectors of the Indian Economy",
-"Money and Credit",
-"Globalisation and the Indian Economy",
-"Consumer Rights"
-],
-Science:[
-"Chemical Reactions and Equations",
-"Acids, Bases and Salts",
-"Metals and Non-metals",
-"Carbon and Its Compounds",
-"Life Processes",
-"Control and Coordination",
-"Electricity"
-],
-Mathematics:[
-"Real Numbers",
-"Polynomials",
-"Pair of Linear Equations in Two Variables",
-"Quadratic Equations",
-"Arithmetic Progressions",
-"Triangles",
-"Statistics",
-"Probability"
-]
-},
-
-11:{
-History:[
-"Writing and City Life",
-"An Empire Across Three Continents",
-"Nomadic Empires",
-"The Three Orders"
-],
-Geography:[
-"Geography as a Discipline",
-"The Origin and Evolution of the Earth",
-"Interior of the Earth"
-],
-"Political Science":[
-"Constitution: Why and How?",
-"Rights in the Indian Constitution",
-"Election and Representation",
-"Executive",
-"Legislature"
-],
-Economics:[
-"Introduction to Microeconomics",
-"Consumer's Equilibrium",
-"Demand",
-"Elasticity of Demand"
-],
-Physics:[
-"Units and Measurements",
-"Motion in a Straight Line",
-"Motion in a Plane",
-"Laws of Motion"
-],
-Chemistry:[
-"Some Basic Concepts of Chemistry",
-"Structure of Atom",
-"Classification of Elements"
-],
-Biology:[
-"The Living World",
-"Biological Classification",
-"Plant Kingdom",
-"Animal Kingdom"
-]
-},
-
-12:{
-History:[
-"Bricks, Beads and Bones",
-"Kings, Farmers and Towns",
-"Kinship, Caste and Class",
-"Thinkers, Beliefs and Buildings",
-"Through the Eyes of Travellers"
-],
-Geography:[
-"Human Geography: Nature and Scope",
-"The World Population",
-"Human Development"
-],
-"Political Science":[
-"The End of Bipolarity",
-"Contemporary Centres of Power",
-"Contemporary South Asia",
-"International Organisations"
-],
-Economics:[
-"National Income Accounting",
-"Money and Banking",
-"Determination of Income and Employment",
-"Government Budget and the Economy"
-],
-Physics:[
-"Electric Charges and Fields",
-"Electrostatic Potential and Capacitance",
-"Current Electricity"
-],
-Chemistry:[
-"Solutions",
-"Electrochemistry",
-"Chemical Kinetics"
-],
-Biology:[
-"Sexual Reproduction in Flowering Plants",
-"Human Reproduction",
-"Reproductive Health"
-]
-}
-};
-
-
-/* =================================================
-   QUESTION BANK
-
-   These are sample questions, not a complete NCERT
-   question bank. Add verified questions for each
-   class, subject and chapter.
-================================================= */
-
-const questionBank = [
-
-{
-classes:[6,7,8],
-subjects:["History"],
-chapters:["What, Where, How and When?"],
-level:"Easy",
-q:"अतीत के बारे में जानकारी प्राप्त करने का एक प्रमुख स्रोत कौन-सा है?",
-options:["ऐतिहासिक पांडुलिपियाँ","केवल मोबाइल फोन","केवल टेलीविजन","केवल मौसम रिपोर्ट"],
-answer:0,
-explanation:"पांडुलिपियाँ अतीत के बारे में जानकारी देने वाले महत्वपूर्ण ऐतिहासिक स्रोतों में शामिल हैं।"
-},
-
-{
-classes:[6,7,8],
-subjects:["History"],
-chapters:["What, Where, How and When?"],
-level:"Moderate",
-q:"इतिहासकार अतीत का अध्ययन करते समय विभिन्न स्रोतों की तुलना क्यों करते हैं?",
-options:[
-"जानकारी की पुष्टि और अंतर समझने के लिए",
-"सभी स्रोतों को एक जैसा बनाने के लिए",
-"पुराने स्रोतों को नष्ट करने के लिए",
-"केवल एक कहानी लिखने के लिए"
-],
-answer:0,
-explanation:"विभिन्न स्रोतों की तुलना से इतिहासकार जानकारी की पुष्टि करते हैं और स्रोतों के बीच अंतर समझते हैं।"
-},
-
-{
-classes:[9,10],
-subjects:["History"],
-chapters:["Nationalism in India"],
-level:"Easy",
-q:"महात्मा गांधी ने नमक कानून तोड़ने के लिए 1930 में कौन-सी यात्रा शुरू की?",
-options:[
-"दांडी मार्च",
-"दिल्ली मार्च",
-"चंपारण मार्च",
-"लखनऊ मार्च"
-],
-answer:0,
-explanation:"महात्मा गांधी ने नमक सत्याग्रह के अंतर्गत साबरमती आश्रम से दांडी तक यात्रा की।"
-},
-
-{
-classes:[9,10],
-subjects:["History"],
-chapters:["Nationalism in India"],
-level:"Moderate",
-q:"दांडी मार्च का प्रमुख उद्देश्य क्या था?",
-options:[
-"नमक कानून का विरोध करना",
-"अलग निर्वाचन क्षेत्र बनाना",
-"रेलवे का राष्ट्रीयकरण करना",
-"नई मुद्रा जारी करना"
-],
-answer:0,
-explanation:"दांडी मार्च ब्रिटिश नमक कानून और नमक पर लगाए गए कर के विरुद्ध सविनय अवज्ञा आंदोलन का महत्वपूर्ण चरण था।"
-},
-
-{
-classes:[9,10],
-subjects:["History"],
-chapters:["The French Revolution"],
-level:"Easy",
-q:"फ्रांसीसी क्रांति किस वर्ष शुरू हुई?",
-options:["1789","1776","1815","1848"],
-answer:0,
-explanation:"1789 में फ्रांस में क्रांति शुरू हुई।"
-},
-
-{
-classes:[9,10],
-subjects:["History"],
-chapters:["The French Revolution"],
-level:"Moderate",
-q:"फ्रांस के पुराने शासन में प्रथम एस्टेट में कौन शामिल था?",
-options:["पादरी वर्ग","किसान वर्ग","व्यापारी वर्ग","कारीगर वर्ग"],
-answer:0,
-explanation:"फ्रांस के पुराने शासन में प्रथम एस्टेट पादरी वर्ग था, जबकि द्वितीय एस्टेट में कुलीन वर्ग शामिल था।"
-},
-
-{
-classes:[9,10],
-subjects:["Geography"],
-chapters:["India: Size and Location"],
-level:"Easy",
-q:"भारत किस गोलार्ध में स्थित है?",
-options:[
-"उत्तरी और पूर्वी गोलार्ध",
-"दक्षिणी और पश्चिमी गोलार्ध",
-"उत्तरी और पश्चिमी गोलार्ध",
-"दक्षिणी और पूर्वी गोलार्ध"
-],
-answer:0,
-explanation:"भारत भूमध्य रेखा के उत्तर और प्रधान मध्याह्न रेखा के पूर्व में स्थित है।"
-},
-
-{
-classes:[9,10],
-subjects:["Geography"],
-chapters:["Climate"],
-level:"Easy",
-q:"भारत की जलवायु का प्रमुख प्रकार क्या है?",
-options:[
-"मानसूनी जलवायु",
-"भूमध्यसागरीय जलवायु",
-"टुंड्रा जलवायु",
-"ध्रुवीय जलवायु"
-],
-answer:0,
-explanation:"भारत की जलवायु मानसूनी पवनों से बहुत प्रभावित होती है।"
-},
-
-{
-classes:[9,10],
-subjects:["Civics"],
-chapters:["Power Sharing"],
-level:"Easy",
-q:"सत्ता की साझेदारी का प्रमुख लाभ क्या है?",
-options:[
-"सामाजिक संघर्ष की संभावना कम होती है",
-"लोकतंत्र समाप्त हो जाता है",
-"नागरिक अधिकार समाप्त होते हैं",
-"सभी चुनाव रद्द हो जाते हैं"
-],
-answer:0,
-explanation:"सत्ता की साझेदारी विभिन्न सामाजिक समूहों के बीच संघर्ष कम करने और राजनीतिक स्थिरता बनाए रखने में सहायक है।"
-},
-
-{
-classes:[9,10],
-subjects:["Civics"],
-chapters:["Federalism"],
-level:"Moderate",
-q:"संघवाद की एक प्रमुख विशेषता क्या है?",
-options:[
-"सरकार के विभिन्न स्तरों के बीच शक्तियों का संवैधानिक विभाजन",
-"सभी शक्तियाँ एक ही अधिकारी के पास",
-"चुनावों का पूर्ण निषेध",
-"न्यायपालिका का उन्मूलन"
-],
-answer:0,
-explanation:"संघीय व्यवस्था में संविधान सरकार के विभिन्न स्तरों के बीच अधिकारों और शक्तियों का विभाजन करता है।"
-},
-
-{
-classes:[9,10],
-subjects:["Economics"],
-chapters:["Development"],
-level:"Easy",
-q:"प्रति व्यक्ति आय की गणना कैसे की जाती है?",
-options:[
-"कुल आय को कुल जनसंख्या से भाग देकर",
-"कुल जनसंख्या को कुल आय से गुणा करके",
-"केवल कृषि आय जोड़कर",
-"कुल आय से जनसंख्या घटाकर"
-],
-answer:0,
-explanation:"प्रति व्यक्ति आय का सामान्य सूत्र कुल आय ÷ कुल जनसंख्या है।"
-},
-
-{
-classes:[9,10],
-subjects:["Economics"],
-chapters:["Money and Credit"],
-level:"Moderate",
-q:"ऋण की शर्तों में सामान्यतः क्या शामिल होता है?",
-options:[
-"ब्याज दर और ऋण चुकाने की अवधि",
-"केवल उधारकर्ता का नाम",
-"केवल बैंक का पता",
-"केवल मुद्रा का रंग"
-],
-answer:0,
-explanation:"ऋण की शर्तों में ब्याज दर, जमानत, दस्तावेज और पुनर्भुगतान की अवधि शामिल हो सकती है।"
-},
-
-{
-classes:[9,10],
-subjects:["Science"],
-chapters:["Atoms and Molecules"],
-level:"Easy",
-q:"पानी का रासायनिक सूत्र क्या है?",
-options:["H₂O","CO₂","O₂","NaCl"],
-answer:0,
-explanation:"पानी के एक अणु में दो हाइड्रोजन परमाणु और एक ऑक्सीजन परमाणु होता है।"
-},
-
-{
-classes:[9,10],
-subjects:["Science"],
-chapters:["Life Processes"],
-level:"Easy",
-q:"पौधों में प्रकाश संश्लेषण के लिए कौन-सी गैस आवश्यक है?",
-options:["कार्बन डाइऑक्साइड","नाइट्रोजन","हीलियम","हाइड्रोजन"],
-answer:0,
-explanation:"पौधे प्रकाश संश्लेषण में कार्बन डाइऑक्साइड और पानी का उपयोग करके भोजन बनाते हैं।"
-},
-
-{
-classes:[9,10],
-subjects:["Science"],
-chapters:["Electricity"],
-level:"Moderate",
-q:"ओम के नियम के अनुसार विद्युत धारा का सूत्र क्या है?",
-options:["I = V/R","I = VR","I = R/V","I = V + R"],
-answer:0,
-explanation:"ओम के नियम के अनुसार I = V/R, जहाँ V विभवांतर और R प्रतिरोध है।"
-},
-
-{
-classes:[10],
-subjects:["History"],
-chapters:["Print Culture and the Modern World"],
-level:"Moderate",
-q:"मुद्रण संस्कृति ने आधुनिक समाज में किस प्रकार योगदान दिया?",
-options:[
-"विचारों और सूचनाओं के व्यापक प्रसार में",
-"सभी पुस्तकों को हस्तलिखित बनाने में",
-"समाचारों के प्रसार को पूर्णतः रोकने में",
-"शिक्षा को समाप्त करने में"
-],
-answer:0,
-explanation:"मुद्रण ने पुस्तकों, समाचारों और विचारों को अधिक लोगों तक पहुँचाना आसान बनाया।"
-},
-
-{
-classes:[10],
-subjects:["Geography"],
-chapters:["Water Resources"],
-level:"Moderate",
-q:"वर्षा जल संचयन का प्रमुख उद्देश्य क्या है?",
-options:[
-"वर्षा के पानी को एकत्र करके उपयोग या भूजल पुनर्भरण करना",
-"सभी नदियों को बंद करना",
-"वर्षा को रोकना",
-"भूमि की उर्वरता समाप्त करना"
-],
-answer:0,
-explanation:"वर्षा जल संचयन पानी का संग्रह और भूजल पुनर्भरण करने में मदद करता है।"
-},
-
-{
-classes:[6,7,8],
-subjects:["Geography"],
-chapters:["The Earth in the Solar System"],
-level:"Easy",
-q:"पृथ्वी का प्राकृतिक उपग्रह कौन है?",
-options:["चंद्रमा","मंगल","शुक्र","सूर्य"],
-answer:0,
-explanation:"चंद्रमा पृथ्वी का प्राकृतिक उपग्रह है।"
-},
-
-{
-classes:[6,7,8],
-subjects:["Civics"],
-chapters:["What is Government?"],
-level:"Easy",
-q:"लोकतंत्र में सरकार चुनने का प्रमुख माध्यम क्या है?",
-options:["चुनाव","वंशानुगत नियुक्ति","लॉटरी हमेशा","सैन्य आदेश"],
-answer:0,
-explanation:"लोकतंत्र में नागरिक सामान्यतः चुनावों के माध्यम से अपने प्रतिनिधि चुनते हैं।"
-},
-
-{
-classes:[11,12],
-subjects:["Political Science"],
-chapters:["Constitution: Why and How?"],
-level:"Moderate",
-q:"संविधान का प्रमुख कार्य क्या है?",
-options:[
-"सरकार की संरचना और शक्तियों के नियम निर्धारित करना",
-"केवल व्यापारिक कीमतें तय करना",
-"केवल मौसम का पूर्वानुमान देना",
-"सभी नागरिक अधिकार समाप्त करना"
-],
-answer:0,
-explanation:"संविधान शासन की संस्थाओं, शक्तियों, प्रक्रियाओं और नागरिक अधिकारों के मूल नियम निर्धारित करता है।"
-},
-
-{
-classes:[11,12],
-subjects:["Economics"],
-chapters:["Government Budget and the Economy"],
-level:"Easy",
-q:"सरकारी बजट क्या दर्शाता है?",
-options:[
-"सरकार की अनुमानित प्राप्तियाँ और व्यय",
-"केवल निजी कंपनियों का लाभ",
-"केवल विदेशी पर्यटकों की संख्या",
-"केवल मौसम संबंधी आँकड़े"
-],
-answer:0,
-explanation:"सरकारी बजट एक निश्चित अवधि के लिए सरकार की अनुमानित प्राप्तियों और व्यय का विवरण होता है।"
-},
-
-{
-classes:[11,12],
-subjects:["Physics"],
-chapters:["Current Electricity"],
-level:"Moderate",
-q:"विद्युत प्रतिरोध की SI इकाई क्या है?",
-options:["ओम","वोल्ट","एम्पियर","वाट"],
-answer:0,
-explanation:"विद्युत प्रतिरोध की SI इकाई ओम (Ω) है।"
-},
-
-{
-classes:[11,12],
-subjects:["Biology"],
-chapters:["The Living World"],
-level:"Easy",
-q:"जीवों की पहचान और नामकरण से संबंधित विज्ञान को क्या कहते हैं?",
-options:["वर्गिकी","खगोल विज्ञान","भूविज्ञान","मौसम विज्ञान"],
-answer:0,
-explanation:"वर्गिकी जीवों की पहचान, नामकरण और वर्गीकरण का अध्ययन करती है।"
-},
-
-{
-classes:[11,12],
-subjects:["Chemistry"],
-chapters:["Structure of Atom"],
-level:"Easy",
-q:"इलेक्ट्रॉन पर किस प्रकार का आवेश होता है?",
-options:["ऋणात्मक","धनात्मक","उदासीन","दोनों धनात्मक और ऋणात्मक"],
-answer:0,
-explanation:"इलेक्ट्रॉन पर ऋणात्मक विद्युत आवेश होता है।"
-},
-
-{
-classes:[11,12],
-subjects:["Mathematics"],
-chapters:["Sets"],
-level:"Easy",
-q:"रिक्त समुच्चय में कितने अवयव होते हैं?",
-options:["शून्य","एक","दो","अनंत"],
-answer:0,
-explanation:"रिक्त समुच्चय में कोई अवयव नहीं होता।"
-},
-
-{
-classes:[6,7,8],
-subjects:["Mathematics"],
-chapters:["Integers"],
-level:"Easy",
-q:"(-5) + 8 का मान क्या है?",
-options:["3","-13","13","-3"],
-answer:0,
-explanation:"(-5) + 8 = 3।"
-},
-
-{
-classes:[6,7,8],
-subjects:["Science"],
-chapters:["Heat"],
-level:"Easy",
-q:"तापमान मापने के लिए किस उपकरण का उपयोग किया जाता है?",
-options:["थर्मामीटर","बैरोमीटर","अमीटर","कंपास"],
-answer:0,
-explanation:"तापमान मापने के लिए थर्मामीटर का उपयोग किया जाता है।"
-},
-
-{
-classes:[9,10],
-subjects:["History"],
-chapters:["The Rise of Nationalism in Europe"],
-level:"Moderate",
-q:"वियना कांग्रेस का आयोजन किस वर्ष हुआ था?",
-options:["1815","1789","1848","1919"],
-answer:0,
-explanation:"1815 में नेपोलियन की हार के बाद यूरोप में पुरानी राजशाहियों को पुनर्स्थापित करने के उद्देश्य से वियना कांग्रेस आयोजित हुई।"
-},
-
-{
-classes:[9,10],
-subjects:["Geography"],
-chapters:["Agriculture"],
-level:"Moderate",
-q:"भारत में खरीफ फसलों की बुवाई सामान्यतः किस मौसम में होती है?",
-options:[
-"मानसून के आरंभ में",
-"शीत ऋतु के अंत में ही",
-"केवल वसंत ऋतु में",
-"मानसून समाप्त होने के बाद ही"
-],
-answer:0,
-explanation:"खरीफ फसलों की बुवाई सामान्यतः मानसून के आरंभ में की जाती है।"
-},
-
-{
-classes:[9,10],
-subjects:["Civics"],
-chapters:["Political Parties"],
-level:"Moderate",
-q:"राजनीतिक दलों का एक प्रमुख कार्य क्या है?",
-options:[
-"चुनाव लड़ना और नीतियाँ प्रस्तुत करना",
-"न्यायालयों को समाप्त करना",
-"संविधान को स्वतः बदलना",
-"सभी नागरिकों के मताधिकार को समाप्त करना"
-],
-answer:0,
-explanation:"राजनीतिक दल चुनावों में भाग लेते हैं, नीतियाँ प्रस्तुत करते हैं और सरकार बनाने का प्रयास करते हैं।"
+ ctx.fillStyle="#5d6b80";
+ ctx.font="28px Arial";
+ ctx.textAlign="center";
+ ctx.fillText(
+  "UPLOAD PHOTOS TO START",
+  canvas.width/2,
+  canvas.height/2
+ );
 }
 
-];
+function setRatio(){
+ const ratio=document.getElementById("ratio").value;
 
+ if(ratio==="16:9"){
+  canvas.width=1280;
+  canvas.height=720;
+ }
+ else if(ratio==="9:16"){
+  canvas.width=720;
+  canvas.height=1280;
+ }
+ else{
+  canvas.width=1080;
+  canvas.height=1080;
+ }
 
-/* =================================================
-   APPLICATION STATE
-================================================= */
-
-let generatedQuestions = [];
-let submitted = false;
-let currentConfig = {};
-let selectedAnswers = {};
-
-
-/* =================================================
-   HELPERS
-================================================= */
-
-function el(id) {
-    return document.getElementById(id);
+ if(photos.length)drawPhoto(currentIndex);
+ else clearCanvas();
 }
 
-function getChecked(selector) {
-    return [...document.querySelectorAll(selector)]
-        .filter(x => x.checked)
-        .map(x => x.value);
+document.getElementById("ratio").addEventListener("change",setRatio);
+
+// ======================================
+// 3. PHOTO UPLOAD
+// ======================================
+
+photoInput.addEventListener("change",e=>{
+ const files=Array.from(e.target.files);
+
+ files.forEach(file=>{
+  if(!file.type.startsWith("image/"))return;
+
+  const url=URL.createObjectURL(file);
+  const img=new Image();
+
+  img.onload=()=>{
+   photos.push({
+    img,
+    url,
+    name:file.name,
+    duration:5
+   });
+
+   renderTimeline();
+
+   if(photos.length===1)drawPhoto(0);
+  };
+
+  img.onerror=()=>URL.revokeObjectURL(url);
+  img.src=url;
+ });
+
+ e.target.value="";
+});
+
+function clearPhotos(){
+ pauseVideo();
+
+ photos.forEach(p=>URL.revokeObjectURL(p.url));
+
+ photos=[];
+ currentIndex=0;
+ pausedTime=0;
+
+ renderTimeline();
+ clearCanvas();
+ updateTime();
 }
 
-function selectedClasses() {
-    return getChecked("#classOptions input").map(Number);
+function removePhoto(i){
+ pauseVideo();
+
+ URL.revokeObjectURL(photos[i].url);
+ photos.splice(i,1);
+
+ currentIndex=Math.min(
+  currentIndex,
+  Math.max(0,photos.length-1)
+ );
+
+ renderTimeline();
+
+ if(photos.length)drawPhoto(currentIndex);
+ else clearCanvas();
+
+ pausedTime=getStartTime(currentIndex);
+ updateTime();
 }
 
-function selectedSubjects() {
-    return [...document.querySelectorAll("#subjectContainer input:checked")]
-        .map(x => ({
-            classNumber: Number(x.dataset.class),
-            subject: x.value
-        }));
+// ======================================
+// 4. PHOTO TIMELINE
+// ======================================
+
+function renderTimeline(){
+ photoTimeline.innerHTML="";
+
+ photos.forEach((photo,i)=>{
+
+  const card=document.createElement("div");
+  card.className="photo"+(i===currentIndex?" active":"");
+  card.draggable=true;
+
+  const img=document.createElement("img");
+  img.src=photo.url;
+
+  const name=document.createElement("div");
+  name.className="filename";
+  name.textContent=(i+1)+". "+photo.name;
+
+  const label=document.createElement("div");
+  label.className="small";
+  label.textContent="Duration (Seconds)";
+
+  const duration=document.createElement("input");
+  duration.type="number";
+  duration.min="1";
+  duration.max="600";
+  duration.value=photo.duration;
+
+  duration.addEventListener("change",()=>{
+   photo.duration=Math.max(
+    1,
+    Math.min(600,Number(duration.value)||5)
+   );
+
+   duration.value=photo.duration;
+   updateTime();
+  });
+
+  const buttons=document.createElement("div");
+
+  const select=document.createElement("button");
+  select.textContent="Select";
+  select.onclick=()=>{
+   pauseVideo();
+   currentIndex=i;
+   pausedTime=getStartTime(i);
+   drawPhoto(i);
+   renderTimeline();
+   updateTime();
+  };
+
+  const remove=document.createElement("button");
+  remove.textContent="✕";
+  remove.className="danger";
+  remove.onclick=()=>removePhoto(i);
+
+  buttons.append(select,remove);
+
+  card.append(img,name,label,duration,buttons);
+
+  // Drag and drop reorder
+
+  card.addEventListener("dragstart",()=>{
+   dragIndex=i;
+   card.classList.add("dragging");
+  });
+
+  card.addEventListener("dragend",()=>{
+   card.classList.remove("dragging");
+  });
+
+  card.addEventListener("dragover",e=>{
+   e.preventDefault();
+  });
+
+  card.addEventListener("drop",e=>{
+   e.preventDefault();
+
+   if(dragIndex===null || dragIndex===i)return;
+
+   const moved=photos.splice(dragIndex,1)[0];
+   photos.splice(i,0,moved);
+
+   currentIndex=i;
+   dragIndex=null;
+
+   pausedTime=getStartTime(currentIndex);
+
+   renderTimeline();
+   drawPhoto(currentIndex);
+   updateTime();
+  });
+
+  photoTimeline.appendChild(card);
+ });
+
+ document.getElementById("photoCount").textContent=
+  photos.length+" Photos Uploaded | Total Duration: "+
+  formatTime(totalDuration());
+
+ if(!photos.length){
+  photoTimeline.innerHTML=
+   '<span class="small">Upload photos to create your timeline.</span>';
+ }
 }
 
-function selectedChapters() {
-    return [...document.querySelectorAll("#chapterContainer input:checked")]
-        .map(x => ({
-            classNumber: Number(x.dataset.class),
-            subject: x.dataset.subject,
-            chapter: x.value
-        }));
+// ======================================
+// 5. PHOTO DRAWING
+// ======================================
+
+function drawImage(img,alpha=1,offset=0){
+ const W=canvas.width;
+ const H=canvas.height;
+
+ const scale=Math.max(W/img.width,H/img.height);
+ const w=img.width*scale;
+ const h=img.height*scale;
+
+ const x=(W-w)/2+offset;
+ const y=(H-h)/2;
+
+ ctx.globalAlpha=alpha;
+ ctx.drawImage(img,x,y,w,h);
+ ctx.globalAlpha=1;
 }
 
-function selectedLevels() {
-    return getChecked('input[name="level"]');
+function drawPhoto(index){
+ if(!photos[index])return;
+
+ ctx.fillStyle="#000";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ drawImage(photos[index].img);
+
+ drawTextOverlay();
+ lastPhoto=index;
+
+ renderTimeline();
 }
 
-function makeOption(label, value, data={}) {
-    const wrapper = document.createElement("label");
-    wrapper.className = "option";
+function drawTextOverlay(){
+ if(document.querySelector('input[name="soundMode"]:checked').value!=="text"){
+  return;
+ }
 
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.value = value;
+ const text=document.getElementById("narration").value.trim();
+ if(!text)return;
 
-    Object.entries(data).forEach(([key,val]) => {
-        input.dataset[key] = val;
-    });
+ const W=canvas.width;
+ const H=canvas.height;
 
-    const span = document.createElement("span");
-    span.textContent = label;
+ const size=Number(document.getElementById("textSize").value)||30;
+ const color=document.getElementById("textColor").value;
+ const position=document.getElementById("textPosition").value;
 
-    wrapper.append(input,span);
-    return wrapper;
+ ctx.font="bold "+size+"px Arial";
+ ctx.textAlign="center";
+ ctx.textBaseline="middle";
+
+ const lines=wrapText(text,W-70,size);
+ const lineHeight=size*1.4;
+ const totalHeight=lines.length*lineHeight;
+
+ let y;
+
+ if(position==="top")y=45;
+ else if(position==="center")y=(H-totalHeight)/2;
+ else y=H-totalHeight-55;
+
+ ctx.fillStyle="rgba(0,0,0,.65)";
+ ctx.fillRect(
+  20,
+  Math.max(5,y-12),
+  W-40,
+  totalHeight+24
+ );
+
+ ctx.fillStyle=color;
+
+ lines.forEach((line,i)=>{
+  ctx.fillText(line,W/2,y+i*lineHeight+lineHeight/2);
+ });
 }
 
+function wrapText(text,maxWidth,size){
+ ctx.font="bold "+size+"px Arial";
 
-/* =================================================
-   RENDER CLASSES
-================================================= */
+ const words=text.split(/\s+/);
+ const lines=[];
+ let line="";
 
-function renderClasses() {
-    const box = el("classOptions");
-    box.replaceChildren();
+ words.forEach(word=>{
+  const test=line?line+" "+word:word;
 
-    for(let c=6;c<=12;c++) {
-        const option = makeOption("Class "+c,String(c));
+  if(ctx.measureText(test).width>maxWidth && line){
+   lines.push(line);
+   line=word;
+  }else{
+   line=test;
+  }
+ });
 
-        option.querySelector("input").addEventListener("change",()=>{
-            renderSubjects();
-            renderChapters();
-        });
-
-        box.appendChild(option);
-    }
+ if(line)lines.push(line);
+ return lines;
 }
 
-function selectAllClasses() {
-    document.querySelectorAll("#classOptions input")
-        .forEach(x=>x.checked=true);
-    renderSubjects();
-    renderChapters();
+// ======================================
+// 6. TIME MANAGEMENT
+// ======================================
+
+function totalDuration(){
+ return photos.reduce((sum,p)=>sum+p.duration,0);
 }
 
-function clearClasses() {
-    document.querySelectorAll("#classOptions input")
-        .forEach(x=>x.checked=false);
-    renderSubjects();
-    renderChapters();
+function getStartTime(index){
+ let time=0;
+
+ for(let i=0;i<index;i++){
+  time+=photos[i].duration;
+ }
+
+ return time;
 }
 
+function formatTime(seconds){
+ seconds=Math.floor(Math.max(0,seconds||0));
 
-/* =================================================
-   RENDER SUBJECTS
-================================================= */
+ const m=Math.floor(seconds/60);
+ const s=seconds%60;
 
-function renderSubjects() {
-    const container = el("subjectContainer");
-    container.replaceChildren();
-
-    const classes = selectedClasses();
-
-    if(!classes.length) {
-        container.innerHTML='<div class="empty">पहले कक्षा चुनें।</div>';
-        return;
-    }
-
-    classes.forEach(c=>{
-        const group=document.createElement("div");
-        group.className="group";
-
-        const heading=document.createElement("h3");
-        heading.textContent="Class "+c+" — Subjects";
-
-        const grid=document.createElement("div");
-        grid.className="checkbox-grid";
-
-        (subjectDB[c]||[]).forEach(subject=>{
-            const option=makeOption(subject,subject,{class:c});
-
-            option.querySelector("input").addEventListener("change",renderChapters);
-            grid.appendChild(option);
-        });
-
-        group.append(heading,grid);
-        container.appendChild(group);
-    });
+ return String(m).padStart(2,"0")+":"+
+        String(s).padStart(2,"0");
 }
 
-function selectAllSubjects() {
-    document.querySelectorAll("#subjectContainer input")
-        .forEach(x=>x.checked=true);
-    renderChapters();
+function updateTime(){
+ document.getElementById("timeInfo").textContent=
+  formatTime(pausedTime)+" / "+formatTime(totalDuration());
 }
 
-function clearSubjects() {
-    document.querySelectorAll("#subjectContainer input")
-        .forEach(x=>x.checked=false);
-    renderChapters();
+// ======================================
+// 7. ANIMATION ENGINE
+// ======================================
+
+function renderAt(time){
+ if(!photos.length)return;
+
+ let position=0;
+ let index=0;
+
+ for(let i=0;i<photos.length;i++){
+  if(time<position+photos[i].duration){
+   index=i;
+   break;
+  }
+  position+=photos[i].duration;
+ }
+
+ const localTime=time-position;
+ const duration=photos[index].duration;
+
+ const effect=document.getElementById("transition").value;
+ const transitionDuration=Math.min(
+  Number(document.getElementById("transitionTime").value),
+  duration/2
+ );
+
+ ctx.fillStyle="#000";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ if(index>0 && effect!=="none" && localTime<transitionDuration){
+
+  const progress=localTime/transitionDuration;
+
+  if(effect==="fade"){
+   drawImage(photos[index-1].img,1-progress);
+   drawImage(photos[index].img,progress);
+  }
+
+  else if(effect==="slide"){
+   drawImage(
+    photos[index-1].img,
+    1,
+    -progress*canvas.width
+   );
+
+   drawImage(
+    photos[index].img,
+    1,
+    (1-progress)*canvas.width
+   );
+  }
+ }
+ else{
+  drawImage(photos[index].img);
+ }
+
+ currentIndex=index;
+ lastPhoto=index;
+
+ drawTextOverlay();
+
+ renderTimeline();
+
+ document.getElementById("currentInfo").textContent=
+  "Photo "+(index+1)+" / "+photos.length;
+
+ document.getElementById("seek").value=
+  totalDuration()?time/totalDuration()*100:0;
+
+ pausedTime=time;
+ updateTime();
 }
 
+// ======================================
+// 8. PLAYBACK
+// ======================================
 
-/* =================================================
-   RENDER CHAPTERS
-================================================= */
+function playVideo(){
+ if(!photos.length){
+  alert("Please upload photos first.");
+  return;
+ }
 
-function renderChapters() {
-    const container=el("chapterContainer");
-    container.replaceChildren();
+ if(playing)return;
 
-    const subjects=selectedSubjects();
+ if(pausedTime>=totalDuration()){
+  pausedTime=0;
+ }
 
-    if(!subjects.length) {
-        container.innerHTML='<div class="empty">पहले विषय चुनें।</div>';
-        return;
-    }
+ playing=true;
+ startTime=performance.now()-pausedTime*1000;
 
-    subjects.forEach(item=>{
-        const group=document.createElement("div");
-        group.className="group";
+ if(document.querySelector('input[name="soundMode"]:checked').value==="audio" && audio.src){
+  audio.loop=document.getElementById("loopAudio").checked;
+  audio.volume=document.getElementById("volume").value/100;
+  audio.currentTime=0;
+  audio.play().catch(()=>{});
+ }
 
-        const heading=document.createElement("h3");
-        heading.textContent="Class "+item.classNumber+" — "+item.subject;
+ if(document.querySelector('input[name="soundMode"]:checked').value==="text"){
+  listenText();
+ }
 
-        const grid=document.createElement("div");
-        grid.className="checkbox-grid";
-
-        const chapters=
-            (chapterDB[item.classNumber]||{})[item.subject]||[];
-
-        if(!chapters.length) {
-            const msg=document.createElement("div");
-            msg.className="empty";
-            msg.textContent="इस विषय के अध्यायों की सूची अभी उपलब्ध नहीं है।";
-            group.append(heading,msg);
-            container.appendChild(group);
-            return;
-        }
-
-        chapters.forEach(chapter=>{
-            const option=makeOption(
-                chapter,
-                chapter,
-                {
-                    class:item.classNumber,
-                    subject:item.subject
-                }
-            );
-
-            grid.appendChild(option);
-        });
-
-        group.append(heading,grid);
-        container.appendChild(group);
-    });
+ animate();
 }
 
-function selectAllChapters() {
-    document.querySelectorAll("#chapterContainer input")
-        .forEach(x=>x.checked=true);
+function animate(){
+ if(!playing)return;
+
+ const time=(performance.now()-startTime)/1000;
+
+ if(time>=totalDuration()){
+  finishPlayback();
+  return;
+ }
+
+ renderAt(time);
+
+ animationFrame=requestAnimationFrame(animate);
 }
 
-function clearChapters() {
-    document.querySelectorAll("#chapterContainer input")
-        .forEach(x=>x.checked=false);
+function pauseVideo(){
+ if(!playing)return;
+
+ playing=false;
+ cancelAnimationFrame(animationFrame);
+
+ audio.pause();
+ stopVoice();
+
+ document.getElementById("currentInfo").textContent="Paused";
 }
 
+function stopVideo(){
+ playing=false;
 
-/* =================================================
-   MATCH QUESTIONS TO CONFIGURATION
-================================================= */
+ cancelAnimationFrame(animationFrame);
 
-function matchesSelection(question) {
+ audio.pause();
+ audio.currentTime=0;
 
-    const classes = currentConfig.classes;
-    const subjects = currentConfig.subjects;
-    const chapters = currentConfig.chapters;
-    const levels = currentConfig.levels;
+ stopVoice();
 
-    return classes.some(c=>question.classes.includes(c)) &&
-        subjects.some(s=>question.subjects.includes(s.subject)) &&
-        chapters.some(ch=>question.chapters.includes(ch.chapter)) &&
-        levels.includes(question.level);
+ pausedTime=0;
+ currentIndex=0;
+
+ if(photos.length)renderAt(0);
+ else clearCanvas();
+
+ document.getElementById("currentInfo").textContent="Stopped";
+ document.getElementById("seek").value=0;
+ updateTime();
 }
 
+function finishPlayback(){
+ playing=false;
 
-/* =================================================
-   GENERATE PAPER
-================================================= */
+ cancelAnimationFrame(animationFrame);
 
-function generatePaper() {
+ audio.pause();
+ stopVoice();
 
-    const classes=selectedClasses();
-    const subjects=selectedSubjects();
-    const chapters=selectedChapters();
-    const levels=selectedLevels();
+ pausedTime=0;
 
-    el("errorMessage").textContent="";
+ if(photos.length){
+  currentIndex=photos.length-1;
+  drawPhoto(currentIndex);
+ }
 
-    if(!classes.length) {
-        el("errorMessage").textContent="कम से कम एक कक्षा चुनें।";
-        return;
-    }
-
-    if(!subjects.length) {
-        el("errorMessage").textContent="कम से कम एक विषय चुनें।";
-        return;
-    }
-
-    if(!chapters.length) {
-        el("errorMessage").textContent="कम से कम एक अध्याय चुनें।";
-        return;
-    }
-
-    if(!levels.length) {
-        el("errorMessage").textContent="कम से कम एक कठिनाई स्तर चुनें।";
-        return;
-    }
-
-    currentConfig={
-        classes,
-        subjects,
-        chapters,
-        levels,
-        language:el("language").value,
-        marks:Number(el("marks").value),
-        negative:el("negative").checked
-    };
-
-    /*
-       Only verified questions matching the selected
-       class, subject, chapter and level are included.
-    */
-
-    const matching=questionBank.filter(matchesSelection);
-
-    const unique = [];
-    const seen = new Set();
-
-    matching.forEach(q=>{
-        const key=q.q;
-
-        if(!seen.has(key)) {
-            seen.add(key);
-            unique.push(q);
-        }
-    });
-
-    shuffle(unique);
-
-    const count=Number(el("questionCount").value);
-
-    if(unique.length<count) {
-        el("errorMessage").textContent=
-            "चयनित अध्यायों और स्तरों के लिए केवल "+
-            unique.length+
-            " प्रश्न उपलब्ध हैं। 30 प्रश्न बनाने के लिए इस विषय के प्रश्न बैंक में और सत्यापित प्रश्न जोड़ने होंगे।";
-
-        return;
-    }
-
-    generatedQuestions=unique.slice(0,count);
-    selectedAnswers={};
-    submitted=false;
-
-    renderPaper();
-
-    el("setupPage").classList.add("hidden");
-    el("resultPage").classList.add("hidden");
-    el("paperPage").classList.remove("hidden");
-
-    window.scrollTo({top:0,behavior:"smooth"});
+ document.getElementById("currentInfo").textContent="Completed";
+ document.getElementById("seek").value=100;
 }
 
+function previous(){
+ if(!photos.length)return;
 
-/* =================================================
-   SHUFFLE
-================================================= */
+ pauseVideo();
 
-function shuffle(array) {
-    for(let i=array.length-1;i>0;i--) {
-        const j=Math.floor(Math.random()*(i+1));
-        [array[i],array[j]]=[array[j],array[i]];
-    }
-    return array;
+ currentIndex=Math.max(0,currentIndex-1);
+ pausedTime=getStartTime(currentIndex);
+
+ renderAt(pausedTime);
 }
 
+function next(){
+ if(!photos.length)return;
 
-/* =================================================
-   RENDER PAPER
-================================================= */
+ pauseVideo();
 
-function renderPaper() {
+ currentIndex=Math.min(photos.length-1,currentIndex+1);
+ pausedTime=getStartTime(currentIndex);
 
-    const isEnglish=currentConfig.language==="en";
-
-    el("paperTitle").textContent=isEnglish
-        ?"NCERT MCQ QUESTION PAPER"
-        :"NCERT आधारित बहुविकल्पीय प्रश्नपत्र";
-
-    const classText=currentConfig.classes
-        .map(c=>"Class "+c).join(", ");
-
-    const subjectText=currentConfig.subjects
-        .map(s=>"Class "+s.classNumber+": "+s.subject)
-        .join(" | ");
-
-    const chapterText=currentConfig.chapters
-        .map(c=>c.chapter)
-        .join(", ");
-
-    el("paperSubtitle").textContent=
-        classText+" | "+subjectText+" | "+chapterText;
-
-    el("totalQuestions").textContent=generatedQuestions.length;
-    el("totalMarks") .textContent=
-        generatedQuestions.length*currentConfig.marks;
-
-    const container=el("questionContainer");
-    container.replaceChildren();
-
-    generatedQuestions.forEach((q,index)=>{
-
-        const card=document.createElement("div");
-        card.className="question";
-        card.id="question-"+index;
-
-        const meta=document.createElement("div");
-        meta.className="question-meta";
-        meta.textContent=
-            "Question "+(index+1)+
-            " | "+q.level+
-            " | "+currentConfig.marks+" mark(s)";
-
-        const heading=document.createElement("h3");
-        heading.textContent=(index+1)+". "+q.q;
-
-        const answers=document.createElement("div");
-        answers.className="answers";
-
-        q.options.forEach((option,optionIndex)=>{
-
-            const label=document.createElement("label");
-            label.className="answer";
-
-            const input=document.createElement("input");
-            input.type="radio";
-            input.name="q"+index;
-            input.value=optionIndex;
-
-            input.addEventListener("change",()=>{
-                if(submitted)return;
-
-                selectedAnswers[index]=optionIndex;
-
-                answers.querySelectorAll(".answer")
-                    .forEach(a=>a.classList.remove("selected"));
-
-                label.classList.add("selected");
-
-                updateProgress();
-            });
-
-            const text=document.createElement("span");
-            text.textContent=
-                String.fromCharCode(65+optionIndex)+". "+option;
-
-            label.append(input,text);
-            answers.appendChild(label);
-        });
-
-        const explanation=document.createElement("div");
-        explanation.className="explanation";
-        explanation.id="explanation-"+index;
-
-        explanation.textContent=
-            "सही उत्तर: "+
-            String.fromCharCode(65+q.answer)+
-            ". "+q.options[q.answer]+
-            " — "+q.explanation;
-
-        card.append(meta,heading,answers,explanation);
-        container.appendChild(card);
-    });
-
-    updateProgress();
+ renderAt(pausedTime);
 }
 
+// Seek
+document.getElementById("seek").addEventListener("input",e=>{
+ if(!photos.length)return;
 
-/* =================================================
-   PROGRESS
-================================================= */
+ pauseVideo();
 
-function updateProgress() {
+ pausedTime=Number(e.target.value)/100*totalDuration();
 
-    const total=generatedQuestions.length;
-    const attempted=Object.keys(selectedAnswers).length;
+ renderAt(pausedTime);
+});
 
-    el("attempted").textContent=attempted;
-    el("progressBar").style.width=(attempted/total*100)+"%";
+// ======================================
+// 9. AUDIO STUDIO
+// ======================================
+
+document.getElementById("audioInput").addEventListener("change",e=>{
+ const file=e.target.files[0];
+ if(!file)return;
+
+ pauseVideo();
+
+ removeAudio();
+
+ audioURL=URL.createObjectURL(file);
+ audio.src=audioURL;
+
+ document.getElementById("audioTimeline").textContent=file.name;
+
+ audio.onloadedmetadata=()=>{
+  document.getElementById("audioDuration").textContent=
+   "Audio Duration: "+formatTime(audio.duration);
+ };
+
+ e.target.value="";
+});
+
+function removeAudio(){
+ audio.pause();
+
+ if(audioURL){
+  URL.revokeObjectURL(audioURL);
+  audioURL=null;
+ }
+
+ audio.removeAttribute("src");
+ audio.load();
+
+ document.getElementById("audioTimeline").textContent="No audio selected";
+ document.getElementById("audioDuration").textContent="Audio duration: --";
 }
 
+document.getElementById("volume").addEventListener("input",e=>{
+ audio.volume=Number(e.target.value)/100;
+});
 
-/* =================================================
-   SUBMIT AND RESULT
-================================================= */
+// ======================================
+// 10. TEXT AND SPEECH
+// ======================================
 
-function submitTest() {
+function listenText(){
+ const text=document.getElementById("narration").value.trim();
 
-    if(submitted)return;
+ if(!text){
+  alert("Please write some text first.");
+  return;
+ }
 
-    const unanswered=
-        generatedQuestions.length-Object.keys(selectedAnswers).length;
+ if(!window.speechSynthesis){
+  alert("Speech synthesis is not supported.");
+  return;
+ }
 
-    if(unanswered>0) {
-        const ok=confirm(
-            "आपने "+unanswered+
-            " प्रश्न छोड़ दिए हैं। क्या आप पेपर जमा करना चाहते हैं?"
-        );
+ stopVoice();
 
-        if(!ok)return;
-    }
+ const utterance=new SpeechSynthesisUtterance(text);
 
-    submitted=true;
+ utterance.lang="hi-IN";
+ utterance.rate=1;
 
-    let correct=0;
-    let wrong=0;
-    let skipped=0;
-    let score=0;
-
-    generatedQuestions.forEach((q,index)=>{
-
-        const chosen=selectedAnswers[index];
-
-        if(chosen===undefined) {
-            skipped++;
-        } else if(chosen===q.answer) {
-            correct++;
-            score+=currentConfig.marks;
-        } else {
-            wrong++;
-
-            if(currentConfig.negative) {
-                score-=currentConfig.marks/3;
-            }
-        }
-
-        const card=el("question-"+index);
-        const labels=card.querySelectorAll(".answer");
-
-        labels.forEach((label,optionIndex)=>{
-
-            label.querySelector("input").disabled=true;
-
-            if(optionIndex===q.answer) {
-                label.classList.add("correct");
-            } else if(optionIndex===chosen) {
-                label.classList.add("wrong");
-            }
-
-        });
-
-        el("explanation-"+index).classList.add("show");
-    });
-
-    const maxMarks=generatedQuestions.length*currentConfig.marks;
-    const percentage=Math.max(0,score)/maxMarks*100;
-
-    el("resultScore").textContent=
-        score.toFixed(2)+" / "+maxMarks;
-
-    el("resultPercentage").textContent=
-        "प्रतिशत: "+percentage.toFixed(2)+"%";
-
-    el("resultGrade").textContent=
-        percentage>=90?"उत्कृष्ट प्रदर्शन!":
-        percentage>=75?"बहुत अच्छा!":
-        percentage>=60?"अच्छा प्रयास!":
-        percentage>=40?"अभ्यास जारी रखें।":
-        "अध्यायों का दोबारा अध्ययन करें।";
-
-    el("correctCount").textContent=correct;
-    el("wrongCount").textContent=wrong;
-    el("skippedCount").textContent=skipped;
-
-    el("paperPage").classList.add("hidden");
-    el("resultPage").classList.remove("hidden");
-
-    window.scrollTo({top:0,behavior:"smooth"});
-
-    renderAnswerReview();
+ speechSynthesis.speak(utterance);
 }
 
-
-/* =================================================
-   ANSWER REVIEW
-================================================= */
-
-function renderAnswerReview() {
-
-    const container=el("answerReview");
-    container.replaceChildren();
-
-    generatedQuestions.forEach((q,index)=>{
-
-        const card=document.createElement("div");
-        card.className="question";
-
-        const title=document.createElement("h3");
-        title.textContent=(index+1)+". "+q.q;
-
-        const selected=selectedAnswers[index];
-
-        const selectedText=selected===undefined
-            ?"उत्तर नहीं दिया"
-            :q.options[selected];
-
-        const yourAnswer=document.createElement("p");
-        yourAnswer.textContent="आपका उत्तर: "+selectedText;
-
-        const correctAnswer=document.createElement("p");
-        correctAnswer.style.color="#15803d";
-        correctAnswer.style.fontWeight="bold";
-
-        correctAnswer.textContent=
-            "सही उत्तर: "+q.options[q.answer];
-
-        const explanation=document.createElement("p");
-        explanation.style.marginTop="8px";
-        explanation.textContent="व्याख्या: "+q.explanation;
-
-        card.append(title,yourAnswer,correctAnswer,explanation);
-        container.appendChild(card);
-    });
+function stopVoice(){
+ if(window.speechSynthesis){
+  speechSynthesis.cancel();
+ }
 }
 
+// Update overlay when text changes
+document.getElementById("narration").addEventListener("input",()=>{
+ if(!playing && photos.length)drawPhoto(currentIndex);
+});
 
-/* =================================================
-   NAVIGATION
-================================================= */
+document.getElementById("textSize").addEventListener("change",()=>{
+ if(!playing && photos.length)drawPhoto(currentIndex);
+});
 
-function backToSetup() {
+document.getElementById("textColor").addEventListener("input",()=>{
+ if(!playing && photos.length)drawPhoto(currentIndex);
+});
 
-    el("setupPage").classList.remove("hidden");
-    el("paperPage").classList.add("hidden");
-    el("resultPage").classList.add("hidden");
+document.getElementById("textPosition").addEventListener("change",()=>{
+ if(!playing && photos.length)drawPhoto(currentIndex);
+});
 
-    window.scrollTo({top:0,behavior:"smooth"});
+document.querySelectorAll('input[name="soundMode"]').forEach(el=>{
+ el.addEventListener("change",()=>{
+  if(!playing && photos.length)drawPhoto(currentIndex);
+ });
+});
+
+// ======================================
+// 11. AUDIO RECORDING FOR EXPORT
+// ======================================
+
+async function prepareAudio(){
+ if(!audio.src)return null;
+
+ if(!audioContext){
+  const AudioContextClass=
+   window.AudioContext || window.webkitAudioContext;
+
+  if(!AudioContextClass){
+   throw new Error("Web Audio is not supported.");
+  }
+
+  audioContext=new AudioContextClass();
+
+  audioSource=audioContext.createMediaElementSource(audio);
+
+  audioDestination=audioContext.createMediaStreamDestination();
+
+  audioSource.connect(audioContext.destination);
+  audioSource.connect(audioDestination);
+ }
+
+ await audioContext.resume();
+
+ return audioDestination.stream;
 }
 
-function resetAll() {
+// ======================================
+// 12. VIDEO EXPORT
+// ======================================
 
-    if(!confirm("क्या आप सभी चयन हटाना चाहते हैं?"))return;
+async function exportVideo(){
+ if(!photos.length){
+  alert("Please upload photos.");
+  return;
+ }
 
-    document.querySelectorAll("input[type=checkbox]")
-        .forEach(x=>x.checked=false);
+ if(!window.MediaRecorder || !canvas.captureStream){
+  alert("Video export is not supported in this browser.");
+  return;
+ }
 
-    renderSubjects();
-    renderChapters();
+ if(playing)pauseVideo();
 
-    el("errorMessage").textContent="";
+ stopVideo();
+ setRatio();
 
-    backToSetup();
+ const mode=document.querySelector(
+  'input[name="soundMode"]:checked'
+ ).value;
+
+ if(mode==="audio" && !audio.src){
+  alert("Please upload background audio or select Mute.");
+  return;
+ }
+
+ const button=document.getElementById("exportBtn");
+ const status=document.getElementById("exportStatus");
+
+ button.disabled=true;
+ document.getElementById("downloadBtn").disabled=true;
+
+ status.textContent="Preparing video...";
+
+ let canvasStream=null;
+ let audioStream=null;
+
+ try{
+  canvasStream=canvas.captureStream(30);
+
+  const tracks=[...canvasStream.getVideoTracks()];
+
+  if(mode==="audio"){
+   audioStream=await prepareAudio();
+
+   if(audioStream){
+    tracks.push(...audioStream.getAudioTracks());
+   }
+  }
+
+  const stream=new MediaStream(tracks);
+
+  let mimeType="video/webm";
+
+  if(MediaRecorder.isTypeSupported("video/webm;codecs=vp9,opus")){
+   mimeType="video/webm;codecs=vp9,opus";
+  }
+  else if(MediaRecorder.isTypeSupported("video/webm;codecs=vp8,opus")){
+   mimeType="video/webm;codecs=vp8,opus";
+  }
+
+  const quality=Number(document.getElementById("quality").value);
+
+  const chunks=[];
+
+  recorder=new MediaRecorder(stream,{
+   mimeType,
+   videoBitsPerSecond:quality
+  });
+
+  recorder.ondataavailable=e=>{
+   if(e.data && e.data.size>0){
+    chunks.push(e.data);
+   }
+  };
+
+  recorder.onstop=()=>{
+   videoBlob=new Blob(chunks,{type:recorder.mimeType});
+
+   if(videoURL)URL.revokeObjectURL(videoURL);
+
+   videoURL=URL.createObjectURL(videoBlob);
+
+   document.getElementById("downloadBtn").disabled=false;
+   button.disabled=false;
+
+   status.textContent=
+    "Video Export Completed! Format: "+recorder.mimeType;
+
+   canvasStream.getTracks().forEach(t=>t.stop());
+
+   if(audioStream){
+    audioStream.getTracks().forEach(t=>t.stop());
+   }
+
+   stopVideo();
+  };
+
+  recorder.onerror=e=>{
+   status.textContent="Recording error: "+e.error;
+   button.disabled=false;
+  };
+
+  recorder.start(500);
+
+  if(mode==="audio"){
+   audio.currentTime=0;
+   audio.volume=document.getElementById("volume").value/100;
+  }
+
+  status.textContent="Recording video... Please wait.";
+
+  playVideo();
+
+ }catch(error){
+  status.textContent="Export failed: "+error.message;
+  button.disabled=false;
+
+  if(canvasStream){
+   canvasStream.getTracks().forEach(t=>t.stop());
+  }
+
+  if(audioStream){
+   audioStream.getTracks().forEach(t=>t.stop());
+  }
+
+  if(recorder && recorder.state==="recording"){
+   recorder.stop();
+  }
+ }
 }
 
+// ======================================
+// 13. DOWNLOAD VIDEO
+// ======================================
 
-/* =================================================
-   START APPLICATION
-================================================= */
+function downloadVideo(){
+ if(!videoBlob || !videoURL)return;
 
-renderClasses();
+ const link=document.createElement("a");
+
+ link.href=videoURL;
+ link.download="Professional_Slideshow.webm";
+
+ document.body.appendChild(link);
+ link.click();
+ link.remove();
+}
+
+// ======================================
+// 14. INITIALIZATION
+// ======================================
+
+clearCanvas();
+renderTimeline();
+updateTime();
 
 </script>
-
 </body>
 </html>
