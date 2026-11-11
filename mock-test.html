@@ -4,930 +4,977 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photo Video Studio V7</title>
+<title>Photo Video Studio V8</title>
 
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;background:#10131b;color:#f1f5f9;
+ margin:0;background:#101522;color:#fff;
  font-family:Arial,sans-serif
 }
 header{
- background:#1b2231;padding:16px 20px;
+ padding:15px;background:#1e293b;
+ border-bottom:1px solid #475569;
  display:flex;justify-content:space-between;
- align-items:center;gap:10px;flex-wrap:wrap;
- border-bottom:1px solid #30394c
+ align-items:center;flex-wrap:wrap;gap:10px
 }
 header h2{margin:0;color:#60a5fa}
-.container{padding:16px;max-width:1500px;margin:auto}
+main{max-width:1400px;margin:auto;padding:15px}
 .panel{
- background:#1b2231;border:1px solid #30394c;
- padding:15px;border-radius:12px;margin-bottom:15px
+ background:#1e293b;padding:15px;
+ border-radius:12px;margin-bottom:15px;
+ border:1px solid #334155
 }
 h3{margin:0 0 12px;color:#93c5fd}
-button,.btn{
+button{
  background:#2563eb;color:white;border:0;
- padding:10px 14px;border-radius:7px;
- cursor:pointer;font-weight:bold;margin:3px
+ border-radius:7px;padding:10px 15px;
+ margin:3px;cursor:pointer;font-weight:bold
 }
-button:hover,.btn:hover{background:#1d4ed8}
-button:disabled{opacity:.45;cursor:not-allowed}
+button:hover{background:#1d4ed8}
 input,select,textarea{
  background:#0f172a;color:white;
- border:1px solid #475569;padding:9px;
- border-radius:6px;max-width:100%
+ border:1px solid #475569;
+ border-radius:6px;padding:9px;max-width:100%
 }
 input[type=file]{width:100%}
-textarea{width:100%;min-height:100px;resize:vertical}
-label{font-size:13px;color:#cbd5e1}
+textarea{width:100%;min-height:90px}
 .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:130px}
+label{font-size:13px;color:#cbd5e1}
 #stage{
- position:relative;width:100%;aspect-ratio:16/9;
- background:#05070b;border-radius:10px;
- overflow:hidden;display:flex;align-items:center;
- justify-content:center
+ position:relative;width:100%;
+ aspect-ratio:16/9;background:#000;
+ border-radius:10px;overflow:hidden
 }
-#previewCanvas{width:100%;height:100%;object-fit:contain}
-#emptyMessage{position:absolute;color:#94a3b8;text-align:center}
-#timeline{
- display:flex;gap:10px;overflow-x:auto;
- padding:10px 2px;min-height:135px
+#screen{
+ display:block;width:100%;height:100%;
+ object-fit:contain
 }
-.photoCard{
- flex:0 0 125px;background:#0f172a;
- border:2px solid #334155;border-radius:8px;
- padding:6px;position:relative;cursor:pointer
+#empty{
+ position:absolute;inset:0;display:flex;
+ align-items:center;justify-content:center;
+ color:#94a3b8;text-align:center
 }
-.photoCard.selected{border-color:#60a5fa}
-.photoCard img{
- width:100%;height:75px;object-fit:cover;border-radius:5px
-}
-.photoCard small{display:block;margin-top:5px;color:#cbd5e1}
-.photoCard input{width:100%;margin-top:5px}
-.removePhoto{
- position:absolute;right:5px;top:5px;
- background:#dc2626;padding:4px 7px
-}
-.progress{height:8px;background:#334155;border-radius:10px;overflow:hidden}
-#progressBar{height:100%;width:0;background:#22c55e}
-#status{font-size:13px;color:#93c5fd;margin-top:8px}
-#narrationPreview{
- position:absolute;left:5%;right:5%;bottom:8%;
- text-align:center;font-size:clamp(16px,3vw,30px);
+#caption{
+ position:absolute;left:5%;right:5%;
+ bottom:8%;text-align:center;
+ font-size:clamp(17px,3vw,34px);
  font-weight:bold;color:white;
  text-shadow:2px 2px 5px black;
- pointer-events:none;white-space:pre-wrap
+ pointer-events:none
 }
-.word{padding:1px 2px}
 .word.active{background:#facc15;color:#111827;border-radius:3px}
-hr{border:0;border-top:1px solid #334155;margin:15px 0}
-@media(max-width:600px){
- .container{padding:9px}
- .panel{padding:11px}
- header h2{font-size:18px}
+#timeline{
+ display:flex;gap:10px;overflow-x:auto;
+ padding:10px 0;min-height:125px
 }
+.card{
+ flex:0 0 130px;background:#0f172a;
+ border:2px solid #475569;border-radius:8px;
+ padding:6px;cursor:pointer
+}
+.card.selected{border-color:#60a5fa}
+.card img{width:100%;height:75px;object-fit:cover}
+.card small{display:block;margin:5px 0}
+.card input,.card select{width:100%;margin:3px 0}
+.card button{background:#dc2626;width:100%;margin:3px 0}
+#progress{height:7px;background:#334155;border-radius:8px;margin-top:10px}
+#bar{height:100%;width:0;background:#22c55e;border-radius:8px}
+#status{font-size:13px;color:#93c5fd;margin-top:8px}
 </style>
 </head>
 
 <body>
 
 <header>
- <h2>🎬 Photo Video Studio V7</h2>
- <span>Photo to Video Editor</span>
+ <h2>🎬 Photo Video Studio V8</h2>
+ <span>Preview Engine Updated</span>
 </header>
 
-<div class="container">
+<main>
 
- <section class="panel">
-  <h3>1. Upload Photos</h3>
-  <input type="file" id="photoInput" accept="image/*" multiple>
-  <div class="row">
-   <button onclick="clearPhotos()">Clear All Photos</button>
-   <button onclick="previousPhoto()">◀ Previous</button>
-   <button onclick="nextPhoto()">Next ▶</button>
+<section class="panel">
+ <h3>1. Upload Photos</h3>
+ <input type="file" id="photosInput" accept="image/*" multiple>
+ <div class="row">
+  <button onclick="clearPhotos()">Clear All</button>
+  <button onclick="previousPhoto()">◀ Previous</button>
+  <button onclick="nextPhoto()">Next ▶</button>
+ </div>
+ <div id="timeline"></div>
+</section>
+
+<section class="panel">
+ <h3>2. Video Preview</h3>
+ <div id="stage">
+  <canvas id="screen" width="1280" height="720"></canvas>
+  <div id="empty">Upload photos to start preview</div>
+  <div id="caption"></div>
+ </div>
+
+ <div class="row">
+  <button onclick="playPreview()">▶ Play</button>
+  <button onclick="pausePreview()">⏸ Pause</button>
+  <button onclick="stopPreview()">⏹ Stop</button>
+  <span id="clock">00:00 / 00:00</span>
+ </div>
+ <div id="progress"><div id="bar"></div></div>
+</section>
+
+<section class="panel">
+ <h3>3. Transition Settings</h3>
+ <div class="row">
+  <div class="field">
+   <label>Default Transition</label>
+   <select id="defaultTransition">
+    <option value="fade">Fade</option>
+    <option value="slide-left">Slide Left</option>
+    <option value="slide-right">Slide Right</option>
+    <option value="slide-up">Slide Up</option>
+    <option value="slide-down">Slide Down</option>
+    <option value="zoom-in">Zoom In</option>
+    <option value="zoom-out">Zoom Out</option>
+    <option value="zoom">Zoom In Out</option>
+    <option value="wipe-left">Wipe Left</option>
+    <option value="wipe-right">Wipe Right</option>
+    <option value="wipe-up">Wipe Up</option>
+    <option value="wipe-down">Wipe Down</option>
+    <option value="circle">Circle Reveal</option>
+    <option value="blur">Blur</option>
+    <option value="rotate">Rotate</option>
+    <option value="kenburns">Ken Burns</option>
+    <option value="pan-left">Pan Left</option>
+    <option value="pan-right">Pan Right</option>
+    <option value="none">No Transition</option>
+   </select>
   </div>
-  <div id="timeline"></div>
- </section>
-
- <section class="panel">
-  <h3>2. Video Preview</h3>
-  <div id="stage">
-   <canvas id="previewCanvas" width="1280" height="720"></canvas>
-   <div id="emptyMessage">Upload photos to start creating your video</div>
-   <div id="narrationPreview"></div>
+  <div class="field">
+   <label>Transition Duration</label>
+   <select id="transitionTime">
+    <option value=".3">0.3 seconds</option>
+    <option value=".5" selected>0.5 seconds</option>
+    <option value=".8">0.8 seconds</option>
+    <option value="1">1 second</option>
+    <option value="1.5">1.5 seconds</option>
+    <option value="2">2 seconds</option>
+   </select>
   </div>
+ </div>
+</section>
 
-  <div class="row" style="margin-top:12px">
-   <button onclick="playPreview()">▶ Play</button>
-   <button onclick="pausePreview()">⏸ Pause</button>
-   <button onclick="stopPreview()">⏹ Stop</button>
-   <span id="timeDisplay">00:00 / 00:00</span>
+<section class="panel">
+ <h3>4. Background Audio</h3>
+ <input type="file" id="audioInput" accept="audio/*">
+ <div class="row">
+  <div class="field">
+   <label>Audio Volume</label>
+   <input type="range" id="volume" min="0" max="1" step=".05" value=".8">
   </div>
- </section>
-
- <section class="panel">
-  <h3>3. Transition Settings</h3>
-  <div class="row">
-   <div class="field">
-    <label>Default Transition</label>
-    <select id="defaultTransition"></select>
-   </div>
-   <div class="field">
-    <label>Transition Duration</label>
-    <select id="transitionDuration">
-     <option value="0.3">0.3 seconds</option>
-     <option value="0.5" selected>0.5 seconds</option>
-     <option value="0.8">0.8 seconds</option>
-     <option value="1">1 second</option>
-     <option value="1.5">1.5 seconds</option>
-     <option value="2">2 seconds</option>
-    </select>
-   </div>
-   <div class="field">
-    <label>Video Resolution</label>
-    <select id="resolution">
-     <option value="1280x720">1280 × 720 (HD)</option>
-     <option value="1920x1080">1920 × 1080 (Full HD)</option>
-     <option value="1080x1920">1080 × 1920 (Portrait)</option>
-     <option value="1080x1080">1080 × 1080 (Square)</option>
-    </select>
-   </div>
+  <div class="field">
+   <label>Audio Start (seconds)</label>
+   <input type="number" id="audioStart" min="0" value="0">
   </div>
-  <p><small>आप प्रत्येक फोटो के लिए अलग ट्रांजिशन भी चुन सकते हैं।</small></p>
- </section>
+  <button onclick="removeAudio()">Remove Audio</button>
+ </div>
+ <audio id="audio" controls style="width:100%;margin-top:10px"></audio>
+</section>
 
- <section class="panel">
-  <h3>4. Background Audio</h3>
-  <input type="file" id="audioInput" accept="audio/*">
-  <div class="row">
-   <button onclick="removeAudio()">Remove Audio</button>
-   <div class="field">
-    <label>Audio Volume</label>
-    <input type="range" id="audioVolume" min="0" max="1" step="0.05" value="0.8">
-   </div>
-   <div class="field">
-    <label>Audio Start (seconds)</label>
-    <input type="number" id="audioStart" min="0" value="0">
-   </div>
+<section class="panel">
+ <h3>5. Text Narration</h3>
+ <textarea id="narration" placeholder="Write your narration here..."></textarea>
+ <div class="row">
+  <div class="field">
+   <label>Text Position</label>
+   <select id="position">
+    <option value="bottom">Bottom</option>
+    <option value="center">Center</option>
+    <option value="top">Top</option>
+   </select>
   </div>
-  <audio id="audioPlayer" controls style="width:100%;margin-top:10px"></audio>
- </section>
-
- <section class="panel">
-  <h3>5. Text Narration</h3>
-  <textarea id="narrationText" placeholder="यहाँ अपनी वीडियो की narration या subtitles लिखें..."></textarea>
-
-  <div class="row">
-   <div class="field">
-    <label>Text Position</label>
-    <select id="textPosition">
-     <option value="bottom">Bottom</option>
-     <option value="center">Center</option>
-     <option value="top">Top</option>
-    </select>
-   </div>
-   <div class="field">
-    <label>Text Color</label>
-    <input type="color" id="textColor" value="#ffffff">
-   </div>
-   <div class="field">
-    <label>Font Size</label>
-    <input type="number" id="fontSize" min="12" max="80" value="32">
-   </div>
-   <div class="field">
-    <label>Words Per Minute</label>
-    <input type="number" id="wpm" min="60" max="300" value="150">
-   </div>
+  <div class="field">
+   <label>Text Color</label>
+   <input type="color" id="textColor" value="#ffffff">
   </div>
-
-  <div class="row">
-   <label><input type="checkbox" id="hideText"> Hide text in final video</label>
-   <button onclick="listenText()">🔊 Listen to Text</button>
-   <button onclick="stopVoice()">Stop Voice</button>
+  <div class="field">
+   <label>Font Size</label>
+   <input type="number" id="fontSize" value="30" min="12" max="80">
   </div>
-  <p><small>शब्दों की हाइलाइटिंग अनुमानित WPM के अनुसार होगी। वास्तविक आवाज़ के साथ सटीक सिंक्रोनाइजेशन के लिए रिकॉर्ड की गई narration audio अपलोड करें।</small></p>
- </section>
-
- <section class="panel">
-  <h3>6. Export Video</h3>
-  <div class="row">
-   <button id="exportButton" onclick="exportVideo()">🎥 Export MP4</button>
-   <button id="downloadButton" onclick="downloadVideo()" disabled>⬇ Download Video</button>
+  <div class="field">
+   <label>Words Per Minute</label>
+   <input type="number" id="wpm" value="150" min="60" max="300">
   </div>
-  <div class="progress" style="margin-top:12px">
-   <div id="progressBar"></div>
-  </div>
-  <div id="status">Ready</div>
-  <div id="downloadArea"></div>
- </section>
+ </div>
+ <div class="row">
+  <label><input type="checkbox" id="hideText"> Hide text</label>
+  <button onclick="listenText()">Listen Text</button>
+  <button onclick="stopVoice()">Stop Voice</button>
+ </div>
+</section>
 
-</div>
+<section class="panel">
+ <h3>6. Video Export</h3>
+ <p>Preview is available in this version. Export can be added after confirming that playback works correctly.</p>
+ <div id="status">Ready</div>
+</section>
 
-<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+</main>
 
 <script>
 "use strict";
 
-const $ = id => document.getElementById(id);
+/* =========================
+   APPLICATION DATA
+========================= */
 
-let photos = [];
-let selectedIndex = 0;
-let isPlaying = false;
-let animationFrame = null;
-let playbackStart = 0;
-let pausedAt = 0;
-let videoBlob = null;
-let videoUrl = null;
-let audioContext = null;
-let audioSource = null;
-let ffmpegInstance = null;
-let exportRunning = false;
+const $=id=>document.getElementById(id);
+const canvas=$("screen");
+const ctx=canvas.getContext("2d");
 
-const canvas = $("previewCanvas");
-const ctx = canvas.getContext("2d");
-const audio = $("audioPlayer");
+let photos=[];
+let selected=0;
+let playing=false;
+let raf=0;
+let playStart=0;
+let pausedTime=0;
+let audioURL=null;
 
-const transitions = [
- "fade","crossfade","none",
- "slide-left","slide-right","slide-up","slide-down",
- "zoom-in","zoom-out","zoom-in-out",
- "wipe-left","wipe-right","wipe-up","wipe-down",
- "circle-open","circle-close","diagonal-wipe",
- "vertical-wipe","horizontal-wipe",
- "rotate-left","rotate-right","flip-horizontal","flip-vertical",
- "blur","blur-in","blur-out",
- "pixelate","flash","color-fade",
- "kenburns","pan-left","pan-right","pan-up","pan-down",
- "drone-rise","drone-descend","helicopter-orbit",
- "camera-push","camera-pull","camera-zoom",
- "spin","cube-left","cube-right","swing",
- "shutter","radial-wipe","iris","ripple"
-];
+/* =========================
+   PHOTO UPLOAD
+========================= */
 
-transitions.forEach(t=>{
- const op=document.createElement("option");
- op.value=t;
- op.textContent=t.replaceAll("-"," ").toUpperCase();
- $("defaultTransition").appendChild(op);
-});
+$("photosInput").addEventListener("change",function(e){
 
-function setStatus(message){
- $("status").textContent=message;
-}
+ const files=Array.from(e.target.files);
 
-function setProgress(value){
- $("progressBar").style.width=Math.max(0,Math.min(100,value))+"%";
-}
-
-function formatTime(seconds){
- seconds=Math.max(0,Math.floor(seconds||0));
- return String(Math.floor(seconds/60)).padStart(2,"0")+":"+
- String(seconds%60).padStart(2,"0");
-}
-
-function durationOf(photo){
- return Math.max(0.5,Number(photo.duration)||3);
-}
-
-function transitionDuration(){
- return Math.max(0,Number($("transitionDuration").value)||0.5);
-}
-
-function totalDuration(){
- return photos.reduce((sum,p)=>sum+durationOf(p),0);
-}
-
-function photoStart(index){
- let t=0;
- for(let i=0;i<index;i++) t+=durationOf(photos[i]);
- return t;
-}
-
-function currentIndexAt(time){
- let t=0;
- for(let i=0;i<photos.length;i++){
-  if(time<t+durationOf(photos[i])) return i;
-  t+=durationOf(photos[i]);
- }
- return Math.max(0,photos.length-1);
-}
-
-$("photoInput").addEventListener("change",e=>{
- const files=[...e.target.files];
  files.forEach(file=>{
-  if(!file.type.startsWith("image/")) return;
+
+  if(!file.type.startsWith("image/"))return;
+
   const url=URL.createObjectURL(file);
   const img=new Image();
-  img.onload=()=>{
+
+  img.onload=function(){
+
    photos.push({
-    file,url,img,
+    img:img,
+    url:url,
+    name:file.name,
     duration:3,
     transition:$("defaultTransition").value
    });
+
    renderTimeline();
-   $("emptyMessage").style.display="none";
-   if(photos.length===1) renderAt(0);
+
+   $("empty").style.display="none";
+
+   if(photos.length===1){
+    selected=0;
+    pausedTime=0;
+    renderAt(0);
+   }
+
+   $("status").textContent="Photo loaded: "+file.name;
   };
+
+  img.onerror=function(){
+   URL.revokeObjectURL(url);
+   $("status").textContent="Could not load "+file.name;
+  };
+
   img.src=url;
  });
+
  e.target.value="";
 });
 
+/* =========================
+   TIMELINE
+========================= */
+
 function renderTimeline(){
+
  const timeline=$("timeline");
  timeline.innerHTML="";
+
  photos.forEach((p,i)=>{
+
   const card=document.createElement("div");
-  card.className="photoCard"+(i===selectedIndex?" selected":"");
-  card.onclick=()=>selectPhoto(i);
+  card.className="card"+(i===selected?" selected":"");
 
   const img=document.createElement("img");
   img.src=p.url;
 
-  const title=document.createElement("small");
-  title.textContent="Photo "+(i+1);
+  const name=document.createElement("small");
+  name.textContent="Photo "+(i+1);
+
+  const duration=document.createElement("input");
+  duration.type="number";
+  duration.min=".5";
+  duration.step=".5";
+  duration.value=p.duration;
+  duration.title="Duration in seconds";
+
+  duration.onchange=function(e){
+   p.duration=Math.max(.5,Number(e.target.value)||3);
+   updateClock(pausedTime);
+  };
+
+  const trans=document.createElement("select");
+
+  Array.from($("defaultTransition").options).forEach(o=>{
+   const option=document.createElement("option");
+   option.value=o.value;
+   option.textContent=o.textContent;
+   trans.appendChild(option);
+  });
+
+  trans.value=p.transition;
+
+  trans.onchange=function(e){
+   p.transition=e.target.value;
+  };
 
   const remove=document.createElement("button");
-  remove.className="removePhoto";
-  remove.textContent="×";
-  remove.onclick=e=>{
+  remove.textContent="Remove";
+
+  remove.onclick=function(e){
    e.stopPropagation();
    removePhoto(i);
   };
 
-  const duration=document.createElement("input");
-  duration.type="number";
-  duration.min="0.5";
-  duration.step="0.5";
-  duration.value=p.duration;
-  duration.title="Duration in seconds";
-  duration.onclick=e=>e.stopPropagation();
-  duration.onchange=e=>{
-   p.duration=Math.max(0.5,Number(e.target.value)||3);
-   updateTimeDisplay(pausedAt);
+  card.append(img,name,duration,trans,remove);
+
+  card.onclick=function(){
+   pausePreview();
+   selected=i;
+   pausedTime=getStart(i);
+   renderTimeline();
+   renderAt(pausedTime);
   };
 
-  const trans=document.createElement("select");
-  transitions.forEach(t=>{
-   const op=document.createElement("option");
-   op.value=t;
-   op.textContent=t.replaceAll("-"," ");
-   trans.appendChild(op);
-  });
-  trans.value=p.transition;
-  trans.onclick=e=>e.stopPropagation();
-  trans.onchange=e=>p.transition=e.target.value;
-
-  card.append(img,title,remove,duration,trans);
   timeline.appendChild(card);
  });
- updateTimeDisplay(pausedAt);
 }
 
-function selectPhoto(index){
- selectedIndex=index;
- renderTimeline();
- renderAt(photoStart(index));
- pausedAt=photoStart(index);
-}
+function removePhoto(i){
 
-function removePhoto(index){
- const p=photos[index];
- URL.revokeObjectURL(p.url);
- photos.splice(index,1);
- selectedIndex=Math.min(selectedIndex,photos.length-1);
- renderTimeline();
+ URL.revokeObjectURL(photos[i].url);
+ photos.splice(i,1);
+
+ selected=Math.min(selected,photos.length-1);
+
  if(!photos.length){
-  $("emptyMessage").style.display="block";
+  stopPreview();
+  $("empty").style.display="flex";
   clearCanvas();
  }else{
-  renderAt(photoStart(Math.max(0,selectedIndex)));
+  pausedTime=getStart(Math.max(0,selected));
+  renderAt(pausedTime);
  }
+
+ renderTimeline();
 }
 
 function clearPhotos(){
+
  stopPreview();
+
  photos.forEach(p=>URL.revokeObjectURL(p.url));
  photos=[];
- selectedIndex=0;
- pausedAt=0;
+ selected=0;
+ pausedTime=0;
+
  renderTimeline();
  clearCanvas();
- $("emptyMessage").style.display="block";
+
+ $("empty").style.display="flex";
+ $("status").textContent="Photos cleared";
 }
+
+/* =========================
+   VIDEO TIME CALCULATION
+========================= */
+
+function duration(p){
+ return Math.max(.5,Number(p.duration)||3);
+}
+
+function totalDuration(){
+ return photos.reduce((a,p)=>a+duration(p),0);
+}
+
+function getStart(index){
+ let t=0;
+ for(let i=0;i<index;i++)t+=duration(photos[i]);
+ return t;
+}
+
+function getIndex(time){
+
+ let t=0;
+
+ for(let i=0;i<photos.length;i++){
+
+  if(time<t+duration(photos[i]))return i;
+
+  t+=duration(photos[i]);
+ }
+
+ return photos.length-1;
+}
+
+function getLocalTime(index,time){
+ return time-getStart(index);
+}
+
+/* =========================
+   IMAGE DRAWING
+========================= */
 
 function clearCanvas(){
- ctx.fillStyle="#05070b";
+
+ ctx.fillStyle="#000";
  ctx.fillRect(0,0,canvas.width,canvas.height);
- $("narrationPreview").innerHTML="";
 }
 
-function previousPhoto(){
- if(!photos.length)return;
- selectPhoto(Math.max(0,selectedIndex-1));
+function drawImageCover(img,x,y,w,h,scale=1){
+
+ const ratio=Math.max(w/img.width,h/img.height)*scale;
+
+ const iw=img.width*ratio;
+ const ih=img.height*ratio;
+
+ ctx.drawImage(
+  img,
+  x+(w-iw)/2,
+  y+(h-ih)/2,
+  iw,
+  ih
+ );
 }
 
-function nextPhoto(){
- if(!photos.length)return;
- selectPhoto(Math.min(photos.length-1,selectedIndex+1));
+function drawImageFit(img){
+
+ const w=canvas.width;
+ const h=canvas.height;
+
+ const ratio=Math.min(w/img.width,h/img.height);
+
+ const iw=img.width*ratio;
+ const ih=img.height*ratio;
+
+ ctx.fillStyle="#000";
+ ctx.fillRect(0,0,w,h);
+
+ ctx.drawImage(
+  img,
+  (w-iw)/2,
+  (h-ih)/2,
+  iw,
+  ih
+ );
 }
 
-function fitImage(image,w,h,scale=1){
- const ratio=Math.min(w/image.width,h/image.height)*scale;
- return {
-  width:image.width*ratio,
-  height:image.height*ratio
- };
-}
+/* =========================
+   TRANSITION ENGINE
+========================= */
 
-function drawImageCover(image,x,y,w,h,scale=1,offsetX=0,offsetY=0){
- const size=fitImage(image,w,h,scale);
- const dx=x+(w-size.width)/2+offsetX;
- const dy=y+(h-size.height)/2+offsetY;
- ctx.drawImage(image,dx,dy,size.width,size.height);
-}
+function drawPhoto(index,time){
 
-function ease(t){
- return t*t*(3-2*t);
-}
-
-function drawPhoto(index,time,mode="normal"){
  const p=photos[index];
  if(!p)return;
- const local=time-photoStart(index);
- const progress=Math.max(0,Math.min(1,local/durationOf(p)));
- const w=canvas.width,h=canvas.height;
- const type=p.transition||"fade";
- let scale=1,ox=0,oy=0,alpha=1,blur=0,rotation=0;
 
- if(type==="zoom-in"||type==="camera-push"||type==="drone-rise")
-  scale=1+progress*.18;
- if(type==="zoom-out"||type==="camera-pull"||type==="drone-descend")
-  scale=1.18-progress*.18;
- if(type==="zoom-in-out")
-  scale=1+Math.sin(progress*Math.PI)*.15;
- if(type==="kenburns"||type==="helicopter-orbit")
-  scale=1.08+progress*.12;
- if(type==="pan-left"||type==="slide-left")
-  ox=(progress-.5)*w*.18;
- if(type==="pan-right"||type==="slide-right")
-  ox=(.5-progress)*w*.18;
- if(type==="pan-up"||type==="drone-rise")
-  oy=(.5-progress)*h*.15;
- if(type==="pan-down"||type==="drone-descend")
-  oy=(progress-.5)*h*.15;
- if(type==="helicopter-orbit"){
-  ox=Math.sin(progress*Math.PI*2)*w*.04;
-  oy=Math.cos(progress*Math.PI*2)*h*.03;
- }
- if(type==="blur"||type==="blur-in")
-  blur=(1-progress)*12;
- if(type==="blur-out")
-  blur=progress*12;
- if(type==="rotate-left") rotation=-progress*.08;
- if(type==="rotate-right") rotation=progress*.08;
+ const local=getLocalTime(index,time);
+ const progress=Math.max(0,Math.min(1,local/duration(p)));
+
+ const type=p.transition;
+ const w=canvas.width;
+ const h=canvas.height;
 
  ctx.save();
- if(mode==="normal"&&type==="fade"){
-  alpha=Math.min(1,progress*5+0.05);
- }
- ctx.globalAlpha=alpha;
- if(blur)ctx.filter="blur("+blur+"px)";
- ctx.translate(w/2,h/2);
- ctx.rotate(rotation);
- drawImageCover(p.img,-w/2,-h/2,w,h,scale,ox,oy);
- ctx.restore();
 
- if(type.startsWith("wipe")||type==="diagonal-wipe"||
-    type==="circle-open"||type==="iris"){
-  ctx.save();
-  ctx.beginPath();
-  if(type==="circle-open"||type==="iris"){
-   ctx.arc(w/2,h/2,Math.max(w,h)*progress,0,Math.PI*2);
-  }else if(type==="wipe-left"){
-   ctx.rect(w*(1-progress),0,w*progress,h);
-  }else if(type==="wipe-right"){
-   ctx.rect(0,0,w*progress,h);
-  }else if(type==="wipe-up"){
-   ctx.rect(0,h*(1-progress),w,h*progress);
-  }else if(type==="wipe-down"){
-   ctx.rect(0,0,w,h*progress);
-  }else{
-   ctx.moveTo(0,0);
-   ctx.lineTo(w*progress,0);
-   ctx.lineTo(0,h*progress);
-   ctx.closePath();
-  }
-  ctx.clip();
-  ctx.fillStyle="#05070b";
-  ctx.globalCompositeOperation="destination-over";
-  ctx.fillRect(0,0,w,h);
-  ctx.restore();
+ if(type==="zoom-in"){
+  drawImageCover(p.img,0,0,w,h,1+progress*.18);
  }
+ else if(type==="zoom-out"){
+  drawImageCover(p.img,0,0,w,h,1.18-progress*.18);
+ }
+ else if(type==="zoom"){
+  drawImageCover(p.img,0,0,w,h,1+Math.sin(progress*Math.PI)*.12);
+ }
+ else if(type==="kenburns"){
+  drawImageCover(p.img,0,0,w,h,1.08+progress*.12);
+ }
+ else if(type==="pan-left"){
+  drawImageCover(p.img,-progress*w*.1,0,w*1.1,h);
+ }
+ else if(type==="pan-right"){
+  drawImageCover(p.img,-(1-progress)*w*.1,0,w*1.1,h);
+ }
+ else if(type==="rotate"){
+  ctx.translate(w/2,h/2);
+  ctx.rotate((progress-.5)*.08);
+  drawImageCover(p.img,-w/2,-h/2,w,h,1.1);
+ }
+ else if(type==="blur"){
+  ctx.filter="blur("+((1-progress)*10)+"px)";
+  drawImageCover(p.img,0,0,w,h);
+  ctx.filter="none";
+ }
+ else{
+  drawImageFit(p.img);
+ }
+
+ ctx.restore();
 }
 
 function drawTransition(index,time){
+
  const p=photos[index];
  if(!p)return;
+
  const next=photos[index+1];
- const dur=transitionDuration();
- const remaining=photoStart(index)+durationOf(p)-time;
+ const trans=Number($("transitionTime").value);
+ const remaining=getStart(index)+duration(p)-time;
 
- if(next&&dur>0&&remaining<=dur&&remaining>=0){
-  const progress=1-remaining/dur;
-  const type=p.transition;
-  if(type==="crossfade"||type==="fade"||type==="color-fade"||type==="flash"){
-   drawPhoto(index+1,photoStart(index+1)+progress*durationOf(next));
-   ctx.save();
-   ctx.globalAlpha=1-progress;
-   drawImageCover(p.img,0,0,canvas.width,canvas.height);
-   ctx.restore();
-   if(type==="flash"&&progress>.45&&progress<.58){
-    ctx.fillStyle="white";
-    ctx.globalAlpha=.8;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.globalAlpha=1;
-   }
-  }else{
-   drawPhoto(index, time);
-   if(type==="slide-left"||type==="slide-right"||
-      type==="slide-up"||type==="slide-down"){
-    const w=canvas.width,h=canvas.height;
-    const x=type==="slide-left"?w*(1-progress):
-            type==="slide-right"?-w*(1-progress):0;
-    const y=type==="slide-up"?h*(1-progress):
-            type==="slide-down"?-h*(1-progress):0;
-    drawImageCover(next.img,x,y,w,h);
-   }else{
-    drawPhoto(index,time);
-   }
-  }
- }else{
+ // Transition is applied only at the end of the current photo.
+
+ if(!next||trans<=0||remaining>trans||remaining<0){
   drawPhoto(index,time);
- }
-}
-
-function narrationWords(){
- const text=$("narrationText").value.trim();
- return text?text.split(/\s+/):[];
-}
-
-function drawNarration(time){
- const words=narrationWords();
- const el=$("narrationPreview");
- if(!words.length||$("hideText").checked){
-  el.innerHTML="";
   return;
  }
- const wpm=Math.max(60,Number($("wpm").value)||150);
- const wordDuration=60/wpm;
- const index=Math.min(words.length-1,Math.floor(time/wordDuration));
- const start=Math.max(0,index-4);
- const end=Math.min(words.length,index+7);
- el.style.top=$("textPosition").value==="top"?"8%":"auto";
- el.style.bottom=$("textPosition").value==="bottom"?"8%":"auto";
- el.style.transform=$("textPosition").value==="center"?"translateY(-50%)":"none";
- el.style.top=$("textPosition").value==="center"?"50%":el.style.top;
- el.style.color=$("textColor").value;
- el.style.fontSize=$("fontSize").value+"px";
- el.innerHTML=words.slice(start,end).map((word,i)=>{
-  const actual=start+i;
-  return '<span class="word '+(actual===index?"active":"")+'">'+
-   escapeHtml(word)+'</span>';
- }).join(" ");
+
+ const progress=Math.max(0,Math.min(1,1-remaining/trans));
+ const type=p.transition;
+ const w=canvas.width;
+ const h=canvas.height;
+
+ if(type==="none"){
+  drawPhoto(index,time);
+  return;
+ }
+
+ if(type==="fade"){
+
+  drawImageFit(next.img);
+
+  ctx.save();
+  ctx.globalAlpha=1-progress;
+  drawImageFit(p.img);
+  ctx.restore();
+
+  return;
+ }
+
+ if(type==="slide-left"){
+
+  drawImageFit(next.img);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0,0,w*(1-progress),h);
+  ctx.clip();
+
+  ctx.drawImage(
+   p.img,
+   -progress*w,0,w,h
+  );
+
+  ctx.restore();
+  return;
+ }
+
+ if(type==="slide-right"){
+
+  drawImageFit(next.img);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(progress*w,0,w*(1-progress),h);
+  ctx.clip();
+
+  ctx.drawImage(
+   p.img,
+   progress*w,0,w,h
+  );
+
+  ctx.restore();
+  return;
+ }
+
+ if(type==="slide-up"||type==="slide-down"){
+
+  drawImageFit(next.img);
+
+  ctx.save();
+  ctx.beginPath();
+
+  if(type==="slide-up"){
+   ctx.rect(0,0,w,h*(1-progress));
+   ctx.clip();
+   ctx.drawImage(p.img,0,-progress*h,w,h);
+  }else{
+   ctx.rect(0,progress*h,w,h*(1-progress));
+   ctx.clip();
+   ctx.drawImage(p.img,0,progress*h,w,h);
+  }
+
+  ctx.restore();
+  return;
+ }
+
+ if(type==="wipe-left"||type==="wipe-right"||
+    type==="wipe-up"||type==="wipe-down"){
+
+  drawImageFit(p.img);
+
+  ctx.save();
+  ctx.beginPath();
+
+  if(type==="wipe-left")ctx.rect(w*(1-progress),0,w*progress,h);
+  if(type==="wipe-right")ctx.rect(0,0,w*progress,h);
+  if(type==="wipe-up")ctx.rect(0,h*(1-progress),w,h*progress);
+  if(type==="wipe-down")ctx.rect(0,0,w,h*progress);
+
+  ctx.clip();
+  drawImageFit(next.img);
+  ctx.restore();
+  return;
+ }
+
+ if(type==="circle"){
+
+  drawImageFit(p.img);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(w/2,h/2,Math.max(w,h)*progress,0,Math.PI*2);
+  ctx.clip();
+  drawImageFit(next.img);
+  ctx.restore();
+  return;
+ }
+
+ // Other effects use a stable crossfade fallback.
+ drawImageFit(next.img);
+ ctx.save();
+ ctx.globalAlpha=1-progress;
+ drawImageFit(p.img);
+ ctx.restore();
 }
 
-function escapeHtml(s){
+/* =========================
+   NARRATION
+========================= */
+
+function escapeHTML(s){
  return s.replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",
-  '"':"&quot;","'":"&#39;"
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
  }[c]));
 }
 
-function renderAt(time){
- if(!photos.length)return;
- const t=Math.max(0,Math.min(time,totalDuration()));
- const index=currentIndexAt(t);
- selectedIndex=index;
- ctx.fillStyle="#05070b";
- ctx.fillRect(0,0,canvas.width,canvas.height);
- drawTransition(index,t);
- drawNarration(t);
- updateTimeDisplay(t);
-}
+function drawCaption(time){
 
-function updateTimeDisplay(time){
- $("timeDisplay").textContent=
-  formatTime(time)+" / "+formatTime(totalDuration());
-}
+ const el=$("caption");
 
-function playPreview(){
- if(!photos.length){setStatus("Please upload photos first.");return}
- if(isPlaying)return;
- isPlaying=true;
- playbackStart=performance.now()-pausedAt*1000;
- if(audio.src){
-  audio.volume=Number($("audioVolume").value);
-  const offset=Number($("audioStart").value)||0;
-  try{audio.currentTime=offset+pausedAt}catch(e){}
-  audio.play().catch(()=>{});
- }
- function tick(now){
-  if(!isPlaying)return;
-  const elapsed=(now-playbackStart)/1000;
-  if(elapsed>=totalDuration()){
-   pausedAt=0;
-   stopPreview();
-   renderAt(0);
-   return;
-  }
-  pausedAt=elapsed;
-  renderAt(elapsed);
-  animationFrame=requestAnimationFrame(tick);
- }
- animationFrame=requestAnimationFrame(tick);
- setStatus("Preview playing...");
-}
-
-function pausePreview(){
- if(!isPlaying)return;
- isPlaying=false;
- cancelAnimationFrame(animationFrame);
- audio.pause();
- setStatus("Paused");
-}
-
-function stopPreview(){
- isPlaying=false;
- cancelAnimationFrame(animationFrame);
- audio.pause();
- pausedAt=0;
- renderAt(0);
- setStatus("Stopped");
-}
-
-$("audioInput").addEventListener("change",e=>{
- const file=e.target.files[0];
- if(!file)return;
- if(audio.src)URL.revokeObjectURL(audio.src);
- audio.src=URL.createObjectURL(file);
- audio.load();
- setStatus("Audio loaded.");
-});
-
-function removeAudio(){
- audio.pause();
- if(audio.src)URL.revokeObjectURL(audio.src);
- audio.removeAttribute("src");
- audio.load();
- $("audioInput").value="";
-}
-
-$("audioVolume").addEventListener("input",()=>{
- audio.volume=Number($("audioVolume").value);
-});
-
-function listenText(){
- const text=$("narrationText").value.trim();
- if(!text)return;
- if(!("speechSynthesis" in window)){
-  alert("Speech synthesis is not supported in this browser.");
+ if($("hideText").checked){
+  el.innerHTML="";
   return;
  }
- speechSynthesis.cancel();
- const utterance=new SpeechSynthesisUtterance(text);
- utterance.lang="hi-IN";
- utterance.rate=1;
- speechSynthesis.speak(utterance);
-}
 
-function stopVoice(){
- if("speechSynthesis" in window)speechSynthesis.cancel();
-}
+ const text=$("narration").value.trim();
 
-function setResolution(){
- const [w,h]=$("resolution").value.split("x").map(Number);
- canvas.width=w;
- canvas.height=h;
- renderAt(pausedAt);
-}
-
-$("resolution").addEventListener("change",setResolution);
-
-async function loadFFmpeg(){
- if(ffmpegInstance)return ffmpegInstance;
- if(!window.FFmpeg){
-  throw new Error("FFmpeg library could not be loaded. Check internet connection.");
+ if(!text){
+  el.innerHTML="";
+  return;
  }
- const {createFFmpeg,fetchFile}=window.FFmpeg;
- ffmpegInstance=createFFmpeg({
-  log:true,
-  corePath:"https://unpkg.com/@ffmpeg/core@0.12.6/dist/ffmpeg-core.js"
- });
- setStatus("Loading MP4 converter...");
- await ffmpegInstance.load();
- return ffmpegInstance;
+
+ const words=text.split(/\s+/);
+ const wpm=Math.max(60,Number($("wpm").value)||150);
+ const index=Math.min(
+  words.length-1,
+  Math.floor(time*wpm/60)
+ );
+
+ const start=Math.max(0,index-5);
+ const end=Math.min(words.length,index+7);
+
+ el.style.color=$("textColor").value;
+ el.style.fontSize=$("fontSize").value+"px";
+
+ const pos=$("position").value;
+
+ el.style.top=pos==="top"?"7%":pos==="center"?"50%":"auto";
+ el.style.bottom=pos==="bottom"?"8%":"auto";
+ el.style.transform=pos==="center"?"translateY(-50%)":"none";
+
+ el.innerHTML=words.slice(start,end).map((word,i)=>{
+  const n=start+i;
+
+  return '<span class="'+(n===index?"word active":"word")+'">'+
+   escapeHTML(word)+'</span>';
+
+ }).join(" ");
 }
 
-function drawExportFrame(time){
- ctx.fillStyle="#05070b";
- ctx.fillRect(0,0,canvas.width,canvas.height);
- const index=currentIndexAt(time);
- drawTransition(index,time);
- if(!$("hideText").checked)drawNarration(time);
+/* =========================
+   MAIN RENDER FUNCTION
+========================= */
+
+function renderAt(time){
+
+ if(!photos.length){
+  clearCanvas();
+  return;
+ }
+
+ const t=Math.max(0,Math.min(time,totalDuration()));
+
+ selected=getIndex(t);
+
+ clearCanvas();
+ drawTransition(selected,t);
+ drawCaption(t);
+
+ updateClock(t);
 }
 
-async function exportVideo(){
- if(exportRunning)return;
+/* =========================
+   PREVIEW PLAYBACK ENGINE
+========================= */
+
+function playPreview(){
+
  if(!photos.length){
   alert("Please upload photos first.");
   return;
  }
- if(!window.MediaRecorder){
-  alert("MediaRecorder is not supported in this browser.");
-  return;
+
+ if(playing)return;
+
+ if(pausedTime>=totalDuration())pausedTime=0;
+
+ playing=true;
+
+ // Audio is synchronized to the current preview position.
+ const audio=$("audio");
+
+ if(audio.src){
+  audio.volume=Number($("volume").value);
+
+  const start=Number($("audioStart").value)||0;
+
+  try{
+   audio.currentTime=start+pausedTime;
+  }catch(e){}
+
+  audio.play().catch(err=>{
+   console.log("Audio playback:",err);
+  });
  }
- exportRunning=true;
- $("exportButton").disabled=true;
- $("downloadButton").disabled=true;
- setProgress(0);
- setStatus("Preparing video...");
+
+ playStart=performance.now()-pausedTime*1000;
+
+ $("status").textContent="Playing Preview";
+
+ function loop(now){
+
+  if(!playing)return;
+
+  const current=(now-playStart)/1000;
+
+  if(current>=totalDuration()){
+   pausedTime=0;
+   stopPreview();
+   return;
+  }
+
+  pausedTime=current;
+
+  renderAt(current);
+
+  raf=requestAnimationFrame(loop);
+ }
+
+ raf=requestAnimationFrame(loop);
+}
+
+function pausePreview(){
+
+ if(!playing)return;
+
+ playing=false;
+
+ cancelAnimationFrame(raf);
+
+ $("audio").pause();
+
+ $("status").textContent="Preview Paused";
+
+ renderAt(pausedTime);
+}
+
+function stopPreview(){
+
+ playing=false;
+
+ cancelAnimationFrame(raf);
+
+ $("audio").pause();
+
+ pausedTime=0;
+
+ renderAt(0);
+
+ $("status").textContent="Preview Stopped";
+}
+
+function previousPhoto(){
+
+ if(!photos.length)return;
+
  pausePreview();
 
- let recorder=null;
- let stream=null;
- let audioStream=null;
- let audioNode=null;
- let destination=null;
+ selected=Math.max(0,selected-1);
 
- try{
-  await loadFFmpeg();
+ pausedTime=getStart(selected);
 
-  const fps=30;
-  const total=totalDuration();
-  const canvasStream=canvas.captureStream(fps);
-
-  if(audio.src){
-   audioContext=new (window.AudioContext||window.webkitAudioContext)();
-   await audioContext.resume();
-   audioSource=audioContext.createMediaElementSource(audio);
-   destination=audioContext.createMediaStreamDestination();
-   audioSource.connect(destination);
-   audioSource.connect(audioContext.destination);
-   audioStream=destination.stream;
-  }
-
-  const tracks=[...canvasStream.getVideoTracks()];
-  if(audioStream){
-   tracks.push(...audioStream.getAudioTracks());
-  }
-  stream=new MediaStream(tracks);
-
-  let mime="video/webm;codecs=vp9,opus";
-  if(!MediaRecorder.isTypeSupported(mime)){
-   mime="video/webm;codecs=vp8,opus";
-  }
-  if(!MediaRecorder.isTypeSupported(mime)){
-   mime="video/webm";
-  }
-
-  recorder=new MediaRecorder(stream,{mimeType:mime});
-  const chunks=[];
-  recorder.ondataavailable=e=>{
-   if(e.data&&e.data.size)chunks.push(e.data);
-  };
-
-  const stopped=new Promise((resolve,reject)=>{
-   recorder.onerror=e=>reject(e.error||new Error("Recording failed"));
-   recorder.onstop=resolve;
-  });
-
-  if(audio.src){
-   audio.volume=Number($("audioVolume").value);
-   audio.currentTime=Number($("audioStart").value)||0;
-   await audio.play().catch(()=>{});
-  }
-
-  recorder.start(1000);
-  const start=performance.now();
-
-  await new Promise(resolve=>{
-   function frame(now){
-    const elapsed=(now-start)/1000;
-    if(elapsed>=total){
-     resolve();
-     return;
-    }
-    drawExportFrame(elapsed);
-    setProgress(elapsed/total*75);
-    setStatus("Recording video: "+Math.floor(elapsed/total*100)+"%");
-    requestAnimationFrame(frame);
-   }
-   requestAnimationFrame(frame);
-  });
-
-  recorder.stop();
-  await stopped;
-  audio.pause();
-
-  const webmBlob=new Blob(chunks,{type:"video/webm"});
-  if(!webmBlob.size)throw new Error("Recording is empty.");
-
-  setStatus("Converting WebM to MP4...");
-  setProgress(80);
-
-  const ff=await loadFFmpeg();
-  const {fetchFile}=window.FFmpeg;
-  ff.FS("writeFile","input.webm",await fetchFile(webmBlob));
-
-  const hasAudio=!!audioStream;
-  const args=[
-   "-i","input.webm",
-   "-c:v","libx264",
-   "-preset","ultrafast",
-   "-pix_fmt","yuv420p"
-  ];
-  if(hasAudio){
-   args.push("-c:a","aac","-b:a","128k","-shortest");
-  }else{
-   args.push("-an");
-  }
-  args.push("-movflags","+faststart","output.mp4");
-
-  const result=await ff.run(...args);
-  if(result!==0)throw new Error("MP4 conversion failed.");
-
-  const data=ff.FS("readFile","output.mp4");
-  videoBlob=new Blob([data.buffer],{type:"video/mp4"});
-
-  if(videoUrl)URL.revokeObjectURL(videoUrl);
-  videoUrl=URL.createObjectURL(videoBlob);
-
-  $("downloadArea").innerHTML="";
-  const link=document.createElement("a");
-  link.href=videoUrl;
-  link.download="my-photo-video.mp4";
-  link.textContent="Download MP4 Video";
-  link.className="btn";
-  $("downloadArea").appendChild(link);
-
-  $("downloadButton").disabled=false;
-  setProgress(100);
-  setStatus("MP4 export completed successfully!");
-  renderAt(0);
-
- }catch(error){
-  console.error(error);
-  setStatus("Export error: "+error.message);
-  alert("Export failed: "+error.message+
-   "\n\nPlease try Chrome browser with internet connection.");
- }finally{
-  if(recorder&&recorder.state!=="inactive"){
-   try{recorder.stop()}catch(e){}
-  }
-  if(stream)stream.getTracks().forEach(t=>t.stop());
-  if(audioContext){
-   try{await audioContext.close()}catch(e){}
-   audioContext=null;
-   audioSource=null;
-  }
-  exportRunning=false;
-  $("exportButton").disabled=false;
- }
+ renderTimeline();
+ renderAt(pausedTime);
 }
 
-function downloadVideo(){
- if(!videoUrl||!videoBlob){
-  alert("Please export the video first.");
+function nextPhoto(){
+
+ if(!photos.length)return;
+
+ pausePreview();
+
+ selected=Math.min(photos.length-1,selected+1);
+
+ pausedTime=getStart(selected);
+
+ renderTimeline();
+ renderAt(pausedTime);
+}
+
+function updateClock(time){
+
+ const total=totalDuration();
+
+ $("clock").textContent=
+  formatTime(time)+" / "+formatTime(total);
+
+ $("bar").style.width=
+  (total?time/total*100:0)+"%";
+}
+
+function formatTime(s){
+
+ s=Math.floor(Math.max(0,s||0));
+
+ return String(Math.floor(s/60)).padStart(2,"0")+":"+
+ String(s%60).padStart(2,"0");
+}
+
+/* =========================
+   AUDIO
+========================= */
+
+$("audioInput").addEventListener("change",function(e){
+
+ const file=e.target.files[0];
+
+ if(!file)return;
+
+ removeAudio();
+
+ audioURL=URL.createObjectURL(file);
+
+ $("audio").src=audioURL;
+
+ $("audio").load();
+
+ $("status").textContent="Audio loaded successfully";
+});
+
+function removeAudio(){
+
+ $("audio").pause();
+
+ if(audioURL)URL.revokeObjectURL(audioURL);
+
+ audioURL=null;
+
+ $("audio").removeAttribute("src");
+ $("audio").load();
+
+ $("audioInput").value="";
+}
+
+$("volume").addEventListener("input",function(){
+ $("audio").volume=Number(this.value);
+});
+
+/* =========================
+   SPEECH
+========================= */
+
+function listenText(){
+
+ const text=$("narration").value.trim();
+
+ if(!text)return;
+
+ if(!window.speechSynthesis){
+  alert("Speech is not supported.");
   return;
  }
- const a=document.createElement("a");
- a.href=videoUrl;
- a.download="my-photo-video.mp4";
- document.body.appendChild(a);
- a.click();
- a.remove();
+
+ speechSynthesis.cancel();
+
+ const utterance=new SpeechSynthesisUtterance(text);
+
+ utterance.lang="hi-IN";
+
+ speechSynthesis.speak(utterance);
 }
 
-// Global functions for HTML onclick controls.
-window.clearPhotos=clearPhotos;
-window.removeAudio=removeAudio;
+function stopVoice(){
+
+ if(window.speechSynthesis){
+  speechSynthesis.cancel();
+ }
+}
+
+/* =========================
+   GLOBAL CONTROLS
+========================= */
+
 window.playPreview=playPreview;
 window.pausePreview=pausePreview;
 window.stopPreview=stopPreview;
 window.previousPhoto=previousPhoto;
 window.nextPhoto=nextPhoto;
+window.clearPhotos=clearPhotos;
+window.removeAudio=removeAudio;
 window.listenText=listenText;
 window.stopVoice=stopVoice;
-window.exportVideo=exportVideo;
-window.downloadVideo=downloadVideo;
 
-audio.volume=Number($("audioVolume").value);
+/* =========================
+   INITIALIZATION
+========================= */
+
 clearCanvas();
 renderTimeline();
+updateClock(0);
 
-console.log("Photo Video Studio V7 Ready");
+$("status").textContent="Photo Video Studio V8 Ready";
+
 </script>
 
 </body>
