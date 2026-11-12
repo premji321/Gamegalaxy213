@@ -1,238 +1,1963 @@
-<!doctype html>
-<html lang="hi">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#101827">
-<title>Professional Video Studio V7 Mobile</title>
-<style>
-:root{color-scheme:dark;--bg:#0b1220;--panel:#151f30;--line:#29364b;--txt:#edf3ff;--muted:#9eacc2;--accent:#55b6ff;--good:#39c98a;--warn:#ffca68}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
-header{padding:16px;background:linear-gradient(135deg,#162c49,#101827);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-h1{font-size:20px;margin:0 0 4px}header p{margin:0;color:var(--muted);font-size:12px}
-main{max-width:850px;margin:auto;padding:12px;display:grid;gap:12px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px}
-h2{font-size:16px;margin:0 0 12px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.row>*{flex:1;min-width:115px}
-label{display:block;color:var(--muted);font-size:12px;margin:9px 0 5px}
-input,select,button,textarea{font:inherit;color:var(--txt);background:#0e1726;border:1px solid #34435a;border-radius:9px;padding:10px;width:100%;min-height:42px}
-input[type=file]{padding:8px;font-size:12px}input[type=range]{padding:0;min-height:24px;accent-color:var(--accent)}
-button{background:#1e4264;border:1px solid #35658f;font-weight:650;cursor:pointer}
-button.secondary{background:#202b3d;border-color:#3b4a60}button.primary{background:#087ac0;border-color:#1498e9}button:disabled{opacity:.45}
-small,.muted{color:var(--muted);font-size:12px}
-#previewWrap{background:#05080d;border-radius:12px;overflow:hidden;position:relative}
-canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#05080d}
-#status{padding:9px;background:#0d1929;border:1px solid var(--line);border-radius:9px;font-size:12px;color:#c8d8ee;white-space:pre-wrap}
-#photoList{display:grid;gap:7px;margin-top:9px}.photo{display:grid;grid-template-columns:54px 1fr auto;gap:8px;align-items:center;background:#0e1726;border:1px solid var(--line);padding:7px;border-radius:9px}
-.photo img{width:54px;height:42px;object-fit:cover;border-radius:5px}.photo strong{font-size:12px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.photo button{width:auto;min-width:38px;padding:5px}
-progress{width:100%;height:12px;accent-color:var(--good)}
-#downloadLink{display:none;color:#8bd1ff;font-weight:700;padding:10px}
-.note{border-left:3px solid var(--warn);padding:8px 10px;background:#211d15;color:#ffe2aa;font-size:12px;border-radius:5px}
-@media(min-width:700px){main{grid-template-columns:1fr 1fr}.wide{grid-column:1/-1}}
-</style>
-</head>
-<body>
-<header><h1>Professional Video Studio V7</h1><p>Mobile Photo → Cinematic Video · Narration Mixer · MP4 Export</p></header>
-<main>
-<section class="panel wide">
-<h2>1. फोटो जोड़ें</h2>
-<label>एक या कई फोटो चुनें</label><input id="photos" type="file" accept="image/*" multiple>
-<div class="row">
-<div><label>वीडियो अनुपात</label><select id="ratio"><option value="16:9">16:9 Landscape</option><option value="9:16">9:16 Portrait</option><option value="1:1">1:1 Square</option></select></div>
-<div><label>हर फोटो की अवधि (सेकंड)</label><input id="duration" type="number" min="1" max="30" value="5"></div>
-<div><label>Transition</label><select id="transition"><option value="fade">Fade</option><option value="slide">Slide</option><option value="zoom">Zoom</option><option value="wipe">Wipe</option><option value="none">Cut</option></select></div>
-</div>
-<div id="photoList"></div>
-</section>
+<!DOCTYPE html>  <html lang="hi">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Professional Video Studio V5</title>  <style>  
+:root{  
+ --bg:#0b1020;  
+ --panel:#151e31;  
+ --inner:#0b1528;  
+ --border:#30415c;  
+ --blue:#159ee5;  
+ --green:#07976c;  
+ --red:#d94359;  
+ --text:#f2f5ff;  
+ --muted:#9aabc3;  
+}  
+*{box-sizing:border-box}  
+body{  
+ margin:0;background:var(--bg);color:var(--text);  
+ font-family:Arial,sans-serif;  
+}  
+header{  
+ background:#111a2c;text-align:center;  
+ padding:18px 10px;border-bottom:1px solid var(--border)  
+}  
+header h1{font-size:22px;color:#55caff;margin:0}  
+header p{font-size:12px;color:var(--muted)}  
+.container{max-width:1250px;margin:auto;padding:13px}  
+.panel{  
+ background:var(--panel);  
+ border:1px solid var(--border);  
+ border-radius:11px;padding:15px;margin-bottom:14px  
+}  
+h3{font-size:16px;color:#62c9ff;margin:0 0 14px}  
+h4{font-size:13px;color:#6ccaff}  
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}  
+button,.upload{  
+ background:#087fca;color:white;border:0;  
+ border-radius:7px;padding:10px 13px;  
+ font-weight:bold;cursor:pointer;margin:3px;  
+}  
+button:disabled{opacity:.4;cursor:not-allowed}  
+.secondary{background:#35445e}  
+.success{background:#087b58}  
+.danger{background:#a83249}  
+input,select,textarea{  
+ background:#0b1425;color:white;  
+ border:1px solid #40516b;border-radius:6px;  
+ padding:8px;max-width:100%;  
+}  
+input[type=file]{display:none}  
+input[type=range]{accent-color:#19baff}  
+textarea{width:100%;min-height:105px;resize:vertical}  
+label{font-size:12px;color:#c8d7e9}  
+.small{font-size:11px;color:var(--muted)}  
+.status{font-size:12px;color:#69d3ff;margin-top:10px}  
+.track{  
+ background:var(--inner);border:1px solid #2a3b56;  
+ border-radius:8px;padding:11px;margin-top:10px  
+}  
+.track-title{font-size:12px;color:#67caff;font-weight:bold}  
+.timeline{  
+ display:flex;gap:10px;overflow-x:auto;  
+ padding:12px 2px;min-height:150px  
+}  
+.photo-card{  
+ width:205px;min-width:205px;  
+ padding:8px;background:#111d32;  
+ border:2px solid #34435d;border-radius:9px;  
+}  
+.photo-card.active{border-color:#20bdff}  
+.photo-card img{  
+ width:100%;height:105px;object-fit:cover;border-radius:5px  
+}  
+.photo-card .filename{  
+ font-size:11px;white-space:nowrap;  
+ overflow:hidden;text-overflow:ellipsis;margin:6px 0  
+}  
+.photo-card input,.photo-card select{  
+ width:100%;margin:4px 0;font-size:11px  
+}  
+.photo-card button{font-size:11px;padding:6px 8px}  
+.photo-settings{  
+ background:#0a1425;border-radius:6px;  
+ padding:8px;margin-top:8px  
+}  
+.preview{background:#000;border-radius:8px;overflow:hidden}  
+canvas{width:100%;height:auto;display:block}  
+.info{  
+ display:flex;justify-content:space-between;  
+ font-size:11px;color:var(--muted);margin-top:7px  
+}  
+#seek{width:100%;margin:10px 0}  
+.audio-track{  
+ background:#203650;border-radius:5px;  
+ padding:11px;margin-top:10px;font-size:12px  
+}  
+.option-box{  
+ background:#0d1729;border:1px solid #30415c;  
+ border-radius:8px;padding:12px;margin-top:10px  
+}  
+.export-box{  
+ border:1px dashed #50647e;border-radius:8px;  
+ padding:18px;text-align:center  
+}  
+.progress-track{  
+ background:#29364b;height:9px;  
+ border-radius:10px;overflow:hidden;margin:14px 0  
+}  
+#progressBar{height:100%;width:0%;background:#18b9ef}  
+.check-row{display:flex;align-items:center;gap:6px}  
+footer{text-align:center;color:#75839a;padding:20px;font-size:12px}  
+@media(max-width:600px){  
+ .container{padding:8px}  
+ .panel{padding:11px}  
+ .photo-card{width:190px;min-width:190px}  
+ header h1{font-size:19px}  
+}  
+</style>  </head>  <body>  <header>  
+<h1>🎬 PROFESSIONAL VIDEO STUDIO V5</h1>  
+<p>Advanced Photo Editor | Drone Camera | Cinematic Transitions | Audio | Narration</p>  
+</header>  <div class="container">  <!-- 01 PHOTO LIBRARY -->  <div class="panel">  
+<h3>01. Photo Library & Individual Timeline</h3>  <div class="row">  
+<label class="upload" for="photoInput">📷 Upload Multiple Photos</label>  
+<input type="file" id="photoInput" accept="image/*" multiple>  
+<button class="secondary" onclick="clearPhotos()">Clear All</button>  
+</div>  <p class="small" id="photoCount">No photos uploaded</p>  <div class="track">  
+<div class="track-title">🖼 PHOTO TIMELINE</div>  <div class="timeline" id="photoTimeline">  
+<span class="small">Upload your photos.</span>  
+</div>  <p class="small">  
+हर फोटो के नीचे Duration, Transition Style और Transition Duration अलग-अलग सेट करें।  
+Drag and Drop से फोटो का क्रम बदल सकते हैं।  
+</p>  
+</div>  
+</div>  <!-- 02 PREVIEW -->  <div class="panel">  
+<h3>02. Video Preview Monitor</h3>  <div class="preview">  
+<canvas id="canvas" width="1280" height="720"></canvas>  
+</div>  <div class="info">  
+<span id="photoInfo">Ready</span>  
+<span id="timeInfo">00:00 / 00:00</span>  
+</div>  <div class="row" style="margin-top:12px">  
+<button class="success" onclick="playPreview()">▶ PLAY</button>  
+<button class="secondary" onclick="pausePreview()">Ⅱ PAUSE</button>  
+<button class="danger" onclick="stopPreview()">■ STOP</button>  
+<button class="secondary" onclick="previousPhoto()">⏮ PREVIOUS</button>  
+<button class="secondary" onclick="nextPhoto()">NEXT ⏭</button>  
+</div>  <input type="range" id="seek" min="0" max="100" value="0">  <div class="row">  
+<label>Video Ratio  
+<select id="ratio">  
+<option value="16:9">16:9 Landscape</option>  
+<option value="9:16">9:16 Portrait</option>  
+<option value="1:1">1:1 Square</option>  
+</select>  
+</label>  
+</div>  <p class="status" id="previewStatus">Ready to Preview</p>  
+</div>  <!-- 03 AUDIO -->  <div class="panel">  
+<h3>03. Audio Studio</h3>  <div class="row">  
+<label class="upload" for="audioInput">🎵 Upload Audio</label>  
+<input type="file" id="audioInput" accept="audio/*">  
+<button class="danger" onclick="removeAudio()">Remove Audio</button>  
+</div>  <div class="track">  
+<div class="track-title">🎧 AUDIO TIMELINE</div>  
+<div class="audio-track" id="audioTimeline">No audio selected</div>  <p class="small" id="audioDuration">Audio Duration: --</p>  <audio id="audioPlayer" controls style="width:100%;margin-top:10px"></audio>
 
-<section class="panel wide">
-<h2>2. वीडियो प्रीव्यू</h2>
-<div id="previewWrap"><canvas id="canvas" width="1280" height="720"></canvas></div>
-<div class="row" style="margin-top:9px"><button id="previewBtn" class="primary">▶ Preview चलाएँ</button><button id="stopPreview" class="secondary">■ रोकें</button></div>
-<label>वीडियो शीर्षक (वैकल्पिक)</label><input id="titleText" placeholder="महाराणा प्रताप – एक योद्धा">
-<label>सबटाइटल / स्क्रीन टेक्स्ट</label><input id="subText" placeholder="वीरता, स्वाभिमान और स्वतंत्रता की कहानी">
-</section>
+<div class="row">  
+<label>Volume  
+<input type="range" id="volume" min="0" max="100" value="80">  
+</label>  <label class="check-row">  
+<input type="checkbox" id="loopAudio" checked>  
+Loop Audio  
+</label>  
+</div>  
+</div>  
+</div>  <!-- 04 NARRATION -->  <div class="panel">  
+<h3>04. Smart Text Narration</h3>  <div class="row">  
+<label><input type="radio" name="soundMode" value="audio"> Background Audio</label>  
+<label><input type="radio" name="soundMode" value="text" checked> Text Narration</label>  
+<label><input type="radio" name="soundMode" value="none"> Mute</label>  
+</div>  <div class="track">  
+<div class="track-title">📝 NARRATION SCRIPT</div>  
+<textarea id="narration" placeholder="अपनी स्क्रिप्ट यहां लिखें..."></textarea>  <div class="option-box">  
+<h4>Narration Display Settings</h4>  <div class="row">  
+<label>Text Position  
+<select id="textPosition">  
+<option value="bottom">Bottom</option>  
+<option value="center">Center</option>  
+<option value="top">Top</option>  
+</select>  
+</label>  <label>Font Size
+<input type="number" id="textSize" value="28" min="14" max="70">
+</label>
 
-<section class="panel">
-<h2>3. Narration / कहानी की आवाज</h2>
-<label>अपनी हिंदी Narration ऑडियो अपलोड करें (MP3, WAV, M4A)</label>
-<input id="voiceFile" type="file" accept="audio/*">
-<div class="row"><button id="voicePlay" class="secondary">▶ आवाज सुनें</button><button id="voiceStop" class="secondary">■ रोकें</button></div>
-<label>Voice Volume <span id="voiceVal">100%</span></label><input id="voiceVol" type="range" min="0" max="1" step=".01" value="1">
-<p class="muted">Narration फ़ाइल वीडियो में वास्तविक ऑडियो ट्रैक के रूप में मिलाई जाएगी। केवल स्क्रीन पर चलने वाली browser speech इस export में शामिल नहीं होती।</p>
-</section>
+<label>Text Color
+<input type="color" id="textColor" value="#ffffff">
+</label>
 
-<section class="panel">
-<h2>4. Background Music</h2>
-<label>म्यूजिक अपलोड करें</label><input id="musicFile" type="file" accept="audio/*">
-<div class="row"><button id="musicPlay" class="secondary">▶ Music सुनें</button><button id="musicStop" class="secondary">■ रोकें</button></div>
-<label>Music Volume <span id="musicVal">20%</span></label><input id="musicVol" type="range" min="0" max="1" step=".01" value=".2">
-</section>
+<label>Highlight Color
+<input type="color" id="highlightColor" value="#ffd43b">
+</label>
 
-<section class="panel wide">
-<h2>5. MP4 वीडियो एक्सपोर्ट</h2>
-<div class="note">MP4 कन्वर्जन FFmpeg.wasm से मोबाइल में ही होगा। पहली बार FFmpeg लगभग 30–35 MB डाउनलोड हो सकता है। लंबा वीडियो या कम RAM वाला फोन कन्वर्जन पूरा न कर पाए। पेज को Chrome में खोलें और कन्वर्जन के दौरान टैब खुला रखें।</div>
-<div class="row" style="margin-top:10px"><button id="exportBtn" class="primary">⬇ MP4 बनाएं</button><button id="loadFF" class="secondary">FFmpeg तैयार करें</button></div>
-<progress id="progress" max="100" value="0"></progress>
-<div id="status">तैयार। पहले फोटो जोड़ें, फिर Preview या MP4 Export करें।</div>
-<a id="downloadLink" download="my-video.mp4">MP4 डाउनलोड करें</a>
-</section>
-</main>
+</div>  <div class="row" style="margin-top:10px">  
+<label class="check-row">  
+<input type="checkbox" id="hideText">  
+Hide Text From Viewers  
+</label>  <label class="check-row">  
+<input type="checkbox" id="showBackground" checked>  
+Show Text Background  
+</label>  
+</div>  
+</div>  <div class="option-box">  
+<h4>Voice Settings</h4>  
+<div class="row">  
+<label>Voice  
+<select id="voiceSelect">  
+<option value="">Default Hindi Voice</option>  
+</select>  
+</label>  <label>Speaking Speed
+<select id="voiceSpeed">
 
-<script type="module">
-import { FFmpeg } from 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js';
-import { toBlobURL } from 'https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js';
+<option value=".7">Very Slow</option>  
+<option value=".85">Slow</option>  
+<option value="1" selected>Normal</option>  
+<option value="1.15">Fast</option>  
+</select>  
+</label>  
+</div>  <div class="row" style="margin-top:10px">  
+<button onclick="listenText()">🔊 Listen Narration</button>  
+<button class="secondary" onclick="stopVoice()">Stop Voice</button>  
+</div>  
+<p id="voiceStatus" class="status">Ready for narration.</p>  
+</div>  <div class="track">  
+<div class="track-title">🎤 KARAOKE PREVIEW</div>  
+<div id="karaokePreview" style="background:#080e1c;padding:20px;text-align:center;min-height:65px;border-radius:7px">  
+Your narration will appear here.  
+</div>  
+</div>  
+</div>  
+</div>  <!-- 05 EXPORT -->  <div class="panel">  
+<h3>05. Video Export Studio</h3>  <div class="export-box">  
+<p>🎥 आपका Slideshow Video तैयार करें</p>  <label>Export Quality
+<select id="quality">
 
-const $=id=>document.getElementById(id);
-const canvas=$('canvas'),ctx=canvas.getContext('2d');
-let items=[],previewRAF=0,previewStart=0,ffmpeg=null,ffReady=false;
-let voiceURL='',musicURL='',voiceAudio=null,musicAudio=null;
-let audioCtx=null,voiceGain=null,musicGain=null,mixDest=null;
-
-function status(s){$('status').textContent=s}
-function setRatio(){
- const r=$('ratio').value.split(':').map(Number),w=1280,h=Math.round(1280*r[1]/r[0]);
- canvas.width=w;canvas.height=h;canvas.style.aspectRatio=`${r[0]}/${r[1]}`;
-}
-$('ratio').onchange=setRatio;
-function addFiles(files){
- for(const f of files){if(!f.type.startsWith('image/'))continue;const url=URL.createObjectURL(f);const im=new Image();im.onload=()=>drawFrame(0);im.src=url;items.push({file:f,url,img:im,duration:Math.max(1,+$('duration').value||5)});}
- renderList();drawFrame(0);
-}
-$('photos').onchange=e=>addFiles([...e.target.files]);
-function renderList(){
- $('photoList').innerHTML='';
- items.forEach((it,i)=>{
-  const d=document.createElement('div');d.className='photo';
-  const im=document.createElement('img');im.src=it.url;
-  const info=document.createElement('div');const name=document.createElement('strong');name.textContent=(i+1)+'. '+it.file.name;
-  const dur=document.createElement('input');dur.type='number';dur.min=1;dur.max=30;dur.value=it.duration;dur.style.minHeight='32px';dur.style.padding='4px';dur.setAttribute('aria-label','Duration');
-  dur.onchange=()=>{it.duration=Math.max(1,Math.min(30,+dur.value||5));};
-  info.append(name,dur);const del=document.createElement('button');del.textContent='×';del.title='हटाएँ';del.onclick=()=>{URL.revokeObjectURL(it.url);items.splice(i,1);renderList();drawFrame(0)};
-  d.append(im,info,del);$('photoList').append(d);
- });
-}
-function totalDuration(){return items.reduce((a,x)=>a+x.duration,0)}
-function locate(t){let acc=0;for(let i=0;i<items.length;i++){if(t<acc+items[i].duration)return {i,local:t-acc,acc};acc+=items[i].duration;}return {i:Math.max(0,items.length-1),local:0,acc:0}}
-function drawImageFit(img,alpha=1,scale=1,dx=0,dy=0){
- if(!img||!img.complete)return;const W=canvas.width,H=canvas.height;
- const s=Math.max(W/img.width,H/img.height)*scale,w=img.width*s,h=img.height*s;
- ctx.globalAlpha=alpha;ctx.drawImage(img,(W-w)/2+dx,(H-h)/2+dy,w,h);ctx.globalAlpha=1;
-}
-function drawFrame(t){
- const W=canvas.width,H=canvas.height;ctx.fillStyle='#080d16';ctx.fillRect(0,0,W,H);
- if(!items.length){ctx.fillStyle='#9fb0c8';ctx.textAlign='center';ctx.font=`bold ${Math.round(W*.035)}px sans-serif`;ctx.fillText('यहाँ आपकी फोटो का Preview दिखाई देगा',W/2,H/2);return;}
- const p=locate(Math.max(0,Math.min(t,totalDuration()-.001))),it=items[p.i];
- const tr=$('transition').value,fadeDur=Math.min(.8,it.duration*.25),progress=Math.min(1,p.local/Math.max(.01,fadeDur));
- if(tr==='fade'&&p.local<fadeDur){drawImageFit(it.img,progress);if(p.i>0){ctx.fillStyle=`rgba(0,0,0,${1-progress})`;ctx.fillRect(0,0,W,H);}}
- else if(tr==='slide'&&p.local<fadeDur){drawImageFit(it.img,1,1,(1-progress)*W*.45,0);}
- else if(tr==='zoom'){drawImageFit(it.img,1,1.02+Math.min(.12,p.local/it.duration*.12));}
- else if(tr==='wipe'&&p.local<fadeDur){ctx.save();ctx.beginPath();ctx.rect(0,0,W*progress,H);ctx.clip();drawImageFit(it.img);ctx.restore();}
- else drawImageFit(it.img);
- const title=$('titleText').value,sub=$('subText').value;
- if(title||sub){ctx.textAlign='center';ctx.shadowColor='#000';ctx.shadowBlur=12;ctx.fillStyle='white';
-  if(title){ctx.font=`bold ${Math.round(W*.045)}px sans-serif`;ctx.fillText(title,W/2,H*.83,W*.9);}
-  if(sub){ctx.font=`${Math.round(W*.025)}px sans-serif`;ctx.fillText(sub,W/2,H*.9,W*.9);}ctx.shadowBlur=0;}
-}
-function startPreview(){
- if(!items.length){status('पहले कम-से-कम एक फोटो जोड़ें।');return;}
- cancelAnimationFrame(previewRAF);previewStart=performance.now();let end=totalDuration()*1000;
- function tick(now){let t=((now-previewStart)/1000)%Math.max(.1,totalDuration());drawFrame(t);if(now-previewStart<end)previewRAF=requestAnimationFrame(tick);else drawFrame(0);}
- previewRAF=requestAnimationFrame(tick);
-}
-$('previewBtn').onclick=startPreview;$('stopPreview').onclick=()=>{cancelAnimationFrame(previewRAF);drawFrame(0)};
-$('titleText').oninput=()=>drawFrame(0);$('subText').oninput=()=>drawFrame(0);
-
-function setAudioFile(input,type){
- const f=input.files[0];if(!f)return;
- const url=URL.createObjectURL(f);
- if(type==='voice'){if(voiceURL)URL.revokeObjectURL(voiceURL);voiceURL=url;voiceAudio=new Audio(url);voiceAudio.loop=false;}
- else{if(musicURL)URL.revokeObjectURL(musicURL);musicURL=url;musicAudio=new Audio(url);musicAudio.loop=true;}
- status((type==='voice'?'Narration':'Music')+' फ़ाइल लोड हो गई: '+f.name);
-}
-$('voiceFile').onchange=()=>setAudioFile($('voiceFile'),'voice');
-$('musicFile').onchange=()=>setAudioFile($('musicFile'),'music');
-$('voiceVol').oninput=()=>{$('voiceVal').textContent=Math.round(+$('voiceVol').value*100)+'%';if(voiceGain)voiceGain.gain.value=+$('voiceVol').value};
-$('musicVol').oninput=()=>{$('musicVal').textContent=Math.round(+$('musicVol').value*100)+'%';if(musicGain)musicGain.gain.value=+$('musicVol').value};
-$('voicePlay').onclick=()=>{if(!voiceAudio){status('पहले Narration ऑडियो अपलोड करें।');return;}voiceAudio.currentTime=0;voiceAudio.play()};
-$('voiceStop').onclick=()=>{if(voiceAudio){voiceAudio.pause();voiceAudio.currentTime=0}};
-$('musicPlay').onclick=()=>{if(!musicAudio){status('पहले Music अपलोड करें।');return;}musicAudio.currentTime=0;musicAudio.play()};
-$('musicStop').onclick=()=>{if(musicAudio){musicAudio.pause();musicAudio.currentTime=0}};
-
-async function prepareAudio(){
- if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)();mixDest=audioCtx.createMediaStreamDestination();}
- await audioCtx.resume();
- for(const [a,kind] of [[voiceAudio,'voice'],[musicAudio,'music']]){
-  if(!a)continue;
-  // Rebuild media element source only once.
-  if(!a._source){a._source=audioCtx.createMediaElementSource(a);a._gain=audioCtx.createGain();a._source.connect(a._gain);a._gain.connect(mixDest);a._gain.connect(audioCtx.destination);}
-  a._gain.gain.value=kind==='voice'?+$('voiceVol').value:+$('musicVol').value;
- }
- voiceGain=voiceAudio?voiceAudio._gain:null;musicGain=musicAudio?musicAudio._gain:null;
-}
-async function loadFFmpeg(){
- if(ffReady)return;
- if(!window.isSecureContext && location.hostname!=='localhost'){status('FFmpeg के लिए सुरक्षित HTTPS पेज जरूरी है।');throw Error('HTTPS required');}
- $('loadFF').disabled=true;status('FFmpeg लाइब्रेरी डाउनलोड हो रही है। पहली बार कुछ समय लग सकता है…');
- try{
-  ffmpeg=new FFmpeg();
-  ffmpeg.on('log',({message})=>{if(/error/i.test(message))status(message.slice(-500));});
-  ffmpeg.on('progress',({progress})=>{$('progress').value=Math.round(progress*100);});
-  const base='https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
-  const coreURL=await toBlobURL(base+'/ffmpeg-core.js','text/javascript');
-  const wasmURL=await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm');
-  await ffmpeg.load({coreURL,wasmURL});
-  ffReady=true;status('FFmpeg तैयार है। अब MP4 एक्सपोर्ट कर सकते हैं।');
- }catch(e){status('FFmpeg लोड नहीं हुआ: '+e.message+'\nChrome में HTTPS पर खोलें और इंटरनेट कनेक्शन जाँचें।');throw e}
- finally{$('loadFF').disabled=false}
-}
-$('loadFF').onclick=()=>loadFFmpeg().catch(()=>{});
-
-async function exportMP4(){
- if(!items.length){status('पहले फोटो जोड़ें।');return}
- if(!window.MediaRecorder||!canvas.captureStream){status('इस ब्राउज़र में वीडियो रिकॉर्डिंग सपोर्ट नहीं है। Chrome का नया संस्करण उपयोग करें।');return}
- $('exportBtn').disabled=true;$('progress').value=0;$('downloadLink').style.display='none';
- let stream=null,recorder=null,chunks=[];
- try{
-  await loadFFmpeg();await prepareAudio();
-  if(voiceAudio){voiceAudio.pause();voiceAudio.currentTime=0;}
-  if(musicAudio){musicAudio.pause();musicAudio.currentTime=0;}
-  // Audio track is mixed into the recorder stream; no speechSynthesis dependency.
-  const videoStream=canvas.captureStream(30);
-  const tracks=[...videoStream.getVideoTracks(),...mixDest.stream.getAudioTracks()];
-  stream=new MediaStream(tracks);
-  const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(x=>MediaRecorder.isTypeSupported(x));
-  if(!mime)throw Error('इस Chrome में WebM recording उपलब्ध नहीं है।');
-  recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:5000000});
-  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
-  const stopped=new Promise((resolve,reject)=>{recorder.onstop=resolve;recorder.onerror=e=>reject(e.error||new Error('Recording failed'))});
-  recorder.start(1000);
-  const duration=totalDuration(),start=performance.now();
-  if(voiceAudio){voiceAudio.currentTime=0;await voiceAudio.play().catch(()=>{});}
-  if(musicAudio){musicAudio.currentTime=0;await musicAudio.play().catch(()=>{});}
-  status('वीडियो रिकॉर्ड हो रहा है… '+duration+' सेकंड');
-  await new Promise(resolve=>{
-   function frame(now){const t=Math.min((now-start)/1000,duration);drawFrame(t);$('progress').value=Math.round(t/duration*35);
-    if(t<duration)requestAnimationFrame(frame);else resolve();}
-   requestAnimationFrame(frame);
-  });
-  recorder.stop();await stopped;
-  if(voiceAudio)voiceAudio.pause();if(musicAudio)musicAudio.pause();
-  const webm=new Blob(chunks,{type:'video/webm'});
-  status('रिकॉर्डिंग पूरी। अब MP4 में कन्वर्जन हो रहा है…');
-  await ffmpeg.writeFile('input.webm',new Uint8Array(await webm.arrayBuffer()));
-  // Audio is already muxed into WebM. Re-encode to broadly compatible H.264/AAC MP4.
-  await ffmpeg.exec(['-i','input.webm','-c:v','libx264','-preset','ultrafast','-pix_fmt','yuv420p','-c:a','aac','-b:a','160k','-movflags','+faststart','output.mp4']);
-  const data=await ffmpeg.readFile('output.mp4');
-  const mp4=new Blob([data.buffer],{type:'video/mp4'});
-  const url=URL.createObjectURL(mp4);
-  const link=$('downloadLink');link.href=url;link.style.display='block';link.textContent='⬇ MP4 डाउनलोड / सेव करें';
-  link.download='professional-video-studio.mp4';$('progress').value=100;
-  status('MP4 तैयार है। डाउनलोड लिंक पर टैप करें। यदि Android पूछे तो Download चुनें।');
- }catch(e){status('Export में समस्या: '+e.message+'\nकम अवधि/कम resolution की कोशिश करें, Chrome में HTTPS पर चलाएँ और फोन में खाली स्टोरेज रखें।');}
- finally{if(stream)stream.getTracks().forEach(t=>t.stop());$('exportBtn').disabled=false;drawFrame(0)}
-}
-$('exportBtn').onclick=exportMP4;
-setRatio();drawFrame(0);
-</script>
-</body>
-</html>
+<option value="2500000">Standard Quality</option>  
+<option value="5000000" selected>High Quality</option>  
+<option value="8000000">Very High Quality</option>  
+</select>  
+</label>  <div class="row" style="justify-content:center;margin-top:12px">  
+<button class="success" id="exportBtn" onclick="exportVideo()">🎬 EXPORT VIDEO</button>  
+<button class="secondary" id="downloadBtn" disabled onclick="downloadVideo()">⬇ DOWNLOAD VIDEO</button>  
+</div>  <div class="progress-track">  
+<div id="progressBar"></div>  
+</div>  
+<p id="exportPercent">0%</p>  
+<p id="exportStatus" class="status">Ready for Export</p>  
+</div>  
+</div>  </div>  <footer>Professional Video Studio V5.0 | Cinematic Photo Video Editor</footer>  <script>  
+  
+// ========================================  
+// 01. GLOBAL VARIABLES  
+// ========================================  
+  
+const canvas=document.getElementById("canvas");  
+const ctx=canvas.getContext("2d");  
+const audio=document.getElementById("audioPlayer");  
+  
+let photos=[];  
+let currentIndex=0;  
+  
+let previewPlaying=false;  
+let previewRAF=null;  
+let previewStart=0;  
+let previewPosition=0;  
+  
+let audioURL=null;  
+let videoBlob=null;  
+let videoURL=null;  
+let recorder=null;  
+let canvasStream=null;  
+let audioStream=null;  
+let audioContext=null;  
+let audioSource=null;  
+let audioDestination=null;  
+let exportTimer=null;  
+let exporting=false;  
+let exportStart=0;  
+let dragIndex=null;  
+  
+let narrationWords=[];  
+let narrationLines=[];  
+let activeWord=0;  
+let speechUtterance=null;  
+  
+// ========================================  
+// 02. TIME FUNCTIONS  
+// ========================================  
+  
+function formatTime(t){  
+ t=Math.floor(Math.max(0,t||0));  
+ return String(Math.floor(t/60)).padStart(2,"0")+":"+  
+ String(t%60).padStart(2,"0");  
+}  
+  
+function totalDuration(){  
+ return photos.reduce((s,p)=>s+p.duration,0);  
+}  
+  
+function getStartTime(index){  
+ let t=0;  
+ for(let i=0;i<index;i++)t+=photos[i].duration;  
+ return t;  
+}  
+  
+function getMode(){  
+ return document.querySelector(  
+ 'input[name="soundMode"]:checked'  
+ ).value;  
+}  
+  
+function updateTime(){  
+ document.getElementById("timeInfo").textContent=  
+ formatTime(previewPosition)+" / "+formatTime(totalDuration());  
+}  
+  
+// ========================================  
+// 03. CANVAS RATIO  
+// ========================================  
+  
+function setRatio(){  
+  
+ const r=document.getElementById("ratio").value;  
+  
+ if(r==="16:9"){  
+  canvas.width=1280;canvas.height=720;  
+ }else if(r==="9:16"){  
+  canvas.width=720;canvas.height=1280;  
+ }else{  
+  canvas.width=1080;canvas.height=1080;  
+ }  
+  
+ if(photos.length)renderAt(previewPosition);  
+ else clearCanvas();  
+}  
+  
+document.getElementById("ratio").addEventListener("change",setRatio);  
+  
+function clearCanvas(){  
+ ctx.fillStyle="#000";  
+ ctx.fillRect(0,0,canvas.width,canvas.height);  
+ ctx.fillStyle="#75849b";  
+ ctx.font="26px Arial";  
+ ctx.textAlign="center";  
+ ctx.fillText("UPLOAD PHOTOS TO START",canvas.width/2,canvas.height/2);  
+}  
+  
+// ========================================  
+// 04. TRANSITION CATALOG  
+// ========================================  
+  
+const TRANSITIONS={  
+  
+ "Fade & Dissolve":[  
+  ["fade","Fade"],  
+  ["fadeBlack","Fade Through Black"],  
+  ["fadeWhite","Fade Through White"],  
+  ["dissolve","Cross Dissolve"],  
+  ["fadeOut","Fade Out / In"]  
+ ],  
+  
+ "Slide & Push":[  
+  ["slideLeft","Slide Left"],  
+  ["slideRight","Slide Right"],  
+  ["slideUp","Slide Up"],  
+  ["slideDown","Slide Down"],  
+  ["pushLeft","Push Left"],  
+  ["pushRight","Push Right"]  
+ ],  
+  
+ "Zoom & Camera":[  
+  ["zoomIn","Zoom In"],  
+  ["zoomOut","Zoom Out"],  
+  ["zoomDynamic","Dynamic Zoom"],  
+  ["zoomThrough","Zoom Through"],  
+  ["zoomBlur","Zoom Blur"],  
+  ["cameraPush","Camera Push In"],  
+  ["cameraPull","Camera Pull Out"],  
+  ["cameraPan","Camera Pan"],  
+  ["cameraSweep","Camera Sweep"]  
+ ],  
+  
+ "Drone & Helicopter":[  
+  ["droneRise","Drone Rise – Ground to Sky"],  
+  ["droneDescend","Drone Descend – Sky to City"],  
+  ["droneFlyover","Drone Flyover"],  
+  ["dronePush","Drone Push In"],  
+  ["dronePull","Drone Pull Out"],  
+  ["droneOrbit","Drone Orbit"],  
+  ["helicopterOrbit","Helicopter Orbit"],  
+  ["aerialReveal","Aerial City Reveal"],  
+  ["aerialSweep","Aerial Sweep"],  
+  ["topDown","Top Down Camera"],  
+  ["tiltUp","Camera Tilt Up"],  
+  ["tiltDown","Camera Tilt Down"]  
+ ],  
+  
+ "Wipe & Mask":[  
+  ["wipeLeft","Wipe Left"],  
+  ["wipeRight","Wipe Right"],  
+  ["wipeUp","Wipe Up"],  
+  ["wipeDown","Wipe Down"],  
+  ["circle","Circle Reveal"],  
+  ["circleClose","Circle Close"],  
+  ["radial","Radial Reveal"],  
+  ["diagonal","Diagonal Wipe"],  
+  ["clock","Clock Reveal"]  
+ ],  
+  
+ "3D Effects":[  
+  ["rotate","Rotate"],  
+  ["flipH","Flip Horizontal"],  
+  ["flipV","Flip Vertical"],  
+  ["cube","3D Cube Style"],  
+  ["page","Page Turn Style"],  
+  ["card","Card Flip Style"]  
+ ],  
+  
+ "Blur & Motion":[  
+  ["blur","Blur"],  
+  ["motionBlur","Motion Blur"],  
+  ["radialBlur","Radial Blur"],  
+  ["blurIn","Blur In"],  
+  ["blurOut","Blur Out"]  
+ ],  
+  
+ "Creative Effects":[  
+  ["flash","White Flash"],  
+  ["blackFlash","Black Flash"],  
+  ["glitch","Glitch"],  
+  ["shake","Camera Shake"],  
+  ["spin","Spin Transition"],  
+  ["swirl","Swirl Style"],  
+  ["pixel","Pixel Reveal"],  
+  ["rgb","RGB Flash"]  
+ ]  
+  
+};  
+  
+// ========================================  
+// 05. UPLOAD PHOTOS  
+// ========================================  
+  
+document.getElementById("photoInput").addEventListener("change",e=>{  
+  
+ Array.from(e.target.files).forEach(file=>{  
+  
+  if(!file.type.startsWith("image/"))return;  
+  
+  const url=URL.createObjectURL(file);  
+  const img=new Image();  
+  
+  img.onload=()=>{  
+  
+   photos.push({  
+    img,  
+    url,  
+    name:file.name,  
+    duration:5,  
+    transition:"fade",  
+    transitionDuration:1,  
+    motion:"none"  
+   });  
+  
+   renderTimeline();  
+  
+   if(photos.length===1)renderAt(0);  
+  };  
+  
+  img.onerror=()=>URL.revokeObjectURL(url);  
+  img.src=url;  
+ });  
+  
+ e.target.value="";  
+});  
+  
+function clearPhotos(){  
+  
+ if(exporting)return;  
+  
+ stopPreview();  
+  
+ photos.forEach(p=>URL.revokeObjectURL(p.url));  
+  
+ photos=[];  
+ currentIndex=0;  
+ previewPosition=0;  
+  
+ renderTimeline();  
+ clearCanvas();  
+ updateTime();  
+}  
+  
+// ========================================  
+// 06. CREATE TRANSITION DROPDOWN  
+// ========================================  
+  
+function createTransitionSelect(photo,index){  
+  
+ const select=document.createElement("select");  
+  
+ Object.entries(TRANSITIONS).forEach(([group,items])=>{  
+  
+  const optgroup=document.createElement("optgroup");  
+  optgroup.label=group;  
+  
+  items.forEach(([value,label])=>{  
+  
+   const option=document.createElement("option");  
+   option.value=value;  
+   option.textContent=label;  
+  
+   optgroup.appendChild(option);  
+  });  
+  
+  select.appendChild(optgroup);  
+ });  
+  
+ select.value=photo.transition;  
+ select.disabled=exporting;  
+  
+ select.onchange=()=>{  
+  
+  photo.transition=select.value;  
+  
+  if(!previewPlaying)renderAt(previewPosition);  
+ };  
+  
+ return select;  
+}  
+  
+// ========================================  
+// 07. CREATE MOTION DROPDOWN  
+// ========================================  
+  
+function createMotionSelect(photo){  
+  
+ const select=document.createElement("select");  
+  
+ const options=[  
+  ["none","No Camera Motion"],  
+  ["kenburns","Ken Burns Slow Zoom"],  
+  ["zoomIn","Continuous Zoom In"],  
+  ["zoomOut","Continuous Zoom Out"],  
+  ["droneRise","Drone Rising Camera"],  
+  ["droneDescend","Drone Descending Camera"],  
+  ["droneFlyover","Drone Flyover"],  
+  ["droneOrbit","Drone Orbit"],  
+  ["helicopter","Helicopter Camera Orbit"],  
+  ["panLeft","Pan Left"],  
+  ["panRight","Pan Right"],  
+  ["panUp","Pan Up"],  
+  ["panDown","Pan Down"],  
+  ["aerial","Aerial City Sweep"],  
+  ["tilt","Camera Tilt"],  
+  ["handheld","Handheld Camera"],  
+  ["parallax","Parallax Style"]  
+ ];  
+  
+ options.forEach(([v,t])=>{  
+  const op=document.createElement("option");  
+  op.value=v;op.textContent=t;  
+  select.appendChild(op);  
+ });  
+  
+ select.value=photo.motion||"none";  
+ select.disabled=exporting;  
+  
+ select.onchange=()=>{  
+  photo.motion=select.value;  
+ };  
+  
+ return select;  
+}  
+  
+// ========================================  
+// 08. PHOTO TIMELINE  
+// ========================================  
+  
+function renderTimeline(){  
+  
+ const box=document.getElementById("photoTimeline");  
+ box.innerHTML="";  
+  
+ photos.forEach((photo,index)=>{  
+  
+  const card=document.createElement("div");  
+  
+  card.className="photo-card"+  
+  (index===currentIndex?" active":"");  
+  
+  card.draggable=!exporting;  
+  
+  const img=document.createElement("img");  
+  img.src=photo.url;  
+  
+  const name=document.createElement("div");  
+  name.className="filename";  
+  name.textContent=(index+1)+". "+photo.name;  
+  
+  const durationLabel=document.createElement("label");  
+  durationLabel.textContent="Photo Duration";  
+  
+  const duration=document.createElement("input");  
+  duration.type="number";  
+  duration.min=1;  
+  duration.max=600;  
+  duration.value=photo.duration;  
+  duration.disabled=exporting;  
+  
+  duration.onchange=()=>{  
+   photo.duration=Math.max(1,Math.min(600,Number(duration.value)||5));  
+   duration.value=photo.duration;  
+   updateTime();  
+  };  
+  
+  const transitionLabel=document.createElement("label");  
+  transitionLabel.textContent="Individual Transition";  
+  
+  const transition=createTransitionSelect(photo,index);  
+  
+  const transitionTimeLabel=document.createElement("label");  
+  transitionTimeLabel.textContent="Transition Duration";  
+  
+  const transitionTime=document.createElement("select");  
+  
+  [0.5,1,1.5,2,2.5,3,4,5].forEach(v=>{  
+  
+   const op=document.createElement("option");  
+   op.value=v;  
+   op.textContent=v+" Seconds";  
+  
+   transitionTime.appendChild(op);  
+  });  
+  
+  transitionTime.value=photo.transitionDuration;  
+  transitionTime.disabled=exporting;  
+  
+  transitionTime.onchange=()=>{  
+   photo.transitionDuration=Number(transitionTime.value);  
+  };  
+  
+  const motionLabel=document.createElement("label");  
+  motionLabel.textContent="Camera Motion (During Photo)";  
+  
+  const motion=createMotionSelect(photo);  
+  
+  const settings=document.createElement("div");  
+  settings.className="photo-settings";  
+  
+  settings.append(  
+   durationLabel,duration,  
+   transitionLabel,transition,  
+   transitionTimeLabel,transitionTime,  
+   motionLabel,motion  
+  );  
+  
+  const buttons=document.createElement("div");  
+  buttons.className="row";  
+  
+  const selectButton=document.createElement("button");  
+  selectButton.textContent="Preview";  
+  selectButton.className="secondary";  
+  selectButton.disabled=exporting;  
+  
+  selectButton.onclick=()=>{  
+   pausePreview();  
+   currentIndex=index;  
+   previewPosition=getStartTime(index);  
+   renderAt(previewPosition);  
+  };  
+  
+  const removeButton=document.createElement("button");  
+  removeButton.textContent="✕ Remove";  
+  removeButton.className="danger";  
+  removeButton.disabled=exporting;  
+  
+  removeButton.onclick=()=>removePhoto(index);  
+  
+  buttons.append(selectButton,removeButton);  
+  
+  card.append(img,name,settings,buttons);  
+  
+  card.addEventListener("dragstart",()=>{  
+   dragIndex=index;  
+   card.style.opacity=".4";  
+  });  
+  
+  card.addEventListener("dragend",()=>{  
+   card.style.opacity="1";  
+  });  
+  
+  card.addEventListener("dragover",e=>e.preventDefault());  
+  
+  card.addEventListener("drop",e=>{  
+  
+   e.preventDefault();  
+  
+   if(dragIndex===null || dragIndex===index)return;  
+  
+   const moved=photos.splice(dragIndex,1)[0];  
+   photos.splice(index,0,moved);  
+  
+   currentIndex=index;  
+   previewPosition=getStartTime(index);  
+   dragIndex=null;  
+  
+   renderTimeline();  
+   renderAt(previewPosition);  
+  });  
+  
+  box.appendChild(card);  
+ });  
+  
+ document.getElementById("photoCount").textContent=  
+ photos.length+" Photos | Total: "+formatTime(totalDuration());  
+  
+ if(!photos.length){  
+  box.innerHTML='<span class="small">No photos uploaded.</span>';  
+ }  
+}  
+  
+function removePhoto(index){  
+  
+ if(exporting)return;  
+  
+ pausePreview();  
+  
+ URL.revokeObjectURL(photos[index].url);  
+ photos.splice(index,1);  
+  
+ currentIndex=Math.min(currentIndex,Math.max(0,photos.length-1));  
+ previewPosition=getStartTime(currentIndex);  
+  
+ renderTimeline();  
+  
+ if(photos.length)renderAt(previewPosition);  
+ else clearCanvas();  
+  
+ updateTime();  
+}  
+  
+// ========================================  
+// 09. IMAGE DRAWING  
+// ========================================  
+  
+function imageMetrics(img,scale=1){  
+  
+ const W=canvas.width;  
+ const H=canvas.height;  
+  
+ const base=Math.max(W/img.width,H/img.height);  
+  
+ return {  
+  w:img.width*base*scale,  
+  h:img.height*base*scale  
+ };  
+}  
+  
+function drawImage(img,options={}){  
+  
+ const W=canvas.width;  
+ const H=canvas.height;  
+  
+ const scale=options.scale||1;  
+ const x=options.x||0;  
+ const y=options.y||0;  
+ const rotation=options.rotation||0;  
+ const blur=options.blur||0;  
+ const opacity=options.opacity===undefined?1:options.opacity;  
+  
+ const m=imageMetrics(img,scale);  
+  
+ ctx.save();  
+ ctx.globalAlpha=opacity;  
+ ctx.filter=blur>0?"blur("+blur+"px)":"none";  
+ ctx.translate(W/2+x,H/2+y);  
+ ctx.rotate(rotation);  
+ ctx.drawImage(img,-m.w/2,-m.h/2,m.w,m.h);  
+ ctx.restore();  
+ ctx.filter="none";  
+}  
+  
+// ========================================  
+// 10. CONTINUOUS CAMERA MOTION  
+// ========================================  
+  
+function drawMotion(img,motion,p){  
+  
+ p=Math.max(0,Math.min(1,p));  
+  
+ const W=canvas.width;  
+ const H=canvas.height;  
+  
+ let scale=1.12;  
+ let x=0,y=0,rotation=0;  
+  
+ switch(motion){  
+  
+  case "none":  
+   scale=1;  
+   break;  
+  
+  case "kenburns":  
+   scale=1.12+p*.17;  
+   x=-W*.035*p;  
+   y=-H*.02*p;  
+   break;  
+  
+  case "zoomIn":  
+   scale=1.05+p*.45;  
+   break;  
+  
+  case "zoomOut":  
+   scale=1.5-p*.4;  
+   break;  
+  
+  case "droneRise":  
+   scale=1.7-p*.55;  
+   y=H*.12*(1-p);  
+   break;  
+  
+  case "droneDescend":  
+   scale=1.12+p*.55;  
+   y=-H*.1*p;  
+   break;  
+  
+  case "droneFlyover":  
+   scale=1.65-p*.35;  
+   x=-W*.12*p;  
+   y=-H*.12*p;  
+   break;  
+  
+  case "droneOrbit":  
+  case "helicopter":  
+   scale=1.32;  
+   rotation=Math.sin(p*Math.PI*2)*.055;  
+   x=Math.sin(p*Math.PI*2)*W*.035;  
+   y=Math.cos(p*Math.PI*2)*H*.025;  
+   break;  
+  
+  case "panLeft":  
+   scale=1.3;x=W*.12*(1-2*p);  
+   break;  
+  
+  case "panRight":  
+   scale=1.3;x=-W*.12*(1-2*p);  
+   break;  
+  
+  case "panUp":  
+   scale=1.3;y=H*.12*(1-2*p);  
+   break;  
+  
+  case "panDown":  
+   scale=1.3;y=-H*.12*(1-2*p);  
+   break;  
+  
+  case "aerial":  
+   scale=1.48;  
+   x=-W*.09*p;  
+   y=-H*.05*p;  
+   rotation=Math.sin(p*Math.PI)*.025;  
+   break;  
+  
+  case "tilt":  
+   scale=1.25;  
+   rotation=Math.sin(p*Math.PI)*.04;  
+   y=-H*.06*p;  
+   break;  
+  
+  case "handheld":  
+   scale=1.18;  
+   x=Math.sin(p*35)*W*.004;  
+   y=Math.cos(p*29)*H*.004;  
+   rotation=Math.sin(p*20)*.004;  
+   break;  
+  
+  case "parallax":  
+   scale=1.35;  
+   x=Math.sin(p*Math.PI)*W*.07;  
+   y=Math.cos(p*Math.PI)*H*.035;  
+   break;  
+ }  
+  
+ drawImage(img,{scale,x,y,rotation});  
+}  
+  
+// ========================================  
+// 11. TRANSITION ENGINE  
+// ========================================  
+  
+function drawTransition(previous,next,p,type){  
+  
+ const W=canvas.width;  
+ const H=canvas.height;  
+  
+ p=Math.max(0,Math.min(1,p));  
+  
+ ctx.fillStyle="#000";  
+ ctx.fillRect(0,0,W,H);  
+  
+ const old=()=>drawImage(previous);  
+ const fresh=()=>drawImage(next);  
+  
+ switch(type){  
+  
+  case "fade":  
+  case "dissolve":  
+   drawImage(previous,{opacity:1-p});  
+   drawImage(next,{opacity:p});  
+   break;  
+  
+  case "fadeBlack":  
+   if(p<.5){  
+    drawImage(previous,{opacity:1-p*2});  
+   }else{  
+    drawImage(next,{opacity:(p-.5)*2});  
+   }  
+   break;  
+  
+  case "fadeWhite":  
+   if(p<.5){  
+    old();  
+    ctx.fillStyle="rgba(255,255,255,"+(p*2)+")";  
+    ctx.fillRect(0,0,W,H);  
+   }else{  
+    ctx.fillStyle="white";  
+    ctx.fillRect(0,0,W,H);  
+    drawImage(next,{opacity:(p-.5)*2});  
+   }  
+   break;  
+  
+  case "fadeOut":  
+   if(p<.5)drawImage(previous,{opacity:1-p*2});  
+   else drawImage(next,{opacity:(p-.5)*2});  
+   break;  
+  
+  case "slideLeft":  
+   drawImage(previous,{x:-p*W});  
+   drawImage(next,{x:(1-p)*W});  
+   break;  
+  
+  case "slideRight":  
+   drawImage(previous,{x:p*W});  
+   drawImage(next,{x:-(1-p)*W});  
+   break;  
+  
+  case "slideUp":  
+   drawImage(previous,{y:-p*H});  
+   drawImage(next,{y:(1-p)*H});  
+   break;  
+  
+  case "slideDown":  
+   drawImage(previous,{y:p*H});  
+   drawImage(next,{y:-(1-p)*H});  
+   break;  
+  
+  case "pushLeft":  
+   drawImage(previous,{x:-p*W});  
+   drawImage(next,{x:(1-p)*W});  
+   break;  
+  
+  case "pushRight":  
+   drawImage(previous,{x:p*W});  
+   drawImage(next,{x:-(1-p)*W});  
+   break;  
+  
+  case "zoomIn":  
+  case "zoomDynamic":  
+  case "zoomThrough":  
+  case "cameraPush":  
+   drawImage(previous,{opacity:1-p,scale:1+p*.35});  
+   drawImage(next,{opacity:p,scale:1.55-p*.55});  
+   break;  
+  
+  case "zoomOut":  
+  case "cameraPull":  
+   drawImage(previous,{opacity:1-p,scale:1-.3*p});  
+   drawImage(next,{opacity:p,scale:1.45-.45*p});  
+   break;  
+  
+  case "zoomBlur":  
+   drawImage(previous,{opacity:1-p,blur:p*14,scale:1+p*.25});  
+   drawImage(next,{opacity:p,blur:(1-p)*14,scale:1.3-p*.3});  
+   break;  
+  
+  case "cameraPan":  
+  case "cameraSweep":  
+   drawImage(previous,{opacity:1-p,x:-p*W*.25,scale:1.35});  
+   drawImage(next,{opacity:p,x:(1-p)*W*.25,scale:1.35});  
+   break;  
+  
+  case "droneRise":  
+  case "droneDescend":  
+  case "droneFlyover":  
+  case "dronePush":  
+  case "dronePull":  
+  case "droneOrbit":  
+  case "helicopterOrbit":  
+  case "aerialReveal":  
+  case "aerialSweep":  
+  case "topDown":  
+  case "tiltUp":  
+  case "tiltDown":  
+  
+   // Aerial cinematic camera transition  
+   drawImage(previous,{opacity:1-p,scale:1+p*.28,  
+    y:-p*H*.08,rotation:-p*.035});  
+  
+   if(type==="droneRise" || type==="aerialReveal"){  
+    drawImage(next,{opacity:p,scale:1.65-p*.65,  
+     y:H*.13*(1-p)});  
+   }else if(type==="droneDescend" || type==="topDown"){  
+    drawImage(next,{opacity:p,scale:1.08+p*.5,  
+     y:-H*.12*p});  
+   }else if(type==="droneOrbit" || type==="helicopterOrbit"){  
+    drawImage(next,{opacity:p,scale:1.4,  
+     rotation:Math.sin(p*Math.PI)*.15,  
+     x:Math.sin(p*Math.PI)*W*.06});  
+   }else{  
+    drawImage(next,{opacity:p,scale:1.55-p*.4,  
+     x:-W*.1*p,y:-H*.06*p});  
+   }  
+   break;  
+  
+  case "wipeLeft":  
+   old();  
+   ctx.save();ctx.beginPath();ctx.rect(0,0,W*p,H);ctx.clip();fresh();ctx.restore();  
+   break;  
+  
+  case "wipeRight":  
+   old();  
+   ctx.save();ctx.beginPath();ctx.rect(W*(1-p),0,W*p,H);ctx.clip();fresh();ctx.restore();  
+   break;  
+  
+  case "wipeUp":  
+   old();  
+   ctx.save();ctx.beginPath();ctx.rect(0,0,W,H*p);ctx.clip();fresh();ctx.restore();  
+   break;  
+  
+  case "wipeDown":  
+   old();  
+   ctx.save();ctx.beginPath();ctx.rect(0,H*(1-p),W,H*p);ctx.clip();fresh();ctx.restore();  
+   break;  
+  
+  case "circle":  
+  case "radial":  
+   old();  
+   ctx.save();ctx.beginPath();  
+   ctx.arc(W/2,H/2,Math.sqrt(W*W+H*H)*p/2,0,Math.PI*2);  
+   ctx.clip();fresh();ctx.restore();  
+   break;  
+  
+  case "circleClose":  
+   old();  
+   ctx.save();ctx.beginPath();  
+   ctx.arc(W/2,H/2,Math.sqrt(W*W+H*H)*(1-p)/2,0,Math.PI*2);  
+   ctx.clip();fresh();ctx.restore();  
+   break;  
+  
+  case "diagonal":  
+   old();  
+   ctx.save();ctx.beginPath();  
+   ctx.moveTo(0,0);  
+   ctx.lineTo(W*p,0);  
+   ctx.lineTo(0,H*p);  
+   ctx.closePath();ctx.clip();fresh();ctx.restore();  
+   break;  
+  
+  case "clock":  
+   old();  
+   ctx.save();ctx.beginPath();  
+   ctx.moveTo(W/2,H/2);  
+   ctx.arc(W/2,H/2,Math.sqrt(W*W+H*H),  
+   -Math.PI/2,-Math.PI/2+p*Math.PI*2);  
+   ctx.closePath();ctx.clip();fresh();ctx.restore();  
+   break;  
+  
+  case "rotate":  
+  case "spin":  
+   drawImage(previous,{opacity:1-p});  
+   drawImage(next,{opacity:p,rotation:(1-p)*Math.PI*2,scale:.5+p*.5});  
+   break;  
+  
+  case "flipH":  
+  case "flipV":  
+  case "cube":  
+  case "card":  
+   if(p<.5){  
+    drawImage(previous,{opacity:1-p*2,scale:1-Math.abs(p-.5)*.4,  
+     rotation:(type==="flipH"||type==="cube")?p*Math.PI:0});  
+   }else{  
+    drawImage(next,{opacity:(p-.5)*2,scale:.8+Math.abs(p-.5)*.4,  
+     rotation:(type==="flipV"?1:0)*(p-.5)*Math.PI});  
+   }  
+   break;  
+  
+  case "page":  
+   drawImage(previous,{opacity:1-p,scale:1-p*.1});  
+   drawImage(next,{opacity:p,scale:.7+p*.3,rotation:(1-p)*.15});  
+   break;  
+  
+  case "blur":  
+  case "blurIn":  
+  case "motionBlur":  
+  case "radialBlur":  
+   drawImage(previous,{opacity:1-p,blur:p*20});  
+   drawImage(next,{opacity:p,blur:(1-p)*20});  
+   break;  
+  
+  case "blurOut":  
+   drawImage(previous,{opacity:1-p,blur:p*18});  
+   drawImage(next,{opacity:p,blur:(1-p)*18});  
+   break;  
+  
+  case "flash":  
+  case "blackFlash":  
+   drawImage(previous,{opacity:1-p});  
+   drawImage(next,{opacity:p});  
+   ctx.fillStyle=type==="flash"?  
+    "rgba(255,255,255,"+(Math.sin(p*Math.PI)*.9)+")":  
+    "rgba(0,0,0,"+(Math.sin(p*Math.PI)*.8)+")";  
+   ctx.fillRect(0,0,W,H);  
+   break;  
+  
+  case "glitch":  
+  case "rgb":  
+   drawImage(previous,{opacity:1-p});  
+   drawImage(next,{opacity:p});  
+   ctx.save();  
+   for(let i=0;i<7;i++){  
+    const y=Math.random()*H;  
+    const h=3+Math.random()*25;  
+    ctx.globalAlpha=.4;  
+    ctx.drawImage(canvas,0,y,W,h,  
+     (Math.random()-.5)*45,y,W,h);  
+   }  
+   ctx.restore();  
+   break;  
+  
+  case "shake":  
+   drawImage(previous,{opacity:1-p,x:Math.sin(p*60)*15});  
+   drawImage(next,{opacity:p,x:Math.sin(p*60+2)*15});  
+   break;  
+  
+  case "swirl":  
+   drawImage(previous,{opacity:1-p,rotation:p*1.5});  
+   drawImage(next,{opacity:p,rotation:-(1-p)*1.5,scale:1.2-p*.2});  
+   break;  
+  
+  case "pixel":  
+   drawImage(previous,{opacity:1-p,blur:(1-p)*15});  
+   drawImage(next,{opacity:p,blur:(1-p)*15});  
+   break;  
+  
+  default:  
+   drawImage(previous,{opacity:1-p});  
+   drawImage(next,{opacity:p});  
+ }  
+}  
+  
+// ========================================  
+// 12. NARRATION  
+// ========================================  
+  
+function prepareNarration(){  
+  
+ const text=document.getElementById("narration").value.trim();  
+  
+ narrationWords=[];  
+ narrationLines=[];  
+  
+ const regex=/\S+/g;  
+ let m;  
+  
+ while((m=regex.exec(text))!==null){  
+  narrationWords.push({  
+   text:m[0],  
+   start:m.index,  
+   end:m.index+m[0].length  
+  });  
+ }  
+  
+ const size=Number(document.getElementById("textSize").value)||28;  
+ ctx.font="bold "+size+"px Arial";  
+  
+ let line=[];  
+ let width=0;  
+  
+ narrationWords.forEach((word,i)=>{  
+  
+  const ww=ctx.measureText(word.text).width;  
+  const space=ctx.measureText(" ").width;  
+  
+  if(width+ww+space>canvas.width-60 && line.length){  
+   narrationLines.push(line);  
+   line=[];  
+   width=0;  
+  }  
+  
+  word.line=narrationLines.length;  
+  line.push(i);  
+  width+=ww+space;  
+ });  
+  
+ if(line.length)narrationLines.push(line);  
+}  
+  
+function updateKaraokePreview(){  
+  
+ const box=document.getElementById("karaokePreview");  
+ box.innerHTML="";  
+  
+ if(!narrationWords.length){  
+  box.textContent="Your narration will appear here.";  
+  return;  
+ }  
+  
+ const line=narrationWords[  
+  Math.min(activeWord,narrationWords.length-1)  
+ ].line;  
+  
+ (narrationLines[line]||[]).forEach(i=>{  
+  
+  const span=document.createElement("span");  
+  span.textContent=narrationWords[i].text+" ";  
+  
+  if(i===activeWord){  
+   span.style.background=  
+    document.getElementById("highlightColor").value;  
+   span.style.color="#111";  
+   span.style.padding="3px 5px";  
+   span.style.borderRadius="4px";  
+  }  
+  
+  box.appendChild(span);  
+ });  
+}  
+  
+function drawNarration(){  
+  
+ if(getMode()!=="text")return;  
+ if(document.getElementById("hideText").checked)return;  
+ if(!narrationWords.length)return;  
+  
+ const wordIndex=Math.min(activeWord,narrationWords.length-1);  
+ const lineIndex=narrationWords[wordIndex].line;  
+ const indexes=narrationLines[lineIndex]||[];  
+  
+ const size=Math.max(14,Math.min(70,  
+ Number(document.getElementById("textSize").value)||28));  
+  
+ ctx.font="bold "+size+"px Arial";  
+ ctx.textBaseline="middle";  
+  
+ const widths=indexes.map(i=>  
+  ctx.measureText(narrationWords[i].text).width  
+ );  
+  
+ const space=ctx.measureText(" ").width;  
+ const total=widths.reduce((a,b)=>a+b,0)+  
+ space*(indexes.length-1);  
+  
+ let x=(canvas.width-total)/2;  
+  
+ const pos=document.getElementById("textPosition").value;  
+  
+ const y=pos==="top"?size+35:  
+ pos==="center"?canvas.height/2:  
+ canvas.height-size-45;  
+  
+ if(document.getElementById("showBackground").checked){  
+  ctx.fillStyle="rgba(0,0,0,.78)";  
+  ctx.fillRect(0,y-size,canvas.width,size*2);  
+ }  
+  
+ indexes.forEach((i,j)=>{  
+  
+  const w=narrationWords[i].text;  
+  const width=widths[j];  
+  
+  if(i===wordIndex){  
+   ctx.fillStyle=document.getElementById("highlightColor").value;  
+   ctx.fillRect(x-3,y-size*.65,width+6,size*1.3);  
+   ctx.fillStyle="#111";  
+  }else{  
+   ctx.fillStyle=document.getElementById("textColor").value;  
+  }  
+  
+  ctx.textAlign="left";  
+  ctx.fillText(w,x,y);  
+  x+=width+space;  
+ });  
+}  
+  
+function setActiveWord(charIndex){  
+  
+ if(!narrationWords.length)return;  
+  
+ let found=0;  
+  
+ narrationWords.forEach((w,i)=>{  
+  if(charIndex>=w.start)found=i;  
+ });  
+  
+ activeWord=found;  
+ updateKaraokePreview();  
+}  
+  
+// ========================================  
+// 13. RENDER ENGINE  
+// ========================================  
+  
+function renderAt(time){  
+  
+ if(!photos.length)return;  
+  
+ time=Math.max(0,Math.min(time,totalDuration()));  
+  
+ let index=photos.length-1;  
+ let start=0;  
+  
+ for(let i=0;i<photos.length;i++){  
+  
+  if(time<start+photos[i].duration){  
+   index=i;  
+   break;  
+  }  
+  
+  start+=photos[i].duration;  
+ }  
+  
+ const photo=photos[index];  
+ const local=time-start;  
+ const p=photo.duration?local/photo.duration:0;  
+  
+ const t=photo.transitionDuration;  
+ const motionProgress=p;  
+  
+ if(index>0 && local<t && t>0){  
+  
+  const previous=photos[index-1];  
+  
+  drawTransition(  
+   previous.img,  
+   photo.img,  
+   local/t,  
+   photo.transition  
+  );  
+  
+ }else{  
+  
+  drawMotion(  
+   photo.img,  
+   photo.motion||"none",  
+   motionProgress  
+  );  
+ }  
+  
+ currentIndex=index;  
+  
+ drawNarration();  
+  
+ document.getElementById("photoInfo").textContent=  
+ "Photo "+(index+1)+" / "+photos.length;  
+  
+ document.getElementById("seek").value=  
+ time/totalDuration()*100;  
+  
+ previewPosition=time;  
+  
+ updateTime();  
+}  
+  
+// ========================================  
+// 14. PLAYBACK  
+// ========================================  
+  
+function playPreview(){  
+  
+ if(exporting)return;  
+  
+ if(!photos.length){  
+  alert("पहले Photos Upload करें।");  
+  return;  
+ }  
+  
+ if(previewPlaying)return;  
+  
+ if(previewPosition>=totalDuration())previewPosition=0;  
+  
+ previewPlaying=true;  
+ previewStart=performance.now()-previewPosition*1000;  
+  
+ if(getMode()==="audio" && audio.src){  
+  audio.loop=document.getElementById("loopAudio").checked;  
+  audio.volume=Number(document.getElementById("volume").value)/100;  
+  audio.currentTime=0;  
+  audio.play().catch(()=>{});  
+ }  
+  
+ if(getMode()==="text")listenText();  
+  
+ document.getElementById("previewStatus").textContent="Preview Playing";  
+  
+ previewLoop();  
+}  
+  
+function previewLoop(){  
+  
+ if(!previewPlaying)return;  
+  
+ const time=(performance.now()-previewStart)/1000;  
+  
+ if(time>=totalDuration()){  
+  finishPreview();  
+  return;  
+ }  
+  
+ renderAt(time);  
+  
+ previewRAF=requestAnimationFrame(previewLoop);  
+}  
+  
+function pausePreview(){  
+  
+ if(!previewPlaying)return;  
+  
+ previewPlaying=false;  
+ cancelAnimationFrame(previewRAF);  
+  
+ previewPosition=Math.min(  
+  totalDuration(),(performance.now()-previewStart)/1000  
+ );  
+  
+ audio.pause();  
+ stopVoice();  
+  
+ document.getElementById("previewStatus").textContent="Preview Paused";  
+}  
+  
+function stopPreview(){  
+  
+ previewPlaying=false;  
+ cancelAnimationFrame(previewRAF);  
+  
+ audio.pause();  
+ stopVoice();  
+  
+ previewPosition=0;  
+ currentIndex=0;  
+ activeWord=0;  
+  
+ if(photos.length)renderAt(0);  
+ else clearCanvas();  
+  
+ document.getElementById("previewStatus").textContent="Preview Stopped";  
+}  
+  
+function finishPreview(){  
+  
+ previewPlaying=false;  
+ cancelAnimationFrame(previewRAF);  
+  
+ audio.pause();  
+ stopVoice();  
+  
+ previewPosition=0;  
+  
+ renderAt(Math.max(0,totalDuration()-.01));  
+  
+ document.getElementById("previewStatus").textContent="Preview Completed";  
+}  
+  
+function previousPhoto(){  
+  
+ if(!photos.length)return;  
+  
+ pausePreview();  
+  
+ currentIndex=Math.max(0,currentIndex-1);  
+ previewPosition=getStartTime(currentIndex);  
+  
+ renderAt(previewPosition);  
+}  
+  
+function nextPhoto(){  
+  
+ if(!photos.length)return;  
+  
+ pausePreview();  
+  
+ currentIndex=Math.min(photos.length-1,currentIndex+1);  
+ previewPosition=getStartTime(currentIndex);  
+  
+ renderAt(previewPosition);  
+}  
+  
+document.getElementById("seek").addEventListener("input",e=>{  
+  
+ if(!photos.length || exporting)return;  
+  
+ pausePreview();  
+  
+ previewPosition=Number(e.target.value)/100*totalDuration();  
+  
+ renderAt(previewPosition);  
+});  
+  
+// ========================================  
+// 15. SPEECH SYNTHESIS  
+// ========================================  
+  
+function loadVoices(){  
+  
+ if(!window.speechSynthesis)return;  
+  
+ const select=document.getElementById("voiceSelect");  
+ const voices=speechSynthesis.getVoices();  
+  
+ const old=select.value;  
+  
+ select.innerHTML='<option value="">Default Hindi Voice</option>';  
+  
+ voices.forEach((v,i)=>{  
+  
+  const op=document.createElement("option");  
+  op.value=i;  
+  op.textContent=v.name+" ("+v.lang+")";  
+  
+  select.appendChild(op);  
+ });  
+  
+ select.value=old;  
+}  
+  
+if(window.speechSynthesis){  
+ loadVoices();  
+ speechSynthesis.onvoiceschanged=loadVoices;  
+}  
+  
+function listenText(){  
+  
+ const text=document.getElementById("narration").value.trim();  
+  
+ if(!text){  
+  alert("Narration Text लिखें।");  
+  return;  
+ }  
+  
+ if(!window.speechSynthesis)return;  
+  
+ stopVoice();  
+ prepareNarration();  
+  
+ activeWord=0;  
+ updateKaraokePreview();  
+  
+ speechUtterance=new SpeechSynthesisUtterance(text);  
+  
+ speechUtterance.lang="hi-IN";  
+ speechUtterance.rate=Number(document.getElementById("voiceSpeed").value);  
+  
+ const v=document.getElementById("voiceSelect").value;  
+  
+ if(v!==""){  
+  const voices=speechSynthesis.getVoices();  
+  if(voices[Number(v)])speechUtterance.voice=voices[Number(v)];  
+ }  
+  
+ speechUtterance.onboundary=e=>{  
+  setActiveWord(e.charIndex);  
+  
+  if(photos.length && !exporting)renderAt(previewPosition);  
+ };  
+  
+ speechUtterance.onend=()=>{  
+  document.getElementById("voiceStatus").textContent="Narration Completed";  
+ };  
+  
+ speechUtterance.onerror=e=>{  
+  document.getElementById("voiceStatus").textContent="Voice Error: "+e.error;  
+ };  
+  
+ document.getElementById("voiceStatus").textContent="Narration Playing...";  
+ speechSynthesis.speak(speechUtterance);  
+}  
+  
+function stopVoice(){  
+ if(window.speechSynthesis)speechSynthesis.cancel();  
+}  
+  
+[  
+ "narration","textSize","textColor","highlightColor",  
+ "textPosition","hideText","showBackground"  
+].forEach(id=>{  
+ document.getElementById(id).addEventListener("input",()=>{  
+  prepareNarration();  
+  updateKaraokePreview();  
+  if(photos.length && !previewPlaying)renderAt(previewPosition);  
+ });  
+});  
+  
+// ========================================  
+// 16. AUDIO UPLOAD  
+// ========================================  
+  
+document.getElementById("audioInput").addEventListener("change",e=>{  
+  
+ const file=e.target.files[0];  
+ if(!file || exporting)return;  
+  
+ removeAudio();  
+  
+ audioURL=URL.createObjectURL(file);  
+ audio.src=audioURL;  
+  
+ document.getElementById("audioTimeline").textContent="🎵 "+file.name;  
+  
+ audio.onloadedmetadata=()=>{  
+  document.getElementById("audioDuration").textContent=  
+  "Audio Duration: "+formatTime(audio.duration);  
+ };  
+  
+ e.target.value="";  
+});  
+  
+function removeAudio(){  
+  
+ audio.pause();  
+  
+ if(audioURL){  
+  URL.revokeObjectURL(audioURL);  
+  audioURL=null;  
+ }  
+  
+ audio.removeAttribute("src");  
+ audio.load();  
+  
+ document.getElementById("audioTimeline").textContent="No audio selected";  
+ document.getElementById("audioDuration").textContent="Audio Duration: --";  
+}  
+  
+document.getElementById("volume").addEventListener("input",e=>{  
+ audio.volume=Number(e.target.value)/100;  
+});  
+  
+// ========================================  
+// 17. AUDIO CAPTURE  
+// ========================================  
+  
+async function prepareAudioCapture(){  
+  
+ if(!audio.src)return null;  
+  
+ const AC=window.AudioContext||window.webkitAudioContext;  
+  
+ if(!AC)throw new Error("Web Audio API not supported");  
+  
+ if(!audioContext){  
+  
+  audioContext=new AC();  
+  
+  audioSource=audioContext.createMediaElementSource(audio);  
+  audioDestination=audioContext.createMediaStreamDestination();  
+  
+  audioSource.connect(audioContext.destination);  
+  audioSource.connect(audioDestination);  
+ }  
+  
+ await audioContext.resume();  
+  
+ return audioDestination.stream;  
+}  
+  
+// ========================================  
+// 18. EXPORT PROGRESS  
+// ========================================  
+  
+function updateProgress(p){  
+  
+ p=Math.max(0,Math.min(100,p));  
+  
+ document.getElementById("progressBar").style.width=p+"%";  
+ document.getElementById("exportPercent").textContent=Math.floor(p)+"%";  
+}  
+  
+function setExportStatus(t){  
+ document.getElementById("exportStatus").textContent=t;  
+}  
+  
+// ========================================  
+// 19. EXPORT VIDEO  
+// ========================================  
+  
+async function exportVideo(){  
+  
+ if(exporting)return;  
+  
+ if(!photos.length){  
+  alert("पहले Photos Upload करें।");  
+  return;  
+ }  
+  
+ if(!window.MediaRecorder || !canvas.captureStream){  
+  alert("यह Browser Video Recording Support नहीं करता।");  
+  return;  
+ }  
+  
+ const mode=getMode();  
+  
+ if(mode==="audio" && !audio.src){  
+  alert("पहले Audio Upload करें।");  
+  return;  
+ }  
+  
+ pausePreview();  
+ stopPreview();  
+  
+ if(mode==="text")prepareNarration();  
+  
+ exporting=true;  
+  
+ const btn=document.getElementById("exportBtn");  
+ btn.disabled=true;  
+ document.getElementById("downloadBtn").disabled=true;  
+  
+ renderTimeline();  
+ setRatio();  
+  
+ const chunks=[];  
+ const duration=totalDuration();  
+  
+ try{  
+  
+  canvasStream=canvas.captureStream(30);  
+  
+  let tracks=[...canvasStream.getVideoTracks()];  
+  
+  if(mode==="audio"){  
+  
+   audioStream=await prepareAudioCapture();  
+  
+   if(audioStream){  
+    tracks.push(...audioStream.getAudioTracks());  
+   }  
+  }  
+  
+  const stream=new MediaStream(tracks);  
+  
+  const formats=[  
+   "video/webm;codecs=vp9,opus",  
+   "video/webm;codecs=vp8,opus",  
+   "video/webm"  
+  ];  
+  
+  let mime="";  
+  
+  for(const f of formats){  
+   if(MediaRecorder.isTypeSupported(f)){  
+    mime=f;break;  
+   }  
+  }  
+  
+  if(!mime)throw new Error("WebM format unavailable");  
+  
+  recorder=new MediaRecorder(stream,{  
+   mimeType:mime,  
+   videoBitsPerSecond:Number(document.getElementById("quality").value)  
+  });  
+  
+  recorder.ondataavailable=e=>{  
+   if(e.data && e.data.size)chunks.push(e.data);  
+  };  
+  
+  recorder.onstop=()=>{  
+  
+   clearInterval(exportTimer);  
+   exportTimer=null;  
+  
+   videoBlob=new Blob(chunks,{type:recorder.mimeType});  
+  
+   if(videoURL)URL.revokeObjectURL(videoURL);  
+  
+   videoURL=URL.createObjectURL(videoBlob);  
+  
+   if(canvasStream)canvasStream.getTracks().forEach(t=>t.stop());  
+   if(audioStream)audioStream.getTracks().forEach(t=>t.stop());  
+  
+   audio.pause();  
+  
+   exporting=false;  
+   btn.disabled=false;  
+  
+   renderTimeline();  
+  
+   if(videoBlob.size>0){  
+  
+    document.getElementById("downloadBtn").disabled=false;  
+    updateProgress(100);  
+  
+    setExportStatus(  
+     "Video Created Successfully! "+  
+     (videoBlob.size/1048576).toFixed(2)+" MB | WEBM"  
+    );  
+  
+   }else{  
+    setExportStatus("Empty video file");  
+   }  
+  
+   previewPosition=0;  
+   renderAt(0);  
+  };  
+  
+  recorder.onerror=e=>{  
+   setExportStatus("Recording Error");  
+   cleanupExport();  
+  };  
+  
+  if(mode==="audio"){  
+  
+   audio.pause();  
+   audio.currentTime=0;  
+   audio.loop=document.getElementById("loopAudio").checked;  
+   audio.volume=Number(document.getElementById("volume").value)/100;  
+  }  
+  
+  activeWord=0;  
+  renderAt(0);  
+  
+  recorder.start(1000);  
+  
+  if(mode==="audio"){  
+   try{await audio.play();}catch(e){console.warn(e);}  
+  }  
+  
+  exportStart=performance.now();  
+  
+  setExportStatus("Recording Video...");  
+  
+  exportTimer=setInterval(()=>{  
+  
+   if(!exporting || recorder.state!=="recording")return;  
+  
+   const elapsed=(performance.now()-exportStart)/1000;  
+  
+   if(elapsed>=duration){  
+  
+    renderAt(Math.max(0,duration-.01));  
+  
+    updateProgress(100);  
+    setExportStatus("Finalizing Video...");  
+  
+    clearInterval(exportTimer);  
+    exportTimer=null;  
+  
+    audio.pause();  
+  
+    setTimeout(()=>{  
+     if(recorder.state==="recording")recorder.stop();  
+    },700);  
+  
+    return;  
+   }  
+  
+   // Update active word approximately for export  
+   if(mode==="text" && narrationWords.length){  
+  
+    activeWord=Math.min(  
+     narrationWords.length-1,  
+     Math.floor(elapsed/duration*narrationWords.length)  
+    );  
+   }  
+  
+   renderAt(elapsed);  
+  
+   updateProgress(elapsed/duration*100);  
+  
+   setExportStatus(  
+    "Recording Video... "+Math.floor(elapsed/duration*100)+"%"  
+   );  
+  
+  },33);  
+  
+ }catch(error){  
+  
+  console.error(error);  
+  
+  cleanupExport();  
+  
+  setExportStatus("Export Failed: "+error.message);  
+  alert(error.message);  
+ }  
+}  
+  
+// ========================================  
+// 20. CLEANUP  
+// ========================================  
+  
+function cleanupExport(){  
+  
+ if(exportTimer){  
+  clearInterval(exportTimer);  
+  exportTimer=null;  
+ }  
+  
+ exporting=false;  
+  
+ if(recorder && recorder.state==="recording"){  
+  recorder.stop();  
+ }  
+  
+ if(canvasStream)canvasStream.getTracks().forEach(t=>t.stop());  
+ if(audioStream)audioStream.getTracks().forEach(t=>t.stop());  
+  
+ audio.pause();  
+  
+ document.getElementById("exportBtn").disabled=false;  
+  
+ renderTimeline();  
+}  
+  
+// ========================================  
+// 21. DOWNLOAD VIDEO  
+// ========================================  
+  
+function downloadVideo(){  
+  
+ if(!videoBlob || !videoURL || !videoBlob.size){  
+  alert("पहले Video Export पूरा होने दें।");  
+  return;  
+ }  
+  
+ const a=document.createElement("a");  
+  
+ a.href=videoURL;  
+ a.download="Professional_Video_Studio_V5.webm";  
+  
+ document.body.appendChild(a);  
+ a.click();  
+ a.remove();  
+}  
+  
+// ========================================  
+// 22. INITIALIZE  
+// ========================================  
+  
+clearCanvas();  
+renderTimeline();  
+prepareNarration();  
+updateKaraokePreview();  
+updateTime();  
+updateProgress(0);  
+  
+</script>  </body>  
+</html>  
