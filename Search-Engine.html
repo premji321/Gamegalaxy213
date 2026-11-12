@@ -1,1251 +1,453 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AI Singing Studio</title>
+<title>Photo Motion Studio</title>
 
 <style>
-:root {
-    --bg: #080b18;
-    --panel: #12182b;
-    --panel2: #1a2340;
-    --primary: #a855f7;
-    --secondary: #06b6d4;
-    --text: #f8fafc;
-    --muted: #a5b4d0;
-    --border: rgba(255,255,255,.1);
+*{box-sizing:border-box}
+body{
+ margin:0;background:#10131c;color:white;
+ font-family:Arial,sans-serif;
 }
-
-* {
-    box-sizing: border-box;
+header{
+ padding:16px;text-align:center;
+ background:#191f2d;
+ border-bottom:1px solid #30394b;
 }
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: var(--text);
-    background:
-        radial-gradient(circle at top left, #242052, transparent 40%),
-        radial-gradient(circle at bottom right, #073749, transparent 40%),
-        var(--bg);
-    min-height: 100vh;
+header h2{margin:0;color:#54c8ff}
+header p{font-size:12px;color:#aebbd0}
+.container{max-width:850px;margin:auto;padding:12px}
+.panel{
+ background:#1a2130;padding:14px;
+ border-radius:12px;margin-bottom:12px;
 }
-
-button, select, textarea, input {
-    font: inherit;
+label{display:block;margin:12px 0 6px;font-size:14px}
+input,select,button{
+ width:100%;padding:11px;
+ border-radius:7px;border:none;
+ font-size:14px;
 }
-
-button {
-    cursor: pointer;
+input,select{
+ background:#30394b;color:white;
 }
-
-.app {
-    max-width: 1150px;
-    margin: auto;
-    padding: 22px;
+button{
+ background:#168bd1;color:white;
+ font-weight:bold;margin-top:8px;
+ cursor:pointer;
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
+button.secondary{background:#39465c}
+button.green{background:#159b70}
+button.red{background:#c54242}
+.preview{
+ background:#080b11;border-radius:10px;
+ overflow:hidden;text-align:center;
 }
-
-.logo {
-    font-size: 25px;
-    font-weight: 800;
-    background: linear-gradient(90deg, #c084fc, #22d3ee);
-    -webkit-background-clip: text;
-    color: transparent;
+canvas{
+ display:block;width:100%;height:auto;
+ max-height:65vh;
+ object-fit:contain;
 }
-
-.badge {
-    background: #152a37;
-    color: #67e8f9;
-    border: 1px solid #155e75;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 12px;
+.controls{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
 }
-
-.hero {
-    text-align: center;
-    padding: 28px 15px 35px;
-}
-
-.hero h1 {
-    font-size: clamp(30px, 6vw, 52px);
-    margin: 0 0 12px;
-}
-
-.hero h1 span {
-    color: #c084fc;
-}
-
-.hero p {
-    color: var(--muted);
-    line-height: 1.7;
-}
-
-.layout {
-    display: grid;
-    grid-template-columns: 1.2fr .8fr;
-    gap: 20px;
-}
-
-.card {
-    background: rgba(18,24,43,.92);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 22px;
-    margin-bottom: 20px;
-    box-shadow: 0 15px 45px rgba(0,0,0,.16);
-}
-
-.card h2 {
-    font-size: 19px;
-    margin: 0 0 18px;
-}
-
-label {
-    display: block;
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 8px;
-}
-
-textarea, select {
-    width: 100%;
-    color: white;
-    background: #0b1021;
-    border: 1px solid #303b59;
-    border-radius: 12px;
-    padding: 13px;
-    outline: none;
-}
-
-textarea:focus, select:focus {
-    border-color: var(--primary);
-}
-
-textarea {
-    resize: vertical;
-    min-height: 240px;
-    line-height: 1.8;
-}
-
-select {
-    min-height: 45px;
-}
-
-option {
-    background: #12182b;
-}
-
-.field {
-    margin-bottom: 18px;
-}
-
-.row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-
-input[type="range"] {
-    width: 100%;
-    accent-color: #c084fc;
-}
-
-.range-head {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 8px;
-    font-size: 13px;
-}
-
-.range-head span:last-child {
-    color: #c084fc;
-}
-
-.btn {
-    border: none;
-    border-radius: 12px;
-    padding: 13px 17px;
-    font-weight: 700;
-    transition: .2s;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
-}
-
-.primary {
-    background: linear-gradient(110deg, #9333ea, #6366f1);
-    color: white;
-}
-
-.secondary {
-    background: #20304f;
-    color: white;
-    border: 1px solid #384b70;
-}
-
-.record {
-    background: linear-gradient(110deg, #e11d48, #be123c);
-    color: white;
-}
-
-.full {
-    width: 100%;
-}
-
-.button-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.status {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #0b1021;
-    padding: 13px;
-    border-radius: 12px;
-    color: var(--muted);
-    font-size: 13px;
-    margin-top: 15px;
-}
-
-.dot {
-    width: 9px;
-    height: 9px;
-    background: #64748b;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.dot.active {
-    background: #4ade80;
-    box-shadow: 0 0 12px #4ade80;
-}
-
-.visualizer {
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    background: #0b1021;
-    border-radius: 14px;
-    overflow: hidden;
-    margin: 15px 0;
-}
-
-.bar {
-    width: 5px;
-    height: 8px;
-    border-radius: 5px;
-    background: linear-gradient(to top, #6366f1, #22d3ee, #c084fc);
-    transition: height .15s;
-}
-
-.recording-indicator {
-    color: #fb7185;
-    font-size: 13px;
-    display: none;
-    margin-top: 10px;
-}
-
-.recording-indicator.show {
-    display: block;
-}
-
-audio {
-    width: 100%;
-    margin-top: 15px;
-}
-
-.note {
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.7;
-    margin-top: 14px;
-}
-
-footer {
-    text-align: center;
-    color: #7c8aa8;
-    padding: 20px 0;
-    font-size: 12px;
-}
-
-@media(max-width: 760px) {
-    .layout {
-        grid-template-columns: 1fr;
-    }
-
-    .app {
-        padding: 14px;
-    }
-
-    .card {
-        padding: 17px;
-    }
-
-    .hero {
-        padding-top: 15px;
-    }
-}
-
-@media(max-width: 380px) {
-    .row {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-}
+.range-value{color:#54c8ff;font-size:12px}
+small{color:#aab4c5}
+.status{font-size:13px;color:#66d9a2}
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
 <header>
-    <div class="logo">♫ AI SINGING STUDIO</div>
-    <div class="badge">MUSIC CREATION STUDIO</div>
+<h2>🎬 PHOTO MOTION STUDIO</h2>
+<p>Upload Photo • Animate Character • Export Video</p>
 </header>
 
-<section class="hero">
-    <h1>Your Lyrics. <span>Your Music.</span></h1>
-    <p>
-        Write your lyrics, choose a voice, create a musical background
-        and enjoy your performance.
-    </p>
-</section>
+<div class="container">
 
-<div class="layout">
-
-<!-- LEFT COLUMN -->
-
-<div>
-
-    <section class="card">
-        <h2>🎤 Your Song Lyrics</h2>
-
-        <div class="field">
-            <label for="lyrics">Enter your song lyrics</label>
-
-            <textarea id="lyrics"
-                placeholder="Write your song here...
-
-Example:
-
-Dil ki dhadkan keh rahi hai,
-Nayi subah ab aa rahi hai,
-Sapno ko pankh lagane do,
-Manzil ko paas bulane do..."></textarea>
-        </div>
-
-        <div class="row">
-            <button class="btn secondary" id="sampleBtn">
-                ✨ Load Sample
-            </button>
-
-            <button class="btn secondary" id="clearBtn">
-                🗑 Clear Lyrics
-            </button>
-        </div>
-
-        <div class="status">
-            <span class="dot"></span>
-            <span id="wordCount">0 words · 0 characters</span>
-        </div>
-    </section>
-
-    <section class="card">
-        <h2>🎚 Voice & Rhythm Settings</h2>
-
-        <div class="field">
-            <label for="voiceSelect">Choose Available Voice</label>
-            <select id="voiceSelect">
-                <option value="">Loading available voices...</option>
-            </select>
-        </div>
-
-        <div class="field">
-            <label for="styleSelect">Performance Style</label>
-            <select id="styleSelect">
-                <option value="normal">Natural Voice</option>
-                <option value="soft">Soft & Gentle</option>
-                <option value="dramatic">Dramatic</option>
-                <option value="energetic">Energetic</option>
-                <option value="slow">Slow & Emotional</option>
-            </select>
-        </div>
-
-        <div class="field">
-            <div class="range-head">
-                <label for="tempo">Speaking Tempo</label>
-                <span id="tempoValue">80%</span>
-            </div>
-
-            <input id="tempo" type="range"
-                min="50" max="150" value="80">
-        </div>
-
-        <div class="field">
-            <div class="range-head">
-                <label for="pitch">Voice Pitch</label>
-                <span id="pitchValue">1.0</span>
-            </div>
-
-            <input id="pitch" type="range"
-                min="0.5" max="2" step="0.1" value="1">
-        </div>
-
-        <div class="field">
-            <div class="range-head">
-                <label for="voiceVolume">Voice Volume</label>
-                <span id="voiceVolumeValue">100%</span>
-            </div>
-
-            <input id="voiceVolume" type="range"
-                min="0" max="100" value="100">
-        </div>
-    </section>
-
+<div class="panel">
+<h3>📷 Upload Your Photo</h3>
+<input type="file" id="upload" accept="image/*">
+<small>JPG, PNG और Transparent PNG समर्थित</small>
 </div>
 
-<!-- RIGHT COLUMN -->
-
-<div>
-
-    <section class="card">
-        <h2>🎹 Background Music</h2>
-
-        <div class="field">
-            <label for="musicSelect">Choose Music Style</label>
-
-            <select id="musicSelect">
-                <option value="piano">Soft Piano</option>
-                <option value="romantic">Romantic Melody</option>
-                <option value="flute">Flute-like Synth</option>
-                <option value="sad">Sad Atmosphere</option>
-                <option value="pop">Pop Rhythm</option>
-                <option value="electronic">Electronic Beat</option>
-                <option value="ambient">Ambient Meditation</option>
-            </select>
-        </div>
-
-        <div class="field">
-            <label for="keySelect">Musical Scale</label>
-
-            <select id="keySelect">
-                <option value="261.63">C Major</option>
-                <option value="293.66">D Major</option>
-                <option value="329.63">E Major</option>
-                <option value="349.23">F Major</option>
-                <option value="392">G Major</option>
-                <option value="440">A Minor</option>
-            </select>
-        </div>
-
-        <div class="field">
-            <div class="range-head">
-                <label for="musicVolume">Music Volume</label>
-                <span id="musicVolumeValue">25%</span>
-            </div>
-
-            <input id="musicVolume" type="range"
-                min="0" max="100" value="25">
-        </div>
-
-        <div class="field">
-            <div class="range-head">
-                <label for="beat">Music Speed</label>
-                <span id="beatValue">90 BPM</span>
-            </div>
-
-            <input id="beat" type="range"
-                min="50" max="160" value="90">
-        </div>
-
-        <div class="visualizer" id="visualizer"></div>
-
-        <div class="button-grid">
-            <button class="btn primary" id="musicStart">
-                ▶ Start Music
-            </button>
-
-            <button class="btn secondary" id="musicStop">
-                ■ Stop Music
-            </button>
-        </div>
-
-        <p class="note">
-            The background music is generated using your browser's
-            audio engine. These are synthesized musical tones,
-            not prerecorded instrumental tracks.
-        </p>
-    </section>
-
-    <section class="card">
-        <h2>🔴 Performance Studio</h2>
-
-        <button class="btn primary full" id="playBtn">
-            ▶ Play Performance
-        </button>
-
-        <div class="button-grid">
-            <button class="btn secondary" id="pauseBtn">
-                ⏸ Pause
-            </button>
-
-            <button class="btn secondary" id="resumeBtn">
-                ▶ Resume
-            </button>
-        </div>
-
-        <button class="btn secondary full"
-            style="margin-top:10px" id="stopBtn">
-            ⏹ Stop Performance
-        </button>
-
-        <div class="status">
-            <span class="dot" id="statusDot"></span>
-            <span id="statusText">Ready to start</span>
-        </div>
-
-        <div class="recording-indicator" id="recordingIndicator">
-            ● RECORDING IN PROGRESS
-        </div>
-
-        <div class="button-grid">
-            <button class="btn record" id="recordBtn">
-                ⏺ Start Recording
-            </button>
-
-            <button class="btn secondary" id="stopRecordBtn">
-                ■ Stop Recording
-            </button>
-        </div>
-
-        <div id="recordingResult"></div>
-
-        <p class="note">
-            Recording uses your microphone to capture the audible
-            performance. Allow microphone access and keep the
-            speakers audible near the microphone. Headphones may
-            prevent the music and generated voice from being captured.
-        </p>
-
-    </section>
-
-</div>
+<div class="panel preview">
+<canvas id="canvas" width="900" height="600"></canvas>
 </div>
 
-<footer>
-    AI Singing Studio · Single-file HTML prototype
-</footer>
+<div class="panel">
+<h3>🎭 Animation Effects</h3>
+
+<label>Select Animation</label>
+<select id="effect">
+<option value="walk">🚶 Walking Motion</option>
+<option value="jump">🦘 Jumping</option>
+<option value="fly">🕊 Flying Motion</option>
+<option value="swing">↔ Side Movement</option>
+<option value="zoom">🎥 Cinematic Zoom</option>
+<option value="float">☁ Floating</option>
+<option value="run">🏃 Running Motion</option>
+<option value="rotate">🔄 Rotation</option>
+</select>
+
+<label>Animation Speed <span id="speedText" class="range-value">1.0</span></label>
+<input type="range" id="speed" min="0.2" max="3" step="0.1" value="1">
+
+<label>Movement Amount <span id="amountText" class="range-value">30</span></label>
+<input type="range" id="amount" min="5" max="150" value="30">
+
+<label>Video Duration (Seconds)</label>
+<select id="duration">
+<option value="5">5 Seconds</option>
+<option value="10" selected>10 Seconds</option>
+<option value="15">15 Seconds</option>
+<option value="20">20 Seconds</option>
+</select>
+</div>
+
+<div class="panel">
+<h3>🎮 Manual Character Movement</h3>
+
+<label>Horizontal Position</label>
+<input type="range" id="horizontal" min="-300" max="300" value="0">
+
+<label>Vertical Position</label>
+<input type="range" id="vertical" min="-200" max="200" value="0">
+
+<label>Character Size</label>
+<input type="range" id="scale" min="30" max="180" value="100">
+
+<label>Rotation</label>
+<input type="range" id="rotation" min="-45" max="45" value="0">
+
+<button class="secondary" onclick="resetPosition()">Reset Position</button>
+</div>
+
+<div class="panel">
+<h3>▶ Video Controls</h3>
+
+<div class="controls">
+<button class="green" onclick="playAnimation()">▶ Play</button>
+<button class="secondary" onclick="pauseAnimation()">⏸ Pause</button>
+<button class="red" onclick="resetAnimation()">↺ Reset</button>
+<button onclick="downloadVideo()">⬇ Export Video</button>
+</div>
+
+<p class="status" id="status">Ready to animate</p>
+</div>
+
+<div class="panel">
+<h3>💡 Important</h3>
+<small>
+यह स्टूडियो Canvas आधारित 2D Photo Animation करता है।
+पात्र और बैकग्राउंड अलग-अलग न होने पर दोनों एक साथ मूव होंगे।
+अलग-अलग हाथ-पैर की वास्तविक गति के लिए Character Rigging या AI Motion तकनीक आवश्यक है।
+</small>
+</div>
 
 </div>
 
 <script>
-/* ======================================
-   1. ELEMENTS
-====================================== */
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
 
-const lyrics = document.getElementById("lyrics");
-const voiceSelect = document.getElementById("voiceSelect");
-const styleSelect = document.getElementById("styleSelect");
+const upload=document.getElementById("upload");
+const effect=document.getElementById("effect");
+const speed=document.getElementById("speed");
+const amount=document.getElementById("amount");
+const horizontal=document.getElementById("horizontal");
+const vertical=document.getElementById("vertical");
+const scale=document.getElementById("scale");
+const rotation=document.getElementById("rotation");
+const statusText=document.getElementById("status");
 
-const tempo = document.getElementById("tempo");
-const pitch = document.getElementById("pitch");
-const voiceVolume = document.getElementById("voiceVolume");
+let img=new Image();
+let imageLoaded=false;
+let playing=false;
+let recording=false;
+let startTime=0;
+let elapsed=0;
+let animationId=null;
+let recorder=null;
+let chunks=[];
+let exportStarted=false;
 
-const musicSelect = document.getElementById("musicSelect");
-const keySelect = document.getElementById("keySelect");
-const musicVolume = document.getElementById("musicVolume");
-const beat = document.getElementById("beat");
+let duration=10;
 
-const statusText = document.getElementById("statusText");
-const statusDot = document.getElementById("statusDot");
-
-const recordingIndicator =
-    document.getElementById("recordingIndicator");
-
-let voices = [];
-let isPlaying = false;
-let currentUtteranceId = 0;
-
-let audioContext = null;
-let masterGain = null;
-let musicGain = null;
-let musicTimer = null;
-let noteIndex = 0;
-
-let mediaRecorder = null;
-let recordedChunks = [];
-let micStream = null;
-
-
-/* ======================================
-   2. WORD COUNTER
-====================================== */
-
-function updateWordCount() {
-    const text = lyrics.value.trim();
-
-    const words = text
-        ? text.split(/\s+/).length
-        : 0;
-
-    document.getElementById("wordCount").textContent =
-        `${words} words · ${lyrics.value.length} characters`;
+function drawBackground(){
+ ctx.fillStyle="#111827";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
 }
 
-lyrics.addEventListener("input", updateWordCount);
+function draw(time=0){
+ drawBackground();
 
+ if(!imageLoaded){
+  ctx.fillStyle="#aabbd0";
+  ctx.textAlign="center";
+  ctx.font="28px Arial";
+  ctx.fillText("Upload Your Photo",450,290);
+  return;
+ }
 
-/* ======================================
-   3. SAMPLE SONG
-====================================== */
+ let t=time/1000;
+ let s=Number(speed.value);
+ let a=Number(amount.value);
+ let x=Number(horizontal.value);
+ let y=Number(vertical.value);
+ let z=Number(scale.value)/100;
+ let r=Number(rotation.value);
 
-document.getElementById("sampleBtn").addEventListener("click", () => {
-    lyrics.value =
-`Dil ki dhadkan keh rahi hai,
-Nayi subah ab aa rahi hai,
-Sapno ko pankh lagane do,
-Manzil ko paas bulane do.
+ let moveX=0;
+ let moveY=0;
+ let rotate=0;
+ let zoom=1;
 
-Chalte jaana, rukna nahi,
-Apne sapno se darna nahi,
-Mehnat se duniya jeetenge,
-Ek naya itihaas likhenge.`;
+ switch(effect.value){
 
-    updateWordCount();
-});
+ case "walk":
+  moveX=Math.sin(t*s*5)*a;
+  moveY=Math.abs(Math.sin(t*s*10))*a*.25;
+  rotate=Math.sin(t*s*5)*.04;
+  break;
 
-document.getElementById("clearBtn").addEventListener("click", () => {
-    lyrics.value = "";
-    updateWordCount();
-});
+ case "run":
+  moveX=Math.sin(t*s*9)*a;
+  moveY=Math.abs(Math.sin(t*s*18))*a*.5;
+  rotate=Math.sin(t*s*9)*.08;
+  break;
 
+ case "jump":
+  moveY=-Math.abs(Math.sin(t*s*2))*a*2;
+  break;
 
-/* ======================================
-   4. BROWSER VOICES
-====================================== */
+ case "fly":
+  moveX=Math.sin(t*s*2)*a;
+  moveY=-Math.sin(t*s*3)*a;
+  rotate=Math.sin(t*s*2)*.08;
+  break;
 
-function loadVoices() {
-    voices = window.speechSynthesis
-        ? speechSynthesis.getVoices()
-        : [];
+ case "swing":
+  moveX=Math.sin(t*s*3)*a;
+  rotate=Math.sin(t*s*3)*.12;
+  break;
 
-    const previousValue = voiceSelect.value;
+ case "zoom":
+  zoom=1+Math.sin(t*s)*.15;
+  break;
 
-    voiceSelect.innerHTML = "";
+ case "float":
+  moveY=Math.sin(t*s*2)*a;
+  moveX=Math.sin(t*s)*a*.3;
+  break;
 
-    if (!voices.length) {
-        const option = document.createElement("option");
-        option.textContent = "No browser voices available";
-        voiceSelect.appendChild(option);
-        return;
-    }
+ case "rotate":
+  rotate=Math.sin(t*s*2)*.35;
+  break;
+ }
 
-    voices.forEach((voice, index) => {
-        const option = document.createElement("option");
+ let fit=Math.min(
+  canvas.width/img.width,
+  canvas.height/img.height
+ );
 
-        option.value = index;
+ let w=img.width*fit*z*zoom;
+ let h=img.height*fit*z*zoom;
 
-        option.textContent =
-            `${voice.name} (${voice.lang})`;
+ ctx.save();
 
-        voiceSelect.appendChild(option);
-    });
+ ctx.translate(
+  canvas.width/2+x+moveX,
+  canvas.height/2+y+moveY
+ );
 
-    if (previousValue !== "" &&
-        voices[Number(previousValue)]) {
-        voiceSelect.value = previousValue;
-    } else {
-        const preferred = voices.findIndex(v =>
-            /^en-IN$/i.test(v.lang)
-        );
+ ctx.rotate(r*Math.PI/180+rotate);
 
-        const hindi = voices.findIndex(v =>
-            /^hi-IN$/i.test(v.lang)
-        );
+ ctx.drawImage(img,-w/2,-h/2,w,h);
 
-        const english = voices.findIndex(v =>
-            /^en/i.test(v.lang)
-        );
-
-        voiceSelect.value =
-            preferred >= 0 ? preferred :
-            hindi >= 0 ? hindi :
-            english >= 0 ? english : 0;
-    }
+ ctx.restore();
 }
 
-if ("speechSynthesis" in window) {
-    loadVoices();
+function loop(now){
+ if(!playing && !recording)return;
 
-    speechSynthesis.onvoiceschanged = loadVoices;
-} else {
-    voiceSelect.innerHTML =
-        "<option>Speech synthesis is not supported</option>";
+ if(!startTime)startTime=now-elapsed*1000;
+
+ elapsed=(now-startTime)/1000;
+
+ draw(elapsed*1000);
+
+ if(recording && elapsed>=duration){
+  stopRecording();
+  return;
+ }
+
+ if(playing || recording){
+  animationId=requestAnimationFrame(loop);
+ }
 }
 
+upload.addEventListener("change",function(e){
+ const file=e.target.files[0];
+ if(!file)return;
 
-/* ======================================
-   5. SETTINGS LABELS
-====================================== */
-
-tempo.addEventListener("input", () => {
-    document.getElementById("tempoValue").textContent =
-        tempo.value + "%";
+ const url=URL.createObjectURL(file);
+ img.onload=function(){
+  imageLoaded=true;
+  resetPosition();
+  draw();
+  URL.revokeObjectURL(url);
+  statusText.innerText="Photo uploaded successfully";
+ };
+ img.src=url;
 });
 
-pitch.addEventListener("input", () => {
-    document.getElementById("pitchValue").textContent =
-        Number(pitch.value).toFixed(1);
-});
-
-voiceVolume.addEventListener("input", () => {
-    document.getElementById("voiceVolumeValue").textContent =
-        voiceVolume.value + "%";
-});
-
-musicVolume.addEventListener("input", () => {
-    document.getElementById("musicVolumeValue").textContent =
-        musicVolume.value + "%";
-
-    if (musicGain) {
-        musicGain.gain.setTargetAtTime(
-            Number(musicVolume.value) / 100 * 0.25,
-            audioContext.currentTime,
-            0.05
-        );
-    }
-});
-
-beat.addEventListener("input", () => {
-    document.getElementById("beatValue").textContent =
-        beat.value + " BPM";
-});
-
-
-/* ======================================
-   6. STATUS
-====================================== */
-
-function setStatus(message, active = false) {
-    statusText.textContent = message;
-
-    statusDot.classList.toggle("active", active);
-}
-
-
-/* ======================================
-   7. AUDIO ENGINE
-====================================== */
-
-async function initAudio() {
-    if (!audioContext) {
-        const AudioCtx =
-            window.AudioContext || window.webkitAudioContext;
-
-        if (!AudioCtx) {
-            throw new Error("Web Audio is not supported.");
-        }
-
-        audioContext = new AudioCtx();
-
-        masterGain = audioContext.createGain();
-        masterGain.gain.value = 0.8;
-
-        musicGain = audioContext.createGain();
-
-        musicGain.gain.value =
-            Number(musicVolume.value) / 100 * 0.25;
-
-        musicGain.connect(masterGain);
-        masterGain.connect(audioContext.destination);
-    }
-
-    if (audioContext.state === "suspended") {
-        await audioContext.resume();
-    }
-}
-
-
-/* ======================================
-   8. MUSIC SYNTHESIZER
-====================================== */
-
-const scales = {
-    piano:      [0, 4, 7, 12, 7, 4],
-    romantic:   [0, 4, 7, 11, 7, 4],
-    flute:      [0, 2, 4, 7, 9, 7],
-    sad:        [0, 3, 7, 10, 7, 3],
-    pop:        [0, 4, 7, 12, 7, 4],
-    electronic: [0, 7, 12, 7, 3, 10],
-    ambient:    [0, 7, 12, 7, 5, 2]
+speed.oninput=()=>{
+ document.getElementById("speedText").innerText=speed.value;
 };
 
-function playTone(frequency, duration, type, volume) {
-    if (!audioContext || !musicGain) return;
+amount.oninput=()=>{
+ document.getElementById("amountText").innerText=amount.value;
+};
 
-    const osc = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+[
+ effect,horizontal,vertical,scale,rotation
+].forEach(el=>{
+ el.addEventListener("input",()=>{
+  if(!playing && !recording)draw(elapsed*1000);
+ });
+});
 
-    osc.type = type;
-    osc.frequency.value = frequency;
+function playAnimation(){
+ if(!imageLoaded){
+  alert("Please upload a photo first");
+  return;
+ }
 
-    gain.gain.setValueAtTime(
-        0.0001,
-        audioContext.currentTime
-    );
+ if(recording)return;
 
-    gain.gain.exponentialRampToValueAtTime(
-        Math.max(volume, 0.0002),
-        audioContext.currentTime + 0.03
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        audioContext.currentTime + duration
-    );
-
-    osc.connect(gain);
-    gain.connect(musicGain);
-
-    osc.start();
-    osc.stop(audioContext.currentTime + duration + 0.05);
+ playing=true;
+ startTime=0;
+ elapsed=0;
+ statusText.innerText="Animation Playing...";
+ cancelAnimationFrame(animationId);
+ animationId=requestAnimationFrame(loop);
 }
 
-function playBeat() {
-    if (!audioContext) return;
-
-    const style = musicSelect.value;
-    const base = Number(keySelect.value);
-    const notes = scales[style] || scales.piano;
-
-    const semitone = notes[noteIndex % notes.length];
-
-    const frequency =
-        base * Math.pow(2, semitone / 12);
-
-    const duration = 60 / Number(beat.value);
-
-    if (style === "flute") {
-        playTone(frequency, duration * 1.3, "sine", 0.15);
-
-    } else if (style === "electronic") {
-        playTone(frequency / 2, duration * 0.8, "sawtooth", 0.08);
-        playTone(base * 2, 0.09, "square", 0.06);
-
-    } else if (style === "pop") {
-        playTone(frequency, duration * 0.65, "triangle", 0.11);
-
-        if (noteIndex % 2 === 0) {
-            playTone(base / 2, 0.12, "sine", 0.13);
-        }
-
-    } else if (style === "ambient") {
-        playTone(frequency, duration * 2, "sine", 0.09);
-
-    } else if (style === "sad") {
-        playTone(frequency, duration * 1.4, "triangle", 0.12);
-
-    } else {
-        playTone(frequency, duration * 0.75, "triangle", 0.13);
-
-        if (noteIndex % 3 === 0) {
-            playTone(
-                frequency * 1.5,
-                duration * 0.8,
-                "sine",
-                0.05
-            );
-        }
-    }
-
-    noteIndex++;
-    animateBars();
+function pauseAnimation(){
+ playing=false;
+ cancelAnimationFrame(animationId);
+ draw(elapsed*1000);
+ statusText.innerText="Animation Paused";
 }
 
-async function startMusic() {
-    try {
-        await initAudio();
-
-        if (musicTimer) {
-            clearInterval(musicTimer);
-        }
-
-        noteIndex = 0;
-        playBeat();
-
-        musicTimer = setInterval(
-            playBeat,
-            60000 / Number(beat.value)
-        );
-
-        setStatus("Background music is playing", true);
-
-    } catch (error) {
-        setStatus(error.message);
-    }
+function resetAnimation(){
+ playing=false;
+ recording=false;
+ cancelAnimationFrame(animationId);
+ elapsed=0;
+ startTime=0;
+ draw(0);
+ statusText.innerText="Animation Reset";
 }
 
-function stopMusic() {
-    if (musicTimer) {
-        clearInterval(musicTimer);
-        musicTimer = null;
-    }
-
-    setStatus("Background music stopped", false);
+function resetPosition(){
+ horizontal.value=0;
+ vertical.value=0;
+ scale.value=100;
+ rotation.value=0;
+ draw(elapsed*1000);
 }
 
-document.getElementById("musicStart")
-    .addEventListener("click", startMusic);
+function downloadVideo(){
+ if(!imageLoaded){
+  alert("Upload a photo first");
+  return;
+ }
 
-document.getElementById("musicStop")
-    .addEventListener("click", stopMusic);
+ if(!canvas.captureStream || !window.MediaRecorder){
+  alert("Your browser does not support video recording. Please use updated Chrome.");
+  return;
+ }
 
+ if(recording)return;
 
-/* ======================================
-   9. VISUALIZER
-====================================== */
+ duration=Number(document.getElementById("duration").value);
+ chunks=[];
+ elapsed=0;
+ startTime=0;
+ playing=false;
+ recording=true;
+ exportStarted=false;
 
-const visualizer = document.getElementById("visualizer");
+ draw(0);
 
-for (let i = 0; i < 42; i++) {
-    const bar = document.createElement("div");
-    bar.className = "bar";
-    visualizer.appendChild(bar);
+ let stream=canvas.captureStream(30);
+
+ let mime="video/webm";
+ if(MediaRecorder.isTypeSupported("video/webm;codecs=vp9")){
+  mime="video/webm;codecs=vp9";
+ }else if(MediaRecorder.isTypeSupported("video/webm;codecs=vp8")){
+  mime="video/webm;codecs=vp8";
+ }
+
+ try{
+  recorder=new MediaRecorder(stream,{mimeType:mime});
+ }catch(err){
+  recording=false;
+  statusText.innerText="Recording could not start";
+  alert("Video recording could not start in this browser.");
+  return;
+ }
+
+ recorder.ondataavailable=function(e){
+  if(e.data.size>0)chunks.push(e.data);
+ };
+
+ recorder.onstop=function(){
+  recording=false;
+  stream.getTracks().forEach(track=>track.stop());
+
+  if(chunks.length===0){
+   statusText.innerText="No video data recorded";
+   return;
+  }
+
+  const blob=new Blob(chunks,{type:"video/webm"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+
+  a.href=url;
+  a.download="Photo-Animation.webm";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  setTimeout(()=>URL.revokeObjectURL(url),30000);
+
+  statusText.innerText="Video Downloaded Successfully!";
+  draw(elapsed*1000);
+ };
+
+ recorder.start(200);
+ exportStarted=true;
+ statusText.innerText="Recording Video... Please wait";
+
+ animationId=requestAnimationFrame(loop);
 }
 
-function animateBars() {
-    const bars = document.querySelectorAll(".bar");
-
-    bars.forEach(bar => {
-        bar.style.height =
-            (5 + Math.random() * 80) + "px";
-    });
+function stopRecording(){
+ if(recorder && recorder.state==="recording"){
+  recorder.stop();
+ }
 }
 
-
-/* ======================================
-   10. PERFORMANCE ENGINE
-====================================== */
-
-function splitLyrics(text) {
-    return text
-        .replace(/\r/g, "")
-        .split(/(?<=[.!?।,;\n])\s*/)
-        .map(line => line.trim())
-        .filter(Boolean);
-}
-
-function speakLine(line, runId) {
-    return new Promise(resolve => {
-        if (runId !== currentUtteranceId) {
-            resolve();
-            return;
-        }
-
-        const utterance = new SpeechSynthesisUtterance(line);
-
-        const voiceIndex = Number(voiceSelect.value);
-
-        if (voices[voiceIndex]) {
-            utterance.voice = voices[voiceIndex];
-            utterance.lang = voices[voiceIndex].lang;
-        }
-
-        let rate = Number(tempo.value) / 100;
-        let pitchValue = Number(pitch.value);
-
-        switch (styleSelect.value) {
-            case "soft":
-                rate *= 0.85;
-                pitchValue *= 1.05;
-                break;
-
-            case "dramatic":
-                rate *= 0.8;
-                pitchValue *= 0.9;
-                break;
-
-            case "energetic":
-                rate *= 1.15;
-                pitchValue *= 1.1;
-                break;
-
-            case "slow":
-                rate *= 0.65;
-                pitchValue *= 0.95;
-                break;
-        }
-
-        utterance.rate = Math.max(0.1, Math.min(10, rate));
-        utterance.pitch = Math.max(0, Math.min(2, pitchValue));
-
-        utterance.volume =
-            Number(voiceVolume.value) / 100;
-
-        utterance.onend = () => resolve();
-
-        utterance.onerror = event => {
-            if (event.error !== "canceled" &&
-                event.error !== "interrupted") {
-                console.warn("Speech error:", event.error);
-            }
-
-            resolve();
-        };
-
-        speechSynthesis.speak(utterance);
-    });
-}
-
-async function playPerformance() {
-    if (!("speechSynthesis" in window)) {
-        setStatus("This browser does not support speech synthesis.");
-        return;
-    }
-
-    const text = lyrics.value.trim();
-
-    if (!text) {
-        alert("Please enter your song lyrics first.");
-        lyrics.focus();
-        return;
-    }
-
-    await initAudio();
-
-    stopPerformance();
-
-    const runId = currentUtteranceId;
-
-    isPlaying = true;
-
-    setStatus("Performance in progress...", true);
-
-    const lines = splitLyrics(text);
-
-    try {
-        for (let i = 0; i < lines.length; i++) {
-            if (runId !== currentUtteranceId) return;
-
-            await speakLine(lines[i], runId);
-
-            if (runId !== currentUtteranceId) return;
-
-            // Small pause between lyric lines.
-            await new Promise(resolve =>
-                setTimeout(resolve, 300)
-            );
-        }
-
-        if (runId === currentUtteranceId) {
-            isPlaying = false;
-            setStatus("Performance completed", false);
-        }
-
-    } catch (error) {
-        isPlaying = false;
-        setStatus("Unable to play performance.");
-        console.error(error);
-    }
-}
-
-function stopPerformance() {
-    currentUtteranceId++;
-    isPlaying = false;
-
-    if ("speechSynthesis" in window) {
-        speechSynthesis.cancel();
-    }
-}
-
-document.getElementById("playBtn")
-    .addEventListener("click", playPerformance);
-
-document.getElementById("pauseBtn")
-    .addEventListener("click", () => {
-        if (speechSynthesis.speaking) {
-            speechSynthesis.pause();
-            setStatus("Performance paused");
-        }
-    });
-
-document.getElementById("resumeBtn")
-    .addEventListener("click", () => {
-        speechSynthesis.resume();
-        setStatus("Performance resumed", true);
-    });
-
-document.getElementById("stopBtn")
-    .addEventListener("click", () => {
-        stopPerformance();
-        stopMusic();
-        setStatus("Performance stopped");
-    });
-
-
-/* ======================================
-   11. MICROPHONE RECORDING
-====================================== */
-
-async function startRecording() {
-    try {
-        if (!navigator.mediaDevices ||
-            !navigator.mediaDevices.getUserMedia) {
-            throw new Error(
-                "Microphone recording requires HTTPS or localhost."
-            );
-        }
-
-        // Ask permission only after the user clicks Record.
-        micStream = await navigator.mediaDevices.getUserMedia({
-            audio: true
-        });
-
-        recordedChunks = [];
-
-        const mimeCandidates = [
-            "audio/webm;codecs=opus",
-            "audio/webm",
-            "audio/mp4"
-        ];
-
-        const supportedType = mimeCandidates.find(type =>
-            MediaRecorder.isTypeSupported(type)
-        );
-
-        mediaRecorder = supportedType
-            ? new MediaRecorder(micStream, {
-                mimeType: supportedType
-            })
-            : new MediaRecorder(micStream);
-
-        mediaRecorder.ondataavailable = event => {
-            if (event.data && event.data.size > 0) {
-                recordedChunks.push(event.data);
-            }
-        };
-
-        mediaRecorder.onstop = () => {
-            const mimeType =
-                mediaRecorder.mimeType || "audio/webm";
-
-            const blob = new Blob(recordedChunks, {
-                type: mimeType
-            });
-
-            const audioURL = URL.createObjectURL(blob);
-
-            const extension = mimeType.includes("mp4")
-                ? "mp4"
-                : "webm";
-
-            const result =
-                document.getElementById("recordingResult");
-
-            result.innerHTML = `
-                <p style="color:#86efac;font-size:14px">
-                    ✓ Recording completed
-                </p>
-
-                <audio controls></audio>
-
-                <a class="btn primary full"
-                    style="display:block;text-align:center;
-                    text-decoration:none;margin-top:12px"
-                    download="singing-performance.${extension}"
-                    href="${audioURL}">
-                    ⬇ Download Recording
-                </a>
-            `;
-
-            result.querySelector("audio").src = audioURL;
-
-            recordingIndicator.classList.remove("show");
-
-            setStatus("Recording saved. Preview or download it.");
-
-            if (micStream) {
-                micStream.getTracks().forEach(track => track.stop());
-                micStream = null;
-            }
-        };
-
-        mediaRecorder.start();
-
-        recordingIndicator.classList.add("show");
-
-        setStatus("Recording microphone audio...", true);
-
-    } catch (error) {
-        alert(
-            "Recording could not start: " + error.message +
-            "\n\nAllow microphone permission and use HTTPS or localhost."
-        );
-
-        setStatus("Recording unavailable");
-    }
-}
-
-function stopRecording() {
-    if (mediaRecorder &&
-        mediaRecorder.state !== "inactive") {
-        mediaRecorder.stop();
-        setStatus("Preparing recording...");
-    }
-}
-
-document.getElementById("recordBtn")
-    .addEventListener("click", startRecording);
-
-document.getElementById("stopRecordBtn")
-    .addEventListener("click", stopRecording);
-
-
-/* ======================================
-   12. INITIALIZATION
-====================================== */
-
-updateWordCount();
-
-document.getElementById("tempoValue").textContent =
-    tempo.value + "%";
-
-document.getElementById("pitchValue").textContent =
-    Number(pitch.value).toFixed(1);
-
-document.getElementById("voiceVolumeValue").textContent =
-    voiceVolume.value + "%";
-
-document.getElementById("musicVolumeValue").textContent =
-    musicVolume.value + "%";
-
-document.getElementById("beatValue").textContent =
-    beat.value + " BPM";
-
-setStatus("Ready to start");
-
+draw();
 </script>
 
 </body>
