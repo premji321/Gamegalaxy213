@@ -4,299 +4,340 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Text To Speech Studio</title>
+<title>Hindi AI Text To Speech Studio</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+ margin:0;background:#0b1120;color:#fff;
+ font-family:Arial,sans-serif;padding:15px
 }
-
-body {
-    margin: 0;
-    padding: 15px;
-    background: #101827;
-    color: white;
-    font-family: Arial, sans-serif;
+.app{
+ max-width:750px;margin:auto;background:#172235;
+ padding:20px;border-radius:16px;
+ border:1px solid #334155
 }
-
-.container {
-    max-width: 700px;
-    margin: auto;
-    background: #1d293b;
-    padding: 20px;
-    border-radius: 15px;
+h1{text-align:center;color:#38bdf8;font-size:25px}
+.sub{text-align:center;color:#94a3b8}
+textarea{
+ width:100%;height:190px;padding:15px;
+ background:#0b1120;color:white;
+ border:1px solid #475569;border-radius:10px;
+ font-size:17px;line-height:1.7
 }
-
-h1 {
-    text-align: center;
-    color: #38bdf8;
+label{display:block;margin-top:17px;color:#bae6fd}
+select,input[type=range]{
+ width:100%;margin-top:9px
 }
-
-textarea {
-    width: 100%;
-    height: 200px;
-    background: #101827;
-    color: white;
-    border: 1px solid #475569;
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 17px;
-    resize: vertical;
+select{
+ background:#0b1120;color:white;padding:12px;
+ border:1px solid #475569;border-radius:8px
 }
-
-label {
-    display: block;
-    margin-top: 18px;
-    margin-bottom: 7px;
-    color: #bae6fd;
+button{
+ padding:13px 16px;border:0;border-radius:8px;
+ font-weight:bold;margin:5px;cursor:pointer
 }
-
-select, input[type=range] {
-    width: 100%;
+button:disabled{opacity:.4;cursor:not-allowed}
+.controls{
+ display:flex;flex-wrap:wrap;justify-content:center;
+ margin-top:18px
 }
-
-select {
-    padding: 12px;
-    border-radius: 8px;
-    background: #101827;
-    color: white;
-    border: 1px solid #475569;
+.generate{background:#2563eb;color:white}
+.play{background:#16a34a;color:white}
+.stop{background:#dc2626;color:white}
+.download{background:#0284c7;color:white}
+.status{
+ background:#0b1120;border-radius:9px;
+ padding:14px;margin-top:18px;color:#38bdf8;
+ text-align:center;line-height:1.6
 }
-
-button {
-    border: none;
-    padding: 13px;
-    border-radius: 8px;
-    margin: 5px 2px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
+.progress{
+ width:100%;height:9px;background:#334155;
+ border-radius:10px;margin-top:12px;overflow:hidden
 }
-
-.play { background: #16a34a; color: white; }
-.pause { background: #eab308; color: black; }
-.stop { background: #dc2626; color: white; }
-.download { background: #0284c7; color: white; }
-.reset { background: #475569; color: white; }
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.status {
-    background: #101827;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 18px;
-    color: #38bdf8;
-    text-align: center;
-}
-
-.note {
-    font-size: 13px;
-    color: #cbd5e1;
-    line-height: 1.6;
-}
+.bar{height:100%;width:0;background:#38bdf8}
+.small{font-size:13px;color:#94a3b8;line-height:1.6}
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<div class="container">
+<h1>🎙 Hindi AI Voice Studio</h1>
+<p class="sub">Neural Text To Speech & MP3 Export</p>
 
-<h1>🎙 Text To Speech Studio</h1>
+<label>अपना टेक्स्ट लिखें</label>
+<textarea id="text" placeholder="यहाँ अपनी कहानी या कोई भी हिंदी टेक्स्ट लिखें..."></textarea>
 
-<p>अपना टेक्स्ट लिखें और उसे आवाज में बदलें।</p>
+<p class="small" id="count">0 Characters</p>
 
-<textarea id="text" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
-
-<label>Select Voice</label>
+<label>AI Voice Model</label>
 <select id="voice">
-<option value="">Loading Voices...</option>
+<option value="hi_IN-pratham-medium">Hindi - Pratham (Male)</option>
 </select>
 
-<label>Speech Speed: <span id="speedValue">1</span></label>
-<input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+<label>Speech Speed: <span id="speedText">1.0x</span></label>
+<input type="range" id="speed" min="0.7" max="1.5" step="0.1" value="1">
 
-<label>Pitch: <span id="pitchValue">1</span></label>
-<input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
-
-<label>Volume: <span id="volumeValue">100%</span></label>
-<input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+<label>Voice Pitch: <span id="pitchText">1.0</span></label>
+<input type="range" id="pitch" min="0.7" max="1.5" step="0.1" value="1">
 
 <div class="controls">
-<button class="play" onclick="speakText()">▶ Play</button>
-<button class="pause" onclick="pauseSpeech()">⏸ Pause</button>
-<button class="play" onclick="resumeSpeech()">▶ Resume</button>
-<button class="stop" onclick="stopSpeech()">■ Stop</button>
+<button class="generate" id="generate">⚡ Generate Voice</button>
+<button class="stop" id="stop">■ Stop</button>
 </div>
+
+<div class="status" id="status">Ready - टेक्स्ट लिखें</div>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<audio id="player" controls style="width:100%;margin-top:18px"></audio>
 
 <div class="controls">
-<button class="download" onclick="downloadMP3()">⬇ Download MP3</button>
-<button class="reset" onclick="resetAll()">Reset</button>
+<button class="play" id="play">▶ Play Audio</button>
+<button class="download" id="download" disabled>⬇ Download MP3</button>
 </div>
 
-<div class="status" id="status">
-Ready to Speak
-</div>
-
-<p class="note">
-नोट: आवाज आपके ब्राउज़र में उपलब्ध Voice Engine पर निर्भर करती है।
-MP3 बनाने के लिए ब्राउज़र की Media Recording सुविधा आवश्यक है।
+<p class="small">
+पहली बार AI Voice Model डाउनलोड होगा। इसके लिए इंटरनेट और पर्याप्त मोबाइल स्टोरेज जरूरी है।
+आवाज तैयार होने के बाद टेक्स्ट को ब्राउज़र के अंदर प्रोसेस किया जाएगा।
 </p>
 
 </div>
 
-<script>
+<script type="module">
 
-const textBox = document.getElementById("text");
-const voiceSelect = document.getElementById("voice");
-const speed = document.getElementById("speed");
-const pitch = document.getElementById("pitch");
-const volume = document.getElementById("volume");
-const statusBox = document.getElementById("status");
+import * as tts from
+"https://esm.sh/@mintplex-labs/piper-tts-web";
 
-let voices = [];
+const $ = id => document.getElementById(id);
 
-function loadVoices() {
-    voices = speechSynthesis.getVoices();
+let currentAudioURL = null;
+let currentBlob = null;
+let stopped = false;
+let isGenerating = false;
 
-    voiceSelect.innerHTML = "";
+$("text").addEventListener("input",()=>{
+ $("count").textContent =
+ $("text").value.length + " Characters";
+});
 
-    voices.forEach((voice, index) => {
-        let option = document.createElement("option");
-
-        option.value = index;
-        option.textContent =
-            voice.name + " (" + voice.lang + ")";
-
-        voiceSelect.appendChild(option);
-    });
-
-    let hindiIndex = voices.findIndex(v =>
-        v.lang.toLowerCase().startsWith("hi")
-    );
-
-    if (hindiIndex >= 0) {
-        voiceSelect.value = hindiIndex;
-    }
-}
-
-speechSynthesis.onvoiceschanged = loadVoices;
-loadVoices();
-
-speed.oninput = () => {
-    document.getElementById("speedValue").textContent = speed.value;
+$("speed").oninput = () => {
+ $("speedText").textContent = $("speed").value+"x";
 };
 
-pitch.oninput = () => {
-    document.getElementById("pitchValue").textContent = pitch.value;
+$("pitch").oninput = () => {
+ $("pitchText").textContent = $("pitch").value;
 };
 
-volume.oninput = () => {
-    document.getElementById("volumeValue").textContent =
-        Math.round(volume.value * 100) + "%";
+function status(message,progress){
+ $("status").textContent = message;
+ if(progress !== undefined){
+  $("bar").style.width = progress+"%";
+ }
+}
+
+function setBusy(value){
+ isGenerating = value;
+ $("generate").disabled = value;
+ $("download").disabled = value || !currentBlob;
+}
+
+function cleanAudio(){
+ if(currentAudioURL){
+  URL.revokeObjectURL(currentAudioURL);
+  currentAudioURL = null;
+ }
+ currentBlob = null;
+ $("player").removeAttribute("src");
+ $("download").disabled = true;
+}
+
+async function initVoices(){
+ try{
+  status("AI Voice Engine लोड हो रहा है...");
+  const result = await tts.voices();
+
+  let entries = Array.isArray(result)
+   ? result.map(v => [v.key || v.id, v])
+   : Object.entries(result || {});
+
+  const hindi = entries.filter(([id]) =>
+   String(id).toLowerCase().startsWith("hi_in")
+  );
+
+  if(hindi.length){
+   $("voice").innerHTML = "";
+   hindi.forEach(([id,info])=>{
+    let opt = document.createElement("option");
+    opt.value = id;
+    opt.textContent =
+     info.name || info.description || id;
+    $("voice").appendChild(opt);
+   });
+
+   const preferred = hindi.find(([id]) =>
+    id.includes("pratham")
+   );
+   if(preferred) $("voice").value = preferred[0];
+  }
+
+  status("Engine तैयार है। टेक्स्ट लिखें।",0);
+
+ }catch(error){
+  status("Voice list लोड नहीं हुई: "+error.message);
+ }
+}
+
+async function convertToMP3(wavBlob){
+
+ const arrayBuffer = await wavBlob.arrayBuffer();
+
+ const audioContext = new AudioContext();
+ const audioBuffer =
+  await audioContext.decodeAudioData(arrayBuffer);
+
+ const sampleRate = audioBuffer.sampleRate;
+ const channels = Math.min(audioBuffer.numberOfChannels,2);
+
+ const left = audioBuffer.getChannelData(0);
+ const right = channels > 1
+  ? audioBuffer.getChannelData(1)
+  : left;
+
+ const encoder =
+  new lamejs.Mp3Encoder(channels,sampleRate,128);
+
+ const blockSize = 1152;
+ const mp3Parts = [];
+
+ for(let i=0;i<left.length;i+=blockSize){
+
+  const length = Math.min(blockSize,left.length-i);
+
+  const l = new Int16Array(length);
+  const r = new Int16Array(length);
+
+  for(let j=0;j<length;j++){
+   l[j] = Math.max(-32768,
+    Math.min(32767,left[i+j]*32767));
+   r[j] = Math.max(-32768,
+    Math.min(32767,right[i+j]*32767));
+  }
+
+  const chunk = channels > 1
+   ? encoder.encodeBuffer(l,r)
+   : encoder.encodeBuffer(l);
+
+  if(chunk.length) mp3Parts.push(chunk);
+ }
+
+ const end = encoder.flush();
+ if(end.length) mp3Parts.push(end);
+
+ await audioContext.close();
+
+ return new Blob(mp3Parts,{type:"audio/mpeg"});
+}
+
+$("generate").onclick = async()=>{
+
+ const text = $("text").value.trim();
+
+ if(!text){
+  alert("पहले टेक्स्ट लिखें!");
+  return;
+ }
+
+ if(isGenerating) return;
+
+ stopped = false;
+ cleanAudio();
+ setBusy(true);
+
+ try{
+
+  status("AI Model डाउनलोड / लोड हो रहा है...",5);
+
+  const voiceId = $("voice").value;
+
+  const wav = await tts.predict({
+   text:text,
+   voiceId:voiceId,
+   lengthScale:1/Number($("speed").value)
+  },(progress)=>{
+   if(progress && progress.total){
+    let percent =
+     Math.round(progress.loaded*100/progress.total);
+    status("Voice Model डाउनलोड: "+percent+"%",percent);
+   }
+  });
+
+  if(stopped) return;
+
+  status("MP3 में परिवर्तित किया जा रहा है...",85);
+
+  const mp3 = await convertToMP3(wav);
+
+  if(stopped) return;
+
+  currentBlob = mp3;
+  currentAudioURL = URL.createObjectURL(mp3);
+
+  $("player").src = currentAudioURL;
+  $("download").disabled = false;
+
+  status("✅ Voice तैयार! MP3 डाउनलोड कर सकते हैं।",100);
+
+ }catch(error){
+
+  console.error(error);
+
+  status("Error: "+error.message);
+
+  alert("Audio Generate नहीं हुआ। इंटरनेट, Voice Model और Browser Console की जाँच करें।");
+
+ }finally{
+  setBusy(false);
+ }
 };
 
-function speakText() {
+$("play").onclick = ()=>{
+ if(currentAudioURL){
+  $("player").play();
+ }else{
+  alert("पहले Generate Voice करें।");
+ }
+};
 
-    let text = textBox.value.trim();
+$("stop").onclick = ()=>{
+ stopped = true;
+ $("player").pause();
+ $("player").currentTime = 0;
+ status("Generation / Playback रोक दिया गया।");
+};
 
-    if (!text) {
-        alert("पहले कुछ टेक्स्ट लिखें!");
-        return;
-    }
+$("download").onclick = ()=>{
 
-    speechSynthesis.cancel();
+ if(!currentBlob) return;
 
-    let utterance = new SpeechSynthesisUtterance(text);
+ const link = document.createElement("a");
+ link.href = currentAudioURL;
+ link.download = "Hindi_Narration.mp3";
 
-    let selectedVoice = voices[voiceSelect.value];
+ document.body.appendChild(link);
+ link.click();
+ link.remove();
 
-    if (selectedVoice) {
-        utterance.voice = selectedVoice;
-        utterance.lang = selectedVoice.lang;
-    }
+ status("MP3 डाउनलोड शुरू किया गया।",100);
+};
 
-    utterance.rate = Number(speed.value);
-    utterance.pitch = Number(pitch.value);
-    utterance.volume = Number(volume.value);
-
-    utterance.onstart = () => {
-        statusBox.textContent = "🔊 Speaking...";
-    };
-
-    utterance.onend = () => {
-        statusBox.textContent = "Speech Completed";
-    };
-
-    utterance.onerror = () => {
-        statusBox.textContent = "Speech Error";
-    };
-
-    speechSynthesis.speak(utterance);
-}
-
-function pauseSpeech() {
-    speechSynthesis.pause();
-    statusBox.textContent = "Speech Paused";
-}
-
-function resumeSpeech() {
-    speechSynthesis.resume();
-    statusBox.textContent = "Speech Resumed";
-}
-
-function stopSpeech() {
-    speechSynthesis.cancel();
-    statusBox.textContent = "Speech Stopped";
-}
-
-function resetAll() {
-    stopSpeech();
-    textBox.value = "";
-    speed.value = 1;
-    pitch.value = 1;
-    volume.value = 1;
-
-    speed.oninput();
-    pitch.oninput();
-    volume.oninput();
-}
-
-// MP3 Export
-// SpeechSynthesis का audio stream सीधे उपलब्ध नहीं होता.
-// इसलिए वास्तविक MP3 export के लिए Web Audio input चाहिए.
-
-async function downloadMP3() {
-
-    let text = textBox.value.trim();
-
-    if (!text) {
-        alert("पहले टेक्स्ट लिखें!");
-        return;
-    }
-
-    if (!window.AudioContext ||
-        !navigator.mediaDevices ||
-        !navigator.mediaDevices.getUserMedia) {
-
-        alert("आपके ब्राउज़र में जरूरी Audio Recording सुविधा उपलब्ध नहीं है।");
-        return;
-    }
-
-    alert(
-      "ध्यान दें: Chrome SpeechSynthesis का audio सीधे रिकॉर्ड नहीं कर सकता। " +
-      "यह बटन वास्तविक TTS MP3 बनाने के लिए अभी उपलब्ध नहीं है।"
-    );
-}
+initVoices();
 
 </script>
-
 </body>
 </html>
