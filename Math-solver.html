@@ -1,2463 +1,302 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#173b82">
-<title>Current Affairs Pro</title>
+<title>Text To Speech Studio</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
 
 <style>
-:root {
-    --primary:#2457d6;
-    --primary-dark:#173b82;
-    --background:#f3f6fc;
-    --surface:#fff;
-    --text:#172033;
-    --muted:#68758a;
-    --border:#dfe6f0;
-    --green:#15803d;
-    --red:#dc2626;
-    --shadow:0 5px 20px rgba(25,45,80,.07);
+* {
+    box-sizing: border-box;
 }
-
-* { box-sizing:border-box; }
 
 body {
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--background);
-    color:var(--text);
+    margin: 0;
+    padding: 15px;
+    background: #101827;
+    color: white;
+    font-family: Arial, sans-serif;
 }
 
-button,input,select,textarea { font:inherit; }
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: #1d293b;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+h1 {
+    text-align: center;
+    color: #38bdf8;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    background: #101827;
+    color: white;
+    border: 1px solid #475569;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 17px;
+    resize: vertical;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 7px;
+    color: #bae6fd;
+}
+
+select, input[type=range] {
+    width: 100%;
+}
+
+select {
+    padding: 12px;
+    border-radius: 8px;
+    background: #101827;
+    color: white;
+    border: 1px solid #475569;
+}
 
 button {
-    cursor:pointer;
-    transition:.15s;
+    border: none;
+    padding: 13px;
+    border-radius: 8px;
+    margin: 5px 2px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-button:disabled {
-    opacity:.55;
-    cursor:not-allowed;
+.play { background: #16a34a; color: white; }
+.pause { background: #eab308; color: black; }
+.stop { background: #dc2626; color: white; }
+.download { background: #0284c7; color: white; }
+.reset { background: #475569; color: white; }
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-    outline:2px solid var(--primary);
-    outline-offset:2px;
+.status {
+    background: #101827;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 18px;
+    color: #38bdf8;
+    text-align: center;
 }
 
-header {
-    background:linear-gradient(120deg,#142b62,#2862df);
-    color:white;
-    padding:20px;
-}
-
-.header-inner {
-    max-width:1500px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:15px;
-}
-
-header h1 {
-    margin:0 0 7px;
-    font-size:25px;
-}
-
-header p {
-    margin:0;
-    font-size:13px;
-    color:#dce7ff;
-}
-
-.header-actions {
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-}
-
-.header-actions button {
-    padding:10px 13px;
-    border:1px solid #ffffff60;
-    border-radius:8px;
-    background:#ffffff17;
-    color:white;
-}
-
-.header-actions button:hover {
-    background:#ffffff30;
-}
-
-.app {
-    max-width:1500px;
-    margin:20px auto;
-    padding:0 15px;
-    display:grid;
-    grid-template-columns:250px minmax(0,1fr);
-    gap:18px;
-}
-
-.sidebar,.panel,.stat {
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:13px;
-    box-shadow:var(--shadow);
-}
-
-.sidebar {
-    padding:15px;
-    align-self:start;
-    position:sticky;
-    top:10px;
-}
-
-.sidebar h3 {
-    font-size:14px;
-    margin:8px 0 12px;
-}
-
-.sidebar hr {
-    border:0;
-    border-top:1px solid var(--border);
-    margin:15px 0;
-}
-
-.nav-btn {
-    display:block;
-    width:100%;
-    border:0;
-    background:transparent;
-    color:var(--text);
-    padding:10px;
-    text-align:left;
-    border-radius:8px;
-    margin:3px 0;
-}
-
-.nav-btn:hover,.nav-btn.active {
-    background:#eaf0ff;
-    color:var(--primary);
-    font-weight:bold;
-}
-
-.main { min-width:0; }
-
-.stats {
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:12px;
-    margin-bottom:16px;
-}
-
-.stat {
-    padding:15px;
-    min-width:0;
-}
-
-.stat span {
-    font-size:12px;
-    color:var(--muted);
-}
-
-.stat strong {
-    display:block;
-    font-size:26px;
-    margin-top:8px;
-}
-
-.panel {
-    padding:17px;
-    margin-bottom:16px;
-}
-
-.panel h2 {
-    font-size:19px;
-    margin:0 0 15px;
-}
-
-.filters {
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:11px;
-}
-
-.field label {
-    display:block;
-    font-size:12px;
-    color:var(--muted);
-    margin-bottom:6px;
-}
-
-.field input,.field select,.field textarea,
-.modal-box input,.modal-box select,.modal-box textarea {
-    width:100%;
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:10px;
-    background:#fff;
-    color:var(--text);
-}
-
-.field textarea,.modal-box textarea {
-    resize:vertical;
-    min-height:110px;
-}
-
-.btn {
-    border:0;
-    background:var(--primary);
-    color:white;
-    padding:10px 13px;
-    border-radius:8px;
-}
-
-.btn:hover { filter:brightness(.96); }
-
-.btn.secondary {
-    background:#e8efff;
-    color:#2148a9;
-}
-
-.btn.danger {
-    background:#fee2e2;
-    color:#b91c1c;
-}
-
-.btn.success {
-    background:#dcfce7;
-    color:#166534;
-}
-
-.btn.small {
-    padding:7px 9px;
-    font-size:12px;
-}
-
-.button-row {
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:12px;
-}
-
-.news-toolbar {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:15px;
-}
-
-.news-toolbar h2 { margin:0; }
-
-.news-list {
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:13px;
-}
-
-.news-card {
-    min-width:0;
-    background:white;
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:15px;
-}
-
-.news-card h3 {
-    font-size:16px;
-    line-height:1.5;
-    margin:10px 0;
-    overflow-wrap:anywhere;
-}
-
-.news-card p {
-    font-size:13px;
-    line-height:1.7;
-    color:#475569;
-    white-space:pre-wrap;
-    overflow-wrap:anywhere;
-}
-
-.badges {
-    display:flex;
-    flex-wrap:wrap;
-    gap:5px;
-}
-
-.badge {
-    display:inline-block;
-    padding:5px 8px;
-    border-radius:20px;
-    font-size:11px;
-    background:#edf2ff;
-    color:#2449a4;
-}
-
-.badge.green {
-    background:#dcfce7;
-    color:#166534;
-}
-
-.badge.orange {
-    background:#ffedd5;
-    color:#9a3412;
-}
-
-.card-date {
-    font-size:11px;
-    color:var(--muted);
-    margin-top:10px;
-    line-height:1.6;
-}
-
-.card-footer {
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:7px;
-    border-top:1px solid var(--border);
-    padding-top:11px;
-    margin-top:12px;
-}
-
-.card-footer a {
-    color:var(--primary);
-    font-size:12px;
-    font-weight:bold;
-    text-decoration:none;
-    margin-right:auto;
-}
-
-.empty {
-    grid-column:1/-1;
-    text-align:center;
-    background:white;
-    border:1px dashed #b9c5d8;
-    border-radius:12px;
-    padding:35px 15px;
-    color:var(--muted);
-}
-
-.source-list {
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:12px;
-}
-
-.source-card {
-    min-width:0;
-    border:1px solid var(--border);
-    border-radius:11px;
-    padding:14px;
-    background:white;
-}
-
-.source-card h3 {
-    margin:0 0 8px;
-    font-size:15px;
-}
-
-.source-card a {
-    color:var(--primary);
-    font-size:12px;
-    overflow-wrap:anywhere;
-}
-
-.source-card p {
-    font-size:12px;
-    color:var(--muted);
-    line-height:1.6;
-}
-
-.source-status {
-    font-size:11px;
-    color:var(--muted);
-    line-height:1.6;
-    overflow-wrap:anywhere;
-    margin-top:8px;
-}
-
-.hidden { display:none!important; }
-
-.modal {
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:1000;
-    background:rgba(10,20,40,.72);
-    padding:15px;
-    overflow:auto;
-}
-
-.modal.open {
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-}
-
-.modal-box {
-    background:white;
-    width:min(760px,100%);
-    padding:22px;
-    border-radius:14px;
-    margin:auto;
-}
-
-.modal-box h2 { margin-top:0; }
-
-.modal-box>p {
-    font-size:13px;
-    color:var(--muted);
-    line-height:1.7;
-}
-
-.modal-grid {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.full { grid-column:1/-1; }
-
-.status-box {
-    background:#f6f8fc;
-    border:1px solid var(--border);
-    padding:12px;
-    border-radius:9px;
-    margin-top:12px;
-    font-size:13px;
-    line-height:1.7;
-    white-space:pre-wrap;
-    overflow-wrap:anywhere;
-}
-
-.preview-list {
-    max-height:260px;
-    overflow:auto;
-    margin-top:10px;
-}
-
-.preview-item {
-    padding:9px;
-    border-bottom:1px solid var(--border);
-    font-size:12px;
-    line-height:1.5;
-}
-
-.preview-item strong { display:block; }
-
-footer {
-    text-align:center;
-    color:var(--muted);
-    padding:20px;
-    font-size:12px;
-    line-height:1.8;
-}
-
-@media(max-width:1050px) {
-    .app { grid-template-columns:215px minmax(0,1fr); }
-    .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .filters { grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
-
-@media(max-width:720px) {
-    header { padding:17px 12px; }
-    header h1 { font-size:21px; }
-
-    .app {
-        display:flex;
-        flex-direction:column;
-        margin-top:12px;
-        padding:0 10px;
-        gap:12px;
-    }
-
-    .sidebar { position:static; }
-    .sidebar nav {
-        display:grid;
-        grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:3px;
-    }
-
-    .news-list,.source-list { grid-template-columns:1fr; }
-    .panel { padding:13px; }
-    .modal-grid { grid-template-columns:1fr; }
-    .full { grid-column:auto; }
-}
-
-@media(max-width:390px) {
-    .filters { grid-template-columns:1fr; }
-    .stat { padding:11px; }
-    .stat strong { font-size:21px; }
+.note {
+    font-size: 13px;
+    color: #cbd5e1;
+    line-height: 1.6;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="header-inner">
-        <div>
-            <h1>📰 Current Affairs Pro</h1>
-            <p>Daily News • UPSC • BPSC • State Current Affairs</p>
-        </div>
+<div class="container">
 
-        <div class="header-actions">
-            <button onclick="openImportModal()">📥 Add News</button>
-            <button onclick="openNewsModal()">＋ Manual News</button>
-            <button onclick="refreshAllSources()">↻ Refresh RSS</button>
-            <button onclick="exportBackup()">⬇ Backup</button>
-        </div>
-    </div>
-</header>
+<h1>🎙 Text To Speech Studio</h1>
 
-<div class="app">
+<p>अपना टेक्स्ट लिखें और उसे आवाज में बदलें।</p>
 
-    <aside class="sidebar">
-        <h3>📚 Dashboard</h3>
+<textarea id="text" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
 
-        <nav>
-            <button class="nav-btn active" data-view="dashboard"
-                onclick="changeView('dashboard',this)">🏠 All News</button>
+<label>Select Voice</label>
+<select id="voice">
+<option value="">Loading Voices...</option>
+</select>
 
-            <button class="nav-btn" data-view="bookmarks"
-                onclick="changeView('bookmarks',this)">⭐ Bookmarks</button>
+<label>Speech Speed: <span id="speedValue">1</span></label>
+<input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
 
-            <button class="nav-btn" data-view="mynews"
-                onclick="changeView('mynews',this)">📝 My News & Notes</button>
+<label>Pitch: <span id="pitchValue">1</span></label>
+<input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
 
-            <button class="nav-btn" data-view="sources"
-                onclick="changeView('sources',this)">🌐 News Sources</button>
-        </nav>
+<label>Volume: <span id="volumeValue">100%</span></label>
+<input type="range" id="volume" min="0" max="1" step="0.1" value="1">
 
-        <hr>
-        <h3>📂 Categories</h3>
-        <nav id="categoryNav"></nav>
-
-        <hr>
-        <h3>🗺️ Regions</h3>
-        <nav id="regionNav"></nav>
-
-        <hr>
-        <h3>💾 Data Management</h3>
-
-        <button class="nav-btn" onclick="openImportModal()">📥 Add News JSON</button>
-        <button class="nav-btn" onclick="exportBackup()">⬇ Export Backup</button>
-
-        <button class="nav-btn"
-            onclick="document.getElementById('restoreFile').click()">
-            ⬆ Restore Backup
-        </button>
-
-        <input type="file" id="restoreFile"
-            accept=".json,application/json" hidden
-            onchange="importBackup(event)">
-
-        <button class="nav-btn" onclick="clearFilters()">↺ Clear Filters</button>
-
-        <p style="font-size:11px;color:#64748b;line-height:1.6">
-            समाचार इस ब्राउज़र के IndexedDB में सेव होते हैं।
-            नियमित रूप से JSON Backup डाउनलोड करें।
-        </p>
-    </aside>
-
-    <main class="main">
-
-        <section class="stats">
-            <div class="stat">
-                <span>Total Saved News</span>
-                <strong id="totalCount">0</strong>
-            </div>
-            <div class="stat">
-                <span>Bookmarks</span>
-                <strong id="bookmarkCount">0</strong>
-            </div>
-            <div class="stat">
-                <span>Today's News</span>
-                <strong id="todayCount">0</strong>
-            </div>
-            <div class="stat">
-                <span>News Sources</span>
-                <strong id="sourceCount">15</strong>
-            </div>
-        </section>
-
-        <section class="panel" id="filterPanel">
-            <h2>🔎 Search & Filter</h2>
-
-            <div class="filters">
-                <div class="field">
-                    <label>Search News</label>
-                    <input id="searchInput" type="search"
-                        placeholder="Search news, facts, notes..."
-                        oninput="renderNews()">
-                </div>
-
-                <div class="field">
-                    <label>Category</label>
-                    <select id="categoryFilter" onchange="renderNews()"></select>
-                </div>
-
-                <div class="field">
-                    <label>Month</label>
-                    <select id="monthFilter" onchange="renderNews()"></select>
-                </div>
-
-                <div class="field">
-                    <label>Region</label>
-                    <select id="regionFilter" onchange="renderNews()"></select>
-                </div>
-
-                <div class="field">
-                    <label>Source</label>
-                    <select id="sourceFilter" onchange="renderNews()"></select>
-                </div>
-
-                <div class="field">
-                    <label>Year</label>
-                    <select id="yearFilter" onchange="renderNews()"></select>
-                </div>
-
-                <div class="field">
-                    <label>Sort By</label>
-                    <select id="sortFilter" onchange="renderNews()">
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
-                        <option value="title">Title A–Z</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label>Clear Filters</label>
-                    <button class="btn secondary" style="width:100%"
-                        onclick="clearFilters()">Clear All</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel" id="newsPanel">
-            <div class="news-toolbar">
-                <h2 id="listTitle">📰 Current Affairs</h2>
-                <button class="btn" onclick="openImportModal()">📥 Add News JSON</button>
-            </div>
-
-            <div id="newsList" class="news-list">
-                <div class="empty">Loading...</div>
-            </div>
-        </section>
-
-        <section class="panel hidden" id="sourcesPanel">
-            <h2>🌐 News Sources</h2>
-            <p style="font-size:13px;line-height:1.7;color:#64748b">
-                Insights IAS RSS पहले से कॉन्फ़िगर है। अन्य वेबसाइटों के RSS
-                Feed को Configure Feed से जोड़ा जा सकता है। RSS काम करने के लिए
-                वेबसाइट को browser requests की अनुमति देनी होगी।
-            </p>
-
-            <div class="button-row">
-                <button class="btn" onclick="refreshAllSources()">↻ Refresh Feeds</button>
-            </div>
-
-            <div id="sourceList" class="source-list" style="margin-top:15px"></div>
-        </section>
-
-    </main>
+<div class="controls">
+<button class="play" onclick="speakText()">▶ Play</button>
+<button class="pause" onclick="pauseSpeech()">⏸ Pause</button>
+<button class="play" onclick="resumeSpeech()">▶ Resume</button>
+<button class="stop" onclick="stopSpeech()">■ Stop</button>
 </div>
 
-<footer>
-    Current Affairs Pro • Personal Study Organizer
-    <br>Local Browser Database • JSON Import / Export
-</footer>
-
-
-<!-- ================================================
-     ADD NEWS JSON MODAL
-================================================ -->
-
-<div class="modal" id="importModal">
-    <div class="modal-box">
-
-        <h2>📥 Add Current Affairs</h2>
-
-        <p>
-            ChatGPT से तैयार किया गया JSON डेटा पेस्ट करें या JSON फ़ाइल अपलोड करें।
-            पहले Preview देखें, फिर Continue दबाकर समाचार सेव करें।
-        </p>
-
-        <div class="field">
-            <label>JSON Data</label>
-            <textarea id="jsonInput"
-                placeholder='{"version":1,"news":[{"title":"Example","date":"2026-10-25","category":"National","region":"India","summary":"News summary"}]}'
-                style="min-height:220px"></textarea>
-        </div>
-
-        <div class="button-row">
-            <button class="btn secondary"
-                onclick="document.getElementById('jsonFile').click()">
-                📂 Add File
-            </button>
-
-            <input type="file" id="jsonFile"
-                accept=".json,application/json" hidden
-                onchange="loadJSONFile(event)">
-
-            <button class="btn secondary" onclick="pasteFromClipboard()">
-                📋 Paste
-            </button>
-
-            <button class="btn secondary" onclick="validateJSON()">
-                👁 Preview
-            </button>
-
-            <button class="btn" id="continueImportBtn"
-                onclick="continueJSONImport()">
-                Continue →
-            </button>
-
-            <button class="btn secondary" onclick="closeImportModal()">
-                Cancel
-            </button>
-        </div>
-
-        <div id="importPreview" class="status-box">
-            JSON डेटा पेस्ट करें या Add File चुनें।
-        </div>
-
-        <div id="previewList" class="preview-list"></div>
-
-        <div id="importResults" class="status-box hidden"></div>
-
-    </div>
+<div class="controls">
+<button class="download" onclick="downloadMP3()">⬇ Download MP3</button>
+<button class="reset" onclick="resetAll()">Reset</button>
 </div>
 
-
-<!-- ================================================
-     MANUAL NEWS MODAL
-================================================ -->
-
-<div class="modal" id="newsModal">
-    <div class="modal-box">
-
-        <h2 id="manualModalTitle">＋ Add News Manually</h2>
-
-        <form id="newsForm">
-            <input type="hidden" id="newsId">
-
-            <div class="modal-grid">
-                <div class="field full">
-                    <label>News Title *</label>
-                    <input id="newsTitle" required maxlength="500">
-                </div>
-
-                <div class="field">
-                    <label>Category</label>
-                    <select id="newsCategory"></select>
-                </div>
-
-                <div class="field">
-                    <label>Region</label>
-                    <select id="newsRegion"></select>
-                </div>
-
-                <div class="field">
-                    <label>News Date</label>
-                    <input id="newsDate" type="date">
-                </div>
-
-                <div class="field">
-                    <label>Source</label>
-                    <select id="newsSource"></select>
-                </div>
-
-                <div class="field full">
-                    <label>Original Article URL</label>
-                    <input id="newsUrl" type="url"
-                        placeholder="https://example.com/article">
-                </div>
-
-                <div class="field full">
-                    <label>Summary / Important Facts</label>
-                    <textarea id="newsSummary"></textarea>
-                </div>
-
-                <div class="field full">
-                    <label>Tags (comma separated)</label>
-                    <input id="newsTags" placeholder="UPSC, BPSC, Economy">
-                </div>
-            </div>
-
-            <div class="button-row">
-                <button class="btn" type="submit">💾 Save News</button>
-                <button class="btn secondary" type="button"
-                    onclick="closeNewsModal()">Cancel</button>
-            </div>
-
-            <div id="manualStatus" class="status-box"></div>
-        </form>
-    </div>
+<div class="status" id="status">
+Ready to Speak
 </div>
 
+<p class="note">
+नोट: आवाज आपके ब्राउज़र में उपलब्ध Voice Engine पर निर्भर करती है।
+MP3 बनाने के लिए ब्राउज़र की Media Recording सुविधा आवश्यक है।
+</p>
+
+</div>
 
 <script>
-"use strict";
 
-/* ==========================================
-   1. CONSTANTS AND SOURCES
-========================================== */
+const textBox = document.getElementById("text");
+const voiceSelect = document.getElementById("voice");
+const speed = document.getElementById("speed");
+const pitch = document.getElementById("pitch");
+const volume = document.getElementById("volume");
+const statusBox = document.getElementById("status");
 
-const CATEGORIES = [
-    "National",
-    "International",
-    "Political",
-    "Economic",
-    "Sports",
-    "Social Issue",
-    "Scheme"
-];
+let voices = [];
 
-const REGIONS = [
-    "India",
-    "Bihar",
-    "Jharkhand",
-    "Uttar Pradesh",
-    "West Bengal"
-];
+function loadVoices() {
+    voices = speechSynthesis.getVoices();
 
-const MONTHS = [
-    "January","February","March","April",
-    "May","June","July","August",
-    "September","October","November","December"
-];
+    voiceSelect.innerHTML = "";
 
-const SOURCES = [
-    {
-        id:"pib",
-        name:"PIB India",
-        url:"https://pib.gov.in/",
-        feed:"",
-        description:"Official Government of India press releases"
-    },
-    {
-        id:"hindu",
-        name:"The Hindu",
-        url:"https://www.thehindu.com/",
-        feed:"",
-        description:"National and international news"
-    },
-    {
-        id:"indian-express",
-        name:"The Indian Express",
-        url:"https://indianexpress.com/",
-        feed:"",
-        description:"Politics and governance"
-    },
-    {
-        id:"bbc",
-        name:"BBC News",
-        url:"https://www.bbc.com/news",
-        feed:"",
-        description:"International news"
-    },
-    {
-        id:"reuters",
-        name:"Reuters",
-        url:"https://www.reuters.com/",
-        feed:"",
-        description:"World news and business"
-    },
-    {
-        id:"economic-times",
-        name:"Economic Times",
-        url:"https://economictimes.indiatimes.com/",
-        feed:"",
-        description:"Economy and finance"
-    },
-    {
-        id:"business-standard",
-        name:"Business Standard",
-        url:"https://www.business-standard.com/",
-        feed:"",
-        description:"Business and economic policy"
-    },
-    {
-        id:"drishti",
-        name:"Drishti IAS",
-        url:"https://www.drishtiias.com/",
-        feed:"",
-        description:"UPSC and state PCS"
-    },
-    {
-        id:"affairscloud",
-        name:"AffairsCloud",
-        url:"https://affairscloud.com/",
-        feed:"",
-        description:"Daily current affairs"
-    },
-    {
-        id:"sansad-tv",
-        name:"Sansad TV",
-        url:"https://sansadtv.nic.in/",
-        feed:"",
-        description:"Parliament and policy"
-    },
-    {
-        id:"vajiram",
-        name:"Vajiram & Ravi",
-        url:"https://vajiramandravi.com/",
-        feed:"",
-        description:"UPSC preparation"
-    },
-    {
-        id:"vision-ias",
-        name:"Vision IAS",
-        url:"https://visionias.in/",
-        feed:"",
-        description:"Current affairs and study material"
-    },
-    {
-        id:"insights-ias",
-        name:"Insights IAS",
-        url:"https://www.insightsonindia.com/",
-        feed:"https://www.insightsonindia.com/feed/",
-        description:"Daily current affairs and quizzes"
-    },
-    {
-        id:"forum-ias",
-        name:"ForumIAS",
-        url:"https://forumias.com/",
-        feed:"",
-        description:"Civil services preparation"
-    },
-    {
-        id:"next-ias",
-        name:"NEXT IAS",
-        url:"https://www.nextias.com/",
-        feed:"",
-        description:"UPSC current affairs"
-    }
-];
+    voices.forEach((voice, index) => {
+        let option = document.createElement("option");
 
-const DB_NAME = "CurrentAffairsProDB";
-const DB_VERSION = 1;
-const STORE_NAME = "news";
-const RSS_PROXY = "https://api.allorigins.win/raw?url=";
+        option.value = index;
+        option.textContent =
+            voice.name + " (" + voice.lang + ")";
 
-let db = null;
-let allNews = [];
-let currentView = "dashboard";
-let sourceStates = {};
-let pendingJSONNews = null;
-let pendingJSONErrors = [];
-
-
-/* ==========================================
-   2. UTILITY FUNCTIONS
-========================================== */
-
-function uid() {
-    if (window.crypto && crypto.randomUUID) {
-        return crypto.randomUUID();
-    }
-
-    return "CA-" + Date.now() + "-" +
-        Math.random().toString(36).slice(2);
-}
-
-function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, ch => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-    })[ch]);
-}
-
-function safeURL(value) {
-    if (!value) return "";
-
-    try {
-        const url = new URL(String(value));
-
-        if (url.protocol === "http:" || url.protocol === "https:") {
-            return url.href;
-        }
-    } catch(error) {}
-
-    return "";
-}
-
-function simpleHash(text) {
-    let hash = 0;
-
-    for (let i=0;i<text.length;i++) {
-        hash = ((hash << 5) - hash) + text.charCodeAt(i);
-        hash |= 0;
-    }
-
-    return Math.abs(hash).toString(36);
-}
-
-function validDate(value) {
-    if (!value) return "";
-
-    const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
-
-    if (match) {
-        const d = new Date(
-            Number(match[1]),
-            Number(match[2])-1,
-            Number(match[3])
-        );
-
-        if (
-            d.getFullYear() === Number(match[1]) &&
-            d.getMonth() === Number(match[2])-1 &&
-            d.getDate() === Number(match[3])
-        ) {
-            return String(value);
-        }
-
-        return "";
-    }
-
-    const d = new Date(value);
-
-    if (Number.isNaN(d.getTime())) return "";
-
-    return d.getFullYear() + "-" +
-        String(d.getMonth()+1).padStart(2,"0") + "-" +
-        String(d.getDate()).padStart(2,"0");
-}
-
-function sourceName(id) {
-    const source = SOURCES.find(s => s.id === id);
-    return source ? source.name : "Personal / Other";
-}
-
-function monthForDate(date) {
-    if (!date) return "";
-
-    const d = new Date(date + "T12:00:00");
-
-    if (Number.isNaN(d.getTime())) return "";
-
-    return MONTHS[d.getMonth()];
-}
-
-function yearForDate(date) {
-    return date ? date.slice(0,4) : "";
-}
-
-
-/* ==========================================
-   3. INDEXEDDB
-========================================== */
-
-function openDatabase() {
-    return new Promise((resolve,reject) => {
-        if (!("indexedDB" in window)) {
-            reject(new Error("IndexedDB इस ब्राउज़र में उपलब्ध नहीं है।"));
-            return;
-        }
-
-        const request = indexedDB.open(DB_NAME,DB_VERSION);
-
-        request.onupgradeneeded = event => {
-            const database = event.target.result;
-
-            if (!database.objectStoreNames.contains(STORE_NAME)) {
-                const store = database.createObjectStore(
-                    STORE_NAME,
-                    {keyPath:"id"}
-                );
-
-                store.createIndex("date","date",{unique:false});
-                store.createIndex("sourceId","sourceId",{unique:false});
-            }
-        };
-
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-}
-
-function dbRequest(mode,action) {
-    return new Promise((resolve,reject) => {
-        const tx = db.transaction(STORE_NAME,mode);
-        const store = tx.objectStore(STORE_NAME);
-
-        let request;
-
-        try {
-            request = action(store);
-        } catch(error) {
-            reject(error);
-            return;
-        }
-
-        let result;
-
-        if (request) {
-            request.onsuccess = () => {
-                result = request.result;
-            };
-
-            request.onerror = () => reject(request.error);
-        }
-
-        tx.oncomplete = () => resolve(result);
-        tx.onerror = () => reject(tx.error);
-        tx.onabort = () => reject(tx.error || new Error("Transaction aborted"));
-    });
-}
-
-function getAllFromDB() {
-    return dbRequest("readonly",store => store.getAll());
-}
-
-function saveNewsToDB(item) {
-    return dbRequest("readwrite",store => store.put(item));
-}
-
-function deleteNewsFromDB(id) {
-    return dbRequest("readwrite",store => store.delete(id));
-}
-
-function replaceAllNews(items) {
-    return new Promise((resolve,reject) => {
-        const tx = db.transaction(STORE_NAME,"readwrite");
-        const store = tx.objectStore(STORE_NAME);
-
-        store.clear();
-
-        items.forEach(item => store.put(item));
-
-        tx.oncomplete = resolve;
-        tx.onerror = () => reject(tx.error);
-        tx.onabort = () => reject(tx.error);
-    });
-}
-
-
-/* ==========================================
-   4. SETTINGS
-========================================== */
-
-function loadSettings() {
-    try {
-        const settings = JSON.parse(
-            localStorage.getItem("cap_settings") || "{}"
-        );
-
-        if (settings.feeds) {
-            SOURCES.forEach(source => {
-                if (Object.prototype.hasOwnProperty.call(
-                    settings.feeds,source.id
-                )) {
-                    source.feed = safeURL(settings.feeds[source.id]);
-                }
-            });
-        }
-
-        sourceStates = settings.states || {};
-
-    } catch(error) {
-        console.warn("Settings could not be loaded",error);
-    }
-}
-
-function saveSettings() {
-    const feeds = {};
-
-    SOURCES.forEach(source => {
-        feeds[source.id] = source.feed || "";
+        voiceSelect.appendChild(option);
     });
 
-    localStorage.setItem("cap_settings",JSON.stringify({
-        feeds,
-        states:sourceStates
-    }));
-}
-
-
-/* ==========================================
-   5. SELECT BOXES AND NAVIGATION
-========================================== */
-
-function fillSelect(id,items,firstLabel) {
-    const select = document.getElementById(id);
-
-    select.innerHTML = "";
-
-    if (firstLabel !== null) {
-        const first = document.createElement("option");
-        first.value = "";
-        first.textContent = firstLabel;
-        select.appendChild(first);
-    }
-
-    items.forEach(item => {
-        const option = document.createElement("option");
-
-        if (typeof item === "object") {
-            option.value = item.value;
-            option.textContent = item.label;
-        } else {
-            option.value = item;
-            option.textContent = item;
-        }
-
-        select.appendChild(option);
-    });
-}
-
-function initializeFilters() {
-    fillSelect("categoryFilter",CATEGORIES,"All Categories");
-    fillSelect("monthFilter",MONTHS,"All Months");
-    fillSelect("regionFilter",REGIONS,"All Regions");
-
-    fillSelect(
-        "sourceFilter",
-        SOURCES.map(s => ({value:s.id,label:s.name})),
-        "All Sources"
+    let hindiIndex = voices.findIndex(v =>
+        v.lang.toLowerCase().startsWith("hi")
     );
 
-    const years = [];
-
-    for (let y=new Date().getFullYear()+1;y>=2020;y--) {
-        years.push(String(y));
+    if (hindiIndex >= 0) {
+        voiceSelect.value = hindiIndex;
     }
-
-    fillSelect("yearFilter",years,"All Years");
-
-    fillSelect("newsCategory",CATEGORIES,null);
-    fillSelect("newsRegion",REGIONS,null);
-
-    fillSelect(
-        "newsSource",
-        [
-            {value:"",label:"Personal / Other"},
-            ...SOURCES.map(s => ({value:s.id,label:s.name}))
-        ],
-        null
-    );
-
-    document.getElementById("categoryNav").innerHTML =
-        CATEGORIES.map(category => `
-            <button class="nav-btn"
-                onclick="quickCategory('${escapeHTML(category)}')">
-                ${escapeHTML(category)}
-            </button>
-        `).join("");
-
-    document.getElementById("regionNav").innerHTML =
-        REGIONS.map(region => `
-            <button class="nav-btn"
-                onclick="quickRegion('${escapeHTML(region)}')">
-                📍 ${escapeHTML(region)}
-            </button>
-        `).join("");
 }
 
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
 
-/* ==========================================
-   6. NAVIGATION
-========================================== */
+speed.oninput = () => {
+    document.getElementById("speedValue").textContent = speed.value;
+};
 
-function changeView(view,button) {
-    currentView = view;
+pitch.oninput = () => {
+    document.getElementById("pitchValue").textContent = pitch.value;
+};
 
-    document.querySelectorAll("[data-view]").forEach(btn =>
-        btn.classList.remove("active")
-    );
+volume.oninput = () => {
+    document.getElementById("volumeValue").textContent =
+        Math.round(volume.value * 100) + "%";
+};
 
-    if (button) button.classList.add("active");
+function speakText() {
 
-    const sourceView = view === "sources";
+    let text = textBox.value.trim();
 
-    document.getElementById("sourcesPanel")
-        .classList.toggle("hidden",!sourceView);
-
-    document.getElementById("filterPanel")
-        .classList.toggle("hidden",sourceView);
-
-    document.getElementById("newsPanel")
-        .classList.toggle("hidden",sourceView);
-
-    if (sourceView) {
-        renderSources();
+    if (!text) {
+        alert("पहले कुछ टेक्स्ट लिखें!");
         return;
     }
 
-    renderNews();
-}
+    speechSynthesis.cancel();
 
-function quickCategory(category) {
-    document.getElementById("categoryFilter").value = category;
+    let utterance = new SpeechSynthesisUtterance(text);
 
-    changeView("dashboard",document.querySelector('[data-view="dashboard"]'));
-    renderNews();
-}
+    let selectedVoice = voices[voiceSelect.value];
 
-function quickRegion(region) {
-    document.getElementById("regionFilter").value = region;
-
-    changeView("dashboard",document.querySelector('[data-view="dashboard"]'));
-    renderNews();
-}
-
-function clearFilters() {
-    [
-        "searchInput",
-        "categoryFilter",
-        "monthFilter",
-        "regionFilter",
-        "sourceFilter",
-        "yearFilter"
-    ].forEach(id => {
-        document.getElementById(id).value = "";
-    });
-
-    document.getElementById("sortFilter").value = "newest";
-
-    renderNews();
-}
-
-
-/* ==========================================
-   7. AUTO CATEGORY / REGION
-========================================== */
-
-function classifyNews(title,summary) {
-    const text = (title + " " + summary).toLowerCase();
-
-    const rules = [
-        ["Sports",[
-            "cricket","football","hockey","olympic","medal",
-            "tournament","world cup","sports","badminton",
-            "tennis","athlete","fifa"
-        ]],
-        ["Economic",[
-            "economy","economic","gdp","inflation","rbi",
-            "banking","budget","tax","trade","fiscal",
-            "monetary","investment","rupee","exports","imports"
-        ]],
-        ["Scheme",[
-            "scheme","yojana","mission","subsidy","beneficiary",
-            "welfare programme","pension","pm-kisan",
-            "ayushman bharat"
-        ]],
-        ["Political",[
-            "election","parliament","political","minister",
-            "chief minister","president","cabinet","legislature",
-            "opposition","governor"
-        ]],
-        ["International",[
-            "united nations","world bank","imf","international",
-            "bilateral","foreign affairs","summit","global",
-            "nato","g20","brics","diplomacy"
-        ]],
-        ["Social Issue",[
-            "poverty","education","healthcare","women",
-            "child labour","gender","inequality","human rights",
-            "malnutrition","social justice","migration"
-        ]]
-    ];
-
-    for (const [category,words] of rules) {
-        if (words.some(word => text.includes(word))) return category;
+    if (selectedVoice) {
+        utterance.voice = selectedVoice;
+        utterance.lang = selectedVoice.lang;
     }
 
-    return "National";
-}
+    utterance.rate = Number(speed.value);
+    utterance.pitch = Number(pitch.value);
+    utterance.volume = Number(volume.value);
 
-function detectRegion(text) {
-    const t = text.toLowerCase();
-
-    if (/\bbihar\b|\bpatna\b|\bgaya\b|\bmuzaffarpur\b/.test(t))
-        return "Bihar";
-
-    if (/\bjharkhand\b|\branchi\b|\bdhanbad\b|\bjamshedpur\b/.test(t))
-        return "Jharkhand";
-
-    if (/\buttar pradesh\b|\blucknow\b|\bvaranasi\b|\bprayagraj\b/.test(t))
-        return "Uttar Pradesh";
-
-    if (/\bwest bengal\b|\bkolkata\b|\bdarjeeling\b|\bhowrah\b/.test(t))
-        return "West Bengal";
-
-    return "India";
-}
-
-
-/* ==========================================
-   8. ADD / EDIT NEWS MANUALLY
-========================================== */
-
-function openNewsModal(item=null) {
-    document.getElementById("newsForm").reset();
-
-    document.getElementById("newsId").value = "";
-
-    document.getElementById("newsDate").value =
-        new Date().toISOString().slice(0,10);
-
-    document.getElementById("manualModalTitle").textContent =
-        item ? "Edit Current Affairs" : "Add News Manually";
-
-    document.getElementById("manualStatus").textContent = "";
-
-    if (item) {
-        document.getElementById("newsId").value = item.id;
-        document.getElementById("newsTitle").value = item.title || "";
-        document.getElementById("newsCategory").value = item.category || "National";
-        document.getElementById("newsRegion").value = item.region || "India";
-        document.getElementById("newsDate").value = item.date || "";
-        document.getElementById("newsSource").value = item.sourceId || "";
-        document.getElementById("newsUrl").value = item.url || "";
-        document.getElementById("newsSummary").value = item.summary || "";
-        document.getElementById("newsTags").value = (item.tags || []).join(", ");
-    }
-
-    document.getElementById("newsModal").classList.add("open");
-}
-
-function closeNewsModal() {
-    document.getElementById("newsModal").classList.remove("open");
-}
-
-document.getElementById("newsForm").addEventListener("submit",async event => {
-    event.preventDefault();
-
-    try {
-        const id = document.getElementById("newsId").value || uid();
-        const old = allNews.find(n => n.id === id);
-
-        const title = document.getElementById("newsTitle").value.trim();
-
-        const urlInput = document.getElementById("newsUrl").value.trim();
-        const url = urlInput ? safeURL(urlInput) : "";
-
-        if (urlInput && !url) {
-            throw new Error("कृपया सही HTTP/HTTPS URL डालें।");
-        }
-
-        const item = {
-            id,
-            title,
-            date:document.getElementById("newsDate").value || "",
-            category:document.getElementById("newsCategory").value,
-            region:document.getElementById("newsRegion").value,
-            sourceId:document.getElementById("newsSource").value,
-            url,
-            summary:document.getElementById("newsSummary").value.trim(),
-            tags:document.getElementById("newsTags").value
-                .split(",").map(s => s.trim()).filter(Boolean),
-            bookmarked:old ? !!old.bookmarked : false,
-            createdAt:old ? old.createdAt : new Date().toISOString(),
-            updatedAt:new Date().toISOString(),
-            type:"manual"
-        };
-
-        await saveNewsToDB(item);
-        await reloadNews();
-        closeNewsModal();
-
-    } catch(error) {
-        document.getElementById("manualStatus").textContent =
-            "❌ " + error.message;
-    }
-});
-
-
-/* ==========================================
-   9. SEARCH AND RENDER NEWS
-========================================== */
-
-function filteredNews() {
-    let list = [...allNews];
-
-    if (currentView === "bookmarks") {
-        list = list.filter(n => n.bookmarked);
-    }
-
-    if (currentView === "mynews") {
-        list = list.filter(n => n.type === "manual");
-    }
-
-    const search = document.getElementById("searchInput").value.trim().toLowerCase();
-    const category = document.getElementById("categoryFilter").value;
-    const month = document.getElementById("monthFilter").value;
-    const region = document.getElementById("regionFilter").value;
-    const source = document.getElementById("sourceFilter").value;
-    const year = document.getElementById("yearFilter").value;
-
-    if (search) {
-        list = list.filter(n => [
-            n.title,n.summary,n.category,n.region,
-            sourceName(n.sourceId),...(n.tags || [])
-        ].join(" ").toLowerCase().includes(search));
-    }
-
-    if (category) list = list.filter(n => n.category === category);
-    if (month) list = list.filter(n => monthForDate(n.date) === month);
-    if (region) list = list.filter(n => n.region === region);
-    if (source) list = list.filter(n => n.sourceId === source);
-    if (year) list = list.filter(n => yearForDate(n.date) === year);
-
-    const sort = document.getElementById("sortFilter").value;
-
-    if (sort === "oldest") {
-        list.sort((a,b) => (a.date || "9999").localeCompare(b.date || "9999"));
-    } else if (sort === "title") {
-        list.sort((a,b) => a.title.localeCompare(b.title));
-    } else {
-        list.sort((a,b) =>
-            (b.date || "").localeCompare(a.date || "") ||
-            (b.createdAt || "").localeCompare(a.createdAt || "")
-        );
-    }
-
-    return list;
-}
-
-function renderNews() {
-    const container = document.getElementById("newsList");
-    if (!container) return;
-
-    const titles = {
-        dashboard:"📰 Current Affairs",
-        bookmarks:"⭐ Bookmarked News",
-        mynews:"📝 My News & Notes"
+    utterance.onstart = () => {
+        statusBox.textContent = "🔊 Speaking...";
     };
 
-    document.getElementById("listTitle").textContent =
-        titles[currentView] || "📰 Current Affairs";
-
-    const list = filteredNews();
-
-    if (!list.length) {
-        container.innerHTML = `
-            <div class="empty">
-                <h3>कोई समाचार नहीं मिला</h3>
-                <p>JSON फ़ाइल आयात करें या Manual News जोड़ें।</p>
-                <button class="btn" onclick="openImportModal()">📥 Add News</button>
-            </div>
-        `;
-
-        updateStats();
-        return;
-    }
-
-    container.innerHTML = list.map(item => {
-        const url = safeURL(item.url);
-        const summary = item.summary || "अभी कोई सारांश उपलब्ध नहीं है।";
-
-        return `
-            <article class="news-card">
-                <div class="badges">
-                    <span class="badge">${escapeHTML(item.category || "National")}</span>
-                    <span class="badge green">${escapeHTML(item.region || "India")}</span>
-                    <span class="badge">${item.type === "rss" ? "RSS" : "Saved"}</span>
-                </div>
-
-                <h3>${escapeHTML(item.title)}</h3>
-
-                <p>${escapeHTML(summary)}</p>
-
-                ${(item.tags || []).length
-                    ? `<div class="badges">
-                        ${item.tags.slice(0,10).map(tag =>
-                            `<span class="badge">${escapeHTML(tag)}</span>`
-                        ).join("")}
-                       </div>`
-                    : ""}
-
-                <div class="card-date">
-                    📅 ${escapeHTML(item.date || "तारीख उपलब्ध नहीं")}
-                    <br>🌐 ${escapeHTML(sourceName(item.sourceId))}
-                    ${item.importedFromChatGPT ? "<br>📥 ChatGPT JSON Import" : ""}
-                </div>
-
-                <div class="card-footer">
-                    ${url ? `<a href="${escapeHTML(url)}" target="_blank"
-                        rel="noopener noreferrer">Read Original ↗</a>` : ""}
-
-                    <button class="btn small secondary"
-                        onclick="toggleBookmark('${escapeHTML(item.id)}')">
-                        ${item.bookmarked ? "★ Saved" : "☆ Bookmark"}
-                    </button>
-
-                    <button class="btn small secondary"
-                        onclick="editNews('${escapeHTML(item.id)}')">Edit</button>
-
-                    <button class="btn small danger"
-                        onclick="deleteNews('${escapeHTML(item.id)}')">Delete</button>
-                </div>
-            </article>
-        `;
-    }).join("");
-
-    updateStats();
-}
-
-function updateStats() {
-    const today = new Date().toISOString().slice(0,10);
-
-    document.getElementById("totalCount").textContent = allNews.length;
-
-    document.getElementById("bookmarkCount").textContent =
-        allNews.filter(n => n.bookmarked).length;
-
-    document.getElementById("todayCount").textContent =
-        allNews.filter(n => n.date === today).length;
-
-    document.getElementById("sourceCount").textContent = SOURCES.length;
-}
-
-function editNews(id) {
-    const item = allNews.find(n => n.id === id);
-    if (item) openNewsModal(item);
-}
-
-async function toggleBookmark(id) {
-    const item = allNews.find(n => n.id === id);
-    if (!item) return;
-
-    item.bookmarked = !item.bookmarked;
-    item.updatedAt = new Date().toISOString();
-
-    await saveNewsToDB(item);
-    await reloadNews();
-}
-
-async function deleteNews(id) {
-    if (!confirm("क्या आप यह समाचार हटाना चाहते हैं?")) return;
-
-    await deleteNewsFromDB(id);
-    await reloadNews();
-}
-
-
-/* ==========================================
-   10. ADD NEWS JSON IMPORT
-========================================== */
-
-function openImportModal() {
-    pendingJSONNews = null;
-    pendingJSONErrors = [];
-
-    document.getElementById("jsonInput").value = "";
-    document.getElementById("importPreview").textContent =
-        "JSON डेटा पेस्ट करें या Add File चुनें।";
-    document.getElementById("previewList").innerHTML = "";
-    document.getElementById("importResults").textContent = "";
-    document.getElementById("importResults").classList.add("hidden");
-
-    const button = document.getElementById("continueImportBtn");
-    button.textContent = "Continue →";
-    button.disabled = false;
-
-    document.getElementById("importModal").classList.add("open");
-}
-
-function closeImportModal() {
-    document.getElementById("importModal").classList.remove("open");
-}
-
-async function loadJSONFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    try {
-        if (file.size > 15 * 1024 * 1024) {
-            throw new Error("फ़ाइल 15 MB से बड़ी है।");
-        }
-
-        const text = await file.text();
-
-        document.getElementById("jsonInput").value = text;
-
-        document.getElementById("importPreview").textContent =
-            "फ़ाइल लोड हुई: " + file.name +
-            "\nअब Preview दबाएँ।";
-
-        document.getElementById("previewList").innerHTML = "";
-        pendingJSONNews = null;
-
-    } catch(error) {
-        alert("फ़ाइल पढ़ने में समस्या: " + error.message);
-    } finally {
-        event.target.value = "";
-    }
-}
-
-async function pasteFromClipboard() {
-    try {
-        const text = await navigator.clipboard.readText();
-
-        if (!text) throw new Error("Clipboard खाली है।");
-
-        document.getElementById("jsonInput").value = text;
-
-        document.getElementById("importPreview").textContent =
-            "Clipboard से डेटा पेस्ट हो गया। अब Preview दबाएँ।";
-
-    } catch(error) {
-        alert("Clipboard access उपलब्ध नहीं है। JSON बॉक्स में लंबे समय तक दबाकर Paste करें।");
-    }
-}
-
-function normalizeImportedNews(item,index) {
-    if (!item || typeof item !== "object" || Array.isArray(item)) {
-        throw new Error("समाचार " + (index+1) + " का डेटा गलत है।");
-    }
-
-    const title = String(item.title || "").trim();
-
-    if (!title) {
-        throw new Error("समाचार " + (index+1) + " का title खाली है।");
-    }
-
-    const date = validDate(item.date || "");
-
-    if (item.date && !date) {
-        throw new Error("समाचार " + (index+1) + " की date गलत है।");
-    }
-
-    const category = CATEGORIES.includes(item.category)
-        ? item.category
-        : classifyNews(title,String(item.summary || ""));
-
-    const region = REGIONS.includes(item.region)
-        ? item.region
-        : detectRegion(title + " " + String(item.summary || ""));
-
-    const source = SOURCES.find(s =>
-        s.id === item.sourceId ||
-        s.name.toLowerCase() === String(item.source || "").toLowerCase()
-    );
-
-    const rawURL = item.url || "";
-    const url = rawURL ? safeURL(rawURL) : "";
-
-    if (rawURL && !url) {
-        throw new Error("समाचार " + (index+1) + " का URL गलत है।");
-    }
-
-    const facts = Array.isArray(item.facts)
-        ? item.facts.map(x => String(x))
-        : [];
-
-    const tags = [
-        ...(Array.isArray(item.tags) ? item.tags : []),
-        ...(Array.isArray(item.exam_tags) ? item.exam_tags : [])
-    ].map(x => String(x).trim()).filter(Boolean);
-
-    const summaryParts = [];
-
-    if (item.summary) summaryParts.push(String(item.summary));
-
-    if (facts.length) {
-        summaryParts.push(
-            "महत्त्वपूर्ण तथ्य:\n" +
-            facts.map((fact,i) => (i+1)+". "+fact).join("\n")
-        );
-    }
-
-    const summary = summaryParts.join("\n\n");
-
-    /*
-      Stable identity:
-      same explicit ID, URL, title and date will be recognized.
-    */
-
-    const stableBase = item.id
-        ? "id:" + String(item.id)
-        : "article:" + (url || "") + "|" + title.toLowerCase() + "|" + date;
-
-    const id = "ca-" + simpleHash(stableBase);
-
-    return {
-        id,
-        title,
-        date,
-        category,
-        region,
-        sourceId:source ? source.id : "",
-        url,
-        summary,
-        tags:[...new Set(tags)],
-        bookmarked:!!item.bookmarked,
-        createdAt:new Date().toISOString(),
-        updatedAt:new Date().toISOString(),
-        type:"manual",
-        importedFromChatGPT:true,
-        originalId:item.id ? String(item.id) : "",
-        language:item.language || "hi"
-    };
-}
-
-function validateJSON() {
-    const text = document.getElementById("jsonInput").value.trim();
-
-    const preview = document.getElementById("importPreview");
-    const previewList = document.getElementById("previewList");
-    const resultBox = document.getElementById("importResults");
-    const button = document.getElementById("continueImportBtn");
-
-    resultBox.classList.add("hidden");
-    resultBox.textContent = "";
-    previewList.innerHTML = "";
-    pendingJSONNews = null;
-    pendingJSONErrors = [];
-
-    button.textContent = "Continue →";
-    button.disabled = false;
-
-    try {
-        if (!text) {
-            throw new Error("पहले JSON डेटा पेस्ट करें या Add File चुनें।");
-        }
-
-        const data = JSON.parse(text);
-
-        let items;
-
-        if (Array.isArray(data)) {
-            items = data;
-        } else if (data && Array.isArray(data.news)) {
-            items = data.news;
-        } else if (data && Array.isArray(data.items)) {
-            items = data.items;
-        } else {
-            throw new Error('JSON में "news" या "items" array होना चाहिए।');
-        }
-
-        if (!items.length) {
-            throw new Error("इस फ़ाइल में कोई समाचार नहीं मिला।");
-        }
-
-        if (items.length > 10000) {
-            throw new Error("एक बार में अधिकतम 10,000 समाचार आयात करें।");
-        }
-
-        const validItems = [];
-        const errors = [];
-
-        items.forEach((item,index) => {
-            try {
-                validItems.push(normalizeImportedNews(item,index));
-            } catch(error) {
-                errors.push("Item " + (index+1) + ": " + error.message);
-            }
-        });
-
-        if (!validItems.length) {
-            throw new Error(
-                "कोई वैध समाचार नहीं मिला।\n" + errors.slice(0,10).join("\n")
-            );
-        }
-
-        pendingJSONNews = validItems;
-        pendingJSONErrors = errors;
-
-        preview.textContent =
-            "✅ JSON जाँच पूरी हुई।\n" +
-            "कुल आइटम: " + items.length + "\n" +
-            "आयात के लिए तैयार: " + validItems.length + "\n" +
-            "गलत प्रारूप वाले आइटम छोड़े जाएँगे: " + errors.length +
-            "\n\nContinue दबाकर समाचार सेव करें।";
-
-        previewList.innerHTML = validItems.slice(0,50).map((item,index) => `
-            <div class="preview-item">
-                <strong>${index+1}. ${escapeHTML(item.title)}</strong>
-                <span>
-                    ${escapeHTML(item.date || "तारीख उपलब्ध नहीं")}
-                    • ${escapeHTML(item.category)}
-                    • ${escapeHTML(item.region)}
-                </span>
-            </div>
-        `).join("");
-
-        if (validItems.length > 50) {
-            previewList.insertAdjacentHTML("beforeend",
-                `<div class="preview-item">और ${validItems.length-50} समाचार...</div>`
-            );
-        }
-
-        button.textContent = "Continue →";
-
-    } catch(error) {
-        preview.textContent = "❌ JSON Error:\n" + error.message;
-    }
-}
-
-async function continueJSONImport() {
-    if (!pendingJSONNews) {
-        validateJSON();
-
-        if (!pendingJSONNews) return;
-
-        /*
-          First click previews and validates.
-          The user then clicks Continue again to save.
-        */
-        document.getElementById("importPreview").textContent +=
-            "\n\nडेटा जाँच लिया गया है। अब Continue दोबारा दबाएँ।";
-
-        return;
-    }
-
-    const button = document.getElementById("continueImportBtn");
-    const preview = document.getElementById("importPreview");
-    const resultBox = document.getElementById("importResults");
-
-    if (!db) {
-        preview.textContent = "Local database तैयार नहीं है। फिर प्रयास करें।";
-        return;
-    }
-
-    button.disabled = true;
-    button.textContent = "Saving...";
-
-    resultBox.classList.remove("hidden");
-    resultBox.textContent = "समाचार सेव किए जा रहे हैं...";
-
-    let added = 0;
-    let duplicates = 0;
-    let failed = 0;
-
-    try {
-        const existing = await getAllFromDB();
-
-        const ids = new Set(existing.map(n => n.id));
-
-        const urls = new Set(
-            existing.map(n => safeURL(n.url || "")).filter(Boolean)
-        );
-
-        const titleDates = new Set(
-            existing.map(n =>
-                String(n.title || "").trim().toLowerCase() +
-                "|" + String(n.date || "")
-            )
-        );
-
-        for (const item of pendingJSONNews) {
-            const titleDate =
-                item.title.trim().toLowerCase() + "|" + item.date;
-
-            if (
-                ids.has(item.id) ||
-                (item.url && urls.has(item.url)) ||
-                titleDates.has(titleDate)
-            ) {
-                duplicates++;
-                continue;
-            }
-
-            try {
-                await saveNewsToDB(item);
-
-                ids.add(item.id);
-                if (item.url) urls.add(item.url);
-                titleDates.add(titleDate);
-
-                added++;
-
-            } catch(error) {
-                console.error(error);
-                failed++;
-            }
-        }
-
-        await reloadNews();
-
-        preview.textContent = "✅ Import पूरा हो गया।";
-
-        resultBox.textContent =
-            "नए समाचार सेव हुए: " + added + "\n" +
-            "डुप्लिकेट छोड़े गए: " + duplicates + "\n" +
-            "सेव करने में असफल: " + failed + "\n" +
-            "गलत प्रारूप वाले छोड़े गए: " + pendingJSONErrors.length +
-            "\n\nसमाचार आपके लोकल ब्राउज़र में सेव हैं।";
-
-        pendingJSONNews = null;
-        pendingJSONErrors = [];
-
-        button.textContent = "Imported ✓";
-
-    } catch(error) {
-        preview.textContent = "❌ Import असफल: " + error.message;
-        button.disabled = false;
-        button.textContent = "Retry Import";
-    }
-}
-
-
-/* ==========================================
-   11. JSON BACKUP AND RESTORE
-========================================== */
-
-function exportBackup() {
-    const data = {
-        app:"Current Affairs Pro",
-        version:1,
-        exportedAt:new Date().toISOString(),
-        news:allNews,
-        settings:{
-            feeds:Object.fromEntries(
-                SOURCES.map(s => [s.id,s.feed || ""])
-            ),
-            states:sourceStates
-        }
+    utterance.onend = () => {
+        statusBox.textContent = "Speech Completed";
     };
 
-    const blob = new Blob(
-        [JSON.stringify(data,null,2)],
-        {type:"application/json"}
-    );
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = "current-affairs-backup-" +
-        new Date().toISOString().slice(0,10) + ".json";
-
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url),1000);
-}
-
-async function importBackup(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    try {
-        if (file.size > 30 * 1024 * 1024) {
-            throw new Error("Backup फ़ाइल 30 MB से बड़ी है।");
-        }
-
-        const data = JSON.parse(await file.text());
-
-        if (!data || !Array.isArray(data.news)) {
-            throw new Error("यह वैध Current Affairs Backup नहीं है।");
-        }
-
-        const cleaned = data.news.map((n,index) => {
-            const item = normalizeImportedNews(n,index);
-
-            item.id = String(n.id || item.id);
-            item.bookmarked = !!n.bookmarked;
-            item.createdAt = n.createdAt || item.createdAt;
-            item.updatedAt = n.updatedAt || item.updatedAt;
-            item.type = n.type === "rss" ? "rss" : "manual";
-
-            return item;
-        });
-
-        if (!confirm(
-            cleaned.length + " समाचार Restore होंगे।\n" +
-            "वर्तमान समाचारों की जगह Backup का डेटा आ जाएगा।\n\nजारी रखें?"
-        )) return;
-
-        await replaceAllNews(cleaned);
-
-        if (data.settings && data.settings.feeds) {
-            SOURCES.forEach(source => {
-                const feed = data.settings.feeds[source.id];
-
-                if (typeof feed === "string") {
-                    source.feed = safeURL(feed);
-                }
-            });
-
-            sourceStates = data.settings.states || {};
-            saveSettings();
-        }
-
-        await reloadNews();
-
-        alert("Backup सफलतापूर्वक Restore हो गया।");
-
-    } catch(error) {
-        alert("Restore असफल:\n" + error.message);
-    } finally {
-        event.target.value = "";
-    }
-}
-
-
-/* ==========================================
-   12. RSS FEED SUPPORT
-========================================== */
-
-async function fetchTextWithTimeout(url,timeout=15000) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(),timeout);
-
-    try {
-        const response = await fetch(url,{
-            signal:controller.signal,
-            cache:"no-store"
-        });
-
-        if (!response.ok) {
-            throw new Error("HTTP " + response.status);
-        }
-
-        return await response.text();
-
-    } finally {
-        clearTimeout(timer);
-    }
-}
-
-async function fetchFeedText(url) {
-    let directError;
-
-    try {
-        return await fetchTextWithTimeout(url);
-    } catch(error) {
-        directError = error;
-    }
-
-    try {
-        return await fetchTextWithTimeout(
-            RSS_PROXY + encodeURIComponent(url),
-            20000
-        );
-    } catch(error) {
-        throw new Error(
-            "Direct request और proxy दोनों असफल। " +
-            "CORS या वेबसाइट की अनुमति समस्या हो सकती है। " +
-            "Direct: " + directError.message
-        );
-    }
-}
-
-function parseFeed(xmlText,source) {
-    const doc = new DOMParser().parseFromString(xmlText,"text/xml");
-
-    if (doc.querySelector("parsererror")) {
-        throw new Error("वैध RSS/Atom XML नहीं मिला।");
-    }
-
-    const nodes = Array.from(doc.querySelectorAll("item,entry"));
-
-    return nodes.map(node => {
-        const getText = selectors => {
-            for (const selector of selectors) {
-                const element = node.querySelector(selector);
-
-                if (element) {
-                    const value = element.textContent.trim();
-                    if (value) return value;
-                }
-            }
-
-            return "";
-        };
-
-        let link = "";
-        const linkEl = node.querySelector("link");
-
-        if (linkEl) {
-            link = linkEl.textContent.trim() ||
-                linkEl.getAttribute("href") || "";
-        }
-
-        const title = getText(["title"]);
-
-        let summary = getText(["description","summary","content"]);
-
-        summary = summary
-            .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,"")
-            .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,"")
-            .replace(/<[^>]*>/g," ")
-            .replace(/&nbsp;/gi," ")
-            .replace(/&amp;/gi,"&")
-            .replace(/&quot;/gi,'"')
-            .replace(/&#39;/gi,"'")
-            .replace(/&lt;/gi,"<")
-            .replace(/&gt;/gi,">")
-            .replace(/\s+/g," ")
-            .trim();
-
-        const published = getText(["pubDate","published","updated"]);
-        const date = validDate(published);
-
-        const url = safeURL(link) || source.url;
-
-        return {
-            id:"rss-" + source.id + "-" + simpleHash(url + title),
-            title:title || "Untitled article",
-            summary:summary.slice(0,3000),
-            date,
-            category:classifyNews(title,summary),
-            region:detectRegion(title + " " + summary),
-            sourceId:source.id,
-            url,
-            tags:["RSS"],
-            bookmarked:false,
-            createdAt:new Date().toISOString(),
-            updatedAt:new Date().toISOString(),
-            type:"rss"
-        };
-    }).filter(n => n.title && n.url);
-}
-
-async function refreshSource(source) {
-    if (!source.feed) {
-        sourceStates[source.id] = {
-            status:"Not configured",
-            message:"RSS URL नहीं जोड़ा गया"
-        };
-
-        saveSettings();
-        return;
-    }
-
-    sourceStates[source.id] = {
-        status:"Loading",
-        message:"Feed पढ़ा जा रहा है..."
+    utterance.onerror = () => {
+        statusBox.textContent = "Speech Error";
     };
 
-    saveSettings();
-    renderSources();
-
-    try {
-        const text = await fetchFeedText(source.feed);
-        const parsed = parseFeed(text,source);
-        const existing = await getAllFromDB();
-
-        const map = new Map(existing.map(n => [n.id,n]));
-
-        let count = 0;
-
-        for (const item of parsed) {
-            const old = map.get(item.id);
-
-            if (old) {
-                item.bookmarked = !!old.bookmarked;
-            }
-
-            await saveNewsToDB(item);
-            count++;
-        }
-
-        sourceStates[source.id] = {
-            status:"Success",
-            message:count + " RSS items processed",
-            checkedAt:new Date().toISOString()
-        };
-
-    } catch(error) {
-        sourceStates[source.id] = {
-            status:"Failed",
-            message:error.message,
-            checkedAt:new Date().toISOString()
-        };
-    }
-
-    saveSettings();
-    renderSources();
+    speechSynthesis.speak(utterance);
 }
 
-async function refreshAllSources() {
-    const configured = SOURCES.filter(s => s.feed);
+function pauseSpeech() {
+    speechSynthesis.pause();
+    statusBox.textContent = "Speech Paused";
+}
 
-    if (!configured.length) {
-        alert("कोई RSS Feed configured नहीं है।");
+function resumeSpeech() {
+    speechSynthesis.resume();
+    statusBox.textContent = "Speech Resumed";
+}
+
+function stopSpeech() {
+    speechSynthesis.cancel();
+    statusBox.textContent = "Speech Stopped";
+}
+
+function resetAll() {
+    stopSpeech();
+    textBox.value = "";
+    speed.value = 1;
+    pitch.value = 1;
+    volume.value = 1;
+
+    speed.oninput();
+    pitch.oninput();
+    volume.oninput();
+}
+
+// MP3 Export
+// SpeechSynthesis का audio stream सीधे उपलब्ध नहीं होता.
+// इसलिए वास्तविक MP3 export के लिए Web Audio input चाहिए.
+
+async function downloadMP3() {
+
+    let text = textBox.value.trim();
+
+    if (!text) {
+        alert("पहले टेक्स्ट लिखें!");
         return;
     }
 
-    for (const source of configured) {
-        await refreshSource(source);
+    if (!window.AudioContext ||
+        !navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
+
+        alert("आपके ब्राउज़र में जरूरी Audio Recording सुविधा उपलब्ध नहीं है।");
+        return;
     }
-
-    await reloadNews();
-
-    const success = configured.filter(s =>
-        sourceStates[s.id] &&
-        sourceStates[s.id].status === "Success"
-    ).length;
 
     alert(
-        "RSS Refresh पूरा हुआ।\n" +
-        "Configured feeds: " + configured.length + "\n" +
-        "Successful feeds: " + success
+      "ध्यान दें: Chrome SpeechSynthesis का audio सीधे रिकॉर्ड नहीं कर सकता। " +
+      "यह बटन वास्तविक TTS MP3 बनाने के लिए अभी उपलब्ध नहीं है।"
     );
 }
-
-
-/* ==========================================
-   13. SOURCE MANAGEMENT
-========================================== */
-
-function renderSources() {
-    const container = document.getElementById("sourceList");
-
-    container.innerHTML = SOURCES.map(source => {
-        const state = sourceStates[source.id] || {};
-
-        return `
-            <article class="source-card">
-                <h3>${escapeHTML(source.name)}</h3>
-
-                <a href="${escapeHTML(source.url)}"
-                    target="_blank" rel="noopener noreferrer">
-                    Open Website ↗
-                </a>
-
-                <p>${escapeHTML(source.description)}</p>
-
-                <div class="badges">
-                    <span class="badge ${source.feed ? "green" : ""}">
-                        ${source.feed ? "RSS Configured" : "Website Only"}
-                    </span>
-                    ${source.id === "insights-ias"
-                        ? '<span class="badge green">Default Feed</span>' : ""}
-                </div>
-
-                <div class="source-status">
-                    <strong>Status:</strong> ${escapeHTML(state.status || "Not checked")}
-                    <br>${escapeHTML(state.message || "")}
-                </div>
-
-                <div class="button-row">
-                    <button class="btn small"
-                        onclick="configureFeed('${escapeHTML(source.id)}')">
-                        ${source.feed ? "Change Feed" : "Configure Feed"}
-                    </button>
-
-                    <button class="btn small secondary"
-                        onclick="testSource('${escapeHTML(source.id)}')">
-                        Test / Refresh
-                    </button>
-                </div>
-            </article>
-        `;
-    }).join("");
-}
-
-function configureFeed(id) {
-    const source = SOURCES.find(s => s.id === id);
-    if (!source) return;
-
-    const value = prompt(
-        "RSS/Atom Feed URL डालें:",
-        source.feed || ""
-    );
-
-    if (value === null) return;
-
-    const url = safeURL(value.trim());
-
-    if (!url) {
-        alert("कृपया वैध HTTP/HTTPS URL डालें।");
-        return;
-    }
-
-    source.feed = url;
-
-    sourceStates[id] = {
-        status:"Configured",
-        message:"Feed URL सेव हो गया।"
-    };
-
-    saveSettings();
-    renderSources();
-}
-
-async function testSource(id) {
-    const source = SOURCES.find(s => s.id === id);
-    if (!source) return;
-
-    if (!source.feed) {
-        configureFeed(id);
-        if (!source.feed) return;
-    }
-
-    await refreshSource(source);
-    await reloadNews();
-
-    const state = sourceStates[id];
-
-    alert(
-        source.name + "\n" +
-        (state ? state.status + "\n" + state.message : "No status")
-    );
-}
-
-
-/* ==========================================
-   14. RELOAD DATABASE
-========================================== */
-
-async function reloadNews() {
-    allNews = await getAllFromDB();
-
-    allNews.sort((a,b) =>
-        (b.date || "").localeCompare(a.date || "")
-    );
-
-    renderNews();
-    updateStats();
-}
-
-
-/* ==========================================
-   15. MODAL CLOSE HANDLERS
-========================================== */
-
-document.getElementById("importModal").addEventListener("click",event => {
-    if (event.target === event.currentTarget) closeImportModal();
-});
-
-document.getElementById("newsModal").addEventListener("click",event => {
-    if (event.target === event.currentTarget) closeNewsModal();
-});
-
-
-/* ==========================================
-   16. INITIALIZE APP
-========================================== */
-
-async function initialize() {
-    loadSettings();
-    initializeFilters();
-
-    try {
-        db = await openDatabase();
-        await reloadNews();
-        renderSources();
-    } catch(error) {
-        document.getElementById("newsList").innerHTML = `
-            <div class="empty">
-                <h3>Database Error</h3>
-                <p>${escapeHTML(error.message)}</p>
-                <p>Chrome या किसी आधुनिक ब्राउज़र में ऐप खोलकर देखें।</p>
-            </div>
-        `;
-    }
-}
-
-initialize();
 
 </script>
+
 </body>
 </html>
