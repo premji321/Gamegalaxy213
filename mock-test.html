@@ -1,837 +1,1578 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photo Video Studio V8</title>
+<title>Professional Video Studio V5</title>
 
 <style>
+:root{
+ --bg:#0b1020;
+ --panel:#151e31;
+ --inner:#0b1528;
+ --border:#30415c;
+ --blue:#159ee5;
+ --green:#07976c;
+ --red:#d94359;
+ --text:#f2f5ff;
+ --muted:#9aabc3;
+}
 *{box-sizing:border-box}
 body{
- margin:0;background:#101522;color:#fff;
- font-family:Arial,sans-serif
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;
 }
 header{
- padding:15px;background:#1e293b;
- border-bottom:1px solid #475569;
- display:flex;justify-content:space-between;
- align-items:center;flex-wrap:wrap;gap:10px
+ background:#111a2c;text-align:center;
+ padding:18px 10px;border-bottom:1px solid var(--border)
 }
-header h2{margin:0;color:#60a5fa}
-main{max-width:1400px;margin:auto;padding:15px}
+header h1{font-size:22px;color:#55caff;margin:0}
+header p{font-size:12px;color:var(--muted)}
+.container{max-width:1250px;margin:auto;padding:13px}
 .panel{
- background:#1e293b;padding:15px;
- border-radius:12px;margin-bottom:15px;
- border:1px solid #334155
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:11px;padding:15px;margin-bottom:14px
 }
-h3{margin:0 0 12px;color:#93c5fd}
-button{
- background:#2563eb;color:white;border:0;
- border-radius:7px;padding:10px 15px;
- margin:3px;cursor:pointer;font-weight:bold
+h3{font-size:16px;color:#62c9ff;margin:0 0 14px}
+h4{font-size:13px;color:#6ccaff}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+button,.upload{
+ background:#087fca;color:white;border:0;
+ border-radius:7px;padding:10px 13px;
+ font-weight:bold;cursor:pointer;margin:3px;
 }
-button:hover{background:#1d4ed8}
+button:disabled{opacity:.4;cursor:not-allowed}
+.secondary{background:#35445e}
+.success{background:#087b58}
+.danger{background:#a83249}
 input,select,textarea{
- background:#0f172a;color:white;
- border:1px solid #475569;
- border-radius:6px;padding:9px;max-width:100%
+ background:#0b1425;color:white;
+ border:1px solid #40516b;border-radius:6px;
+ padding:8px;max-width:100%;
 }
-input[type=file]{width:100%}
-textarea{width:100%;min-height:90px}
-.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:130px}
-label{font-size:13px;color:#cbd5e1}
-#stage{
- position:relative;width:100%;
- aspect-ratio:16/9;background:#000;
- border-radius:10px;overflow:hidden
+input[type=file]{display:none}
+input[type=range]{accent-color:#19baff}
+textarea{width:100%;min-height:105px;resize:vertical}
+label{font-size:12px;color:#c8d7e9}
+.small{font-size:11px;color:var(--muted)}
+.status{font-size:12px;color:#69d3ff;margin-top:10px}
+.track{
+ background:var(--inner);border:1px solid #2a3b56;
+ border-radius:8px;padding:11px;margin-top:10px
 }
-#screen{
- display:block;width:100%;height:100%;
- object-fit:contain
-}
-#empty{
- position:absolute;inset:0;display:flex;
- align-items:center;justify-content:center;
- color:#94a3b8;text-align:center
-}
-#caption{
- position:absolute;left:5%;right:5%;
- bottom:8%;text-align:center;
- font-size:clamp(17px,3vw,34px);
- font-weight:bold;color:white;
- text-shadow:2px 2px 5px black;
- pointer-events:none
-}
-.word.active{background:#facc15;color:#111827;border-radius:3px}
-#timeline{
+.track-title{font-size:12px;color:#67caff;font-weight:bold}
+.timeline{
  display:flex;gap:10px;overflow-x:auto;
- padding:10px 0;min-height:125px
+ padding:12px 2px;min-height:150px
 }
-.card{
- flex:0 0 130px;background:#0f172a;
- border:2px solid #475569;border-radius:8px;
- padding:6px;cursor:pointer
+.photo-card{
+ width:205px;min-width:205px;
+ padding:8px;background:#111d32;
+ border:2px solid #34435d;border-radius:9px;
 }
-.card.selected{border-color:#60a5fa}
-.card img{width:100%;height:75px;object-fit:cover}
-.card small{display:block;margin:5px 0}
-.card input,.card select{width:100%;margin:3px 0}
-.card button{background:#dc2626;width:100%;margin:3px 0}
-#progress{height:7px;background:#334155;border-radius:8px;margin-top:10px}
-#bar{height:100%;width:0;background:#22c55e;border-radius:8px}
-#status{font-size:13px;color:#93c5fd;margin-top:8px}
+.photo-card.active{border-color:#20bdff}
+.photo-card img{
+ width:100%;height:105px;object-fit:cover;border-radius:5px
+}
+.photo-card .filename{
+ font-size:11px;white-space:nowrap;
+ overflow:hidden;text-overflow:ellipsis;margin:6px 0
+}
+.photo-card input,.photo-card select{
+ width:100%;margin:4px 0;font-size:11px
+}
+.photo-card button{font-size:11px;padding:6px 8px}
+.photo-settings{
+ background:#0a1425;border-radius:6px;
+ padding:8px;margin-top:8px
+}
+.preview{background:#000;border-radius:8px;overflow:hidden}
+canvas{width:100%;height:auto;display:block}
+.info{
+ display:flex;justify-content:space-between;
+ font-size:11px;color:var(--muted);margin-top:7px
+}
+#seek{width:100%;margin:10px 0}
+.audio-track{
+ background:#203650;border-radius:5px;
+ padding:11px;margin-top:10px;font-size:12px
+}
+.option-box{
+ background:#0d1729;border:1px solid #30415c;
+ border-radius:8px;padding:12px;margin-top:10px
+}
+.export-box{
+ border:1px dashed #50647e;border-radius:8px;
+ padding:18px;text-align:center
+}
+.progress-track{
+ background:#29364b;height:9px;
+ border-radius:10px;overflow:hidden;margin:14px 0
+}
+#progressBar{height:100%;width:0%;background:#18b9ef}
+.check-row{display:flex;align-items:center;gap:6px}
+footer{text-align:center;color:#75839a;padding:20px;font-size:12px}
+@media(max-width:600px){
+ .container{padding:8px}
+ .panel{padding:11px}
+ .photo-card{width:190px;min-width:190px}
+ header h1{font-size:19px}
+}
 </style>
 </head>
 
 <body>
 
 <header>
- <h2>🎬 Photo Video Studio V8</h2>
- <span>Preview Engine Updated</span>
+<h1>🎬 PROFESSIONAL VIDEO STUDIO V5</h1>
+<p>Advanced Photo Editor | Drone Camera | Cinematic Transitions | Audio | Narration</p>
 </header>
 
-<main>
+<div class="container">
 
-<section class="panel">
- <h3>1. Upload Photos</h3>
- <input type="file" id="photosInput" accept="image/*" multiple>
- <div class="row">
-  <button onclick="clearPhotos()">Clear All</button>
-  <button onclick="previousPhoto()">◀ Previous</button>
-  <button onclick="nextPhoto()">Next ▶</button>
- </div>
- <div id="timeline"></div>
-</section>
+<!-- 01 PHOTO LIBRARY -->
 
-<section class="panel">
- <h3>2. Video Preview</h3>
- <div id="stage">
-  <canvas id="screen" width="1280" height="720"></canvas>
-  <div id="empty">Upload photos to start preview</div>
-  <div id="caption"></div>
- </div>
+<div class="panel">
+<h3>01. Photo Library & Individual Timeline</h3>
 
- <div class="row">
-  <button onclick="playPreview()">▶ Play</button>
-  <button onclick="pausePreview()">⏸ Pause</button>
-  <button onclick="stopPreview()">⏹ Stop</button>
-  <span id="clock">00:00 / 00:00</span>
- </div>
- <div id="progress"><div id="bar"></div></div>
-</section>
+<div class="row">
+<label class="upload" for="photoInput">📷 Upload Multiple Photos</label>
+<input type="file" id="photoInput" accept="image/*" multiple>
+<button class="secondary" onclick="clearPhotos()">Clear All</button>
+</div>
 
-<section class="panel">
- <h3>3. Transition Settings</h3>
- <div class="row">
-  <div class="field">
-   <label>Default Transition</label>
-   <select id="defaultTransition">
-    <option value="fade">Fade</option>
-    <option value="slide-left">Slide Left</option>
-    <option value="slide-right">Slide Right</option>
-    <option value="slide-up">Slide Up</option>
-    <option value="slide-down">Slide Down</option>
-    <option value="zoom-in">Zoom In</option>
-    <option value="zoom-out">Zoom Out</option>
-    <option value="zoom">Zoom In Out</option>
-    <option value="wipe-left">Wipe Left</option>
-    <option value="wipe-right">Wipe Right</option>
-    <option value="wipe-up">Wipe Up</option>
-    <option value="wipe-down">Wipe Down</option>
-    <option value="circle">Circle Reveal</option>
-    <option value="blur">Blur</option>
-    <option value="rotate">Rotate</option>
-    <option value="kenburns">Ken Burns</option>
-    <option value="pan-left">Pan Left</option>
-    <option value="pan-right">Pan Right</option>
-    <option value="none">No Transition</option>
-   </select>
-  </div>
-  <div class="field">
-   <label>Transition Duration</label>
-   <select id="transitionTime">
-    <option value=".3">0.3 seconds</option>
-    <option value=".5" selected>0.5 seconds</option>
-    <option value=".8">0.8 seconds</option>
-    <option value="1">1 second</option>
-    <option value="1.5">1.5 seconds</option>
-    <option value="2">2 seconds</option>
-   </select>
-  </div>
- </div>
-</section>
+<p class="small" id="photoCount">No photos uploaded</p>
 
-<section class="panel">
- <h3>4. Background Audio</h3>
- <input type="file" id="audioInput" accept="audio/*">
- <div class="row">
-  <div class="field">
-   <label>Audio Volume</label>
-   <input type="range" id="volume" min="0" max="1" step=".05" value=".8">
-  </div>
-  <div class="field">
-   <label>Audio Start (seconds)</label>
-   <input type="number" id="audioStart" min="0" value="0">
-  </div>
-  <button onclick="removeAudio()">Remove Audio</button>
- </div>
- <audio id="audio" controls style="width:100%;margin-top:10px"></audio>
-</section>
+<div class="track">
+<div class="track-title">🖼 PHOTO TIMELINE</div>
 
-<section class="panel">
- <h3>5. Text Narration</h3>
- <textarea id="narration" placeholder="Write your narration here..."></textarea>
- <div class="row">
-  <div class="field">
-   <label>Text Position</label>
-   <select id="position">
-    <option value="bottom">Bottom</option>
-    <option value="center">Center</option>
-    <option value="top">Top</option>
-   </select>
-  </div>
-  <div class="field">
-   <label>Text Color</label>
-   <input type="color" id="textColor" value="#ffffff">
-  </div>
-  <div class="field">
-   <label>Font Size</label>
-   <input type="number" id="fontSize" value="30" min="12" max="80">
-  </div>
-  <div class="field">
-   <label>Words Per Minute</label>
-   <input type="number" id="wpm" value="150" min="60" max="300">
-  </div>
- </div>
- <div class="row">
-  <label><input type="checkbox" id="hideText"> Hide text</label>
-  <button onclick="listenText()">Listen Text</button>
-  <button onclick="stopVoice()">Stop Voice</button>
- </div>
-</section>
+<div class="timeline" id="photoTimeline">
+<span class="small">Upload your photos.</span>
+</div>
 
-<section class="panel">
- <h3>6. Video Export</h3>
- <p>Preview is available in this version. Export can be added after confirming that playback works correctly.</p>
- <div id="status">Ready</div>
-</section>
+<p class="small">
+हर फोटो के नीचे Duration, Transition Style और Transition Duration अलग-अलग सेट करें।
+Drag and Drop से फोटो का क्रम बदल सकते हैं।
+</p>
+</div>
+</div>
 
-</main>
+<!-- 02 PREVIEW -->
+
+<div class="panel">
+<h3>02. Video Preview Monitor</h3>
+
+<div class="preview">
+<canvas id="canvas" width="1280" height="720"></canvas>
+</div>
+
+<div class="info">
+<span id="photoInfo">Ready</span>
+<span id="timeInfo">00:00 / 00:00</span>
+</div>
+
+<div class="row" style="margin-top:12px">
+<button class="success" onclick="playPreview()">▶ PLAY</button>
+<button class="secondary" onclick="pausePreview()">Ⅱ PAUSE</button>
+<button class="danger" onclick="stopPreview()">■ STOP</button>
+<button class="secondary" onclick="previousPhoto()">⏮ PREVIOUS</button>
+<button class="secondary" onclick="nextPhoto()">NEXT ⏭</button>
+</div>
+
+<input type="range" id="seek" min="0" max="100" value="0">
+
+<div class="row">
+<label>Video Ratio
+<select id="ratio">
+<option value="16:9">16:9 Landscape</option>
+<option value="9:16">9:16 Portrait</option>
+<option value="1:1">1:1 Square</option>
+</select>
+</label>
+</div>
+
+<p class="status" id="previewStatus">Ready to Preview</p>
+</div>
+
+<!-- 03 AUDIO -->
+
+<div class="panel">
+<h3>03. Audio Studio</h3>
+
+<div class="row">
+<label class="upload" for="audioInput">🎵 Upload Audio</label>
+<input type="file" id="audioInput" accept="audio/*">
+<button class="danger" onclick="removeAudio()">Remove Audio</button>
+</div>
+
+<div class="track">
+<div class="track-title">🎧 AUDIO TIMELINE</div>
+<div class="audio-track" id="audioTimeline">No audio selected</div>
+
+<p class="small" id="audioDuration">Audio Duration: --</p>
+
+<audio id="audioPlayer" controls style="width:100%;margin-top:10px"></audio>
+
+<div class="row">
+<label>Volume
+<input type="range" id="volume" min="0" max="100" value="80">
+</label>
+
+<label class="check-row">
+<input type="checkbox" id="loopAudio" checked>
+Loop Audio
+</label>
+</div>
+</div>
+</div>
+
+<!-- 04 NARRATION -->
+
+<div class="panel">
+<h3>04. Smart Text Narration</h3>
+
+<div class="row">
+<label><input type="radio" name="soundMode" value="audio"> Background Audio</label>
+<label><input type="radio" name="soundMode" value="text" checked> Text Narration</label>
+<label><input type="radio" name="soundMode" value="none"> Mute</label>
+</div>
+
+<div class="track">
+<div class="track-title">📝 NARRATION SCRIPT</div>
+<textarea id="narration" placeholder="अपनी स्क्रिप्ट यहां लिखें..."></textarea>
+
+<div class="option-box">
+<h4>Narration Display Settings</h4>
+
+<div class="row">
+<label>Text Position
+<select id="textPosition">
+<option value="bottom">Bottom</option>
+<option value="center">Center</option>
+<option value="top">Top</option>
+</select>
+</label>
+
+<label>Font Size
+<input type="number" id="textSize" value="28" min="14" max="70">
+</label>
+
+<label>Text Color
+<input type="color" id="textColor" value="#ffffff">
+</label>
+
+<label>Highlight Color
+<input type="color" id="highlightColor" value="#ffd43b">
+</label>
+</div>
+
+<div class="row" style="margin-top:10px">
+<label class="check-row">
+<input type="checkbox" id="hideText">
+Hide Text From Viewers
+</label>
+
+<label class="check-row">
+<input type="checkbox" id="showBackground" checked>
+Show Text Background
+</label>
+</div>
+</div>
+
+<div class="option-box">
+<h4>Voice Settings</h4>
+<div class="row">
+<label>Voice
+<select id="voiceSelect">
+<option value="">Default Hindi Voice</option>
+</select>
+</label>
+
+<label>Speaking Speed
+<select id="voiceSpeed">
+<option value=".7">Very Slow</option>
+<option value=".85">Slow</option>
+<option value="1" selected>Normal</option>
+<option value="1.15">Fast</option>
+</select>
+</label>
+</div>
+
+<div class="row" style="margin-top:10px">
+<button onclick="listenText()">🔊 Listen Narration</button>
+<button class="secondary" onclick="stopVoice()">Stop Voice</button>
+</div>
+<p id="voiceStatus" class="status">Ready for narration.</p>
+</div>
+
+<div class="track">
+<div class="track-title">🎤 KARAOKE PREVIEW</div>
+<div id="karaokePreview" style="background:#080e1c;padding:20px;text-align:center;min-height:65px;border-radius:7px">
+Your narration will appear here.
+</div>
+</div>
+</div>
+</div>
+
+<!-- 05 EXPORT -->
+
+<div class="panel">
+<h3>05. Video Export Studio</h3>
+
+<div class="export-box">
+<p>🎥 आपका Slideshow Video तैयार करें</p>
+
+<label>Export Quality
+<select id="quality">
+<option value="2500000">Standard Quality</option>
+<option value="5000000" selected>High Quality</option>
+<option value="8000000">Very High Quality</option>
+</select>
+</label>
+
+<div class="row" style="justify-content:center;margin-top:12px">
+<button class="success" id="exportBtn" onclick="exportVideo()">🎬 EXPORT VIDEO</button>
+<button class="secondary" id="downloadBtn" disabled onclick="downloadVideo()">⬇ DOWNLOAD VIDEO</button>
+</div>
+
+<div class="progress-track">
+<div id="progressBar"></div>
+</div>
+<p id="exportPercent">0%</p>
+<p id="exportStatus" class="status">Ready for Export</p>
+</div>
+</div>
+
+</div>
+
+<footer>Professional Video Studio V5.0 | Cinematic Photo Video Editor</footer>
 
 <script>
-"use strict";
 
-/* =========================
-   APPLICATION DATA
-========================= */
+// ========================================
+// 01. GLOBAL VARIABLES
+// ========================================
 
-const $=id=>document.getElementById(id);
-const canvas=$("screen");
+const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
+const audio=document.getElementById("audioPlayer");
 
 let photos=[];
-let selected=0;
-let playing=false;
-let raf=0;
-let playStart=0;
-let pausedTime=0;
+let currentIndex=0;
+
+let previewPlaying=false;
+let previewRAF=null;
+let previewStart=0;
+let previewPosition=0;
+
 let audioURL=null;
+let videoBlob=null;
+let videoURL=null;
+let recorder=null;
+let canvasStream=null;
+let audioStream=null;
+let audioContext=null;
+let audioSource=null;
+let audioDestination=null;
+let exportTimer=null;
+let exporting=false;
+let exportStart=0;
+let dragIndex=null;
 
-/* =========================
-   PHOTO UPLOAD
-========================= */
+let narrationWords=[];
+let narrationLines=[];
+let activeWord=0;
+let speechUtterance=null;
 
-$("photosInput").addEventListener("change",function(e){
+// ========================================
+// 02. TIME FUNCTIONS
+// ========================================
 
- const files=Array.from(e.target.files);
+function formatTime(t){
+ t=Math.floor(Math.max(0,t||0));
+ return String(Math.floor(t/60)).padStart(2,"0")+":"+
+ String(t%60).padStart(2,"0");
+}
 
- files.forEach(file=>{
+function totalDuration(){
+ return photos.reduce((s,p)=>s+p.duration,0);
+}
+
+function getStartTime(index){
+ let t=0;
+ for(let i=0;i<index;i++)t+=photos[i].duration;
+ return t;
+}
+
+function getMode(){
+ return document.querySelector(
+ 'input[name="soundMode"]:checked'
+ ).value;
+}
+
+function updateTime(){
+ document.getElementById("timeInfo").textContent=
+ formatTime(previewPosition)+" / "+formatTime(totalDuration());
+}
+
+// ========================================
+// 03. CANVAS RATIO
+// ========================================
+
+function setRatio(){
+
+ const r=document.getElementById("ratio").value;
+
+ if(r==="16:9"){
+  canvas.width=1280;canvas.height=720;
+ }else if(r==="9:16"){
+  canvas.width=720;canvas.height=1280;
+ }else{
+  canvas.width=1080;canvas.height=1080;
+ }
+
+ if(photos.length)renderAt(previewPosition);
+ else clearCanvas();
+}
+
+document.getElementById("ratio").addEventListener("change",setRatio);
+
+function clearCanvas(){
+ ctx.fillStyle="#000";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle="#75849b";
+ ctx.font="26px Arial";
+ ctx.textAlign="center";
+ ctx.fillText("UPLOAD PHOTOS TO START",canvas.width/2,canvas.height/2);
+}
+
+// ========================================
+// 04. TRANSITION CATALOG
+// ========================================
+
+const TRANSITIONS={
+
+ "Fade & Dissolve":[
+  ["fade","Fade"],
+  ["fadeBlack","Fade Through Black"],
+  ["fadeWhite","Fade Through White"],
+  ["dissolve","Cross Dissolve"],
+  ["fadeOut","Fade Out / In"]
+ ],
+
+ "Slide & Push":[
+  ["slideLeft","Slide Left"],
+  ["slideRight","Slide Right"],
+  ["slideUp","Slide Up"],
+  ["slideDown","Slide Down"],
+  ["pushLeft","Push Left"],
+  ["pushRight","Push Right"]
+ ],
+
+ "Zoom & Camera":[
+  ["zoomIn","Zoom In"],
+  ["zoomOut","Zoom Out"],
+  ["zoomDynamic","Dynamic Zoom"],
+  ["zoomThrough","Zoom Through"],
+  ["zoomBlur","Zoom Blur"],
+  ["cameraPush","Camera Push In"],
+  ["cameraPull","Camera Pull Out"],
+  ["cameraPan","Camera Pan"],
+  ["cameraSweep","Camera Sweep"]
+ ],
+
+ "Drone & Helicopter":[
+  ["droneRise","Drone Rise – Ground to Sky"],
+  ["droneDescend","Drone Descend – Sky to City"],
+  ["droneFlyover","Drone Flyover"],
+  ["dronePush","Drone Push In"],
+  ["dronePull","Drone Pull Out"],
+  ["droneOrbit","Drone Orbit"],
+  ["helicopterOrbit","Helicopter Orbit"],
+  ["aerialReveal","Aerial City Reveal"],
+  ["aerialSweep","Aerial Sweep"],
+  ["topDown","Top Down Camera"],
+  ["tiltUp","Camera Tilt Up"],
+  ["tiltDown","Camera Tilt Down"]
+ ],
+
+ "Wipe & Mask":[
+  ["wipeLeft","Wipe Left"],
+  ["wipeRight","Wipe Right"],
+  ["wipeUp","Wipe Up"],
+  ["wipeDown","Wipe Down"],
+  ["circle","Circle Reveal"],
+  ["circleClose","Circle Close"],
+  ["radial","Radial Reveal"],
+  ["diagonal","Diagonal Wipe"],
+  ["clock","Clock Reveal"]
+ ],
+
+ "3D Effects":[
+  ["rotate","Rotate"],
+  ["flipH","Flip Horizontal"],
+  ["flipV","Flip Vertical"],
+  ["cube","3D Cube Style"],
+  ["page","Page Turn Style"],
+  ["card","Card Flip Style"]
+ ],
+
+ "Blur & Motion":[
+  ["blur","Blur"],
+  ["motionBlur","Motion Blur"],
+  ["radialBlur","Radial Blur"],
+  ["blurIn","Blur In"],
+  ["blurOut","Blur Out"]
+ ],
+
+ "Creative Effects":[
+  ["flash","White Flash"],
+  ["blackFlash","Black Flash"],
+  ["glitch","Glitch"],
+  ["shake","Camera Shake"],
+  ["spin","Spin Transition"],
+  ["swirl","Swirl Style"],
+  ["pixel","Pixel Reveal"],
+  ["rgb","RGB Flash"]
+ ]
+
+};
+
+// ========================================
+// 05. UPLOAD PHOTOS
+// ========================================
+
+document.getElementById("photoInput").addEventListener("change",e=>{
+
+ Array.from(e.target.files).forEach(file=>{
 
   if(!file.type.startsWith("image/"))return;
 
   const url=URL.createObjectURL(file);
   const img=new Image();
 
-  img.onload=function(){
+  img.onload=()=>{
 
    photos.push({
-    img:img,
-    url:url,
+    img,
+    url,
     name:file.name,
-    duration:3,
-    transition:$("defaultTransition").value
+    duration:5,
+    transition:"fade",
+    transitionDuration:1,
+    motion:"none"
    });
 
    renderTimeline();
 
-   $("empty").style.display="none";
-
-   if(photos.length===1){
-    selected=0;
-    pausedTime=0;
-    renderAt(0);
-   }
-
-   $("status").textContent="Photo loaded: "+file.name;
+   if(photos.length===1)renderAt(0);
   };
 
-  img.onerror=function(){
-   URL.revokeObjectURL(url);
-   $("status").textContent="Could not load "+file.name;
-  };
-
+  img.onerror=()=>URL.revokeObjectURL(url);
   img.src=url;
  });
 
  e.target.value="";
 });
 
-/* =========================
-   TIMELINE
-========================= */
-
-function renderTimeline(){
-
- const timeline=$("timeline");
- timeline.innerHTML="";
-
- photos.forEach((p,i)=>{
-
-  const card=document.createElement("div");
-  card.className="card"+(i===selected?" selected":"");
-
-  const img=document.createElement("img");
-  img.src=p.url;
-
-  const name=document.createElement("small");
-  name.textContent="Photo "+(i+1);
-
-  const duration=document.createElement("input");
-  duration.type="number";
-  duration.min=".5";
-  duration.step=".5";
-  duration.value=p.duration;
-  duration.title="Duration in seconds";
-
-  duration.onchange=function(e){
-   p.duration=Math.max(.5,Number(e.target.value)||3);
-   updateClock(pausedTime);
-  };
-
-  const trans=document.createElement("select");
-
-  Array.from($("defaultTransition").options).forEach(o=>{
-   const option=document.createElement("option");
-   option.value=o.value;
-   option.textContent=o.textContent;
-   trans.appendChild(option);
-  });
-
-  trans.value=p.transition;
-
-  trans.onchange=function(e){
-   p.transition=e.target.value;
-  };
-
-  const remove=document.createElement("button");
-  remove.textContent="Remove";
-
-  remove.onclick=function(e){
-   e.stopPropagation();
-   removePhoto(i);
-  };
-
-  card.append(img,name,duration,trans,remove);
-
-  card.onclick=function(){
-   pausePreview();
-   selected=i;
-   pausedTime=getStart(i);
-   renderTimeline();
-   renderAt(pausedTime);
-  };
-
-  timeline.appendChild(card);
- });
-}
-
-function removePhoto(i){
-
- URL.revokeObjectURL(photos[i].url);
- photos.splice(i,1);
-
- selected=Math.min(selected,photos.length-1);
-
- if(!photos.length){
-  stopPreview();
-  $("empty").style.display="flex";
-  clearCanvas();
- }else{
-  pausedTime=getStart(Math.max(0,selected));
-  renderAt(pausedTime);
- }
-
- renderTimeline();
-}
-
 function clearPhotos(){
+
+ if(exporting)return;
 
  stopPreview();
 
  photos.forEach(p=>URL.revokeObjectURL(p.url));
+
  photos=[];
- selected=0;
- pausedTime=0;
+ currentIndex=0;
+ previewPosition=0;
 
  renderTimeline();
  clearCanvas();
-
- $("empty").style.display="flex";
- $("status").textContent="Photos cleared";
+ updateTime();
 }
 
-/* =========================
-   VIDEO TIME CALCULATION
-========================= */
+// ========================================
+// 06. CREATE TRANSITION DROPDOWN
+// ========================================
 
-function duration(p){
- return Math.max(.5,Number(p.duration)||3);
+function createTransitionSelect(photo,index){
+
+ const select=document.createElement("select");
+
+ Object.entries(TRANSITIONS).forEach(([group,items])=>{
+
+  const optgroup=document.createElement("optgroup");
+  optgroup.label=group;
+
+  items.forEach(([value,label])=>{
+
+   const option=document.createElement("option");
+   option.value=value;
+   option.textContent=label;
+
+   optgroup.appendChild(option);
+  });
+
+  select.appendChild(optgroup);
+ });
+
+ select.value=photo.transition;
+ select.disabled=exporting;
+
+ select.onchange=()=>{
+
+  photo.transition=select.value;
+
+  if(!previewPlaying)renderAt(previewPosition);
+ };
+
+ return select;
 }
 
-function totalDuration(){
- return photos.reduce((a,p)=>a+duration(p),0);
+// ========================================
+// 07. CREATE MOTION DROPDOWN
+// ========================================
+
+function createMotionSelect(photo){
+
+ const select=document.createElement("select");
+
+ const options=[
+  ["none","No Camera Motion"],
+  ["kenburns","Ken Burns Slow Zoom"],
+  ["zoomIn","Continuous Zoom In"],
+  ["zoomOut","Continuous Zoom Out"],
+  ["droneRise","Drone Rising Camera"],
+  ["droneDescend","Drone Descending Camera"],
+  ["droneFlyover","Drone Flyover"],
+  ["droneOrbit","Drone Orbit"],
+  ["helicopter","Helicopter Camera Orbit"],
+  ["panLeft","Pan Left"],
+  ["panRight","Pan Right"],
+  ["panUp","Pan Up"],
+  ["panDown","Pan Down"],
+  ["aerial","Aerial City Sweep"],
+  ["tilt","Camera Tilt"],
+  ["handheld","Handheld Camera"],
+  ["parallax","Parallax Style"]
+ ];
+
+ options.forEach(([v,t])=>{
+  const op=document.createElement("option");
+  op.value=v;op.textContent=t;
+  select.appendChild(op);
+ });
+
+ select.value=photo.motion||"none";
+ select.disabled=exporting;
+
+ select.onchange=()=>{
+  photo.motion=select.value;
+ };
+
+ return select;
 }
 
-function getStart(index){
- let t=0;
- for(let i=0;i<index;i++)t+=duration(photos[i]);
- return t;
-}
+// ========================================
+// 08. PHOTO TIMELINE
+// ========================================
 
-function getIndex(time){
+function renderTimeline(){
 
- let t=0;
+ const box=document.getElementById("photoTimeline");
+ box.innerHTML="";
 
- for(let i=0;i<photos.length;i++){
+ photos.forEach((photo,index)=>{
 
-  if(time<t+duration(photos[i]))return i;
+  const card=document.createElement("div");
 
-  t+=duration(photos[i]);
- }
+  card.className="photo-card"+
+  (index===currentIndex?" active":"");
 
- return photos.length-1;
-}
+  card.draggable=!exporting;
 
-function getLocalTime(index,time){
- return time-getStart(index);
-}
+  const img=document.createElement("img");
+  img.src=photo.url;
 
-/* =========================
-   IMAGE DRAWING
-========================= */
+  const name=document.createElement("div");
+  name.className="filename";
+  name.textContent=(index+1)+". "+photo.name;
 
-function clearCanvas(){
+  const durationLabel=document.createElement("label");
+  durationLabel.textContent="Photo Duration";
 
- ctx.fillStyle="#000";
- ctx.fillRect(0,0,canvas.width,canvas.height);
-}
+  const duration=document.createElement("input");
+  duration.type="number";
+  duration.min=1;
+  duration.max=600;
+  duration.value=photo.duration;
+  duration.disabled=exporting;
 
-function drawImageCover(img,x,y,w,h,scale=1){
+  duration.onchange=()=>{
+   photo.duration=Math.max(1,Math.min(600,Number(duration.value)||5));
+   duration.value=photo.duration;
+   updateTime();
+  };
 
- const ratio=Math.max(w/img.width,h/img.height)*scale;
+  const transitionLabel=document.createElement("label");
+  transitionLabel.textContent="Individual Transition";
 
- const iw=img.width*ratio;
- const ih=img.height*ratio;
+  const transition=createTransitionSelect(photo,index);
 
- ctx.drawImage(
-  img,
-  x+(w-iw)/2,
-  y+(h-ih)/2,
-  iw,
-  ih
- );
-}
+  const transitionTimeLabel=document.createElement("label");
+  transitionTimeLabel.textContent="Transition Duration";
 
-function drawImageFit(img){
+  const transitionTime=document.createElement("select");
 
- const w=canvas.width;
- const h=canvas.height;
+  [0.5,1,1.5,2,2.5,3,4,5].forEach(v=>{
 
- const ratio=Math.min(w/img.width,h/img.height);
+   const op=document.createElement("option");
+   op.value=v;
+   op.textContent=v+" Seconds";
 
- const iw=img.width*ratio;
- const ih=img.height*ratio;
+   transitionTime.appendChild(op);
+  });
 
- ctx.fillStyle="#000";
- ctx.fillRect(0,0,w,h);
+  transitionTime.value=photo.transitionDuration;
+  transitionTime.disabled=exporting;
 
- ctx.drawImage(
-  img,
-  (w-iw)/2,
-  (h-ih)/2,
-  iw,
-  ih
- );
-}
+  transitionTime.onchange=()=>{
+   photo.transitionDuration=Number(transitionTime.value);
+  };
 
-/* =========================
-   TRANSITION ENGINE
-========================= */
+  const motionLabel=document.createElement("label");
+  motionLabel.textContent="Camera Motion (During Photo)";
 
-function drawPhoto(index,time){
+  const motion=createMotionSelect(photo);
 
- const p=photos[index];
- if(!p)return;
+  const settings=document.createElement("div");
+  settings.className="photo-settings";
 
- const local=getLocalTime(index,time);
- const progress=Math.max(0,Math.min(1,local/duration(p)));
-
- const type=p.transition;
- const w=canvas.width;
- const h=canvas.height;
-
- ctx.save();
-
- if(type==="zoom-in"){
-  drawImageCover(p.img,0,0,w,h,1+progress*.18);
- }
- else if(type==="zoom-out"){
-  drawImageCover(p.img,0,0,w,h,1.18-progress*.18);
- }
- else if(type==="zoom"){
-  drawImageCover(p.img,0,0,w,h,1+Math.sin(progress*Math.PI)*.12);
- }
- else if(type==="kenburns"){
-  drawImageCover(p.img,0,0,w,h,1.08+progress*.12);
- }
- else if(type==="pan-left"){
-  drawImageCover(p.img,-progress*w*.1,0,w*1.1,h);
- }
- else if(type==="pan-right"){
-  drawImageCover(p.img,-(1-progress)*w*.1,0,w*1.1,h);
- }
- else if(type==="rotate"){
-  ctx.translate(w/2,h/2);
-  ctx.rotate((progress-.5)*.08);
-  drawImageCover(p.img,-w/2,-h/2,w,h,1.1);
- }
- else if(type==="blur"){
-  ctx.filter="blur("+((1-progress)*10)+"px)";
-  drawImageCover(p.img,0,0,w,h);
-  ctx.filter="none";
- }
- else{
-  drawImageFit(p.img);
- }
-
- ctx.restore();
-}
-
-function drawTransition(index,time){
-
- const p=photos[index];
- if(!p)return;
-
- const next=photos[index+1];
- const trans=Number($("transitionTime").value);
- const remaining=getStart(index)+duration(p)-time;
-
- // Transition is applied only at the end of the current photo.
-
- if(!next||trans<=0||remaining>trans||remaining<0){
-  drawPhoto(index,time);
-  return;
- }
-
- const progress=Math.max(0,Math.min(1,1-remaining/trans));
- const type=p.transition;
- const w=canvas.width;
- const h=canvas.height;
-
- if(type==="none"){
-  drawPhoto(index,time);
-  return;
- }
-
- if(type==="fade"){
-
-  drawImageFit(next.img);
-
-  ctx.save();
-  ctx.globalAlpha=1-progress;
-  drawImageFit(p.img);
-  ctx.restore();
-
-  return;
- }
-
- if(type==="slide-left"){
-
-  drawImageFit(next.img);
-
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(0,0,w*(1-progress),h);
-  ctx.clip();
-
-  ctx.drawImage(
-   p.img,
-   -progress*w,0,w,h
+  settings.append(
+   durationLabel,duration,
+   transitionLabel,transition,
+   transitionTimeLabel,transitionTime,
+   motionLabel,motion
   );
 
-  ctx.restore();
-  return;
+  const buttons=document.createElement("div");
+  buttons.className="row";
+
+  const selectButton=document.createElement("button");
+  selectButton.textContent="Preview";
+  selectButton.className="secondary";
+  selectButton.disabled=exporting;
+
+  selectButton.onclick=()=>{
+   pausePreview();
+   currentIndex=index;
+   previewPosition=getStartTime(index);
+   renderAt(previewPosition);
+  };
+
+  const removeButton=document.createElement("button");
+  removeButton.textContent="✕ Remove";
+  removeButton.className="danger";
+  removeButton.disabled=exporting;
+
+  removeButton.onclick=()=>removePhoto(index);
+
+  buttons.append(selectButton,removeButton);
+
+  card.append(img,name,settings,buttons);
+
+  card.addEventListener("dragstart",()=>{
+   dragIndex=index;
+   card.style.opacity=".4";
+  });
+
+  card.addEventListener("dragend",()=>{
+   card.style.opacity="1";
+  });
+
+  card.addEventListener("dragover",e=>e.preventDefault());
+
+  card.addEventListener("drop",e=>{
+
+   e.preventDefault();
+
+   if(dragIndex===null || dragIndex===index)return;
+
+   const moved=photos.splice(dragIndex,1)[0];
+   photos.splice(index,0,moved);
+
+   currentIndex=index;
+   previewPosition=getStartTime(index);
+   dragIndex=null;
+
+   renderTimeline();
+   renderAt(previewPosition);
+  });
+
+  box.appendChild(card);
+ });
+
+ document.getElementById("photoCount").textContent=
+ photos.length+" Photos | Total: "+formatTime(totalDuration());
+
+ if(!photos.length){
+  box.innerHTML='<span class="small">No photos uploaded.</span>';
  }
+}
 
- if(type==="slide-right"){
+function removePhoto(index){
 
-  drawImageFit(next.img);
+ if(exporting)return;
 
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(progress*w,0,w*(1-progress),h);
-  ctx.clip();
+ pausePreview();
 
-  ctx.drawImage(
-   p.img,
-   progress*w,0,w,h
-  );
+ URL.revokeObjectURL(photos[index].url);
+ photos.splice(index,1);
 
-  ctx.restore();
-  return;
- }
+ currentIndex=Math.min(currentIndex,Math.max(0,photos.length-1));
+ previewPosition=getStartTime(currentIndex);
 
- if(type==="slide-up"||type==="slide-down"){
+ renderTimeline();
 
-  drawImageFit(next.img);
+ if(photos.length)renderAt(previewPosition);
+ else clearCanvas();
 
-  ctx.save();
-  ctx.beginPath();
+ updateTime();
+}
 
-  if(type==="slide-up"){
-   ctx.rect(0,0,w,h*(1-progress));
-   ctx.clip();
-   ctx.drawImage(p.img,0,-progress*h,w,h);
-  }else{
-   ctx.rect(0,progress*h,w,h*(1-progress));
-   ctx.clip();
-   ctx.drawImage(p.img,0,progress*h,w,h);
-  }
+// ========================================
+// 09. IMAGE DRAWING
+// ========================================
 
-  ctx.restore();
-  return;
- }
+function imageMetrics(img,scale=1){
 
- if(type==="wipe-left"||type==="wipe-right"||
-    type==="wipe-up"||type==="wipe-down"){
+ const W=canvas.width;
+ const H=canvas.height;
 
-  drawImageFit(p.img);
+ const base=Math.max(W/img.width,H/img.height);
 
-  ctx.save();
-  ctx.beginPath();
+ return {
+  w:img.width*base*scale,
+  h:img.height*base*scale
+ };
+}
 
-  if(type==="wipe-left")ctx.rect(w*(1-progress),0,w*progress,h);
-  if(type==="wipe-right")ctx.rect(0,0,w*progress,h);
-  if(type==="wipe-up")ctx.rect(0,h*(1-progress),w,h*progress);
-  if(type==="wipe-down")ctx.rect(0,0,w,h*progress);
+function drawImage(img,options={}){
 
-  ctx.clip();
-  drawImageFit(next.img);
-  ctx.restore();
-  return;
- }
+ const W=canvas.width;
+ const H=canvas.height;
 
- if(type==="circle"){
+ const scale=options.scale||1;
+ const x=options.x||0;
+ const y=options.y||0;
+ const rotation=options.rotation||0;
+ const blur=options.blur||0;
+ const opacity=options.opacity===undefined?1:options.opacity;
 
-  drawImageFit(p.img);
+ const m=imageMetrics(img,scale);
 
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(w/2,h/2,Math.max(w,h)*progress,0,Math.PI*2);
-  ctx.clip();
-  drawImageFit(next.img);
-  ctx.restore();
-  return;
- }
-
- // Other effects use a stable crossfade fallback.
- drawImageFit(next.img);
  ctx.save();
- ctx.globalAlpha=1-progress;
- drawImageFit(p.img);
+ ctx.globalAlpha=opacity;
+ ctx.filter=blur>0?"blur("+blur+"px)":"none";
+ ctx.translate(W/2+x,H/2+y);
+ ctx.rotate(rotation);
+ ctx.drawImage(img,-m.w/2,-m.h/2,m.w,m.h);
  ctx.restore();
+ ctx.filter="none";
 }
 
-/* =========================
-   NARRATION
-========================= */
+// ========================================
+// 10. CONTINUOUS CAMERA MOTION
+// ========================================
 
-function escapeHTML(s){
- return s.replace(/[&<>"']/g,c=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
- }[c]));
+function drawMotion(img,motion,p){
+
+ p=Math.max(0,Math.min(1,p));
+
+ const W=canvas.width;
+ const H=canvas.height;
+
+ let scale=1.12;
+ let x=0,y=0,rotation=0;
+
+ switch(motion){
+
+  case "none":
+   scale=1;
+   break;
+
+  case "kenburns":
+   scale=1.12+p*.17;
+   x=-W*.035*p;
+   y=-H*.02*p;
+   break;
+
+  case "zoomIn":
+   scale=1.05+p*.45;
+   break;
+
+  case "zoomOut":
+   scale=1.5-p*.4;
+   break;
+
+  case "droneRise":
+   scale=1.7-p*.55;
+   y=H*.12*(1-p);
+   break;
+
+  case "droneDescend":
+   scale=1.12+p*.55;
+   y=-H*.1*p;
+   break;
+
+  case "droneFlyover":
+   scale=1.65-p*.35;
+   x=-W*.12*p;
+   y=-H*.12*p;
+   break;
+
+  case "droneOrbit":
+  case "helicopter":
+   scale=1.32;
+   rotation=Math.sin(p*Math.PI*2)*.055;
+   x=Math.sin(p*Math.PI*2)*W*.035;
+   y=Math.cos(p*Math.PI*2)*H*.025;
+   break;
+
+  case "panLeft":
+   scale=1.3;x=W*.12*(1-2*p);
+   break;
+
+  case "panRight":
+   scale=1.3;x=-W*.12*(1-2*p);
+   break;
+
+  case "panUp":
+   scale=1.3;y=H*.12*(1-2*p);
+   break;
+
+  case "panDown":
+   scale=1.3;y=-H*.12*(1-2*p);
+   break;
+
+  case "aerial":
+   scale=1.48;
+   x=-W*.09*p;
+   y=-H*.05*p;
+   rotation=Math.sin(p*Math.PI)*.025;
+   break;
+
+  case "tilt":
+   scale=1.25;
+   rotation=Math.sin(p*Math.PI)*.04;
+   y=-H*.06*p;
+   break;
+
+  case "handheld":
+   scale=1.18;
+   x=Math.sin(p*35)*W*.004;
+   y=Math.cos(p*29)*H*.004;
+   rotation=Math.sin(p*20)*.004;
+   break;
+
+  case "parallax":
+   scale=1.35;
+   x=Math.sin(p*Math.PI)*W*.07;
+   y=Math.cos(p*Math.PI)*H*.035;
+   break;
+ }
+
+ drawImage(img,{scale,x,y,rotation});
 }
 
-function drawCaption(time){
+// ========================================
+// 11. TRANSITION ENGINE
+// ========================================
 
- const el=$("caption");
+function drawTransition(previous,next,p,type){
 
- if($("hideText").checked){
-  el.innerHTML="";
-  return;
+ const W=canvas.width;
+ const H=canvas.height;
+
+ p=Math.max(0,Math.min(1,p));
+
+ ctx.fillStyle="#000";
+ ctx.fillRect(0,0,W,H);
+
+ const old=()=>drawImage(previous);
+ const fresh=()=>drawImage(next);
+
+ switch(type){
+
+  case "fade":
+  case "dissolve":
+   drawImage(previous,{opacity:1-p});
+   drawImage(next,{opacity:p});
+   break;
+
+  case "fadeBlack":
+   if(p<.5){
+    drawImage(previous,{opacity:1-p*2});
+   }else{
+    drawImage(next,{opacity:(p-.5)*2});
+   }
+   break;
+
+  case "fadeWhite":
+   if(p<.5){
+    old();
+    ctx.fillStyle="rgba(255,255,255,"+(p*2)+")";
+    ctx.fillRect(0,0,W,H);
+   }else{
+    ctx.fillStyle="white";
+    ctx.fillRect(0,0,W,H);
+    drawImage(next,{opacity:(p-.5)*2});
+   }
+   break;
+
+  case "fadeOut":
+   if(p<.5)drawImage(previous,{opacity:1-p*2});
+   else drawImage(next,{opacity:(p-.5)*2});
+   break;
+
+  case "slideLeft":
+   drawImage(previous,{x:-p*W});
+   drawImage(next,{x:(1-p)*W});
+   break;
+
+  case "slideRight":
+   drawImage(previous,{x:p*W});
+   drawImage(next,{x:-(1-p)*W});
+   break;
+
+  case "slideUp":
+   drawImage(previous,{y:-p*H});
+   drawImage(next,{y:(1-p)*H});
+   break;
+
+  case "slideDown":
+   drawImage(previous,{y:p*H});
+   drawImage(next,{y:-(1-p)*H});
+   break;
+
+  case "pushLeft":
+   drawImage(previous,{x:-p*W});
+   drawImage(next,{x:(1-p)*W});
+   break;
+
+  case "pushRight":
+   drawImage(previous,{x:p*W});
+   drawImage(next,{x:-(1-p)*W});
+   break;
+
+  case "zoomIn":
+  case "zoomDynamic":
+  case "zoomThrough":
+  case "cameraPush":
+   drawImage(previous,{opacity:1-p,scale:1+p*.35});
+   drawImage(next,{opacity:p,scale:1.55-p*.55});
+   break;
+
+  case "zoomOut":
+  case "cameraPull":
+   drawImage(previous,{opacity:1-p,scale:1-.3*p});
+   drawImage(next,{opacity:p,scale:1.45-.45*p});
+   break;
+
+  case "zoomBlur":
+   drawImage(previous,{opacity:1-p,blur:p*14,scale:1+p*.25});
+   drawImage(next,{opacity:p,blur:(1-p)*14,scale:1.3-p*.3});
+   break;
+
+  case "cameraPan":
+  case "cameraSweep":
+   drawImage(previous,{opacity:1-p,x:-p*W*.25,scale:1.35});
+   drawImage(next,{opacity:p,x:(1-p)*W*.25,scale:1.35});
+   break;
+
+  case "droneRise":
+  case "droneDescend":
+  case "droneFlyover":
+  case "dronePush":
+  case "dronePull":
+  case "droneOrbit":
+  case "helicopterOrbit":
+  case "aerialReveal":
+  case "aerialSweep":
+  case "topDown":
+  case "tiltUp":
+  case "tiltDown":
+
+   // Aerial cinematic camera transition
+   drawImage(previous,{opacity:1-p,scale:1+p*.28,
+    y:-p*H*.08,rotation:-p*.035});
+
+   if(type==="droneRise" || type==="aerialReveal"){
+    drawImage(next,{opacity:p,scale:1.65-p*.65,
+     y:H*.13*(1-p)});
+   }else if(type==="droneDescend" || type==="topDown"){
+    drawImage(next,{opacity:p,scale:1.08+p*.5,
+     y:-H*.12*p});
+   }else if(type==="droneOrbit" || type==="helicopterOrbit"){
+    drawImage(next,{opacity:p,scale:1.4,
+     rotation:Math.sin(p*Math.PI)*.15,
+     x:Math.sin(p*Math.PI)*W*.06});
+   }else{
+    drawImage(next,{opacity:p,scale:1.55-p*.4,
+     x:-W*.1*p,y:-H*.06*p});
+   }
+   break;
+
+  case "wipeLeft":
+   old();
+   ctx.save();ctx.beginPath();ctx.rect(0,0,W*p,H);ctx.clip();fresh();ctx.restore();
+   break;
+
+  case "wipeRight":
+   old();
+   ctx.save();ctx.beginPath();ctx.rect(W*(1-p),0,W*p,H);ctx.clip();fresh();ctx.restore();
+   break;
+
+  case "wipeUp":
+   old();
+   ctx.save();ctx.beginPath();ctx.rect(0,0,W,H*p);ctx.clip();fresh();ctx.restore();
+   break;
+
+  case "wipeDown":
+   old();
+   ctx.save();ctx.beginPath();ctx.rect(0,H*(1-p),W,H*p);ctx.clip();fresh();ctx.restore();
+   break;
+
+  case "circle":
+  case "radial":
+   old();
+   ctx.save();ctx.beginPath();
+   ctx.arc(W/2,H/2,Math.sqrt(W*W+H*H)*p/2,0,Math.PI*2);
+   ctx.clip();fresh();ctx.restore();
+   break;
+
+  case "circleClose":
+   old();
+   ctx.save();ctx.beginPath();
+   ctx.arc(W/2,H/2,Math.sqrt(W*W+H*H)*(1-p)/2,0,Math.PI*2);
+   ctx.clip();fresh();ctx.restore();
+   break;
+
+  case "diagonal":
+   old();
+   ctx.save();ctx.beginPath();
+   ctx.moveTo(0,0);
+   ctx.lineTo(W*p,0);
+   ctx.lineTo(0,H*p);
+   ctx.closePath();ctx.clip();fresh();ctx.restore();
+   break;
+
+  case "clock":
+   old();
+   ctx.save();ctx.beginPath();
+   ctx.moveTo(W/2,H/2);
+   ctx.arc(W/2,H/2,Math.sqrt(W*W+H*H),
+   -Math.PI/2,-Math.PI/2+p*Math.PI*2);
+   ctx.closePath();ctx.clip();fresh();ctx.restore();
+   break;
+
+  case "rotate":
+  case "spin":
+   drawImage(previous,{opacity:1-p});
+   drawImage(next,{opacity:p,rotation:(1-p)*Math.PI*2,scale:.5+p*.5});
+   break;
+
+  case "flipH":
+  case "flipV":
+  case "cube":
+  case "card":
+   if(p<.5){
+    drawImage(previous,{opacity:1-p*2,scale:1-Math.abs(p-.5)*.4,
+     rotation:(type==="flipH"||type==="cube")?p*Math.PI:0});
+   }else{
+    drawImage(next,{opacity:(p-.5)*2,scale:.8+Math.abs(p-.5)*.4,
+     rotation:(type==="flipV"?1:0)*(p-.5)*Math.PI});
+   }
+   break;
+
+  case "page":
+   drawImage(previous,{opacity:1-p,scale:1-p*.1});
+   drawImage(next,{opacity:p,scale:.7+p*.3,rotation:(1-p)*.15});
+   break;
+
+  case "blur":
+  case "blurIn":
+  case "motionBlur":
+  case "radialBlur":
+   drawImage(previous,{opacity:1-p,blur:p*20});
+   drawImage(next,{opacity:p,blur:(1-p)*20});
+   break;
+
+  case "blurOut":
+   drawImage(previous,{opacity:1-p,blur:p*18});
+   drawImage(next,{opacity:p,blur:(1-p)*18});
+   break;
+
+  case "flash":
+  case "blackFlash":
+   drawImage(previous,{opacity:1-p});
+   drawImage(next,{opacity:p});
+   ctx.fillStyle=type==="flash"?
+    "rgba(255,255,255,"+(Math.sin(p*Math.PI)*.9)+")":
+    "rgba(0,0,0,"+(Math.sin(p*Math.PI)*.8)+")";
+   ctx.fillRect(0,0,W,H);
+   break;
+
+  case "glitch":
+  case "rgb":
+   drawImage(previous,{opacity:1-p});
+   drawImage(next,{opacity:p});
+   ctx.save();
+   for(let i=0;i<7;i++){
+    const y=Math.random()*H;
+    const h=3+Math.random()*25;
+    ctx.globalAlpha=.4;
+    ctx.drawImage(canvas,0,y,W,h,
+     (Math.random()-.5)*45,y,W,h);
+   }
+   ctx.restore();
+   break;
+
+  case "shake":
+   drawImage(previous,{opacity:1-p,x:Math.sin(p*60)*15});
+   drawImage(next,{opacity:p,x:Math.sin(p*60+2)*15});
+   break;
+
+  case "swirl":
+   drawImage(previous,{opacity:1-p,rotation:p*1.5});
+   drawImage(next,{opacity:p,rotation:-(1-p)*1.5,scale:1.2-p*.2});
+   break;
+
+  case "pixel":
+   drawImage(previous,{opacity:1-p,blur:(1-p)*15});
+   drawImage(next,{opacity:p,blur:(1-p)*15});
+   break;
+
+  default:
+   drawImage(previous,{opacity:1-p});
+   drawImage(next,{opacity:p});
  }
-
- const text=$("narration").value.trim();
-
- if(!text){
-  el.innerHTML="";
-  return;
- }
-
- const words=text.split(/\s+/);
- const wpm=Math.max(60,Number($("wpm").value)||150);
- const index=Math.min(
-  words.length-1,
-  Math.floor(time*wpm/60)
- );
-
- const start=Math.max(0,index-5);
- const end=Math.min(words.length,index+7);
-
- el.style.color=$("textColor").value;
- el.style.fontSize=$("fontSize").value+"px";
-
- const pos=$("position").value;
-
- el.style.top=pos==="top"?"7%":pos==="center"?"50%":"auto";
- el.style.bottom=pos==="bottom"?"8%":"auto";
- el.style.transform=pos==="center"?"translateY(-50%)":"none";
-
- el.innerHTML=words.slice(start,end).map((word,i)=>{
-  const n=start+i;
-
-  return '<span class="'+(n===index?"word active":"word")+'">'+
-   escapeHTML(word)+'</span>';
-
- }).join(" ");
 }
 
-/* =========================
-   MAIN RENDER FUNCTION
-========================= */
+// ========================================
+// 12. NARRATION
+// ========================================
 
-function renderAt(time){
+function prepareNarration(){
 
- if(!photos.length){
-  clearCanvas();
-  return;
- }
+ const text=document.getElementById("narration").value.trim();
 
- const t=Math.max(0,Math.min(time,totalDuration()));
+ narrationWords=[];
+ narrationLines=[];
 
- selected=getIndex(t);
+ const regex=/\S+/g;
+ let m;
 
- clearCanvas();
- drawTransition(selected,t);
- drawCaption(t);
-
- updateClock(t);
-}
-
-/* =========================
-   PREVIEW PLAYBACK ENGINE
-========================= */
-
-function playPreview(){
-
- if(!photos.length){
-  alert("Please upload photos first.");
-  return;
- }
-
- if(playing)return;
-
- if(pausedTime>=totalDuration())pausedTime=0;
-
- playing=true;
-
- // Audio is synchronized to the current preview position.
- const audio=$("audio");
-
- if(audio.src){
-  audio.volume=Number($("volume").value);
-
-  const start=Number($("audioStart").value)||0;
-
-  try{
-   audio.currentTime=start+pausedTime;
-  }catch(e){}
-
-  audio.play().catch(err=>{
-   console.log("Audio playback:",err);
+ while((m=regex.exec(text))!==null){
+  narrationWords.push({
+   text:m[0],
+   start:m.index,
+   end:m.index+m[0].length
   });
  }
 
- playStart=performance.now()-pausedTime*1000;
+ const size=Number(document.getElementById("textSize").value)||28;
+ ctx.font="bold "+size+"px Arial";
 
- $("status").textContent="Playing Preview";
+ let line=[];
+ let width=0;
 
- function loop(now){
+ narrationWords.forEach((word,i)=>{
 
-  if(!playing)return;
+  const ww=ctx.measureText(word.text).width;
+  const space=ctx.measureText(" ").width;
 
-  const current=(now-playStart)/1000;
-
-  if(current>=totalDuration()){
-   pausedTime=0;
-   stopPreview();
-   return;
+  if(width+ww+space>canvas.width-60 && line.length){
+   narrationLines.push(line);
+   line=[];
+   width=0;
   }
 
-  pausedTime=current;
+  word.line=narrationLines.length;
+  line.push(i);
+  width+=ww+space;
+ });
 
-  renderAt(current);
+ if(line.length)narrationLines.push(line);
+}
 
-  raf=requestAnimationFrame(loop);
+function updateKaraokePreview(){
+
+ const box=document.getElementById("karaokePreview");
+ box.innerHTML="";
+
+ if(!narrationWords.length){
+  box.textContent="Your narration will appear here.";
+  return;
  }
 
- raf=requestAnimationFrame(loop);
+ const line=narrationWords[
+  Math.min(activeWord,narrationWords.length-1)
+ ].line;
+
+ (narrationLines[line]||[]).forEach(i=>{
+
+  const span=document.createElement("span");
+  span.textContent=narrationWords[i].text+" ";
+
+  if(i===activeWord){
+   span.style.background=
+    document.getElementById("highlightColor").value;
+   span.style.color="#111";
+   span.style.padding="3px 5px";
+   span.style.borderRadius="4px";
+  }
+
+  box.appendChild(span);
+ });
+}
+
+function drawNarration(){
+
+ if(getMode()!=="text")return;
+ if(document.getElementById("hideText").checked)return;
+ if(!narrationWords.length)return;
+
+ const wordIndex=Math.min(activeWord,narrationWords.length-1);
+ const lineIndex=narrationWords[wordIndex].line;
+ const indexes=narrationLines[lineIndex]||[];
+
+ const size=Math.max(14,Math.min(70,
+ Number(document.getElementById("textSize").value)||28));
+
+ ctx.font="bold "+size+"px Arial";
+ ctx.textBaseline="middle";
+
+ const widths=indexes.map(i=>
+  ctx.measureText(narrationWords[i].text).width
+ );
+
+ const space=ctx.measureText(" ").width;
+ const total=widths.reduce((a,b)=>a+b,0)+
+ space*(indexes.length-1);
+
+ let x=(canvas.width-total)/2;
+
+ const pos=document.getElementById("textPosition").value;
+
+ const y=pos==="top"?size+35:
+ pos==="center"?canvas.height/2:
+ canvas.height-size-45;
+
+ if(document.getElementById("showBackground").checked){
+  ctx.fillStyle="rgba(0,0,0,.78)";
+  ctx.fillRect(0,y-size,canvas.width,size*2);
+ }
+
+ indexes.forEach((i,j)=>{
+
+  const w=narrationWords[i].text;
+  const width=widths[j];
+
+  if(i===wordIndex){
+   ctx.fillStyle=document.getElementById("highlightColor").value;
+   ctx.fillRect(x-3,y-size*.65,width+6,size*1.3);
+   ctx.fillStyle="#111";
+  }else{
+   ctx.fillStyle=document.getElementById("textColor").value;
+  }
+
+  ctx.textAlign="left";
+  ctx.fillText(w,x,y);
+  x+=width+space;
+ });
+}
+
+function setActiveWord(charIndex){
+
+ if(!narrationWords.length)return;
+
+ let found=0;
+
+ narrationWords.forEach((w,i)=>{
+  if(charIndex>=w.start)found=i;
+ });
+
+ activeWord=found;
+ updateKaraokePreview();
+}
+
+// ========================================
+// 13. RENDER ENGINE
+// ========================================
+
+function renderAt(time){
+
+ if(!photos.length)return;
+
+ time=Math.max(0,Math.min(time,totalDuration()));
+
+ let index=photos.length-1;
+ let start=0;
+
+ for(let i=0;i<photos.length;i++){
+
+  if(time<start+photos[i].duration){
+   index=i;
+   break;
+  }
+
+  start+=photos[i].duration;
+ }
+
+ const photo=photos[index];
+ const local=time-start;
+ const p=photo.duration?local/photo.duration:0;
+
+ const t=photo.transitionDuration;
+ const motionProgress=p;
+
+ if(index>0 && local<t && t>0){
+
+  const previous=photos[index-1];
+
+  drawTransition(
+   previous.img,
+   photo.img,
+   local/t,
+   photo.transition
+  );
+
+ }else{
+
+  drawMotion(
+   photo.img,
+   photo.motion||"none",
+   motionProgress
+  );
+ }
+
+ currentIndex=index;
+
+ drawNarration();
+
+ document.getElementById("photoInfo").textContent=
+ "Photo "+(index+1)+" / "+photos.length;
+
+ document.getElementById("seek").value=
+ time/totalDuration()*100;
+
+ previewPosition=time;
+
+ updateTime();
+}
+
+// ========================================
+// 14. PLAYBACK
+// ========================================
+
+function playPreview(){
+
+ if(exporting)return;
+
+ if(!photos.length){
+  alert("पहले Photos Upload करें।");
+  return;
+ }
+
+ if(previewPlaying)return;
+
+ if(previewPosition>=totalDuration())previewPosition=0;
+
+ previewPlaying=true;
+ previewStart=performance.now()-previewPosition*1000;
+
+ if(getMode()==="audio" && audio.src){
+  audio.loop=document.getElementById("loopAudio").checked;
+  audio.volume=Number(document.getElementById("volume").value)/100;
+  audio.currentTime=0;
+  audio.play().catch(()=>{});
+ }
+
+ if(getMode()==="text")listenText();
+
+ document.getElementById("previewStatus").textContent="Preview Playing";
+
+ previewLoop();
+}
+
+function previewLoop(){
+
+ if(!previewPlaying)return;
+
+ const time=(performance.now()-previewStart)/1000;
+
+ if(time>=totalDuration()){
+  finishPreview();
+  return;
+ }
+
+ renderAt(time);
+
+ previewRAF=requestAnimationFrame(previewLoop);
 }
 
 function pausePreview(){
 
- if(!playing)return;
+ if(!previewPlaying)return;
 
- playing=false;
+ previewPlaying=false;
+ cancelAnimationFrame(previewRAF);
 
- cancelAnimationFrame(raf);
+ previewPosition=Math.min(
+  totalDuration(),(performance.now()-previewStart)/1000
+ );
 
- $("audio").pause();
+ audio.pause();
+ stopVoice();
 
- $("status").textContent="Preview Paused";
-
- renderAt(pausedTime);
+ document.getElementById("previewStatus").textContent="Preview Paused";
 }
 
 function stopPreview(){
 
- playing=false;
+ previewPlaying=false;
+ cancelAnimationFrame(previewRAF);
 
- cancelAnimationFrame(raf);
+ audio.pause();
+ stopVoice();
 
- $("audio").pause();
+ previewPosition=0;
+ currentIndex=0;
+ activeWord=0;
 
- pausedTime=0;
+ if(photos.length)renderAt(0);
+ else clearCanvas();
 
- renderAt(0);
+ document.getElementById("previewStatus").textContent="Preview Stopped";
+}
 
- $("status").textContent="Preview Stopped";
+function finishPreview(){
+
+ previewPlaying=false;
+ cancelAnimationFrame(previewRAF);
+
+ audio.pause();
+ stopVoice();
+
+ previewPosition=0;
+
+ renderAt(Math.max(0,totalDuration()-.01));
+
+ document.getElementById("previewStatus").textContent="Preview Completed";
 }
 
 function previousPhoto(){
@@ -840,12 +1581,10 @@ function previousPhoto(){
 
  pausePreview();
 
- selected=Math.max(0,selected-1);
+ currentIndex=Math.max(0,currentIndex-1);
+ previewPosition=getStartTime(currentIndex);
 
- pausedTime=getStart(selected);
-
- renderTimeline();
- renderAt(pausedTime);
+ renderAt(previewPosition);
 }
 
 function nextPhoto(){
@@ -854,126 +1593,467 @@ function nextPhoto(){
 
  pausePreview();
 
- selected=Math.min(photos.length-1,selected+1);
+ currentIndex=Math.min(photos.length-1,currentIndex+1);
+ previewPosition=getStartTime(currentIndex);
 
- pausedTime=getStart(selected);
-
- renderTimeline();
- renderAt(pausedTime);
+ renderAt(previewPosition);
 }
 
-function updateClock(time){
+document.getElementById("seek").addEventListener("input",e=>{
 
- const total=totalDuration();
+ if(!photos.length || exporting)return;
 
- $("clock").textContent=
-  formatTime(time)+" / "+formatTime(total);
+ pausePreview();
 
- $("bar").style.width=
-  (total?time/total*100:0)+"%";
+ previewPosition=Number(e.target.value)/100*totalDuration();
+
+ renderAt(previewPosition);
+});
+
+// ========================================
+// 15. SPEECH SYNTHESIS
+// ========================================
+
+function loadVoices(){
+
+ if(!window.speechSynthesis)return;
+
+ const select=document.getElementById("voiceSelect");
+ const voices=speechSynthesis.getVoices();
+
+ const old=select.value;
+
+ select.innerHTML='<option value="">Default Hindi Voice</option>';
+
+ voices.forEach((v,i)=>{
+
+  const op=document.createElement("option");
+  op.value=i;
+  op.textContent=v.name+" ("+v.lang+")";
+
+  select.appendChild(op);
+ });
+
+ select.value=old;
 }
 
-function formatTime(s){
-
- s=Math.floor(Math.max(0,s||0));
-
- return String(Math.floor(s/60)).padStart(2,"0")+":"+
- String(s%60).padStart(2,"0");
+if(window.speechSynthesis){
+ loadVoices();
+ speechSynthesis.onvoiceschanged=loadVoices;
 }
 
-/* =========================
-   AUDIO
-========================= */
+function listenText(){
 
-$("audioInput").addEventListener("change",function(e){
+ const text=document.getElementById("narration").value.trim();
+
+ if(!text){
+  alert("Narration Text लिखें।");
+  return;
+ }
+
+ if(!window.speechSynthesis)return;
+
+ stopVoice();
+ prepareNarration();
+
+ activeWord=0;
+ updateKaraokePreview();
+
+ speechUtterance=new SpeechSynthesisUtterance(text);
+
+ speechUtterance.lang="hi-IN";
+ speechUtterance.rate=Number(document.getElementById("voiceSpeed").value);
+
+ const v=document.getElementById("voiceSelect").value;
+
+ if(v!==""){
+  const voices=speechSynthesis.getVoices();
+  if(voices[Number(v)])speechUtterance.voice=voices[Number(v)];
+ }
+
+ speechUtterance.onboundary=e=>{
+  setActiveWord(e.charIndex);
+
+  if(photos.length && !exporting)renderAt(previewPosition);
+ };
+
+ speechUtterance.onend=()=>{
+  document.getElementById("voiceStatus").textContent="Narration Completed";
+ };
+
+ speechUtterance.onerror=e=>{
+  document.getElementById("voiceStatus").textContent="Voice Error: "+e.error;
+ };
+
+ document.getElementById("voiceStatus").textContent="Narration Playing...";
+ speechSynthesis.speak(speechUtterance);
+}
+
+function stopVoice(){
+ if(window.speechSynthesis)speechSynthesis.cancel();
+}
+
+[
+ "narration","textSize","textColor","highlightColor",
+ "textPosition","hideText","showBackground"
+].forEach(id=>{
+ document.getElementById(id).addEventListener("input",()=>{
+  prepareNarration();
+  updateKaraokePreview();
+  if(photos.length && !previewPlaying)renderAt(previewPosition);
+ });
+});
+
+// ========================================
+// 16. AUDIO UPLOAD
+// ========================================
+
+document.getElementById("audioInput").addEventListener("change",e=>{
 
  const file=e.target.files[0];
-
- if(!file)return;
+ if(!file || exporting)return;
 
  removeAudio();
 
  audioURL=URL.createObjectURL(file);
+ audio.src=audioURL;
 
- $("audio").src=audioURL;
+ document.getElementById("audioTimeline").textContent="🎵 "+file.name;
 
- $("audio").load();
+ audio.onloadedmetadata=()=>{
+  document.getElementById("audioDuration").textContent=
+  "Audio Duration: "+formatTime(audio.duration);
+ };
 
- $("status").textContent="Audio loaded successfully";
+ e.target.value="";
 });
 
 function removeAudio(){
 
- $("audio").pause();
+ audio.pause();
 
- if(audioURL)URL.revokeObjectURL(audioURL);
+ if(audioURL){
+  URL.revokeObjectURL(audioURL);
+  audioURL=null;
+ }
 
- audioURL=null;
+ audio.removeAttribute("src");
+ audio.load();
 
- $("audio").removeAttribute("src");
- $("audio").load();
-
- $("audioInput").value="";
+ document.getElementById("audioTimeline").textContent="No audio selected";
+ document.getElementById("audioDuration").textContent="Audio Duration: --";
 }
 
-$("volume").addEventListener("input",function(){
- $("audio").volume=Number(this.value);
+document.getElementById("volume").addEventListener("input",e=>{
+ audio.volume=Number(e.target.value)/100;
 });
 
-/* =========================
-   SPEECH
-========================= */
+// ========================================
+// 17. AUDIO CAPTURE
+// ========================================
 
-function listenText(){
+async function prepareAudioCapture(){
 
- const text=$("narration").value.trim();
+ if(!audio.src)return null;
 
- if(!text)return;
+ const AC=window.AudioContext||window.webkitAudioContext;
 
- if(!window.speechSynthesis){
-  alert("Speech is not supported.");
+ if(!AC)throw new Error("Web Audio API not supported");
+
+ if(!audioContext){
+
+  audioContext=new AC();
+
+  audioSource=audioContext.createMediaElementSource(audio);
+  audioDestination=audioContext.createMediaStreamDestination();
+
+  audioSource.connect(audioContext.destination);
+  audioSource.connect(audioDestination);
+ }
+
+ await audioContext.resume();
+
+ return audioDestination.stream;
+}
+
+// ========================================
+// 18. EXPORT PROGRESS
+// ========================================
+
+function updateProgress(p){
+
+ p=Math.max(0,Math.min(100,p));
+
+ document.getElementById("progressBar").style.width=p+"%";
+ document.getElementById("exportPercent").textContent=Math.floor(p)+"%";
+}
+
+function setExportStatus(t){
+ document.getElementById("exportStatus").textContent=t;
+}
+
+// ========================================
+// 19. EXPORT VIDEO
+// ========================================
+
+async function exportVideo(){
+
+ if(exporting)return;
+
+ if(!photos.length){
+  alert("पहले Photos Upload करें।");
   return;
  }
 
- speechSynthesis.cancel();
+ if(!window.MediaRecorder || !canvas.captureStream){
+  alert("यह Browser Video Recording Support नहीं करता।");
+  return;
+ }
 
- const utterance=new SpeechSynthesisUtterance(text);
+ const mode=getMode();
 
- utterance.lang="hi-IN";
+ if(mode==="audio" && !audio.src){
+  alert("पहले Audio Upload करें।");
+  return;
+ }
 
- speechSynthesis.speak(utterance);
-}
+ pausePreview();
+ stopPreview();
 
-function stopVoice(){
+ if(mode==="text")prepareNarration();
 
- if(window.speechSynthesis){
-  speechSynthesis.cancel();
+ exporting=true;
+
+ const btn=document.getElementById("exportBtn");
+ btn.disabled=true;
+ document.getElementById("downloadBtn").disabled=true;
+
+ renderTimeline();
+ setRatio();
+
+ const chunks=[];
+ const duration=totalDuration();
+
+ try{
+
+  canvasStream=canvas.captureStream(30);
+
+  let tracks=[...canvasStream.getVideoTracks()];
+
+  if(mode==="audio"){
+
+   audioStream=await prepareAudioCapture();
+
+   if(audioStream){
+    tracks.push(...audioStream.getAudioTracks());
+   }
+  }
+
+  const stream=new MediaStream(tracks);
+
+  const formats=[
+   "video/webm;codecs=vp9,opus",
+   "video/webm;codecs=vp8,opus",
+   "video/webm"
+  ];
+
+  let mime="";
+
+  for(const f of formats){
+   if(MediaRecorder.isTypeSupported(f)){
+    mime=f;break;
+   }
+  }
+
+  if(!mime)throw new Error("WebM format unavailable");
+
+  recorder=new MediaRecorder(stream,{
+   mimeType:mime,
+   videoBitsPerSecond:Number(document.getElementById("quality").value)
+  });
+
+  recorder.ondataavailable=e=>{
+   if(e.data && e.data.size)chunks.push(e.data);
+  };
+
+  recorder.onstop=()=>{
+
+   clearInterval(exportTimer);
+   exportTimer=null;
+
+   videoBlob=new Blob(chunks,{type:recorder.mimeType});
+
+   if(videoURL)URL.revokeObjectURL(videoURL);
+
+   videoURL=URL.createObjectURL(videoBlob);
+
+   if(canvasStream)canvasStream.getTracks().forEach(t=>t.stop());
+   if(audioStream)audioStream.getTracks().forEach(t=>t.stop());
+
+   audio.pause();
+
+   exporting=false;
+   btn.disabled=false;
+
+   renderTimeline();
+
+   if(videoBlob.size>0){
+
+    document.getElementById("downloadBtn").disabled=false;
+    updateProgress(100);
+
+    setExportStatus(
+     "Video Created Successfully! "+
+     (videoBlob.size/1048576).toFixed(2)+" MB | WEBM"
+    );
+
+   }else{
+    setExportStatus("Empty video file");
+   }
+
+   previewPosition=0;
+   renderAt(0);
+  };
+
+  recorder.onerror=e=>{
+   setExportStatus("Recording Error");
+   cleanupExport();
+  };
+
+  if(mode==="audio"){
+
+   audio.pause();
+   audio.currentTime=0;
+   audio.loop=document.getElementById("loopAudio").checked;
+   audio.volume=Number(document.getElementById("volume").value)/100;
+  }
+
+  activeWord=0;
+  renderAt(0);
+
+  recorder.start(1000);
+
+  if(mode==="audio"){
+   try{await audio.play();}catch(e){console.warn(e);}
+  }
+
+  exportStart=performance.now();
+
+  setExportStatus("Recording Video...");
+
+  exportTimer=setInterval(()=>{
+
+   if(!exporting || recorder.state!=="recording")return;
+
+   const elapsed=(performance.now()-exportStart)/1000;
+
+   if(elapsed>=duration){
+
+    renderAt(Math.max(0,duration-.01));
+
+    updateProgress(100);
+    setExportStatus("Finalizing Video...");
+
+    clearInterval(exportTimer);
+    exportTimer=null;
+
+    audio.pause();
+
+    setTimeout(()=>{
+     if(recorder.state==="recording")recorder.stop();
+    },700);
+
+    return;
+   }
+
+   // Update active word approximately for export
+   if(mode==="text" && narrationWords.length){
+
+    activeWord=Math.min(
+     narrationWords.length-1,
+     Math.floor(elapsed/duration*narrationWords.length)
+    );
+   }
+
+   renderAt(elapsed);
+
+   updateProgress(elapsed/duration*100);
+
+   setExportStatus(
+    "Recording Video... "+Math.floor(elapsed/duration*100)+"%"
+   );
+
+  },33);
+
+ }catch(error){
+
+  console.error(error);
+
+  cleanupExport();
+
+  setExportStatus("Export Failed: "+error.message);
+  alert(error.message);
  }
 }
 
-/* =========================
-   GLOBAL CONTROLS
-========================= */
+// ========================================
+// 20. CLEANUP
+// ========================================
 
-window.playPreview=playPreview;
-window.pausePreview=pausePreview;
-window.stopPreview=stopPreview;
-window.previousPhoto=previousPhoto;
-window.nextPhoto=nextPhoto;
-window.clearPhotos=clearPhotos;
-window.removeAudio=removeAudio;
-window.listenText=listenText;
-window.stopVoice=stopVoice;
+function cleanupExport(){
 
-/* =========================
-   INITIALIZATION
-========================= */
+ if(exportTimer){
+  clearInterval(exportTimer);
+  exportTimer=null;
+ }
+
+ exporting=false;
+
+ if(recorder && recorder.state==="recording"){
+  recorder.stop();
+ }
+
+ if(canvasStream)canvasStream.getTracks().forEach(t=>t.stop());
+ if(audioStream)audioStream.getTracks().forEach(t=>t.stop());
+
+ audio.pause();
+
+ document.getElementById("exportBtn").disabled=false;
+
+ renderTimeline();
+}
+
+// ========================================
+// 21. DOWNLOAD VIDEO
+// ========================================
+
+function downloadVideo(){
+
+ if(!videoBlob || !videoURL || !videoBlob.size){
+  alert("पहले Video Export पूरा होने दें।");
+  return;
+ }
+
+ const a=document.createElement("a");
+
+ a.href=videoURL;
+ a.download="Professional_Video_Studio_V5.webm";
+
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+}
+
+// ========================================
+// 22. INITIALIZE
+// ========================================
 
 clearCanvas();
 renderTimeline();
-updateClock(0);
-
-$("status").textContent="Photo Video Studio V8 Ready";
+prepareNarration();
+updateKaraokePreview();
+updateTime();
+updateProgress(0);
 
 </script>
 
