@@ -4,797 +4,466 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101827">
-
-<title>Hindi AI Text To Speech Studio V3</title>
-
-<script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
+<title>Text To Speech Studio</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
- margin:0;
- padding:14px;
- background:#080e19;
- color:#fff;
- font-family:Arial,sans-serif;
+* {
+    box-sizing: border-box;
 }
 
-.app{
- max-width:750px;
- margin:auto;
- background:#172235;
- border:1px solid #334155;
- border-radius:16px;
- padding:18px;
+body {
+    margin: 0;
+    padding: 15px;
+    font-family: Arial, sans-serif;
+    background: #101827;
+    color: white;
 }
 
-h1{
- text-align:center;
- color:#38bdf8;
- font-size:24px;
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: #1c293b;
+    padding: 20px;
+    border-radius: 15px;
 }
 
-.subtitle{
- text-align:center;
- color:#94a3b8;
- font-size:13px;
+h1 {
+    text-align: center;
+    color: #35d6c0;
 }
 
-.section{
- margin-top:20px;
+.subtitle {
+    text-align: center;
+    color: #aebbd0;
 }
 
-label{
- display:block;
- color:#bae6fd;
- margin-bottom:9px;
- font-size:14px;
+textarea {
+    width: 100%;
+    height: 180px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #42536c;
+    background: #111c2d;
+    color: white;
+    font-size: 17px;
+    resize: vertical;
 }
 
-textarea{
- width:100%;
- height:190px;
- padding:14px;
- border-radius:10px;
- background:#080e19;
- color:white;
- border:1px solid #475569;
- font-size:17px;
- line-height:1.7;
- resize:vertical;
+label {
+    display: block;
+    margin: 18px 0 8px;
+    font-weight: bold;
 }
 
-select{
- width:100%;
- padding:13px;
- border-radius:9px;
- border:1px solid #475569;
- background:#080e19;
- color:white;
+select, input[type=range] {
+    width: 100%;
 }
 
-input[type=range]{
- width:100%;
- accent-color:#38bdf8;
+select {
+    padding: 12px;
+    border-radius: 8px;
+    background: #111c2d;
+    color: white;
+    border: 1px solid #42536c;
 }
 
-.row{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
+.controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.controls{
- display:flex;
- flex-wrap:wrap;
- justify-content:center;
- margin-top:15px;
- gap:7px;
+button {
+    padding: 13px 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-button{
- padding:13px 15px;
- border:0;
- border-radius:8px;
- font-weight:bold;
- font-size:14px;
- cursor:pointer;
+.play { background: #16c79a; color: #071b19; }
+.pause { background: #f5b942; color: #222; }
+.stop { background: #e74c3c; color: white; }
+.record { background: #e84393; color: white; }
+.download { background: #287be0; color: white; }
+.neutral { background: #40536d; color: white; }
+
+button:disabled {
+    opacity: 0.4;
 }
 
-button:disabled{
- opacity:.4;
- cursor:not-allowed;
+.value {
+    color: #35d6c0;
+    float: right;
 }
 
-.generate{background:#2563eb;color:white}
-.stop{background:#dc2626;color:white}
-.download{background:#0284c7;color:white}
-.play{background:#16a34a;color:white}
-.reset{background:#475569;color:white}
-
-.status{
- background:#080e19;
- border:1px solid #334155;
- border-radius:10px;
- padding:14px;
- margin-top:20px;
- color:#38bdf8;
- text-align:center;
- font-size:14px;
- line-height:1.6;
- overflow-wrap:anywhere;
+.status {
+    margin-top: 20px;
+    padding: 13px;
+    background: #111c2d;
+    border-radius: 8px;
+    color: #35d6c0;
+    text-align: center;
 }
 
-.progress{
- height:10px;
- background:#334155;
- border-radius:20px;
- overflow:hidden;
- margin-top:12px;
-}
-
-.bar{
- width:0%;
- height:100%;
- background:#38bdf8;
- transition:width .2s;
-}
-
-audio{
- width:100%;
- margin-top:18px;
-}
-
-.info{
- font-size:12px;
- color:#94a3b8;
- line-height:1.7;
- margin-top:18px;
-}
-
-.counter{
- font-size:12px;
- color:#94a3b8;
- text-align:right;
- margin-top:7px;
-}
-
-.small{
- font-size:12px;
- color:#94a3b8;
- margin-top:8px;
+.note {
+    font-size: 13px;
+    color: #aebbd0;
+    line-height: 1.6;
+    margin-top: 18px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-<h1>🎙 Hindi AI Voice Studio</h1>
+<h1>🎙 Text To Speech Studio</h1>
 
 <p class="subtitle">
-Neural Text To Speech | WAV to MP3 Converter
+Convert Your Text Into Voice
 </p>
 
-<!-- TEXT INPUT -->
+<label>अपना टेक्स्ट लिखें:</label>
 
-<div class="section">
+<textarea id="text" placeholder="यहाँ अपनी कहानी या कोई भी टेक्स्ट लिखें..."></textarea>
 
-<label>अपना टेक्स्ट लिखें</label>
-
-<textarea id="text"
-placeholder="यहाँ अपनी कहानी, इतिहास या कोई भी हिंदी टेक्स्ट लिखें..."></textarea>
-
-<div class="counter" id="counter">
-0 Characters
-</div>
-
-</div>
-
-<!-- VOICE -->
-
-<div class="section">
-
-<label>AI Narrator Voice</label>
+<label>Voice Select करें:</label>
 
 <select id="voice">
-<option value="hi_IN-pratham-medium">
-Hindi India - Pratham (Male)
-</option>
+    <option value="">Voice Loading...</option>
 </select>
 
-<div class="small">
-Voice Model: Piper Hindi Medium
-</div>
+<label>
+Speech Speed
+<span class="value" id="speedValue">1</span>
+</label>
 
-</div>
+<input type="range" id="speed"
+min="0.5" max="2" step="0.1" value="1">
 
-<!-- SPEED -->
+<label>
+Voice Pitch
+<span class="value" id="pitchValue">1</span>
+</label>
 
-<div class="section">
+<input type="range" id="pitch"
+min="0.5" max="2" step="0.1" value="1">
 
-<div class="row">
-<label>Preview Speed</label>
-<strong id="speedValue">1.0x</strong>
-</div>
+<label>
+Volume
+<span class="value" id="volumeValue">100%</span>
+</label>
 
-<input type="range"
-id="speed"
-min="0.7"
-max="1.3"
-step="0.1"
-value="1">
-
-<div class="small">
-यह गति केवल Preview पर लागू होगी।
-डाउनलोड की गई MP3 सामान्य गति में होगी।
-</div>
-
-</div>
-
-<!-- GENERATE -->
+<input type="range" id="volume"
+min="0" max="1" step="0.1" value="1">
 
 <div class="controls">
 
-<button class="generate" id="generate">
-⚡ Generate Voice
+<button class="play" onclick="speakText()">
+▶ Play Voice
 </button>
 
-<button class="stop" id="stop">
+<button class="pause" onclick="pauseVoice()">
+⏸ Pause
+</button>
+
+<button class="neutral" onclick="resumeVoice()">
+▶ Resume
+</button>
+
+<button class="stop" onclick="stopVoice()">
 ■ Stop
 </button>
 
-<button class="reset" id="reset">
-↻ Reset
+<button class="record" onclick="startRecording()" id="recordBtn">
+● Record Audio
+</button>
+
+<button class="stop" onclick="stopRecording()" id="stopRecordBtn" disabled>
+■ Stop Recording
+</button>
+
+<button class="download" onclick="downloadAudio()" id="downloadBtn" disabled>
+⬇ Download Audio
+</button>
+
+<button class="neutral" onclick="clearText()">
+Clear Text
 </button>
 
 </div>
-
-<!-- STATUS -->
 
 <div class="status" id="status">
-Engine शुरू होने की प्रतीक्षा...
+Ready - अपना टेक्स्ट लिखें
 </div>
 
-<div class="progress">
-<div class="bar" id="bar"></div>
-</div>
-
-<!-- AUDIO PLAYER -->
-
-<div class="section">
-
-<label>Audio Preview</label>
-
-<audio id="audio" controls preload="none"></audio>
-
-</div>
-
-<!-- DOWNLOAD -->
-
-<div class="controls">
-
-<button class="play" id="play">
-▶ Play
-</button>
-
-<button class="download" id="download" disabled>
-⬇ Download MP3
-</button>
-
-</div>
-
-<div class="info">
-
-<strong>System Information</strong>
-
-<p id="engineInfo">
-Piper AI Engine: Initializing...
-</p>
-
-<p>
-• पहली बार Voice Model डाउनलोड होगा।<br>
-• मॉडल लगभग 64 MB का है।<br>
-• अगली बार ब्राउज़र में कैश उपलब्ध होने पर दोबारा डाउनलोड नहीं करना पड़ेगा।<br>
-• Audio Generation आपके ब्राउज़र में होता है।<br>
-• MP3 Encoding LAME Encoder द्वारा होगी।
+<p class="note">
+ध्यान दें: ऑडियो रिकॉर्डिंग के लिए माइक्रोफोन की अनुमति दें।
+मोबाइल का स्पीकर चालू रखें और हेडफोन न लगाएं।
+डाउनलोड फाइल WebM फॉर्मेट में होगी।
 </p>
 
 </div>
 
-</div>
+<script>
 
-<script type="module">
+const textBox = document.getElementById("text");
+const voiceSelect = document.getElementById("voice");
+const statusBox = document.getElementById("status");
 
-import * as tts from
-"https://esm.sh/@mintplex-labs/piper-tts-web@1.0.5";
+let voices = [];
+let recorder = null;
+let audioChunks = [];
+let audioBlob = null;
+let micStream = null;
 
-const $ = id => document.getElementById(id);
+let recording = false;
 
-const VOICE_ID = "hi_IN-pratham-medium";
+function loadVoices() {
 
-let audioURL = null;
-let mp3Blob = null;
-let generating = false;
-let cancelled = false;
+    voices = speechSynthesis.getVoices();
 
-const audio = $("audio");
+    voiceSelect.innerHTML = "";
 
-function showStatus(message,progress){
+    if (voices.length === 0) {
+        voiceSelect.innerHTML =
+        '<option value="">No voices available</option>';
+        return;
+    }
 
- $("status").textContent = message;
+    voices.forEach((voice, index) => {
 
- if(progress !== undefined){
-  $("bar").style.width =
-   Math.max(0,Math.min(100,progress))+"%";
- }
-}
+        const option = document.createElement("option");
 
-function setBusy(value){
+        option.value = index;
 
- generating = value;
+        option.textContent =
+        voice.name + " (" + voice.lang + ")";
 
- $("generate").disabled = value;
+        voiceSelect.appendChild(option);
 
- $("stop").disabled = !value;
+    });
 
- $("download").disabled =
-  value || !mp3Blob;
-}
-
-function clearAudio(){
-
- audio.pause();
-
- audio.removeAttribute("src");
- audio.load();
-
- if(audioURL){
-  URL.revokeObjectURL(audioURL);
- }
-
- audioURL = null;
- mp3Blob = null;
-
- $("download").disabled = true;
-}
-
-function progressHandler(p){
-
- if(!p || cancelled) return;
-
- if(p.total > 0){
-
-  let percent =
-   Math.round(p.loaded*100/p.total);
-
-  showStatus(
-   "Voice Model डाउनलोड हो रहा है: "+percent+"%",
-   percent
-  );
-
- }else{
-
-  showStatus("AI Model डाउनलोड हो रहा है...");
- }
-}
-
-// CHECK ENGINE
-
-async function initialize(){
-
- try{
-
-  $("engineInfo").textContent =
-   "Piper AI Engine: Checking Hindi Voice...";
-
-  showStatus("AI Voice Engine तैयार किया जा रहा है...");
-
-  const available = await tts.voices();
-
-  let ids = [];
-
-  if(Array.isArray(available)){
-   ids = available.map(v =>
-    typeof v === "string" ? v : v.key || v.id
-   );
-  }else if(available){
-   ids = Object.keys(available);
-  }
-
-  const hindiVoices = ids.filter(id =>
-   id && id.toLowerCase().startsWith("hi_in")
-  );
-
-  if(hindiVoices.length){
-
-   $("voice").innerHTML = "";
-
-   hindiVoices.forEach(id=>{
-
-    const option =
-     document.createElement("option");
-
-    option.value = id;
-    option.textContent =
-     id.replaceAll("_"," ").replaceAll("-"," ");
-
-    $("voice").appendChild(option);
-
-   });
-
-   const preferred = hindiVoices.find(id =>
-    id.includes("pratham")
-   );
-
-   if(preferred){
-    $("voice").value = preferred;
-   }
-
-  }else{
-
-   $("engineInfo").textContent =
-    "Hindi Voice Model सूची की जाँच आवश्यक है।";
-  }
-
-  $("engineInfo").textContent =
-   "Piper Engine Ready | Hindi Voice";
-
-  showStatus(
-   "Engine तैयार है। अब अपना टेक्स्ट लिखें।",
-   0
-  );
-
- }catch(error){
-
-  console.error(error);
-
-  $("engineInfo").textContent =
-   "Engine initialization error: "+error.message;
-
-  showStatus(
-   "Engine शुरू नहीं हुआ। इंटरनेट और CDN कनेक्शन जाँचें।"
-  );
- }
-}
-
-// WAV TO MP3
-
-async function convertMP3(wavBlob){
-
- if(typeof lamejs === "undefined"){
-  throw new Error("LAME MP3 Encoder लोड नहीं हुआ।");
- }
-
- const AudioContextClass =
-  window.AudioContext || window.webkitAudioContext;
-
- if(!AudioContextClass){
-  throw new Error("Web Audio API उपलब्ध नहीं है।");
- }
-
- const context = new AudioContextClass();
-
- try{
-
-  const buffer = await wavBlob.arrayBuffer();
-
-  const decoded =
-   await context.decodeAudioData(buffer);
-
-  const sampleRate = decoded.sampleRate;
-
-  const channels =
-   Math.min(decoded.numberOfChannels,2);
-
-  const left = decoded.getChannelData(0);
-
-  const right = channels > 1
-   ? decoded.getChannelData(1)
-   : left;
-
-  const encoder =
-   new lamejs.Mp3Encoder(channels,sampleRate,128);
-
-  const chunks = [];
-
-  const blockSize = 1152;
-
-  for(let i=0;i<left.length;i+=blockSize){
-
-   if(cancelled){
-    throw new Error("Generation cancelled.");
-   }
-
-   const length =
-    Math.min(blockSize,left.length-i);
-
-   const L = new Int16Array(length);
-   const R = new Int16Array(length);
-
-   for(let j=0;j<length;j++){
-
-    L[j] = Math.max(-32768,
-     Math.min(32767,left[i+j]*32767));
-
-    R[j] = Math.max(-32768,
-     Math.min(32767,right[i+j]*32767));
-   }
-
-   let encoded;
-
-   if(channels === 2){
-    encoded = encoder.encodeBuffer(L,R);
-   }else{
-    encoded = encoder.encodeBuffer(L);
-   }
-
-   if(encoded.length){
-    chunks.push(encoded);
-   }
-
-   if(i % (blockSize*100) === 0){
-
-    const percent =
-     85 + Math.round(i/left.length*14);
-
-    showStatus(
-     "MP3 Encoding: "+percent+"%",
-     percent
+    const hindiVoice = voices.findIndex(v =>
+        v.lang.toLowerCase().startsWith("hi")
     );
 
-    await new Promise(resolve =>
-     setTimeout(resolve,0)
-    );
-   }
-  }
+    if (hindiVoice >= 0) {
+        voiceSelect.value = hindiVoice;
+    }
 
-  const finalChunk = encoder.flush();
-
-  if(finalChunk.length){
-   chunks.push(finalChunk);
-  }
-
-  return new Blob(chunks,{
-   type:"audio/mpeg"
-  });
-
- }finally{
-
-  await context.close();
- }
 }
 
-// GENERATE VOICE
+speechSynthesis.onvoiceschanged = loadVoices;
 
-async function generateVoice(){
+loadVoices();
 
- const text = $("text").value.trim();
+document.getElementById("speed").oninput = function() {
+    document.getElementById("speedValue").textContent = this.value;
+};
 
- if(!text){
-  showStatus("पहले अपना टेक्स्ट लिखें।");
-  return;
- }
+document.getElementById("pitch").oninput = function() {
+    document.getElementById("pitchValue").textContent = this.value;
+};
 
- if(generating) return;
+document.getElementById("volume").oninput = function() {
+    document.getElementById("volumeValue").textContent =
+    Math.round(this.value * 100) + "%";
+};
 
- if(!navigator.onLine){
-  showStatus("पहली बार Voice Model के लिए इंटरनेट जरूरी है।");
-  return;
- }
+function speakText() {
 
- if(!window.isSecureContext){
-  showStatus("HTTPS वेबसाइट पर खोलें।");
-  return;
- }
+    const text = textBox.value.trim();
 
- if(!window.lamejs && typeof lamejs === "undefined"){
-  showStatus("MP3 Encoder लोड नहीं हुआ। पेज Refresh करें।");
-  return;
- }
+    if (!text) {
+        alert("कृपया पहले टेक्स्ट लिखें!");
+        return;
+    }
 
- cancelled = false;
+    if (!("speechSynthesis" in window)) {
+        alert("आपका ब्राउजर Text To Speech सपोर्ट नहीं करता।");
+        return;
+    }
 
- clearAudio();
- setBusy(true);
+    speechSynthesis.cancel();
 
- try{
+    const utterance = new SpeechSynthesisUtterance(text);
 
-  showStatus(
-   "Piper AI Voice Generation शुरू हो रहा है...",
-   2
-  );
+    const selectedVoice = voiceSelect.value;
 
-  const selectedVoice = $("voice").value;
+    if (voices[selectedVoice]) {
+        utterance.voice = voices[selectedVoice];
+    }
 
-  // Actual Piper API
+    utterance.rate = Number(document.getElementById("speed").value);
+    utterance.pitch = Number(document.getElementById("pitch").value);
+    utterance.volume = Number(document.getElementById("volume").value);
 
-  const wavBlob = await tts.predict({
+    utterance.onstart = function() {
+        statusBox.textContent = "🔊 Voice Playing...";
+    };
 
-   text:text,
+    utterance.onend = function() {
+        statusBox.textContent = "Voice Completed";
+    };
 
-   voiceId:selectedVoice
+    utterance.onerror = function(event) {
+        statusBox.textContent = "Voice Error: " + event.error;
+    };
 
-  },progressHandler);
+    speechSynthesis.speak(utterance);
 
-  if(cancelled){
-   throw new Error("Generation stopped.");
-  }
-
-  if(!wavBlob || !wavBlob.size){
-   throw new Error("Empty audio received.");
-  }
-
-  showStatus(
-   "Voice तैयार हो गई। अब MP3 बनाया जा रहा है...",
-   85
-  );
-
-  const result = await convertMP3(wavBlob);
-
-  if(cancelled){
-   throw new Error("Generation stopped.");
-  }
-
-  if(!result.size){
-   throw new Error("MP3 conversion failed.");
-  }
-
-  mp3Blob = result;
-
-  audioURL = URL.createObjectURL(result);
-
-  audio.src = audioURL;
-
-  $("download").disabled = false;
-
-  showStatus(
-   "✅ MP3 सफलतापूर्वक तैयार हो गई!",
-   100
-  );
-
- }catch(error){
-
-  console.error(error);
-
-  if(cancelled){
-
-   showStatus(
-    "Generation रोक दी गई।"
-   );
-
-  }else{
-
-   showStatus(
-    "Error: "+error.message
-   );
-  }
-
- }finally{
-
-  setBusy(false);
- }
 }
 
-// PLAY
+function pauseVoice() {
 
-$("play").onclick = async()=>{
+    if (speechSynthesis.speaking) {
+        speechSynthesis.pause();
+        statusBox.textContent = "Voice Paused";
+    }
 
- if(!audioURL){
-  showStatus("पहले Generate Voice करें।");
-  return;
- }
+}
 
- try{
-  await audio.play();
- }catch(error){
-  showStatus("Audio Play नहीं हो पाया: "+error.message);
- }
-};
+function resumeVoice() {
 
-// PREVIEW SPEED
+    if (speechSynthesis.paused) {
+        speechSynthesis.resume();
+        statusBox.textContent = "Voice Resumed";
+    }
 
-$("speed").oninput = ()=>{
+}
 
- const rate = Number($("speed").value);
+function stopVoice() {
 
- $("speedValue").textContent =
-  rate.toFixed(1)+"x";
+    speechSynthesis.cancel();
+    statusBox.textContent = "Voice Stopped";
 
- audio.playbackRate = rate;
-};
+}
 
-audio.onloadedmetadata = ()=>{
- audio.playbackRate = Number($("speed").value);
-};
+async function startRecording() {
 
-audio.onended = ()=>{
- showStatus("Audio Playback पूरा हुआ।",100);
-};
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
 
-// DOWNLOAD
+        alert("इस ब्राउजर में माइक्रोफोन रिकॉर्डिंग उपलब्ध नहीं है।");
+        return;
 
-$("download").onclick = ()=>{
+    }
 
- if(!mp3Blob || !audioURL) return;
+    try {
 
- const link = document.createElement("a");
+        audioChunks = [];
+        audioBlob = null;
 
- link.href = audioURL;
+        document.getElementById("downloadBtn").disabled = true;
 
- link.download =
-  "Hindi_Narration_"+Date.now()+".mp3";
+        micStream = await navigator.mediaDevices.getUserMedia({
+            audio: true
+        });
 
- document.body.appendChild(link);
+        let options = {};
 
- link.click();
+        if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+            options.mimeType = "audio/webm;codecs=opus";
+        }
 
- link.remove();
+        recorder = new MediaRecorder(micStream, options);
 
- showStatus(
-  "MP3 Download शुरू हो गया।",
-  100
- );
-};
+        recorder.ondataavailable = function(event) {
 
-// STOP
+            if (event.data.size > 0) {
+                audioChunks.push(event.data);
+            }
 
-$("stop").onclick = ()=>{
+        };
 
- if(!generating) return;
+        recorder.onstop = function() {
 
- cancelled = true;
+            audioBlob = new Blob(audioChunks, {
+                type: recorder.mimeType || "audio/webm"
+            });
 
- audio.pause();
+            document.getElementById("downloadBtn").disabled = false;
 
- showStatus(
-  "Stop अनुरोध भेजा गया।"
- );
-};
+            statusBox.textContent = "Recording Complete! Download Ready.";
 
-// RESET
+            micStream.getTracks().forEach(track => track.stop());
 
-$("reset").onclick = ()=>{
+            micStream = null;
 
- cancelled = true;
+        };
 
- audio.pause();
+        recorder.start();
 
- clearAudio();
+        recording = true;
 
- $("text").value = "";
+        document.getElementById("recordBtn").disabled = true;
+        document.getElementById("stopRecordBtn").disabled = false;
 
- $("counter").textContent =
-  "0 Characters";
+        statusBox.textContent = "🔴 Recording... अब Play Voice दबाएं।";
 
- $("speed").value = 1;
+    }
 
- $("speedValue").textContent = "1.0x";
+    catch(error) {
 
- audio.playbackRate = 1;
+        alert("Microphone Error: " + error.message);
 
- $("bar").style.width = "0%";
+    }
 
- showStatus("Studio Reset हो गया।");
+}
 
-};
+function stopRecording() {
 
-// CHARACTER COUNT
+    if (recorder && recorder.state === "recording") {
 
-$("text").addEventListener("input",()=>{
+        recorder.stop();
 
- $("counter").textContent =
-  $("text").value.length+" Characters";
+        recording = false;
 
-});
+        document.getElementById("recordBtn").disabled = false;
+        document.getElementById("stopRecordBtn").disabled = true;
 
-// INITIALIZE
+    }
 
-initialize();
+}
+
+function downloadAudio() {
+
+    if (!audioBlob) {
+        alert("पहले ऑडियो रिकॉर्ड करें!");
+        return;
+    }
+
+    const url = URL.createObjectURL(audioBlob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "My-Voice-Recording.webm";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+}
+
+function clearText() {
+
+    textBox.value = "";
+
+    speechSynthesis.cancel();
+
+    statusBox.textContent = "Text Cleared";
+
+}
 
 </script>
 
