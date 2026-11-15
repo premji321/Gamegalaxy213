@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -8,611 +7,146 @@
 <title>OneNote Infinity Pro</title>
 
 <style>
-:root {
-    --accent: #7654c9;
-    --border: #dedede;
-    --hover: #f1edfb;
-    --text: #252525;
-}
-
-* { box-sizing: border-box; }
-
-html, body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    font-family: Arial, "Noto Sans Devanagari", sans-serif;
-    color: var(--text);
-    background: #fff;
-}
-
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-
-.app {
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
+:root{--accent:#7654c9;--border:#dedede;--hover:#f1edfb;--text:#252525}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,"Noto Sans Devanagari",sans-serif;color:var(--text);background:#fff}
+button,input,select{font:inherit}button{cursor:pointer}
+.app{height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 
 /* TOP BAR */
-.topbar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 9px;
-    min-height: 48px;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-    position: relative;
-    z-index: 5;
-    background: #fff;
-}
-
-.brand {
-    font-weight: bold;
-    font-size: 16px;
-    white-space: nowrap;
-}
-.brand span { color: var(--accent); }
-
-.top-actions {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-left: auto;
-}
-
-.btn {
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    background: #fff;
-    padding: 7px 9px;
-    font-size: 12px;
-}
-.btn.primary { background: var(--accent); color: #fff; }
-.btn:hover, .tool:hover { background: var(--hover); }
+.topbar{display:flex;align-items:center;gap:8px;padding:6px 9px;min-height:48px;border-bottom:1px solid var(--border);flex-shrink:0;position:relative;z-index:5;background:#fff}
+.brand{font-weight:bold;font-size:16px;white-space:nowrap}
+.brand span{color:var(--accent)}
+.top-actions{display:flex;align-items:center;gap:4px;margin-left:auto}
+.btn{border:1px solid var(--border);border-radius:5px;background:#fff;padding:7px 9px;font-size:12px}
+.btn.primary{background:var(--accent);color:#fff}
+.btn:hover,.tool:hover{background:var(--hover)}
 
 /* MAIN LAYOUT */
-.main {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    position: relative;
-}
+.main{display:flex;flex:1;min-height:0;overflow:hidden;position:relative}
 
 /* SIDEBAR */
-.sidebar {
-    width: 250px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    border-right: 1px solid var(--border);
-    transition: width .15s;
-    position: relative;
-    z-index: 4;
-    background: #fff;
-}
-
-.sidebar.collapsed {
-    width: 0;
-    overflow: hidden;
-    border: 0;
-}
-
-.side-head { padding: 9px; border-bottom: 1px solid #eee; }
-
-.side-head-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 5px;
-    margin-bottom: 8px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.side-actions { display: flex; flex-wrap: wrap; gap: 4px; }
-
-.small-btn {
-    font-size: 11px;
-    padding: 6px;
-    border: 1px solid #ddd;
-    background: #fff;
-    border-radius: 4px;
-}
-
-.tree {
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-    padding: 5px;
-}
-
-.tree-row {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    min-height: 30px;
-    padding: 2px;
-    border-radius: 4px;
-    font-size: 12px;
-}
-.tree-row:hover { background: #f6f6f6; }
-.tree-row.active { background: #eee8ff; color: #51349b; }
-
-.tree-toggle, .tree-menu {
-    flex-shrink: 0;
-    width: 25px;
-    height: 27px;
-    border: 0;
-    border-radius: 4px;
-    background: transparent;
-}
-
-.tree-label {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.tree-children {
-    margin-left: 10px;
-    padding-left: 5px;
-    border-left: 1px solid #eee;
-}
-
-.side-footer {
-    padding: 8px;
-    border-top: 1px solid #eee;
-    color: #777;
-    font-size: 10px;
-}
+.sidebar{width:250px;flex-shrink:0;display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--border);transition:width .15s;position:relative;z-index:4;background:#fff}
+.sidebar.collapsed{width:0;overflow:hidden;border:0}
+.side-head{padding:9px;border-bottom:1px solid #eee}
+.side-head-row{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-bottom:8px;font-size:13px;font-weight:bold}
+.side-actions{display:flex;flex-wrap:wrap;gap:4px}
+.small-btn{font-size:11px;padding:6px;border:1px solid #ddd;background:#fff;border-radius:4px}
+.tree{flex:1;min-height:0;overflow:auto;padding:5px}
+.tree-row{display:flex;align-items:center;gap:2px;min-height:30px;padding:2px;border-radius:4px;font-size:12px}
+.tree-row:hover{background:#f6f6f6}
+.tree-row.active{background:#eee8ff;color:#51349b}
+.tree-toggle,.tree-menu{flex-shrink:0;width:25px;height:27px;border:0;border-radius:4px;background:transparent}
+.tree-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.tree-children{margin-left:10px;padding-left:5px;border-left:1px solid #eee}
+.side-footer{padding:8px;border-top:1px solid #eee;color:#777;font-size:10px}
 
 /* EDITOR */
-.editor {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    z-index: 1;
-}
-
-.page-head { padding: 7px 12px 4px; flex-shrink: 0; }
-
-#pageTitle {
-    width: 100%;
-    border: 0;
-    outline: none;
-    padding: 5px 0;
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.status { min-height: 13px; font-size: 10px; color: #777; }
+.editor{flex:1;min-width:0;display:flex;flex-direction:column;position:relative;z-index:1}
+.page-head{padding:7px 12px 4px;flex-shrink:0}
+#pageTitle{width:100%;border:0;outline:none;padding:5px 0;font-size:22px;font-weight:bold}
+.status{min-height:13px;font-size:10px;color:#777}
 
 /* TOOLBAR */
-.toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 4px;
-    padding: 6px;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #ddd;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 3;
-    background: #fff;
-}
-
-.group {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    padding-right: 5px;
-    margin-right: 2px;
-    border-right: 1px solid #eee;
-}
-
-.tool {
-    min-height: 30px;
-    min-width: 29px;
-    padding: 4px 7px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    background: #fff;
-    font-size: 12px;
-}
-
-.tool-select {
-    height: 30px;
-    max-width: 130px;
-    padding: 3px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: #fff;
-    font-size: 11px;
-}
-
-.color-input {
-    width: 30px;
-    height: 30px;
-    padding: 2px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:6px;border-top:1px solid #eee;border-bottom:1px solid #ddd;flex-shrink:0;position:relative;z-index:3;background:#fff}
+.group{display:flex;align-items:center;gap:3px;padding-right:5px;margin-right:2px;border-right:1px solid #eee}
+.tool{min-height:30px;min-width:29px;padding:4px 7px;border:1px solid transparent;border-radius:4px;background:#fff;font-size:12px}
+.tool-select{height:30px;max-width:130px;padding:3px;border:1px solid #ddd;border-radius:4px;background:#fff;font-size:11px}
+.color-input{width:30px;height:30px;padding:2px;border:1px solid #ddd;border-radius:4px}
 
 /* WORKSPACE */
-.workspace-scroll {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-    background: #fff;
-    overscroll-behavior: contain;
-}
-
-.workspace {
-    position: relative;
-    min-width: 100%;
-    min-height: 100%;
-    width: 1400px;
-    height: 1000px;
-    background: #fff;
-}
+.workspace-scroll{position:relative;flex:1;min-height:0;overflow:auto;background:#fff;overscroll-behavior:contain;isolation:isolate}
+.workspace{position:relative;min-width:100%;min-height:100%;width:1400px;height:1000px;background:#fff}
 
 /* MAIN WRITING AREA */
-.main-writing {
-    position: absolute;
-    left: 20px;
-    top: 15px;
-    width: 794px;
-    min-height: 500px;
-    border: 1px solid transparent;
-    background: #fff;
-}
-
-.main-writing.has-content { border-color: #e3e3e3; }
-
-.writing-body {
-    min-height: 480px;
-    padding: 24px 28px;
-    outline: none;
-    overflow-wrap: anywhere;
-    line-height: 1.65;
-    font-size: 15px;
-}
-
-.writing-body:empty:before {
-    content: "यहाँ क्लिक करके लिखें...";
-    color: #aaa;
-    pointer-events: none;
-}
+.main-writing{position:absolute;left:20px;top:15px;width:794px;min-height:500px;border:1px solid transparent;background:#fff}
+.main-writing.has-content{border-color:#e3e3e3}
+.writing-body{min-height:480px;padding:24px 28px;outline:none;overflow-wrap:anywhere;line-height:1.65;font-size:15px}
+.writing-body:empty:before{content:"यहाँ क्लिक करके लिखें...";color:#aaa;pointer-events:none}
 
 /* TABLES */
-.writing-body table, .text-body table {
-    border-collapse: collapse;
-    max-width: 100%;
-}
-
-.writing-body td, .writing-body th,
-.text-body td, .text-body th {
-    border: 1px solid #aaa;
-    padding: 5px;
-}
+.writing-body table,.text-body table{border-collapse:collapse;max-width:100%}
+.writing-body td,.writing-body th,.text-body td,.text-body th{border:1px solid #aaa;padding:5px}
 
 /* INLINE IMAGES */
-.writing-body img, .text-body img {
-    max-width: 100%;
-    height: auto;
-    vertical-align: middle;
-}
+.writing-body img,.text-body img{max-width:100%;height:auto;vertical-align:middle}
 
 /* FLOATING OBJECTS */
-.object {
-    position: absolute;
-    left: 100px;
-    top: 100px;
-    background: #fff;
-    border: 1px solid transparent;
-}
-
-.object.has-content { border-color: #d9d9d9; }
-
-.object-head {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    min-height: 27px;
-    padding: 3px 6px;
-    background: #fff;
-    border-bottom: 1px solid transparent;
-    cursor: move;
-    user-select: none;
-    touch-action: none;
-}
-
-.object-title {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 11px;
-    color: #777;
-}
-
-.object-close {
-    border: 0;
-    background: transparent;
-    font-size: 17px;
-    color: #666;
-}
+.object{position:absolute;left:100px;top:100px;background:#fff;border:1px solid transparent}
+.object.has-content{border-color:#d9d9d9}
+.object-head{display:flex;align-items:center;gap:5px;min-height:27px;padding:3px 6px;background:#fff;border-bottom:1px solid transparent;cursor:move;user-select:none;touch-action:none}
+.object-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#777}
+.object-close{border:0;background:transparent;font-size:17px;color:#666}
 
 /* TEXT OBJECT */
-.object-body { background: #fff; }
-
-.text-object {
-    width: 240px;
-    min-width: 100px;
-    min-height: 32px;
-    resize: both;
-    overflow: auto;
-}
-
-.text-body {
-    min-height: 24px;
-    padding: 4px 7px;
-    outline: none;
-    overflow-wrap: anywhere;
-    line-height: 1.6;
-}
+.object-body{background:#fff}
+.text-object{width:240px;min-width:100px;min-height:32px;resize:both;overflow:auto}
+.text-body{min-height:24px;padding:4px 7px;outline:none;overflow-wrap:anywhere;line-height:1.6}
 
 /* IMAGE OBJECT */
-.image-object {
-    width: 330px;
-    min-width: 120px;
-    resize: both;
-    overflow: hidden;
-    border: 1px solid #ddd;
-}
-
-.image-object img {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-}
+.image-object{width:330px;min-width:120px;resize:both;overflow:hidden;border:1px solid #ddd}
+.image-object img{display:block;width:100%;height:auto;object-fit:contain}
 
 /* PDF OBJECT */
-.pdf-object {
-    width: 794px;
-    min-width: 260px;
-    border: 1px solid #ddd;
-}
-
-.pdf-pages { display: flex; flex-direction: column; gap: 10px; }
-
-.pdf-page {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border: 1px solid #eee;
-    background: #fff;
-    line-height: normal;
-}
-
-.pdf-canvas { display: block; width: 100%; height: auto; }
-
-.pdf-placeholder {
-    min-height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fafafa;
-    color: #777;
-    padding: 10px;
-}
-
-.pdf-message { padding: 12px; font-size: 12px; color: #666; }
+.pdf-object{width:794px;min-width:260px;border:1px solid #ddd}
+.pdf-pages{display:flex;flex-direction:column;gap:10px}
+.pdf-page{position:relative;width:100%;overflow:hidden;border:1px solid #eee;background:#fff;line-height:normal}
+.pdf-canvas{display:block;width:100%;height:auto}
+.pdf-placeholder{min-height:140px;display:flex;align-items:center;justify-content:center;background:#fafafa;color:#777;padding:10px}
+.pdf-message{padding:12px;font-size:12px;color:#666}
 
 /* MIND MAP */
-.mindmap {
-    position: absolute;
-    left: 900px;
-    top: 30px;
-    width: 320px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    background: #fff;
-}
-
-.mindmap h3 { font-size: 14px; margin: 0 0 8px; }
-.mindmap input { width: 100%; padding: 7px; border: 1px solid #ddd; }
-.mind-node { padding: 7px; margin-top: 5px; border: 1px solid #ddd; font-size: 12px; }
+.mindmap{position:absolute;left:900px;top:30px;width:320px;padding:10px;border:1px solid #ddd;background:#fff}
+.mindmap h3{font-size:14px;margin:0 0 8px}
+.mindmap input{width:100%;padding:7px;border:1px solid #ddd}
+.mind-node{padding:7px;margin-top:5px;border:1px solid #ddd;font-size:12px}
 
 /* DIALOG */
-.backdrop {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 500;
-    background: #0005;
-    padding: 15px;
-}
-
-.dialog {
-    width: min(420px, 100%);
-    padding: 18px;
-    border-radius: 8px;
-    background: #fff;
-}
-
-.dialog input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.dialog-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-#pdfModeHint { font-size: 11px; color: var(--accent); }
+.backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:500;background:#0005;padding:15px}
+.dialog{width:min(420px,100%);padding:18px;border-radius:8px;background:#fff}
+.dialog input{width:100%;padding:10px;border:1px solid #ccc;border-radius:4px}
+.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+#pdfModeHint{font-size:11px;color:var(--accent)}
 
 /* INLINE PHOTO EDITOR */
-.inline-image-wrap {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    max-width: 100%;
-    margin: 12px 8px;
-    line-height: 0;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.inline-image-wrap img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
-/* SELECTED IMAGE BORDER */
-.inline-image-wrap.selected {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-    box-shadow: 0 0 0 4px #7654c933;
-}
+.inline-image-wrap{position:relative;display:inline-block;vertical-align:middle;max-width:100%;margin:12px 8px;line-height:0;user-select:none;-webkit-user-select:none}
+.inline-image-wrap img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.inline-image-wrap.selected{outline:2px solid var(--accent);outline-offset:3px;box-shadow:0 0 0 4px #7654c933}
 
 /* DRAG HANDLE */
-.inline-image-drag {
-    position: absolute;
-    top: -29px;
-    left: 0;
-    width: 100%;
-    height: 27px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 5px 5px 0 0;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: grab;
-    touch-action: none;
-    z-index: 100;
-    line-height: 1;
-}
-
-.inline-image-wrap.selected .inline-image-drag { display: flex; }
+.inline-image-drag{position:absolute;top:-29px;left:0;width:100%;height:27px;display:none;align-items:center;justify-content:center;background:var(--accent);color:#fff;border-radius:5px 5px 0 0;font-size:12px;font-weight:bold;cursor:grab;touch-action:none;z-index:100;line-height:1}
+.inline-image-wrap.selected .inline-image-drag{display:flex}
 
 /* RESIZE HANDLE */
-.inline-image-resize {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    right: -12px;
-    bottom: -12px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: nwse-resize;
-    touch-action: none;
-    z-index: 101;
-    padding: 0;
-}
-
-.inline-image-wrap.selected .inline-image-resize { display: flex; }
-
-.inline-image-resize:active,
-.inline-image-drag:active { background: #51349b; }
+.inline-image-resize{position:absolute;width:30px;height:30px;right:-12px;bottom:-12px;display:none;align-items:center;justify-content:center;border:2px solid #fff;border-radius:50%;background:var(--accent);color:#fff;font-size:17px;font-weight:bold;cursor:nwse-resize;touch-action:none;z-index:101;padding:0}
+.inline-image-wrap.selected .inline-image-resize{display:flex}
+.inline-image-resize:active,.inline-image-drag:active{background:#51349b}
 
 /* DRAG PREVIEW */
-.inline-image-drag-preview {
-    position: fixed;
-    margin: 0 !important;
-    pointer-events: none !important;
-    z-index: 2 !important;
-    opacity: .88;
-    box-shadow: 0 4px 18px #0003;
-    overflow: visible;
-    box-sizing: border-box;
-}
-
-.inline-image-drag-preview .inline-image-drag,
-.inline-image-drag-preview .inline-image-resize {
-    display: none !important;
-}
+.inline-image-drag-preview{position:fixed!important;margin:0!important;pointer-events:none!important;z-index:2!important;opacity:.88;box-shadow:0 4px 18px #0003;overflow:visible;box-sizing:border-box}
+.inline-image-drag-preview .inline-image-drag,.inline-image-drag-preview .inline-image-resize{display:none!important}
 
 /* MOBILE DESIGN */
-@media(max-width:700px) {
-    .topbar { gap: 4px; padding: 5px; }
-    .brand { font-size: 12px; }
-    .top-actions { gap: 3px; }
-    .top-actions .btn { padding: 6px; font-size: 10px; }
-    .sidebar { width: 150px; }
-    .side-head { padding: 6px; }
-    .small-btn { font-size: 10px; padding: 5px; }
-    .tree-row { font-size: 11px; }
-    #pageTitle { font-size: 19px; }
-    .toolbar { gap: 3px; padding: 4px; }
-    .group { padding-right: 3px; }
-    .tool { padding: 3px 5px; min-width: 26px; }
-    .tool-select { max-width: 105px; }
-    .main-writing { width: 794px; left: 12px; top: 12px; }
-    .writing-body { padding: 18px; }
-    .inline-image-drag { height: 30px; top: -32px; }
-    .inline-image-resize {
-        width: 34px;
-        height: 34px;
-        right: -13px;
-        bottom: -13px;
-    }
+@media(max-width:700px){
+.topbar{gap:4px;padding:5px}.brand{font-size:12px}.top-actions{gap:3px}
+.top-actions .btn{padding:6px;font-size:10px}.sidebar{width:150px}
+.side-head{padding:6px}.small-btn{font-size:10px;padding:5px}
+.tree-row{font-size:11px}#pageTitle{font-size:19px}
+.toolbar{gap:3px;padding:4px}.group{padding-right:3px}
+.tool{padding:3px 5px;min-width:26px}.tool-select{max-width:105px}
+.main-writing{width:794px;left:12px;top:12px}
+.writing-body{padding:18px}.inline-image-drag{height:30px;top:-32px}
+.inline-image-resize{width:34px;height:34px;right:-13px;bottom:-13px}
 }
-
-@media(max-width:420px) {
-    .sidebar { width: 125px; }
-}
+@media(max-width:420px){.sidebar{width:125px}}
 </style>
 </head>
 
 <body>
 <div class="app">
-
 <header class="topbar">
     <button class="btn" id="sidebarToggle">☰</button>
-
-    <div class="brand">
-        OneNote <span>Infinity Pro</span>
-    </div>
-
+    <div class="brand">OneNote <span>Infinity Pro</span></div>
     <div class="top-actions">
         <button class="btn" id="saveBtn">Save</button>
         <button class="btn" id="backupBtn">Backup</button>
@@ -621,26 +155,20 @@ button { cursor: pointer; }
 </header>
 
 <div class="main">
-
     <aside class="sidebar" id="sidebar">
         <div class="side-head">
             <div class="side-head-row">
                 <span>📚 Notebooks</span>
                 <button class="small-btn" id="sidebarMinBtn">−</button>
             </div>
-
             <div class="side-actions">
                 <button class="small-btn" id="newNotebook">＋ Notebook</button>
                 <button class="small-btn" id="newSection">＋ Section</button>
                 <button class="small-btn" id="newPage">＋ Page</button>
             </div>
         </div>
-
         <div class="tree" id="tree"></div>
-
-        <div class="side-footer">
-            Auto Save · Local Storage + IndexedDB
-        </div>
+        <div class="side-footer">Auto Save · Local Storage + IndexedDB</div>
     </aside>
 
     <section class="editor">
@@ -654,7 +182,6 @@ button { cursor: pointer; }
                 <button class="tool" data-cmd="undo">↶</button>
                 <button class="tool" data-cmd="redo">↷</button>
             </div>
-
             <div class="group">
                 <select class="tool-select" id="blockFormat">
                     <option value="P">Paragraph</option>
@@ -663,7 +190,6 @@ button { cursor: pointer; }
                     <option value="H3">Heading 3</option>
                     <option value="BLOCKQUOTE">Quote</option>
                 </select>
-
                 <select class="tool-select" id="fontFamily">
                     <option value="Arial">Arial</option>
                     <option value="Georgia">Georgia</option>
@@ -673,54 +199,40 @@ button { cursor: pointer; }
                     <option value="Courier New">Courier New</option>
                     <option value="Noto Sans Devanagari">Noto Sans Devanagari</option>
                 </select>
-
                 <select class="tool-select" id="fontSize">
-                    <option value="1">8</option>
-                    <option value="2">10</option>
-                    <option value="3" selected>12</option>
-                    <option value="4">14</option>
-                    <option value="5">18</option>
-                    <option value="6">24</option>
+                    <option value="1">8</option><option value="2">10</option>
+                    <option value="3" selected>12</option><option value="4">14</option>
+                    <option value="5">18</option><option value="6">24</option>
                     <option value="7">36</option>
                 </select>
             </div>
-
             <div class="group">
                 <button class="tool" data-cmd="bold"><b>B</b></button>
                 <button class="tool" data-cmd="italic"><i>I</i></button>
                 <button class="tool" data-cmd="underline"><u>U</u></button>
                 <button class="tool" data-cmd="strikeThrough"><s>S</s></button>
             </div>
-
             <div class="group">
-                <label title="Font Color">
-                    <input class="color-input" type="color" id="fontColor" value="#222222">
-                </label>
-                <label title="Highlight Color">
-                    <input class="color-input" type="color" id="highlightColor" value="#fff176">
-                </label>
+                <label title="Font Color"><input class="color-input" type="color" id="fontColor" value="#222222"></label>
+                <label title="Highlight Color"><input class="color-input" type="color" id="highlightColor" value="#fff176"></label>
             </div>
-
             <div class="group">
                 <button class="tool" data-cmd="justifyLeft">⇤</button>
                 <button class="tool" data-cmd="justifyCenter">≡</button>
                 <button class="tool" data-cmd="justifyRight">⇥</button>
                 <button class="tool" data-cmd="justifyFull">☷</button>
             </div>
-
             <div class="group">
                 <button class="tool" data-cmd="insertUnorderedList">• List</button>
                 <button class="tool" data-cmd="insertOrderedList">1. List</button>
                 <button class="tool" data-cmd="indent">→</button>
                 <button class="tool" data-cmd="outdent">←</button>
             </div>
-
             <div class="group">
                 <button class="tool" id="linkBtn">🔗 Link</button>
                 <button class="tool" id="tableBtn">▦ Table</button>
                 <button class="tool" id="clearFormat">Tx</button>
             </div>
-
             <div class="group">
                 <button class="tool" id="addText">＋ Text</button>
                 <button class="tool" id="insertImage">🖼 Image</button>
@@ -728,24 +240,18 @@ button { cursor: pointer; }
                 <button class="tool" id="insertPDF">＋ PDF</button>
                 <button class="tool" id="addMindMap">Mind Map</button>
             </div>
-
             <div class="group">
                 <button class="tool" id="pdfSelectMode">PDF: Select Text</button>
                 <button class="tool" id="pdfHighlightMode">🖍 PDF Highlighter</button>
                 <button class="tool" id="clearPDFHighlights">Clear PDF Highlights</button>
             </div>
-
             <span id="pdfModeHint">PDF mode: Select Text</span>
         </div>
 
         <div class="workspace-scroll" id="workspaceScroll">
             <div class="workspace" id="workspace">
                 <div class="main-writing" id="mainWriting">
-                    <div class="writing-body"
-                         id="writingBody"
-                         contenteditable="true"
-                         spellcheck="true">
-                    </div>
+                    <div class="writing-body" id="writingBody" contenteditable="true" spellcheck="true"></div>
                 </div>
             </div>
         </div>
@@ -770,8 +276,8 @@ button { cursor: pointer; }
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
 <script>
+
 
 
 "use strict";
@@ -2058,6 +1564,9 @@ function clearImageSelection() {
 
 function selectImage(wrapper) {
     clearImageSelection();
+
+    if (!wrapper || !wrapper.isConnected) return;
+
     wrapper.classList.add("selected");
     selectedImageWrapper = wrapper;
 }
@@ -2133,11 +1642,13 @@ function createInlineImage(file, assetId, storedWidth = null) {
         selectImage(wrap);
     });
 
-    /* IMAGE RESIZE — ASPECT RATIO PRESERVED */
+    /* IMAGE RESIZE */
 
     resize.addEventListener("pointerdown", e => {
         e.preventDefault();
         e.stopPropagation();
+
+        if (activeImageAction) return;
 
         selectImage(wrap);
 
@@ -2227,16 +1738,10 @@ document.addEventListener("pointercancel", () => {
     }
 });
 
-/*
- * FIXED IMAGE DRAG:
- * 1. Original image editor ke andar hi rehti hai.
- * 2. Sirf clone preview move hota hai.
- * 3. Preview ko usi text editor ke rectangle mein clip kiya jata hai.
- * 4. Sidebar aur toolbar ke upar preview nahi ja sakta.
- * 5. Drop par image sirf apne original editor mein move hoti hai.
- */
+/* IMPROVED INLINE PHOTO DRAG */
 
 function enableInlineImageDrag(wrap, handle) {
+
     handle.addEventListener("pointerdown", e => {
         e.preventDefault();
         e.stopPropagation();
@@ -2244,6 +1749,7 @@ function enableInlineImageDrag(wrap, handle) {
         if (activeImageAction) return;
 
         const editor = getEditorFor(wrap);
+
         if (!editor || !editor.isConnected) return;
 
         selectImage(wrap);
@@ -2251,12 +1757,30 @@ function enableInlineImageDrag(wrap, handle) {
         const originalRect = wrap.getBoundingClientRect();
         const editorRect = editor.getBoundingClientRect();
 
-        if (
-            originalRect.width <= 0 ||
-            originalRect.height <= 0 ||
-            editorRect.width <= 0 ||
-            editorRect.height <= 0
-        ) return;
+        if (!originalRect.width || !originalRect.height) return;
+
+        /* PLACEHOLDER: ORIGINAL POSITION SAFE RAKHEGA */
+
+        const placeholder = document.createElement("span");
+
+        placeholder.className = "image-drag-placeholder";
+        placeholder.style.cssText =
+            "display:inline-block;vertical-align:middle;" +
+            "width:" + originalRect.width + "px;" +
+            "height:" + originalRect.height + "px;" +
+            "margin:12px 8px;";
+
+        wrap.parentNode.insertBefore(placeholder, wrap);
+
+        /* ORIGINAL IMAGE KO HIDDEN RAKHEIN */
+
+        const oldVisibility = wrap.style.visibility;
+        const oldPointerEvents = wrap.style.pointerEvents;
+
+        wrap.style.visibility = "hidden";
+        wrap.style.pointerEvents = "none";
+
+        /* PREVIEW CLONE */
 
         const preview = wrap.cloneNode(true);
 
@@ -2264,73 +1788,63 @@ function enableInlineImageDrag(wrap, handle) {
         preview.classList.remove("selected");
 
         preview.style.position = "fixed";
-        preview.style.margin = "0";
         preview.style.left = originalRect.left + "px";
         preview.style.top = originalRect.top + "px";
         preview.style.width = originalRect.width + "px";
         preview.style.height = originalRect.height + "px";
+        preview.style.margin = "0";
         preview.style.maxWidth = "none";
         preview.style.pointerEvents = "none";
         preview.style.zIndex = "2";
 
-        const previewImage = preview.querySelector("img");
-
-        if (previewImage) {
-            previewImage.style.width = "100%";
-            previewImage.style.height = "auto";
-        }
-
         preview.querySelectorAll(
             ".inline-image-drag,.inline-image-resize"
-        ).forEach(control => {
-            control.style.display = "none";
-        });
+        ).forEach(control => control.remove());
 
         document.body.appendChild(preview);
 
         const offsetX = e.clientX - originalRect.left;
         const offsetY = e.clientY - originalRect.top;
 
-        const editorBounds = {
-            left: editorRect.left,
-            top: editorRect.top,
-            right: editorRect.right,
-            bottom: editorRect.bottom
-        };
-
         let currentX = originalRect.left;
         let currentY = originalRect.top;
+
+        let finished = false;
 
         activeImageAction = {
             type: "move",
             wrapper: wrap,
             editor,
-            preview
+            preview,
+            placeholder
         };
 
+        try {
+            handle.setPointerCapture(e.pointerId);
+        } catch (_) {}
+
         function movePreview(ev) {
-            if (
-                !activeImageAction ||
-                activeImageAction.wrapper !== wrap
-            ) return;
+            if (finished) return;
+
+            const bounds = editor.getBoundingClientRect();
 
             const maxX = Math.max(
-                editorBounds.left,
-                editorBounds.right - originalRect.width
+                bounds.left,
+                bounds.right - originalRect.width
             );
 
             const maxY = Math.max(
-                editorBounds.top,
-                editorBounds.bottom - originalRect.height
+                bounds.top,
+                bounds.bottom - originalRect.height
             );
 
             currentX = Math.max(
-                editorBounds.left,
+                bounds.left,
                 Math.min(ev.clientX - offsetX, maxX)
             );
 
             currentY = Math.max(
-                editorBounds.top,
+                bounds.top,
                 Math.min(ev.clientY - offsetY, maxY)
             );
 
@@ -2338,7 +1852,7 @@ function enableInlineImageDrag(wrap, handle) {
             preview.style.top = currentY + "px";
         }
 
-        function getCaretRange(x, y) {
+        function getDropRange(x, y) {
             if (document.caretRangeFromPoint) {
                 return document.caretRangeFromPoint(x, y);
             }
@@ -2348,8 +1862,10 @@ function enableInlineImageDrag(wrap, handle) {
 
                 if (pos) {
                     const range = document.createRange();
+
                     range.setStart(pos.offsetNode, pos.offset);
                     range.collapse(true);
+
                     return range;
                 }
             }
@@ -2357,8 +1873,130 @@ function enableInlineImageDrag(wrap, handle) {
             return null;
         }
 
+        /* DROP TARGET KE HISAB SE INSERTION */
+
+        function insertAtDropPosition(x, y) {
+            if (!editor.contains(placeholder)) return false;
+
+            const target = document.elementFromPoint(x, y);
+
+            if (!target || !editor.contains(target)) {
+                return false;
+            }
+
+            /* Kisi doosri image ke pehle/baad */
+
+            const targetImage = target.closest(".inline-image-wrap");
+
+            if (
+                targetImage &&
+                targetImage !== wrap &&
+                editor.contains(targetImage)
+            ) {
+                const rect = targetImage.getBoundingClientRect();
+
+                if (y < rect.top + rect.height / 2) {
+                    targetImage.parentNode.insertBefore(
+                        wrap,
+                        targetImage
+                    );
+                } else {
+                    targetImage.parentNode.insertBefore(
+                        wrap,
+                        targetImage.nextSibling
+                    );
+                }
+
+                return true;
+            }
+
+            /* Agar placeholder ke upar drop hua */
+
+            const targetPlaceholder = target.closest(
+                ".image-drag-placeholder"
+            );
+
+            if (targetPlaceholder === placeholder) {
+                return false;
+            }
+
+            /* Editor ke direct child block ko identify karein */
+
+            let block = target;
+
+            while (
+                block.parentElement &&
+                block.parentElement !== editor
+            ) {
+                block = block.parentElement;
+            }
+
+            if (
+                block.parentElement === editor &&
+                block !== placeholder &&
+                block !== wrap
+            ) {
+                const rect = block.getBoundingClientRect();
+
+                if (y < rect.top + rect.height / 2) {
+                    editor.insertBefore(wrap, block);
+                } else {
+                    editor.insertBefore(wrap, block.nextSibling);
+                }
+
+                return true;
+            }
+
+            /* Caret range fallback */
+
+            const range = getDropRange(x, y);
+
+            if (
+                range &&
+                editor.contains(range.startContainer)
+            ) {
+                const node = range.startContainer.nodeType === 1
+                    ? range.startContainer
+                    : range.startContainer.parentElement;
+
+                const image = node && node.closest
+                    ? node.closest(".inline-image-wrap")
+                    : null;
+
+                if (image && image !== wrap) {
+                    const rect = image.getBoundingClientRect();
+
+                    if (y < rect.top + rect.height / 2) {
+                        image.parentNode.insertBefore(wrap, image);
+                    } else {
+                        image.parentNode.insertBefore(
+                            wrap,
+                            image.nextSibling
+                        );
+                    }
+
+                    return true;
+                }
+
+                range.insertNode(wrap);
+                return true;
+            }
+
+            return false;
+        }
+
         function cleanup() {
+            if (finished) return;
+            finished = true;
+
             preview.remove();
+
+            wrap.style.visibility = oldVisibility;
+            wrap.style.pointerEvents = oldPointerEvents;
+
+            if (placeholder.isConnected) {
+                placeholder.remove();
+            }
 
             document.removeEventListener("pointermove", movePreview);
             document.removeEventListener("pointerup", pointerUp);
@@ -2381,33 +2019,22 @@ function enableInlineImageDrag(wrap, handle) {
                 ev.clientY >= bounds.top &&
                 ev.clientY <= bounds.bottom;
 
-            if (insideEditor && editor.contains(wrap)) {
-                let range = getCaretRange(ev.clientX, ev.clientY);
+            let moved = false;
 
-                if (range && editor.contains(range.startContainer)) {
-                    const node = range.startContainer.nodeType === 1
-                        ? range.startContainer
-                        : range.startContainer.parentElement;
+            if (insideEditor && editor.contains(placeholder)) {
+                moved = insertAtDropPosition(
+                    ev.clientX,
+                    ev.clientY
+                );
+            }
 
-                    const targetImage = node && node.closest
-                        ? node.closest(".inline-image-wrap")
-                        : null;
+            /* Agar drop valid nahi hua to original position par restore */
 
-                    if (targetImage !== wrap) {
-                        if (
-                            targetImage &&
-                            targetImage !== wrap &&
-                            editor.contains(targetImage)
-                        ) {
-                            targetImage.parentNode.insertBefore(
-                                wrap,
-                                targetImage
-                            );
-                        } else {
-                            range.insertNode(wrap);
-                        }
-                    }
-                }
+            if (!moved && placeholder.isConnected) {
+                placeholder.parentNode.insertBefore(
+                    wrap,
+                    placeholder
+                );
             }
 
             cleanup();
@@ -2417,21 +2044,34 @@ function enableInlineImageDrag(wrap, handle) {
         }
 
         function pointerCancel() {
+            if (placeholder.isConnected) {
+                placeholder.parentNode.insertBefore(
+                    wrap,
+                    placeholder
+                );
+            }
+
             cleanup();
             selectImage(wrap);
         }
 
-        document.addEventListener("pointermove", movePreview, {
-            passive: true
-        });
+        document.addEventListener(
+            "pointermove",
+            movePreview,
+            { passive: true }
+        );
 
-        document.addEventListener("pointerup", pointerUp, {
-            once: true
-        });
+        document.addEventListener(
+            "pointerup",
+            pointerUp,
+            { once: true }
+        );
 
-        document.addEventListener("pointercancel", pointerCancel, {
-            once: true
-        });
+        document.addEventListener(
+            "pointercancel",
+            pointerCancel,
+            { once: true }
+        );
     });
 }
 
@@ -2489,6 +2129,8 @@ function migrateLegacyImages(root) {
             e.preventDefault();
             e.stopPropagation();
 
+            if (activeImageAction) return;
+
             selectImage(wrap);
 
             const editor = getEditorFor(wrap);
@@ -2511,7 +2153,10 @@ function migrateLegacyImages(root) {
 /* CLEAR SELECTION ON OUTSIDE CLICK */
 
 document.addEventListener("pointerdown", e => {
-    if (!e.target.closest(".inline-image-wrap")) {
+    if (
+        !e.target.closest(".inline-image-wrap") &&
+        !e.target.closest(".inline-image-drag-preview")
+    ) {
         clearImageSelection();
     }
 });
@@ -2892,6 +2537,8 @@ async function loadPDF(obj, el, container) {
                 await renderTask.promise;
 
                 taskInfo.rendering.delete(item.number);
+
+                if (taskInfo.cancelled) return;
 
                 /* PDF TEXT LAYER */
 
