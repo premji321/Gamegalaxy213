@@ -5,355 +5,4525 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#ffffff">
 <title>OneNote Infinity Pro</title>
-<style>
-:root{--accent:#7654c9;--border:#dedede;--hover:#f1edfb;--text:#252525}
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;font-family:Arial,"Noto Sans Devanagari",sans-serif;color:var(--text);background:#fff}
-button,input,select{font:inherit}button{cursor:pointer}
-.app{height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-.topbar{display:flex;align-items:center;gap:8px;padding:6px 9px;min-height:48px;border-bottom:1px solid var(--border);flex-shrink:0}
-.brand{font-weight:bold;font-size:16px;white-space:nowrap}.brand span{color:var(--accent)}
-.top-actions{display:flex;align-items:center;gap:4px;margin-left:auto}
-.btn{border:1px solid var(--border);border-radius:5px;background:#fff;padding:7px 9px;font-size:12px}.btn.primary{background:var(--accent);color:#fff}.btn:hover,.tool:hover{background:var(--hover)}
-.main{display:flex;flex:1;min-height:0;overflow:hidden}
-.sidebar{width:250px;flex-shrink:0;display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--border);transition:width .15s}
-.sidebar.collapsed{width:0;overflow:hidden;border:0}
-.side-head{padding:9px;border-bottom:1px solid #eee}
-.side-head-row{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-bottom:8px;font-size:13px;font-weight:bold}
-.side-actions{display:flex;flex-wrap:wrap;gap:4px}
-.small-btn{font-size:11px;padding:6px;border:1px solid #ddd;background:#fff;border-radius:4px}
-.tree{flex:1;min-height:0;overflow:auto;padding:5px}
-.tree-row{display:flex;align-items:center;gap:2px;min-height:30px;padding:2px;border-radius:4px;font-size:12px}
-.tree-row:hover{background:#f6f6f6}.tree-row.active{background:#eee8ff;color:#51349b}
-.tree-toggle,.tree-menu{flex-shrink:0;width:25px;height:27px;border:0;border-radius:4px;background:transparent}
-.tree-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
-.tree-children{margin-left:10px;padding-left:5px;border-left:1px solid #eee}
-.side-footer{padding:8px;border-top:1px solid #eee;color:#777;font-size:10px}
-.editor{flex:1;min-width:0;display:flex;flex-direction:column}
-.page-head{padding:7px 12px 4px;flex-shrink:0}
-#pageTitle{width:100%;border:0;outline:none;padding:5px 0;font-size:22px;font-weight:bold}
-.status{min-height:13px;font-size:10px;color:#777}
-.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:6px;border-top:1px solid #eee;border-bottom:1px solid #ddd;flex-shrink:0}
-.group{display:flex;align-items:center;gap:3px;padding-right:5px;margin-right:2px;border-right:1px solid #eee}
-.tool{min-height:30px;min-width:29px;padding:4px 7px;border:1px solid transparent;border-radius:4px;background:#fff;font-size:12px}
-.tool-select{height:30px;max-width:130px;padding:3px;border:1px solid #ddd;border-radius:4px;background:#fff;font-size:11px}
-.color-input{width:30px;height:30px;padding:2px;border:1px solid #ddd;border-radius:4px}
-.workspace-scroll{position:relative;flex:1;min-height:0;overflow:auto;background:#fff;overscroll-behavior:contain}
-.workspace{position:relative;min-width:100%;min-height:100%;width:1400px;height:1000px;background:#fff}
-.main-writing{position:absolute;left:20px;top:15px;width:794px;min-height:500px;border:1px solid transparent;background:#fff}
-.main-writing.has-content{border-color:#e3e3e3}
-.writing-body{min-height:480px;padding:24px 28px;outline:none;overflow-wrap:anywhere;line-height:1.65;font-size:15px}
-.writing-body:empty:before{content:"यहाँ क्लिक करके लिखें...";color:#aaa;pointer-events:none}
-.writing-body table,.text-body table{border-collapse:collapse;max-width:100%}
-.writing-body td,.writing-body th,.text-body td,.text-body th{border:1px solid #aaa;padding:5px}
-.writing-body img,.text-body img{max-width:100%;height:auto;vertical-align:middle}
-.object{position:absolute;left:100px;top:100px;background:#fff;border:1px solid transparent}
-.object.has-content{border-color:#d9d9d9}
-.object-head{display:flex;align-items:center;gap:5px;min-height:27px;padding:3px 6px;background:#fff;border-bottom:1px solid transparent;cursor:move;user-select:none;touch-action:none}
-.object-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#777}
-.object-close{border:0;background:transparent;font-size:17px;color:#666}
-.object-body{background:#fff}
-.text-object{width:240px;min-width:100px;min-height:32px;resize:both;overflow:auto}
-.text-body{min-height:24px;padding:4px 7px;outline:none;overflow-wrap:anywhere;line-height:1.6}
-.image-object{width:330px;min-width:120px;resize:both;overflow:hidden;border:1px solid #ddd}
-.image-object img{display:block;width:100%;height:auto;object-fit:contain}
-.pdf-object{width:794px;min-width:260px;border:1px solid #ddd}
-.pdf-pages{display:flex;flex-direction:column;gap:10px}
-.pdf-page{position:relative;width:100%;overflow:hidden;border:1px solid #eee;background:#fff;line-height:normal}
-.pdf-canvas{display:block;width:100%;height:auto}
-.pdf-placeholder{min-height:140px;display:flex;align-items:center;justify-content:center;background:#fafafa;color:#777;padding:10px}
-.pdf-message{padding:12px;font-size:12px;color:#666}
-.mindmap{position:absolute;left:900px;top:30px;width:320px;padding:10px;border:1px solid #ddd;background:#fff}
-.mindmap h3{font-size:14px;margin:0 0 8px}.mindmap input{width:100%;padding:7px;border:1px solid #ddd}
-.mind-node{padding:7px;margin-top:5px;border:1px solid #ddd;font-size:12px}
-.backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:500;background:#0005;padding:15px}
-.dialog{width:min(420px,100%);padding:18px;border-radius:8px;background:#fff}
-.dialog input{width:100%;padding:10px;border:1px solid #ccc;border-radius:4px}
-.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
-#pdfModeHint{font-size:11px;color:var(--accent)}
 
-/* Photo editor: photos are inline inside the editable text area */
-.inline-image-wrap{position:relative;display:inline-block;vertical-align:middle;max-width:100%;margin:10px 5px;line-height:0;user-select:none;-webkit-user-select:none}
-.inline-image-wrap img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;cursor:pointer;user-select:none;-webkit-user-drag:none;pointer-events:none}
-.inline-image-wrap.selected{outline:2px solid var(--accent);outline-offset:2px;box-shadow:0 0 0 4px #7654c933}
-.inline-image-drag{position:absolute;top:-25px;left:0;width:100%;height:23px;display:none;align-items:center;justify-content:center;background:var(--accent);color:#fff;border-radius:4px 4px 0 0;font-size:12px;font-weight:bold;cursor:grab;touch-action:none;z-index:20;line-height:1}
-.inline-image-wrap.selected .inline-image-drag{display:flex}
-.inline-image-resize{position:absolute;width:27px;height:27px;right:-10px;bottom:-10px;display:none;align-items:center;justify-content:center;border:2px solid #fff;border-radius:50%;background:var(--accent);color:#fff;font-size:16px;font-weight:bold;cursor:nwse-resize;touch-action:none;z-index:21;line-height:1;padding:0}
-.inline-image-wrap.selected .inline-image-resize{display:flex}
-.inline-image-resize:active,.inline-image-drag:active{background:#51349b}
-@media(max-width:700px){
- .topbar{gap:4px;padding:5px}.brand{font-size:12px}.top-actions{gap:3px}.top-actions .btn{padding:6px;font-size:10px}
- .sidebar{width:150px}.side-head{padding:6px}.small-btn{font-size:10px;padding:5px}.tree-row{font-size:11px}
- #pageTitle{font-size:19px}.toolbar{gap:3px;padding:4px}.group{padding-right:3px}.tool{padding:3px 5px;min-width:26px}
- .tool-select{max-width:105px}.main-writing{width:794px;left:12px;top:12px}.writing-body{padding:18px}
- .inline-image-drag{height:26px;top:-28px}.inline-image-resize{width:30px;height:30px;right:-11px;bottom:-11px}
+<style>
+:root {
+    --accent: #7654c9;
+    --border: #dedede;
+    --hover: #f1edfb;
+    --text: #252525;
 }
-@media(max-width:420px){.sidebar{width:125px}}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
+    color: var(--text);
+    background: #fff;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.app {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* TOP BAR */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 9px;
+    min-height: 48px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.brand {
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.brand span {
+    color: var(--accent);
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.btn {
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: #fff;
+    padding: 7px 9px;
+    font-size: 12px;
+}
+
+.btn.primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn:hover, .tool:hover {
+    background: var(--hover);
+}
+
+/* MAIN LAYOUT */
+
+.main {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border-right: 1px solid var(--border);
+    transition: width .15s;
+}
+
+.sidebar.collapsed {
+    width: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+.side-head {
+    padding: 9px;
+    border-bottom: 1px solid #eee;
+}
+
+.side-head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.side-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.small-btn {
+    font-size: 11px;
+    padding: 6px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.tree {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 5px;
+}
+
+.tree-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-height: 30px;
+    padding: 2px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.tree-row:hover {
+    background: #f6f6f6;
+}
+
+.tree-row.active {
+    background: #eee8ff;
+    color: #51349b;
+}
+
+.tree-toggle, .tree-menu {
+    flex-shrink: 0;
+    width: 25px;
+    height: 27px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+}
+
+.tree-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.tree-children {
+    margin-left: 10px;
+    padding-left: 5px;
+    border-left: 1px solid #eee;
+}
+
+.side-footer {
+    padding: 8px;
+    border-top: 1px solid #eee;
+    color: #777;
+    font-size: 10px;
+}
+
+/* EDITOR */
+
+.editor {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-head {
+    padding: 7px 12px 4px;
+    flex-shrink: 0;
+}
+
+#pageTitle {
+    width: 100%;
+    border: 0;
+    outline: none;
+    padding: 5px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.status {
+    min-height: 13px;
+    font-size: 10px;
+    color: #777;
+}
+
+/* TOOLBAR */
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 6px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding-right: 5px;
+    margin-right: 2px;
+    border-right: 1px solid #eee;
+}
+
+.tool {
+    min-height: 30px;
+    min-width: 29px;
+    padding: 4px 7px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 12px;
+}
+
+.tool-select {
+    height: 30px;
+    max-width: 130px;
+    padding: 3px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 11px;
+}
+
+.color-input {
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* WORKSPACE */
+
+.workspace-scroll {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    background: #fff;
+    overscroll-behavior: contain;
+}
+
+.workspace {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+    width: 1400px;
+    height: 1000px;
+    background: #fff;
+}
+
+/* MAIN WRITING AREA */
+
+.main-writing {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    width: 794px;
+    min-height: 500px;
+    border: 1px solid transparent;
+    background: #fff;
+}
+
+.main-writing.has-content {
+    border-color: #e3e3e3;
+}
+
+.writing-body {
+    min-height: 480px;
+    padding: 24px 28px;
+    outline: none;
+    overflow-wrap: anywhere;
+    line-height: 1.65;
+    font-size: 15px;
+}
+
+.writing-body:empty:before {
+    content: "यहाँ क्लिक करके लिखें...";
+    color: #aaa;
+    pointer-events: none;
+}
+
+/* TABLES */
+
+.writing-body table,
+.text-body table {
+    border-collapse: collapse;
+    max-width: 100%;
+}
+
+.writing-body td,
+.writing-body th,
+.text-body td,
+.text-body th {
+    border: 1px solid #aaa;
+    padding: 5px;
+}
+
+/* INLINE IMAGES */
+
+.writing-body img,
+.text-body img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+/* FLOATING OBJECTS */
+
+.object {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    background: #fff;
+    border: 1px solid transparent;
+}
+
+.object.has-content {
+    border-color: #d9d9d9;
+}
+
+.object-head {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 27px;
+    padding: 3px 6px;
+    background: #fff;
+    border-bottom: 1px solid transparent;
+    cursor: move;
+    user-select: none;
+    touch-action: none;
+}
+
+.object-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+    color: #777;
+}
+
+.object-close {
+    border: 0;
+    background: transparent;
+    font-size: 17px;
+    color: #666;
+}
+
+/* TEXT OBJECT */
+
+.object-body {
+    background: #fff;
+}
+
+.text-object {
+    width: 240px;
+    min-width: 100px;
+    min-height: 32px;
+    resize: both;
+    overflow: auto;
+}
+
+.text-body {
+    min-height: 24px;
+    padding: 4px 7px;
+    outline: none;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+}
+
+/* IMAGE OBJECT */
+
+.image-object {
+    width: 330px;
+    min-width: 120px;
+    resize: both;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.image-object img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* PDF OBJECT */
+
+.pdf-object {
+    width: 794px;
+    min-width: 260px;
+    border: 1px solid #ddd;
+}
+
+.pdf-pages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pdf-page {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #eee;
+    background: #fff;
+    line-height: normal;
+}
+
+.pdf-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.pdf-placeholder {
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    color: #777;
+    padding: 10px;
+}
+
+.pdf-message {
+    padding: 12px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* MIND MAP */
+
+.mindmap {
+    position: absolute;
+    left: 900px;
+    top: 30px;
+    width: 320px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.mindmap h3 {
+    font-size: 14px;
+    margin: 0 0 8px;
+}
+
+.mindmap input {
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #ddd;
+}
+
+.mind-node {
+    padding: 7px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+
+/* DIALOG */
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    background: #0005;
+    padding: 15px;
+}
+
+.dialog {
+    width: min(420px, 100%);
+    padding: 18px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.dialog input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+#pdfModeHint {
+    font-size: 11px;
+    color: var(--accent);
+}
+
+/* UPDATED INLINE PHOTO EDITOR */
+
+.inline-image-wrap {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    margin: 12px 8px;
+    line-height: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.inline-image-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* SELECTED IMAGE BORDER */
+
+.inline-image-wrap.selected {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px #7654c933;
+}
+
+/* DRAG HANDLE */
+
+.inline-image-drag {
+    position: absolute;
+    top: -29px;
+    left: 0;
+    width: 100%;
+    height: 27px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 5px 5px 0 0;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: grab;
+    touch-action: none;
+    z-index: 100;
+    line-height: 1;
+}
+
+.inline-image-wrap.selected .inline-image-drag {
+    display: flex;
+}
+
+/* RESIZE HANDLE */
+
+.inline-image-resize {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: -12px;
+    bottom: -12px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: nwse-resize;
+    touch-action: none;
+    z-index: 101;
+    padding: 0;
+}
+
+.inline-image-wrap.selected .inline-image-resize {
+    display: flex;
+}
+
+.inline-image-resize:active,
+.inline-image-drag:active {
+    background: #51349b;
+}
+
+/* MOBILE DESIGN */
+
+@media(max-width:700px) {
+
+    .topbar {
+        gap: 4px;
+        padding: 5px;
+    }
+
+    .brand {
+        font-size: 12px;
+    }
+
+    .top-actions {
+        gap: 3px;
+    }
+
+    .top-actions .btn {
+        padding: 6px;
+        font-size: 10px;
+    }
+
+    .sidebar {
+        width: 150px;
+    }
+
+    .side-head {
+        padding: 6px;
+    }
+
+    .small-btn {
+        font-size: 10px;
+        padding: 5px;
+    }
+
+    .tree-row {
+        font-size: 11px;
+    }
+
+    #pageTitle {
+        font-size: 19px;
+    }
+
+    .toolbar {
+        gap: 3px;
+        padding: 4px;
+    }
+
+    .group {
+        padding-right: 3px;
+    }
+
+    .tool {
+        padding: 3px 5px;
+        min-width: 26px;
+    }
+
+    .tool-select {
+        max-width: 105px;
+    }
+
+    .main-writing {
+        width: 794px;
+        left: 12px;
+        top: 12px;
+    }
+
+    .writing-body {
+        padding: 18px;
+    }
+
+    .inline-image-drag {
+        height: 30px;
+        top: -32px;
+    }
+
+    .inline-image-resize {
+        width: 34px;
+        height: 34px;
+        right: -13px;
+        bottom: -13px;
+    }
+}
+
+@media(max-width:420px) {
+    .sidebar {
+        width: 125px;
+    }
+}
 </style>
 </head>
+
+
 <body>
+
 <div class="app">
+
 <header class="topbar">
- <button class="btn" id="sidebarToggle">☰</button>
- <div class="brand">OneNote <span>Infinity Pro</span></div>
- <div class="top-actions">
-  <button class="btn" id="saveBtn">Save</button>
-  <button class="btn" id="backupBtn">Backup</button>
-  <button class="btn" id="restoreBtn">Restore</button>
- </div>
+
+    <button class="btn" id="sidebarToggle">☰</button>
+
+    <div class="brand">
+        OneNote <span>Infinity Pro</span>
+    </div>
+
+    <div class="top-actions">
+        <button class="btn" id="saveBtn">Save</button>
+        <button class="btn" id="backupBtn">Backup</button>
+        <button class="btn" id="restoreBtn">Restore</button>
+    </div>
+
 </header>
+
 <div class="main">
-<aside class="sidebar" id="sidebar">
- <div class="side-head">
-  <div class="side-head-row"><span>📚 Notebooks</span><button class="small-btn" id="sidebarMinBtn">−</button></div>
-  <div class="side-actions">
-   <button class="small-btn" id="newNotebook">＋ Notebook</button>
-   <button class="small-btn" id="newSection">＋ Section</button>
-   <button class="small-btn" id="newPage">＋ Page</button>
-  </div>
- </div>
- <div class="tree" id="tree"></div>
- <div class="side-footer">Auto Save · Local Storage + IndexedDB</div>
-</aside>
-<section class="editor">
- <div class="page-head"><input id="pageTitle" placeholder="Page title"><div class="status" id="status">Ready</div></div>
- <div class="toolbar">
-  <div class="group"><button class="tool" data-cmd="undo">↶</button><button class="tool" data-cmd="redo">↷</button></div>
-  <div class="group">
-   <select class="tool-select" id="blockFormat"><option value="P">Paragraph</option><option value="H1">Heading 1</option><option value="H2">Heading 2</option><option value="H3">Heading 3</option><option value="BLOCKQUOTE">Quote</option></select>
-   <select class="tool-select" id="fontFamily"><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Verdana">Verdana</option><option value="Tahoma">Tahoma</option><option value="Times New Roman">Times New Roman</option><option value="Courier New">Courier New</option><option value="Noto Sans Devanagari">Noto Sans Devanagari</option></select>
-   <select class="tool-select" id="fontSize"><option value="1">8</option><option value="2">10</option><option value="3" selected>12</option><option value="4">14</option><option value="5">18</option><option value="6">24</option><option value="7">36</option></select>
-  </div>
-  <div class="group"><button class="tool" data-cmd="bold"><b>B</b></button><button class="tool" data-cmd="italic"><i>I</i></button><button class="tool" data-cmd="underline"><u>U</u></button><button class="tool" data-cmd="strikeThrough"><s>S</s></button></div>
-  <div class="group"><label title="Font Color"><input class="color-input" type="color" id="fontColor" value="#222222"></label><label title="Highlight Color"><input class="color-input" type="color" id="highlightColor" value="#fff176"></label></div>
-  <div class="group"><button class="tool" data-cmd="justifyLeft">⇤</button><button class="tool" data-cmd="justifyCenter">≡</button><button class="tool" data-cmd="justifyRight">⇥</button><button class="tool" data-cmd="justifyFull">☷</button></div>
-  <div class="group"><button class="tool" data-cmd="insertUnorderedList">• List</button><button class="tool" data-cmd="insertOrderedList">1. List</button><button class="tool" data-cmd="indent">→</button><button class="tool" data-cmd="outdent">←</button></div>
-  <div class="group"><button class="tool" id="linkBtn">🔗 Link</button><button class="tool" id="tableBtn">▦ Table</button><button class="tool" id="clearFormat">Tx</button></div>
-  <div class="group"><button class="tool" id="addText">＋ Text</button><button class="tool" id="insertImage">🖼 Image</button><button class="tool" id="insertFile">📎 File</button><button class="tool" id="insertPDF">＋ PDF</button><button class="tool" id="addMindMap">Mind Map</button></div>
-  <div class="group"><button class="tool" id="pdfSelectMode">PDF: Select Text</button><button class="tool" id="pdfHighlightMode">🖍 PDF Highlighter</button><button class="tool" id="clearPDFHighlights">Clear PDF Highlights</button></div>
-  <span id="pdfModeHint">PDF mode: Select Text</span>
- </div>
- <div class="workspace-scroll" id="workspaceScroll">
-  <div class="workspace" id="workspace">
-   <div class="main-writing" id="mainWriting"><div class="writing-body" id="writingBody" contenteditable="true" spellcheck="true"></div></div>
-  </div>
- </div>
-</section>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="side-head">
+
+            <div class="side-head-row">
+                <span>📚 Notebooks</span>
+                <button class="small-btn" id="sidebarMinBtn">−</button>
+            </div>
+
+            <div class="side-actions">
+                <button class="small-btn" id="newNotebook">＋ Notebook</button>
+                <button class="small-btn" id="newSection">＋ Section</button>
+                <button class="small-btn" id="newPage">＋ Page</button>
+            </div>
+
+        </div>
+
+        <div class="tree" id="tree"></div>
+
+        <div class="side-footer">
+            Auto Save · Local Storage + IndexedDB
+        </div>
+
+    </aside>
+
+    <section class="editor">
+
+        <div class="page-head">
+            <input id="pageTitle" placeholder="Page title">
+            <div class="status" id="status">Ready</div>
+        </div>
+
+        <div class="toolbar">
+
+            <div class="group">
+                <button class="tool" data-cmd="undo">↶</button>
+                <button class="tool" data-cmd="redo">↷</button>
+            </div>
+
+            <div class="group">
+
+                <select class="tool-select" id="blockFormat">
+                    <option value="P">Paragraph</option>
+                    <option value="H1">Heading 1</option>
+                    <option value="H2">Heading 2</option>
+                    <option value="H3">Heading 3</option>
+                    <option value="BLOCKQUOTE">Quote</option>
+                </select>
+
+                <select class="tool-select" id="fontFamily">
+                    <option value="Arial">Arial</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Tahoma">Tahoma</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Noto Sans Devanagari">Noto Sans Devanagari</option>
+                </select>
+
+                <select class="tool-select" id="fontSize">
+                    <option value="1">8</option>
+                    <option value="2">10</option>
+                    <option value="3" selected>12</option>
+                    <option value="4">14</option>
+                    <option value="5">18</option>
+                    <option value="6">24</option>
+                    <option value="7">36</option>
+                </select>
+
+            </div>
+
+            <div class="group">
+                <button class="tool" data-cmd="bold"><b>B</b></button>
+                <button class="tool" data-cmd="italic"><i>I</i></button>
+                <button class="tool" data-cmd="underline"><u>U</u></button>
+                <button class="tool" data-cmd="strikeThrough"><s>S</s></button>
+            </div>
+
+            <div class="group">
+
+                <label title="Font Color">
+                    <input class="color-input" type="color" id="fontColor" value="#222222">
+                </label>
+
+                <label title="Highlight Color">
+                    <input class="color-input" type="color" id="highlightColor" value="#fff176">
+                </label>
+
+            </div>
+
+            <div class="group">
+                <button class="tool" data-cmd="justifyLeft">⇤</button>
+                <button class="tool" data-cmd="justifyCenter">≡</button>
+                <button class="tool" data-cmd="justifyRight">⇥</button>
+                <button class="tool" data-cmd="justifyFull">☷</button>
+            </div>
+
+            <div class="group">
+                <button class="tool" data-cmd="insertUnorderedList">• List</button>
+                <button class="tool" data-cmd="insertOrderedList">1. List</button>
+                <button class="tool" data-cmd="indent">→</button>
+                <button class="tool" data-cmd="outdent">←</button>
+            </div>
+
+            <div class="group">
+                <button class="tool" id="linkBtn">🔗 Link</button>
+                <button class="tool" id="tableBtn">▦ Table</button>
+                <button class="tool" id="clearFormat">Tx</button>
+            </div>
+
+            <div class="group">
+                <button class="tool" id="addText">＋ Text</button>
+                <button class="tool" id="insertImage">🖼 Image</button>
+                <button class="tool" id="insertFile">📎 File</button>
+                <button class="tool" id="insertPDF">＋ PDF</button>
+                <button class="tool" id="addMindMap">Mind Map</button>
+            </div>
+
+            <div class="group">
+                <button class="tool" id="pdfSelectMode">PDF: Select Text</button>
+                <button class="tool" id="pdfHighlightMode">🖍 PDF Highlighter</button>
+                <button class="tool" id="clearPDFHighlights">Clear PDF Highlights</button>
+            </div>
+
+            <span id="pdfModeHint">PDF mode: Select Text</span>
+
+        </div>
+
+        <div class="workspace-scroll" id="workspaceScroll">
+
+            <div class="workspace" id="workspace">
+
+                <div class="main-writing" id="mainWriting">
+
+                    <div class="writing-body"
+                         id="writingBody"
+                         contenteditable="true"
+                         spellcheck="true">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
 </div>
 </div>
+
 <input type="file" id="imageInput" accept="image/*" multiple hidden>
 <input type="file" id="fileInput" multiple hidden>
 <input type="file" id="pdfInput" accept=".pdf,application/pdf" multiple hidden>
 <input type="file" id="restoreInput" accept=".json,application/json" hidden>
-<div class="backdrop" id="backdrop"><div class="dialog">
- <h3 id="dialogTitle">Create</h3><input id="dialogInput" placeholder="Enter name">
- <div class="dialog-actions"><button class="btn" id="cancelDialog">Cancel</button><button class="btn primary" id="confirmDialog">Create</button></div>
-</div></div>
+
+<div class="backdrop" id="backdrop">
+
+    <div class="dialog">
+
+        <h3 id="dialogTitle">Create</h3>
+
+        <input id="dialogInput" placeholder="Enter name">
+
+        <div class="dialog-actions">
+            <button class="btn" id="cancelDialog">Cancel</button>
+            <button class="btn primary" id="confirmDialog">Create</button>
+        </div>
+
+    </div>
+
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 <script>
 "use strict";
-const KEY="onenoteInfinityV5",DBNAME="onenoteInfinityAssetsV5",STORE="assets";
-const $=id=>document.getElementById(id);
-let state,activePageId,assetDB,saveTimer,dialogAction=null;
-let lastEditor=$("writingBody"),lastRange=null,pendingEmptyPanel=null,menuElement=null,selectedInlineImage=null;
-const objectUrls=new Set(),pdfTasks=new Map();
-let pdfMode="select";
-if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-/* IndexedDB */
-function openDB(){return new Promise((resolve,reject)=>{if(!("indexedDB"in window))return reject(Error("IndexedDB उपलब्ध नहीं है"));const req=indexedDB.open(DBNAME,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(STORE))req.result.createObjectStore(STORE,{keyPath:"id"})};req.onsuccess=()=>{assetDB=req.result;resolve(assetDB)};req.onerror=()=>reject(req.error)})}
-async function putAsset(id,blob,name,type){if(!assetDB)await openDB();return new Promise((resolve,reject)=>{const tx=assetDB.transaction(STORE,"readwrite");tx.objectStore(STORE).put({id,blob,name,type,updatedAt:Date.now()});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)})}
-async function getAsset(id){if(!assetDB)await openDB();return new Promise((resolve,reject)=>{const tx=assetDB.transaction(STORE,"readonly"),req=tx.objectStore(STORE).get(id);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)})}
-function makeObjectURL(blob){const u=URL.createObjectURL(blob);objectUrls.add(u);return u}
-function revokeObjectURL(u){if(u&&objectUrls.has(u)){URL.revokeObjectURL(u);objectUrls.delete(u)}}
+/* BASIC SETTINGS */
 
-/* Data model */
-function uid(){return "id_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,9)}
-function makePage(title="New Page"){return{id:uid(),type:"page",title,content:"",objects:[],mindmap:[],updatedAt:Date.now()}}
-function makeSection(title="New Section"){return{id:uid(),type:"section",title,expanded:true,children:[makePage("Page 1")]}}
-function makeNotebook(title="My Notebook"){return{id:uid(),type:"notebook",title,expanded:true,children:[makeSection("General")]}}
-function defaults(){const n=makeNotebook();return{version:5,notebooks:[n],lastPageId:n.children[0].children[0].id}}
-function walk(n,cb){cb(n);(n.children||[]).forEach(c=>walk(c,cb))}
-function allPages(){const a=[];(state.notebooks||[]).forEach(n=>walk(n,x=>{if(x.type==="page")a.push(x)}));return a}
-function findParent(id){let f=null;(state.notebooks||[]).forEach(n=>walk(n,x=>{if((x.children||[]).some(c=>c.id===id))f=x}));return f}
-function activePage(){return allPages().find(p=>p.id===activePageId)||null}
-function loadState(){try{const raw=localStorage.getItem(KEY);if(raw){const x=JSON.parse(raw);if(x&&Array.isArray(x.notebooks))state=x}}catch(e){console.warn(e)}if(!state||!state.notebooks.length||!allPages().length)state=defaults();const pages=allPages();activePageId=pages.some(p=>p.id===state.lastPageId)?state.lastPageId:pages[0].id}
-function setStatus(t){$("status").textContent=t}
-function saveCurrentPage(){const p=activePage();if(!p)return;p.title=$("pageTitle").value.trim()||"Untitled Page";p.content=$("writingBody").innerHTML;p.objects=p.objects||[];$("workspace").querySelectorAll(".object").forEach(el=>{const o=p.objects.find(x=>x.id===el.dataset.objectId);if(!o)return;o.x=parseFloat(el.style.left)||0;o.y=parseFloat(el.style.top)||0;o.w=el.offsetWidth||o.w||240;o.h=el.offsetHeight||o.h||32;if(o.type==="text"){const b=el.querySelector(".text-body");if(b)o.html=b.innerHTML;o.userWidth=el.dataset.userWidth==="1";o.userHeight=el.dataset.userHeight==="1"}})}
-function saveNow(){clearTimeout(saveTimer);saveCurrentPage();try{state.lastPageId=activePageId;localStorage.setItem(KEY,JSON.stringify(state));setStatus("✓ Saved");return true}catch(e){console.error(e);setStatus("Save error");alert("नोट्स सेव नहीं हो सके। Backup बनाएँ या जगह खाली करें।");return false}}
-function scheduleSave(){setStatus("Saving…");clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,600)}
-$("saveBtn").onclick=saveNow;window.addEventListener("beforeunload",()=>{try{saveCurrentPage();state.lastPageId=activePageId;localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}});
+const KEY = "onenoteInfinityV6";
+const DBNAME = "onenoteInfinityAssetsV6";
+const STORE = "assets";
 
-/* Dialog */
-function showDialog(title,placeholder,fn){$("dialogTitle").textContent=title;$("dialogInput").value="";$("dialogInput").placeholder=placeholder||"Name";dialogAction=fn;$("backdrop").style.display="flex";setTimeout(()=>$("dialogInput").focus(),50)}
-function closeDialog(){$("backdrop").style.display="none";dialogAction=null}
-$("cancelDialog").onclick=closeDialog;$("confirmDialog").onclick=()=>{const v=$("dialogInput").value.trim();if(!v)return alert("नाम लिखें।");const fn=dialogAction;closeDialog();if(fn)fn(v)};
-$("dialogInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("confirmDialog").click()});
-$("backdrop").addEventListener("click",e=>{if(e.target===$("backdrop"))closeDialog()});
+const $ = id => document.getElementById(id);
 
-/* Notebook tree */
-function renderTree(){$("tree").innerHTML="";state.notebooks.forEach(n=>$("tree").appendChild(renderNode(n)))}
-function renderNode(node){const wrap=document.createElement("div"),row=document.createElement("div");row.className="tree-row";if(node.id===activePageId)row.classList.add("active");const has=(node.children||[]).length>0,t=document.createElement("button");t.className="tree-toggle";t.textContent=has?(node.expanded===false?"▸":"▾"):"";const label=document.createElement("span");label.className="tree-label";label.textContent=(node.type==="notebook"?"📚 ":node.type==="section"?"📁 ":"📄 ")+node.title;const menu=document.createElement("button");menu.className="tree-menu";menu.textContent="⋮";row.append(t,label,menu);wrap.append(row);t.onclick=e=>{e.stopPropagation();if(has){node.expanded=node.expanded===false;renderTree();scheduleSave()}};label.onclick=()=>{if(node.type==="page")openPage(node.id);else{node.expanded=node.expanded===false;renderTree();scheduleSave()}};menu.onclick=e=>{e.stopPropagation();showNodeDropdown(menu,node)};if(has&&node.expanded!==false){const ch=document.createElement("div");ch.className="tree-children";node.children.forEach(c=>ch.appendChild(renderNode(c)));wrap.append(ch)}return wrap}
-function closeNodeDropdown(){if(menuElement){menuElement.remove();menuElement=null}}
-document.addEventListener("click",e=>{if(menuElement&&!menuElement.contains(e.target))closeNodeDropdown()});
-function showNodeDropdown(button,node){closeNodeDropdown();const m=document.createElement("div");m.style.cssText="position:fixed;z-index:200;min-width:155px;background:white;border:1px solid #ddd;border-radius:6px;box-shadow:0 5px 20px #0002;padding:4px";const acts=node.type==="notebook"?[["＋ Create Section",()=>createChild(node,"section")],["✎ Rename",()=>renameNode(node)],["🗑 Delete",()=>deleteNode(node)]]:node.type==="section"?[["＋ Create Subsection",()=>createChild(node,"section")],["＋ Create Page",()=>createChild(node,"page")],["✎ Rename",()=>renameNode(node)],["🗑 Delete",()=>deleteNode(node)]]:[["✎ Rename",()=>renameNode(node)],["🗑 Delete",()=>deleteNode(node)]];acts.forEach(([txt,fn])=>{const b=document.createElement("button");b.textContent=txt;b.style.cssText="display:block;width:100%;text-align:left;border:0;background:white;padding:9px;font-size:12px";if(txt.includes("Delete"))b.style.color="#c62828";b.onclick=e=>{e.stopPropagation();closeNodeDropdown();fn()};m.append(b)});document.body.append(m);menuElement=m;const r=button.getBoundingClientRect();m.style.left=Math.max(4,Math.min(r.left,innerWidth-170))+"px";m.style.top=Math.max(4,Math.min(r.bottom,innerHeight-220))+"px"}
-function createChild(parent,type){showDialog(type==="page"?"Create Page":"Create Section",type==="page"?"Page name":"Section name",name=>{const child=type==="page"?makePage(name):makeSection(name);parent.children=parent.children||[];parent.children.push(child);parent.expanded=true;renderTree();openPage(type==="page"?child.id:child.children[0].id);saveNow()})}
-function renameNode(n){showDialog("Rename","New name",name=>{n.title=name;if(n.id===activePageId)$("pageTitle").value=name;renderTree();saveNow()})}
-function deleteNode(n){if(!confirm('"'+n.title+'" को Delete करना चाहते हैं?'))return;if(n.type==="notebook")state.notebooks=state.notebooks.filter(x=>x.id!==n.id);else{const p=findParent(n.id);if(p)p.children=p.children.filter(x=>x.id!==n.id)}if(!state.notebooks.length||!allPages().length)state=defaults();if(!allPages().some(p=>p.id===activePageId))activePageId=allPages()[0].id;renderTree();openPage(activePageId);saveNow()}
-$("newNotebook").onclick=()=>showDialog("New Notebook","Notebook name",name=>{const n=makeNotebook(name);state.notebooks.push(n);renderTree();openPage(n.children[0].children[0].id);saveNow()});
-$("newSection").onclick=()=>{let p=activePage(),parent=p?findParent(p.id):null;while(parent&&parent.type!=="notebook")parent=findParent(parent.id);createChild(parent||state.notebooks[0],"section")};
-$("newPage").onclick=()=>{const p=activePage(),s=p?findParent(p.id):null;createChild(s&&s.type==="section"?s:state.notebooks[0],"page")};
-function toggleSidebar(){$("sidebar").classList.toggle("collapsed")}
-$("sidebarToggle").onclick=toggleSidebar;$("sidebarMinBtn").onclick=toggleSidebar;
+let state;
+let activePageId;
+let assetDB;
+let saveTimer;
 
-/* Selection helpers */
-function rememberEditor(ed){lastEditor=ed;const s=window.getSelection();if(s&&s.rangeCount)lastRange=s.getRangeAt(0).cloneRange()}
-function rememberCurrentSelection(){const s=window.getSelection();if(!s||!s.rangeCount)return;let n=s.getRangeAt(0).commonAncestorContainer;if(n.nodeType===3)n=n.parentElement;const ed=n.closest&&n.closest("#writingBody,.text-body");if(ed){lastEditor=ed;lastRange=s.getRangeAt(0).cloneRange()}}
-document.addEventListener("selectionchange",()=>{const s=window.getSelection();if(!s||!s.rangeCount)return;let n=s.anchorNode;if(n&&n.nodeType===3)n=n.parentElement;if(!n||!n.closest)return;const ed=n.closest("#writingBody,.text-body");if(ed)rememberEditor(ed)});
-function restoreEditorSelection(){if(!lastEditor||!document.contains(lastEditor))lastEditor=$("writingBody");lastEditor.focus();if(lastRange)try{const s=window.getSelection();s.removeAllRanges();s.addRange(lastRange)}catch(e){}}
-function insertAtSavedRange(node){if(!lastEditor||!document.contains(lastEditor))lastEditor=$("writingBody");lastEditor.focus();const sel=window.getSelection();if(lastRange)try{sel.removeAllRanges();sel.addRange(lastRange)}catch(e){}let r=sel.rangeCount?sel.getRangeAt(0):document.createRange();if(!lastEditor.contains(r.commonAncestorContainer)){r=document.createRange();r.selectNodeContents(lastEditor);r.collapse(false)}r.deleteContents();r.insertNode(node);const spacer=document.createTextNode(" ");node.parentNode.insertBefore(spacer,node.nextSibling);r.setStartAfter(spacer);r.collapse(true);sel.removeAllRanges();sel.addRange(r);lastRange=r.cloneRange();if(lastEditor===$("writingBody")){updateMainBorder();autoGrowMain()}else{const box=lastEditor.closest(".text-object");if(box)autoGrowText(box)}scheduleSave()}
+let lastEditor = $("writingBody");
+let lastRange = null;
 
-/* Page switch */
-function openPage(id){saveCurrentPage();const p=allPages().find(x=>x.id===id);if(!p)return;activePageId=id;state.lastPageId=id;$("pageTitle").value=p.title||"";$("writingBody").innerHTML=p.content||"";migrateLegacyImages($("writingBody"));updateMainBorder();renderObjects(p);renderTree();autoGrowMain();rehydrateAssets($("writingBody"));setStatus("Ready")}
-$("pageTitle").addEventListener("input",()=>{const p=activePage();if(p)p.title=$("pageTitle").value;renderTree();scheduleSave()});
-function updateMainBorder(){const b=$("writingBody");$("mainWriting").classList.toggle("has-content",b.textContent.trim().length>0||!!b.querySelector("img,table"))}
-function autoGrowMain(){const b=$("writingBody");b.style.height="auto";const h=Math.max(480,b.scrollHeight+15);b.style.height=h+"px";$("mainWriting").style.height=(h+2)+"px";updateWorkspaceSize()}
-$("writingBody").addEventListener("input",()=>{updateMainBorder();autoGrowMain();rememberEditor($("writingBody"));scheduleSave()});
-$("writingBody").addEventListener("paste",()=>setTimeout(()=>{migrateLegacyImages($("writingBody"));updateMainBorder();autoGrowMain();scheduleSave()},150));
+let pendingEmptyPanel = null;
+let menuElement = null;
 
-/* Formatting */
-function exec(cmd,val=null){restoreEditorSelection();document.execCommand(cmd,false,val);if(lastEditor===$("writingBody")){updateMainBorder();autoGrowMain()}else{const box=lastEditor.closest(".text-object");if(box)autoGrowText(box)}scheduleSave()}
-document.querySelectorAll("[data-cmd]").forEach(b=>{b.addEventListener("mousedown",e=>e.preventDefault());b.addEventListener("click",()=>exec(b.dataset.cmd))});
-$("fontFamily").onchange=e=>exec("fontName",e.target.value);$("fontSize").onchange=e=>exec("fontSize",e.target.value);$("blockFormat").onchange=e=>exec("formatBlock","<"+e.target.value+">");$("fontColor").oninput=e=>exec("foreColor",e.target.value);$("highlightColor").oninput=e=>{restoreEditorSelection();document.execCommand("hiliteColor",false,e.target.value);scheduleSave()};$("clearFormat").onclick=()=>exec("removeFormat");
-$("linkBtn").onclick=()=>{const u=prompt("Link URL लिखें:");if(u)exec("createLink",u)};
-$("tableBtn").onclick=()=>{const rows=Math.min(20,Math.max(1,Number(prompt("Rows?","3"))||3)),cols=Math.min(12,Math.max(1,Number(prompt("Columns?","3"))||3));let h="<table><tbody>";for(let r=0;r<rows;r++){h+="<tr>";for(let c=0;c<cols;c++)h+="<td>&nbsp;</td>";h+="</tr>"}restoreEditorSelection();document.execCommand("insertHTML",false,h+"</tbody></table><p><br></p>");scheduleSave()};
+let selectedInlineImage = null;
+let pdfMode = "select";
 
-/* Workspace and text panels */
-function updateWorkspaceSize(){const s=$("workspaceScroll");let right=s.clientWidth||1200,bottom=s.clientHeight||800;$("workspace").querySelectorAll(".object,.main-writing,.mindmap").forEach(el=>{right=Math.max(right,(parseFloat(el.style.left)||0)+el.offsetWidth+320);bottom=Math.max(bottom,(parseFloat(el.style.top)||0)+el.offsetHeight+150)});$("workspace").style.width=Math.max(right+300,s.clientWidth)+"px";$("workspace").style.height=Math.max(bottom,s.clientHeight)+"px"}
-function panelHasContent(el){const b=el.querySelector(".text-body");return !!b&&(b.textContent.trim().length>0||!!b.querySelector("img,table,video,iframe,a"))}
-function updateTextBorder(el){el.classList.toggle("has-content",panelHasContent(el))}
-function autoGrowText(el){const b=el.querySelector(".text-body");if(!b)return;if(panelHasContent(el)&&!el.dataset.userWidth)el.style.width="794px";if(!el.dataset.userHeight){b.style.height="auto";b.style.height=Math.max(24,b.scrollHeight+8)+"px";el.style.height="auto"}updateTextBorder(el);updateWorkspaceSize()}
-function removeIfEmpty(el){if(el&&el.isConnected&&el.classList.contains("text-object")&&!panelHasContent(el)){const p=activePage();if(p)p.objects=p.objects.filter(o=>o.id!==el.dataset.objectId);el.remove();if(pendingEmptyPanel===el)pendingEmptyPanel=null;scheduleSave();updateWorkspaceSize()}}
-function addTextPanel(x,y,focus=true){const p=activePage();if(!p)return null;const o={id:uid(),type:"text",title:"Text",x:Math.max(0,x),y:Math.max(0,y),w:240,h:32,html:""};p.objects.push(o);const el=createObject(o);$("workspace").append(el);pendingEmptyPanel=el;const b=el.querySelector(".text-body");if(focus&&b){b.focus();const r=document.createRange();r.selectNodeContents(b);r.collapse(false);const s=window.getSelection();s.removeAllRanges();s.addRange(r);rememberEditor(b)}scheduleSave();updateWorkspaceSize();return el}
-$("workspace").addEventListener("click",e=>{if(e.target.closest(".object,.main-writing,.mindmap,.pdf-page"))return;if(pendingEmptyPanel&&!panelHasContent(pendingEmptyPanel))removeIfEmpty(pendingEmptyPanel);const r=$("workspace").getBoundingClientRect();addTextPanel(e.clientX-r.left,e.clientY-r.top,true)});
-$("addText").onclick=()=>addTextPanel($("workspaceScroll").scrollLeft+80,$("workspaceScroll").scrollTop+80,true);
+const objectUrls = new Set();
+const pdfTasks = new Map();
 
-/* Floating objects */
-function createObject(o){const el=document.createElement("div");el.className="object "+o.type+"-object";el.dataset.objectId=o.id;el.style.left=(o.x||0)+"px";el.style.top=(o.y||0)+"px";if(o.w)el.style.width=o.w+"px";if(o.type==="image"&&o.h)el.style.height=o.h+"px";if(o.userWidth)el.dataset.userWidth="1";if(o.userHeight)el.dataset.userHeight="1";const head=document.createElement("div");head.className="object-head";const title=document.createElement("span");title.className="object-title";title.textContent=o.type==="text"?"Text":o.name||(o.type==="pdf"?"PDF":"Image");const close=document.createElement("button");close.className="object-close";close.textContent="×";head.append(title,close);el.append(head);const body=document.createElement("div");body.className="object-body";el.append(body);
- if(o.type==="text"){const b=document.createElement("div");b.className="text-body";b.contentEditable="true";b.spellcheck=true;b.innerHTML=o.html||"";migrateLegacyImages(b);body.append(b);updateTextBorder(el);b.addEventListener("focus",()=>rememberEditor(b));b.addEventListener("input",()=>{updateTextBorder(el);autoGrowText(el);rememberEditor(b);scheduleSave()});b.addEventListener("blur",()=>setTimeout(()=>removeIfEmpty(el),180));requestAnimationFrame(()=>autoGrowText(el))}
- else if(o.type==="image"){const img=document.createElement("img");img.alt=o.name||"Image";body.append(img);loadImage(o,img)}
- else if(o.type==="pdf"){const pages=document.createElement("div");pages.className="pdf-pages";body.append(pages);loadPDF(o,el,pages)}
- close.onclick=()=>{if(!confirm("इस पैनल को हटाएँ?"))return;if(o.type==="pdf")cancelPDFTask(o.id);const p=activePage();if(p)p.objects=p.objects.filter(x=>x.id!==o.id);el.remove();scheduleSave();updateWorkspaceSize()};
- makeDraggable(el,head);if(o.type==="text"||o.type==="image")enableResize(el);if(o.type==="pdf")enablePDFResize(el,o);return el}
-function makeDraggable(el,handle){let moving=false,sx=0,sy=0,ox=0,oy=0;handle.addEventListener("pointerdown",e=>{if(e.target.closest(".object-close"))return;const r=el.getBoundingClientRect();if(r.right-e.clientX<18&&r.bottom-e.clientY<18)return;moving=true;sx=e.clientX;sy=e.clientY;ox=parseFloat(el.style.left)||0;oy=parseFloat(el.style.top)||0;try{handle.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});handle.addEventListener("pointermove",e=>{if(!moving)return;el.style.left=Math.max(0,ox+e.clientX-sx)+"px";el.style.top=Math.max(0,oy+e.clientY-sy)+"px";updateWorkspaceSize()});const stop=()=>{if(moving){moving=false;scheduleSave();updateWorkspaceSize()}};handle.addEventListener("pointerup",stop);handle.addEventListener("pointercancel",stop)}
-function enableResize(el){let ow=el.offsetWidth,oh=el.offsetHeight;if("ResizeObserver"in window)new ResizeObserver(()=>{const w=el.offsetWidth,h=el.offsetHeight;if(el.dataset.userResizing==="1"){if(w!==ow)el.dataset.userWidth="1";if(h!==oh)el.dataset.userHeight="1"}ow=w;oh=h}).observe(el);el.addEventListener("pointerdown",e=>{const r=el.getBoundingClientRect();if(r.right-e.clientX<22&&r.bottom-e.clientY<22)el.dataset.userResizing="1"});el.addEventListener("pointerup",()=>{if(el.dataset.userResizing){delete el.dataset.userResizing;scheduleSave()}})}
-
-/* Inline image editor */
-function clearImageSelection(){document.querySelectorAll(".inline-image-wrap.selected").forEach(x=>x.classList.remove("selected"));selectedInlineImage=null}
-function getEditorFor(el){return el.closest("#writingBody,.text-body")}
-function updateEditorAfterImageChange(editor){if(editor===$("writingBody")){autoGrowMain();updateMainBorder()}else{const panel=editor&&editor.closest(".text-object");if(panel)autoGrowText(panel)}scheduleSave()}
-function createInlineImage(file,assetId,storedWidth=null){
- const wrap=document.createElement("span");wrap.className="inline-image-wrap";wrap.contentEditable="false";wrap.dataset.assetId=assetId;
- const img=document.createElement("img");img.alt=file.name||"Image";img.dataset.assetId=assetId;img.draggable=false;
- const drag=document.createElement("span");drag.className="inline-image-drag";drag.textContent="⠿  MOVE IMAGE";drag.title="Drag image within this text panel";
- const resize=document.createElement("button");resize.className="inline-image-resize";resize.type="button";resize.textContent="↘";resize.title="Resize image";
- wrap.append(img,drag,resize);img.src=makeObjectURL(file);
- img.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();clearImageSelection();wrap.classList.add("selected");selectedInlineImage=wrap});
- img.addEventListener("load",()=>{if(storedWidth){wrap.style.width=storedWidth+"px"}else{const editor=getEditorFor(wrap);const maxW=editor?Math.max(100,editor.clientWidth-35):600;wrap.style.width=Math.min(img.naturalWidth||400,maxW)+"px"}img.style.width="100%";img.style.height="auto";});
- resize.addEventListener("pointerdown",e=>{
-  e.preventDefault();e.stopPropagation();clearImageSelection();wrap.classList.add("selected");selectedInlineImage=wrap;
-  const editor=getEditorFor(wrap);if(!editor)return;
-  const startX=e.clientX,startW=wrap.getBoundingClientRect().width,ratio=(img.naturalWidth||1)/(img.naturalHeight||1);
-  const maxW=Math.max(80,Math.min(editor.clientWidth-12,1200));
-  try{resize.setPointerCapture(e.pointerId)}catch(_){}
-  const move=ev=>{const dx=ev.clientX-startX;const w=Math.max(60,Math.min(maxW,startW+dx));wrap.style.width=w+"px";img.style.width="100%";img.style.height="auto";img.style.aspectRatio=String(ratio);updateEditorAfterImageChange(editor)};
-  const stop=()=>{resize.removeEventListener("pointermove",move);resize.removeEventListener("pointerup",stop);resize.removeEventListener("pointercancel",stop);scheduleSave()};
-  resize.addEventListener("pointermove",move);resize.addEventListener("pointerup",stop);resize.addEventListener("pointercancel",stop);
- });
- enableInlineImageDrag(wrap,drag);
- return wrap;
+if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 }
-function enableInlineImageDrag(wrap,handle){
- handle.addEventListener("pointerdown",e=>{
-  e.preventDefault();e.stopPropagation();const editor=getEditorFor(wrap);if(!editor)return;
-  clearImageSelection();wrap.classList.add("selected");selectedInlineImage=wrap;
-  const placeholder=document.createElement("span");placeholder.className="inline-image-placeholder";placeholder.style.cssText=`display:inline-block;width:${wrap.getBoundingClientRect().width}px;height:${wrap.getBoundingClientRect().height}px;vertical-align:middle`;
-  const rect=wrap.getBoundingClientRect(),startX=e.clientX,startY=e.clientY,oldWidth=wrap.style.width;
-  wrap.parentNode.insertBefore(placeholder,wrap);
-  wrap.style.position="fixed";wrap.style.left=rect.left+"px";wrap.style.top=rect.top+"px";wrap.style.width=rect.width+"px";wrap.style.zIndex="99999";wrap.style.pointerEvents="none";document.body.appendChild(wrap);
-  const move=ev=>{wrap.style.left=(rect.left+ev.clientX-startX)+"px";wrap.style.top=(rect.top+ev.clientY-startY)+"px"};
-  const stop=ev=>{
-   document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",stop);document.removeEventListener("pointercancel",stop);
-   const x=ev.clientX,y=ev.clientY;wrap.style.position="";wrap.style.left="";wrap.style.top="";wrap.style.width=oldWidth||placeholder.style.width;wrap.style.zIndex="";wrap.style.pointerEvents="";
-   let targetRange=null;
-   if(document.caretRangeFromPoint)targetRange=document.caretRangeFromPoint(x,y);
-   else if(document.caretPositionFromPoint){const p=document.caretPositionFromPoint(x,y);if(p){targetRange=document.createRange();targetRange.setStart(p.offsetNode,p.offset);targetRange.collapse(true)}}
-   if(targetRange&&editor.contains(targetRange.startContainer)){
-    const node=targetRange.startContainer.nodeType===1?targetRange.startContainer:targetRange.startContainer.parentElement;
-    const targetWrap=node&&node.closest?node.closest(".inline-image-wrap"):null;
-    if(targetWrap&&targetWrap!==wrap){const r=document.createRange();r.setStartBefore(targetWrap);r.collapse(true);r.insertNode(wrap)}
-    else{targetRange.insertNode(wrap)}
-    placeholder.remove();
-   }else{placeholder.parentNode.insertBefore(wrap,placeholder);placeholder.remove()}
-   wrap.classList.add("selected");selectedInlineImage=wrap;updateEditorAfterImageChange(editor);
-  };
-  document.addEventListener("pointermove",move);document.addEventListener("pointerup",stop);document.addEventListener("pointercancel",stop);
- });
+
+/* INDEXED DB */
+
+function openDB() {
+
+    return new Promise((resolve, reject) => {
+
+        if (!("indexedDB" in window)) {
+            return reject(Error("IndexedDB उपलब्ध नहीं है"));
+        }
+
+        const req = indexedDB.open(DBNAME, 1);
+
+        req.onupgradeneeded = () => {
+
+            if (!req.result.objectStoreNames.contains(STORE)) {
+                req.result.createObjectStore(STORE, {
+                    keyPath: "id"
+                });
+            }
+
+        };
+
+        req.onsuccess = () => {
+            assetDB = req.result;
+            resolve(assetDB);
+        };
+
+        req.onerror = () => reject(req.error);
+
+    });
+
 }
-function migrateLegacyImages(root){
- root.querySelectorAll("img").forEach(img=>{
-  if(img.closest(".inline-image-wrap,.image-object,.pdf-page"))return;
-  const assetId=img.dataset.assetId;if(!assetId)return;
-  const wrap=document.createElement("span");wrap.className="inline-image-wrap";wrap.contentEditable="false";wrap.dataset.assetId=assetId;
-  const drag=document.createElement("span");drag.className="inline-image-drag";drag.textContent="⠿  MOVE IMAGE";
-  const resize=document.createElement("button");resize.className="inline-image-resize";resize.type="button";resize.textContent="↘";
-  const width=img.getBoundingClientRect().width||parseFloat(img.style.width)||300;
-  img.replaceWith(wrap);wrap.append(img,drag,resize);wrap.style.width=Math.max(60,width)+"px";img.style.width="100%";img.style.height="auto";img.draggable=false;
-  img.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();clearImageSelection();wrap.classList.add("selected");selectedInlineImage=wrap});
-  resize.addEventListener("pointerdown",e=>{e.preventDefault();e.stopPropagation();const editor=getEditorFor(wrap),sx=e.clientX,sw=wrap.getBoundingClientRect().width,max=editor?editor.clientWidth-12:1000;const move=ev=>{wrap.style.width=Math.max(60,Math.min(max,sw+ev.clientX-sx))+"px";updateEditorAfterImageChange(editor)};const stop=()=>{document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",stop);scheduleSave()};document.addEventListener("pointermove",move);document.addEventListener("pointerup",stop)});
-  enableInlineImageDrag(wrap,drag);
- });
+
+async function putAsset(id, blob, name, type) {
+
+    if (!assetDB) await openDB();
+
+    return new Promise((resolve, reject) => {
+
+        const tx = assetDB.transaction(STORE, "readwrite");
+
+        tx.objectStore(STORE).put({
+            id,
+            blob,
+            name,
+            type,
+            updatedAt: Date.now()
+        });
+
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(tx.error);
+
+    });
+
 }
-document.addEventListener("pointerdown",e=>{if(!e.target.closest(".inline-image-wrap"))clearImageSelection()});
-$("insertImage").onclick=()=>{rememberCurrentSelection();$("imageInput").click()};
-$("imageInput").addEventListener("change",async e=>{const fs=Array.from(e.target.files||[]);e.target.value="";for(const f of fs){if(!f.type.startsWith("image/"))continue;try{const id=uid();await putAsset(id,f,f.name,f.type);const wrap=createInlineImage(f,id);insertAtSavedRange(wrap);const p=activePage();if(p)p.objects.push({id:uid(),type:"inline-image",assetId:id,name:f.name})}catch(err){console.error(err);alert("इमेज सेव नहीं हो सकी")}}scheduleSave()});
 
-/* Attachments */
-$("insertFile").onclick=()=>{rememberCurrentSelection();$("fileInput").click()};
-$("fileInput").addEventListener("change",async e=>{const fs=Array.from(e.target.files||[]);e.target.value="";for(const f of fs){try{const id=uid();await putAsset(id,f,f.name,f.type);const a=document.createElement("a");a.dataset.assetId=id;a.href=makeObjectURL(f);a.download=f.name;a.textContent="📎 "+f.name;a.target="_blank";a.style.cssText="display:inline-block;margin:4px;padding:4px;border:1px solid #ddd";insertAtSavedRange(a);activePage().objects.push({id:uid(),type:"attachment",assetId:id,name:f.name})}catch(err){alert("फ़ाइल अटैच नहीं हो सकी")}}scheduleSave()});
-async function rehydrateAssets(root){if(!root||!assetDB)return;for(const el of root.querySelectorAll("[data-asset-id]")){try{const rec=await getAsset(el.dataset.assetId);if(!rec||!rec.blob)continue;const u=makeObjectURL(rec.blob);if(el.tagName==="IMG")el.src=u;else if(el.tagName==="A"){el.href=u;el.download=rec.name||el.textContent}}catch(e){console.warn(e)}}}
-async function loadImage(o,img){try{const r=await getAsset(o.assetId);if(r&&r.blob){img.src=makeObjectURL(r.blob);img.onload=updateWorkspaceSize}}catch(e){console.warn(e)}}
+async function getAsset(id) {
 
-/* PDF import and rendering with text selection/highlighting */
-$("insertPDF").onclick=()=>$("pdfInput").click();
-$("pdfInput").addEventListener("change",async e=>{const fs=Array.from(e.target.files||[]);e.target.value="";for(const f of fs){if(f.type!=="application/pdf"&&!f.name.toLowerCase().endsWith(".pdf")){alert("PDF फ़ाइल चुनें: "+f.name);continue}try{const p=activePage(),id=uid();await putAsset(id,f,f.name,"application/pdf");const o={id:uid(),type:"pdf",name:f.name,assetId:id,x:100,y:100,w:794,highlights:[]};p.objects.push(o);$("workspace").append(createObject(o));updateWorkspaceSize();saveNow()}catch(err){console.error(err);alert("PDF insert नहीं हो सकी")}}});
-function cancelPDFTask(id){const t=pdfTasks.get(id);if(!t)return;t.cancelled=true;if(t.observer)t.observer.disconnect();for(const x of t.rendering.values())try{x.cancel()}catch(e){};try{if(t.pdf)t.pdf.destroy()}catch(e){};try{if(t.loadingTask)t.loadingTask.destroy()}catch(e){};pdfTasks.delete(id)}
-async function loadPDF(o,el,container){cancelPDFTask(o.id);container.innerHTML='<div class="pdf-message">PDF तैयार हो रही है...</div>';let ti=null;try{if(!window.pdfjsLib)throw Error("PDF.js लोड नहीं हुई");const rec=await getAsset(o.assetId);if(!rec||!rec.blob)throw Error("सेव PDF नहीं मिली");const loadingTask=pdfjsLib.getDocument({data:new Uint8Array(await rec.blob.arrayBuffer()),isEvalSupported:false});ti={loadingTask,pdf:null,observer:null,cancelled:false,rendering:new Map(),items:[]};pdfTasks.set(o.id,ti);const pdf=await loadingTask.promise;if(ti.cancelled||pdfTasks.get(o.id)!==ti)return;ti.pdf=pdf;container.innerHTML="";for(let n=1;n<=pdf.numPages;n++){const box=document.createElement("div");box.className="pdf-page";box.dataset.pageNumber=n;const ph=document.createElement("div");ph.className="pdf-placeholder";ph.textContent="PDF पेज "+n+" — लोड हो रहा है";box.append(ph);container.append(box);ti.items.push({number:n,box,rendered:false,rendering:false})}
- async function render(item){if(ti.cancelled||item.rendered||item.rendering)return;item.rendering=true;try{const page=await pdf.getPage(item.number);if(ti.cancelled)return;const base=page.getViewport({scale:1}),width=Math.max(260,Math.min(1100,el.clientWidth-2)),scale=width/base.width,dpr=Math.min(devicePixelRatio||1,1.25),viewport=page.getViewport({scale});const canvas=document.createElement("canvas");canvas.className="pdf-canvas";canvas.width=Math.floor(viewport.width*dpr);canvas.height=Math.floor(viewport.height*dpr);canvas.style.width="100%";const hi=document.createElement("canvas");hi.className="pdf-highlight-layer";hi.width=canvas.width;hi.height=canvas.height;hi.style.cssText="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none";item.box.replaceChildren(canvas,hi);item.canvas=canvas;item.hi=hi;const rt=page.render({canvasContext:canvas.getContext("2d",{alpha:false}),viewport,transform:dpr!==1?[dpr,0,0,dpr,0,0]:null});ti.rendering.set(item.number,rt);await rt.promise;ti.rendering.delete(item.number);const tc=await page.getTextContent();const textLayer=document.createElement("div");textLayer.className="pdf-text-layer";textLayer.style.cssText=`position:absolute;inset:0;overflow:hidden;user-select:text;line-height:1;width:${viewport.width}px;height:${viewport.height}px`;for(const it of tc.items){if(!it.str)continue;const sp=document.createElement("span");sp.textContent=it.str;const tx=pdfjsLib.Util.transform(viewport.transform,it.transform),fh=Math.hypot(tx[2],tx[3]);sp.style.cssText=`position:absolute;white-space:pre;transform-origin:0 0;color:transparent;cursor:text;left:${tx[4]}px;top:${tx[5]-fh}px;font-size:${fh}px;height:${fh}px`;textLayer.append(sp)}textLayer.style.transformOrigin="top left";textLayer.style.transform=`scale(${canvas.clientWidth/viewport.width})`;item.box.insertBefore(textLayer,hi);item.rendered=true;setupPDFHighlight(o,item,viewport,dpr);drawSavedHighlights(o,item);page.cleanup()}catch(err){ti.rendering.delete(item.number);if(!ti.cancelled){console.warn(err);const msg=document.createElement("div");msg.className="pdf-message";msg.textContent="पेज "+item.number+" रेंडर नहीं हुआ: "+err.message;item.box.replaceChildren(msg)}}finally{item.rendering=false;updateWorkspaceSize()}}
- if("IntersectionObserver"in window){ti.observer=new IntersectionObserver(entries=>entries.forEach(en=>{const item=ti.items.find(x=>x.box===en.target);if(item&&en.isIntersecting)render(item)}),{root:$("workspaceScroll"),rootMargin:"700px 0px"});ti.items.forEach(x=>ti.observer.observe(x.box))}else ti.items.forEach(render);updateWorkspaceSize();updatePDFMode()
- }catch(err){console.error(err);if(ti&&pdfTasks.get(o.id)===ti)cancelPDFTask(o.id);container.innerHTML="";const m=document.createElement("div");m.className="pdf-message";m.textContent="PDF लोड नहीं हुई: "+err.message;container.append(m)}}
-function setupPDFHighlight(o,item,viewport,dpr){const c=item.hi,ctx=c.getContext("2d");let drawing=false,last=null;function pos(e){const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*c.width,y:(e.clientY-r.top)/r.height*c.height}}c.addEventListener("pointerdown",e=>{if(pdfMode!=="highlight")return;drawing=true;last=pos(e);try{c.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault();e.stopPropagation()});c.addEventListener("pointermove",e=>{if(!drawing||pdfMode!=="highlight")return;const p=pos(e),color=$("highlightColor").value;ctx.save();ctx.globalAlpha=.34;ctx.strokeStyle=color;ctx.lineWidth=Math.max(10,viewport.scale*13*dpr);ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();ctx.restore();o.highlights=o.highlights||[];o.highlights.push({x1:last.x/c.width,y1:last.y/c.height,x2:p.x/c.width,y2:p.y/c.height,color,width:ctx.lineWidth/c.width});last=p});const up=()=>{if(drawing){drawing=false;last=null;scheduleSave()}};c.addEventListener("pointerup",up);c.addEventListener("pointercancel",up)}
-function drawSavedHighlights(o,item){if(!item.hi)return;const c=item.hi,ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);ctx.save();ctx.globalAlpha=.34;for(const h of o.highlights||[]){ctx.strokeStyle=h.color||"#fff176";ctx.lineWidth=Math.max(10,(h.width||.015)*c.width);ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(h.x1*c.width,h.y1*c.height);ctx.lineTo(h.x2*c.width,h.y2*c.height);ctx.stroke()}ctx.restore()}
-$("pdfSelectMode").onclick=()=>{pdfMode="select";updatePDFMode()};$("pdfHighlightMode").onclick=()=>{pdfMode="highlight";updatePDFMode()};
-function updatePDFMode(){$("pdfModeHint").textContent="PDF mode: "+(pdfMode==="select"?"Select Text":"Highlighter — उंगली से ड्रैग करें");document.querySelectorAll(".pdf-page").forEach(p=>{const c=p.querySelector(".pdf-highlight-layer");if(c)c.style.pointerEvents=pdfMode==="highlight"?"auto":"none";p.style.cursor=pdfMode==="highlight"?"crosshair":"text"})}
-$("clearPDFHighlights").onclick=()=>{const p=activePage();if(!p)return;p.objects.filter(o=>o.type==="pdf").forEach(o=>{o.highlights=[];const t=pdfTasks.get(o.id);if(t)t.items.forEach(i=>drawSavedHighlights(o,i))});scheduleSave();setStatus("PDF highlights cleared")};
-function enablePDFResize(el,o){if(!("ResizeObserver"in window))return;let last=el.clientWidth,timer;new ResizeObserver(()=>{const w=el.clientWidth;if(!w||Math.abs(w-last)<24)return;last=w;clearTimeout(timer);timer=setTimeout(()=>{const c=el.querySelector(".pdf-pages");if(c)loadPDF(o,el,c)},800)}).observe(el)}
+    if (!assetDB) await openDB();
 
-/* Mind map and object rendering */
-function renderObjects(p){$("workspace").querySelectorAll(".object,.mindmap").forEach(el=>{if(el.classList.contains("pdf-object"))cancelPDFTask(el.dataset.objectId);el.remove()});p.objects=p.objects||[];p.objects.filter(o=>["text","image","pdf"].includes(o.type)).forEach(o=>$("workspace").append(createObject(o)));renderMindMap(p);requestAnimationFrame(()=>{autoGrowMain();updateWorkspaceSize();updatePDFMode()})}
-function renderMindMap(p){const old=$("workspace").querySelector(".mindmap");if(old)old.remove();if(!p.mindmap||!p.mindmap.length)return;const box=document.createElement("div");box.className="mindmap";const h=document.createElement("h3");h.textContent="Mind Map";const input=document.createElement("input");input.placeholder="New idea — Enter दबाएँ";const list=document.createElement("div");function refresh(){list.innerHTML="";p.mindmap.forEach((v,i)=>{const n=document.createElement("div");n.className="mind-node";n.textContent=v;n.onclick=()=>{if(confirm("इस आइडिया को हटाएँ?")){p.mindmap.splice(i,1);refresh();scheduleSave()}};list.append(n)});updateWorkspaceSize()}input.onkeydown=e=>{if(e.key==="Enter"&&input.value.trim()){p.mindmap.push(input.value.trim());input.value="";refresh();scheduleSave()}};box.append(h,input,list);$("workspace").append(box);refresh()}
-$("addMindMap").onclick=()=>{const p=activePage();if(!p)return;p.mindmap=p.mindmap||[];if(!p.mindmap.length)p.mindmap.push("Main Idea");renderMindMap(p);scheduleSave()};
+    return new Promise((resolve, reject) => {
 
-/* Backup and restore */
-function blobToBase64(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=()=>rej(r.error);r.readAsDataURL(blob)})}
-function base64ToBlob(b,t){const x=atob(b),a=new Uint8Array(x.length);for(let i=0;i<x.length;i++)a[i]=x.charCodeAt(i);return new Blob([a],{type:t||"application/octet-stream"})}
-$("backupBtn").onclick=async()=>{saveNow();try{if(!assetDB)await openDB();const data={app:"OneNote Infinity Pro",version:5,state,assets:[]},ids=new Set();allPages().forEach(p=>{(p.objects||[]).forEach(o=>{if(o.assetId)ids.add(o.assetId)});const t=document.createElement("div");t.innerHTML=p.content||"";t.querySelectorAll("[data-asset-id]").forEach(x=>ids.add(x.dataset.assetId))});for(const id of ids){const r=await getAsset(id);if(r&&r.blob)data.assets.push({id:r.id,name:r.name,type:r.type,base64:await blobToBase64(r.blob)})}const u=makeObjectURL(new Blob([JSON.stringify(data)],{type:"application/json"})),a=document.createElement("a");a.href=u;a.download="onenote-infinity-backup.json";a.click();setTimeout(()=>revokeObjectURL(u),3000);setStatus("Backup downloaded")}catch(e){console.error(e);alert("Backup नहीं बन पाया")}};
-$("restoreBtn").onclick=()=>$("restoreInput").click();
-$("restoreInput").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f||!confirm("Restore से मौजूदा डेटा बदल सकता है। जारी रखें?"))return;try{if(!assetDB)await openDB();const d=JSON.parse(await f.text());if(!d.state||!Array.isArray(d.state.notebooks))throw Error("Invalid backup");for(const a of d.assets||[])await putAsset(a.id,base64ToBlob(a.base64,a.type),a.name,a.type);state=d.state;if(!allPages().length)state=defaults();activePageId=allPages().some(p=>p.id===state.lastPageId)?state.lastPageId:allPages()[0].id;saveNow();renderTree();openPage(activePageId);alert("Backup Restore हो गया")}catch(err){console.error(err);alert("Restore नहीं हो पाया। सही Backup JSON चुनें।")}});
+        const tx = assetDB.transaction(STORE, "readonly");
 
-/* Start */
-async function start(){try{await openDB()}catch(e){console.warn(e);setStatus("फ़ाइल स्टोरेज उपलब्ध नहीं है")}loadState();renderTree();openPage(activePageId);setStatus("Ready")}
-window.addEventListener("resize",updateWorkspaceSize);start();
+        const req = tx.objectStore(STORE).get(id);
+
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => reject(req.error);
+
+    });
+
+}
+
+function makeObjectURL(blob) {
+
+    const url = URL.createObjectURL(blob);
+
+    objectUrls.add(url);
+
+    return url;
+
+}
+
+function revokeObjectURL(url) {
+
+    if (url && objectUrls.has(url)) {
+
+        URL.revokeObjectURL(url);
+
+        objectUrls.delete(url);
+
+    }
+
+}
+
+/* DATA MODEL */
+
+function uid() {
+
+    return "id_" +
+        Date.now().toString(36) +
+        "_" +
+        Math.random().toString(36).slice(2, 9);
+
+}
+
+function makePage(title = "New Page") {
+
+    return {
+        id: uid(),
+        type: "page",
+        title,
+        content: "",
+        objects: [],
+        mindmap: [],
+        updatedAt: Date.now()
+    };
+
+}
+
+function makeSection(title = "New Section") {
+
+    return {
+        id: uid(),
+        type: "section",
+        title,
+        expanded: true,
+        children: [
+            makePage("Page 1")
+        ]
+    };
+
+}
+
+function makeNotebook(title = "My Notebook") {
+
+    return {
+        id: uid(),
+        type: "notebook",
+        title,
+        expanded: true,
+        children: [
+            makeSection("General")
+        ]
+    };
+
+}
+
+function defaults() {
+
+    const notebook = makeNotebook();
+
+    return {
+        version: 6,
+        notebooks: [notebook],
+        lastPageId: notebook.children[0].children[0].id
+    };
+
+}
+
+function walk(node, callback) {
+
+    callback(node);
+
+    (node.children || []).forEach(child => {
+        walk(child, callback);
+    });
+
+}
+
+function allPages() {
+
+    const pages = [];
+
+    (state.notebooks || []).forEach(notebook => {
+
+        walk(notebook, node => {
+
+            if (node.type === "page") {
+                pages.push(node);
+            }
+
+        });
+
+    });
+
+    return pages;
+
+}
+
+function findParent(id) {
+
+    let found = null;
+
+    (state.notebooks || []).forEach(notebook => {
+
+        walk(notebook, node => {
+
+            if ((node.children || []).some(child => child.id === id)) {
+                found = node;
+            }
+
+        });
+
+    });
+
+    return found;
+
+}
+
+function activePage() {
+
+    return allPages().find(page => page.id === activePageId) || null;
+
+}
+
+/* LOAD STATE */
+
+function loadState() {
+
+    try {
+
+        const raw = localStorage.getItem(KEY);
+
+        if (raw) {
+
+            const saved = JSON.parse(raw);
+
+            if (saved && Array.isArray(saved.notebooks)) {
+                state = saved;
+            }
+
+        }
+
+    } catch (e) {
+        console.warn(e);
+    }
+
+    if (!state || !state.notebooks.length || !allPages().length) {
+        state = defaults();
+    }
+
+    const pages = allPages();
+
+    activePageId = pages.some(page => page.id === state.lastPageId)
+        ? state.lastPageId
+        : pages[0].id;
+
+}
+
+/* SAVE */
+
+function setStatus(message) {
+    $("status").textContent = message;
+}
+
+function saveCurrentPage() {
+
+    const page = activePage();
+
+    if (!page) return;
+
+    page.title = $("pageTitle").value.trim() || "Untitled Page";
+
+    page.content = $("writingBody").innerHTML;
+
+    page.objects = page.objects || [];
+
+    $("workspace").querySelectorAll(".object").forEach(el => {
+
+        const obj = page.objects.find(
+            item => item.id === el.dataset.objectId
+        );
+
+        if (!obj) return;
+
+        obj.x = parseFloat(el.style.left) || 0;
+        obj.y = parseFloat(el.style.top) || 0;
+
+        obj.w = el.offsetWidth || obj.w || 240;
+        obj.h = el.offsetHeight || obj.h || 32;
+
+        if (obj.type === "text") {
+
+            const body = el.querySelector(".text-body");
+
+            if (body) obj.html = body.innerHTML;
+
+            obj.userWidth = el.dataset.userWidth === "1";
+            obj.userHeight = el.dataset.userHeight === "1";
+
+        }
+
+    });
+
+}
+
+function saveNow() {
+
+    clearTimeout(saveTimer);
+
+    saveCurrentPage();
+
+    try {
+
+        state.lastPageId = activePageId;
+
+        localStorage.setItem(KEY, JSON.stringify(state));
+
+        setStatus("✓ Saved");
+
+        return true;
+
+    } catch (e) {
+
+        console.error(e);
+
+        setStatus("Save error");
+
+        alert("नोट्स सेव नहीं हो सके। Backup बनाएँ या जगह खाली करें।");
+
+        return false;
+
+    }
+
+}
+
+function scheduleSave() {
+
+    setStatus("Saving…");
+
+    clearTimeout(saveTimer);
+
+    saveTimer = setTimeout(saveNow, 600);
+
+}
+
+$("saveBtn").onclick = saveNow;
+
+window.addEventListener("beforeunload", () => {
+
+    try {
+
+        saveCurrentPage();
+
+        state.lastPageId = activePageId;
+
+        localStorage.setItem(KEY, JSON.stringify(state));
+
+    } catch (e) {}
+
+});
+
+/* DIALOG */
+
+function showDialog(title, placeholder, callback) {
+
+    $("dialogTitle").textContent = title;
+
+    $("dialogInput").value = "";
+
+    $("dialogInput").placeholder = placeholder || "Name";
+
+    window.dialogAction = callback;
+
+    $("backdrop").style.display = "flex";
+
+    setTimeout(() => $("dialogInput").focus(), 50);
+
+}
+
+function closeDialog() {
+
+    $("backdrop").style.display = "none";
+
+    window.dialogAction = null;
+
+}
+
+$("cancelDialog").onclick = closeDialog;
+
+$("confirmDialog").onclick = () => {
+
+    const value = $("dialogInput").value.trim();
+
+    if (!value) {
+        return alert("नाम लिखें।");
+    }
+
+    const callback = window.dialogAction;
+
+    closeDialog();
+
+    if (callback) callback(value);
+
+};
+
+$("dialogInput").addEventListener("keydown", e => {
+
+    if (e.key === "Enter") {
+        $("confirmDialog").click();
+    }
+
+});
+
+$("backdrop").addEventListener("click", e => {
+
+    if (e.target === $("backdrop")) {
+        closeDialog();
+    }
+
+});
+
+/* NOTEBOOK TREE */
+
+function renderTree() {
+
+    $("tree").innerHTML = "";
+
+    state.notebooks.forEach(notebook => {
+
+        $("tree").appendChild(renderNode(notebook));
+
+    });
+
+}
+
+function renderNode(node) {
+
+    const wrap = document.createElement("div");
+
+    const row = document.createElement("div");
+
+    row.className = "tree-row";
+
+    if (node.id === activePageId) {
+        row.classList.add("active");
+    }
+
+    const hasChildren = (node.children || []).length > 0;
+
+    const toggle = document.createElement("button");
+
+    toggle.className = "tree-toggle";
+
+    toggle.textContent = hasChildren
+        ? (node.expanded === false ? "▸" : "▾")
+        : "";
+
+    const label = document.createElement("span");
+
+    label.className = "tree-label";
+
+    label.textContent =
+        (node.type === "notebook" ? "📚 " :
+         node.type === "section" ? "📁 " : "📄 ") +
+        node.title;
+
+    const menu = document.createElement("button");
+
+    menu.className = "tree-menu";
+
+    menu.textContent = "⋮";
+
+    row.append(toggle, label, menu);
+
+    wrap.append(row);
+
+    toggle.onclick = e => {
+
+        e.stopPropagation();
+
+        if (hasChildren) {
+
+            node.expanded = node.expanded === false;
+
+            renderTree();
+
+            scheduleSave();
+
+        }
+
+    };
+
+    label.onclick = () => {
+
+        if (node.type === "page") {
+
+            openPage(node.id);
+
+        } else {
+
+            node.expanded = node.expanded === false;
+
+            renderTree();
+
+            scheduleSave();
+
+        }
+
+    };
+
+    menu.onclick = e => {
+
+        e.stopPropagation();
+
+        showNodeDropdown(menu, node);
+
+    };
+
+    if (hasChildren && node.expanded !== false) {
+
+        const children = document.createElement("div");
+
+        children.className = "tree-children";
+
+        node.children.forEach(child => {
+            children.appendChild(renderNode(child));
+        });
+
+        wrap.append(children);
+
+    }
+
+    return wrap;
+
+}
+
+function closeNodeDropdown() {
+
+    if (menuElement) {
+
+        menuElement.remove();
+
+        menuElement = null;
+
+    }
+
+}
+
+document.addEventListener("click", e => {
+
+    if (menuElement && !menuElement.contains(e.target)) {
+        closeNodeDropdown();
+    }
+
+});
+
+function showNodeDropdown(button, node) {
+
+    closeNodeDropdown();
+
+    const menu = document.createElement("div");
+
+    menu.style.cssText =
+        "position:fixed;z-index:200;min-width:155px;" +
+        "background:white;border:1px solid #ddd;" +
+        "border-radius:6px;box-shadow:0 5px 20px #0002;padding:4px";
+
+    let actions = [];
+
+    if (node.type === "notebook") {
+
+        actions = [
+            ["＋ Create Section", () => createChild(node, "section")],
+            ["✎ Rename", () => renameNode(node)],
+            ["🗑 Delete", () => deleteNode(node)]
+        ];
+
+    } else if (node.type === "section") {
+
+        actions = [
+            ["＋ Create Subsection", () => createChild(node, "section")],
+            ["＋ Create Page", () => createChild(node, "page")],
+            ["✎ Rename", () => renameNode(node)],
+            ["🗑 Delete", () => deleteNode(node)]
+        ];
+
+    } else {
+
+        actions = [
+            ["✎ Rename", () => renameNode(node)],
+            ["🗑 Delete", () => deleteNode(node)]
+        ];
+
+    }
+
+    actions.forEach(([text, callback]) => {
+
+        const button = document.createElement("button");
+
+        button.textContent = text;
+
+        button.style.cssText =
+            "display:block;width:100%;text-align:left;" +
+            "border:0;background:white;padding:9px;font-size:12px";
+
+        if (text.includes("Delete")) {
+            button.style.color = "#c62828";
+        }
+
+        button.onclick = e => {
+
+            e.stopPropagation();
+
+            closeNodeDropdown();
+
+            callback();
+
+        };
+
+        menu.append(button);
+
+    });
+
+    document.body.append(menu);
+
+    menuElement = menu;
+
+    const rect = button.getBoundingClientRect();
+
+    menu.style.left =
+        Math.max(4, Math.min(rect.left, innerWidth - 170)) + "px";
+
+    menu.style.top =
+        Math.max(4, Math.min(rect.bottom, innerHeight - 220)) + "px";
+
+}
+
+function createChild(parent, type) {
+
+    showDialog(
+        type === "page" ? "Create Page" : "Create Section",
+        type === "page" ? "Page name" : "Section name",
+        name => {
+
+            const child = type === "page"
+                ? makePage(name)
+                : makeSection(name);
+
+            parent.children = parent.children || [];
+
+            parent.children.push(child);
+
+            parent.expanded = true;
+
+            renderTree();
+
+            openPage(
+                type === "page"
+                    ? child.id
+                    : child.children[0].id
+            );
+
+            saveNow();
+
+        }
+    );
+
+}
+
+function renameNode(node) {
+
+    showDialog("Rename", "New name", name => {
+
+        node.title = name;
+
+        if (node.id === activePageId) {
+            $("pageTitle").value = name;
+        }
+
+        renderTree();
+
+        saveNow();
+
+    });
+
+}
+
+function deleteNode(node) {
+
+    if (!confirm('"' + node.title + '" को Delete करना चाहते हैं?')) {
+        return;
+    }
+
+    if (node.type === "notebook") {
+
+        state.notebooks = state.notebooks.filter(
+            item => item.id !== node.id
+        );
+
+    } else {
+
+        const parent = findParent(node.id);
+
+        if (parent) {
+            parent.children = parent.children.filter(
+                item => item.id !== node.id
+            );
+        }
+
+    }
+
+    if (!state.notebooks.length || !allPages().length) {
+        state = defaults();
+    }
+
+    if (!allPages().some(page => page.id === activePageId)) {
+        activePageId = allPages()[0].id;
+    }
+
+    renderTree();
+
+    openPage(activePageId);
+
+    saveNow();
+
+}
+
+/* NOTEBOOK BUTTONS */
+
+$("newNotebook").onclick = () => {
+
+    showDialog("New Notebook", "Notebook name", name => {
+
+        const notebook = makeNotebook(name);
+
+        state.notebooks.push(notebook);
+
+        renderTree();
+
+        openPage(notebook.children[0].children[0].id);
+
+        saveNow();
+
+    });
+
+};
+
+$("newSection").onclick = () => {
+
+    let page = activePage();
+
+    let parent = page ? findParent(page.id) : null;
+
+    while (parent && parent.type !== "notebook") {
+        parent = findParent(parent.id);
+    }
+
+    createChild(parent || state.notebooks[0], "section");
+
+};
+
+$("newPage").onclick = () => {
+
+    const page = activePage();
+
+    const section = page ? findParent(page.id) : null;
+
+    createChild(
+        section && section.type === "section"
+            ? section
+            : state.notebooks[0],
+        "page"
+    );
+
+};
+
+function toggleSidebar() {
+    $("sidebar").classList.toggle("collapsed");
+}
+
+$("sidebarToggle").onclick = toggleSidebar;
+
+$("sidebarMinBtn").onclick = toggleSidebar;
+
+/* EDITOR SELECTION */
+
+function rememberEditor(editor) {
+
+    lastEditor = editor;
+
+    const selection = window.getSelection();
+
+    if (selection && selection.rangeCount) {
+        lastRange = selection.getRangeAt(0).cloneRange();
+    }
+
+}
+
+function rememberCurrentSelection() {
+
+    const selection = window.getSelection();
+
+    if (!selection || !selection.rangeCount) return;
+
+    let node = selection.getRangeAt(0).commonAncestorContainer;
+
+    if (node.nodeType === 3) {
+        node = node.parentElement;
+    }
+
+    const editor = node.closest &&
+        node.closest("#writingBody,.text-body");
+
+    if (editor) {
+
+        lastEditor = editor;
+
+        lastRange = selection.getRangeAt(0).cloneRange();
+
+    }
+
+}
+
+document.addEventListener("selectionchange", () => {
+
+    const selection = window.getSelection();
+
+    if (!selection || !selection.rangeCount) return;
+
+    let node = selection.anchorNode;
+
+    if (node && node.nodeType === 3) {
+        node = node.parentElement;
+    }
+
+    if (!node || !node.closest) return;
+
+    const editor = node.closest("#writingBody,.text-body");
+
+    if (editor) {
+        rememberEditor(editor);
+    }
+
+});
+
+function restoreEditorSelection() {
+
+    if (!lastEditor || !document.contains(lastEditor)) {
+        lastEditor = $("writingBody");
+    }
+
+    lastEditor.focus();
+
+    if (lastRange) {
+
+        try {
+
+            const selection = window.getSelection();
+
+            selection.removeAllRanges();
+
+            selection.addRange(lastRange);
+
+        } catch (e) {}
+
+    }
+
+}
+
+function insertAtSavedRange(node) {
+
+    if (!lastEditor || !document.contains(lastEditor)) {
+        lastEditor = $("writingBody");
+    }
+
+    lastEditor.focus();
+
+    const selection = window.getSelection();
+
+    if (lastRange) {
+
+        try {
+
+            selection.removeAllRanges();
+
+            selection.addRange(lastRange);
+
+        } catch (e) {}
+
+    }
+
+    let range = selection.rangeCount
+        ? selection.getRangeAt(0)
+        : document.createRange();
+
+    if (!lastEditor.contains(range.commonAncestorContainer)) {
+
+        range = document.createRange();
+
+        range.selectNodeContents(lastEditor);
+
+        range.collapse(false);
+
+    }
+
+    range.deleteContents();
+
+    range.insertNode(node);
+
+    const spacer = document.createTextNode(" ");
+
+    node.parentNode.insertBefore(spacer, node.nextSibling);
+
+    range.setStartAfter(spacer);
+
+    range.collapse(true);
+
+    selection.removeAllRanges();
+
+    selection.addRange(range);
+
+    lastRange = range.cloneRange();
+
+    if (lastEditor === $("writingBody")) {
+
+        updateMainBorder();
+
+        autoGrowMain();
+
+    } else {
+
+        const box = lastEditor.closest(".text-object");
+
+        if (box) autoGrowText(box);
+
+    }
+
+    scheduleSave();
+
+}
+
+/* OPEN PAGE */
+
+function openPage(id) {
+
+    saveCurrentPage();
+
+    const page = allPages().find(item => item.id === id);
+
+    if (!page) return;
+
+    activePageId = id;
+
+    state.lastPageId = id;
+
+    $("pageTitle").value = page.title || "";
+
+    $("writingBody").innerHTML = page.content || "";
+
+    migrateLegacyImages($("writingBody"));
+
+    updateMainBorder();
+
+    renderObjects(page);
+
+    renderTree();
+
+    autoGrowMain();
+
+    rehydrateAssets($("writingBody"));
+
+    setStatus("Ready");
+
+}
+
+$("pageTitle").addEventListener("input", () => {
+
+    const page = activePage();
+
+    if (page) {
+        page.title = $("pageTitle").value;
+    }
+
+    renderTree();
+
+    scheduleSave();
+
+});
+
+function updateMainBorder() {
+
+    const body = $("writingBody");
+
+    $("mainWriting").classList.toggle(
+        "has-content",
+        body.textContent.trim().length > 0 ||
+        !!body.querySelector("img,table")
+    );
+
+}
+
+function autoGrowMain() {
+
+    const body = $("writingBody");
+
+    body.style.height = "auto";
+
+    const height = Math.max(480, body.scrollHeight + 15);
+
+    body.style.height = height + "px";
+
+    $("mainWriting").style.height = (height + 2) + "px";
+
+    updateWorkspaceSize();
+
+}
+
+$("writingBody").addEventListener("input", () => {
+
+    updateMainBorder();
+
+    autoGrowMain();
+
+    rememberEditor($("writingBody"));
+
+    scheduleSave();
+
+});
+
+$("writingBody").addEventListener("paste", () => {
+
+    setTimeout(() => {
+
+        migrateLegacyImages($("writingBody"));
+
+        updateMainBorder();
+
+        autoGrowMain();
+
+        scheduleSave();
+
+    }, 150);
+
+});
+
+/* TEXT FORMATTING */
+
+function exec(command, value = null) {
+
+    restoreEditorSelection();
+
+    document.execCommand(command, false, value);
+
+    if (lastEditor === $("writingBody")) {
+
+        updateMainBorder();
+
+        autoGrowMain();
+
+    } else {
+
+        const box = lastEditor.closest(".text-object");
+
+        if (box) autoGrowText(box);
+
+    }
+
+    scheduleSave();
+
+}
+
+document.querySelectorAll("[data-cmd]").forEach(button => {
+
+    button.addEventListener("mousedown", e => e.preventDefault());
+
+    button.addEventListener("click", () => {
+        exec(button.dataset.cmd);
+    });
+
+});
+
+$("fontFamily").onchange = e => {
+    exec("fontName", e.target.value);
+};
+
+$("fontSize").onchange = e => {
+    exec("fontSize", e.target.value);
+};
+
+$("blockFormat").onchange = e => {
+    exec("formatBlock", "<" + e.target.value + ">");
+};
+
+$("fontColor").oninput = e => {
+    exec("foreColor", e.target.value);
+};
+
+$("highlightColor").oninput = e => {
+
+    restoreEditorSelection();
+
+    document.execCommand("hiliteColor", false, e.target.value);
+
+    scheduleSave();
+
+};
+
+$("clearFormat").onclick = () => {
+    exec("removeFormat");
+};
+
+$("linkBtn").onclick = () => {
+
+    const url = prompt("Link URL लिखें:");
+
+    if (url) {
+        exec("createLink", url);
+    }
+
+};
+
+$("tableBtn").onclick = () => {
+
+    const rows = Math.min(
+        20,
+        Math.max(1, Number(prompt("Rows?", "3")) || 3)
+    );
+
+    const cols = Math.min(
+        12,
+        Math.max(1, Number(prompt("Columns?", "3")) || 3)
+    );
+
+    let html = "<table><tbody>";
+
+    for (let r = 0; r < rows; r++) {
+
+        html += "<tr>";
+
+        for (let c = 0; c < cols; c++) {
+            html += "<td>&nbsp;</td>";
+        }
+
+        html += "</tr>";
+
+    }
+
+    restoreEditorSelection();
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        html + "</tbody></table><p><br></p>"
+    );
+
+    scheduleSave();
+
+};
+
+
+/* WORKSPACE */
+
+function updateWorkspaceSize() {
+
+    const scroll = $("workspaceScroll");
+
+    let right = scroll.clientWidth || 1200;
+    let bottom = scroll.clientHeight || 800;
+
+    $("workspace").querySelectorAll(
+        ".object,.main-writing,.mindmap"
+    ).forEach(el => {
+
+        right = Math.max(
+            right,
+            (parseFloat(el.style.left) || 0) +
+            el.offsetWidth + 320
+        );
+
+        bottom = Math.max(
+            bottom,
+            (parseFloat(el.style.top) || 0) +
+            el.offsetHeight + 150
+        );
+
+    });
+
+    $("workspace").style.width =
+        Math.max(right + 300, scroll.clientWidth) + "px";
+
+    $("workspace").style.height =
+        Math.max(bottom, scroll.clientHeight) + "px";
+
+}
+
+function panelHasContent(el) {
+
+    const body = el.querySelector(".text-body");
+
+    return !!body && (
+        body.textContent.trim().length > 0 ||
+        !!body.querySelector("img,table,video,iframe,a")
+    );
+
+}
+
+function updateTextBorder(el) {
+
+    el.classList.toggle(
+        "has-content",
+        panelHasContent(el)
+    );
+
+}
+
+function autoGrowText(el) {
+
+    const body = el.querySelector(".text-body");
+
+    if (!body) return;
+
+    if (panelHasContent(el) && !el.dataset.userWidth) {
+        el.style.width = "794px";
+    }
+
+    if (!el.dataset.userHeight) {
+
+        body.style.height = "auto";
+
+        body.style.height =
+            Math.max(24, body.scrollHeight + 8) + "px";
+
+        el.style.height = "auto";
+
+    }
+
+    updateTextBorder(el);
+
+    updateWorkspaceSize();
+
+}
+
+function removeIfEmpty(el) {
+
+    if (
+        el &&
+        el.isConnected &&
+        el.classList.contains("text-object") &&
+        !panelHasContent(el)
+    ) {
+
+        const page = activePage();
+
+        if (page) {
+            page.objects = page.objects.filter(
+                obj => obj.id !== el.dataset.objectId
+            );
+        }
+
+        el.remove();
+
+        if (pendingEmptyPanel === el) {
+            pendingEmptyPanel = null;
+        }
+
+        scheduleSave();
+
+        updateWorkspaceSize();
+
+    }
+
+}
+
+function addTextPanel(x, y, focus = true) {
+
+    const page = activePage();
+
+    if (!page) return null;
+
+    const obj = {
+        id: uid(),
+        type: "text",
+        title: "Text",
+        x: Math.max(0, x),
+        y: Math.max(0, y),
+        w: 240,
+        h: 32,
+        html: ""
+    };
+
+    page.objects.push(obj);
+
+    const el = createObject(obj);
+
+    $("workspace").append(el);
+
+    pendingEmptyPanel = el;
+
+    const body = el.querySelector(".text-body");
+
+    if (focus && body) {
+
+        body.focus();
+
+        const range = document.createRange();
+
+        range.selectNodeContents(body);
+
+        range.collapse(false);
+
+        const selection = window.getSelection();
+
+        selection.removeAllRanges();
+
+        selection.addRange(range);
+
+        rememberEditor(body);
+
+    }
+
+    scheduleSave();
+
+    updateWorkspaceSize();
+
+    return el;
+
+}
+
+$("workspace").addEventListener("click", e => {
+
+    if (
+        e.target.closest(
+            ".object,.main-writing,.mindmap,.pdf-page"
+        )
+    ) return;
+
+    if (
+        pendingEmptyPanel &&
+        !panelHasContent(pendingEmptyPanel)
+    ) {
+        removeIfEmpty(pendingEmptyPanel);
+    }
+
+    const rect = $("workspace").getBoundingClientRect();
+
+    addTextPanel(
+        e.clientX - rect.left,
+        e.clientY - rect.top,
+        true
+    );
+
+});
+
+$("addText").onclick = () => {
+
+    addTextPanel(
+        $("workspaceScroll").scrollLeft + 80,
+        $("workspaceScroll").scrollTop + 80,
+        true
+    );
+
+};
+
+/* FLOATING OBJECTS */
+
+function createObject(obj) {
+
+    const el = document.createElement("div");
+
+    el.className = "object " + obj.type + "-object";
+
+    el.dataset.objectId = obj.id;
+
+    el.style.left = (obj.x || 0) + "px";
+
+    el.style.top = (obj.y || 0) + "px";
+
+    if (obj.w) {
+        el.style.width = obj.w + "px";
+    }
+
+    if (obj.type === "image" && obj.h) {
+        el.style.height = obj.h + "px";
+    }
+
+    if (obj.userWidth) {
+        el.dataset.userWidth = "1";
+    }
+
+    if (obj.userHeight) {
+        el.dataset.userHeight = "1";
+    }
+
+    const head = document.createElement("div");
+
+    head.className = "object-head";
+
+    const title = document.createElement("span");
+
+    title.className = "object-title";
+
+    title.textContent =
+        obj.type === "text"
+            ? "Text"
+            : obj.name ||
+              (obj.type === "pdf" ? "PDF" : "Image");
+
+    const close = document.createElement("button");
+
+    close.className = "object-close";
+
+    close.textContent = "×";
+
+    head.append(title, close);
+
+    el.append(head);
+
+    const body = document.createElement("div");
+
+    body.className = "object-body";
+
+    el.append(body);
+
+    if (obj.type === "text") {
+
+        const textBody = document.createElement("div");
+
+        textBody.className = "text-body";
+
+        textBody.contentEditable = "true";
+
+        textBody.spellcheck = true;
+
+        textBody.innerHTML = obj.html || "";
+
+        migrateLegacyImages(textBody);
+
+        body.append(textBody);
+
+        updateTextBorder(el);
+
+        textBody.addEventListener("focus", () => {
+            rememberEditor(textBody);
+        });
+
+        textBody.addEventListener("input", () => {
+
+            updateTextBorder(el);
+
+            autoGrowText(el);
+
+            rememberEditor(textBody);
+
+            scheduleSave();
+
+        });
+
+        textBody.addEventListener("blur", () => {
+
+            setTimeout(() => removeIfEmpty(el), 180);
+
+        });
+
+        requestAnimationFrame(() => autoGrowText(el));
+
+    } else if (obj.type === "image") {
+
+        const img = document.createElement("img");
+
+        img.alt = obj.name || "Image";
+
+        body.append(img);
+
+        loadImage(obj, img);
+
+    } else if (obj.type === "pdf") {
+
+        const pages = document.createElement("div");
+
+        pages.className = "pdf-pages";
+
+        body.append(pages);
+
+        loadPDF(obj, el, pages);
+
+    }
+
+    close.onclick = () => {
+
+        if (!confirm("इस पैनल को हटाएँ?")) return;
+
+        if (obj.type === "pdf") {
+            cancelPDFTask(obj.id);
+        }
+
+        const page = activePage();
+
+        if (page) {
+            page.objects = page.objects.filter(
+                item => item.id !== obj.id
+            );
+        }
+
+        el.remove();
+
+        scheduleSave();
+
+        updateWorkspaceSize();
+
+    };
+
+    makeDraggable(el, head);
+
+    if (obj.type === "text" || obj.type === "image") {
+        enableResize(el);
+    }
+
+    if (obj.type === "pdf") {
+        enablePDFResize(el, obj);
+    }
+
+    return el;
+
+}
+
+/* FLOATING OBJECT DRAG */
+
+function makeDraggable(el, handle) {
+
+    let moving = false;
+
+    let startX = 0;
+    let startY = 0;
+
+    let originalX = 0;
+    let originalY = 0;
+
+    handle.addEventListener("pointerdown", e => {
+
+        if (e.target.closest(".object-close")) return;
+
+        const rect = el.getBoundingClientRect();
+
+        if (
+            rect.right - e.clientX < 18 &&
+            rect.bottom - e.clientY < 18
+        ) return;
+
+        moving = true;
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        originalX = parseFloat(el.style.left) || 0;
+        originalY = parseFloat(el.style.top) || 0;
+
+        try {
+            handle.setPointerCapture(e.pointerId);
+        } catch (_) {}
+
+        e.preventDefault();
+
+    });
+
+    handle.addEventListener("pointermove", e => {
+
+        if (!moving) return;
+
+        el.style.left =
+            Math.max(0, originalX + e.clientX - startX) + "px";
+
+        el.style.top =
+            Math.max(0, originalY + e.clientY - startY) + "px";
+
+        updateWorkspaceSize();
+
+    });
+
+    const stop = () => {
+
+        if (!moving) return;
+
+        moving = false;
+
+        scheduleSave();
+
+        updateWorkspaceSize();
+
+    };
+
+    handle.addEventListener("pointerup", stop);
+
+    handle.addEventListener("pointercancel", stop);
+
+}
+
+/* FLOATING OBJECT RESIZE */
+
+function enableResize(el) {
+
+    let oldWidth = el.offsetWidth;
+    let oldHeight = el.offsetHeight;
+
+    if ("ResizeObserver" in window) {
+
+        new ResizeObserver(() => {
+
+            const width = el.offsetWidth;
+            const height = el.offsetHeight;
+
+            if (el.dataset.userResizing === "1") {
+
+                if (width !== oldWidth) {
+                    el.dataset.userWidth = "1";
+                }
+
+                if (height !== oldHeight) {
+                    el.dataset.userHeight = "1";
+                }
+
+            }
+
+            oldWidth = width;
+            oldHeight = height;
+
+        }).observe(el);
+
+    }
+
+    el.addEventListener("pointerdown", e => {
+
+        const rect = el.getBoundingClientRect();
+
+        if (
+            rect.right - e.clientX < 22 &&
+            rect.bottom - e.clientY < 22
+        ) {
+            el.dataset.userResizing = "1";
+        }
+
+    });
+
+    el.addEventListener("pointerup", () => {
+
+        if (el.dataset.userResizing) {
+
+            delete el.dataset.userResizing;
+
+            scheduleSave();
+
+        }
+
+    });
+
+}
+
+/* UPDATED INLINE PHOTO EDITOR */
+
+let selectedImageWrapper = null;
+let activeImageAction = null;
+
+/* GET EDITOR */
+
+function getEditorFor(el) {
+
+    return el.closest("#writingBody,.text-body");
+
+}
+
+/* SELECT IMAGE */
+
+function clearImageSelection() {
+
+    document.querySelectorAll(
+        ".inline-image-wrap.selected"
+    ).forEach(el => {
+
+        el.classList.remove("selected");
+
+    });
+
+    selectedImageWrapper = null;
+
+}
+
+function selectImage(wrapper) {
+
+    clearImageSelection();
+
+    wrapper.classList.add("selected");
+
+    selectedImageWrapper = wrapper;
+
+}
+
+/* SAVE AFTER IMAGE CHANGE */
+
+function updateEditorAfterImageChange(editor) {
+
+    if (!editor) return;
+
+    if (editor === $("writingBody")) {
+
+        autoGrowMain();
+
+        updateMainBorder();
+
+    } else {
+
+        const panel = editor.closest(".text-object");
+
+        if (panel) {
+            autoGrowText(panel);
+        }
+
+    }
+
+    scheduleSave();
+
+}
+
+/* CREATE INLINE IMAGE */
+
+function createInlineImage(file, assetId, storedWidth = null) {
+
+    const wrap = document.createElement("span");
+
+    wrap.className = "inline-image-wrap";
+
+    wrap.contentEditable = "false";
+
+    wrap.dataset.assetId = assetId;
+
+    const img = document.createElement("img");
+
+    img.alt = file.name || "Image";
+
+    img.dataset.assetId = assetId;
+
+    img.draggable = false;
+
+    const drag = document.createElement("span");
+
+    drag.className = "inline-image-drag";
+
+    drag.textContent = "⠿  MOVE IMAGE";
+
+    drag.title = "Drag image within this text panel";
+
+    const resize = document.createElement("button");
+
+    resize.className = "inline-image-resize";
+
+    resize.type = "button";
+
+    resize.textContent = "↘";
+
+    resize.title = "Resize image";
+
+    wrap.append(img, drag, resize);
+
+    img.src = makeObjectURL(file);
+
+    img.addEventListener("load", () => {
+
+        if (storedWidth) {
+
+            wrap.style.width = storedWidth + "px";
+
+        } else {
+
+            const editor = getEditorFor(wrap);
+
+            const maxWidth = editor
+                ? Math.max(100, editor.clientWidth - 35)
+                : 500;
+
+            wrap.style.width =
+                Math.min(img.naturalWidth || 400, maxWidth) + "px";
+
+        }
+
+        img.style.width = "100%";
+
+        img.style.height = "auto";
+
+    });
+
+    /*
+       IMPORTANT:
+       Image par pointer-events:none hai.
+       Isliye selection wrapper par lagaya gaya hai.
+    */
+
+    wrap.addEventListener("pointerdown", e => {
+
+        if (e.target.closest(".inline-image-drag")) return;
+
+        if (e.target.closest(".inline-image-resize")) return;
+
+        e.stopPropagation();
+
+        selectImage(wrap);
+
+    });
+
+    /* IMAGE RESIZE */
+
+    resize.addEventListener("pointerdown", e => {
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+        selectImage(wrap);
+
+        const editor = getEditorFor(wrap);
+
+        if (!editor) return;
+
+        const startX = e.clientX;
+
+        const startWidth = wrap.getBoundingClientRect().width;
+
+        const ratio =
+            (img.naturalWidth || 1) /
+            (img.naturalHeight || 1);
+
+        const maxWidth = Math.max(
+            80,
+            Math.min(editor.clientWidth - 12, 1200)
+        );
+
+        activeImageAction = {
+            type: "resize",
+            wrapper: wrap,
+            editor,
+            startX,
+            startWidth,
+            ratio,
+            maxWidth,
+            pointerId: e.pointerId
+        };
+
+        try {
+            resize.setPointerCapture(e.pointerId);
+        } catch (_) {}
+
+    });
+
+    enableInlineImageDrag(wrap, drag);
+
+    return wrap;
+
+}
+
+/* IMAGE RESIZE MOVEMENT */
+
+function moveImageResize(e) {
+
+    if (
+        !activeImageAction ||
+        activeImageAction.type !== "resize"
+    ) return;
+
+    const action = activeImageAction;
+
+    const dx = e.clientX - action.startX;
+
+    const newWidth = Math.max(
+        60,
+        Math.min(
+            action.maxWidth,
+            action.startWidth + dx
+        )
+    );
+
+    action.wrapper.style.width = newWidth + "px";
+
+    const img = action.wrapper.querySelector("img");
+
+    img.style.width = "100%";
+
+    img.style.height = "auto";
+
+    updateEditorAfterImageChange(action.editor);
+
+}
+
+document.addEventListener("pointermove", moveImageResize);
+
+document.addEventListener("pointerup", e => {
+
+    if (
+        activeImageAction &&
+        activeImageAction.type === "resize"
+    ) {
+
+        activeImageAction = null;
+
+        scheduleSave();
+
+    }
+
+});
+
+document.addEventListener("pointercancel", e => {
+
+    if (
+        activeImageAction &&
+        activeImageAction.type === "resize"
+    ) {
+
+        activeImageAction = null;
+
+        scheduleSave();
+
+    }
+
+});
+
+/* DRAG IMAGE INSIDE ITS TEXT PANEL */
+
+function enableInlineImageDrag(wrap, handle) {
+
+    handle.addEventListener("pointerdown", e => {
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+        const editor = getEditorFor(wrap);
+
+        if (!editor) return;
+
+        selectImage(wrap);
+
+        const rect = wrap.getBoundingClientRect();
+
+        const placeholder = document.createElement("span");
+
+        placeholder.className = "inline-image-placeholder";
+
+        placeholder.style.cssText = `
+            display:inline-block;
+            width:${rect.width}px;
+            height:${rect.height}px;
+            vertical-align:middle;
+        `;
+
+        const originalWidth = wrap.style.width;
+
+        /* Original position par placeholder */
+
+        wrap.parentNode.insertBefore(placeholder, wrap);
+
+        /* Temporary floating movement */
+
+        wrap.style.position = "fixed";
+
+        wrap.style.left = rect.left + "px";
+
+        wrap.style.top = rect.top + "px";
+
+        wrap.style.width = rect.width + "px";
+
+        wrap.style.zIndex = "99999";
+
+        wrap.style.pointerEvents = "none";
+
+        document.body.appendChild(wrap);
+
+        const startX = e.clientX;
+
+        const startY = e.clientY;
+
+        activeImageAction = {
+            type: "move",
+            wrapper: wrap,
+            editor,
+            placeholder,
+            originalWidth,
+            rect,
+            startX,
+            startY
+        };
+
+        function move(ev) {
+
+            if (
+                !activeImageAction ||
+                activeImageAction.wrapper !== wrap
+            ) return;
+
+            wrap.style.left =
+                rect.left + ev.clientX - startX + "px";
+
+            wrap.style.top =
+                rect.top + ev.clientY - startY + "px";
+
+        }
+
+        function stop(ev) {
+
+            if (
+                !activeImageAction ||
+                activeImageAction.wrapper !== wrap
+            ) return;
+
+            document.removeEventListener("pointermove", move);
+
+            document.removeEventListener("pointerup", stop);
+
+            document.removeEventListener("pointercancel", stop);
+
+            const x = ev.clientX;
+
+            const y = ev.clientY;
+
+            /* Restore normal inline style */
+
+            wrap.style.position = "";
+
+            wrap.style.left = "";
+
+            wrap.style.top = "";
+
+            wrap.style.width =
+                originalWidth || placeholder.style.width;
+
+            wrap.style.zIndex = "";
+
+            wrap.style.pointerEvents = "";
+
+            let range = null;
+
+            if (document.caretRangeFromPoint) {
+
+                range = document.caretRangeFromPoint(x, y);
+
+            } else if (document.caretPositionFromPoint) {
+
+                const pos = document.caretPositionFromPoint(x, y);
+
+                if (pos) {
+
+                    range = document.createRange();
+
+                    range.setStart(pos.offsetNode, pos.offset);
+
+                    range.collapse(true);
+
+                }
+
+            }
+
+            /*
+              Drop location must belong to the same editor.
+              Otherwise image returns to its original location.
+            */
+
+            if (
+                range &&
+                editor.contains(range.startContainer)
+            ) {
+
+                const node = range.startContainer.nodeType === 1
+                    ? range.startContainer
+                    : range.startContainer.parentElement;
+
+                const targetImage = node && node.closest
+                    ? node.closest(".inline-image-wrap")
+                    : null;
+
+                if (
+                    targetImage &&
+                    targetImage !== wrap &&
+                    editor.contains(targetImage)
+                ) {
+
+                    const newRange = document.createRange();
+
+                    newRange.setStartBefore(targetImage);
+
+                    newRange.collapse(true);
+
+                    newRange.insertNode(wrap);
+
+                } else {
+
+                    range.insertNode(wrap);
+
+                }
+
+                placeholder.remove();
+
+            } else {
+
+                placeholder.parentNode.insertBefore(
+                    wrap,
+                    placeholder
+                );
+
+                placeholder.remove();
+
+            }
+
+            activeImageAction = null;
+
+            selectImage(wrap);
+
+            updateEditorAfterImageChange(editor);
+
+        }
+
+        document.addEventListener("pointermove", move);
+
+        document.addEventListener("pointerup", stop);
+
+        document.addEventListener("pointercancel", stop);
+
+    });
+
+}
+
+/* MIGRATE OLD IMAGES */
+
+function migrateLegacyImages(root) {
+
+    root.querySelectorAll("img").forEach(img => {
+
+        if (
+            img.closest(
+                ".inline-image-wrap,.image-object,.pdf-page"
+            )
+        ) return;
+
+        const assetId = img.dataset.assetId;
+
+        if (!assetId) return;
+
+        const wrap = document.createElement("span");
+
+        wrap.className = "inline-image-wrap";
+
+        wrap.contentEditable = "false";
+
+        wrap.dataset.assetId = assetId;
+
+        const drag = document.createElement("span");
+
+        drag.className = "inline-image-drag";
+
+        drag.textContent = "⠿  MOVE IMAGE";
+
+        const resize = document.createElement("button");
+
+        resize.className = "inline-image-resize";
+
+        resize.type = "button";
+
+        resize.textContent = "↘";
+
+        const width =
+            img.getBoundingClientRect().width ||
+            parseFloat(img.style.width) ||
+            300;
+
+        img.replaceWith(wrap);
+
+        wrap.append(img, drag, resize);
+
+        wrap.style.width = Math.max(60, width) + "px";
+
+        img.style.width = "100%";
+
+        img.style.height = "auto";
+
+        img.draggable = false;
+
+        wrap.addEventListener("pointerdown", e => {
+
+            if (e.target.closest(".inline-image-drag")) return;
+
+            if (e.target.closest(".inline-image-resize")) return;
+
+            e.stopPropagation();
+
+            selectImage(wrap);
+
+        });
+
+        resize.addEventListener("pointerdown", e => {
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            selectImage(wrap);
+
+            const editor = getEditorFor(wrap);
+
+            if (!editor) return;
+
+            const startX = e.clientX;
+
+            const startWidth = wrap.getBoundingClientRect().width;
+
+            const maxWidth = Math.max(
+                80,
+                editor.clientWidth - 12
+            );
+
+            activeImageAction = {
+                type: "resize",
+                wrapper: wrap,
+                editor,
+                startX,
+                startWidth,
+                maxWidth
+            };
+
+        });
+
+        enableInlineImageDrag(wrap, drag);
+
+    });
+
+}
+
+/* CLEAR SELECTION ON OUTSIDE CLICK */
+
+document.addEventListener("pointerdown", e => {
+
+    if (!e.target.closest(".inline-image-wrap")) {
+        clearImageSelection();
+    }
+
+});
+
+/* IMAGE UPLOAD BUTTON */
+
+$("insertImage").onclick = () => {
+
+    rememberCurrentSelection();
+
+    $("imageInput").click();
+
+};
+
+/* IMAGE UPLOAD */
+
+$("imageInput").addEventListener("change", async e => {
+
+    const files = Array.from(e.target.files || []);
+
+    e.target.value = "";
+
+    for (const file of files) {
+
+        if (!file.type.startsWith("image/")) continue;
+
+        try {
+
+            const id = uid();
+
+            await putAsset(
+                id,
+                file,
+                file.name,
+                file.type
+            );
+
+            const wrap = createInlineImage(file, id);
+
+            insertAtSavedRange(wrap);
+
+            const page = activePage();
+
+            if (page) {
+
+                page.objects.push({
+                    id: uid(),
+                    type: "inline-image",
+                    assetId: id,
+                    name: file.name
+                });
+
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert("इमेज सेव नहीं हो सकी।");
+
+        }
+
+    }
+
+    scheduleSave();
+
+});
+
+/* REHYDRATE IMAGE AND FILE ASSETS */
+
+async function rehydrateAssets(root) {
+
+    if (!root || !assetDB) return;
+
+    for (const el of root.querySelectorAll("[data-asset-id]")) {
+
+        try {
+
+            const record = await getAsset(el.dataset.assetId);
+
+            if (!record || !record.blob) continue;
+
+            const url = makeObjectURL(record.blob);
+
+            if (el.tagName === "IMG") {
+
+                el.src = url;
+
+            } else if (el.tagName === "A") {
+
+                el.href = url;
+
+                el.download = record.name || el.textContent;
+
+            }
+
+        } catch (e) {
+
+            console.warn(e);
+
+        }
+
+    }
+
+}
+
+/* LOAD FLOATING IMAGE */
+
+async function loadImage(obj, img) {
+
+    try {
+
+        const record = await getAsset(obj.assetId);
+
+        if (record && record.blob) {
+
+            img.src = makeObjectURL(record.blob);
+
+            img.onload = updateWorkspaceSize;
+
+        }
+
+    } catch (e) {
+
+        console.warn(e);
+
+    }
+
+}
+
+/* FILE ATTACHMENT */
+
+$("insertFile").onclick = () => {
+
+    rememberCurrentSelection();
+
+    $("fileInput").click();
+
+};
+
+$("fileInput").addEventListener("change", async e => {
+
+    const files = Array.from(e.target.files || []);
+
+    e.target.value = "";
+
+    for (const file of files) {
+
+        try {
+
+            const id = uid();
+
+            await putAsset(
+                id,
+                file,
+                file.name,
+                file.type
+            );
+
+            const link = document.createElement("a");
+
+            link.dataset.assetId = id;
+
+            link.href = makeObjectURL(file);
+
+            link.download = file.name;
+
+            link.textContent = "📎 " + file.name;
+
+            link.target = "_blank";
+
+            link.style.cssText =
+                "display:inline-block;margin:4px;padding:4px;" +
+                "border:1px solid #ddd";
+
+            insertAtSavedRange(link);
+
+            activePage().objects.push({
+                id: uid(),
+                type: "attachment",
+                assetId: id,
+                name: file.name
+            });
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert("फ़ाइल अटैच नहीं हो सकी।");
+
+        }
+
+    }
+
+    scheduleSave();
+
+});
+
+/* PDF IMPORT */
+
+$("insertPDF").onclick = () => {
+    $("pdfInput").click();
+};
+
+$("pdfInput").addEventListener("change", async e => {
+
+    const files = Array.from(e.target.files || []);
+
+    e.target.value = "";
+
+    for (const file of files) {
+
+        if (
+            file.type !== "application/pdf" &&
+            !file.name.toLowerCase().endsWith(".pdf")
+        ) {
+            alert("PDF फ़ाइल चुनें: " + file.name);
+            continue;
+        }
+
+        try {
+
+            const page = activePage();
+
+            const assetId = uid();
+
+            await putAsset(
+                assetId,
+                file,
+                file.name,
+                "application/pdf"
+            );
+
+            const obj = {
+                id: uid(),
+                type: "pdf",
+                name: file.name,
+                assetId,
+                x: 100,
+                y: 100,
+                w: 794,
+                highlights: []
+            };
+
+            page.objects.push(obj);
+
+            $("workspace").append(createObject(obj));
+
+            updateWorkspaceSize();
+
+            saveNow();
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert("PDF insert नहीं हो सकी।");
+
+        }
+
+    }
+
+});
+
+/* PDF TASK MANAGEMENT */
+
+function cancelPDFTask(id) {
+
+    const task = pdfTasks.get(id);
+
+    if (!task) return;
+
+    task.cancelled = true;
+
+    if (task.observer) {
+        task.observer.disconnect();
+    }
+
+    for (const rendering of task.rendering.values()) {
+
+        try {
+            rendering.cancel();
+        } catch (e) {}
+
+    }
+
+    try {
+        if (task.pdf) task.pdf.destroy();
+    } catch (e) {}
+
+    try {
+        if (task.loadingTask) task.loadingTask.destroy();
+    } catch (e) {}
+
+    pdfTasks.delete(id);
+
+}
+
+/* LOAD PDF */
+
+async function loadPDF(obj, el, container) {
+
+    cancelPDFTask(obj.id);
+
+    container.innerHTML =
+        '<div class="pdf-message">PDF तैयार हो रही है...</div>';
+
+    let taskInfo = null;
+
+    try {
+
+        if (!window.pdfjsLib) {
+            throw Error("PDF.js लोड नहीं हुई");
+        }
+
+        const record = await getAsset(obj.assetId);
+
+        if (!record || !record.blob) {
+            throw Error("सेव PDF नहीं मिली");
+        }
+
+        const loadingTask = pdfjsLib.getDocument({
+            data: new Uint8Array(
+                await record.blob.arrayBuffer()
+            ),
+            isEvalSupported: false
+        });
+
+        taskInfo = {
+            loadingTask,
+            pdf: null,
+            observer: null,
+            cancelled: false,
+            rendering: new Map(),
+            items: []
+        };
+
+        pdfTasks.set(obj.id, taskInfo);
+
+        const pdf = await loadingTask.promise;
+
+        if (
+            taskInfo.cancelled ||
+            pdfTasks.get(obj.id) !== taskInfo
+        ) return;
+
+        taskInfo.pdf = pdf;
+
+        container.innerHTML = "";
+
+        for (let number = 1; number <= pdf.numPages; number++) {
+
+            const box = document.createElement("div");
+
+            box.className = "pdf-page";
+
+            box.dataset.pageNumber = number;
+
+            const placeholder = document.createElement("div");
+
+            placeholder.className = "pdf-placeholder";
+
+            placeholder.textContent =
+                "PDF पेज " + number + " — लोड हो रहा है";
+
+            box.append(placeholder);
+
+            container.append(box);
+
+            taskInfo.items.push({
+                number,
+                box,
+                rendered: false,
+                rendering: false
+            });
+
+        }
+
+        /* RENDER INDIVIDUAL PAGE */
+
+        async function renderPDFPage(item) {
+
+            if (
+                taskInfo.cancelled ||
+                item.rendered ||
+                item.rendering
+            ) return;
+
+            item.rendering = true;
+
+            try {
+
+                const page = await pdf.getPage(item.number);
+
+                if (taskInfo.cancelled) return;
+
+                const baseViewport = page.getViewport({
+                    scale: 1
+                });
+
+                const width = Math.max(
+                    260,
+                    Math.min(1100, el.clientWidth - 2)
+                );
+
+                const scale = width / baseViewport.width;
+
+                const dpr = Math.min(
+                    window.devicePixelRatio || 1,
+                    1.25
+                );
+
+                const viewport = page.getViewport({
+                    scale
+                });
+
+                const canvas = document.createElement("canvas");
+
+                canvas.className = "pdf-canvas";
+
+                canvas.width = Math.floor(viewport.width * dpr);
+
+                canvas.height = Math.floor(viewport.height * dpr);
+
+                canvas.style.width = "100%";
+
+                const highlightCanvas =
+                    document.createElement("canvas");
+
+                highlightCanvas.className = "pdf-highlight-layer";
+
+                highlightCanvas.width = canvas.width;
+
+                highlightCanvas.height = canvas.height;
+
+                highlightCanvas.style.cssText =
+                    "position:absolute;left:0;top:0;" +
+                    "width:100%;height:100%;pointer-events:none";
+
+                item.box.replaceChildren(
+                    canvas,
+                    highlightCanvas
+                );
+
+                item.canvas = canvas;
+
+                item.hi = highlightCanvas;
+
+                const renderTask = page.render({
+
+                    canvasContext: canvas.getContext(
+                        "2d",
+                        { alpha: false }
+                    ),
+
+                    viewport,
+
+                    transform: dpr !== 1
+                        ? [dpr, 0, 0, dpr, 0, 0]
+                        : null
+
+                });
+
+                taskInfo.rendering.set(
+                    item.number,
+                    renderTask
+                );
+
+                await renderTask.promise;
+
+                taskInfo.rendering.delete(item.number);
+
+                /* PDF TEXT LAYER */
+
+                const textContent = await page.getTextContent();
+
+                const textLayer = document.createElement("div");
+
+                textLayer.className = "pdf-text-layer";
+
+                textLayer.style.cssText =
+                    "position:absolute;inset:0;overflow:hidden;" +
+                    "user-select:text;line-height:1;" +
+                    "width:" + viewport.width + "px;" +
+                    "height:" + viewport.height + "px";
+
+                for (const textItem of textContent.items) {
+
+                    if (!textItem.str) continue;
+
+                    const span = document.createElement("span");
+
+                    span.textContent = textItem.str;
+
+                    const transform = pdfjsLib.Util.transform(
+                        viewport.transform,
+                        textItem.transform
+                    );
+
+                    const fontHeight = Math.hypot(
+                        transform[2],
+                        transform[3]
+                    );
+
+                    span.style.cssText =
+                        "position:absolute;white-space:pre;" +
+                        "transform-origin:0 0;color:transparent;" +
+                        "cursor:text;left:" + transform[4] + "px;" +
+                        "top:" + (transform[5] - fontHeight) + "px;" +
+                        "font-size:" + fontHeight + "px;" +
+                        "height:" + fontHeight + "px";
+
+                    textLayer.append(span);
+
+                }
+
+                textLayer.style.transformOrigin = "top left";
+
+                textLayer.style.transform =
+                    "scale(" +
+                    (canvas.clientWidth / viewport.width) +
+                    ")";
+
+                item.box.insertBefore(textLayer, highlightCanvas);
+
+                item.rendered = true;
+
+                setupPDFHighlight(
+                    obj,
+                    item,
+                    viewport,
+                    dpr
+                );
+
+                drawSavedHighlights(obj, item);
+
+                page.cleanup();
+
+            } catch (err) {
+
+                taskInfo.rendering.delete(item.number);
+
+                if (!taskInfo.cancelled) {
+
+                    console.warn(err);
+
+                    const message =
+                        document.createElement("div");
+
+                    message.className = "pdf-message";
+
+                    message.textContent =
+                        "पेज " + item.number +
+                        " रेंडर नहीं हुआ: " + err.message;
+
+                    item.box.replaceChildren(message);
+
+                }
+
+            } finally {
+
+                item.rendering = false;
+
+                updateWorkspaceSize();
+
+            }
+
+        }
+
+        /* LAZY RENDERING */
+
+        if ("IntersectionObserver" in window) {
+
+            taskInfo.observer = new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        const item = taskInfo.items.find(
+                            x => x.box === entry.target
+                        );
+
+                        if (item && entry.isIntersecting) {
+                            renderPDFPage(item);
+                        }
+
+                    });
+
+                },
+                {
+                    root: $("workspaceScroll"),
+                    rootMargin: "700px 0px"
+                }
+            );
+
+            taskInfo.items.forEach(item => {
+                taskInfo.observer.observe(item.box);
+            });
+
+        } else {
+
+            taskInfo.items.forEach(renderPDFPage);
+
+        }
+
+        updateWorkspaceSize();
+
+        updatePDFMode();
+
+    } catch (err) {
+
+        console.error(err);
+
+        if (
+            taskInfo &&
+            pdfTasks.get(obj.id) === taskInfo
+        ) {
+            cancelPDFTask(obj.id);
+        }
+
+        container.innerHTML = "";
+
+        const message = document.createElement("div");
+
+        message.className = "pdf-message";
+
+        message.textContent =
+            "PDF लोड नहीं हुई: " + err.message;
+
+        container.append(message);
+
+    }
+
+}
+
+/* PDF HIGHLIGHTER */
+
+function setupPDFHighlight(obj, item, viewport, dpr) {
+
+    const canvas = item.hi;
+
+    const ctx = canvas.getContext("2d");
+
+    let drawing = false;
+
+    let last = null;
+
+    function getPosition(e) {
+
+        const rect = canvas.getBoundingClientRect();
+
+        return {
+
+            x: (e.clientX - rect.left) / rect.width * canvas.width,
+
+            y: (e.clientY - rect.top) / rect.height * canvas.height
+
+        };
+
+    }
+
+    canvas.addEventListener("pointerdown", e => {
+
+        if (pdfMode !== "highlight") return;
+
+        drawing = true;
+
+        last = getPosition(e);
+
+        try {
+            canvas.setPointerCapture(e.pointerId);
+        } catch (_) {}
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+    });
+
+    canvas.addEventListener("pointermove", e => {
+
+        if (!drawing || pdfMode !== "highlight") return;
+
+        const position = getPosition(e);
+
+        const color = $("highlightColor").value;
+
+        ctx.save();
+
+        ctx.globalAlpha = 0.34;
+
+        ctx.strokeStyle = color;
+
+        ctx.lineWidth = Math.max(
+            10,
+            viewport.scale * 13 * dpr
+        );
+
+        ctx.lineCap = "round";
+
+        ctx.lineJoin = "round";
+
+        ctx.beginPath();
+
+        ctx.moveTo(last.x, last.y);
+
+        ctx.lineTo(position.x, position.y);
+
+        ctx.stroke();
+
+        ctx.restore();
+
+        obj.highlights = obj.highlights || [];
+
+        obj.highlights.push({
+
+            x1: last.x / canvas.width,
+
+            y1: last.y / canvas.height,
+
+            x2: position.x / canvas.width,
+
+            y2: position.y / canvas.height,
+
+            color,
+
+            width: ctx.lineWidth / canvas.width
+
+        });
+
+        last = position;
+
+    });
+
+    const stop = () => {
+
+        if (drawing) {
+
+            drawing = false;
+
+            last = null;
+
+            scheduleSave();
+
+        }
+
+    };
+
+    canvas.addEventListener("pointerup", stop);
+
+    canvas.addEventListener("pointercancel", stop);
+
+}
+
+/* REDRAW SAVED HIGHLIGHTS */
+
+function drawSavedHighlights(obj, item) {
+
+    if (!item.hi) return;
+
+    const canvas = item.hi;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    ctx.save();
+
+    ctx.globalAlpha = 0.34;
+
+    for (const highlight of obj.highlights || []) {
+
+        ctx.strokeStyle = highlight.color || "#fff176";
+
+        ctx.lineWidth = Math.max(
+            10,
+            (highlight.width || 0.015) * canvas.width
+        );
+
+        ctx.lineCap = "round";
+
+        ctx.lineJoin = "round";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            highlight.x1 * canvas.width,
+            highlight.y1 * canvas.height
+        );
+
+        ctx.lineTo(
+            highlight.x2 * canvas.width,
+            highlight.y2 * canvas.height
+        );
+
+        ctx.stroke();
+
+    }
+
+    ctx.restore();
+
+}
+
+/* PDF MODE BUTTONS */
+
+$("pdfSelectMode").onclick = () => {
+
+    pdfMode = "select";
+
+    updatePDFMode();
+
+};
+
+$("pdfHighlightMode").onclick = () => {
+
+    pdfMode = "highlight";
+
+    updatePDFMode();
+
+};
+
+function updatePDFMode() {
+
+    $("pdfModeHint").textContent =
+        "PDF mode: " +
+        (
+            pdfMode === "select"
+                ? "Select Text"
+                : "Highlighter — उंगली से ड्रैग करें"
+        );
+
+    document.querySelectorAll(".pdf-page").forEach(page => {
+
+        const canvas = page.querySelector(
+            ".pdf-highlight-layer"
+        );
+
+        if (canvas) {
+
+            canvas.style.pointerEvents =
+                pdfMode === "highlight" ? "auto" : "none";
+
+        }
+
+        page.style.cursor =
+            pdfMode === "highlight" ? "crosshair" : "text";
+
+    });
+
+}
+
+/* CLEAR PDF HIGHLIGHTS */
+
+$("clearPDFHighlights").onclick = () => {
+
+    const page = activePage();
+
+    if (!page) return;
+
+    page.objects
+        .filter(obj => obj.type === "pdf")
+        .forEach(obj => {
+
+            obj.highlights = [];
+
+            const task = pdfTasks.get(obj.id);
+
+            if (task) {
+
+                task.items.forEach(item => {
+                    drawSavedHighlights(obj, item);
+                });
+
+            }
+
+        });
+
+    scheduleSave();
+
+    setStatus("PDF highlights cleared");
+
+};
+
+/* PDF RESIZE */
+
+function enablePDFResize(el, obj) {
+
+    if (!("ResizeObserver" in window)) return;
+
+    let lastWidth = el.clientWidth;
+
+    let timer;
+
+    new ResizeObserver(() => {
+
+        const width = el.clientWidth;
+
+        if (!width || Math.abs(width - lastWidth) < 24) {
+            return;
+        }
+
+        lastWidth = width;
+
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+
+            const container = el.querySelector(".pdf-pages");
+
+            if (container) {
+                loadPDF(obj, el, container);
+            }
+
+        }, 800);
+
+    }).observe(el);
+
+}
+
+/* RENDER OBJECTS */
+
+function renderObjects(page) {
+
+    $("workspace").querySelectorAll(
+        ".object,.mindmap"
+    ).forEach(el => {
+
+        if (el.classList.contains("pdf-object")) {
+
+            cancelPDFTask(el.dataset.objectId);
+
+        }
+
+        el.remove();
+
+    });
+
+    page.objects = page.objects || [];
+
+    page.objects
+        .filter(obj =>
+            ["text", "image", "pdf"].includes(obj.type)
+        )
+        .forEach(obj => {
+
+            $("workspace").append(createObject(obj));
+
+        });
+
+    renderMindMap(page);
+
+    requestAnimationFrame(() => {
+
+        autoGrowMain();
+
+        updateWorkspaceSize();
+
+        updatePDFMode();
+
+    });
+
+}
+
+/* MIND MAP */
+
+function renderMindMap(page) {
+
+    const old = $("workspace").querySelector(".mindmap");
+
+    if (old) old.remove();
+
+    if (!page.mindmap || !page.mindmap.length) return;
+
+    const box = document.createElement("div");
+
+    box.className = "mindmap";
+
+    const heading = document.createElement("h3");
+
+    heading.textContent = "Mind Map";
+
+    const input = document.createElement("input");
+
+    input.placeholder = "New idea — Enter दबाएँ";
+
+    const list = document.createElement("div");
+
+    function refresh() {
+
+        list.innerHTML = "";
+
+        page.mindmap.forEach((value, index) => {
+
+            const node = document.createElement("div");
+
+            node.className = "mind-node";
+
+            node.textContent = value;
+
+            node.onclick = () => {
+
+                if (confirm("इस आइडिया को हटाएँ?")) {
+
+                    page.mindmap.splice(index, 1);
+
+                    refresh();
+
+                    scheduleSave();
+
+                }
+
+            };
+
+            list.append(node);
+
+        });
+
+        updateWorkspaceSize();
+
+    }
+
+    input.onkeydown = e => {
+
+        if (
+            e.key === "Enter" &&
+            input.value.trim()
+        ) {
+
+            page.mindmap.push(input.value.trim());
+
+            input.value = "";
+
+            refresh();
+
+            scheduleSave();
+
+        }
+
+    };
+
+    box.append(heading, input, list);
+
+    $("workspace").append(box);
+
+    refresh();
+
+}
+
+$("addMindMap").onclick = () => {
+
+    const page = activePage();
+
+    if (!page) return;
+
+    page.mindmap = page.mindmap || [];
+
+    if (!page.mindmap.length) {
+        page.mindmap.push("Main Idea");
+    }
+
+    renderMindMap(page);
+
+    scheduleSave();
+
+};
+
+/* BACKUP HELPERS */
+
+function blobToBase64(blob) {
+
+    return new Promise((resolve, reject) => {
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+
+            resolve(
+                String(reader.result).split(",")[1]
+            );
+
+        };
+
+        reader.onerror = () => reject(reader.error);
+
+        reader.readAsDataURL(blob);
+
+    });
+
+}
+
+function base64ToBlob(base64, type) {
+
+    const binary = atob(base64);
+
+    const array = new Uint8Array(binary.length);
+
+    for (let i = 0; i < binary.length; i++) {
+
+        array[i] = binary.charCodeAt(i);
+
+    }
+
+    return new Blob(
+        [array],
+        { type: type || "application/octet-stream" }
+    );
+
+}
+
+/* BACKUP */
+
+$("backupBtn").onclick = async () => {
+
+    saveNow();
+
+    try {
+
+        if (!assetDB) {
+            await openDB();
+        }
+
+        const data = {
+
+            app: "OneNote Infinity Pro",
+
+            version: 6,
+
+            state,
+
+            assets: []
+
+        };
+
+        const ids = new Set();
+
+        allPages().forEach(page => {
+
+            (page.objects || []).forEach(obj => {
+
+                if (obj.assetId) {
+                    ids.add(obj.assetId);
+                }
+
+            });
+
+            const temp = document.createElement("div");
+
+            temp.innerHTML = page.content || "";
+
+            temp.querySelectorAll("[data-asset-id]").forEach(el => {
+
+                ids.add(el.dataset.assetId);
+
+            });
+
+        });
+
+        for (const id of ids) {
+
+            const record = await getAsset(id);
+
+            if (record && record.blob) {
+
+                data.assets.push({
+
+                    id: record.id,
+
+                    name: record.name,
+
+                    type: record.type,
+
+                    base64: await blobToBase64(record.blob)
+
+                });
+
+            }
+
+        }
+
+        const blob = new Blob(
+            [JSON.stringify(data)],
+            { type: "application/json" }
+        );
+
+        const url = makeObjectURL(blob);
+
+        const link = document.createElement("a");
+
+        link.href = url;
+
+        link.download = "onenote-infinity-backup.json";
+
+        link.click();
+
+        setTimeout(() => {
+            revokeObjectURL(url);
+        }, 3000);
+
+        setStatus("Backup downloaded");
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Backup नहीं बन पाया।");
+
+    }
+
+};
+
+/* RESTORE BUTTON */
+
+$("restoreBtn").onclick = () => {
+
+    $("restoreInput").click();
+
+};
+
+/* RESTORE BACKUP */
+
+$("restoreInput").addEventListener("change", async e => {
+
+    const file = e.target.files[0];
+
+    e.target.value = "";
+
+    if (!file) return;
+
+    if (
+        !confirm(
+            "Restore से मौजूदा डेटा बदल सकता है। जारी रखें?"
+        )
+    ) return;
+
+    try {
+
+        if (!assetDB) {
+            await openDB();
+        }
+
+        const data = JSON.parse(await file.text());
+
+        if (
+            !data.state ||
+            !Array.isArray(data.state.notebooks)
+        ) {
+
+            throw Error("Invalid backup");
+
+        }
+
+        for (const asset of data.assets || []) {
+
+            await putAsset(
+                asset.id,
+                base64ToBlob(asset.base64, asset.type),
+                asset.name,
+                asset.type
+            );
+
+        }
+
+        state = data.state;
+
+        if (!allPages().length) {
+            state = defaults();
+        }
+
+        activePageId = allPages().some(
+            page => page.id === state.lastPageId
+        )
+            ? state.lastPageId
+            : allPages()[0].id;
+
+        saveNow();
+
+        renderTree();
+
+        openPage(activePageId);
+
+        alert("Backup Restore हो गया।");
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert(
+            "Restore नहीं हो पाया। सही Backup JSON चुनें।"
+        );
+
+    }
+
+});
+
+/* APPLICATION START */
+
+async function start() {
+
+    try {
+
+        await openDB();
+
+    } catch (e) {
+
+        console.warn(e);
+
+        setStatus("फ़ाइल स्टोरेज उपलब्ध नहीं है");
+
+    }
+
+    loadState();
+
+    renderTree();
+
+    openPage(activePageId);
+
+    setStatus("Ready");
+
+}
+
+window.addEventListener("resize", updateWorkspaceSize);
+
+start();
+
 </script>
 </body>
 </html>
